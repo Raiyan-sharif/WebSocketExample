@@ -1,0 +1,26 @@
+//
+//  ViewController.swift
+//  PockeTalk
+//
+//  Created by Piklu Majumder-401 on 8/31/21.
+//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
+//
+
+import UIKit
+
+class BaseViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor._lightGrayColor()
+
+        // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !Reachability.isConnectedToNetwork() {
+            GlobalMethod.showAlert("No Internet conneciton")
+        }
+    }
+}
+
