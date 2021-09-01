@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137926DDCF59004A925D /* AppDelegate.swift */; };
+		4A66137E26DDCF59004A925D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137D26DDCF59004A925D /* ViewController.swift */; };
+		4A66138126DDCF59004A925D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A66137F26DDCF59004A925D /* Main.storyboard */; };
+		4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138226DDCF5D004A925D /* Assets.xcassets */; };
+		4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */; };
+		4A66139126DDCF5E004A925D /* PockeTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66139026DDCF5E004A925D /* PockeTalkTests.swift */; };
+		4A66139C26DDEB9C004A925D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66139B26DDEB9C004A925D /* Utils.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A66138D26DDCF5E004A925D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A66136E26DDCF59004A925D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A66137526DDCF59004A925D;
+			remoteInfo = PockeTalk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4A66137626DDCF59004A925D /* PockeTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PockeTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A66137926DDCF59004A925D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4A66137D26DDCF59004A925D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4A66138026DDCF59004A925D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4A66138226DDCF5D004A925D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A66138526DDCF5D004A925D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4A66138726DDCF5D004A925D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A66138C26DDCF5E004A925D /* PockeTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PockeTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A66139026DDCF5E004A925D /* PockeTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PockeTalkTests.swift; sourceTree = "<group>"; };
+		4A66139226DDCF5E004A925D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A66139B26DDEB9C004A925D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A66137326DDCF59004A925D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A66138926DDCF5E004A925D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A66136D26DDCF59004A925D = {
+			isa = PBXGroup;
+			children = (
+				4A66137826DDCF59004A925D /* PockeTalk */,
+				4A66138F26DDCF5E004A925D /* PockeTalkTests */,
+				4A66137726DDCF59004A925D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A66137726DDCF59004A925D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A66137626DDCF59004A925D /* PockeTalk.app */,
+				4A66138C26DDCF5E004A925D /* PockeTalkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A66137826DDCF59004A925D /* PockeTalk */ = {
+			isa = PBXGroup;
+			children = (
+				4A6613B026DE47FB004A925D /* Application */,
+				4A6613AE26DE4790004A925D /* Models */,
+				4A6613A426DDFC32004A925D /* Views */,
+				4A66139E26DDECA8004A925D /* Controllers */,
+				4A6613AD26DE477B004A925D /* Storyboards */,
+				4A66139D26DDEC91004A925D /* Utitlity */,
+				4A6613AF26DE47E9004A925D /* Resources */,
+			);
+			path = PockeTalk;
+			sourceTree = "<group>";
+		};
+		4A66138F26DDCF5E004A925D /* PockeTalkTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A66139026DDCF5E004A925D /* PockeTalkTests.swift */,
+				4A66139226DDCF5E004A925D /* Info.plist */,
+			);
+			path = PockeTalkTests;
+			sourceTree = "<group>";
+		};
+		4A66139D26DDEC91004A925D /* Utitlity */ = {
+			isa = PBXGroup;
+			children = (
+				4A66139B26DDEB9C004A925D /* Utils.swift */,
+			);
+			path = Utitlity;
+			sourceTree = "<group>";
+		};
+		4A66139E26DDECA8004A925D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4A66137D26DDCF59004A925D /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4A6613A426DDFC32004A925D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4A6613AD26DE477B004A925D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */,
+				4A66137F26DDCF59004A925D /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		4A6613AE26DE4790004A925D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		4A6613AF26DE47E9004A925D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4A66138226DDCF5D004A925D /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4A6613B026DE47FB004A925D /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4A66137926DDCF59004A925D /* AppDelegate.swift */,
+				4A66138726DDCF5D004A925D /* Info.plist */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A66137526DDCF59004A925D /* PockeTalk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A66139526DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalk" */;
+			buildPhases = (
+				4A66137226DDCF59004A925D /* Sources */,
+				4A66137326DDCF59004A925D /* Frameworks */,
+				4A66137426DDCF59004A925D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PockeTalk;
+			productName = PockeTalk;
+			productReference = 4A66137626DDCF59004A925D /* PockeTalk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4A66138B26DDCF5E004A925D /* PockeTalkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A66139826DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalkTests" */;
+			buildPhases = (
+				4A66138826DDCF5E004A925D /* Sources */,
+				4A66138926DDCF5E004A925D /* Frameworks */,
+				4A66138A26DDCF5E004A925D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A66138E26DDCF5E004A925D /* PBXTargetDependency */,
+			);
+			name = PockeTalkTests;
+			productName = PockeTalkTests;
+			productReference = 4A66138C26DDCF5E004A925D /* PockeTalkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A66136E26DDCF59004A925D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Piklu Majumder-401";
+				TargetAttributes = {
+					4A66137526DDCF59004A925D = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					4A66138B26DDCF5E004A925D = {
+						CreatedOnToolsVersion = 11.0;
+						TestTargetID = 4A66137526DDCF59004A925D;
+					};
+				};
+			};
+			buildConfigurationList = 4A66137126DDCF59004A925D /* Build configuration list for PBXProject "PockeTalk" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4A66136D26DDCF59004A925D;
+			productRefGroup = 4A66137726DDCF59004A925D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A66137526DDCF59004A925D /* PockeTalk */,
+				4A66138B26DDCF5E004A925D /* PockeTalkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A66137426DDCF59004A925D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
+				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
+				4A66138126DDCF59004A925D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A66138A26DDCF5E004A925D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A66137226DDCF59004A925D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A66137E26DDCF59004A925D /* ViewController.swift in Sources */,
+				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
+				4A66139C26DDEB9C004A925D /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A66138826DDCF5E004A925D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A66139126DDCF5E004A925D /* PockeTalkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4A66138E26DDCF5E004A925D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A66137526DDCF59004A925D /* PockeTalk */;
+			targetProxy = 4A66138D26DDCF5E004A925D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4A66137F26DDCF59004A925D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A66138026DDCF59004A925D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A66138526DDCF5D004A925D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4A66139326DDCF5E004A925D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4A66139426DDCF5E004A925D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4A66139626DDCF5E004A925D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4A66139726DDCF5E004A925D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4A66139926DDCF5E004A925D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
+			};
+			name = Debug;
+		};
+		4A66139A26DDCF5E004A925D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A66137126DDCF59004A925D /* Build configuration list for PBXProject "PockeTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A66139326DDCF5E004A925D /* Debug */,
+				4A66139426DDCF5E004A925D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A66139526DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A66139626DDCF5E004A925D /* Debug */,
+				4A66139726DDCF5E004A925D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A66139826DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A66139926DDCF5E004A925D /* Debug */,
+				4A66139A26DDCF5E004A925D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A66136E26DDCF59004A925D /* Project object */;
+}
