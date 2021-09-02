@@ -169,4 +169,9 @@ class GlobalMethod {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    static func openUrlInBrowser(url: String){
+        guard let url = URL(string: url) else { return }
+        UIApplication.shared.open(url)
+    }
 }

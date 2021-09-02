@@ -15,6 +15,9 @@ let DISPLAY_SCALE: CGFloat               = SIZE_WIDTH / 375.0
 
 
 //MARK: - Link
+let SUPPORT_URL = "https://www.sourcenext.com/" // TODO: Need to change
+let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
+let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
 
 
 //MARK: - Notification Name

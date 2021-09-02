@@ -41,6 +41,9 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
+		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
+		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +98,9 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +197,7 @@
 				8782DEEB26E092DA003A1681 /* SystemLanguage */,
 				4AD58E9726DF9B5C0004FC38 /* HomePage */,
 				4AF2608126E0726D009C616E /* CameraPage */,
-				4AF2608A26E073CD009C616E /* SettingsPage */,
+				4AF2608A26E073CD009C616E /* Settings */,
 				4AD58E6426DF811A0004FC38 /* BaseController */,
 				4A6613AD26DE477B004A925D /* LaunchScreen */,
 			);
@@ -256,6 +262,7 @@
 				692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */,
 				4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */,
 				4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */,
+				89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -269,13 +276,14 @@
 			path = CameraPage;
 			sourceTree = "<group>";
 		};
-		4AF2608A26E073CD009C616E /* SettingsPage */ = {
+		4AF2608A26E073CD009C616E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				4AF2608626E073B3009C616E /* Settings.storyboard */,
-				4AF2608826E073C4009C616E /* SettingsViewController.swift */,
+				89BC6EC326E21F1D0072BB0A /* views */,
+				89BC6EC226E21EEB0072BB0A /* viewcontrollers */,
+				89BC6EC126E21EE30072BB0A /* models */,
 			);
-			path = SettingsPage;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		4AF2608D26E07811009C616E /* DataExtensions */ = {
@@ -357,6 +365,31 @@
 				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		89BC6EC126E21EE30072BB0A /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		89BC6EC226E21EEB0072BB0A /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2608826E073C4009C616E /* SettingsViewController.swift */,
+			);
+			path = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		89BC6EC326E21F1D0072BB0A /* views */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2608626E073B3009C616E /* Settings.storyboard */,
+				898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */,
+				898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		D4E4E4F32DD69FED2E7E027B /* Pods */ = {
@@ -455,6 +488,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
 				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
@@ -547,12 +581,14 @@
 				4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
+				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
+				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
