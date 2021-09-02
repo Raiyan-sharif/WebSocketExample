@@ -23,4 +23,6 @@ let DISPLAY_SCALE: CGFloat               = SIZE_WIDTH / 375.0
 
 //MARK: - UserDefault Name
 let kUserDefaultAccessToken = "kUserDefaultAccessToken"
+let KSelectedLanguage = "KSelectedLanguage"
+let KFirstInitialized = "KFirstInitialized"
 

@@ -49,3 +49,32 @@ struct  UserDefaultsUtility {
         UserDefaults.standard.string(forKey: key)
     }
 }
+
+@objc final class PlanGridUserDefaults: NSObject {
+
+    /// Keeps track of whether or not a user has already used the annotation filter feature.
+    static var hasUsedAnnotationFilterFeature = UserDefaultsProperty<Bool>("HasUsedAnnotationFilterFeature")
+}
+
+/// A property that wraps around a value that is persisted to NSUserDefaults.
+final class UserDefaultsProperty<T> {
+
+    let identifier: String
+
+    init(_ identifier: String) {
+        self.identifier = identifier
+    }
+
+    var value: T? {
+        set {
+            UserDefaults.standard.set(newValue, forKey: self.identifier)
+        }
+        get {
+            return UserDefaults.standard.object(forKey: self.identifier) as? T
+        }
+    }
+
+}
+enum UserDefaultsKeys:String {
+    case firstTime
+}

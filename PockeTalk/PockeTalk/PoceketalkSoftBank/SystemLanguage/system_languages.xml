@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<language name="system_languages">
+    <child>
+        <item name= "日本語で操作する" code="ja" />
+        <item name= "Use in English" code="en" />
+    </child>
+</language>

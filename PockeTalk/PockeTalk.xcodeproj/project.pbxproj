@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,21 @@
 		4AF2608726E073B3009C616E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608626E073B3009C616E /* Settings.storyboard */; };
 		4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608826E073C4009C616E /* SettingsViewController.swift */; };
 		4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608B26E07801009C616E /* ExtensionString.swift */; };
+		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
+		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
+		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
+		8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8782DEDF26E08D10003A1681 /* Localizable.strings */; };
+		8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */; };
+		8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */; };
+		8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8782DEF626E098DE003A1681 /* SystemLanguageCell.xib */; };
+		8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEFE26E099BF003A1681 /* NibOwnerLoadable.swift */; };
+		8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEFF26E099BF003A1681 /* NibLoadable.swift */; };
+		8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0026E099BF003A1681 /* UITableView+Reusable.swift */; };
+		8782DF0626E099BF003A1681 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0126E099BF003A1681 /* Reusable.swift */; };
+		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
+		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
+		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137626DDCF59004A925D /* PockeTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PockeTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137926DDCF59004A925D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A66137D26DDCF59004A925D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +77,24 @@
 		4AF2608626E073B3009C616E /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4AF2608826E073C4009C616E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4AF2608B26E07801009C616E /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
+		8782DEDE26E08D10003A1681 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8782DEE826E08EC1003A1681 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguageViewController.swift; sourceTree = "<group>"; };
+		8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguageCell.swift; sourceTree = "<group>"; };
+		8782DEF626E098DE003A1681 /* SystemLanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemLanguageCell.xib; sourceTree = "<group>"; };
+		8782DEFE26E099BF003A1681 /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
+		8782DEFF26E099BF003A1681 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		8782DF0026E099BF003A1681 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		8782DF0126E099BF003A1681 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
+		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
+		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBBE50FE0922DF903C71A75A /* Pods-PockeTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,18 +110,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0746EEAA968427852983B808 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */,
+				D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4A66136D26DDCF59004A925D = {
 			isa = PBXGroup;
 			children = (
 				4A66137826DDCF59004A925D /* PockeTalk */,
 				4A66138F26DDCF5E004A925D /* PockeTalkTests */,
 				4A66137726DDCF59004A925D /* Products */,
+				D4E4E4F32DD69FED2E7E027B /* Pods */,
+				0746EEAA968427852983B808 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +149,8 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				8782DEFD26E099A7003A1681 /* Reusable */,
+				8782DECF26E08BEE003A1681 /* Localization */,
 				4A6613B026DE47FB004A925D /* Application */,
 				4AEF500F26DF9FCD0052B6EB /* Extensions */,
 				4A66139E26DDECA8004A925D /* PoceketalkSoftBank */,
@@ -133,6 +183,8 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				8782DF1826E0AF5C003A1681 /* NavigationController */,
+				8782DEEB26E092DA003A1681 /* SystemLanguage */,
 				4AD58E9726DF9B5C0004FC38 /* HomePage */,
 				4AF2608126E0726D009C616E /* CameraPage */,
 				4AF2608A26E073CD009C616E /* SettingsPage */,
@@ -228,6 +280,82 @@
 			path = DataExtensions;
 			sourceTree = "<group>";
 		};
+		8782DECF26E08BEE003A1681 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				8782DED626E08C5B003A1681 /* Localizable */,
+				8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		8782DED626E08C5B003A1681 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEDF26E08D10003A1681 /* Localizable.strings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
+		8782DEEB26E092DA003A1681 /* SystemLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				872AA4E526E0EEEA003BE874 /* system_languages.xml */,
+				8782DF1F26E0B6B9003A1681 /* Model */,
+				8782DEF426E098B3003A1681 /* Cell */,
+				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
+			);
+			path = SystemLanguage;
+			sourceTree = "<group>";
+		};
+		8782DEF426E098B3003A1681 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */,
+				8782DEF626E098DE003A1681 /* SystemLanguageCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		8782DEFD26E099A7003A1681 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEFF26E099BF003A1681 /* NibLoadable.swift */,
+				8782DEFE26E099BF003A1681 /* NibOwnerLoadable.swift */,
+				8782DF0126E099BF003A1681 /* Reusable.swift */,
+				8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */,
+				8782DF0026E099BF003A1681 /* UITableView+Reusable.swift */,
+			);
+			path = Reusable;
+			sourceTree = "<group>";
+		};
+		8782DF1826E0AF5C003A1681 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */,
+			);
+			path = NavigationController;
+			sourceTree = "<group>";
+		};
+		8782DF1F26E0B6B9003A1681 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D4E4E4F32DD69FED2E7E027B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */,
+				99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */,
+				FBBE50FE0922DF903C71A75A /* Pods-PockeTalkTests.debug.xcconfig */,
+				9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -235,9 +363,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A66139526DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalk" */;
 			buildPhases = (
+				9BB7920EC66862277B263086 /* [CP] Check Pods Manifest.lock */,
 				4A66137226DDCF59004A925D /* Sources */,
 				4A66137326DDCF59004A925D /* Frameworks */,
 				4A66137426DDCF59004A925D /* Resources */,
+				00143D1F92986E3E2201C3E9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -252,6 +382,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A66139826DDCF5E004A925D /* Build configuration list for PBXNativeTarget "PockeTalkTests" */;
 			buildPhases = (
+				4BD70EB30AF248FF2FF4F047 /* [CP] Check Pods Manifest.lock */,
 				4A66138826DDCF5E004A925D /* Sources */,
 				4A66138926DDCF5E004A925D /* Frameworks */,
 				4A66138A26DDCF5E004A925D /* Resources */,
@@ -292,6 +423,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 4A66136D26DDCF59004A925D;
 			productRefGroup = 4A66137726DDCF59004A925D /* Products */;
@@ -310,9 +442,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
+				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
+				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
+				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,22 +461,96 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		00143D1F92986E3E2201C3E9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PockeTalk/Pods-PockeTalk-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PockeTalk/Pods-PockeTalk-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PockeTalk/Pods-PockeTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4BD70EB30AF248FF2FF4F047 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PockeTalkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BB7920EC66862277B263086 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PockeTalk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4A66137226DDCF59004A925D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */,
+				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
+				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
+				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
+				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
+				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
+				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
+				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
+				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
+				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
+				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +582,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		8782DEDF26E08D10003A1681 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8782DEDE26E08D10003A1681 /* en */,
+				8782DEE826E08EC1003A1681 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -380,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -426,7 +645,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -440,6 +659,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -480,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -492,9 +712,11 @@
 		};
 		4A66139626DDCF5E004A925D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -503,6 +725,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -510,9 +733,11 @@
 		};
 		4A66139726DDCF5E004A925D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -521,6 +746,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -528,6 +754,7 @@
 		};
 		4A66139926DDCF5E004A925D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBBE50FE0922DF903C71A75A /* Pods-PockeTalkTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -549,6 +776,7 @@
 		};
 		4A66139A26DDCF5E004A925D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
