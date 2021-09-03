@@ -30,6 +30,18 @@
 		4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */; };
 		4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609826E0AC74009C616E /* MenuModel.swift */; };
 		4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609A26E0B516009C616E /* MenuViewModel.swift */; };
+		5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D54C26E29D57002A5250 /* LangListCell.swift */; };
+		5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028D54D26E29D57002A5250 /* LangListCell.xib */; };
+		5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55126E29E59002A5250 /* HistoryListVC.swift */; };
+		5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55426E29EB0002A5250 /* LangSelectVoiceVC.swift */; };
+		5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55626E29FB7002A5250 /* LanguageListVC.swift */; };
+		5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55826E29FE5002A5250 /* TabsPageViewController.swift */; };
+		5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */; };
+		5064D19626E2A93E006E6197 /* conversation_languages_ja_cn.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19426E2A93D006E6197 /* conversation_languages_ja_cn.xml */; };
+		5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */; };
+		5064D19A26E2A9A4006E6197 /* conversation_languages_en_cn.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */; };
+		5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */; };
+		50D76F3A26E5D12B00DAC395 /* LanguageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D76F3926E5D12B00DAC395 /* LanguageItem.swift */; };
 		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
@@ -92,6 +104,18 @@
 		4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF2609826E0AC74009C616E /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		4AF2609A26E0B516009C616E /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		5028D54C26E29D57002A5250 /* LangListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangListCell.swift; sourceTree = "<group>"; };
+		5028D54D26E29D57002A5250 /* LangListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangListCell.xib; sourceTree = "<group>"; };
+		5028D55126E29E59002A5250 /* HistoryListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListVC.swift; sourceTree = "<group>"; };
+		5028D55426E29EB0002A5250 /* LangSelectVoiceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangSelectVoiceVC.swift; sourceTree = "<group>"; };
+		5028D55626E29FB7002A5250 /* LanguageListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageListVC.swift; sourceTree = "<group>"; };
+		5028D55826E29FE5002A5250 /* TabsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsPageViewController.swift; sourceTree = "<group>"; };
+		5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LanguageSelectVoice.storyboard; sourceTree = "<group>"; };
+		5064D19426E2A93D006E6197 /* conversation_languages_ja_cn.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ja_cn.xml; sourceTree = "<group>"; };
+		5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ja.xml; sourceTree = "<group>"; };
+		5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_en_cn.xml; sourceTree = "<group>"; };
+		5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_en.xml; sourceTree = "<group>"; };
+		50D76F3926E5D12B00DAC395 /* LanguageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageItem.swift; sourceTree = "<group>"; };
 		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -239,6 +263,8 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				50D76F3626E5C1B600DAC395 /* Model */,
+				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
 				8782DEEB26E092DA003A1681 /* SystemLanguage */,
 				4AD58E9726DF9B5C0004FC38 /* HomePage */,
@@ -339,6 +365,48 @@
 				4AF2608B26E07801009C616E /* ExtensionString.swift */,
 			);
 			path = DataExtensions;
+			sourceTree = "<group>";
+		};
+		5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */ = {
+			isa = PBXGroup;
+			children = (
+				5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */,
+				5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */,
+				5064D19426E2A93D006E6197 /* conversation_languages_ja_cn.xml */,
+				5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */,
+				5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */,
+				5028D55326E29E65002A5250 /* ViewController */,
+				5028D55026E29D62002A5250 /* View */,
+			);
+			path = LanguageSelectVoiceTranslation;
+			sourceTree = "<group>";
+		};
+		5028D55026E29D62002A5250 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5028D54C26E29D57002A5250 /* LangListCell.swift */,
+				5028D54D26E29D57002A5250 /* LangListCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5028D55326E29E65002A5250 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5028D55826E29FE5002A5250 /* TabsPageViewController.swift */,
+				5028D55626E29FB7002A5250 /* LanguageListVC.swift */,
+				5028D55426E29EB0002A5250 /* LangSelectVoiceVC.swift */,
+				5028D55126E29E59002A5250 /* HistoryListVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		50D76F3626E5C1B600DAC395 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50D76F3926E5D12B00DAC395 /* LanguageItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		692CCEB826E1EA80006E826B /* HomePageViewModel */ = {
@@ -538,13 +606,19 @@
 				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
 				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
+				5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */,
+				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
+				5064D19626E2A93E006E6197 /* conversation_languages_ja_cn.xml in Resources */,
+				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
+				5064D19A26E2A9A4006E6197 /* conversation_languages_en_cn.xml in Resources */,
+				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,14 +704,17 @@
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
+				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
+				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
+				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
@@ -647,6 +724,7 @@
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
+				50D76F3A26E5D12B00DAC395 /* LanguageItem.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
@@ -655,7 +733,9 @@
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
+				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
+				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

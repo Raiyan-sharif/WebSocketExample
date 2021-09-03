@@ -34,6 +34,7 @@ let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
 
 let kUserDefaultAccessToken = "kUserDefaultAccessToken"
 let KSelectedLanguage = "KSelectedLanguage"
+let KSelectedLanguageVoice = "KSelectedLanguageVoice"
 let KFirstInitialized = "KFirstInitialized"
 let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 

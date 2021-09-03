@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<language name="target_languages">
+<item name="اللغة العربية" code="ar" en="Arabic" es="Arábica" fr="Arabe" ja="アラビア語" ko="아랍어" zh="阿拉伯语" it="Arabo" de="Arabisch" />
+<item name="Italiano" code="it" en="Italian" es="Italiano" fr="Italien" ja="イタリア語" ko="이탈리아어" zh="意大利语" it="Italiano" de="Italienisch" />
+<item name="Eesti keel" code="et" en="Estonian" es="Estonio" fr="Estonien" ja="エストニア語" ko="에스토니아어" zh="爱沙尼亚语" it="Estone" de="Estnisch" />
+<item name="English(US)" code="en" en="English(US)" es="Inglés (EE. UU.)" fr="Anglais (États-Unis)" ja="英語(米国)" ko="영어(미국)" zh="英语(美国)" it="Inglese (Stati Uniti)" de="Englisch (US)" />
+<item name="English(slowly)" code="en-SO" en="English(slowly)" ja="英語(ゆっくり)" />
+<item name="English(UK)" code="en-GB" en="English(UK)" es="Inglés (Reino Unido)" fr="Anglais (Royaume-Uni)" ja="英語(英国)" ko="영어(영국)" zh="英语(英国)" it="Inglese (Regno Unito)" de="Englisch (UK)" />
+<item name="English(India)" code="en-IN" en="English(India)" es="Inglés (India)" fr="Anglais (Inde)" ja="英語(インド)" ko="영어(인도)" zh="英语(印度)" it="Inglese (India)" de="Englisch (Indien)" />
+<item name="English(Australia)" code="en-AU" en="English(Australia)" es="Inglés (Australia)" fr="Anglais (Australie)" ja="英語(オーストラリア)" ko="영어(호주)" zh="英语(澳大利亚)" it="Inglese (Australia)" de="Englisch (Australien)" />
+<item name="Nederlands" code="nl" en="Dutch" es="Holandés" fr="Néerlandais" ja="オランダ語" ko="네덜란드어" zh="荷兰语" it="Olandese" de="Niederländisch" />
+<item name="한국어" code="ko" en="Korean" es="Coreano" fr="Coréen" ja="韓国語" ko="한국어" zh="韩语" it="Coreano" de="Koreanisch" />
+<item name="粤語" code="yue" en="Cantonese" es="Cantonés" fr="Cantonais" ja="広東語" ko="광둥어" zh="广东话" it="Cantonese" de="Kantonesisch" />
+<item name="Ελληνικά" code="el" en="Greek" es="Griego" fr="Grec" ja="ギリシャ語" ko="그리스어" zh="希腊语" it="Greco" de="Griechisch" />
+<item name="Svenska" code="sv" en="Swedish" es="Sueco" fr="Suédois" ja="スウェーデン語" ko="스웨덴어" zh="瑞典语" it="Svedese" de="Schwedisch" />
+<item name="Español" code="es" en="Spanish(Spain)" es="Español" fr="Espagnol (Espagne)" ja="スペイン語(スペイン)" ko="스페인어(스페인)" zh="西班牙语(西班牙)" it="Spagnolo" de="Spanisch" />
+<item name="Slovenščina" code="sl" en="Slovenian" es="Esloveno" fr="Slovène" ja="スロベニア語" ko="슬로베니아어" zh="斯洛文尼亚语" it="Sloveno" de="Slowenisch" />
+<item name="ภาษาไทย" code="th" en="Thai" es="Tailandés" fr="Thaïlandais" ja="タイ語" ko="태국어" zh="泰语" it="Thailandese" de="Thailändisch" />
+<item name="Čeština" code="cs" en="Czech" es="Checo" fr="Tchèque" ja="チェコ語" ko="체코어" zh="捷克语" it="Ceco" de="Tschechisch" />
+<item name="中文(简体字)" code="zh-CN" en="Chinese_Simplified" es="Chino simplificado" fr="Chinois simplifié" ja="中国語(簡体字)" ko="중국어(간체자)" zh="中文(简体)" it="Cinese Semplificato" de="Chinesisch (vereinfacht)" />
+<item name="中文(繁體字)" code="zh-TW" en="Chinese_Traditional" es="Chino tradicional" fr="Chinois traditionnel" ja="中国語(繁体字)" ko="중국어(번체자)" zh="中文(繁体)" it="Cinese Tradizionale" de="Chinesisch (traditionell)" />
+<item name="Dansk" code="da" en="Danish" es="Danés" fr="Danois" ja="デンマーク語" ko="덴마크어" zh="丹麦语" it="Danese" de="Dänisch" />
+<item name="Deutsch" code="de" en="German" es="Alemán" fr="Allemand" ja="ドイツ語" ko="독일어" zh="德语" it="Tedesco" de="Deutsch" />
+<item name="日本語" code="ja" en="Japanese" es="Japonés" fr="Japonais" ja="日本語" ko="일본어" zh="日语" it="Giapponese" de="Japanisch" />
+<item name="Magyar nyelv" code="hu" en="Hungarian" es="Húngaro" fr="Hongrois" ja="ハンガリー語" ko="헝가리어" zh="匈牙利语" it="Ungherese" de="Ungarisch" />
+<item name="Suomen kieli / Suomi" code="fi" en="Finnish" es="Finlandés" fr="Finlandais" ja="フィンランド語" ko="핀란드어는" zh="芬兰语" it="Finlandese" de="Finnisch" />
+<item name="Français" code="fr" en="French(France)" es="Francés" fr="Français" ja="フランス語(フランス)" ko="프랑스어(프랑스)" zh="法语(法国)" it="Francese" de="Französisch" />
+<item name="Français canadian" code="fr-CA" en="French(Canada)" es="Francés (Canadá)" fr="Français(Canada)" ja="フランス語(カナダ)" ko="프랑스어 (캐나다)" zh="法语(加拿大)" it="Francese (Canada)" de="Französisch (Kanada)" />
+<item name="български език" code="bg" en="Bulgarian" es="Búlgaro" fr="Bulgare" ja="ブルガリア語" ko="불가리아어" zh="保加利亚语" it="Bulgaro" de="Bulgarisch" />
+<item name="Tiếng Việt" code="vi" en="Vietnamese" es="Vietnamita" fr="Vietnamien" ja="ベトナム語" ko="베트남어" zh="越南语" it="Vietnamita" de="Vietnamesisch" />
+<item name="Português(Brasil)" code="pt-BR" en="Portuguese(Brazil)" es="Portugués (Brasil)" fr="Portugais (Brésil)" ja="ポルトガル語(ブラジル)" ko="포르투갈어(브라질)" zh="葡萄牙语(巴西)" it="Portoghese (Brasile)" de="Portugiesisch (Brasilien)" />
+<item name="Português(Português)" code="pt" en="Portuguese(Portugal)" es="Portugués" fr="Portugais" ja="ポルトガル語(ポルトガル)" ko="포르투갈어(포르투갈)" zh="葡萄牙语(葡萄牙)" it="Portoghese (Portogallo)" de="Portugiesisch (Portugal)" />
+<item name="Limba română" code="ro" en="Romanian" es="Rumano" fr="Roumain" ja="ルーマニア語" ko="루마니아어" zh="罗马尼亚语" it="Romeno" de="Rumänisch" />
+<item name="русский язык" code="ru" en="Russian" es="Ruso" fr="Russe" ja="ロシア語" ko="러시아어" zh="俄语" it="Russo" de="Russisch" />
+</language>

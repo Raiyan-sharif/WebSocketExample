@@ -120,7 +120,10 @@ class HomeViewController: BaseViewController {
 
     // TODO navigate to language selection page
     @IBAction func topLanguageBtnAction(_ sender: UIButton) {
-        self.showToast(message: kTopLanguageButtonActionToastMessage, seconds: toastVisibleTime)
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "LangSelectVoiceVC")as! LangSelectVoiceVC
+                self.navigationController?.pushViewController(controller, animated: true);
+        //self.showToast(message: kTopLanguageButtonActionToastMessage, seconds: toastVisibleTime)
     }
 
     // TODO navigate to language selection page
