@@ -28,6 +28,8 @@ class HomeViewController: BaseViewController {
     var deviceLanguage : String = ""
     let toastVisibleTime : Double = 2.0
     let animationDuration : TimeInterval = 1.0
+    let trailing : CGFloat = -20
+    let width : CGFloat = 50
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,23 @@ class HomeViewController: BaseViewController {
         self.bottomLanguageNameButton.titleLabel?.textAlignment = .center
         self.bottomLanguageNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
         self.bottomLanguageNameButton.setTitleColor(UIColor._whiteColor(), for: .normal)
+        self.setUpMicroPhoneIcon()
+    }
+
+    // floating microphone button
+    func setUpMicroPhoneIcon () {
+        let floatingButton = UIButton()
+        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
+        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
+        floatingButton.layer.cornerRadius = width/2
+        floatingButton.clipsToBounds = true
+        view.addSubview(floatingButton)
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
+        floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
     //TODO Menu tap event
@@ -104,7 +123,7 @@ class HomeViewController: BaseViewController {
     }
 
     // TODO microphone tap event
-    @IBAction func microphoneTapAction(_ sender: UIButton) {
+    @objc func microphoneTapAction (sender:UIButton) {
         self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
     }
 

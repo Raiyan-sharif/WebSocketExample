@@ -123,6 +123,11 @@ extension UIColor {
         return UIColor.init(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1.0)
     }
 
+    //buttonBackgroundColor Color
+    class func _buttonBackgroundColor() -> UIColor {
+        return UIColor.init(red: 0 / 255, green: 143 / 255, blue: 232 / 255, alpha: 1.0)
+    }
+
     // Official Apple placeholder gray
     static var officialApplePlaceholderGray: UIColor {
         return UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
