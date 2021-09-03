@@ -25,6 +25,8 @@
 		4AF2608726E073B3009C616E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608626E073B3009C616E /* Settings.storyboard */; };
 		4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608826E073C4009C616E /* SettingsViewController.swift */; };
 		4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608B26E07801009C616E /* ExtensionString.swift */; };
+		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
+		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
@@ -77,6 +79,8 @@
 		4AF2608626E073B3009C616E /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4AF2608826E073C4009C616E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4AF2608B26E07801009C616E /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
+		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
 		8782DEDE26E08D10003A1681 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 		4AD58E9726DF9B5C0004FC38 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				692CCEB826E1EA80006E826B /* HomePageViewModel */,
 				4AD58E9526DF9B520004FC38 /* HomeViewController.swift */,
 				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
 			);
@@ -248,6 +253,7 @@
 		4AEF501426DFA0C40052B6EB /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */,
 				4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */,
 				4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */,
 			);
@@ -278,6 +284,14 @@
 				4AF2608B26E07801009C616E /* ExtensionString.swift */,
 			);
 			path = DataExtensions;
+			sourceTree = "<group>";
+		};
+		692CCEB826E1EA80006E826B /* HomePageViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				692CCEB926E1EAC0006E826B /* HomeViewModel.swift */,
+			);
+			path = HomePageViewModel;
 			sourceTree = "<group>";
 		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
@@ -532,6 +546,7 @@
 			files = (
 				4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
+				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
@@ -548,6 +563,7 @@
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
+				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,

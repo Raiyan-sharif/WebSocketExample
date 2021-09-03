@@ -113,6 +113,16 @@ extension UIColor {
         return UIColor.init(red: 74, green: 106, blue: 222)
     }
 
+    //Black Color
+    class func _blackColor() -> UIColor {
+        return UIColor.init(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1.0)
+    }
+
+    //White Color
+    class func _whiteColor() -> UIColor {
+        return UIColor.init(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1.0)
+    }
+
     // Official Apple placeholder gray
     static var officialApplePlaceholderGray: UIColor {
         return UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)

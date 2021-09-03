@@ -26,3 +26,8 @@ let kUserDefaultAccessToken = "kUserDefaultAccessToken"
 let KSelectedLanguage = "KSelectedLanguage"
 let KFirstInitialized = "KFirstInitialized"
 
+
+//MARK: - Toast Message Title
+let kMenuActionToastMessage = "Navigate to menu screen"
+let kTopLanguageButtonActionToastMessage = "Navigate to top language selection screen screen"
+let kBottomLanguageButtonActionToastMessage = "Navigate to language selection screen"

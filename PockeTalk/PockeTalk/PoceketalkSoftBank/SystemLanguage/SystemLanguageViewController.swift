@@ -118,7 +118,9 @@ class SystemLanguageViewController: UIViewController {
     
     ///Move to next screeen
     @objc func nextAction () {
-        GlobalMethod.showAlert("TO DO")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 }
 
