@@ -84,7 +84,13 @@ class HomeViewController: BaseViewController {
 
     //TODO Menu tap event
     @IBAction func menuAction(_ sender: UIButton) {
-        self.showToast(message: kMenuActionToastMessage, seconds: toastVisibleTime)
+        let storyboard = UIStoryboard(name: "Menu", bundle: nil)
+        guard let slideMenuController = storyboard.instantiateViewController(withIdentifier: String(describing: MenuViewController.self)) as? MenuViewController else {
+            return
+        }
+
+        self.navigationController?.pushViewController(slideMenuController, animated: true)
+
     }
 
     // This method is called

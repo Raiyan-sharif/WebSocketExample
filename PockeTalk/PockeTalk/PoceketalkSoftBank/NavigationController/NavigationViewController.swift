@@ -12,7 +12,7 @@ class NavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.backgroundColor = .black
+        self.navigationBar.backgroundColor = .white
         self.navigationBar.barTintColor = UIColor.black
         self.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
 

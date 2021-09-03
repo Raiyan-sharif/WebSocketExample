@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum MenuItemType: Int {
+    case settings
+    case camera
+    case favorite
+}
+
 let SIZE_WIDTH: CGFloat                  = UIScreen.main.bounds.size.width
 let SIZE_HEIGHT: CGFloat                 = UIScreen.main.bounds.size.height
 
@@ -25,10 +31,11 @@ let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
 
 
 //MARK: - UserDefault Name
+
 let kUserDefaultAccessToken = "kUserDefaultAccessToken"
 let KSelectedLanguage = "KSelectedLanguage"
 let KFirstInitialized = "KFirstInitialized"
-
+let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"

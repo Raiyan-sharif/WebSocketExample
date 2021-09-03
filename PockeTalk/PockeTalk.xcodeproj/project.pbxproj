@@ -25,6 +25,11 @@
 		4AF2608726E073B3009C616E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608626E073B3009C616E /* Settings.storyboard */; };
 		4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608826E073C4009C616E /* SettingsViewController.swift */; };
 		4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608B26E07801009C616E /* ExtensionString.swift */; };
+		4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2609026E08BA1009C616E /* Menu.storyboard */; };
+		4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609226E08CC1009C616E /* MenuViewController.swift */; };
+		4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */; };
+		4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609826E0AC74009C616E /* MenuModel.swift */; };
+		4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609A26E0B516009C616E /* MenuViewModel.swift */; };
 		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
@@ -82,6 +87,11 @@
 		4AF2608626E073B3009C616E /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4AF2608826E073C4009C616E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4AF2608B26E07801009C616E /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		4AF2609026E08BA1009C616E /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
+		4AF2609226E08CC1009C616E /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AF2609826E0AC74009C616E /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
+		4AF2609A26E0B516009C616E /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -134,6 +144,42 @@
 				D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A3AA83426E24E37008902F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2609026E08BA1009C616E /* Menu.storyboard */,
+				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
+				4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4A3AA83526E24E6F008902F5 /* MenuPage */ = {
+			isa = PBXGroup;
+			children = (
+				4A3AA83426E24E37008902F5 /* Views */,
+				4A3AA83626E24E87008902F5 /* Models */,
+				4A3AA83726E24E92008902F5 /* ViewModels */,
+			);
+			path = MenuPage;
+			sourceTree = "<group>";
+		};
+		4A3AA83626E24E87008902F5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2609826E0AC74009C616E /* MenuModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4A3AA83726E24E92008902F5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2609A26E0B516009C616E /* MenuViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		4A66136D26DDCF59004A925D = {
@@ -200,6 +246,7 @@
 				4AF2608A26E073CD009C616E /* Settings */,
 				4AD58E6426DF811A0004FC38 /* BaseController */,
 				4A6613AD26DE477B004A925D /* LaunchScreen */,
+				4A3AA83526E24E6F008902F5 /* MenuPage */,
 			);
 			path = PoceketalkSoftBank;
 			sourceTree = "<group>";
@@ -492,6 +539,7 @@
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
 				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
+				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
@@ -583,19 +631,23 @@
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
+				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
+				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
+				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
+				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,

@@ -13,40 +13,40 @@ struct  UserDefaultsUtility {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static func getBoolValue(forKey key: String) {
-        UserDefaults.standard.bool(forKey: key)
+    static func getBoolValue(forKey key: String) -> Bool{
+       return UserDefaults.standard.bool(forKey: key)
     }
 
     static func setIntValue(_ value: Int, forKey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static func getIntValue(forKey key: String) {
-        UserDefaults.standard.integer(forKey: key)
+    static func getIntValue(forKey key: String) -> Int{
+        return UserDefaults.standard.integer(forKey: key)
     }
 
     static func setFloadValue(_ value: Float, forKey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static func getFloatValue(forKey key: String) {
-        UserDefaults.standard.float(forKey: key)
+    static func getFloatValue(forKey key: String) -> Float {
+        return UserDefaults.standard.float(forKey: key)
     }
 
     static func setDoubleValue(_ value: Double, forKey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static func getDoubleValue(forKey key: String) {
-        UserDefaults.standard.double(forKey: key)
+    static func getDoubleValue(forKey key: String) -> Double {
+        return UserDefaults.standard.double(forKey: key)
     }
 
     static func setStringValue(_ value: String, forKey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static func getStringValue(forKey key: String) {
-        UserDefaults.standard.string(forKey: key)
+    static func getStringValue(forKey key: String) -> String {
+        return UserDefaults.standard.string(forKey: key) ?? ""
     }
 }
 
