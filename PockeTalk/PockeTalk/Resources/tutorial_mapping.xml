@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mapping name="tutorial_text">
+    <item code="af" line_1="[Hoe om te gebruik]" line_2="Praat na die klank" line_3=""></item>
+    <item code="sq" line_1="[Si të përdoret]" line_2="Bisedoni pas tingullit" line_3=""></item>
+    <item code="am" line_1="[እንዴት መጠቀም እንደሚቻል]" line_2="ከድምጽ በኋላ ይነጋገሩ" line_3=""></item>
+    <item code="ar" line_1="[كيف تستعمل]" line_2="التحدث بعد الصوت" line_3=""></item>
+    <item code="hy" line_1="[Ինչպես օգտագործել]" line_2="Ձայնից հետո խոսեք" line_3=""></item>
+    <item code="az" line_1="[Necə istifadə etməli]" line_2="Səsdən sonra danışın" line_3=""></item>
+    <item code="eu" line_1="[Nola erabili]" line_2="Soinuaren ondoren hizketan" line_3=""></item>
+    <item code="be" line_1="[Як карыстацца]" line_2="Гутарка пасля гуку" line_3=""></item>
+    <item code="bn" line_1="&lt;ব্যবহারবিধি&gt;" line_2="বাটন চেপে ধরে শব্দ শোনার পরে কথা বলুন" line_3=""></item>
+    <item code="bs" line_1="[Kako koristiti]" line_2="Razgovarajte nakon zvuka" line_3=""></item>
+    <item code="bg" line_1="[Как да използвам]" line_2="Говорете след звука" line_3=""></item>
+    <item code="ca" line_1="[Com utilitzar]" line_2="Parla després del so" line_3=""></item>
+    <item code="ceb" line_1="[Unsaon paggamit]" line_2="Pakigsulti sa tingog" line_3=""></item>
+    <item code="zh-CN" line_1="【使用方法】" line_2="请边按住按键边说话。" line_3=""></item>
+    <item code="zh-TW" line_1="【使用方法】" line_2="請邊按住按鍵邊說話。" line_3=""></item>
+    <item code="co" line_1="[Cumu usu]" line_2="Parlà dopu à u sonu" line_3=""></item>
+    <item code="hr" line_1="[Kako koristiti]" line_2="Razgovarajte nakon zvuka" line_3=""></item>
+    <item code="cs" line_1="[Jak používat]" line_2="Mluvte po zvuku" line_3=""></item>
+    <item code="da" line_1="[Sådan bruges]" line_2="Tal efter lyden" line_3=""></item>
+    <item code="nl" line_1="[Hoe te gebruiken]" line_2="Praat na het geluid" line_3=""></item>
+    <item code="en-AU" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="en-IN" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="en-GB" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="en-PH" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="en" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="en-SO" line_1="[How to Use]" line_2="Hold down the button and speak." line_3=""></item>
+    <item code="eo" line_1="[Kiel Uzi]" line_2="Parolu post la sono" line_3=""></item>
+    <item code="et" line_1="[Kuidas kasutada]" line_2="Räägi pärast heli" line_3=""></item>
+    <item code="fi" line_1="[Kuinka käyttää]" line_2="Puhu äänen jälkeen" line_3=""></item>
+    <item code="fr" line_1="[Comment utiliser]" line_2="Maintenez le bouton enfoncé et parlez après le son s'il vous plaît" line_3=""></item>
+    <item code="fr-CA" line_1="[Comment utiliser]" line_2="Maintenez le bouton enfoncé et parlez après le son s'il vous plaît" line_3=""></item>
+    <item code="fy" line_1="[Hoe te brûken]" line_2="Sprekt nei it lûd" line_3=""></item>
+    <item code="gl" line_1="[Como empregar]" line_2="Falar despois do son" line_3=""></item>
+    <item code="ka" line_1="[Როგორ გამოვიყენო]" line_2="ისაუბრეთ ხმაზე" line_3=""></item>
+    <item code="de" line_1="Verwendung:" line_2="Bitte halten Sie die Taste gedrückt und sprechen Sie nach dem Ton" line_3=""></item>
+    <item code="el" line_1="[Πώς να χρησιμοποιήσετε]" line_2="Μιλήστε μετά από τον ήχο" line_3=""></item>
+    <item code="gu" line_1="[કેવી રીતે વાપરવું]" line_2="અવાજ પછી વાત કરો" line_3=""></item>
+    <item code="ht" line_1="[KOUMAN POU SÈVI AK]" line_2="Pale apre son an" line_3=""></item>
+    <item code="ha" line_1="[Yadda za a yi amfani]" line_2="Yi magana bayan sauti" line_3=""></item>
+    <item code="haw" line_1="[Pehea e ho ohana]" line_2="E kūkā ma hope o ke kani" line_3=""></item>
+    <item code="iw" line_1="[איך להישתמש]" line_2="דבר אחרי הצליל" line_3=""></item>
+    <item code="hi" line_1="[कैसे इस्तेमाल करे]" line_2="ध्वनि के बाद बात करो" line_3=""></item>
+    <item code="hmn" line_1="[Yuav Siv]" line_2="Tham tom qab lub suab" line_3=""></item>
+    <item code="hu" line_1="[Hogyan kell használni]" line_2="Beszéljen a hang után" line_3=""></item>
+    <item code="is" line_1="[Hvernig skal nota]" line_2="Talaðu eftir hljóðinu" line_3=""></item>
+    <item code="ig" line_1="[Olee otú iji]" line_2="Na-ekwu okwu mgbe ụda ahụ gasịrị" line_3=""></item>
+    <item code="id" line_1="[Bagaimana cara menggunakan]" line_2="Bicara setelah suara" line_3=""></item>
+    <item code="ga" line_1="[Conas a Úsáid]" line_2="Labhair tar éis an fhuaim" line_3=""></item>
+    <item code="it" line_1="Modalità d’uso:" line_2="tenere premuto il tasto e parlare dopo il suono" line_3=""></item>
+    <item code="ja" line_1="&lt;使い方&gt;" line_2="ボタンを押したまま話してください。" line_3=""></item>
+    <item code="jw" line_1="[Cara Gunakake]" line_2="Dhiskusi sawise swara" line_3=""></item>
+    <item code="kn" line_1="[ಬಳಸುವುದು ಹೇಗೆ]" line_2="ಧ್ವನಿಯ ನಂತರ ಮಾತನಾಡಿ" line_3=""></item>
+    <item code="kk" line_1="[Қалай пайдалануға болады]" line_2="Дыбыспен сөйлесіңіз" line_3=""></item>
+    <item code="km" line_1="[របៀបប្រើ]" line_2="និយាយបន្ទាប់ពីសំឡេង" line_3=""></item>
+    <item code="ko" line_1="&lt;사용법&gt;" line_2="버튼을　누른 상태에서 소리가 울린 후에 이야기 해주세요." line_3=""></item>
+    <item code="ku" line_1="[Çawa bikar bînin]" line_2="Piştî axaftinê" line_3=""></item>
+    <item code="ky" line_1="[Кантип колдонсо болот?]" line_2="үн кийин сөз сүйлөйт" line_3=""></item>
+    <item code="lo" line_1="[ວິທີການນໍາໃຊ້]" line_2="ສົນທະນາຫຼັງຈາກສຽງ" line_3=""></item>
+    <item code="la" line_1="[Quomodo ad uti]" line_2="Post verba sana" line_3=""></item>
+    <item code="lv" line_1="[Kā izmantot]" line_2="Runā pēc skaņas" line_3=""></item>
+    <item code="lt" line_1="[Kaip naudoti]" line_2="Kalbėk po garso" line_3=""></item>
+    <item code="lb" line_1="[Wéi benotzen]" line_2="Diskussioun nom Sound" line_3=""></item>
+    <item code="mk" line_1="[Како да се користи]" line_2="Разговарај по звукот" line_3=""></item>
+    <item code="mg" line_1="[Ny fomba fampiasana]" line_2="Resaho ny feo" line_3=""></item>
+    <item code="ms" line_1="[Bagaimana nak guna]" line_2="Bercakap selepas bunyi" line_3=""></item>
+    <item code="ml" line_1="[എങ്ങനെ ഉപയോഗിക്കാം]" line_2="ശബ്ദത്തിന് ശേഷം സംസാരിക്കുക" line_3=""></item>
+    <item code="mt" line_1="[Kif tuża]" line_2="Tkellem wara l-ħoss" line_3=""></item>
+    <item code="mi" line_1="[Pehea ki te Whakamahia]" line_2="Korero i muri i te tangi" line_3=""></item>
+    <item code="mr" line_1="[कसे वापरायचे]" line_2="आवाज नंतर बोला" line_3=""></item>
+    <item code="mn" line_1="[Яаж хэрэглэх вэ]" line_2="Дууны дараа ярина уу" line_3=""></item>
+    <item code="my" line_1="[အသုံးပြုနည်းကိုဘယ်လို]" line_2="အသံပြီးနောက်စကားပြေ" line_3=""></item>
+    <item code="ne" line_1="[कसरी प्रयोग गर्ने]" line_2="आवाज पछि कुरा गर्नुहोस्" line_3=""></item>
+    <item code="no" line_1="[Hvordan å bruke]" line_2="Snakk etter lyden" line_3=""></item>
+    <item code="ny" line_1="[Momwe Mungagwiritsire ntchito]" line_2="Kuyankhula pambuyo phokoso" line_3=""></item>
+    <item code="ps" line_1="[څنګه یی استعمال کړو]" line_2="د غږ وروسته خبرې وکړئ" line_3=""></item>
+    <item code="fa" line_1="[نحوه استفاده از]" line_2="بعد از صدا صحبت کنید" line_3=""></item>
+    <item code="pl" line_1="[Jak używać]" line_2="Rozmawiaj po dźwięku" line_3=""></item>
+    <item code="pt" line_1="[Como usar]" line_2="Fale depois do som" line_3=""></item>
+    <item code="pt-BR" line_1="[Como usar]" line_2="Fale depois do som" line_3=""></item>
+    <item code="pa" line_1="[ਇਹਨੂੰ ਕਿਵੇਂ ਵਰਤਣਾ ਹੈ]" line_2="ਆਵਾਜ਼ ਦੇ ਬਾਅਦ ਗੱਲ ਕਰੋ" line_3=""></item>
+    <item code="ro" line_1="[Cum să utilizați]" line_2="Vorbiți după sunet" line_3=""></item>
+    <item code="ru" line_1="[Как пользоваться]" line_2="Обсуждение после звука" line_3=""></item>
+    <item code="sm" line_1="[Auala e Faaaoga ai]" line_2="Talanoa pe a uma le leo" line_3=""></item>
+    <item code="gd" line_1="[Mar a chleachdas tu]" line_2="Còmhradh an dèidh na fuaime" line_3=""></item>
+    <item code="sr" line_1="[Како се користи]" line_2="Разговарај по звуку" line_3=""></item>
+    <item code="st" line_1="[Tsela ea ho Sebelisa]" line_2="Puo ka mor'a molumo" line_3=""></item>
+    <item code="sn" line_1="[Kushandisa sei]" line_2="Kutaura mushure mezwi" line_3=""></item>
+    <item code="sd" line_1="[ڪيئن استعمال ڪجي]" line_2="آواز بعد ڳالهائڻ" line_3=""></item>
+    <item code="si" line_1="[භාවිතා කරන ආකාරය]" line_2="ශබ්දයෙන් කතා කරන්න" line_3=""></item>
+    <item code="sk" line_1="[Ako použiť]" line_2="Diskusia po zvuk" line_3=""></item>
+    <item code="sl" line_1="[Kako uporabiti]" line_2="Govorite po zvoku" line_3=""></item>
+    <item code="so" line_1="[Sida loo Isticmaalo]" line_2="Kala hadal codka kadib" line_3=""></item>
+    <item code="es" line_1="Como a utilizar:" line_2="siga presionando el botón y hable después del sonido." line_3=""></item>
+    <item code="es-US" line_1="Como a utilizar:" line_2="siga presionando el botón y hable después del sonido." line_3=""></item>
+    <item code="es-CO" line_1="Como a utilizar:" line_2="siga presionando el botón y hable después del sonido." line_3=""></item>
+    <item code="es-AR" line_1="Como a utilizar:" line_2="siga presionando el botón y hable después del sonido." line_3=""></item>
+    <item code="su" line_1="[Kumaha mun Paké]" line_2="Ngobrol sanggeus sora" line_3=""></item>
+    <item code="sw" line_1="[Jinsi ya kutumia]" line_2="Majadiliano baada ya sauti" line_3=""></item>
+    <item code="sv" line_1="[Hur man använder]" line_2="Prata efter ljudet" line_3=""></item>
+    <item code="tl" line_1="[Paano gamitin]" line_2="Makipag-usap pagkatapos ng tunog" line_3=""></item>
+    <item code="tg" line_1="[То чӣ андоза истифода]" line_2="Баъд аз садо сӯҳбат кунед" line_3=""></item>
+    <item code="ta" line_1="[எப்படி உபயோகிப்பது]" line_2="ஒலிக்குப் பின் பேசுங்கள்" line_3=""></item>
+    <item code="te" line_1="[ఎలా ఉపయోగించాలి]" line_2="ధ్వని తర్వాత మాట్లాడండి" line_3=""></item>
+    <item code="th" line_1="[วิธีใช้]" line_2="พูดหลังจากเสียง" line_3=""></item>
+    <item code="tr" line_1="[Nasıl kullanılır]" line_2="Sesten sonra konuş" line_3=""></item>
+    <item code="uk" line_1="[Як використовувати]" line_2="Поговоримо після звуку" line_3=""></item>
+    <item code="ur" line_1="[استعمال کرنے کا طریقہ]" line_2="آواز کے بعد بات کریں" line_3=""></item>
+    <item code="uz" line_1="[Qanday ishlatish]" line_2="Ovozdan so'ng suhbatlashing" line_3=""></item>
+    <item code="vi" line_1="[Cách sử dụng]" line_2="Nói sau âm thanh" line_3=""></item>
+    <item code="cy" line_1="[Sut i ddefnyddio]" line_2="Siaradwch ar ôl y sain" line_3=""></item>
+    <item code="xh" line_1="[Kusetyenziswa kwanjani]" line_2="Thetha emva kwesandi" line_3=""></item>
+    <item code="yi" line_1="[וויאזוי צו ניצן]" line_2="רעדן נאָך דעם געזונט" line_3=""></item>
+    <item code="yo" line_1="[Bawo ni lati Lo]" line_2="Soro lẹhin ohun" line_3=""></item>
+    <item code="zu" line_1="[Isetshenziswa kanjani]" line_2="Khuluma ngemva komsindo" line_3=""></item>
+    <item code="yue" line_1="【使用方法】" line_2="請邊按住按鍵邊講話。" line_3=""></item>
+</mapping>

@@ -37,6 +37,7 @@ let KSelectedLanguage = "KSelectedLanguage"
 let KSelectedLanguageVoice = "KSelectedLanguageVoice"
 let KFirstInitialized = "KFirstInitialized"
 let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
+let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"

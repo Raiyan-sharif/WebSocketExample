@@ -45,6 +45,12 @@ class HomeViewController: BaseViewController {
 
     // Initial UI set up
     func setUpUI () {
+        /// Check whether tutorial has already been displayed
+        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
+          UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
+            self.dislayTutorialScreen()
+        }
+
         if let lanCode = self.homeVM.getLanguageName() {
             self.deviceLanguage = lanCode
         }
@@ -116,6 +122,15 @@ class HomeViewController: BaseViewController {
                             transitionFromImageView.isHidden = true
                             transitionToImageView.image = UIImage(named: imageName)
                           }, completion: nil)
+    }
+
+    ///Move to Tutorial Screen
+    func dislayTutorialScreen () {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "TutorialViewController")as! TutorialViewController
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(controller, animated: true, completion: nil)
     }
 
     // TODO navigate to language selection page
