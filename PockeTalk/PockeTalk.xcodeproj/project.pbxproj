@@ -66,6 +66,8 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
+		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
 		8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
@@ -154,6 +156,8 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
+		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
 		8935A12626E5D9FB00AC3CA1 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
 		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 			isa = PBXGroup;
 			children = (
 				960835B726E7552A006DB9F9 /* Pronunciation */,
+				8920067026E734F6005A23F0 /* PronunciationPractice */,
+				50D76F3626E5C1B600DAC395 /* Model */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
 				8782DEEB26E092DA003A1681 /* SystemLanguage */,
@@ -571,6 +577,55 @@
 				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8920066F26E72F29005A23F0 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
+			);
+			path = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		8920067026E734F6005A23F0 /* PronunciationPractice */ = {
+			isa = PBXGroup;
+			children = (
+				8920067426E73608005A23F0 /* Model */,
+				8920067326E735F9005A23F0 /* ViewController */,
+				8920067226E735D8005A23F0 /* ViewModel */,
+				8920067126E735CB005A23F0 /* View */,
+			);
+			path = PronunciationPractice;
+			sourceTree = "<group>";
+		};
+		8920067126E735CB005A23F0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8920067526E73620005A23F0 /* PronunciationPractice.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8920067226E735D8005A23F0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8920067326E735F9005A23F0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8920067426E73608005A23F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8935A12526E5D9E800AC3CA1 /* CropViewController */ = {
@@ -889,6 +944,7 @@
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
+				8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */,
 				69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 				5064D19A26E2A9A4006E6197 /* conversation_languages_en_cn.xml in Resources */,
@@ -1003,6 +1059,7 @@
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
+				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,

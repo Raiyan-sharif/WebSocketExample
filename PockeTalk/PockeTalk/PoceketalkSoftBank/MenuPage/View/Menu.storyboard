@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bAX-eS-kCx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bAX-eS-kCx">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -101,6 +101,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="TSN-bk-hT1"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="TSN-bk-hT1" firstAttribute="bottom" secondItem="egQ-dU-1Cc" secondAttribute="bottom" id="8zb-ne-DJz"/>
@@ -115,7 +116,6 @@
                             <constraint firstItem="Rif-mL-eKj" firstAttribute="trailing" secondItem="TSN-bk-hT1" secondAttribute="trailing" id="uqh-1e-cgq"/>
                             <constraint firstItem="egQ-dU-1Cc" firstAttribute="leading" secondItem="TSN-bk-hT1" secondAttribute="leading" id="wrf-Bp-RSx"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="TSN-bk-hT1"/>
                     </view>
                     <connections>
                         <outlet property="mSlideMenuCollectionView" destination="egQ-dU-1Cc" id="wXE-Xp-new"/>
@@ -129,6 +129,6 @@
     <resources>
         <image name="icon_menu_bg" width="240" height="400"/>
         <image name="icon_menu_settings" width="45" height="45"/>
-        <image name="lessthan" catalog="system" width="64" height="54"/>
+        <image name="lessthan" catalog="system" width="128" height="111"/>
     </resources>
 </document>
