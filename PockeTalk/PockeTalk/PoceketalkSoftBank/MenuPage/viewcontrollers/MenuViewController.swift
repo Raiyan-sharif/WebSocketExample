@@ -50,7 +50,7 @@ extension MenuViewController: UICollectionViewDataSource {
         }
         let cellVM = slideMenuViewModel.getCellViewModel( at: indexPath )
         cell.menuItemImageView.image = UIImage.init(named: cellVM.menuItemImageName)
-        cell.menuItemLabel.text = cellVM.menuItemLabel
+        cell.menuItemLabel.text = cellVM.menuItemLabel.localiz()
         cell.menuItemLabel.textColor = UIColor.white
         return cell;
     }

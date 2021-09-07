@@ -35,6 +35,11 @@ class SystemLanguageViewController: UIViewController {
         return okBtn
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Get data from XML
@@ -118,9 +123,14 @@ class SystemLanguageViewController: UIViewController {
     
     ///Move to next screeen
     @objc func nextAction () {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
-        self.navigationController?.pushViewController(controller, animated: true);
+        if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
+            UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value = true
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
+            self.navigationController?.pushViewController(controller, animated: true);
+        }else{
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 

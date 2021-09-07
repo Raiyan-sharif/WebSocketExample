@@ -28,7 +28,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8N-WE-GYJ">
-                                <rect key="frame" x="5" y="10" width="281" height="24"/>
+                                <rect key="frame" x="10" y="10" width="276" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                         <color key="backgroundColor" red="0.25882352941176467" green="0.25882352941176467" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="l8N-WE-GYJ" firstAttribute="top" secondItem="6Ah-CI-prx" secondAttribute="top" id="3Cb-JP-igy"/>
-                            <constraint firstItem="l8N-WE-GYJ" firstAttribute="leading" secondItem="fn6-58-iVf" secondAttribute="leading" constant="5" id="J3m-Wp-FZ6"/>
+                            <constraint firstItem="l8N-WE-GYJ" firstAttribute="leading" secondItem="fn6-58-iVf" secondAttribute="leading" constant="10" id="J3m-Wp-FZ6"/>
                             <constraint firstItem="6Ah-CI-prx" firstAttribute="centerY" secondItem="fn6-58-iVf" secondAttribute="centerY" id="beI-pR-nnY"/>
                             <constraint firstItem="6Ah-CI-prx" firstAttribute="leading" secondItem="l8N-WE-GYJ" secondAttribute="trailing" constant="5" id="hbd-5e-rc3"/>
                             <constraint firstAttribute="trailing" secondItem="6Ah-CI-prx" secondAttribute="trailing" constant="5" id="jW4-ZW-g2k"/>

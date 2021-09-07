@@ -63,6 +63,7 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
 		8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
@@ -146,6 +147,7 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
 		8935A12626E5D9FB00AC3CA1 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
 		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
@@ -194,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				4AF2609026E08BA1009C616E /* Menu.storyboard */,
-				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
 				4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -203,6 +204,7 @@
 		4A3AA83526E24E6F008902F5 /* MenuPage */ = {
 			isa = PBXGroup;
 			children = (
+				8920066E26E72F08005A23F0 /* viewcontrollers */,
 				4A3AA83426E24E37008902F5 /* Views */,
 				4A3AA83626E24E87008902F5 /* Models */,
 				4A3AA83726E24E92008902F5 /* ViewModels */,
@@ -472,9 +474,9 @@
 			isa = PBXGroup;
 			children = (
 				872AA4E526E0EEEA003BE874 /* system_languages.xml */,
+				8920066F26E72F29005A23F0 /* viewcontrollers */,
 				8782DF1F26E0B6B9003A1681 /* Model */,
 				8782DEF426E098B3003A1681 /* Cell */,
-				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
 			);
 			path = SystemLanguage;
 			sourceTree = "<group>";
@@ -514,6 +516,22 @@
 				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8920066E26E72F08005A23F0 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
+			);
+			path = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		8920066F26E72F29005A23F0 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
+			);
+			path = viewcontrollers;
 			sourceTree = "<group>";
 		};
 		8935A12526E5D9E800AC3CA1 /* CropViewController */ = {
@@ -556,6 +574,7 @@
 		89BC6EC126E21EE30072BB0A /* models */ = {
 			isa = PBXGroup;
 			children = (
+				892EB97E26E6201600E44E7E /* SettingItems.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -782,7 +801,6 @@
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
-				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
@@ -796,6 +814,7 @@
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
 				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
+				892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
@@ -986,7 +1005,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1011,7 +1030,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

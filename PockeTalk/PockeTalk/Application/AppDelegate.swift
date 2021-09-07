@@ -16,13 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //Set initial view controller
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: HomeViewController.self))
-        let navVC = NavigationViewController()
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navVC
-        window?.makeKeyAndVisible()
-        navVC.pushViewController(homeViewController, animated: false)
+        if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
+            let navVC = NavigationViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = navVC
+            window?.makeKeyAndVisible()
+            navVC.pushViewController(SystemLanguageViewController(), animated: false)
+        }else{
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let navigationController = UINavigationController.init(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }
         return true
     }
 }

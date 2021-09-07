@@ -9,24 +9,10 @@
 import UIKit
 
 class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buttonBack: UIButton!
     @IBOutlet weak var labelTopBarTitle: UILabel!
     @IBOutlet weak var imageViewOk: UIImageView!
-    
-    
-    enum SettingsItemType: String, CaseIterable {
-        case languageChange = "Language Change"
-        case softBank = "SoftBank"
-        case support = "Support"
-        case userManual = "User Manual"
-        case promotion = "Pocketalk Promotion"
-        
-        static var settingsItems: [String] {
-            return SettingsItemType.allCases.map { $0.rawValue }
-          }
-    }
     
     @IBAction func actionBack(_ sender: UIButton) {
         navigationController?.popToViewController(ofClass: HomeViewController.self)
@@ -34,7 +20,13 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
             self.navigationController?.navigationBar.isHidden = true
+            self.tableView.reloadData()
+            labelTopBarTitle?.text = "Settings".localiz()
         }
+    
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +45,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath) as! SettingsTableViewCell
             
-        cell.labelTitle.text = SettingsItemType.settingsItems[indexPath.row]
+        cell.labelTitle.text = SettingsItemType.settingsItems[indexPath.row].localiz()
         return cell
             
     }
@@ -65,7 +57,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         {
         case SettingsItemType.languageChange.rawValue:
             print("languageChange")
-            GlobalMethod.showAlert("Todo: Goto language change screen.")
+            self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
         case SettingsItemType.softBank.rawValue:
             print("softBank")
             GlobalMethod.showAlert("Todo: Goto softBank screen.")
