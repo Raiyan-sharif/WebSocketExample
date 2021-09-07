@@ -20,7 +20,6 @@
 		4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEF500D26DF9E9A0052B6EB /* Main.storyboard */; };
 		4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */; };
 		4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */; };
-		4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608226E072A5009C616E /* CameraViewController.swift */; };
 		4AF2608526E072D1009C616E /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608426E072D1009C616E /* Camera.storyboard */; };
 		4AF2608726E073B3009C616E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608626E073B3009C616E /* Settings.storyboard */; };
 		4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608826E073C4009C616E /* SettingsViewController.swift */; };
@@ -64,8 +63,12 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */; };
+		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
+		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
+		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
 		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
@@ -100,7 +103,6 @@
 		4AEF500D26DF9E9A0052B6EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIColor.swift; sourceTree = "<group>"; };
 		4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAttibutedString.swift; sourceTree = "<group>"; };
-		4AF2608226E072A5009C616E /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4AF2608426E072D1009C616E /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		4AF2608626E073B3009C616E /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4AF2608826E073C4009C616E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -144,8 +146,14 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		8935A12626E5D9FB00AC3CA1 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
+		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
+		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		894B977126E5D91700D1BEE1 /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -360,8 +368,8 @@
 		4AF2608126E0726D009C616E /* CameraPage */ = {
 			isa = PBXGroup;
 			children = (
-				4AF2608226E072A5009C616E /* CameraViewController.swift */,
-				4AF2608426E072D1009C616E /* Camera.storyboard */,
+				89A7B65726E5CBF200087537 /* Controller */,
+				89A7B65626E5CBE800087537 /* View */,
 			);
 			path = CameraPage;
 			sourceTree = "<group>";
@@ -508,6 +516,43 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8935A12526E5D9E800AC3CA1 /* CropViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8935A12626E5D9FB00AC3CA1 /* CropViewController.h */,
+				8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */,
+			);
+			path = CropViewController;
+			sourceTree = "<group>";
+		};
+		89A7B65626E5CBE800087537 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				89A7B65826E5CC0200087537 /* CustomView */,
+				4AF2608426E072D1009C616E /* Camera.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		89A7B65726E5CBF200087537 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8935A12526E5D9E800AC3CA1 /* CropViewController */,
+				8935A16726E61F8300AC3CA1 /* CameraViewController.swift */,
+				8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */,
+				894B977126E5D91700D1BEE1 /* PockeTalk-Bridging-Header.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		89A7B65826E5CC0200087537 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				89A7B65926E5CC2000087537 /* CustomShapeButton.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		89BC6EC126E21EE30072BB0A /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +642,7 @@
 				TargetAttributes = {
 					4A66137526DDCF59004A925D = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1250;
 					};
 					4A66138B26DDCF5E004A925D = {
 						CreatedOnToolsVersion = 11.0;
@@ -737,12 +783,15 @@
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				4AF2608326E072A5009C616E /* CameraViewController.swift in Sources */,
+				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
+				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
+				8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
@@ -766,6 +815,7 @@
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
+				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
 				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,
 			);
@@ -931,6 +981,8 @@
 			baseConfigurationReference = 1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
@@ -942,6 +994,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PoceketalkSoftBank/CameraPage/Controller/PockeTalk-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -952,6 +1006,8 @@
 			baseConfigurationReference = 99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
@@ -963,6 +1019,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PoceketalkSoftBank/CameraPage/Controller/PockeTalk-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

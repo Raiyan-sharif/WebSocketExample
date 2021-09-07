@@ -54,6 +54,7 @@ extension MenuViewController: UICollectionViewDataSource {
         cell.menuItemLabel.textColor = UIColor.white
         return cell;
     }
+    
 }
 
 //MARK: - UICollectionViewDelegate
@@ -71,7 +72,10 @@ extension MenuViewController: UICollectionViewDelegate {
                 self.navigationController?.pushViewController(settinsViewController, animated: true)
             }
         case .camera:
-            print("\(indexPath.item)")
+            let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+            if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+                self.navigationController?.pushViewController(cameraViewController, animated: true)
+            }
         case .favorite:
             print("\(indexPath.item)")
         default:
