@@ -12,7 +12,7 @@
         <!--Lang Select VoiceVC-->
         <scene sceneID="Qce-Re-qNg">
             <objects>
-                <viewController storyboardIdentifier="LangSelectVoiceVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QSE-q6-FMb" customClass="LangSelectVoiceVC" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="LangSelectVoiceVC" storyboardIdentifier="LangSelectVoiceVC" id="QSE-q6-FMb" customClass="LangSelectVoiceVC" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cVJ-de-mHu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,11 +31,32 @@
                                             <action selector="onBackButtonPressed:" destination="QSE-q6-FMb" eventType="touchUpInside" id="Vs8-fi-uaZ"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr3-Oa-3tp">
+                                        <rect key="frame" x="207" y="25" width="0.0" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfv-Oa-Jjd">
+                                        <rect key="frame" x="368" y="7" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="X8O-yU-3RN"/>
+                                            <constraint firstAttribute="width" constant="36" id="eOI-lE-Dvu"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="btn_country"/>
+                                        <connections>
+                                            <action selector="onCountryButtonTapped:" destination="QSE-q6-FMb" eventType="touchUpInside" id="fBn-OF-z7O"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="vfv-Oa-Jjd" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="3eu-Re-WLX"/>
+                                    <constraint firstAttribute="trailing" secondItem="vfv-Oa-Jjd" secondAttribute="trailing" constant="10" id="7BE-aC-EtA"/>
                                     <constraint firstAttribute="height" constant="50" id="Fg8-AZ-49U"/>
                                     <constraint firstItem="2aN-TX-jdk" firstAttribute="leading" secondItem="xh3-3a-Ruh" secondAttribute="leading" constant="10" id="Pf8-28-O32"/>
+                                    <constraint firstItem="kr3-Oa-3tp" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="gsH-Vc-ysR"/>
+                                    <constraint firstItem="kr3-Oa-3tp" firstAttribute="centerX" secondItem="xh3-3a-Ruh" secondAttribute="centerX" id="kAA-Gp-nyW"/>
                                     <constraint firstItem="2aN-TX-jdk" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="uhX-O4-s2v"/>
                                 </constraints>
                             </view>
@@ -89,6 +110,7 @@
                         <outlet property="btnHistoryList" destination="j5a-GV-dFW" id="BQj-vG-LBw"/>
                         <outlet property="btnLangList" destination="pdz-fq-CgF" id="yz8-EU-nOo"/>
                         <outlet property="tabsView" destination="cHQ-jV-wOB" id="rcL-Td-2SP"/>
+                        <outlet property="toolbarTitleLabel" destination="kr3-Oa-3tp" id="bhP-o6-0A0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W01-VP-Yj8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -100,6 +122,11 @@
             <objects>
                 <pageViewController storyboardIdentifier="TabsPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="2md-f8-Ave" customClass="TabsPageViewController" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CLq-iG-ghK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bEF-iO-l7T">
+                    <rect key="frame" x="0.0" y="0.0" width="94" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button" image="btn_country_push" backgroundImage="arrow_circular_bg"/>
+                </button>
             </objects>
             <point key="canvasLocation" x="1855" y="112"/>
         </scene>
@@ -168,6 +195,9 @@
     </scenes>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="arrow_circular_bg" width="120" height="120"/>
+        <image name="btn_country" width="40" height="40"/>
+        <image name="btn_country_push" width="40" height="40"/>
         <image name="icon_language_global_unselect" width="20" height="20"/>
         <image name="icon_language_history_unselect" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">

@@ -29,6 +29,8 @@
 		4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */; };
 		4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609826E0AC74009C616E /* MenuModel.swift */; };
 		4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2609A26E0B516009C616E /* MenuViewModel.swift */; };
+		5007495826E7A0E2002FBBE2 /* LanguageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5007495726E7A0E2002FBBE2 /* LanguageItem.swift */; };
+		5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5007D5C526E71B71005B7C51 /* NotificationNames.swift */; };
 		5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D54C26E29D57002A5250 /* LangListCell.swift */; };
 		5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028D54D26E29D57002A5250 /* LangListCell.xib */; };
 		5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55126E29E59002A5250 /* HistoryListVC.swift */; };
@@ -40,7 +42,8 @@
 		5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */; };
 		5064D19A26E2A9A4006E6197 /* conversation_languages_en_cn.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */; };
 		5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */; };
-		50D76F3A26E5D12B00DAC395 /* LanguageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D76F3926E5D12B00DAC395 /* LanguageItem.swift */; };
+		506B93C326E74E530085BDDF /* default_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 506B93C226E74E530085BDDF /* default_languages.xml */; };
+		50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */; };
 		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */; };
@@ -114,6 +117,8 @@
 		4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF2609826E0AC74009C616E /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		4AF2609A26E0B516009C616E /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		5007495726E7A0E2002FBBE2 /* LanguageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageItem.swift; sourceTree = "<group>"; };
+		5007D5C526E71B71005B7C51 /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		5028D54C26E29D57002A5250 /* LangListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangListCell.swift; sourceTree = "<group>"; };
 		5028D54D26E29D57002A5250 /* LangListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangListCell.xib; sourceTree = "<group>"; };
 		5028D55126E29E59002A5250 /* HistoryListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListVC.swift; sourceTree = "<group>"; };
@@ -125,7 +130,8 @@
 		5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ja.xml; sourceTree = "<group>"; };
 		5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_en_cn.xml; sourceTree = "<group>"; };
 		5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_en.xml; sourceTree = "<group>"; };
-		50D76F3926E5D12B00DAC395 /* LanguageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageItem.swift; sourceTree = "<group>"; };
+		506B93C226E74E530085BDDF /* default_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default_languages.xml; sourceTree = "<group>"; };
+		50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionManager.swift; sourceTree = "<group>"; };
 		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 				4AD58E5E26DF791E0004FC38 /* GlobalMethod.swift */,
 				4AD58E6226DF7DB60004FC38 /* Reachability.swift */,
 				4AD58E9326DF8C1D0004FC38 /* UserDefaultsUtility.swift */,
+				5007D5C526E71B71005B7C51 /* NotificationNames.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -288,7 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				960835B726E7552A006DB9F9 /* Pronunciation */,
-				50D76F3626E5C1B600DAC395 /* Model */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
 				8782DEEB26E092DA003A1681 /* SystemLanguage */,
@@ -397,14 +403,20 @@
 			path = DataExtensions;
 			sourceTree = "<group>";
 		};
+		5007495626E7A0CB002FBBE2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5007495726E7A0E2002FBBE2 /* LanguageItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */ = {
 			isa = PBXGroup;
 			children = (
-				5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */,
-				5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */,
-				5064D19426E2A93D006E6197 /* conversation_languages_ja_cn.xml */,
-				5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */,
-				5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */,
+				5007495626E7A0CB002FBBE2 /* Model */,
+				50C005C926E77FAC00C58957 /* ViewModel */,
+				50C005C826E77F8700C58957 /* Resources */,
 				5028D55326E29E65002A5250 /* ViewController */,
 				5028D55026E29D62002A5250 /* View */,
 			);
@@ -414,6 +426,7 @@
 		5028D55026E29D62002A5250 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */,
 				5028D54C26E29D57002A5250 /* LangListCell.swift */,
 				5028D54D26E29D57002A5250 /* LangListCell.xib */,
 			);
@@ -431,12 +444,32 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		50D76F3626E5C1B600DAC395 /* Model */ = {
+		50C005C826E77F8700C58957 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				50D76F3926E5D12B00DAC395 /* LanguageItem.swift */,
+				506B93C226E74E530085BDDF /* default_languages.xml */,
+				5064D19826E2A9A3006E6197 /* conversation_languages_en_cn.xml */,
+				5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */,
+				5064D19426E2A93D006E6197 /* conversation_languages_ja_cn.xml */,
+				5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */,
 			);
-			path = Model;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		50C005C926E77FAC00C58957 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		50C005CA26E7837F00C58957 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		692CCEB826E1EA80006E826B /* HomePageViewModel */ = {
@@ -476,8 +509,8 @@
 		8782DEEB26E092DA003A1681 /* SystemLanguage */ = {
 			isa = PBXGroup;
 			children = (
+				50C005CA26E7837F00C58957 /* ViewController */,
 				872AA4E526E0EEEA003BE874 /* system_languages.xml */,
-				8920066F26E72F29005A23F0 /* viewcontrollers */,
 				8782DF1F26E0B6B9003A1681 /* Model */,
 				8782DEF426E098B3003A1681 /* Cell */,
 			);
@@ -487,8 +520,8 @@
 		8782DEF426E098B3003A1681 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */,
 				8782DEF626E098DE003A1681 /* SystemLanguageCell.xib */,
+				8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -525,14 +558,6 @@
 			isa = PBXGroup;
 			children = (
 				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
-			);
-			path = viewcontrollers;
-			sourceTree = "<group>";
-		};
-		8920066F26E72F29005A23F0 /* viewcontrollers */ = {
-			isa = PBXGroup;
-			children = (
-				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
 			);
 			path = viewcontrollers;
 			sourceTree = "<group>";
@@ -708,6 +733,7 @@
 				69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */,
 				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
+				506B93C326E74E530085BDDF /* default_languages.xml in Resources */,
 				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
 				5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */,
 				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
@@ -814,6 +840,7 @@
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
+				5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
@@ -831,15 +858,16 @@
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
+				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
-				50D76F3A26E5D12B00DAC395 /* LanguageItem.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
+				5007495826E7A0E2002FBBE2 /* LanguageItem.swift in Sources */,
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,

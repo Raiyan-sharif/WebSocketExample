@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<language name="default_languages">
+    <item  code="en" native="en" translate="es"/>
+    <item  code="ja" native="ja" translate="en"/>
+</language>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -60,7 +60,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="cEp-eS-duJ"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="bottomLanguageBtnAction:" destination="y8L-Ms-o17" eventType="touchUpInside" id="Qb8-mz-iJk"/>
                                         </connections>
@@ -71,7 +73,7 @@
                                             <constraint firstAttribute="height" constant="35" id="W2Z-M5-WdK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvf-tD-tHq">
@@ -79,7 +81,6 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="2Vl-o2-DU1"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="topLanguageBtnAction:" destination="y8L-Ms-o17" eventType="touchUpInside" id="BeB-F1-4OX"/>
                                         </connections>
@@ -137,13 +138,14 @@
                     <navigationItem key="navigationItem" id="2fX-8O-dpP"/>
                     <connections>
                         <outlet property="bottomFlipImageView" destination="tFF-5Y-gz5" id="n0C-3O-fz8"/>
-                        <outlet property="bottomLanguageNameButton" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
+                        <outlet property="bottomLangNativeName" destination="Kdr-me-0xI" id="JvV-um-PTK"/>
+                        <outlet property="bottomLangSysLangName" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
                         <outlet property="directionImageView" destination="h3U-SE-DAe" id="Gfl-3C-qml"/>
                         <outlet property="languageChangedDirectionButton" destination="4iA-Ie-wc2" id="KUP-Jo-TPA"/>
                         <outlet property="menuButton" destination="mjI-JA-TBG" id="nfV-ji-sky"/>
                         <outlet property="topFlipImageView" destination="sZt-1h-ZlQ" id="87t-ZM-NwI"/>
-                        <outlet property="topLanguageNameLabel" destination="SE4-5x-hIU" id="FS9-Jh-xXb"/>
-                        <outlet property="topLanguagePronouncedNameButton" destination="tvf-tD-tHq" id="5iz-01-LMs"/>
+                        <outlet property="topNativeLangNameLable" destination="tvf-tD-tHq" id="5iz-01-LMs"/>
+                        <outlet property="topSysLangName" destination="SE4-5x-hIU" id="FS9-Jh-xXb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g9f-rr-iv2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

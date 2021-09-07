@@ -34,7 +34,6 @@ let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
 
 let kUserDefaultAccessToken = "kUserDefaultAccessToken"
 let KSelectedLanguage = "KSelectedLanguage"
-let KSelectedLanguageVoice = "KSelectedLanguageVoice"
 let KFirstInitialized = "KFirstInitialized"
 let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
@@ -44,3 +43,13 @@ let kIsShownLanguageSettings = "kIsShownLanguageSettings"
 let kMenuActionToastMessage = "Navigate to menu screen"
 let kTopLanguageButtonActionToastMessage = "Navigate to top language selection screen screen"
 let kBottomLanguageButtonActionToastMessage = "Navigate to language selection screen"
+
+
+// Language selection voice
+let KSelectedLanguageVoice = "KSelectedLanguageVoice"
+let nativeLanguageCode = "nativeLanguageCode"
+let translatedLanguageCode = "translatedLanguageCode"
+let kIsArrowUp = "isArrowUpKey"
+let kIsNative = "kIsNative"
+let kLanguageSelectVoice = "LangSelectVoiceVC"
+let languageConversationFileNamePrefix = "conversation_languages_"

@@ -11,15 +11,15 @@ import UIKit
 class HomeViewController: BaseViewController {
 
     //Views
-    @IBOutlet weak var bottomLanguageNameButton: UIButton!
+    @IBOutlet weak var bottomLangSysLangName: UIButton!
     @IBOutlet weak var languageChangedDirectionButton: UIButton!
-    @IBOutlet weak var topLanguagePronouncedNameButton: UIButton!
+    @IBOutlet weak var topNativeLangNameLable: UIButton!
     @IBOutlet weak var bottomFlipImageView: UIImageView!
     @IBOutlet weak var topFlipImageView: UIImageView!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
-    @IBOutlet weak var topLanguageNameLabel: UILabel!
-
+    @IBOutlet weak var topSysLangName: UILabel!
+    @IBOutlet weak var bottomLangNativeName: UILabel!
     //Properties
     var homeVM : HomeViewModel!
     var selected : Bool = false
@@ -33,6 +33,7 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerNotification()
         // Do any additional setup after loading the view.
         self.homeVM = HomeViewModel()
         self.setUpUI()
@@ -42,7 +43,9 @@ class HomeViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        updateLanguageNames()
+    }
     // Initial UI set up
     func setUpUI () {
         /// Check whether tutorial has already been displayed
@@ -55,20 +58,20 @@ class HomeViewController: BaseViewController {
             self.deviceLanguage = lanCode
         }
 
-        self.topLanguagePronouncedNameButton.setTitle("Japanese", for: .normal)
-        self.topLanguagePronouncedNameButton.titleLabel?.textAlignment = .center
-        self.topLanguagePronouncedNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
-        self.topLanguagePronouncedNameButton.setTitleColor(UIColor._whiteColor(), for: .normal)
+        //self.topNativeLangNameLable.setTitle("Japanese", for: .normal)
+        self.topNativeLangNameLable.titleLabel?.textAlignment = .center
+        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
+        self.topNativeLangNameLable.setTitleColor(UIColor._whiteColor(), for: .normal)
 
-        self.topLanguageNameLabel.text = "Japanese"
-        self.topLanguageNameLabel.textAlignment = .center
-        self.topLanguageNameLabel.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
-        self.topLanguageNameLabel.textColor = UIColor._whiteColor()
+        //self.topSysLangName.text = "Japanese"
+        self.topSysLangName.textAlignment = .center
+        self.topSysLangName.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
+        self.topSysLangName.textColor = UIColor._whiteColor()
 
-        self.bottomLanguageNameButton.setTitle(deviceLanguage, for: .normal)
-        self.bottomLanguageNameButton.titleLabel?.textAlignment = .center
-        self.bottomLanguageNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
-        self.bottomLanguageNameButton.setTitleColor(UIColor._whiteColor(), for: .normal)
+        self.bottomLangSysLangName.setTitle(deviceLanguage, for: .normal)
+        self.bottomLangSysLangName.titleLabel?.textAlignment = .center
+        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
+        self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
         self.setUpMicroPhoneIcon()
     }
 
@@ -135,15 +138,13 @@ class HomeViewController: BaseViewController {
 
     // TODO navigate to language selection page
     @IBAction func topLanguageBtnAction(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "LangSelectVoiceVC")as! LangSelectVoiceVC
-                self.navigationController?.pushViewController(controller, animated: true);
+        openLanguageSelectionScreen(isNative: 0)
         //self.showToast(message: kTopLanguageButtonActionToastMessage, seconds: toastVisibleTime)
     }
 
     // TODO navigate to language selection page
     @IBAction func bottomLanguageBtnAction(_ sender: UIButton) {
-        self.showToast(message: kBottomLanguageButtonActionToastMessage, seconds: toastVisibleTime)
+        openLanguageSelectionScreen(isNative: 1)
     }
 
     // TODO microphone tap event
@@ -161,4 +162,46 @@ class HomeViewController: BaseViewController {
     }
     */
 
+    override func viewDidDisappear(_ animated: Bool) {
+      
+    }
+    
+    deinit {
+        unregisterNotification()
+    }
+    
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
+    }
+    
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
+    }
+    
+    func openLanguageSelectionScreen(isNative: Int){
+        print("\(HomeViewController.self) isNative \(isNative)")
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        controller.isNative = isNative
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+    
+    fileprivate func updateLanguageNames() {
+        print("\(HomeViewController.self) updateLanguageNames method called")
+        let languageManager = LanguageSelectionManager.shared
+        let nativeLangCode = languageManager.nativeLanguage
+        let targetLangCode = languageManager.targetLanguage
+        
+        let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
+        let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
+        print("\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
+        topSysLangName.text = targetLanguage?.sysLangName
+        topNativeLangNameLable.setTitle(targetLanguage?.name, for: .normal)
+        bottomLangSysLangName.setTitle(nativeLanguage?.sysLangName, for: .normal)
+        bottomLangNativeName.text = nativeLanguage?.name
+    }
+    
+    @objc func onVoiceLanguageChanged(notification: Notification) {
+        updateLanguageNames()
+    }
 }

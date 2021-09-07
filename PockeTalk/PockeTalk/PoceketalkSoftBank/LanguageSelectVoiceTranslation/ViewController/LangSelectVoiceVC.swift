@@ -28,7 +28,13 @@ class LangSelectVoiceVC: UIViewController {
     var mLanguageFile = "conversation_languages_en"
     var pageController: UIPageViewController!
     let langListArray:NSMutableArray = NSMutableArray()
-
+    var selectedLanguageCode = ""
+    var isNative: Int = 0
+    let width : CGFloat = 50
+    let trailing : CGFloat = -20
+    let toastVisibleTime : Double = 2.0
+    
+    @IBOutlet weak var toolbarTitleLabel: UILabel!
 
     @IBAction func onLangSelectButton(_ sender: Any) {
         updateButton(index: 0)
@@ -39,13 +45,19 @@ class LangSelectVoiceVC: UIViewController {
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1)
     }
-
+    @IBAction func onCountryButtonTapped(_ sender: Any) {
+        self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaultsProperty<Int>(kIsNative).value = isNative
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
+        toolbarTitleLabel.text = "Language".localiz()
         updateButton(index:0)
         setupPageViewController()
+        setUpMicroPhoneIcon()
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){
@@ -81,7 +93,22 @@ class LangSelectVoiceVC: UIViewController {
         ])
         self.pageController.didMove(toParent: self)
     }
-
+    // floating microphone button
+    func setUpMicroPhoneIcon () {
+        let floatingButton = UIButton()
+        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
+        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
+        floatingButton.layer.cornerRadius = width/2
+        floatingButton.clipsToBounds = true
+        view.addSubview(floatingButton)
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
+        floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // Refresh CollectionView Layout when you rotate the device
@@ -120,9 +147,8 @@ class LangSelectVoiceVC: UIViewController {
         currentIndex = index
         if index == 0 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier:tagLanguageListVC) as! LanguageListVC
-                //contentVC.name = tabsView.tabs[index].title
-                contentVC.pageIndex = index
-                return contentVC
+            contentVC.pageIndex = index
+            return contentVC
         } else if index == 1 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier: tagHistoryListVC) as! HistoryListVC
                 //contentVC.name = tabsView.tabs[index].title
@@ -144,7 +170,22 @@ class LangSelectVoiceVC: UIViewController {
         return String(data: data, encoding: String.Encoding.utf8)
     }
     
+    
+    // TODO microphone tap event
+    @objc func microphoneTapAction (sender:UIButton) {
+        self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
+    }
+
+    
     @IBAction func onBackButtonPressed(_ sender: Any) {
+        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
+        print("\(LangSelectVoiceVC.self) code \(selectedLanguageCode) isnativeval \(isNative)")
+        if isNative == 1{
+            LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+        }else{
+            LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+        }
+        NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         self.navigationController?.popViewController(animated: true)
     }
     

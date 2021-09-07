@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         //Set initial view controller
         if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
             let navVC = NavigationViewController()
@@ -23,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.makeKeyAndVisible()
             navVC.pushViewController(SystemLanguageViewController(), animated: false)
         }else{
+            let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
+            LanguageSelectionManager.shared.getLanguageSelectionData(systemLanguageCode: systemLanguageCode)
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
