@@ -71,6 +71,7 @@
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
 		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
+		960835B926E75549006DB9F9 /* PronunciationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationUtils.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +158,7 @@
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
+		960835B826E75549006DB9F9 /* PronunciationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationUtils.swift; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,6 +287,7 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				960835B726E7552A006DB9F9 /* Pronunciation */,
 				50D76F3626E5C1B600DAC395 /* Model */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
@@ -597,6 +600,14 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		960835B726E7552A006DB9F9 /* Pronunciation */ = {
+			isa = PBXGroup;
+			children = (
+				960835B826E75549006DB9F9 /* PronunciationUtils.swift */,
+			);
+			path = Pronunciation;
+			sourceTree = "<group>";
+		};
 		D4E4E4F32DD69FED2E7E027B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,6 +809,7 @@
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationUtils.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,

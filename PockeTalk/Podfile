@@ -8,6 +8,10 @@ target 'PockeTalk' do
   pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
   
   pod 'TOCropViewController'
+  
+  pod 'Differ'
+  
+  pod 'SwiftRichString'
 
   # Pods for PockeTalk
 
