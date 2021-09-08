@@ -124,7 +124,6 @@ class SystemLanguageViewController: UIViewController {
     ///Move to next screeen
     @objc func nextAction () {
         LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
-        CountryWiseLanguageSelectionViewModel.shared.loadCountryDataFromJson()
         if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
             UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value = true
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

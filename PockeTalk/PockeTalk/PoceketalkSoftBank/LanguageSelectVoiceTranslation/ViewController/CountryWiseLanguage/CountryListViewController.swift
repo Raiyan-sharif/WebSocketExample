@@ -24,21 +24,26 @@ class CountryListViewController: UIViewController {
     @objc func clickOnEnglishButton(_ sender:UITapGestureRecognizer){
         print("\(CountryListViewController.self) Clickedn on english button")
         if dataShowingAsEnlish{
+            dataShowingLanguageCode = sysLangCode
+            countryList.removeAll()
+            countryList = CountryWiseLanguageSelectionViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             viewEnglishName.backgroundColor = .white
             dataShowingAsEnlish = false
-            dataShowingLanguageCode = sysLangCode
             countryNameLabel.text = "Region".localiz()
         }else{
+            dataShowingLanguageCode = systemLanguageCodeEN
+            countryList.removeAll()
+            countryList = CountryWiseLanguageSelectionViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             dataShowingAsEnlish = true
             viewEnglishName.backgroundColor = ._skyBlueColor()
-            dataShowingLanguageCode = systemLanguageCodeEN
             countryNameLabel.text = "Region"
         }
         countryListCollectionView.reloadData()
     }
     
     fileprivate func configureCollectionView() {
-        countryList = CountryWiseLanguageSelectionViewModel.shared.countryList
+        countryList.removeAll()
+        countryList = CountryWiseLanguageSelectionViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: sysLangCode)!.countryList
         let layout = UICollectionViewFlowLayout()
         countryListCollectionView.collectionViewLayout = layout
         countryListCollectionView.register(CountryListCollectionViewCell.nib(), forCellWithReuseIdentifier: CountryListCollectionViewCell.identifier)
