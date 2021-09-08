@@ -1,21 +1,32 @@
 //
-//  PronunciationPracticeViewController.swift
+//  PronunciationPracticeResultViewController.swift
 //  PockeTalk
 //
-//  Created by Khairuzzaman Shipon on 7/9/21.
+//  Created by Khairuzzaman Shipon on 8/9/21.
 //  Copyright © 2021 BJIT LTD All rights reserved.
 //
 
 import UIKit
 
-class PronunciationPracticeViewController: BaseViewController {
-    
-    @IBOutlet weak var viewSpeechTextContainer: UIView!
-    @IBOutlet weak var labelPronunciationGuideline: UILabel!
-    @IBOutlet weak var btnBack: UIButton!
+class PronunciationPracticeResultViewController: BaseViewController {
+    @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet var viewRoot: UIView!
+    @IBOutlet weak var viewFailureContainer: UIView!
+    @IBOutlet weak var labelFailedOriginalText: UILabel!
+    @IBOutlet weak var labelFailedPronuncedText: UILabel!
+    @IBOutlet weak var viewSuccessContainer: UIView!
+    @IBOutlet weak var labelSuccessText: UILabel!
     let width : CGFloat = 50
     let trailing : CGFloat = -20
+        
+    @IBAction func actionBack(_ sender: Any) {
+        self.showPronunciationPractice()
+    }
     
+    //TODO: need to replace with valid action
+    @IBAction func actionReplay(_ sender: Any) {
+        GlobalMethod.showAlert("TODO: Replay")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,11 +36,10 @@ class PronunciationPracticeViewController: BaseViewController {
     // Initial UI set up
     func setUpUI () {
         self.setUpMicroPhoneIcon()
-        self.labelPronunciationGuideline.text = "PronunciationGuideline".localiz()
-        self.viewSpeechTextContainer.layer.cornerRadius = 20
-        self.viewSpeechTextContainer.layer.masksToBounds = true
+        self.viewContainer.layer.cornerRadius = 20
+        self.viewContainer.layer.masksToBounds = true
 
-        self.viewSpeechTextContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
+        self.viewContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
 
     }
     
@@ -59,13 +69,9 @@ class PronunciationPracticeViewController: BaseViewController {
         self.navigationController?.pushViewController(controller, animated: true);
     }
     
-    @IBAction func actionBack(_ sender: Any) {
-        self.showHome()
-    }
-    
-    func showHome () {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
+    func showPronunciationPractice () {
+        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
         self.navigationController?.pushViewController(controller, animated: true);
     }
 }

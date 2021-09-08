@@ -85,6 +85,7 @@
 		8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
+		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
@@ -189,6 +190,7 @@
 		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
@@ -678,6 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */,
+				8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
+				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,

@@ -43,6 +43,7 @@ class SpeechProcessingViewController: UIViewController {
     let leftImgDampiing : CGFloat = 0.10
     let rightImgDamping : CGFloat = 0.05
     let springVelocity : CGFloat = 6.0
+    var isFromPronunciationPractice: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,7 +143,11 @@ class SpeechProcessingViewController: UIViewController {
         if (currentTS - self.homeMicTapTimeStamp) <=  1 {
             self.showTutorial()
         } else {
-            self.showHome()
+            if(isFromPronunciationPractice){
+                self.showPronunciationPracticeResult()
+            }else{
+                self.showHome()
+            }
         }
     }
 
@@ -158,6 +163,12 @@ class SpeechProcessingViewController: UIViewController {
     func showHome () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+    
+    func showPronunciationPracticeResult () {
+        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeResultViewController")as! PronunciationPracticeResultViewController
         self.navigationController?.pushViewController(controller, animated: true);
     }
 
