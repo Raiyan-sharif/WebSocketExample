@@ -159,12 +159,12 @@
 		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		894B977126E5D91700D1BEE1 /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationUtils.swift; sourceTree = "<group>"; };
+		96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,40 +200,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4A3AA83426E24E37008902F5 /* Views */ = {
+		4A3AA83426E24E37008902F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2609026E08BA1009C616E /* Menu.storyboard */,
 				4AF2609426E0A39A009C616E /* MenuCollectionViewCell.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		4A3AA83526E24E6F008902F5 /* MenuPage */ = {
 			isa = PBXGroup;
 			children = (
-				8920066E26E72F08005A23F0 /* viewcontrollers */,
-				4A3AA83426E24E37008902F5 /* Views */,
-				4A3AA83626E24E87008902F5 /* Models */,
-				4A3AA83726E24E92008902F5 /* ViewModels */,
+				8920066E26E72F08005A23F0 /* ViewController */,
+				4A3AA83426E24E37008902F5 /* View */,
+				4A3AA83626E24E87008902F5 /* Model */,
+				4A3AA83726E24E92008902F5 /* ViewModel */,
 			);
 			path = MenuPage;
 			sourceTree = "<group>";
 		};
-		4A3AA83626E24E87008902F5 /* Models */ = {
+		4A3AA83626E24E87008902F5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2609826E0AC74009C616E /* MenuModel.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		4A3AA83726E24E92008902F5 /* ViewModels */ = {
+		4A3AA83726E24E92008902F5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2609A26E0B516009C616E /* MenuViewModel.swift */,
 			);
-			path = ViewModels;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4A66136D26DDCF59004A925D = {
@@ -259,6 +259,7 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */,
 				8782DEFD26E099A7003A1681 /* Reusable */,
 				8782DECF26E08BEE003A1681 /* Localization */,
 				4A6613B026DE47FB004A925D /* Application */,
@@ -301,7 +302,7 @@
 				4AD58E9726DF9B5C0004FC38 /* HomePage */,
 				4AF2608126E0726D009C616E /* CameraPage */,
 				4AF2608A26E073CD009C616E /* Settings */,
-				4AD58E6426DF811A0004FC38 /* BaseController */,
+				4AD58E6426DF811A0004FC38 /* Base */,
 				4A6613AD26DE477B004A925D /* LaunchScreen */,
 				4A3AA83526E24E6F008902F5 /* MenuPage */,
 			);
@@ -311,7 +312,10 @@
 		4A6613AD26DE477B004A925D /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */,
+				96D123A726E86BC9003F3572 /* ViewModel */,
+				96D123A626E86BC2003F3572 /* Model */,
+				96D123A526E86BB8003F3572 /* ViewController */,
+				96D123A426E86BB2003F3572 /* View */,
 			);
 			path = LaunchScreen;
 			sourceTree = "<group>";
@@ -335,12 +339,12 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
-		4AD58E6426DF811A0004FC38 /* BaseController */ = {
+		4AD58E6426DF811A0004FC38 /* Base */ = {
 			isa = PBXGroup;
 			children = (
 				4A66137D26DDCF59004A925D /* BaseViewController.swift */,
 			);
-			path = BaseController;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		4AD58E9726DF9B5C0004FC38 /* HomePage */ = {
@@ -379,7 +383,9 @@
 		4AF2608126E0726D009C616E /* CameraPage */ = {
 			isa = PBXGroup;
 			children = (
-				89A7B65726E5CBF200087537 /* Controller */,
+				96D123A226E86AFF003F3572 /* Model */,
+				96D123A126E86AF2003F3572 /* ViewModel */,
+				89A7B65726E5CBF200087537 /* ViewController */,
 				89A7B65626E5CBE800087537 /* View */,
 			);
 			path = CameraPage;
@@ -388,9 +394,10 @@
 		4AF2608A26E073CD009C616E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				89BC6EC326E21F1D0072BB0A /* views */,
-				89BC6EC226E21EEB0072BB0A /* viewcontrollers */,
-				89BC6EC126E21EE30072BB0A /* models */,
+				96D123A326E86B29003F3572 /* ViewModel */,
+				89BC6EC326E21F1D0072BB0A /* View */,
+				89BC6EC226E21EEB0072BB0A /* ViewController */,
+				89BC6EC126E21EE30072BB0A /* Model */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -509,10 +516,11 @@
 		8782DEEB26E092DA003A1681 /* SystemLanguage */ = {
 			isa = PBXGroup;
 			children = (
+				96D123A826E880F9003F3572 /* Resources */,
+				96D123A026E86AB0003F3572 /* ViewModel */,
+				96D1239F26E86AA2003F3572 /* View */,
 				50C005CA26E7837F00C58957 /* ViewController */,
-				872AA4E526E0EEEA003BE874 /* system_languages.xml */,
 				8782DF1F26E0B6B9003A1681 /* Model */,
-				8782DEF426E098B3003A1681 /* Cell */,
 			);
 			path = SystemLanguage;
 			sourceTree = "<group>";
@@ -541,7 +549,10 @@
 		8782DF1826E0AF5C003A1681 /* NavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */,
+				96D1239E26E86A6C003F3572 /* ViewModel */,
+				96D1239D26E86A61003F3572 /* ViewController */,
+				96D1239C26E86A5A003F3572 /* View */,
+				96D1239B26E86A32003F3572 /* Model */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -554,12 +565,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		8920066E26E72F08005A23F0 /* viewcontrollers */ = {
+		8920066E26E72F08005A23F0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2609226E08CC1009C616E /* MenuViewController.swift */,
 			);
-			path = viewcontrollers;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		8935A12526E5D9E800AC3CA1 /* CropViewController */ = {
@@ -580,15 +591,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		89A7B65726E5CBF200087537 /* Controller */ = {
+		89A7B65726E5CBF200087537 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				8935A12526E5D9E800AC3CA1 /* CropViewController */,
 				8935A16726E61F8300AC3CA1 /* CameraViewController.swift */,
 				8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */,
-				894B977126E5D91700D1BEE1 /* PockeTalk-Bridging-Header.h */,
 			);
-			path = Controller;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		89A7B65826E5CC0200087537 /* CustomView */ = {
@@ -599,38 +609,172 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
-		89BC6EC126E21EE30072BB0A /* models */ = {
+		89BC6EC126E21EE30072BB0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				892EB97E26E6201600E44E7E /* SettingItems.swift */,
 			);
-			path = models;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		89BC6EC226E21EEB0072BB0A /* viewcontrollers */ = {
+		89BC6EC226E21EEB0072BB0A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2608826E073C4009C616E /* SettingsViewController.swift */,
 			);
-			path = viewcontrollers;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
-		89BC6EC326E21F1D0072BB0A /* views */ = {
+		89BC6EC326E21F1D0072BB0A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				4AF2608626E073B3009C616E /* Settings.storyboard */,
 				898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */,
 				898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */,
 			);
-			path = views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		960835B726E7552A006DB9F9 /* Pronunciation */ = {
 			isa = PBXGroup;
 			children = (
-				960835B826E75549006DB9F9 /* PronunciationUtils.swift */,
+				96D1239A26E86A1A003F3572 /* ViewModel */,
+				96D1239926E86A12003F3572 /* Model */,
+				96D1239726E869F9003F3572 /* View */,
+				96D1239826E86A01003F3572 /* ViewController */,
 			);
 			path = Pronunciation;
+			sourceTree = "<group>";
+		};
+		96D1239726E869F9003F3572 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96D1239826E86A01003F3572 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		96D1239926E86A12003F3572 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				960835B826E75549006DB9F9 /* PronunciationUtils.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96D1239A26E86A1A003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D1239B26E86A32003F3572 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96D1239C26E86A5A003F3572 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96D1239D26E86A61003F3572 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		96D1239E26E86A6C003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D1239F26E86AA2003F3572 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8782DEF426E098B3003A1681 /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96D123A026E86AB0003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D123A126E86AF2003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D123A226E86AFF003F3572 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96D123A326E86B29003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D123A426E86BB2003F3572 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96D123A526E86BB8003F3572 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		96D123A626E86BC2003F3572 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96D123A726E86BC9003F3572 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96D123A826E880F9003F3572 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				872AA4E526E0EEEA003BE874 /* system_languages.xml */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D4E4E4F32DD69FED2E7E027B /* Pods */ = {
@@ -1053,7 +1197,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PoceketalkSoftBank/CameraPage/Controller/PockeTalk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PockeTalk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1078,7 +1222,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PoceketalkSoftBank/CameraPage/Controller/PockeTalk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PockeTalk-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
