@@ -17,6 +17,18 @@
 		4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E6226DF7DB60004FC38 /* Reachability.swift */; };
 		4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E9326DF8C1D0004FC38 /* UserDefaultsUtility.swift */; };
 		4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E9526DF9B520004FC38 /* HomeViewController.swift */; };
+		4AE97ACF26E8D33D007344FC /* CameraHistoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97ACE26E8D33D007344FC /* CameraHistoryTable.swift */; };
+		4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD026E8E0E6007344FC /* CameraHistoryDBHelper.swift */; };
+		4AE97AD326E8E10F007344FC /* LanguageSelectionTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD226E8E10F007344FC /* LanguageSelectionTable.swift */; };
+		4AE97AD526E8E122007344FC /* LanguageSelectionDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD426E8E122007344FC /* LanguageSelectionDBHelper.swift */; };
+		4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD626E8E1E7007344FC /* ChatTableDBHelper.swift */; };
+		4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD726E8E1E7007344FC /* ChatTable.swift */; };
+		4AE97AE026E8E27A007344FC /* LanguageMapTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97ADF26E8E27A007344FC /* LanguageMapTable.swift */; };
+		4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AE126E8E294007344FC /* LanguageMapDBHelper.swift */; };
+		4AE97AE426E8E2BC007344FC /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AE326E8E2BC007344FC /* BaseModel.swift */; };
+		4AE97AE826E8E303007344FC /* DataHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AE626E8E303007344FC /* DataHelperProtocol.swift */; };
+		4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */; };
+		4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */; };
 		4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEF500D26DF9E9A0052B6EB /* Main.storyboard */; };
 		4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */; };
 		4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */; };
@@ -123,6 +135,18 @@
 		4AD58E6226DF7DB60004FC38 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		4AD58E9326DF8C1D0004FC38 /* UserDefaultsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtility.swift; sourceTree = "<group>"; };
 		4AD58E9526DF9B520004FC38 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		4AE97ACE26E8D33D007344FC /* CameraHistoryTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHistoryTable.swift; sourceTree = "<group>"; };
+		4AE97AD026E8E0E6007344FC /* CameraHistoryDBHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHistoryDBHelper.swift; sourceTree = "<group>"; };
+		4AE97AD226E8E10F007344FC /* LanguageSelectionTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSelectionTable.swift; sourceTree = "<group>"; };
+		4AE97AD426E8E122007344FC /* LanguageSelectionDBHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSelectionDBHelper.swift; sourceTree = "<group>"; };
+		4AE97AD626E8E1E7007344FC /* ChatTableDBHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableDBHelper.swift; sourceTree = "<group>"; };
+		4AE97AD726E8E1E7007344FC /* ChatTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTable.swift; sourceTree = "<group>"; };
+		4AE97ADF26E8E27A007344FC /* LanguageMapTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageMapTable.swift; sourceTree = "<group>"; };
+		4AE97AE126E8E294007344FC /* LanguageMapDBHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageMapDBHelper.swift; sourceTree = "<group>"; };
+		4AE97AE326E8E2BC007344FC /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		4AE97AE626E8E303007344FC /* DataHelperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelperProtocol.swift; sourceTree = "<group>"; };
+		4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDataStore.swift; sourceTree = "<group>"; };
+		4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseConstant.swift; sourceTree = "<group>"; };
 		4AEF500D26DF9E9A0052B6EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIColor.swift; sourceTree = "<group>"; };
 		4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAttibutedString.swift; sourceTree = "<group>"; };
@@ -296,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */,
+				4AE97AEA26E8E30D007344FC /* Database */,
 				8782DEFD26E099A7003A1681 /* Reusable */,
 				8782DECF26E08BEE003A1681 /* Localization */,
 				4A6613B026DE47FB004A925D /* Application */,
@@ -331,6 +356,7 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97ADA26E8E1ED007344FC /* ChatPage */,
 				8920067026E734F6005A23F0 /* PronunciationPractice */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
@@ -377,6 +403,7 @@
 		4AD58E6426DF811A0004FC38 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97AE326E8E2BC007344FC /* BaseModel.swift */,
 				4A66137D26DDCF59004A925D /* BaseViewController.swift */,
 			);
 			path = Base;
@@ -392,6 +419,57 @@
 				692CCEB826E1EA80006E826B /* ViewModel */,
 			);
 			path = HomePage;
+			sourceTree = "<group>";
+		};
+		4AE97ADA26E8E1ED007344FC /* ChatPage */ = {
+			isa = PBXGroup;
+			children = (
+				4AE97ADE26E8E22F007344FC /* ViewController */,
+				4AE97ADD26E8E21F007344FC /* View */,
+				4AE97ADB26E8E1FC007344FC /* ViewModel */,
+				4AE97ADC26E8E20A007344FC /* Model */,
+			);
+			path = ChatPage;
+			sourceTree = "<group>";
+		};
+		4AE97ADB26E8E1FC007344FC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AE97AD626E8E1E7007344FC /* ChatTableDBHelper.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AE97ADC26E8E20A007344FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AE97AD726E8E1E7007344FC /* ChatTable.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AE97ADD26E8E21F007344FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AE97ADE26E8E22F007344FC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4AE97AEA26E8E30D007344FC /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				4AE97AE626E8E303007344FC /* DataHelperProtocol.swift */,
+				4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */,
+				4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		4AEF500F26DF9FCD0052B6EB /* Extensions */ = {
@@ -449,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				5007495726E7A0E2002FBBE2 /* LanguageItem.swift */,
+				4AE97AD226E8E10F007344FC /* LanguageSelectionTable.swift */,
 				50193E0A26E8880C0052F170 /* CountryListItem.swift */,
 			);
 			path = Model;
@@ -518,6 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */,
+				4AE97AD426E8E122007344FC /* LanguageSelectionDBHelper.swift */,
 				50193E0726E8876A0052F170 /* CountryWiseLanguageSelectionViewModel.swift */,
 			);
 			path = ViewModel;
@@ -651,6 +731,7 @@
 		8782DF1F26E0B6B9003A1681 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97ADF26E8E27A007344FC /* LanguageMapTable.swift */,
 				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
 			);
 			path = Model;
@@ -809,6 +890,7 @@
 		96D123A026E86AB0003F3572 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97AE126E8E294007344FC /* LanguageMapDBHelper.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -816,6 +898,7 @@
 		96D123A126E86AF2003F3572 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97AD026E8E0E6007344FC /* CameraHistoryDBHelper.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -823,6 +906,7 @@
 		96D123A226E86AFF003F3572 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97ACE26E8D33D007344FC /* CameraHistoryTable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1081,6 +1165,15 @@
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
+				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
@@ -1090,12 +1183,19 @@
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
+				4AE97ACF26E8D33D007344FC /* CameraHistoryTable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
+				4AE97AE826E8E303007344FC /* DataHelperProtocol.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */,
+				4AE97AE426E8E2BC007344FC /* BaseModel.swift in Sources */,
+				4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */,
+				4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */,
+				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
+				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
@@ -1111,6 +1211,7 @@
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
+				4AE97AD326E8E10F007344FC /* LanguageSelectionTable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
@@ -1124,14 +1225,19 @@
 				693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */,
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
+				4AE97AD526E8E122007344FC /* LanguageSelectionDBHelper.swift in Sources */,
+				4AE97AD526E8E122007344FC /* LanguageSelectionDBHelper.swift in Sources */,
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
+				4AE97AE026E8E27A007344FC /* LanguageMapTable.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
+				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,
+				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,
 				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
