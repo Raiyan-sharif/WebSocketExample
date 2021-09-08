@@ -115,7 +115,7 @@ class HomeViewController: BaseViewController {
     ///Move to Tutorial Screen
     func dislayTutorialScreen () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "TutorialViewController")as! TutorialViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(controller, animated: true, completion: nil)
@@ -137,7 +137,7 @@ class HomeViewController: BaseViewController {
         //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
         let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "SpeechProcessingViewController")as! SpeechProcessingViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
         controller.homeMicTapTimeStamp = currentTS
         self.navigationController?.pushViewController(controller, animated: true);
     }

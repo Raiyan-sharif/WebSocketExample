@@ -56,3 +56,8 @@ let languageConversationFileNamePrefix = "conversation_languages_"
 let countryConversationFileNamePrefix = "country_selection_list_"
 let systemLanguageCodeJP = "ja"
 let systemLanguageCodeEN = "en"
+
+// Storyboard identifier
+let KTutorialViewController = "TutorialViewController"
+let KTtsAlertController = "TtsAlertController"
+let KSpeechProcessingViewController = "SpeechProcessingViewController"

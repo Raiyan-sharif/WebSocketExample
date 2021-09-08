@@ -61,6 +61,8 @@
 		69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */; };
 		69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */ = {isa = PBXBuildFile; fileRef = 69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */; };
 		69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */; };
+		693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F526E890F600F57533 /* TtsAlertController.swift */; };
+		693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */; };
 		69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */; };
 		69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */; };
 		69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */; };
@@ -165,6 +167,8 @@
 		69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
 		69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial_mapping.xml; sourceTree = "<group>"; };
 		69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUILabel.swift; sourceTree = "<group>"; };
+		693D72F526E890F600F57533 /* TtsAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertController.swift; sourceTree = "<group>"; };
+		693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertViewModel.swift; sourceTree = "<group>"; };
 		69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewController.swift; sourceTree = "<group>"; };
 		69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewModel.swift; sourceTree = "<group>"; };
 		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
@@ -533,6 +537,7 @@
 				692CCEB926E1EAC0006E826B /* HomeViewModel.swift */,
 				69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */,
 				69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */,
+				693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -568,9 +573,18 @@
 		693D72ED26E86A2600F57533 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				693D72F226E8878900F57533 /* Alert */,
 				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		693D72F226E8878900F57533 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				693D72F526E890F600F57533 /* TtsAlertController.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
@@ -1103,9 +1117,11 @@
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				50193E0826E8876A0052F170 /* CountryWiseLanguageSelectionViewModel.swift in Sources */,
+				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
 				5007495826E7A0E2002FBBE2 /* LanguageItem.swift in Sources */,
+				693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */,
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,

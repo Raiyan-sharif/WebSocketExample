@@ -44,12 +44,14 @@ class SpeechProcessingViewController: UIViewController {
     let rightImgDamping : CGFloat = 0.05
     let springVelocity : CGFloat = 6.0
     var isFromPronunciationPractice: Bool = false
+    var nativeLangCode : String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
-        self.speechProcessingLanguageList = self.speechProcessingVM.getData()
+        let languageManager = LanguageSelectionManager.shared
+        nativeLangCode = languageManager.nativeLanguage
         self.setUpUI()
         self.startTimer()
     }
@@ -61,8 +63,8 @@ class SpeechProcessingViewController: UIViewController {
 
     /// Initial UI set up
     func setUpUI () {
-        let speechLanguage = self.speechProcessingLanguageList[selectedLanguageIndex]
-        self.titleLabel.text = speechLanguage.initText
+        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
+        self.titleLabel.text = speechLanguage?.initText
         self.titleLabel.textAlignment = .center
         self.titleLabel.numberOfLines = 0
         self.titleLabel.lineBreakMode = .byWordWrapping
@@ -116,13 +118,13 @@ class SpeechProcessingViewController: UIViewController {
     }
 
     func showExample () {
-        let speechLanguage = self.speechProcessingLanguageList[selectedLanguageIndex]
-        self.exampleLabel.text = speechLanguage.exampleText
+        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
+        self.exampleLabel.text = speechLanguage?.exampleText
         self.exampleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.exampleLabel.textAlignment = .center
         self.exampleLabel.textColor = UIColor._whiteColor()
 
-        self.descriptionLabel.text = speechLanguage.secText
+        self.descriptionLabel.text = speechLanguage?.secText
         self.descriptionLabel.setLineHeight(lineHeight: lineSpacing)
         self.descriptionLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.descriptionLabel.textAlignment = .center
@@ -153,7 +155,7 @@ class SpeechProcessingViewController: UIViewController {
 
     func showTutorial () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "TutorialViewController")as! TutorialViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         controller.delegate = self
@@ -162,8 +164,10 @@ class SpeechProcessingViewController: UIViewController {
 
     func showHome () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
-        self.navigationController?.pushViewController(controller, animated: true);
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(controller, animated: true, completion: nil)
     }
     
     func showPronunciationPracticeResult () {

@@ -41,7 +41,6 @@ class TutorialViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.tutorialVM = TutorialViewModel()
-        self.tutorialLanguageList = self.tutorialVM.getData()
         self.setUpUI()
     }
 
@@ -55,14 +54,16 @@ class TutorialViewController: UIViewController {
         self.containerView.layer.masksToBounds = true
         self.containerView.layer.cornerRadius = cornerRadius
 
-        let tutorialLanguage = self.tutorialLanguageList[selectedLanguageIndex]
+        let languageManager = LanguageSelectionManager.shared
+        let nativeLangCode = languageManager.nativeLanguage
+        let tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: nativeLangCode)
 
-        self.titleLabel.text = tutorialLanguage.lineOne
+        self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
         self.titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
         self.titleLabel.textColor = UIColor._blackColor()
 
-        self.infoLabel.text = tutorialLanguage.lineTwo
+        self.infoLabel.text = tutorialLanguage?.lineTwo
         self.infoLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.infoLabel.setLineHeight(lineHeight: lineSpacing)
         self.infoLabel.textAlignment = .center
