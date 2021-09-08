@@ -89,7 +89,7 @@
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
 		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
-		960835B926E75549006DB9F9 /* PronunciationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationUtils.swift */; };
+		960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationModel.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -193,7 +193,7 @@
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
-		960835B826E75549006DB9F9 /* PronunciationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationUtils.swift; sourceTree = "<group>"; };
+		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -325,9 +325,7 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
-				960835B726E7552A006DB9F9 /* Pronunciation */,
 				8920067026E734F6005A23F0 /* PronunciationPractice */,
-				50D76F3626E5C1B600DAC395 /* Model */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
 				8782DF1826E0AF5C003A1681 /* NavigationController */,
 				8782DEEB26E092DA003A1681 /* SystemLanguage */,
@@ -650,14 +648,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		8920066F26E72F29005A23F0 /* viewcontrollers */ = {
-			isa = PBXGroup;
-			children = (
-				8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */,
-			);
-			path = viewcontrollers;
-			sourceTree = "<group>";
-		};
 		8920067026E734F6005A23F0 /* PronunciationPractice */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +685,7 @@
 		8920067426E73608005A23F0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				960835B826E75549006DB9F9 /* PronunciationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -759,46 +750,6 @@
 				898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		960835B726E7552A006DB9F9 /* Pronunciation */ = {
-			isa = PBXGroup;
-			children = (
-				96D1239A26E86A1A003F3572 /* ViewModel */,
-				96D1239926E86A12003F3572 /* Model */,
-				96D1239726E869F9003F3572 /* View */,
-				96D1239826E86A01003F3572 /* ViewController */,
-			);
-			path = Pronunciation;
-			sourceTree = "<group>";
-		};
-		96D1239726E869F9003F3572 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		96D1239826E86A01003F3572 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		96D1239926E86A12003F3572 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				960835B826E75549006DB9F9 /* PronunciationUtils.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		96D1239A26E86A1A003F3572 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		96D1239B26E86A32003F3572 /* Model */ = {
@@ -1112,7 +1063,7 @@
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
-				960835B926E75549006DB9F9 /* PronunciationUtils.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,

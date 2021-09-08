@@ -14,23 +14,25 @@
 //let aaa = StyleXML(base: nil, ["b" : styleColor])
 //let a = "?Hello.Are ? You?"
 //let b = "hello, are yu."
-//let ss = PronunciationUtils()
+//let ss = PronunciationModel()
 //let res = ss.generateDiff(original: a, practice: b, languageCode: "ja")
-//print("result orginal : \(res[0])")
-//print("result practice : \(res[1])")
-//self.mLabelWelcome.attributedText = res[0].set(style: aaa)
+//print("result orginal : \(res[1])")
+//print("result practice : \(res[2])")
+//self.mLabelWelcome.attributedText = res[1].set(style: aaa)
 
 import Foundation
 import Differ
 
 public class PronunciationUtils {
-    
-    let PUNCTUATION_LIST:[Character] = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
-    let PUNCTUATION_SPACE_NOT_NEEDED_LIST:[Character] = ["՚", "’", "'"]
-    let LANGUAGE_NOT_SPACE_SEPARATED:[String] = ["my", "zh-CN", "zh-TW", "ja", "km", "lo", "th", "yue"]
-    var mLanguageCode:String = ""
-    
-    func generateDiff(original:String, practice:String, languageCode:String) -> [String] {
+
+    private let PUNCTUATION_LIST:[Character] = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
+    private let PUNCTUATION_SPACE_NOT_NEEDED_LIST:[Character] = ["՚", "’", "'"]
+    private let LANGUAGE_NOT_SPACE_SEPARATED:[String] = ["my", "zh-CN", "zh-TW", "ja", "km", "lo", "th", "yue"]
+    private var mLanguageCode:String = ""
+    private let DIFF_STRING_MATCHED = "Matched"
+    private let DIFF_STRING_NOT_MATCHED = "Not Matched"
+
+    public func generateDiff(original:String, practice:String, languageCode:String) -> [String] {
         let diffMode = diffMode(languageCode: languageCode)
         var modifiedOrginal = Array(original)
         var modifiedPractice = Array(practice)
@@ -44,16 +46,15 @@ public class PronunciationUtils {
         var addSpacePractice = [Int]()
         var punctuationList = Array(PUNCTUATION_LIST)
         mLanguageCode = languageCode
-        
+
         // PT_SK-4921
         if !diffMode {
             punctuationList.append(" ")
             // Khmer and Lao contains this space '\u200B'(whitespace without character)
             punctuationList.append("\u{200B}")
         }
-        
+
         // PT_SK-4941 add space after punctuations, which is needed
-        
         if diffMode {
             var loopIndex = modifiedOrginal.count - 2
             while loopIndex > 0 {
@@ -66,7 +67,7 @@ public class PronunciationUtils {
                 }
                 loopIndex -= 1
             }
-            
+
             loopIndex = modifiedPractice.count - 2
             while loopIndex > 0 {
                 if punctuationList.contains(modifiedPractice[loopIndex]) && !(PUNCTUATION_SPACE_NOT_NEEDED_LIST.contains(modifiedPractice[loopIndex])) {
@@ -79,25 +80,23 @@ public class PronunciationUtils {
                 loopIndex -= 1
             }
         }
-        
+
         // caseInsensitive
-        
         for (index, element) in modifiedOrginal.enumerated() {
             if element.isUppercase {
                 caseSensitiveOrginal.append(index)
                 modifiedOrginal[index] = Character(String(modifiedOrginal[index]).lowercased())
             }
         }
-        
+
         for (index, element) in modifiedPractice.enumerated() {
             if element.isUppercase {
                 caseSensitivePractice.append(index)
                 modifiedPractice[index] = Character(String(modifiedPractice[index]).lowercased())
             }
         }
-        
+
         // Punctuation removed
-        
         var index = modifiedOrginal.count - 1
         while index >= 0 {
             if punctuationList.contains(modifiedOrginal[index]) {
@@ -106,7 +105,7 @@ public class PronunciationUtils {
             }
             index -= 1
         }
-        
+
         index = modifiedPractice.count - 1
         while index >= 0 {
             if punctuationList.contains(modifiedPractice[index]) {
@@ -115,12 +114,8 @@ public class PronunciationUtils {
             }
             index -= 1
         }
-        
-        print(orginalPunctuation)
-        print(practicePunctuation)
-        
+
         // PT_SK-4941 remove extra space which is not needed
-        
         if diffMode {
             var loop = 0
             while loop < modifiedOrginal.count - 1 {
@@ -130,7 +125,7 @@ public class PronunciationUtils {
                 }
                 loop += 1
             }
-            
+
             loop = 0
             while loop < modifiedPractice.count - 1 {
                 if modifiedPractice[loop] == " " && modifiedPractice[loop + 1] == " " {
@@ -140,19 +135,13 @@ public class PronunciationUtils {
                 loop += 1
             }
         }
-        
-        print("add o: ", removeSpaceOrginal)
-        print("add o: ", String(modifiedOrginal))
-        print("add p: ", removeSpacePractice)
-        print("add p: ", String(modifiedPractice))
-        
+
         var originalText = [String]()
         var practiceText = [String]()
-        
+
         // false = character mode
         // true = word mode
-        
-        print("mode :", diffMode)
+        print("Diffmode(true = word mode) :", diffMode)
         if diffMode {
             originalText = String(modifiedOrginal).components(separatedBy: " ")
             practiceText = String(modifiedPractice).components(separatedBy: " ")
@@ -160,34 +149,34 @@ public class PronunciationUtils {
             originalText = String(modifiedOrginal).map {String($0)}
             practiceText = String(modifiedPractice).map {String($0)}
         }
-        
-        print("before algorithm call orginal : ", originalText)
-        print("before algorithm call practice : ", practiceText)
-        
+
+        print("before algorithm call orginalText : ", originalText)
+        print("before algorithm call practiceText : ", practiceText)
+
         let output = textDiff(original: originalText, practice: practiceText, diffMode: diffMode)
-        
-        
-        
+
+        print("Algorithm output orginalText : ", output[0])
+        print("Algorithm output practiceText : ", output[1])
+        let okMark = originalText.joined().trimmingCharacters(in: .whitespaces) == practiceText.joined().trimmingCharacters(in: .whitespaces)
+
         var result = [String]()
+        result.append((okMark) ? DIFF_STRING_MATCHED : DIFF_STRING_NOT_MATCHED)
         result.append(postDiffProcess(output: output[0], punctuationList: orginalPunctuation, caseSensitive: caseSensitiveOrginal, addSpaceList: addSpaceOrginal, removeSpaceList: removeSpaceOrginal))
         result.append(postDiffProcess(output: output[1], punctuationList: practicePunctuation, caseSensitive: caseSensitivePractice, addSpaceList: addSpacePractice, removeSpaceList: removeSpacePractice))
-        
+
         return result
     }
-    
-    func textDiff(original:[String] , practice:[String], diffMode:Bool) -> [String] {
-        
+
+    private func textDiff(original:[String] , practice:[String], diffMode:Bool) -> [String] {
+
         var delete = [Int]()
         var insert = [Int]()
-        
-//        let diff = original.diff(practice)
         let diff = original.nestedDiff(to: practice)
         let diffElements = diff.elements
         for element in diffElements{
             let str:String = "\(element)"
             let conditon:Character = Array(str)[0]
             let stringArray = str.components(separatedBy:CharacterSet.decimalDigits.inverted)
-            
             for item in stringArray {
                 if let number = Int(item) {
                     if conditon == "D" {
@@ -198,10 +187,10 @@ public class PronunciationUtils {
                 }
             }
         }
-        print("diff raw output : ", diff)
-        
+
+        print("diff algorithm raw output : ", diff)
+
         var outputOrginal = String()
-        
         for (index, element) in original.enumerated() {
             if delete.contains(index) {
                 outputOrginal.append("\""+element+"\"")
@@ -212,9 +201,8 @@ public class PronunciationUtils {
                 outputOrginal.append(" ")
             }
         }
-        
+
         var outputPractice = String()
-        
         for (index, element) in practice.enumerated() {
             if insert.contains(index) {
                 outputPractice.append("\""+element+"\"")
@@ -225,19 +213,18 @@ public class PronunciationUtils {
                 outputPractice.append(" ")
             }
         }
-        
+
         var result = [String]()
         result.append(outputOrginal)
         result.append(outputPractice)
-        
+
         return result
     }
-    
-    func postDiffProcess(output:String, punctuationList:Dictionary<Int, String>, caseSensitive:[Int], addSpaceList:[Int], removeSpaceList:[Int]) -> String {
+
+    private func postDiffProcess(output:String, punctuationList:Dictionary<Int, String>, caseSensitive:[Int], addSpaceList:[Int], removeSpaceList:[Int]) -> String {
         let diffMode = diffMode(languageCode: mLanguageCode)
         var tempStr = output
-        print("text before: ", tempStr)
-        
+
         if diffMode {
             var loop = removeSpaceList.count - 1
             while loop >= 0 {
@@ -253,9 +240,7 @@ public class PronunciationUtils {
                 loop -= 1
             }
         }
-        
-        print("text after spaceadd: ", tempStr)
-        
+
         for (key, value) in punctuationList.sorted(by: {$0.0 < $1.0}) {
             print("Dict : ", key, ":", value)
             var range = key
@@ -267,19 +252,14 @@ public class PronunciationUtils {
                     range += 1
                 }
             }
-            print("range :", range)
-            
             if (range == tempStr.count - 1) && (tempStr.last == "\"") {
                 tempStr.insert(Character(value), at: tempStr.index(tempStr.startIndex, offsetBy: range + 1))
             } else {
                 tempStr.insert(Character(value), at: tempStr.index(tempStr.startIndex, offsetBy: range))
             }
         }
-        
-        print("text after punc: ", tempStr)
-        
+
         var tempCharArray = Array(tempStr)
-        
         for index in caseSensitive {
             var caseOffset = 0
             var caseRange = index
@@ -293,12 +273,9 @@ public class PronunciationUtils {
             }
             tempCharArray[index + caseOffset] = Character(String(tempCharArray[index + caseOffset]).uppercased())
         }
-        
+
         tempStr = String(tempCharArray)
-        print("text after caseSensitive: ", tempStr)
-        
         // PT_SK-4941 remove the added space after punctuations
-        
         if diffMode {
             var loop = addSpaceList.count - 1
             while loop >= 0 {
@@ -314,9 +291,7 @@ public class PronunciationUtils {
                 loop -= 1
             }
         }
-        
-        print("text after spaceremove: ", tempStr)
-        
+
         var str = String(tempStr).map {String($0)}
         var openTag = true
         for (index, element) in str.enumerated() {
@@ -330,14 +305,13 @@ public class PronunciationUtils {
                 }
             }
         }
-        
-        print("test : ", str.joined())
-        
+
+        print("final output : ", str.joined())
         let result = str.joined()
         return result
     }
-    
-    func diffMode(languageCode:String) -> Bool {
+
+    private func diffMode(languageCode:String) -> Bool {
         for element in LANGUAGE_NOT_SPACE_SEPARATED {
             if element.contains(languageCode) {
                 return false
@@ -345,5 +319,5 @@ public class PronunciationUtils {
         }
         return true
     }
-    
+
 }
