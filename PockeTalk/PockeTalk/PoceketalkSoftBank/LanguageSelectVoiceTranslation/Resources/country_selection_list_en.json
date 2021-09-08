@@ -1,0 +1,3344 @@
+{
+  "country_list": [
+    {
+      "country_name": {
+        "de": "Afghanistan",
+        "en": "Afghanistan",
+        "es": "Afganistán",
+        "fr": "Afghanistan",
+        "it": "Afghanistan",
+        "ja": "アフガニスタン",
+        "ko": "아프가니스탄",
+        "zh": "阿富汗"
+      },
+      "language_list": [
+        "ps",
+        "fa"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Albanien",
+        "en": "Albania",
+        "es": "Albania",
+        "fr": "Albanie",
+        "it": "Albania",
+        "ja": "アルバニア",
+        "ko": "알바니아",
+        "zh": "阿尔巴尼亚"
+      },
+      "language_list": [
+        "sq"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Algerien",
+        "en": "Algeria",
+        "es": "Argelia",
+        "fr": "Algérie",
+        "it": "Algeria",
+        "ja": "アルジェリア",
+        "ko": "알제리",
+        "zh": "阿尔及利亚"
+      },
+      "language_list": [
+        "ar",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Andorra",
+        "en": "Andorra",
+        "es": "Andorra",
+        "fr": "Andorre",
+        "it": "Andorra",
+        "ja": "アンドラ",
+        "ko": "안도라",
+        "zh": "安道尔"
+      },
+      "language_list": [
+        "ca",
+        "fr",
+        "fr-CA",
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Angola",
+        "en": "Angola",
+        "es": "Angola",
+        "fr": "Angola",
+        "it": "Angola",
+        "ja": "アンゴラ",
+        "ko": "앙골라",
+        "zh": "安哥拉"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Antigua und Barbuda",
+        "en": "Antigua and Barbuda",
+        "es": "Antigua y Barbuda",
+        "fr": "Antigua-et-Barbuda",
+        "it": "Antigua e Barbuda",
+        "ja": "アンティグア・バーブーダ",
+        "ko": "앤티가바부다",
+        "zh": "安提瓜和巴布达"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Argentinien",
+        "en": "Argentina",
+        "es": "Argentina",
+        "fr": "Argentine",
+        "it": "Argentina",
+        "ja": "アルゼンチン",
+        "ko": "아르헨티나",
+        "zh": "阿根廷"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Armenien",
+        "en": "Armenia",
+        "es": "Armenia",
+        "fr": "Arménie",
+        "it": "Armenia",
+        "ja": "アルメニア",
+        "ko": "아르메니아",
+        "zh": "亚美尼亚"
+      },
+      "language_list": [
+        "hy"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Australien",
+        "en": "Australia",
+        "es": "Australia",
+        "fr": "Australie",
+        "it": "Australia",
+        "ja": "オーストラリア",
+        "ko": "호주",
+        "zh": "澳大利亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Österreich",
+        "en": "Austria",
+        "es": "Austria",
+        "fr": "Autriche",
+        "it": "Austria",
+        "ja": "オーストリア",
+        "ko": "오스트리아",
+        "zh": "奥地利"
+      },
+      "language_list": [
+        "de"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Aserbaidschan",
+        "en": "Azerbaijan",
+        "es": "Azerbaiyán",
+        "fr": "Azerbaïdjan",
+        "it": "Azerbaijan",
+        "ja": "アゼルバイジャン",
+        "ko": "아제르바이잔",
+        "zh": "阿塞拜疆"
+      },
+      "language_list": [
+        "az"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bahamas",
+        "en": "Bahamas",
+        "es": "Bahamas",
+        "fr": "Bahamas",
+        "it": "Bahamas",
+        "ja": "バハマ",
+        "ko": "바하마",
+        "zh": "巴哈马"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bahrain",
+        "en": "Bahrain",
+        "es": "Bahréin",
+        "fr": "Bahreïn",
+        "it": "Bahrein",
+        "ja": "バーレーン",
+        "ko": "바레인",
+        "zh": "巴林"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bangladesch",
+        "en": "Bangladesh",
+        "es": "Bangladés",
+        "fr": "Bangladesh",
+        "it": "Bangladesh",
+        "ja": "バングラデシュ",
+        "ko": "방글라데시",
+        "zh": "孟加拉"
+      },
+      "language_list": [
+        "bn"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Barbados",
+        "en": "Barbados",
+        "es": "Barbados",
+        "fr": "Barbade",
+        "it": "Barbados",
+        "ja": "バルバドス",
+        "ko": "바베이도스",
+        "zh": "巴巴多斯"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Belarus",
+        "en": "Belarus",
+        "es": "Bielorrusia",
+        "fr": "Biélorussie",
+        "it": "Bielorussia",
+        "ja": "ベラルーシ",
+        "ko": "벨라루스",
+        "zh": "白俄罗斯"
+      },
+      "language_list": [
+        "be"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Belgien",
+        "en": "Belgium",
+        "es": "Bélgica",
+        "fr": "Belgique",
+        "it": "Belgio",
+        "ja": "ベルギー",
+        "ko": "벨기에",
+        "zh": "比利时"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Belize",
+        "en": "Belize",
+        "es": "Belice",
+        "fr": "Belize",
+        "it": "Belize",
+        "ja": "ベリーズ",
+        "ko": "벨리즈",
+        "zh": "伯利兹"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Benin",
+        "en": "Benin",
+        "es": "Benín",
+        "fr": "Bénin",
+        "it": "Benin",
+        "ja": "ベナン",
+        "ko": "베냉",
+        "zh": "贝宁"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bolivien",
+        "en": "Bolivia (Plurinational State of)",
+        "es": "Bolivia",
+        "fr": "Bolivie",
+        "it": "Bolivia",
+        "ja": "ボリビア",
+        "ko": "볼리비아",
+        "zh": "玻利维亚"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bosnien und Herzegowina",
+        "en": "Bosnia and Herzegovina",
+        "es": "Bosnia-Herzegovina",
+        "fr": "Bosnie-Herzégovine",
+        "it": "Bosnia ed Erzegovina",
+        "ja": "ボスニア・ヘルツェゴビナ",
+        "ko": "보스니아-헤르체고비나",
+        "zh": "波斯尼亚和黑塞哥维那"
+      },
+      "language_list": [
+        "sr",
+        "hr"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Botswana",
+        "en": "Botswana",
+        "es": "Botsuana",
+        "fr": "Botswana",
+        "it": "Botswana",
+        "ja": "ボツワナ",
+        "ko": "보츠와나",
+        "zh": "博茨瓦纳"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Brasilien",
+        "en": "Brazil",
+        "es": "Brasil",
+        "fr": "Brésil",
+        "it": "Brasile",
+        "ja": "ブラジル",
+        "ko": "브라질",
+        "zh": "巴西"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Brunei",
+        "en": "Brunei Darussalam",
+        "es": "Brunéi",
+        "fr": "Brunei",
+        "it": "Brunei",
+        "ja": "ブルネイ",
+        "ko": "브루나이",
+        "zh": "文莱"
+      },
+      "language_list": [
+        "ms",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Bulgarien",
+        "en": "Bulgaria",
+        "es": "Bulgaria",
+        "fr": "Bulgarie",
+        "it": "Bulgaria",
+        "ja": "ブルガリア",
+        "ko": "불가리아",
+        "zh": "保加利亚"
+      },
+      "language_list": [
+        "bg"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Burkina Faso",
+        "en": "Burkina Faso",
+        "es": "Burkina Faso",
+        "fr": "Burkina Faso",
+        "it": "Burkina Faso",
+        "ja": "ブルキナファソ",
+        "ko": "부르키나파소",
+        "zh": "布基纳法索"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Burundi",
+        "en": "Burundi",
+        "es": "Burundi",
+        "fr": "Burundi",
+        "it": "Burundi",
+        "ja": "ブルンジ",
+        "ko": "부룬디",
+        "zh": "布隆迪"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kap Verde",
+        "en": "Cabo Verde",
+        "es": "Cabo Verde",
+        "fr": "Cap-Vert",
+        "it": "Capo Verde",
+        "ja": "カーボベルデ",
+        "ko": "카보베르데",
+        "zh": "佛得角"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kambodscha",
+        "en": "Cambodia",
+        "es": "Camboya",
+        "fr": "Cambodge",
+        "it": "Cambogia",
+        "ja": "カンボジア",
+        "ko": "캄보디아",
+        "zh": "柬埔寨"
+      },
+      "language_list": [
+        "km"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kamerun",
+        "en": "Cameroon",
+        "es": "Camerún",
+        "fr": "Cameroun",
+        "it": "Camerun",
+        "ja": "カメルーン",
+        "ko": "카메룬",
+        "zh": "喀麦隆"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kanada",
+        "en": "Canada",
+        "es": "Canadá",
+        "fr": "Canada",
+        "it": "Canada",
+        "ja": "カナダ",
+        "ko": "캐나다",
+        "zh": "加拿大"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Zentralafrikanische Republik",
+        "en": "Central African Republic",
+        "es": "República Centroafricana",
+        "fr": "République centrafricaine",
+        "it": "Repubblica Centrafricana",
+        "ja": "中央アフリカ共和国",
+        "ko": "중앙아프리카공화국",
+        "zh": "中非共和国"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tschad",
+        "en": "Chad",
+        "es": "Chad",
+        "fr": "Tchad",
+        "it": "Ciad",
+        "ja": "チャド",
+        "ko": "차드",
+        "zh": "乍得"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Chile",
+        "en": "Chile",
+        "es": "Chile",
+        "fr": "Chili",
+        "it": "Cile",
+        "ja": "チリ",
+        "ko": "칠레",
+        "zh": "智利"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "China",
+        "en": "China",
+        "es": "China",
+        "fr": "Chine",
+        "it": "Cina",
+        "ja": "中国",
+        "ko": "중국",
+        "zh": "中国"
+      },
+      "language_list": [
+        "zh-CN",
+        "zh-TW",
+        "yue"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kolumbien",
+        "en": "Colombia",
+        "es": "Colombia",
+        "fr": "Colombie",
+        "it": "Colombia",
+        "ja": "コロンビア",
+        "ko": "콜롬비아",
+        "zh": "哥伦比亚"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Komoren",
+        "en": "Comoros",
+        "es": "Comoras",
+        "fr": "Comores",
+        "it": "Comore",
+        "ja": "コモロ",
+        "ko": "코모로",
+        "zh": "科摩罗"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "ar",
+        "sw"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kongo",
+        "en": "Congo",
+        "es": "Congo",
+        "fr": "République du Congo",
+        "it": "Congo",
+        "ja": "コンゴ",
+        "ko": "콩고",
+        "zh": "刚果（布）"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Costa Rica",
+        "en": "Costa Rica",
+        "es": "Costa Rica",
+        "fr": "Costa Rica",
+        "it": "Costa Rica",
+        "ja": "コスタリカ",
+        "ko": "코스타리카",
+        "zh": "哥斯达黎加"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Elfenbeinküste",
+        "en": "Cote D'Ivoire",
+        "es": "Costa de Marfil",
+        "fr": "Côte d'Ivoire",
+        "it": "Costa d'Avorio",
+        "ja": "コートジボアール",
+        "ko": "코트디부아르",
+        "zh": "科特迪瓦"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kroatien",
+        "en": "Croatia",
+        "es": "Croacia",
+        "fr": "Croatie",
+        "it": "Croazia",
+        "ja": "クロアチア",
+        "ko": "크로아티아",
+        "zh": "克罗地亚"
+      },
+      "language_list": [
+        "hr"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kuba",
+        "en": "Cuba",
+        "es": "Cuba",
+        "fr": "Cuba",
+        "it": "Cuba",
+        "ja": "キューバ",
+        "ko": "쿠바",
+        "zh": "古巴"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Zypern",
+        "en": "Cyprus",
+        "es": "Chipre",
+        "fr": "Chypre",
+        "it": "Cipro",
+        "ja": "キプロス",
+        "ko": "키프로스",
+        "zh": "塞浦路斯"
+      },
+      "language_list": [
+        "el",
+        "tr",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tschechien",
+        "en": "Czech Republic",
+        "es": "República Checa",
+        "fr": "République tchèque",
+        "it": "Repubblica Ceca",
+        "ja": "チェコ",
+        "ko": "체코",
+        "zh": "捷克"
+      },
+      "language_list": [
+        "cs"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Demokratische Volksrepublik Korea",
+        "en": "Democratic People's Republic of Korea",
+        "es": "República Popular Democrática de Corea (Corea del Norte)",
+        "fr": "Corée du Nord",
+        "it": "Corea del Nord",
+        "ja": "朝鮮民主主義人民共和国",
+        "ko": "북한",
+        "zh": "朝鲜民主主义人民共和国"
+      },
+      "language_list": [
+        "ko"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Demokratische Republik Kongo",
+        "en": "Democratic Republic of the Congo",
+        "es": "República Democrática del Congo",
+        "fr": "République démocratique du Congo",
+        "it": "Repubblica Democratica del Congo",
+        "ja": "コンゴ民主共和国",
+        "ko": "콩고민주공화국",
+        "zh": "刚果（金）"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Dänemark",
+        "en": "Denmark",
+        "es": "Dinamarca",
+        "fr": "Danemark",
+        "it": "Danimarca",
+        "ja": "デンマーク",
+        "ko": "덴마크",
+        "zh": "丹麦"
+      },
+      "language_list": [
+        "da"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Dschibuti",
+        "en": "Djibouti",
+        "es": "Yibuti",
+        "fr": "Djibouti",
+        "it": "Gibuti",
+        "ja": "ジブチ",
+        "ko": "지부티",
+        "zh": "吉布提"
+      },
+      "language_list": [
+        "ar",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Dominica",
+        "en": "Dominica",
+        "es": "Dominica",
+        "fr": "Dominique",
+        "it": "Dominica",
+        "ja": "ドミニカ",
+        "ko": "도미니카",
+        "zh": "多米尼克"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Dominikanische Republik",
+        "en": "Dominican Republic",
+        "es": "República Dominicana",
+        "fr": "République dominicaine",
+        "it": "Repubblica Dominicana",
+        "ja": "ドミニカ共和国",
+        "ko": "도미니카공화국",
+        "zh": "多米尼加共和国"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ecuador",
+        "en": "Ecuador",
+        "es": "Ecuador",
+        "fr": "Équateur",
+        "it": "Ecuador",
+        "ja": "エクアドル",
+        "ko": "에콰도르",
+        "zh": "厄瓜多尔"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ägypten",
+        "en": "Egypt",
+        "es": "Egipto",
+        "fr": "Égypte",
+        "it": "Egitto",
+        "ja": "エジプト",
+        "ko": "이집트",
+        "zh": "埃及"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "El Salvador",
+        "en": "El Salvador",
+        "es": "El Salvador",
+        "fr": "Salvador",
+        "it": "El Salvador",
+        "ja": "エルサルバドル",
+        "ko": "엘살바도르",
+        "zh": "萨尔瓦多"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Äquatorialguinea",
+        "en": "Equatorial Guinea",
+        "es": "Guinea Ecuatorial",
+        "fr": "Guinée équatoriale",
+        "it": "Guinea Equatoriale",
+        "ja": "赤道ギニア",
+        "ko": "적도기니",
+        "zh": "赤道几内亚"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Eritrea",
+        "en": "Eritrea",
+        "es": "Eritrea",
+        "fr": "Erythrée",
+        "it": "Eritrea",
+        "ja": "エリトリア",
+        "ko": "에리트레아",
+        "zh": "厄立特里亚"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Estland",
+        "en": "Estonia",
+        "es": "Estonia",
+        "fr": "Estonie",
+        "it": "Estonia",
+        "ja": "エストニア",
+        "ko": "에스토니아",
+        "zh": "爱沙尼亚"
+      },
+      "language_list": [
+        "et"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Eswatini",
+        "en": "Eswatini",
+        "es": "Suazilandia",
+        "fr": "Eswatini",
+        "it": "eSwatini",
+        "ja": "エスワティニ",
+        "ko": "에스와티니",
+        "zh": "艾史瓦帝尼"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Äthiopien",
+        "en": "Ethiopia",
+        "es": "Etiopía",
+        "fr": "Éthiopie",
+        "it": "Etiopia",
+        "ja": "エチオピア",
+        "ko": "에티오피아",
+        "zh": "埃塞俄比亚"
+      },
+      "language_list": [
+        "am"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Fidschi",
+        "en": "Fiji",
+        "es": "Fiyi",
+        "fr": "Fidji",
+        "it": "Fiji",
+        "ja": "フィジ－",
+        "ko": "피지",
+        "zh": "斐济"
+      },
+      "language_list": [
+        "hi",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Finnland",
+        "en": "Finland",
+        "es": "Finlandia",
+        "fr": "Finlande",
+        "it": "Finlandia",
+        "ja": "フィンランド",
+        "ko": "핀란드",
+        "zh": "芬兰"
+      },
+      "language_list": [
+        "fi",
+        "sv"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Frankreich",
+        "en": "France",
+        "es": "Francia",
+        "fr": "France",
+        "it": "Francia",
+        "ja": "フランス",
+        "ko": "프랑스",
+        "zh": "法国"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Gabun",
+        "en": "Gabon",
+        "es": "Gabón",
+        "fr": "Gabon",
+        "it": "Gabon",
+        "ja": "ガボン",
+        "ko": "가봉",
+        "zh": "加蓬"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Gambia",
+        "en": "Gambia (Republic of the)",
+        "es": "Gambia",
+        "fr": "Gambie",
+        "it": "Gambia",
+        "ja": "ガンビア",
+        "ko": "감비아",
+        "zh": "冈比亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Georgien",
+        "en": "Georgia",
+        "es": "Georgia",
+        "fr": "Géorgie",
+        "it": "Georgia",
+        "ja": "ジョージア",
+        "ko": "조지아",
+        "zh": "格鲁吉亚"
+      },
+      "language_list": [
+        "ka"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Deutschland",
+        "en": "Germany",
+        "es": "Alemania",
+        "fr": "Allemagne",
+        "it": "Germania",
+        "ja": "ドイツ",
+        "ko": "독일",
+        "zh": "德国"
+      },
+      "language_list": [
+        "de"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ghana",
+        "en": "Ghana",
+        "es": "Ghana",
+        "fr": "Ghana",
+        "it": "Ghana",
+        "ja": "ガーナ",
+        "ko": "가나",
+        "zh": "加纳"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Griechenland",
+        "en": "Greece",
+        "es": "Grecia",
+        "fr": "Grèce",
+        "it": "Grecia",
+        "ja": "ギリシャ",
+        "ko": "그리스",
+        "zh": "希腊"
+      },
+      "language_list": [
+        "el"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Grenada",
+        "en": "Grenada",
+        "es": "Granada",
+        "fr": "Grenade",
+        "it": "Grenada",
+        "ja": "グレナダ",
+        "ko": "그레나다",
+        "zh": "格林纳达"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Guatemala",
+        "en": "Guatemala",
+        "es": "Guatemala",
+        "fr": "Guatemala",
+        "it": "Guatemala",
+        "ja": "グアテマラ",
+        "ko": "과테말라",
+        "zh": "危地马拉"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Guinea",
+        "en": "Guinea",
+        "es": "Guinea",
+        "fr": "Guinée",
+        "it": "Guinea",
+        "ja": "ギニア",
+        "ko": "기니",
+        "zh": "几内亚"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Guinea-Bissau",
+        "en": "Guinea Bissau",
+        "es": "Guinea-Bissau",
+        "fr": "Guinée-Bissau",
+        "it": "Guinea-Bissau",
+        "ja": "ギニアビサウ",
+        "ko": "기니비사우",
+        "zh": "几内亚比绍"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Guyana",
+        "en": "Guyana",
+        "es": "Guyana",
+        "fr": "Guyana",
+        "it": "Guyana",
+        "ja": "ガイアナ",
+        "ko": "가이아나",
+        "zh": "圭亚那"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Haiti",
+        "en": "Haiti",
+        "es": "Haití",
+        "fr": "Haïti",
+        "it": "Haiti",
+        "ja": "ハイチ",
+        "ko": "아이티",
+        "zh": "海地"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "ht"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Honduras",
+        "en": "Honduras",
+        "es": "Honduras",
+        "fr": "Honduras",
+        "it": "Honduras",
+        "ja": "ホンジュラス",
+        "ko": "온두라스",
+        "zh": "洪都拉斯"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Hongkong",
+        "en": "Hong Kong",
+        "es": "Hong Kong",
+        "fr": "Hong Kong",
+        "it": "Hong Kong",
+        "ja": "香港",
+        "ko": "홍콩",
+        "zh": "香港"
+      },
+      "language_list": [
+        "yue",
+        "zh-CN",
+        "zh-TW",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ungarn",
+        "en": "Hungary",
+        "es": "Hungría",
+        "fr": "Hongrie",
+        "it": "Ungheria",
+        "ja": "ハンガリ－",
+        "ko": "헝가리",
+        "zh": "匈牙利"
+      },
+      "language_list": [
+        "hu"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Island",
+        "en": "Iceland",
+        "es": "Islandia",
+        "fr": "Islande",
+        "it": "Islanda",
+        "ja": "アイスランド",
+        "ko": "아이슬란드",
+        "zh": "冰岛"
+      },
+      "language_list": [
+        "is"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Indien",
+        "en": "India",
+        "es": "India",
+        "fr": "Inde",
+        "it": "India",
+        "ja": "インド",
+        "ko": "인도",
+        "zh": "印度"
+      },
+      "language_list": [
+        "hi",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Indonesien",
+        "en": "Indonesia",
+        "es": "Indonesia",
+        "fr": "Indonésie",
+        "it": "Indonesia",
+        "ja": "インドネシア",
+        "ko": "인도네시아",
+        "zh": "印度尼西亚"
+      },
+      "language_list": [
+        "id"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Iran (Islamische Republik)",
+        "en": "Iran(Islamic Republic of)",
+        "es": "(República Islámica del) Irán",
+        "fr": "Iran (république islamique)",
+        "it": "Iran (Repubblica Islamica)",
+        "ja": "イラン",
+        "ko": "이란",
+        "zh": "伊朗（伊斯兰共和国）"
+      },
+      "language_list": [
+        "fa"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Irak",
+        "en": "Iraq",
+        "es": "Iraq",
+        "fr": "Irak",
+        "it": "Iraq",
+        "ja": "イラク",
+        "ko": "이라크",
+        "zh": "伊拉克"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Irland",
+        "en": "Ireland",
+        "es": "Irlanda",
+        "fr": "Irlande",
+        "it": "Irlanda",
+        "ja": "アイルランド",
+        "ko": "아일랜드",
+        "zh": "爱尔兰"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "ga"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Israel",
+        "en": "Israel",
+        "es": "Israel",
+        "fr": "Israël",
+        "it": "Israele",
+        "ja": "イスラエル",
+        "ko": "이스라엘",
+        "zh": "以色列"
+      },
+      "language_list": [
+        "iw",
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Italien",
+        "en": "Italy",
+        "es": "Italia",
+        "fr": "Italie",
+        "it": "Italia",
+        "ja": "イタリア",
+        "ko": "이탈리아",
+        "zh": "意大利"
+      },
+      "language_list": [
+        "it"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Jamaika",
+        "en": "Jamaica",
+        "es": "Jamaica",
+        "fr": "Jamaïque",
+        "it": "Giamaica",
+        "ja": "ジャマイカ",
+        "ko": "자메이카",
+        "zh": "牙买加"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Japan",
+        "en": "Japan",
+        "es": "Japón",
+        "fr": "Japon",
+        "it": "Giappone",
+        "ja": "日本",
+        "ko": "일본",
+        "zh": "日本"
+      },
+      "language_list": [
+        "ja"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Jordanien",
+        "en": "Jordan",
+        "es": "Jordania",
+        "fr": "Jordanie",
+        "it": "Giordania",
+        "ja": "ヨルダン",
+        "ko": "요르단",
+        "zh": "约旦"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kasachstan",
+        "en": "Kazakhstan",
+        "es": "Kazajistán",
+        "fr": "Kazakhstan",
+        "it": "Kazakistan",
+        "ja": "カザフスタン",
+        "ko": "카자흐스탄",
+        "zh": "哈萨克斯坦"
+      },
+      "language_list": [
+        "kk"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kenia",
+        "en": "Kenya",
+        "es": "Kenia",
+        "fr": "Kenya",
+        "it": "Kenya",
+        "ja": "ケニア",
+        "ko": "케냐",
+        "zh": "肯尼亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "sw"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kuwait",
+        "en": "Kuwait",
+        "es": "Kuwait",
+        "fr": "Koweït",
+        "it": "Kuwait",
+        "ja": "クウェート",
+        "ko": "쿠웨이트",
+        "zh": "科威特"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Kirgisische Republik",
+        "en": "Kyrgyz Republic",
+        "es": "República de Kirguistán",
+        "fr": "République kirghize",
+        "it": "Kirghizistan",
+        "ja": "キルギス",
+        "ko": "키르기스",
+        "zh": "吉尔吉斯斯坦"
+      },
+      "language_list": [
+        "ky"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Demokratische Volksrepublik Laos",
+        "en": "Lao People's Democratic Republic",
+        "es": "República Democrática Popular Lao",
+        "fr": "Laos",
+        "it": "Laos",
+        "ja": "ラオス人民民主共和国",
+        "ko": "라오스",
+        "zh": "老挝人民民主共和国"
+      },
+      "language_list": [
+        "lo"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Lettland",
+        "en": "Latvia",
+        "es": "Letonia",
+        "fr": "Lettonie",
+        "it": "Lettonia",
+        "ja": "ラトビア",
+        "ko": "라트비아",
+        "zh": "拉脱维亚"
+      },
+      "language_list": [
+        "lv"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Libanon",
+        "en": "Lebanon",
+        "es": "Líbano",
+        "fr": "Liban",
+        "it": "Libano",
+        "ja": "レバノン",
+        "ko": "레바논",
+        "zh": "黎巴嫩"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Lesotho",
+        "en": "Lesotho",
+        "es": "Lesoto",
+        "fr": "Lesotho",
+        "it": "Lesotho",
+        "ja": "レソト",
+        "ko": "레소토",
+        "zh": "莱索托"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "st"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Liberia",
+        "en": "Liberia",
+        "es": "Liberia",
+        "fr": "Libéria",
+        "it": "Liberia",
+        "ja": "リベリア",
+        "ko": "라이베리아",
+        "zh": "利比里亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Libyen",
+        "en": "Libya",
+        "es": "Libia",
+        "fr": "Lybie",
+        "it": "Libia",
+        "ja": "リビア",
+        "ko": "리비아",
+        "zh": "利比亚"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Liechtenstein",
+        "en": "Liechtenstein",
+        "es": "Liechtenstein",
+        "fr": "Lichtenstein",
+        "it": "Liechtenstein",
+        "ja": "リヒテンシュタイン",
+        "ko": "리히텐슈타인",
+        "zh": "列支敦士登"
+      },
+      "language_list": [
+        "de"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Litauen",
+        "en": "Lithuania",
+        "es": "Lituania",
+        "fr": "Lituanie",
+        "it": "Lituania",
+        "ja": "リトアニア",
+        "ko": "리투아니아",
+        "zh": "立陶宛"
+      },
+      "language_list": [
+        "lt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Luxemburg",
+        "en": "Luxembourg",
+        "es": "Luxemburgo",
+        "fr": "Luxembourg",
+        "it": "Lussemburgo",
+        "ja": "ルクセンブルク",
+        "ko": "룩셈부르크",
+        "zh": "卢森堡"
+      },
+      "language_list": [
+        "lb"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Madagaskar",
+        "en": "Madagascar",
+        "es": "Madagascar",
+        "fr": "Madagascar",
+        "it": "Madagascar",
+        "ja": "マダガスカル",
+        "ko": "마다가스카르",
+        "zh": "马达加斯加"
+      },
+      "language_list": [
+        "mg",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Malawi",
+        "en": "Malawi",
+        "es": "Malaui",
+        "fr": "Malawi",
+        "it": "Malawi",
+        "ja": "マラウイ",
+        "ko": "말라위",
+        "zh": "马拉维"
+      },
+      "language_list": [
+        "ny"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Malaysia",
+        "en": "Malaysia",
+        "es": "Malasia",
+        "fr": "Malaisie",
+        "it": "Malaysia",
+        "ja": "マレーシア",
+        "ko": "말레이시아",
+        "zh": "马来西亚"
+      },
+      "language_list": [
+        "ms",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mali",
+        "en": "Mali",
+        "es": "Mali",
+        "fr": "Mali",
+        "it": "Mali",
+        "ja": "マリ",
+        "ko": "말리",
+        "zh": "马里"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Malta",
+        "en": "Malta",
+        "es": "Malta",
+        "fr": "Malte",
+        "it": "Malta",
+        "ja": "マルタ",
+        "ko": "몰타",
+        "zh": "马耳他"
+      },
+      "language_list": [
+        "mt",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Marshallinseln",
+        "en": "Marshall Islands",
+        "es": "Islas Marshall",
+        "fr": "Îles Marshall",
+        "it": "Isole Marshall",
+        "ja": "マーシャル諸島",
+        "ko": "마셜제도",
+        "zh": "马绍尔群岛"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mauretanien",
+        "en": "Mauritania",
+        "es": "Mauritania",
+        "fr": "Mauritanie",
+        "it": "Mauritania",
+        "ja": "モーリタニア",
+        "ko": "모리타니",
+        "zh": "毛里塔尼亚"
+      },
+      "language_list": [
+        "ar",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mauritius",
+        "en": "Mauritius",
+        "es": "Mauricio",
+        "fr": "Maurice",
+        "it": "Mauritius",
+        "ja": "モーリシャス",
+        "ko": "모리셔스",
+        "zh": "毛里求斯"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "fr",
+        "fr-CA",
+        "ht"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mexiko",
+        "en": "Mexico",
+        "es": "México",
+        "fr": "Mexique",
+        "it": "Messico",
+        "ja": "メキシコ",
+        "ko": "멕시코",
+        "zh": "墨西哥"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Föderierte Staaten von Mikronesien",
+        "en": "Micronesia(Federated States of)",
+        "es": "Estados Federados de Micronesia",
+        "fr": "États fédérés de Micronésie",
+        "it": "Stati Federati di Micronesia",
+        "ja": "ミクロネシア連邦",
+        "ko": "미크로네시아",
+        "zh": "密克罗尼西亚联邦"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Monaco",
+        "en": "Monaco",
+        "es": "Mónaco",
+        "fr": "Monaco",
+        "it": "Principato di Monaco",
+        "ja": "モナコ",
+        "ko": "모나코",
+        "zh": "摩纳哥"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mongolei",
+        "en": "Mongolia",
+        "es": "Mongolia",
+        "fr": "Mongolie",
+        "it": "Mongolia",
+        "ja": "モンゴル",
+        "ko": "몽골",
+        "zh": "蒙古国"
+      },
+      "language_list": [
+        "mn"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Marokko",
+        "en": "Morocco",
+        "es": "Marruecos",
+        "fr": "Maroc",
+        "it": "Marocco",
+        "ja": "モロッコ",
+        "ko": "모로코",
+        "zh": "摩洛哥"
+      },
+      "language_list": [
+        "ar",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Mosambik",
+        "en": "Mozambique",
+        "es": "Mozambique",
+        "fr": "Mozambique",
+        "it": "Mozambico",
+        "ja": "モザンビーク",
+        "ko": "모잠비크",
+        "zh": "莫桑比克"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Myanmar",
+        "en": "Myanmar",
+        "es": "Birmania",
+        "fr": "Myanmar",
+        "it": "Myanmar",
+        "ja": "ミャンマー",
+        "ko": "미얀마",
+        "zh": "缅甸"
+      },
+      "language_list": [
+        "my"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Namibia",
+        "en": "Namibia",
+        "es": "Namibia",
+        "fr": "Namibie",
+        "it": "Namibia",
+        "ja": "ナミビア",
+        "ko": "나미비아",
+        "zh": "纳米比亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Nauru",
+        "en": "Nauru",
+        "es": "Nauru",
+        "fr": "Nauru",
+        "it": "Nauru",
+        "ja": "ナウル",
+        "ko": "나우루",
+        "zh": "瑙鲁"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Nepal",
+        "en": "Nepal",
+        "es": "Nepal",
+        "fr": "Népal",
+        "it": "Nepal",
+        "ja": "ネパール",
+        "ko": "네팔",
+        "zh": "尼泊尔"
+      },
+      "language_list": [
+        "ne"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Niederlande",
+        "en": "Netherlands",
+        "es": "Países Bajos",
+        "fr": "Pays-Bas",
+        "it": "Paesi Bassi",
+        "ja": "オランダ",
+        "ko": "네덜란드",
+        "zh": "荷兰"
+      },
+      "language_list": [
+        "nl"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Neuseeland",
+        "en": "New Zealand",
+        "es": "Nueva Zelandia",
+        "fr": "Nouvelle-Zélande",
+        "it": "Nuova Zelanda",
+        "ja": "ニュージーランド",
+        "ko": "뉴질랜드",
+        "zh": "新西兰"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Nicaragua",
+        "en": "Nicaragua",
+        "es": "Nicaragua",
+        "fr": "Nicaragua",
+        "it": "Nicaragua",
+        "ja": "ニカラグア",
+        "ko": "니카라과",
+        "zh": "尼加拉瓜"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Niger",
+        "en": "Niger",
+        "es": "Níger",
+        "fr": "Niger",
+        "it": "Niger",
+        "ja": "ニジェール",
+        "ko": "니제르",
+        "zh": "尼日尔"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "ha"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Nigeria",
+        "en": "Nigeria",
+        "es": "Nigeria",
+        "fr": "Nigéria",
+        "it": "Nigeria",
+        "ja": "ナイジェリア",
+        "ko": "나이지리아",
+        "zh": "尼日利亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "ha",
+        "yo"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Norwegen",
+        "en": "Norway",
+        "es": "Noruega",
+        "fr": "Norvège",
+        "it": "Norvegia",
+        "ja": "ノルウェー",
+        "ko": "노르웨이",
+        "zh": "挪威"
+      },
+      "language_list": [
+        "no"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Oman",
+        "en": "Oman",
+        "es": "Omán",
+        "fr": "Oman",
+        "it": "Oman",
+        "ja": "オマーン",
+        "ko": "오만",
+        "zh": "阿曼"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Pakistan",
+        "en": "Pakistan",
+        "es": "Pakistán",
+        "fr": "Pakistan",
+        "it": "Pakistan",
+        "ja": "パキスタン",
+        "ko": "파키스탄",
+        "zh": "巴基斯坦"
+      },
+      "language_list": [
+        "ur",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Palau",
+        "en": "Palau",
+        "es": "Palaos",
+        "fr": "Palaos",
+        "it": "Palau",
+        "ja": "パラオ",
+        "ko": "팔라우",
+        "zh": "帕劳"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Panama",
+        "en": "Panama",
+        "es": "Panamá",
+        "fr": "Panama",
+        "it": "Panama",
+        "ja": "パナマ",
+        "ko": "파나마",
+        "zh": "巴拿马"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Papua-Neuguinea",
+        "en": "Papua New Guinea",
+        "es": "Papúa Nueva Guinea",
+        "fr": "Papouasie-Nouvelle-Guinée",
+        "it": "Papua Nuova Guinea",
+        "ja": "パプア・ニューギニア",
+        "ko": "파푸아뉴기니",
+        "zh": "巴布亚新几内亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Paraguay",
+        "en": "Paraguay",
+        "es": "Paraguay",
+        "fr": "Paraguay",
+        "it": "Paraguay",
+        "ja": "パラグアイ",
+        "ko": "파라과이",
+        "zh": "巴拉圭"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Peru",
+        "en": "Peru",
+        "es": "Perú",
+        "fr": "Pérou",
+        "it": "Perù",
+        "ja": "ペル－",
+        "ko": "페루",
+        "zh": "秘鲁"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Philippinen",
+        "en": "Philippines",
+        "es": "Filipinas",
+        "fr": "Philippines",
+        "it": "Filippine",
+        "ja": "フィリピン",
+        "ko": "필리핀",
+        "zh": "菲律宾"
+      },
+      "language_list": [
+        "tl",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Polen",
+        "en": "Poland",
+        "es": "Polonia",
+        "fr": "Pologne",
+        "it": "Polonia",
+        "ja": "ポーランド",
+        "ko": "폴란드",
+        "zh": "波兰"
+      },
+      "language_list": [
+        "pl"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Portugal",
+        "en": "Portugal",
+        "es": "Portugal",
+        "fr": "Portugal",
+        "it": "Portogallo",
+        "ja": "ポルトガル",
+        "ko": "포르투갈",
+        "zh": "葡萄牙"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Katar",
+        "en": "Qatar",
+        "es": "Qatar",
+        "fr": "Qatar",
+        "it": "Qatar",
+        "ja": "カタール",
+        "ko": "카타르",
+        "zh": "卡塔尔"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Korea",
+        "en": "Republic of Korea",
+        "es": "Corea del Sur",
+        "fr": "Corée du Sud",
+        "it": "Corea del Sud",
+        "ja": "韓国",
+        "ko": "한국",
+        "zh": "韩国"
+      },
+      "language_list": [
+        "ko"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Republik Moldau",
+        "en": "Republic of Moldova",
+        "es": "Moldavia",
+        "fr": "Moldavie",
+        "it": "Moldavia",
+        "ja": "モルドバ",
+        "ko": "몰도바",
+        "zh": "摩尔多瓦"
+      },
+      "language_list": [
+        "ru"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Republik Nordmakedonien",
+        "en": "Republic of North Macedonia",
+        "es": "República de Macedonia del Norte",
+        "fr": "République de Macédoine du Nord",
+        "it": "Macedonia del Nord",
+        "ja": "北マケドニア",
+        "ko": "북마케도니아",
+        "zh": "北马其顿"
+      },
+      "language_list": [
+        "mk"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Rumänien",
+        "en": "Romania",
+        "es": "Rumanía",
+        "fr": "Roumanie",
+        "it": "Romania",
+        "ja": "ルーマニア",
+        "ko": "루마니아",
+        "zh": "罗马尼亚"
+      },
+      "language_list": [
+        "ro"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Russische Föderation",
+        "en": "Russian Federation",
+        "es": "Federación Rusa",
+        "fr": "Russie",
+        "it": "Russia",
+        "ja": "ロシア連邦",
+        "ko": "러시아",
+        "zh": "俄罗斯联邦"
+      },
+      "language_list": [
+        "ru"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ruanda",
+        "en": "Rwanda",
+        "es": "Ruanda",
+        "fr": "Rwanda",
+        "it": "Ruanda",
+        "ja": "ルワンダ",
+        "ko": "르완다",
+        "zh": "卢旺达"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "St. Kitts und Nevis",
+        "en": "Saint Kitts and Nevis",
+        "es": "San Cristóbal y Nieves",
+        "fr": "Saint-Christophe-et-Niévès",
+        "it": "Saint Kitts e Nevis",
+        "ja": "セントクリストファー・ネイビス",
+        "ko": "세인트키츠네비스",
+        "zh": "圣基茨和尼维斯"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "St. Lucia",
+        "en": "Saint Lucia",
+        "es": "Santa Lucía",
+        "fr": "Sainte-Lucie",
+        "it": "Santa Lucia",
+        "ja": "セントルシア",
+        "ko": "세인트루시아",
+        "zh": "圣卢西亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "St. Vincent und die Grenadinen",
+        "en": "Saint Vincent and the Grenadines",
+        "es": "San Vicente y las Granadinas",
+        "fr": "Saint-Vincent-et-les-Grenadines",
+        "it": "Saint Vincent e Grenadine",
+        "ja": "セントビンセントおよびグレナディーン諸島",
+        "ko": "세인트빈센트그레나딘",
+        "zh": "圣文森特和格林纳丁斯"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Samoa",
+        "en": "Samoa",
+        "es": "Samoa",
+        "fr": "Samoa",
+        "it": "Samoa",
+        "ja": "サモア",
+        "ko": "사모아",
+        "zh": "萨摩亚"
+      },
+      "language_list": [
+        "sm",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "San Marino",
+        "en": "San Marino",
+        "es": "San Marino",
+        "fr": "Saint-Marin",
+        "it": "San Marino",
+        "ja": "サンマリノ",
+        "ko": "산마리노",
+        "zh": "圣马力诺"
+      },
+      "language_list": [
+        "it"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "São Tomé und Príncipe",
+        "en": "Sao Tome and Principe",
+        "es": "Santo Tomé y Príncipe",
+        "fr": "Sao Tomé-et-Principe",
+        "it": "São Tomé e Príncipe",
+        "ja": "サントメ・プリンシペ",
+        "ko": "상투메프린시페",
+        "zh": "圣多美和普林西比"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Saudi-Arabien",
+        "en": "Saudi Arabia",
+        "es": "Arabia Saudí",
+        "fr": "Arabie saoudite",
+        "it": "Arabia Saudita",
+        "ja": "サウジアラビア",
+        "ko": "사우디아라비아",
+        "zh": "沙特阿拉伯"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Senegal",
+        "en": "Senegal",
+        "es": "Senegal",
+        "fr": "Sénégal",
+        "it": "Senegal",
+        "ja": "セネガル",
+        "ko": "세네갈",
+        "zh": "塞内加尔"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Serbien",
+        "en": "Serbia",
+        "es": "Serbia",
+        "fr": "Serbie",
+        "it": "Serbia",
+        "ja": "セルビア",
+        "ko": "세르비아",
+        "zh": "塞尔维亚"
+      },
+      "language_list": [
+        "sr"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Seychellen",
+        "en": "Seychelles",
+        "es": "Seychelles",
+        "fr": "Seychelles",
+        "it": "Seychelles",
+        "ja": "セーシェル",
+        "ko": "세이셸",
+        "zh": "塞舍尔"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "fr",
+        "fr-CA",
+        "ht"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Sierra Leone",
+        "en": "Sierra Leone",
+        "es": "Sierra Leona",
+        "fr": "Sierra Leone",
+        "it": "Sierra Leone",
+        "ja": "シエラレオネ",
+        "ko": "시에라리온",
+        "zh": "塞拉利昂"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Singapur",
+        "en": "Singapore",
+        "es": "Singapur",
+        "fr": "Singapour",
+        "it": "Singapore",
+        "ja": "シンガポール",
+        "ko": "싱가포르",
+        "zh": "新加坡"
+      },
+      "language_list": [
+        "ms",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "zh-CN",
+        "zh-TW",
+        "yue",
+        "ta"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Slowakei",
+        "en": "Slovakia",
+        "es": "Eslovaquia",
+        "fr": "Slovaquie",
+        "it": "Slovacchia",
+        "ja": "スロバキア",
+        "ko": "슬로바키아",
+        "zh": "斯洛伐克"
+      },
+      "language_list": [
+        "sk"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Slowenien",
+        "en": "Slovenia",
+        "es": "Eslovenia",
+        "fr": "Slovénie",
+        "it": "Slovenia",
+        "ja": "スロベニア",
+        "ko": "슬로베니아",
+        "zh": "斯洛文尼亚"
+      },
+      "language_list": [
+        "sl"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Salomonen",
+        "en": "Solomon Islands",
+        "es": "Islas Salomón",
+        "fr": "Îles Salomon",
+        "it": "Isole Salomone",
+        "ja": "ソロモン諸島",
+        "ko": "솔로몬제도",
+        "zh": "所罗门群岛"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Somalia",
+        "en": "Somalia",
+        "es": "Somalia",
+        "fr": "Somalie",
+        "it": "Somalia",
+        "ja": "ソマリア",
+        "ko": "소말리아",
+        "zh": "索马里"
+      },
+      "language_list": [
+        "so",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "it",
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Südafrika",
+        "en": "South Africa",
+        "es": "Sudáfrica",
+        "fr": "Afrique du Sud",
+        "it": "Africa meridionale",
+        "ja": "南アフリカ",
+        "ko": "남아프리카공화국",
+        "zh": "南非"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "af",
+        "zu",
+        "xh"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Südsudan",
+        "en": "South Sudan",
+        "es": "Sudán del Sur",
+        "fr": "Soudan du Sud",
+        "it": "Sudan del Sud",
+        "ja": "南スーダン",
+        "ko": "남수단",
+        "zh": "南苏丹"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Spanien",
+        "en": "Spain",
+        "es": "España",
+        "fr": "Espagne",
+        "it": "Spagna",
+        "ja": "スペイン",
+        "ko": "스페인",
+        "zh": "西班牙"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO",
+        "ca"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Sri Lanka",
+        "en": "Sri Lanka",
+        "es": "Sri Lanka",
+        "fr": "Sri Lanka",
+        "it": "Sri Lanka",
+        "ja": "スリランカ",
+        "ko": "스리랑카",
+        "zh": "斯里兰卡"
+      },
+      "language_list": [
+        "si",
+        "ta",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Sudan",
+        "en": "Sudan",
+        "es": "Sudán",
+        "fr": "Soudan",
+        "it": "Sudan",
+        "ja": "スーダン",
+        "ko": "수단",
+        "zh": "苏丹"
+      },
+      "language_list": [
+        "ar",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Suriname",
+        "en": "Suriname",
+        "es": "Surinam",
+        "fr": "Suriname",
+        "it": "Suriname",
+        "ja": "スリナム",
+        "ko": "수리남",
+        "zh": "苏里南"
+      },
+      "language_list": [
+        "nl"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Schweden",
+        "en": "Sweden",
+        "es": "Suecia",
+        "fr": "Suède",
+        "it": "Svezia",
+        "ja": "スウェーデン",
+        "ko": "스웨덴",
+        "zh": "瑞典"
+      },
+      "language_list": [
+        "sv"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Schweiz",
+        "en": "Switzerland",
+        "es": "Suiza",
+        "fr": "Suisse",
+        "it": "Svizzera",
+        "ja": "スイス",
+        "ko": "스위스",
+        "zh": "瑞士"
+      },
+      "language_list": [
+        "de",
+        "fr",
+        "fr-CA",
+        "it"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Syrien",
+        "en": "Syrian Arab Republic",
+        "es": "Siria",
+        "fr": "Syrie",
+        "it": "Siria",
+        "ja": "シリア",
+        "ko": "시리아",
+        "zh": "叙利亚"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Taiwan",
+        "en": "Taiwan",
+        "es": "Taiwán",
+        "fr": "Taïwan",
+        "it": "Taiwan",
+        "ja": "台湾",
+        "ko": "대만",
+        "zh": "台湾"
+      },
+      "language_list": [
+        "zh-TW",
+        "zh-CN",
+        "yue"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tadschikistan",
+        "en": "Tajikistan",
+        "es": "Tayikistán",
+        "fr": "Tadjikistan",
+        "it": "Tagikistan",
+        "ja": "タジキスタン",
+        "ko": "타지키스탄",
+        "zh": "塔吉克斯坦"
+      },
+      "language_list": [
+        "tg"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Thailand",
+        "en": "Thailand",
+        "es": "Tailandia",
+        "fr": "Thaïlande",
+        "it": "Thailandia",
+        "ja": "タイ",
+        "ko": "태국",
+        "zh": "泰国"
+      },
+      "language_list": [
+        "th"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Osttimor",
+        "en": "Timor-Leste",
+        "es": "Timor Oriental",
+        "fr": "Timor oriental",
+        "it": "Timor Est",
+        "ja": "東ティモール",
+        "ko": "동티모르",
+        "zh": "东帝汶"
+      },
+      "language_list": [
+        "pt-BR",
+        "pt"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Togo",
+        "en": "Togo",
+        "es": "Togo",
+        "fr": "Togo",
+        "it": "Togo",
+        "ja": "トーゴ",
+        "ko": "토고",
+        "zh": "多哥"
+      },
+      "language_list": [
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tonga",
+        "en": "Tonga",
+        "es": "Tonga",
+        "fr": "Tonga",
+        "it": "Tonga",
+        "ja": "トンガ",
+        "ko": "통가",
+        "zh": "汤加"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Trinidad und Tobago",
+        "en": "Trinidad and Tobago",
+        "es": "Trinidad y Tobago",
+        "fr": "Trinité-et-Tobago",
+        "it": "Trinidad e Tobago",
+        "ja": "トリニダード・トバゴ",
+        "ko": "트리니다드토바고",
+        "zh": "特立尼达和多巴哥"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tunesien",
+        "en": "Tunisia",
+        "es": "Túnez",
+        "fr": "Tunisie",
+        "it": "Tunisia",
+        "ja": "チュニジア",
+        "ko": "튀니지",
+        "zh": "突尼斯"
+      },
+      "language_list": [
+        "ar",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Türkei",
+        "en": "Turkey",
+        "es": "Turquía",
+        "fr": "Turquie",
+        "it": "Turchia",
+        "ja": "トルコ",
+        "ko": "터키",
+        "zh": "土耳其"
+      },
+      "language_list": [
+        "tr"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tuvalu",
+        "en": "Tuvalu",
+        "es": "Tuvalu",
+        "fr": "Tuvalu",
+        "it": "Tuvalu",
+        "ja": "ツバル",
+        "ko": "투발루",
+        "zh": "图瓦卢"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Uganda",
+        "en": "Uganda",
+        "es": "Uganda",
+        "fr": "Ouganda",
+        "it": "Uganda",
+        "ja": "ウガンダ",
+        "ko": "우간다",
+        "zh": "乌干达"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "sw"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Ukraine",
+        "en": "Ukraine",
+        "es": "Ucrania",
+        "fr": "Ukraine",
+        "it": "Ucraina",
+        "ja": "ウクライナ",
+        "ko": "우크라이나",
+        "zh": "乌克兰"
+      },
+      "language_list": [
+        "uk"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Vereinigte Arabische Emirate",
+        "en": "United Arab Emirates",
+        "es": "Emiratos Árabes Unidos",
+        "fr": "Émirats arabes unis",
+        "it": "Emirati Arabi Uniti",
+        "ja": "アラブ首長国連邦",
+        "ko": "아랍에미리트",
+        "zh": "阿拉伯联合酋长国"
+      },
+      "language_list": [
+        "ar",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "fa"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Vereinigtes Königreich",
+        "en": "United Kingdom of Great Britain and Northern Ireland",
+        "es": "Reino Unido",
+        "fr": "Royaume-Uni",
+        "it": "Regno Unito",
+        "ja": "イギリス",
+        "ko": "영국",
+        "zh": "英国"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Tansania",
+        "en": "United Republic of Tanzania",
+        "es": "Tanzania",
+        "fr": "Tanzanie",
+        "it": "Tanzania",
+        "ja": "タンザニア",
+        "ko": "탄자니아",
+        "zh": "坦桑尼亚"
+      },
+      "language_list": [
+        "sw",
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Vereinigte Staaten von Amerika",
+        "en": "United States of America",
+        "es": "Estados Unidos",
+        "fr": "États-Unis",
+        "it": "Stati Uniti",
+        "ja": "アメリカ",
+        "ko": "미국",
+        "zh": "美国"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Uruguay",
+        "en": "Uruguay",
+        "es": "Uruguay",
+        "fr": "Uruguay",
+        "it": "Uruguay",
+        "ja": "ウルグアイ",
+        "ko": "우루과이",
+        "zh": "乌拉圭"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Usbekistan",
+        "en": "Uzbekistan",
+        "es": "Uzbekistán",
+        "fr": "Ouzbékistan",
+        "it": "Uzbekistan",
+        "ja": "ウズベキスタン",
+        "ko": "우즈베키스탄",
+        "zh": "乌兹别克斯坦"
+      },
+      "language_list": [
+        "uz"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Vanuatu",
+        "en": "Vanuatu",
+        "es": "Vanuatu",
+        "fr": "Vanuatu",
+        "it": "Vanuatu",
+        "ja": "バヌアツ",
+        "ko": "바누아투",
+        "zh": "瓦努阿图"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "fr",
+        "fr-CA"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Venezuela",
+        "en": "Venezuela (Bolivarian Republic of)",
+        "es": "Venezuela",
+        "fr": "Venezuela",
+        "it": "Venezuela",
+        "ja": "ベネズエラ",
+        "ko": "베네수엘라",
+        "zh": "委内瑞拉"
+      },
+      "language_list": [
+        "es",
+        "es-US",
+        "es-AR",
+        "es-CO"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Vietnam",
+        "en": "Viet Nam",
+        "es": "Vietnam",
+        "fr": "Vietnam",
+        "it": "Vietnam",
+        "ja": "ベトナム",
+        "ko": "베트남",
+        "zh": "越南"
+      },
+      "language_list": [
+        "vi"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Jemen",
+        "en": "Yemen",
+        "es": "Yemen",
+        "fr": "Yémen",
+        "it": "Yemen",
+        "ja": "イエメン",
+        "ko": "예멘",
+        "zh": "也门"
+      },
+      "language_list": [
+        "ar"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Sambia",
+        "en": "Zambia",
+        "es": "Zambia",
+        "fr": "Zambie",
+        "it": "Zambia",
+        "ja": "ザンビア",
+        "ko": "잠비아",
+        "zh": "赞比亚"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH"
+      ]
+    },
+    {
+      "country_name": {
+        "de": "Simbabwe",
+        "en": "Zimbabwe",
+        "es": "Zimbabue",
+        "fr": "Zimbabwe",
+        "it": "Zimbabwe",
+        "ja": "ジンバブエ",
+        "ko": "짐바브웨",
+        "zh": "津巴布韦"
+      },
+      "language_list": [
+        "en",
+        "en-SO",
+        "en-GB",
+        "en-IN",
+        "en-AU",
+        "en-PH",
+        "sn"
+      ]
+    }
+  ]
+}

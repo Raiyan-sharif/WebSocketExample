@@ -46,7 +46,10 @@ class LangSelectVoiceVC: UIViewController {
         tabsViewDidSelectItemAt(position: 1)
     }
     @IBAction func onCountryButtonTapped(_ sender: Any) {
-        self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
+        //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
+        self.navigationController?.pushViewController(controller, animated: true);
     }
     
     override func viewDidLoad() {

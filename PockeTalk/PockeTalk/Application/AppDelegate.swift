@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.makeKeyAndVisible()
             navVC.pushViewController(SystemLanguageViewController(), animated: false)
         }else{
-            let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
-            LanguageSelectionManager.shared.getLanguageSelectionData(systemLanguageCode: systemLanguageCode)
+            LanguageSelectionManager.shared.getLanguageSelectionData()
+            CountryWiseLanguageSelectionViewModel.shared
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController

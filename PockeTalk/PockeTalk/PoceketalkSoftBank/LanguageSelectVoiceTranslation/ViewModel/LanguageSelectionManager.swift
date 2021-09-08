@@ -59,7 +59,8 @@ public class LanguageSelectionManager{
     }
     
     ///Get data from XML
-    public func getLanguageSelectionData(systemLanguageCode: String){
+    public func getLanguageSelectionData(){
+        let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
         let mLanguageFile = "\(languageConversationFileNamePrefix)\(systemLanguageCode)"
         print("\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
         if let path = Bundle.main.path(forResource: mLanguageFile, ofType: "xml") {
@@ -110,7 +111,7 @@ public class LanguageSelectionManager{
     func setLanguageAccordingToSystemLanguage(){
         let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         print("\(LanguageManager.self) sysLangCode \(sysLangCode)")
-        LanguageSelectionManager.shared.getLanguageSelectionData(systemLanguageCode: sysLangCode)
+        LanguageSelectionManager.shared.getLanguageSelectionData()
         LanguageSelectionManager.shared.setDefaultLanguageSettings(systemLanguageCode: sysLangCode)
     }
 }
