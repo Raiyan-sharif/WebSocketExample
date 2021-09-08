@@ -174,4 +174,20 @@ class GlobalMethod {
         guard let url = URL(string: url) else { return }
         UIApplication.shared.open(url)
     }
+
+    // floating microphone button
+    static func setUpMicroPhoneIcon (view : UIView, width : CGFloat, height : CGFloat, trailing : CGFloat, bottom : CGFloat)-> UIButton {
+        let floatingButton = UIButton()
+        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
+        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
+        floatingButton.layer.cornerRadius = width/2
+        floatingButton.clipsToBounds = true
+        view.addSubview(floatingButton)
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: trailing).isActive = true
+        floatingButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        return floatingButton
+    }
 }

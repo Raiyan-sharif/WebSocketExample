@@ -48,7 +48,7 @@ class HomeViewController: BaseViewController {
     }
     // Initial UI set up
     func setUpUI () {
-        /// Check whether tutorial has already been displayed
+         ///Check whether tutorial has already been displayed
         if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
           UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
             self.dislayTutorialScreen()
@@ -72,22 +72,7 @@ class HomeViewController: BaseViewController {
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
-        self.setUpMicroPhoneIcon()
-    }
-
-    // floating microphone button
-    func setUpMicroPhoneIcon () {
-        let floatingButton = UIButton()
-        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
-        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingButton.layer.cornerRadius = width/2
-        floatingButton.clipsToBounds = true
-        view.addSubview(floatingButton)
-        floatingButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
-        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
-        floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
-        floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
@@ -149,7 +134,12 @@ class HomeViewController: BaseViewController {
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
+        //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
+        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "SpeechProcessingViewController")as! SpeechProcessingViewController
+        controller.homeMicTapTimeStamp = currentTS
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 
     /*

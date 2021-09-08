@@ -8,6 +8,9 @@
 
 import UIKit
 import AVKit
+protocol SpeechControllerDismissDelegate : class {
+    func dismiss()
+}
 
 class TutorialViewController: UIViewController {
     ///Views
@@ -26,6 +29,7 @@ class TutorialViewController: UIViewController {
     let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
+    var delegate : SpeechControllerDismissDelegate?
 
     /// Showing Bengali for now
     let selectedLanguageIndex : Int = 8
@@ -85,7 +89,8 @@ class TutorialViewController: UIViewController {
         UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
             self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
         }, completion: { _ in
-            self.dismiss(animated: true, completion: nil) // Here you hide it when animation done
+            self.delegate?.dismiss()
+            self.dismiss(animated: true, completion: nil)
         })
     }
     /*

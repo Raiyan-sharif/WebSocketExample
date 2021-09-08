@@ -52,6 +52,10 @@
 		69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */; };
 		69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */ = {isa = PBXBuildFile; fileRef = 69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */; };
 		69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */; };
+		69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */; };
+		69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */; };
+		69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */; };
+		69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */ = {isa = PBXBuildFile; fileRef = 69C99F1626E744EA00D853AB /* hello_mapping_new.xml */; };
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
@@ -142,6 +146,10 @@
 		69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
 		69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial_mapping.xml; sourceTree = "<group>"; };
 		69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUILabel.swift; sourceTree = "<group>"; };
+		69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewController.swift; sourceTree = "<group>"; };
+		69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewModel.swift; sourceTree = "<group>"; };
+		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
+		69C99F1626E744EA00D853AB /* hello_mapping_new.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = hello_mapping_new.xml; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
 		8782DEDE26E08D10003A1681 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -329,7 +337,6 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */,
 				69349AA826E5DB90008D9AF4 /* tutorial.mp4 */,
 				4A66138226DDCF5D004A925D /* Assets.xcassets */,
 			);
@@ -356,11 +363,11 @@
 		4AD58E9726DF9B5C0004FC38 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				69349AB026E5ED74008D9AF4 /* HomePageModel */,
-				692CCEB826E1EA80006E826B /* HomePageViewModel */,
-				4AD58E9526DF9B520004FC38 /* HomeViewController.swift */,
-				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
-				69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */,
+				693D72ED26E86A2600F57533 /* View */,
+				693D72BF26E8573800F57533 /* Resources */,
+				693D72BC26E8531B00F57533 /* ViewController */,
+				69349AB026E5ED74008D9AF4 /* Model */,
+				692CCEB826E1EA80006E826B /* ViewModel */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -485,21 +492,50 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		692CCEB826E1EA80006E826B /* HomePageViewModel */ = {
+		692CCEB826E1EA80006E826B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				692CCEB926E1EAC0006E826B /* HomeViewModel.swift */,
 				69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */,
+				69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */,
 			);
-			path = HomePageViewModel;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		69349AB026E5ED74008D9AF4 /* HomePageModel */ = {
+		69349AB026E5ED74008D9AF4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */,
+				69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */,
 			);
-			path = HomePageModel;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		693D72BC26E8531B00F57533 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4AD58E9526DF9B520004FC38 /* HomeViewController.swift */,
+				69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */,
+				69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		693D72BF26E8573800F57533 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				69C99F1626E744EA00D853AB /* hello_mapping_new.xml */,
+				69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		693D72ED26E86A2600F57533 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
@@ -940,6 +976,7 @@
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
+				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5064D19626E2A93E006E6197 /* conversation_languages_ja_cn.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
@@ -1042,10 +1079,12 @@
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
+				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
+				69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */,
@@ -1077,6 +1116,7 @@
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
+				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
 				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

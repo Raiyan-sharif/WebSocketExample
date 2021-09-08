@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mapping name="hello_text">
+    <item code="af" init_text="Praat asseblief in hierdie toestel." ex_text="byvoorbeeld" sec_text="Kom ons praat die gebruik van hierdie vertaling toestel."></item>
+    <item code="sq" init_text="Të lutem, foli në këtë pajisje." ex_text="shembull" sec_text="Le të flasim duke përdorur këtë pajisje përkthim."></item>
+    <item code="am" init_text="ይህ መሣሪያ ወደ መናገር እባክህ." ex_text="ለምሳሌ" sec_text="በዚህ የትርጉም መሣሪያ በመጠቀም መነጋገር እንመልከት."></item>
+    <item code="ar" init_text="يرجى التحدث في هذا الجهاز." ex_text="مثال" sec_text="دعونا نتحدث استخدام هذا الجهاز الترجمة."></item>
+    <item code="hy" init_text="Խնդրում ենք խոսում է այս սարքի." ex_text="օրինակ" sec_text="Եկեք խոսենք, օգտագործելով այս թարգմանություն սարքը:"></item>
+    <item code="az" init_text="Bu cihaz danışmaq edin." ex_text="misal" sec_text="Bizə bu tərcümə cihaz istifadə edərək danışmaq edək."></item>
+    <item code="eu" init_text="Mesedez, gailu hau sartu esateko." ex_text="Adibidez" sec_text="itzulpen Telefonoa erabiltzeko Hitz egin dezagun."></item>
+    <item code="be" init_text="Калі ласка, кажаце ў гэта прылада." ex_text="прыклад" sec_text="Давайце гаварыць з дапамогай гэтага перакладу прылады."></item>
+    <item code="bn" init_text="দয়া করে এই ডিভাইস দিয়ে কথা বলুন" ex_text="উদাহরণ" sec_text="চলুন এই অনুবাদ ডিভাইসটি ব্যবহার করে কথা বলি"></item>
+    <item code="bs" init_text="Da govori u ovom uređaju." ex_text="primjer" sec_text="Hajde da pričamo koristeći ovaj prijevod uređaja."></item>
+    <item code="bg" init_text="Моля, говорете в това устройство." ex_text="пример" sec_text="Нека поговорим с помощта на този превод устройство."></item>
+    <item code="ca" init_text="Si us plau, parli en aquest dispositiu." ex_text="exemple" sec_text="Parlem d'utilitzar aquest dispositiu de traducció."></item>
+    <item code="ceb" init_text="Palihug pagsulti ngadto sa device niini." ex_text="nga panig-ingnan" sec_text="Atong makig-istorya sa paggamit niini nga device nga hubad."></item>
+    <item code="zh-CN" init_text="请讲话" ex_text="例如" sec_text="让我们用这个翻译机对话吧"></item>
+    <item code="zh-TW" init_text="請講話" ex_text="例如" sec_text="讓我們用這個翻譯機對話吧"></item>
+    <item code="co" init_text="Per piacè di parlà in stu dispusitivu." ex_text="esempiu" sec_text="Andemu parlà cù stu dispusitivu traduzzione."></item>
+    <item code="hr" init_text="Molimo da se obratite na ovaj uređaj." ex_text="primjer" sec_text="Nemojmo govoriti koristeći ovaj prijevod uređaj."></item>
+    <item code="cs" init_text="Prosím mluvte do tohoto zařízení." ex_text="příklad" sec_text="Mluvme s použitím tohoto překladu zařízení."></item>
+    <item code="da" init_text="Tal ind i denne enhed." ex_text="eksempel" sec_text="Lad os tale at bruge denne oversættelse enhed."></item>
+    <item code="nl" init_text="Gelieve spreek in dit apparaat." ex_text="voorbeeld" sec_text="Laten we praten met behulp van deze vertaling apparaat."></item>
+    <item code="en-AU" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="en-IN" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="en-GB" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="en-PH" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="en" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="en-SO" init_text="Please speak into this device." ex_text="example" sec_text="Let's talk using this translation device."></item>
+    <item code="eo" init_text="Bonvolu paroli en tiu aparato." ex_text="ekzemple" sec_text="Ni parolas uzante ĉi traduko aparato."></item>
+    <item code="et" init_text="Palun rääkige sellest seadmest." ex_text="näide" sec_text="Rääkigem selle tõlke abil seade."></item>
+    <item code="fi" init_text="Keskustele tähän laitteeseen." ex_text="esimerkki" sec_text="Puhutaanpa tällä -laite."></item>
+    <item code="fr" init_text="S'il vous plaît parlez dans cet appareil." ex_text="Exemple" sec_text="Parlons d'utiliser cet appareil de traduction."></item>
+    <item code="fr-CA" init_text="S'il vous plaît parlez dans cet appareil." ex_text="Exemple" sec_text="Parlons d'utiliser cet appareil de traduction."></item>
+    <item code="fy" init_text="Please sprek yn dit apparaat." ex_text="foarbyld" sec_text="Lit ús prate mei help fan dizze oersetting apparaat."></item>
+    <item code="gl" init_text="Por favor, fale para este dispositivo." ex_text="exemplo" sec_text="Imos falar usando este dispositivo de tradución."></item>
+    <item code="ka" init_text="გთხოვთ, საუბარი ამ მოწყობილობის." ex_text="მაგალითად" sec_text="მოდით ვისაუბროთ გამოყენებისას თარგმანი მოწყობილობა."></item>
+    <item code="de" init_text="Bitte sprechen Sie in diesem Gerät." ex_text="Beispiel" sec_text="Lassen Sie uns mit dieser Übersetzung Gerät sprechen."></item>
+    <item code="el" init_text="Παρακαλείστε να μιλήσει σε αυτή τη συσκευή." ex_text="παράδειγμα" sec_text="Ας μιλήσουμε χρήση αυτής της συσκευής μετάφραση."></item>
+    <item code="gu" init_text="કૃપા કરીને આ ઉપકરણમાં બોલે છે." ex_text="ઉદાહરણ" sec_text="અમને આ અનુવાદ ઉપકરણનો ઉપયોગ વાત કરીએ."></item>
+    <item code="ht" init_text="Tanpri pale nan aparèy sa a." ex_text="egzanp" sec_text="Se pou nou pale lè l sèvi avèk aparèy tradiksyon sa a."></item>
+    <item code="ha" init_text="Don Allah magana a cikin wannan na'urar." ex_text="misali" sec_text="Bari mu magana ta amfani da wannan fassarar na'urar."></item>
+    <item code="haw" init_text="Eʻoluʻolu, e olelo aku i loko o kēia mea." ex_text="Eia kekahi laʻana" sec_text="E mākou kamailio ka hoʻohana 'ana i kēia unuhi noonoo."></item>
+    <item code="iw" init_text="אנא לדבר אל המכשיר הזה." ex_text="דוגמא" sec_text="בואו נדבר באמצעות מכשיר התרגום הזה."></item>
+    <item code="hi" init_text="कृपया इस उपकरण में बोलें।" ex_text="उदाहरण" sec_text="हमें इस अनुवाद उपकरण का उपयोग कर बात करते हैं।"></item>
+    <item code="hmn" init_text="Thov hais rau hauv no ntaus ntawv." ex_text="Piv txwv li" sec_text="Cia peb tham siv cov lus txhais no ntaus ntawv."></item>
+    <item code="hu" init_text="Kérjük, beszéljen erről az eszközről." ex_text="példa" sec_text="Beszéljünk ezzel a fordítással eszközt."></item>
+    <item code="is" init_text="Vinsamlegast talað í þessu tæki." ex_text="dæmi" sec_text="Við skulum tala með þessari þýðingu tæki."></item>
+    <item code="ig" init_text="Biko na-ekwu okwu n'ime ngwaọrụ a." ex_text="atụ" sec_text="Ka anyị na-ekwu na iji translation ngwaọrụ."></item>
+    <item code="id" init_text="Silahkan berbicara ke perangkat ini." ex_text="contoh" sec_text="Mari kita berbicara menggunakan perangkat ini terjemahan."></item>
+    <item code="ga" init_text="Le do thoil labhairt isteach an ngléas." ex_text="sampla" sec_text="Lig dúinn labhairt ag baint úsáide as an ngléas aistriúcháin."></item>
+    <item code="it" init_text="Si prega di parlare in questo dispositivo." ex_text="esempio" sec_text="Parliamo di utilizzare questo strumento di traduzione."></item>
+    <item code="ja" init_text="話してください" ex_text="例" sec_text="この翻訳機を使って話しましょう"></item>
+    <item code="jw" init_text="Mangga nganggo menyang piranti." ex_text="contone" sec_text="Ayo kita pirembagan nggunakake piranti iki terjemahan."></item>
+    <item code="kn" init_text="ಈ ಸಾಧನವನ್ನು ಒಳಗೆ ಮಾತನಾಡಿ." ex_text="ಉದಾಹರಣೆ" sec_text="ನಮಗೆ ಈ ಅನುವಾದ ಸಾಧನವನ್ನು ಬಳಸಿ ಮಾತನಾಡೋಣ."></item>
+    <item code="kk" init_text="Бұл құрылғының сөйлеңіз сұраймыз." ex_text="мысал" sec_text="АҚШ-тың бұл аударма құрылғыны пайдаланып талқылайық."></item>
+    <item code="km" init_text="សូមនិយាយទៅក្នុងឧបករណ៍នេះ។" ex_text="ឧទាហរណ៍" sec_text="សូមឱ្យយើងនិយាយដោយប្រើឧបករណ៍បកប្រែនេះ។"></item>
+    <item code="ko" init_text="이 장치에 대고 말하십시오." ex_text="예" sec_text="우리는 이 번역 장치를 사용하여 이야기하자."></item>
+    <item code="ku" init_text="Ji kerema xwe nav vê amûrê de diaxivin." ex_text="mînak" sec_text="Bila ji me re biaxivin bikaranîna vê amûrê werger."></item>
+    <item code="ky" init_text="Бул аппаратка сүйлөйм." ex_text="мисал" sec_text="Келгиле, бул котормо аспапты пайдалануу тууралуу сүйлөшүп көрөлү."></item>
+    <item code="lo" init_text="ກະລຸນາເວົ້າເປັນອຸປະກອນນີ້." ex_text="ຍົກຕົວຢ່າງ" sec_text="ໃຫ້ພວກເຮົາສົນທະນາການນໍາໃຊ້ອຸປະກອນການແປພາສານີ້."></item>
+    <item code="la" init_text="Please speak in hac fabrica." ex_text="exempli gratia" sec_text="Venite hanc translationem loqui usura fabrica."></item>
+    <item code="lv" init_text="Lūdzu, runājiet par šo ierīci." ex_text="piemērs" sec_text="Runāsim, izmantojot šo tulkojumu ierīci."></item>
+    <item code="lt" init_text="Prašome kalbėti į šį įrenginį." ex_text="pavyzdys" sec_text="Kalbėkime naudojant šią vertimo įrenginį."></item>
+    <item code="lb" init_text="Weg schwätzen an dësem Apparat." ex_text="Beispill" sec_text="Loosst eis mat dëser Iwwersetzung Apparat schwätzen."></item>
+    <item code="mk" init_text="Ве молиме да се зборува во овој уред." ex_text="пример" sec_text="Дозволете ни да зборува со користење на овој превод уред."></item>
+    <item code="mg" init_text="Mba mitenena ianareo ho amin'ity fitaovana ity." ex_text="ohatra" sec_text="Aoka isika hiresaka mampiasa fitaovana fandikan-teny io."></item>
+    <item code="ms" init_text="Sila bercakap ke dalam peranti ini." ex_text="contoh" sec_text="Mari kita bercakap menggunakan peranti ini terjemahan."></item>
+    <item code="ml" init_text="ഈ ഉപകരണം സംസാരിക്കുന്നവർ ദയവായി." ex_text="ഉദാഹരണം" sec_text="ഞങ്ങളെ ഈ വിവർത്തന ഉപകരണം ഉപയോഗിച്ച് സംസാരിക്കാം."></item>
+    <item code="mt" init_text="Jekk jogħġbok kellem fis dan l-apparat." ex_text="eżempju" sec_text="Ejja nitkellmu jużaw dan il-mezz ta 'traduzzjoni."></item>
+    <item code="mi" init_text="Tena korero ki tenei pūrere." ex_text="tauira" sec_text="Kia kōrero tatou te whakamahi i tenei pūrere translation."></item>
+    <item code="mr" init_text="हे डिव्हाइस बोलायला करा." ex_text="उदाहरणार्थ" sec_text="आम्हाला हे भाषांतर डिव्हाइस वापरून चर्चा करू."></item>
+    <item code="mn" init_text="Энэ төхөөрөмжийн руу ярих уу." ex_text="жишээ нь" sec_text="АНУ-ын энэ орчуулга төхөөрөмжийг ашиглан ярилцъя."></item>
+    <item code="my" init_text="ဤစက်ကိရိယာသို့မပြောတတ်ပေးပါ။" ex_text="နမူနာ" sec_text="ကျွန်တော်တို့ကိုဤဘာသာ device ကိုသုံးပြီးစကားပြောကြပါစို့။"></item>
+    <item code="ne" init_text="कृपया यो उपकरण बोल्छन्।" ex_text="उदाहरणका" sec_text="हामीलाई यो अनुवाद उपकरण प्रयोग गरेर कुरा गरौं।"></item>
+    <item code="no" init_text="Snakk inn i denne enheten." ex_text="eksempel" sec_text="La oss snakke bruker denne oversettelsen enheten."></item>
+    <item code="ny" init_text="Chonde lankhulani mu chipangizo ichi." ex_text="Mwachitsanzo" sec_text="Tiyeni tikambirane ntchito chipangizo kamasulidweka."></item>
+    <item code="ps" init_text="مهرباني خبرې دې آله." ex_text="د مثال په" sec_text="راځئ، چې دا ژباړه آلې په کارولو سره خبرې وکړي."></item>
+    <item code="fa" init_text="لطفا به این دستگاه صحبت می کنند." ex_text="مثال" sec_text="اجازه دهید ما صحبت استفاده از این دستگاه ترجمه."></item>
+    <item code="pl" init_text="Proszę mówić do tego urządzenia." ex_text="przykład" sec_text="Pomówmy za pomocą tego urządzenia translacji."></item>
+    <item code="pt" init_text="Por favor, fale para este dispositivo." ex_text="exemplo" sec_text="Vamos falar usando este dispositivo de tradução."></item>
+    <item code="pt-BR" init_text="Por favor, fale para este dispositivo." ex_text="exemplo" sec_text="Vamos falar usando este dispositivo de tradução."></item>
+    <item code="pa" init_text="ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਜੰਤਰ ਵਿੱਚ ਗੱਲ ਕਰੋ." ex_text="ਮਿਸਾਲ" sec_text="ਸਾਨੂੰ ਇਸ ਅਨੁਵਾਦ ਨੂੰ ਜੰਤਰ ਵਰਤ ਕੇ ਗੱਲ ਕਰੀਏ."></item>
+    <item code="ro" init_text="Vă rugăm să vorbiți în acest aparat." ex_text="exemplu" sec_text="Să vorbim cu ajutorul acestui dispozitiv de traducere."></item>
+    <item code="ru" init_text="Пожалуйста, говорите в это устройство." ex_text="пример" sec_text="Давайте говорить с помощью этого перевода устройства."></item>
+    <item code="sm" init_text="Faamolemole talanoa i lenei masini." ex_text="faataitaiga" sec_text="Ia tatou talanoa ma le faaaogaina o lenei masini faaliliuga."></item>
+    <item code="gd" init_text="Feuch am bruidhinn a-steach an uidheam seo." ex_text="mar eisimpleir" sec_text="Leig dhuinn bruidhinn bhith a 'cleachdadh eadar-theangachadh seo inneal."></item>
+    <item code="sr" init_text="Да говори у овом уређају." ex_text="пример" sec_text="Хајде да причамо користећи овај превод уређаја."></item>
+    <item code="st" init_text="Ke kopa o bua ka sesebelisoa sena." ex_text="mohlala" sec_text="A re ke re bue sebedisa sesebediswa sena phetolelo."></item>
+    <item code="sn" init_text="Tapota taura kupinda mudziyo uyu." ex_text="muenzaniso" sec_text="Ngatimbokurukurai kushandisa ichi rokushandura mudziyo."></item>
+    <item code="sd" init_text="مهرباني ڪري هن اوزار ۾ چئي." ex_text="مثال" sec_text="اسان کي هن ترجمي اوزار استعمال ڪري ڳالهائي جڳائي."></item>
+    <item code="si" init_text="මෙම උපාංගය බවට කතා කරන්න." ex_text="උදාහරණයක්" sec_text="අපට මේ පරිවර්තනය උපාංගය භාවිතා කතා කරමු."></item>
+    <item code="sk" init_text="Prosím hovorte do tohto zariadenia." ex_text="príklad" sec_text="Hovorme s použitím tohto prekladu zariadenia."></item>
+    <item code="sl" init_text="Prosimo, da govori v to napravo." ex_text="primer" sec_text="Nam govori uporabo te prevod napravo."></item>
+    <item code="so" init_text="Fadlan hadlo qalab this." ex_text="tusaale ahaan" sec_text="Ina keena aynu la hadal oo isticmaalaya qalab turjumidda."></item>
+    <item code="es" init_text="Por favor, hable en este dispositivo." ex_text="ejemplo" sec_text="Hablemos de utilizar este dispositivo de traducción."></item>
+    <item code="es-US" init_text="Por favor, hable en este dispositivo." ex_text="ejemplo" sec_text="Hablemos de utilizar este dispositivo de traducción."></item>
+    <item code="es-CO" init_text="Por favor, hable en este dispositivo." ex_text="ejemplo" sec_text="Hablemos de utilizar este dispositivo de traducción."></item>
+    <item code="es-AR" init_text="Por favor, hable en este dispositivo." ex_text="ejemplo" sec_text="Hablemos de utilizar este dispositivo de traducción."></item>
+    <item code="su" init_text="Mangga nyarita kana alat ieu." ex_text="conto" sec_text="Hayu urang ngobrol ngagunakeun alat ieu tarjamah."></item>
+    <item code="sw" init_text="Tafadhali zungumza katika kifaa hiki." ex_text="mfano" sec_text="Hebu majadiliano ya kutumia kifaa hiki tafsiri."></item>
+    <item code="sv" init_text="Tala i den här enheten." ex_text="exempel" sec_text="Låt oss tala med hjälp av denna översättningsverktyg."></item>
+    <item code="tl" init_text="Mangyaring makipag-usap sa aparatong ito." ex_text="halimbawa" sec_text="Ipaalam sa amin makipag-usap gamit ang device na pagsasalin."></item>
+    <item code="tg" init_text="Лутфан, ба ин дастгоҳ сухан." ex_text="мисол" sec_text="Биёед сӯҳбат истифодабарии ин дастгоҳ ба тарҷума."></item>
+    <item code="ta" init_text="இந்த சாதனம் ஒரு பேசவு." ex_text="உதாரணமாக" sec_text="எங்களுக்கு இந்த மொழிபெயர்ப்பு சாதனத்தைப் பயன்படுத்தி பேசலாம்."></item>
+    <item code="te" init_text="ఈ పరికరం లోకి మాట్లాడండి." ex_text="ఉదాహరణ" sec_text="మాకు ఈ అనువాద పరికరం ఉపయోగించి మాట్లాడటానికి లెట్."></item>
+    <item code="th" init_text="กรุณาพูดลงในอุปกรณ์นี้" ex_text="ตัวอย่าง" sec_text="ให้เราพูดคุยโดยใช้อุปกรณ์การแปลนี้"></item>
+    <item code="tr" init_text="Bu cihazın içine konuşun." ex_text="örnek" sec_text="Bize bu çeviri cihazı kullanarak konuşalım."></item>
+    <item code="uk" init_text="Будь ласка, говоріть в цей пристрій." ex_text="приклад" sec_text="Давайте говорити за допомогою цього перекладу пристрою."></item>
+    <item code="ur" init_text="اس آلہ میں بات کریں." ex_text="مثال" sec_text="ہمیں اس ترجمہ کے آلہ کو استعمال کرتے ہوئے بات کرتے ہیں."></item>
+    <item code="uz" init_text="Bu qurilma ichiga gapirish, iltimos." ex_text="misol" sec_text="AQSh bu tarjima qurilmasi yordamida olaylik."></item>
+    <item code="vi" init_text="Hãy nói vào thiết bị này." ex_text="thí dụ" sec_text="Chúng ta hãy nói chuyện sử dụng thiết bị dịch này."></item>
+    <item code="cy" init_text="Siaradwch mewn i ddyfais hon." ex_text="enghraifft" sec_text="Gadewch i ni siarad gan ddefnyddio dyfais gyfieithu hwn."></item>
+    <item code="xh" init_text="Nceda uthethe kule fowuni." ex_text="umzekelo" sec_text="Makhe sithethe usebenzisa esi sixhobo translation."></item>
+    <item code="yi" init_text="ביטע רעדן אין דעם מיטל." ex_text="בייַשפּיל" sec_text="זאל אונדז רעדן ניצן דעם איבערזעצונג מיטל."></item>
+    <item code="yo" init_text="Jọwọ sọrọ sinu ẹrọ yi." ex_text="apẹẹrẹ" sec_text="Jẹ ki a sọrọ lilo yi translation ẹrọ."></item>
+    <item code="zu" init_text="Sicela ukhulume ku kule divayisi." ex_text="Ngokwesibonelo" sec_text="Ake sixoxe ekusebenziseni le divayisi wokuhumusha."></item>
+    <item code="yue" init_text="请讲" ex_text="例如" sec_text="我哋用呢个翻译机对话啦！"></item>
+</mapping>
