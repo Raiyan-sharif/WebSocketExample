@@ -61,3 +61,7 @@ let systemLanguageCodeEN = "en"
 let KTutorialViewController = "TutorialViewController"
 let KTtsAlertController = "TtsAlertController"
 let KSpeechProcessingViewController = "SpeechProcessingViewController"
+
+// Pronunciation Practice
+let DIFF_STRING_MATCHED = "Matched"
+let DIFF_STRING_NOT_MATCHED = "Not Matched"

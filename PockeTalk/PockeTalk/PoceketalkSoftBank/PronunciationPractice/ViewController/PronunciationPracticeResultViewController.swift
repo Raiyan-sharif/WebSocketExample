@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftRichString
 
 class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var viewContainer: UIView!
@@ -18,21 +19,21 @@ class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var labelSuccessText: UILabel!
     let width : CGFloat = 50
     let trailing : CGFloat = -20
-        
+
     @IBAction func actionBack(_ sender: Any) {
         self.showPronunciationPractice()
     }
-    
+
     //TODO: need to replace with valid action
     @IBAction func actionReplay(_ sender: Any) {
         GlobalMethod.showAlert("TODO: Replay")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.setUpUI()
     }
-    
+
     // Initial UI set up
     func setUpUI () {
         self.setUpMicroPhoneIcon()
@@ -40,9 +41,10 @@ class PronunciationPracticeResultViewController: BaseViewController {
         self.viewContainer.layer.masksToBounds = true
 
         self.viewContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
+        showResultView()
 
     }
-    
+
     // floating microphone button
     func setUpMicroPhoneIcon () {
         let floatingButton = UIButton()
@@ -58,7 +60,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
-    
+
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
@@ -68,10 +70,51 @@ class PronunciationPracticeResultViewController: BaseViewController {
         controller.isFromPronunciationPractice = true
         self.navigationController?.pushViewController(controller, animated: true);
     }
-    
+
     func showPronunciationPractice () {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
         self.navigationController?.pushViewController(controller, animated: true);
+    }
+
+    func showResultView() {
+        let styleColor = Style({
+            $0.color = UIColor.red
+        })
+        let style = StyleXML(base: nil, ["b" : styleColor])
+
+        // TODO : dummy data call, will remove
+        let dummyData = dummyRandomIO()
+
+        let result = PronunciationModel().generateDiff(original: dummyData[0], practice: dummyData[1], languageCode: dummyData[2])
+
+        if result[0] == DIFF_STRING_MATCHED {
+            viewFailureContainer.isHidden = true
+            viewSuccessContainer.isHidden = false
+            labelSuccessText.attributedText = result[1].set(style: style)
+        } else {
+            viewFailureContainer.isHidden = false
+            viewSuccessContainer.isHidden = true
+            labelFailedOriginalText.attributedText = result[1].set(style: style)
+            labelFailedPronuncedText.attributedText = result[2].set(style: style)
+        }
+    }
+
+    // TODO : Dummy method will be removed
+    func dummyRandomIO() -> [String] {
+        let lang = ["en", "ja"]
+        let english = ["Hello, how are you?", "What are you doing?", "hello how are you", "How are you?", "what are you doing", "HOW ARE ???? You"]
+        let japanese = ["引きずる", "ひきずる", "きょうしつ", "やすめる", "ずるすめ", "しつ", "きず"]
+        var result = [String]()
+        if lang.randomElement()! == "en" {
+            result.append(english.randomElement()!)
+            result.append(english.randomElement()!)
+            result.append(lang[0])
+        } else {
+            result.append(japanese.randomElement()!)
+            result.append(japanese.randomElement()!)
+            result.append(lang[1])
+        }
+        return result
     }
 }
