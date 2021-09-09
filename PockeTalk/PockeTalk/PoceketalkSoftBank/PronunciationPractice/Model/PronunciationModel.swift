@@ -1,36 +1,20 @@
 //
-//  PronunciationUtils.swift
+//  PronunciationModel.swift
 //  PockeTalk
 //
 //  Created by Kenedy Joy on 7/9/21.
 //  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
-//for ViewController
-//import SwiftRichString
-//let styleColor = Style({
-//    $0.color = UIColor.red
-//})
-//let aaa = StyleXML(base: nil, ["b" : styleColor])
-//let a = "?Hello.Are ? You?"
-//let b = "hello, are yu."
-//let ss = PronunciationModel()
-//let res = ss.generateDiff(original: a, practice: b, languageCode: "ja")
-//print("result orginal : \(res[1])")
-//print("result practice : \(res[2])")
-//self.mLabelWelcome.attributedText = res[1].set(style: aaa)
-
 import Foundation
 import Differ
 
-public class PronunciationUtils {
+public class PronunciationModel {
 
     private let PUNCTUATION_LIST:[Character] = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
     private let PUNCTUATION_SPACE_NOT_NEEDED_LIST:[Character] = ["՚", "’", "'"]
     private let LANGUAGE_NOT_SPACE_SEPARATED:[String] = ["my", "zh-CN", "zh-TW", "ja", "km", "lo", "th", "yue"]
     private var mLanguageCode:String = ""
-    private let DIFF_STRING_MATCHED = "Matched"
-    private let DIFF_STRING_NOT_MATCHED = "Not Matched"
 
     public func generateDiff(original:String, practice:String, languageCode:String) -> [String] {
         let diffMode = diffMode(languageCode: languageCode)
