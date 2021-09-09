@@ -9,7 +9,7 @@
 import Foundation
 import Differ
 
-public class PronunciationModel {
+public class PronunciationModel: BaseModel {
 
     private let PUNCTUATION_LIST:[Character] = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
     private let PUNCTUATION_SPACE_NOT_NEEDED_LIST:[Character] = ["՚", "’", "'"]
