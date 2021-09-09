@@ -47,6 +47,7 @@ let kBottomLanguageButtonActionToastMessage = "Navigate to language selection sc
 
 // Language selection voice
 let KSelectedLanguageVoice = "KSelectedLanguageVoice"
+let KSelectedCountryLanguageVoice = "KSelectedCountryLanguageVoice"
 let nativeLanguageCode = "nativeLanguageCode"
 let translatedLanguageCode = "translatedLanguageCode"
 let kIsArrowUp = "isArrowUpKey"

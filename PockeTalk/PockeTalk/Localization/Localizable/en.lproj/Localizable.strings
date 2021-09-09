@@ -19,3 +19,5 @@
 "Region" = "Region";
 "TtsToLanguage" = "Hola como estas";
 "TtsFromLanguage" = "Hello how are you?";
+"Language Settings" = "Language Settings";
+"Speech Guideline" = "Hold down the button and say the language you want to search for.";

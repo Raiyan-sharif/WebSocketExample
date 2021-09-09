@@ -45,10 +45,12 @@ class LangSelectVoiceVC: UIViewController {
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1)
     }
+
     @IBAction func onCountryButtonTapped(_ sender: Any) {
         //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
+        controller.isNative = isNative
         self.navigationController?.pushViewController(controller, animated: true);
     }
     
@@ -176,7 +178,8 @@ class LangSelectVoiceVC: UIViewController {
     
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
+        LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
+        //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
     }
 
     

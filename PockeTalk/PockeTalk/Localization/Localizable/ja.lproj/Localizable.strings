@@ -19,3 +19,5 @@
 "Region" = "地域";
 "TtsToLanguage" = "Hola como estas";
 "TtsFromLanguage" = "Hello how are you?";
+"Language Settings" = "言語設定";
+"Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";

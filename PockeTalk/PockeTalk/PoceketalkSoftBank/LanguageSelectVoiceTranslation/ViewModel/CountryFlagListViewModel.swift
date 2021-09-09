@@ -6,15 +6,15 @@
 //
 
 import Foundation
-public class CountryWiseLanguageSelectionViewModel{
-    public static let shared: CountryWiseLanguageSelectionViewModel = CountryWiseLanguageSelectionViewModel()
+class CountryFlagListViewModel: BaseModel{
+    public static let shared: CountryFlagListViewModel = CountryFlagListViewModel()
     var countryList = [CountryListItemElement]()
-    
-    init() {
-        print("\(CountryWiseLanguageSelectionViewModel.self) init called")
+
+    override init() {
+        print("\(CountryFlagListViewModel.self) init called")
         //loadCountryDataFromJson()
     }
-    
+
 //    ///Get data from XML
 //    public func loadCountryDataFromJson(){
 //        print("\(CountryWiseLanguageSelectionViewModel.self) loadCountryDataFromJson called")
@@ -36,7 +36,7 @@ public class CountryWiseLanguageSelectionViewModel{
 
     ///Get data from XML
     func loadCountryDataFromJsonbyCode(countryCode: String) -> CountryList?{
-        print("\(CountryWiseLanguageSelectionViewModel.self) loadCountryDataFromJson called")
+        print("\(CountryFlagListViewModel.self) loadCountryDataFromJson called")
         //let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         let mLanguageFile = "\(countryConversationFileNamePrefix)\(countryCode)"
         print("\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
@@ -45,7 +45,7 @@ public class CountryWiseLanguageSelectionViewModel{
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CountryList.self, from: data) as CountryList
-                print("\(CountryWiseLanguageSelectionViewModel.self) countrylist \(jsonData.countryList.count) first-item \(String(describing: jsonData.countryList.first?.countryName))")
+                print("\(CountryFlagListViewModel.self) countrylist \(jsonData.countryList.count) first-item \(String(describing: jsonData.countryList.first?.countryName))")
                 return jsonData
             } catch {
                 print("error:\(error)")

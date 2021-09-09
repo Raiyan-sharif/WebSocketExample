@@ -21,10 +21,7 @@ class LanguageListVC: UIViewController {
     //let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
     override func viewDidLoad() {
         super.viewDidLoad()
-        //systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
         isNative = UserDefaultsProperty<Int>(kIsNative).value!
-        //let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        //let langSelectController = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         if isNative == 1{
             UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
         }else{
