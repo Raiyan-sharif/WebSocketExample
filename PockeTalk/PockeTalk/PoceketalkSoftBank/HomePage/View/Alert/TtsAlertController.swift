@@ -28,6 +28,7 @@ class TtsAlertController: UIViewController {
     let toastVisibleTime : CGFloat = 2.0
     var nativeLanguage : String = ""
     var targetLanguage : String = ""
+    var delegate : SpeechControllerDismissDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,7 @@ class TtsAlertController: UIViewController {
 
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
+        self.delegate?.dismiss()
         self.dismiss(animated: true, completion: nil)
     }
 
