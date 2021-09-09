@@ -29,6 +29,7 @@ class TtsAlertController: UIViewController {
     var nativeLanguage : String = ""
     var targetLanguage : String = ""
     var delegate : SpeechControllerDismissDelegate?
+    var itemsToShowOnContextMenu : [AlertItems] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,7 @@ class TtsAlertController: UIViewController {
             targetLanguage = targetLangName
         }
         self.setUpUI()
+        self.populateData()
     }
 
     /// Initial UI set up
@@ -74,6 +76,24 @@ class TtsAlertController: UIViewController {
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
+    @IBAction func menuTapAction(_ sender: UIButton) {
+        let vc = AlertReusable.init()
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        vc.items = self.itemsToShowOnContextMenu
+        present(vc, animated: true, completion: nil)
+    }
+
+    // Populate item to show on context menu
+    func populateData () {
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("history_add_fav", comment: ""), imageName: "icon_favorite_popup.png", menuType: .favorite))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("retranslation", comment: ""), imageName: "", menuType: .retranslation))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("reverse", comment: ""), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("pronunciation_practice", comment: ""), imageName: "", menuType: .practice))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("send_an_email", comment: ""), imageName: "", menuType: .sendMail))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("cancel", comment: ""), imageName: "", menuType: .cancel) )
+    }
+
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
         self.delegate?.dismiss()
@@ -83,19 +103,6 @@ class TtsAlertController: UIViewController {
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
-    }
-
-    fileprivate func updateLanguageNames() {
-        print("\(HomeViewController.self) updateLanguageNames method called")
-        let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.nativeLanguage
-        let targetLangCode = languageManager.targetLanguage
-
-        let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
-        let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
-        print("\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
-        self.fromTranslateLabel.text = nativeLanguage?.name
-        self.toTranslateLabel.text = targetLanguage?.name
     }
     /*
     // MARK: - Navigation

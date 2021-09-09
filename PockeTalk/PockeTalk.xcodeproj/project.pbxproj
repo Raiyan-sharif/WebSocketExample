@@ -65,6 +65,11 @@
 		506B93C326E74E530085BDDF /* default_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 506B93C226E74E530085BDDF /* default_languages.xml */; };
 		5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C14C26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift */; };
 		50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */; };
+		691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC66326E9D37C00259407 /* AlertTableViewCell.swift */; };
+		691FC66626E9D37C00259407 /* AlertTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 691FC66426E9D37C00259407 /* AlertTableViewCell.xib */; };
+		691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC66D26E9DCB800259407 /* AlertReusableModel.swift */; };
+		691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */; };
+		691FC67826EA09FD00259407 /* AlertMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC67726EA09FD00259407 /* AlertMenuType.swift */; };
 		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */; };
@@ -75,6 +80,8 @@
 		69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */; };
 		693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F526E890F600F57533 /* TtsAlertController.swift */; };
 		693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */; };
+		694BECA626E9D060004EFAB5 /* AlertReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694BECA426E9D060004EFAB5 /* AlertReusable.swift */; };
+		694BECA726E9D060004EFAB5 /* AlertReusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694BECA526E9D060004EFAB5 /* AlertReusable.xib */; };
 		69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */; };
 		69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */; };
 		69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */; };
@@ -183,6 +190,11 @@
 		506B93C226E74E530085BDDF /* default_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default_languages.xml; sourceTree = "<group>"; };
 		5098C14C26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsTutorialVC.swift; sourceTree = "<group>"; };
 		50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionManager.swift; sourceTree = "<group>"; };
+		691FC66326E9D37C00259407 /* AlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
+		691FC66426E9D37C00259407 /* AlertTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertTableViewCell.xib; sourceTree = "<group>"; };
+		691FC66D26E9DCB800259407 /* AlertReusableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableModel.swift; sourceTree = "<group>"; };
+		691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableViewModel.swift; sourceTree = "<group>"; };
+		691FC67726EA09FD00259407 /* AlertMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMenuType.swift; sourceTree = "<group>"; };
 		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +205,8 @@
 		69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUILabel.swift; sourceTree = "<group>"; };
 		693D72F526E890F600F57533 /* TtsAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertController.swift; sourceTree = "<group>"; };
 		693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertViewModel.swift; sourceTree = "<group>"; };
+		694BECA426E9D060004EFAB5 /* AlertReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusable.swift; sourceTree = "<group>"; };
+		694BECA526E9D060004EFAB5 /* AlertReusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertReusable.xib; sourceTree = "<group>"; };
 		69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewController.swift; sourceTree = "<group>"; };
 		69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewModel.swift; sourceTree = "<group>"; };
 		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
@@ -349,6 +363,7 @@
 				4AD58E6226DF7DB60004FC38 /* Reachability.swift */,
 				4AD58E9326DF8C1D0004FC38 /* UserDefaultsUtility.swift */,
 				5007D5C526E71B71005B7C51 /* NotificationNames.swift */,
+				691FC67726EA09FD00259407 /* AlertMenuType.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -612,6 +627,31 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		691FC66226E9D32A00259407 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				691FC66326E9D37C00259407 /* AlertTableViewCell.swift */,
+				691FC66426E9D37C00259407 /* AlertTableViewCell.xib */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		691FC66B26E9DC7600259407 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				691FC66D26E9DCB800259407 /* AlertReusableModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		691FC66C26E9DC8700259407 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		692CCEB826E1EA80006E826B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +708,18 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		694BECA326E9CD8B004EFAB5 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				691FC66C26E9DC8700259407 /* ViewModel */,
+				691FC66B26E9DC7600259407 /* Model */,
+				691FC66226E9D32A00259407 /* TableViewCell */,
+				694BECA426E9D060004EFAB5 /* AlertReusable.swift */,
+				694BECA526E9D060004EFAB5 /* AlertReusable.xib */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,6 +761,7 @@
 		8782DEFD26E099A7003A1681 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				694BECA326E9CD8B004EFAB5 /* Alert */,
 				8782DEFF26E099BF003A1681 /* NibLoadable.swift */,
 				8782DEFE26E099BF003A1681 /* NibOwnerLoadable.swift */,
 				8782DF0126E099BF003A1681 /* Reusable.swift */,
@@ -1070,9 +1123,12 @@
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
+				694BECA726E9D060004EFAB5 /* AlertReusable.xib in Resources */,
 				50193E0E26E888760052F170 /* country_selection_list_en.json in Resources */,
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
 				8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */,
+				691FC66626E9D37C00259407 /* AlertTableViewCell.xib in Resources */,
+				50193E0F26E888760052F170 /* country_selection_list_en_cn.json in Resources */,
 				69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
@@ -1158,6 +1214,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */,
+				694BECA626E9D060004EFAB5 /* AlertReusable.swift in Sources */,
+				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
@@ -1178,6 +1236,7 @@
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */,
+				691FC67826EA09FD00259407 /* AlertMenuType.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
@@ -1221,6 +1280,7 @@
 				50193E0826E8876A0052F170 /* CountryFlagListViewModel.swift in Sources */,
 				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
+				691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
 				5007495826E7A0E2002FBBE2 /* LanguageItem.swift in Sources */,
 				693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */,
@@ -1233,6 +1293,7 @@
 				4AE97AE026E8E27A007344FC /* LanguageMapTable.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
+				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,

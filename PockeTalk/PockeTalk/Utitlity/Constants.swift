@@ -38,6 +38,7 @@ let KFirstInitialized = "KFirstInitialized"
 let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
 let kIsShownLanguageSettings = "kIsShownLanguageSettings"
+let kIsAlreadyFavorite = "kIsAlreadyFavorite"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -66,3 +67,9 @@ let KSpeechProcessingViewController = "SpeechProcessingViewController"
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"
 let DIFF_STRING_NOT_MATCHED = "Not Matched"
+
+//TableView Cell identifier
+let KAlertTableViewCell = "AlertTableViewCell"
+
+//Nib name
+let KAlertReusable = "AlertReusable"

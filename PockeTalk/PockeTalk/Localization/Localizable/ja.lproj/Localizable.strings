@@ -21,3 +21,9 @@
 "TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "言語設定";
 "Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";
+"history_add_fav" = "お気に入りに追加";
+"retranslation" = "他の言語に翻訳";
+"reverse" = "逆翻訳";
+"pronunciation_practice" = "発音練習";
+"send_an_email" = "メールで送る";
+"cancel" = "キャンセル";

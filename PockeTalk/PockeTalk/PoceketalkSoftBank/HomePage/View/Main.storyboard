@@ -391,6 +391,9 @@
                                             <constraint firstAttribute="height" constant="40" id="kXi-pf-a4U"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="btn_menu"/>
+                                        <connections>
+                                            <action selector="menuTapAction:" destination="C5R-Lo-wGP" eventType="touchUpInside" id="XAH-4u-53u"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
