@@ -29,3 +29,7 @@
 "cancel" = "キャンセル";
 "internet_connection_error" = "インターネット接続がありません";
 "connect_via_wifi" = "Wi-Fiに接続する";
+"Playback Speed" = "再生速度";
+"Standard" = "標準";
+"Slowly" = "ゆっくり";
+"Very Slowly" = "とてもゆっくり";

@@ -78,10 +78,6 @@ extension MenuViewController: UICollectionViewDelegate {
             }
         case .favorite:
             print("\(indexPath.item)")
-            //TODO: temoporary access
-            let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
-            self.navigationController?.pushViewController(controller, animated: true);
         default:
             break
         }

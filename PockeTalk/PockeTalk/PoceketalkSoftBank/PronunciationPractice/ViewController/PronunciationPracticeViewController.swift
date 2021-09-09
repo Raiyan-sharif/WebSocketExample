@@ -15,6 +15,7 @@ class PronunciationPracticeViewController: BaseViewController {
     @IBOutlet weak var viewSpeechTextContainer: UIView!
     @IBOutlet weak var labelPronunciationGuideline: UILabel!
     @IBOutlet weak var btnBack: UIButton!
+    @IBOutlet weak var labelOriginalText: UILabel!
     let width : CGFloat = 50
     let trailing : CGFloat = -20
     var delegate : DismissPronunciationDelegate?
@@ -37,6 +38,10 @@ class PronunciationPracticeViewController: BaseViewController {
         self.viewSpeechTextContainer.layer.masksToBounds = true
 
         self.viewSpeechTextContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
+        
+        let tapForTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnTTSText(sender:)))
+        labelOriginalText.isUserInteractionEnabled = true
+        labelOriginalText.addGestureRecognizer(tapForTTS)
 
     }
     
@@ -69,5 +74,9 @@ class PronunciationPracticeViewController: BaseViewController {
     @IBAction func actionBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         self.delegate?.dismissPro()
+    }
+    
+    @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
+        GlobalMethod.showAlert("TODO: PLAY TTS!")
     }
 }

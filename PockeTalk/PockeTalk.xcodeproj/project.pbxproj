@@ -114,6 +114,9 @@
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
+		89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */; };
+		89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */; };
+		89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */; };
 		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
 		960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationModel.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
@@ -244,6 +247,9 @@
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
+		89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TempoControlSelectionAlertController.swift; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/ViewController/TempoControlSelectionAlertController.swift; sourceTree = SOURCE_ROOT; };
+		89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TempoControlSelectionAlert.xib; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/View/TempoControlSelectionAlert.xib; sourceTree = SOURCE_ROOT; };
+		89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoControlSpeedType.swift; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -829,6 +835,7 @@
 		8920067026E734F6005A23F0 /* PronunciationPractice */ = {
 			isa = PBXGroup;
 			children = (
+				89B2945E26EB1CA700747B61 /* TempoControlSelectionAlert */,
 				8920067426E73608005A23F0 /* Model */,
 				8920067326E735F9005A23F0 /* ViewController */,
 				8920067226E735D8005A23F0 /* ViewModel */,
@@ -905,6 +912,40 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
+		89B2945E26EB1CA700747B61 /* TempoControlSelectionAlert */ = {
+			isa = PBXGroup;
+			children = (
+				89FCF42F26EB95D100CD1BCC /* ViewController */,
+				89B2946226EB1D0000747B61 /* ViewModel */,
+				89B2946126EB1CFA00747B61 /* Model */,
+				89B2945F26EB1CDF00747B61 /* View */,
+			);
+			path = TempoControlSelectionAlert;
+			sourceTree = "<group>";
+		};
+		89B2945F26EB1CDF00747B61 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		89B2946126EB1CFA00747B61 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		89B2946226EB1D0000747B61 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		89BC6EC126E21EE30072BB0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +970,14 @@
 				898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		89FCF42F26EB95D100CD1BCC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		96D1239B26E86A32003F3572 /* Model */ = {
@@ -1160,6 +1209,7 @@
 				692E8DF726EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
+				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1321,12 +1371,14 @@
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				4AE97AE026E8E27A007344FC /* LanguageMapTable.swift in Sources */,
+				89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
+				89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */,
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,

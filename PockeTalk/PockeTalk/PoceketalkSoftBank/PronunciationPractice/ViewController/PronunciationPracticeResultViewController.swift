@@ -26,11 +26,13 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     //TODO: need to replace with valid action
     @IBAction func actionReplay(_ sender: Any) {
-        GlobalMethod.showAlert("TODO: Replay")
+        let vc = TempoControlSelectionAlertController.init()
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        present(vc, animated: true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.setUpUI()
     }
 
@@ -42,6 +44,12 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
         self.viewContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
         showResultView()
+        let tapForTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnTTSText(sender:)))
+        labelFailedOriginalText.isUserInteractionEnabled = true
+        labelFailedOriginalText.addGestureRecognizer(tapForTTS)
+        
+        labelSuccessText.isUserInteractionEnabled = true
+        labelSuccessText.addGestureRecognizer(tapForTTS)
 
     }
 
@@ -116,5 +124,9 @@ class PronunciationPracticeResultViewController: BaseViewController {
             result.append(lang[1])
         }
         return result
+    }
+    
+    @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
+        GlobalMethod.showAlert("TODO: PLAY TTS!")
     }
 }

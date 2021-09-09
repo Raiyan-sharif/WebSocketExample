@@ -82,3 +82,4 @@ let IMAGE_HEIGHT:Int = 853
 let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
 let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
+let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
