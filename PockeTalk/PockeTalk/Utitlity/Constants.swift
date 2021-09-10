@@ -73,3 +73,11 @@ let KAlertTableViewCell = "AlertTableViewCell"
 
 //Nib name
 let KAlertReusable = "AlertReusable"
+
+//Camera Constants
+let ITTServerURL = URL(string: "server url")! //TODO set server url
+let IMAGE_WIDTH:Int = 640
+let IMAGE_HEIGHT:Int = 853
+let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
+let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
+let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
