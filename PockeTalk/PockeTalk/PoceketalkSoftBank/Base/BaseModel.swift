@@ -8,6 +8,6 @@
 
 import Foundation
 
-class BaseModel {
+public class BaseModel {
     var jsonData: [String: String] = [:]
 }
