@@ -1,35 +1,36 @@
 //
-//  Demo1ViewController.swift
+//  LanguageListCamera.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 3/9/21.
+//  Created by Sadikul Bari on 10/9/21.
 //
 
 import UIKit
 import SwiftyXMLParser
 
-class LanguageListVC: BaseViewController {
-
+class LanguageListCameraVC: BaseViewController {
+    let TAG = LanguageListCameraVC.self
     @IBOutlet weak var langListTableView: UITableView!
     var pageIndex: Int!
     var languageItems = [LanguageItem]()
-    var mLanguageFile = "conversation_languages_"
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedIndexPath: IndexPath?
-    var isNative: Int = 0
-    //let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+    var listShowingForFromLanguage = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        isNative = UserDefaultsProperty<Int>(kIsNative).value!
-        if isNative == 1{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
-        }else{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.targetLanguage
-        }
-        print("\(LanguageListVC.self) isnative \(isNative) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value))")
+        listShowingForFromLanguage = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
 
-        print("\(LanguageListVC.self) LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
-        languageItems = LanguageSelectionManager.shared.languageItems
+        if listShowingForFromLanguage{
+            languageItems.removeAll()
+            languageItems = CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()
+            UserDefaultsProperty<String>(KSelectedLanguageCamera).value = CameraLanguageSelectionViewModel.shared.fromLanguage
+        }else{
+            languageItems = CameraLanguageSelectionViewModel.shared.targetLanguageItemsCamera
+            UserDefaultsProperty<String>(KSelectedLanguageCamera).value = CameraLanguageSelectionViewModel.shared.targetLanguage
+        }
+        print("\(TAG) isForFromLanguage \(listShowingForFromLanguage) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value))")
+        
+        print("\(TAG) LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
         langListTableView.delegate = self
         langListTableView.dataSource = self
         let nib = UINib(nibName: "LangListCell", bundle: nil)
@@ -39,7 +40,7 @@ class LanguageListVC: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
-        print("\(LanguageListVC.self) position \(selectedItemPosition)")
+        print("\(TAG) position \(selectedItemPosition)")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
     }
@@ -50,10 +51,10 @@ class LanguageListVC: BaseViewController {
         }
         return String(data: data, encoding: String.Encoding.utf8)
     }
-
+    
     func getSelectedItemPosition() -> Int{
-        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
-        for i in 0...languageItems.count{
+        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
+        for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
                 return i
@@ -64,21 +65,21 @@ class LanguageListVC: BaseViewController {
 }
 
 
-extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
+extension LanguageListCameraVC: UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languageItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LangListCell",for: indexPath) as! LangListCell
-        
+
         let languageItem = languageItems[indexPath.row]
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
-        print("\(LanguageListVC.self) value \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
-        if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
+        print("\(TAG) value \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
+        if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
             cell.imageLangItemSelector.isHidden = false
             cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
-            print("\(LanguageListVC.self) matched lang \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
+            print("\(TAG) matched lang \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
         }else{
             cell.imageLangItemSelector.isHidden = true
             cell.langListCellContainer.backgroundColor = .black
@@ -89,7 +90,7 @@ extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //tableView.deselectRow(at: indexPath, animated: false)
         let languageItem = languageItems[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
+        UserDefaultsProperty<String>(KSelectedLanguageCamera).value = languageItem.code
         self.langListTableView.reloadData()
     }
 

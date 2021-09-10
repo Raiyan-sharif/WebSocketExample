@@ -3,7 +3,6 @@
 //  PockeTalk
 //
 //  Created by Md. Moshiour Rahman on 9/2/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 
@@ -15,47 +14,97 @@ enum Camera {
     case front, back
 }
 
-class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
-        
+class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
+    let TAG = CameraViewController.self
     @IBOutlet weak var zoomLevel: UILabel!
     private(set) var camera = Camera.back
-    
+
     private lazy var session = AVCaptureSession()
     private lazy var photoOutput = AVCapturePhotoOutput()
     private var initialScale: CGFloat = 0
     var capturedImage = UIImage()
-    
+
     private var activeCamera: AVCaptureDevice?
     private lazy var backCamera: AVCaptureDevice? = {
         return AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
     }()
+    @IBOutlet weak var btnFromLanguage: RoundButtonWithBorder!
     
+    @IBOutlet weak var btnTargetLanguage: RoundButtonWithBorder!
     private lazy var previewView = UIView()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: session)
-    
+
     // Used to determine the image orientation.
     private let currentDevice = UIDevice.current
-    
-    
+
+
     var zoomScaleRange: ClosedRange<CGFloat> = 1...5
-    
+
     private let sessionQueue = DispatchQueue(label: "Session Queue")
-    
+
     private var sessionSetupSucceeds = false
-    
+
     private var captureProcessors: [Int64: PhotoCaptureProcessor] = [:]
-    
+
     private var videoOrientation: AVCaptureVideoOrientation = .portrait
-    
+
+    @IBAction func onFromLangBtnPressed(_ sender: Any) {
+            //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
+        UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
+        openCameraLanguageListScreen()
+    }
+
+    @IBAction func onTargetLangBtnPressed(_ sender: Any) {
+        UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
+        openCameraLanguageListScreen()
+    }
+
+    func openCameraLanguageListScreen(){
+        let storyboard = UIStoryboard(name: KStoryBoardCamera, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KiDLangSelectCamera)as! LanguageSelectCameraVC
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+
+    fileprivate func updateLanguageNames() {
+        print("\(HomeViewController.self) updateLanguageNames method called")
+        let languageManager = LanguageSelectionManager.shared
+        let fromLangCode = CameraLanguageSelectionViewModel.shared.fromLanguage
+        let targetLangCode = CameraLanguageSelectionViewModel.shared.targetLanguage
+
+        let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
+        let targetLang = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
+        if(fromLang?.code == CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()[0].code){
+            btnFromLanguage.setTitle("\(fromLang!.sysLangName)", for: .normal)
+        }else{
+            btnFromLanguage.setTitle("\(fromLang!.sysLangName) (\(fromLang!.name))", for: .normal)
+        }
+        btnTargetLanguage.setTitle("\(targetLang!.sysLangName) (\(targetLang!.name))", for: .normal)
+    }
+
+    @objc func onCameraLanguageChanged(notification: Notification) {
+        updateLanguageNames()
+    }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
+    }
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name: .languageSelectionCameraNotification, object: nil)
+    }
+
+    deinit {
+        unregisterNotification()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Bloking point start , to open camera screen without camera
         print("camera camera camera")
         previewLayer.videoGravity = .resizeAspectFill
         previewView.frame = view.bounds
         previewView.layer.addSublayer(previewLayer)
         view.insertSubview(previewView, at: 0)
-        
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             sessionQueue.async { [unowned self] in
@@ -72,38 +121,37 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         default:
             break
         }
-        
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         previewView.addGestureRecognizer(pinch)
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         previewView.addGestureRecognizer(tap)
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didInterrupted),
                                                name: .AVCaptureSessionWasInterrupted,
                                                object: session)
+        // Bloking point end , to open camera screen without camera
     }
-    
+
     @objc
     func didInterrupted() {
         print(session.isInterrupted)
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        registerNotification()
+        updateLanguageNames()
         sessionQueue.async { [unowned self] in
             if self.sessionSetupSucceeds {
                 self.session.startRunning()
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -113,39 +161,39 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             }
         }
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         previewLayer.frame = previewView.layer.bounds
     }
-    
+
     func setCamera(_ camera: Camera) {
         guard sessionSetupSucceeds else { return }
-        
+
         if camera == self.camera { return }
-        
+
         sessionQueue.async { [unowned self] in
             self.session.beginConfiguration()
             self._setCamera(camera)
             self.session.commitConfiguration()
         }
     }
-    
+
     func takePhoto(_ completion: ((Photo) -> Void)? = nil) {
         guard sessionSetupSucceeds else { return }
-        
+
         let settings: AVCapturePhotoSettings
         if self.photoOutput.availablePhotoCodecTypes.contains(.hevc) {
             settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
         } else {
             settings = AVCapturePhotoSettings()
         }
-        
+
         let orientation = videoOrientation
-        
+
         // Update the photo output's connection to match current device's orientation
         photoOutput.connection(with: .video)?.videoOrientation = orientation
-        
+
         let processor = PhotoCaptureProcessor()
         processor.orientation = orientation
         processor.completion = { [unowned self] processor in
@@ -158,7 +206,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                 
                 completion?(Photo(photo: photo, orientation: processor.orientation))
             }
-            
+
             if let settings = processor.settings {
                 let id = settings.uniqueID
                 self.captureProcessors.removeValue(forKey: id)
@@ -170,72 +218,72 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             self.photoOutput.capturePhoto(with: settings, delegate: processor)
         }
     }
-    
+
     // Call this on the `sessionQueue`.
     
     private func configureSession() {
         self.session.beginConfiguration()
-        
+
         self.session.sessionPreset = .photo
-        
+
         if backCamera != nil {
             _setCamera(.back)
         } else {
             return
         }
-        
+
         self.photoOutput.isHighResolutionCaptureEnabled = true
         guard self.session.canAddOutput(self.photoOutput) else {
             return
         }
         self.session.addOutput(self.photoOutput)
-        
+
         self.session.commitConfiguration()
-        
+
         sessionSetupSucceeds = true
     }
-    
+
     private func _setCamera(_ camera: Camera) {
         let newDevice: AVCaptureDevice?
         newDevice = backCamera
-        
+
         if let _currentInput = session.inputs.first {
             session.removeInput(_currentInput)
         }
-        
+
         guard
             let device = newDevice,
             let input = try? AVCaptureDeviceInput(device: device),
             session.canAddInput(input) else { return }
-        
+
         session.addInput(input)
-        
+
         self.camera = camera
         activeCamera = device
     }
-    
+
     private func configCamera(_ camera: AVCaptureDevice?, _ config: @escaping (AVCaptureDevice) -> ()) {
         guard let device = camera else { return }
-        
+
         sessionQueue.async { [device] in
             do {
                 try device.lockForConfiguration()
             } catch {
                 return
             }
-            
+
             config(device)
-            
+
             device.unlockForConfiguration()
         }
     }
-    
-    
-    
+
+
+
     @objc
     private func handlePinch(_ pinch: UIPinchGestureRecognizer) {
         guard sessionSetupSucceeds,  let device = activeCamera else { return }
-        
+
         switch pinch.state {
         case .began:
             initialScale = device.videoZoomFactor
@@ -244,9 +292,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             let maxAvailableZoomScale = device.maxAvailableVideoZoomFactor
             let availableZoomScaleRange = minAvailableZoomScale...maxAvailableZoomScale
             let resolvedZoomScaleRange = zoomScaleRange.clamped(to: availableZoomScaleRange)
-            
+
             let resolvedScale = max(resolvedZoomScaleRange.lowerBound, min(pinch.scale * initialScale, resolvedZoomScaleRange.upperBound))
-            
+
             configCamera(device) { device in
                 device.videoZoomFactor = resolvedScale
                 print("zoom: \(resolvedScale)")
@@ -258,28 +306,28 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             return
         }
     }
-    
+
     @objc
     private func handleTap(_ tap: UITapGestureRecognizer) {
         guard sessionSetupSucceeds else { return }
-        
+
         let point = tap.location(in: previewView)
         let devicePoint = previewLayer.captureDevicePointConverted(fromLayerPoint: point)
-        
+
         configCamera(activeCamera) { device in
             let focusMode = AVCaptureDevice.FocusMode.autoFocus
             if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(focusMode) {
                 device.focusPointOfInterest = devicePoint
                 device.focusMode = focusMode
             }
-            
+
             let exposureMode = AVCaptureDevice.ExposureMode.autoExpose
             if device.isExposurePointOfInterestSupported && device.isExposureModeSupported(exposureMode) {
                 device.exposurePointOfInterest = devicePoint
                 device.exposureMode = exposureMode
             }
         }
-        
+
         //focus
     }
     
@@ -331,16 +379,16 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
         guard error == nil else {
             return
         }
-        
+
         self.photo = photo
         
     }
-    
+
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
         guard error == nil else {
             return
         }
-        
+
         self.settings = resolvedSettings
         
         completion?(self)
@@ -349,17 +397,17 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
 
 
 extension CameraViewController {
-    
+
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
         
     }
 
-    
+
     @IBAction func captureButtonEventListener(_ sender: Any) {
         //        let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
         //        photoOutput.capturePhoto(with: settings, delegate: self)
-        
+
         takePhoto { photo in
             let image = photo.image()
             if let captureImg = image {
@@ -372,8 +420,8 @@ extension CameraViewController {
         }
         
     }
-    
-    
+
+
     @IBAction func didTouchFlashButton(sender: UIButton) {
         print("torch on")
         // check if the device has torch
@@ -384,7 +432,7 @@ extension CameraViewController {
             } catch {
                 print("aaaa")
             }
-            
+
             // if flash is on turn it off, if turn off turn it on
             if activeCamera!.isTorchActive {
                 activeCamera!.torchMode = AVCaptureDevice.TorchMode.off
@@ -400,24 +448,24 @@ extension CameraViewController {
             activeCamera!.unlockForConfiguration()
         }
     }
-    
-    
+
+
 }
 
 
 extension CameraViewController: CropViewControllerDelegate {
-    
+
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         //self.captureImageView.image = image
         cropViewController.dismiss(animated: true, completion: nil)
-        
+
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
             vc.image = image
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
         cropViewController.dismiss(animated: true) {
             let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
@@ -427,5 +475,5 @@ extension CameraViewController: CropViewControllerDelegate {
             }
         }
     }
-    
+
 }

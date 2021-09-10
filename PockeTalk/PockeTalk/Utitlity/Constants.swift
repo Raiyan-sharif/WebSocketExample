@@ -48,21 +48,34 @@ let kBottomLanguageButtonActionToastMessage = "Navigate to language selection sc
 
 // Language selection voice
 let KSelectedLanguageVoice = "KSelectedLanguageVoice"
+let KSelectedLanguageCamera = "KSelectedLanguageCamera"
 let KSelectedCountryLanguageVoice = "KSelectedCountryLanguageVoice"
 let nativeLanguageCode = "nativeLanguageCode"
+let KCameraNativeLanguageCode = "KCameraNativeLanguageCode"
 let translatedLanguageCode = "translatedLanguageCode"
+let KCameraTargetLanguageCode = "KCameraTargetLanguageCode"
 let kIsArrowUp = "isArrowUpKey"
 let kIsNative = "kIsNative"
+let KCameraLanguageFrom = "KCameraLanguagelistShowing"
 let kLanguageSelectVoice = "LangSelectVoiceVC"
 let languageConversationFileNamePrefix = "conversation_languages_"
 let countryConversationFileNamePrefix = "country_selection_list_"
 let systemLanguageCodeJP = "ja"
 let systemLanguageCodeEN = "en"
+let cameraLanguageDetectionCodeJsonFile = "language_detection_codes"
 
 // Storyboard identifier
 let KTutorialViewController = "TutorialViewController"
 let KTtsAlertController = "TtsAlertController"
 let KSpeechProcessingViewController = "SpeechProcessingViewController"
+let KLanguageListVoice = "LanguageListVoice"
+let LHistoryListVoice = "HistoryListVoice"
+let KLanguageListCamera = "LanguageListCamera"
+let KHistoryListCamera = "LanguageHistoryListCamera"
+let KiDLangSelectCamera = "LanguageSelectCameraVC"
+
+// Storyboard Name
+let KStoryBoardCamera = "LanguageSelectCamera"
 
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"

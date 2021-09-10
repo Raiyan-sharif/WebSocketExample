@@ -9,4 +9,5 @@
 import Foundation
 extension Notification.Name {
     static let languageSelectionVoiceNotification = Notification.Name("languageSelectionVoiceNotification")
+    static let languageSelectionCameraNotification = Notification.Name("languageSelectionCameraNotification")
 }

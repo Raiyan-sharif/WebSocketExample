@@ -88,6 +88,9 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onTargetLangBtnPressed:" destination="DvQ-pH-G7E" eventType="touchUpInside" id="R7L-nW-zlB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLv-Px-5aU" customClass="RoundButtonWithBorder" customModule="PockeTalk" customModuleProvider="target">
                                 <rect key="frame" x="16" y="798" width="162.5" height="48"/>
@@ -109,6 +112,9 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onFromLangBtnPressed:" destination="DvQ-pH-G7E" eventType="touchUpInside" id="lLn-Ae-b39"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxc-LL-kif">
                                 <rect key="frame" x="182" y="737" width="50" height="50"/>
@@ -173,6 +179,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnFromLanguage" destination="tLv-Px-5aU" id="Bbf-1o-dGM"/>
+                        <outlet property="btnTargetLanguage" destination="o2B-Pd-RWb" id="yOO-qj-SM9"/>
                         <outlet property="zoomLevel" destination="qxd-7B-8Ym" id="eqn-lg-hTt"/>
                     </connections>
                 </viewController>
