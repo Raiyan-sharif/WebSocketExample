@@ -134,12 +134,15 @@ class HomeViewController: BaseViewController {
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
-        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-        controller.homeMicTapTimeStamp = currentTS
-        self.navigationController?.pushViewController(controller, animated: true);
+        if Reachability.isConnectedToNetwork() {
+            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            self.navigationController?.pushViewController(controller, animated: true);
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
     }
 
     /*

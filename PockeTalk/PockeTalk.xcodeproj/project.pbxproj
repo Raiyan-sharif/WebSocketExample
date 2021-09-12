@@ -72,6 +72,10 @@
 		691FC67826EA09FD00259407 /* AlertMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC67726EA09FD00259407 /* AlertMenuType.swift */; };
 		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
+		692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */; };
+		692E8DEE26EB1B47003F7636 /* NoInternetAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */; };
+		692E8DF626EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692E8DF426EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift */; };
+		692E8DF726EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 692E8DF526EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib */; };
 		69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */; };
 		69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 69349AA826E5DB90008D9AF4 /* tutorial.mp4 */; };
 		69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */; };
@@ -197,6 +201,10 @@
 		691FC67726EA09FD00259407 /* AlertMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMenuType.swift; sourceTree = "<group>"; };
 		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetAlert.swift; sourceTree = "<group>"; };
+		692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoInternetAlert.xib; sourceTree = "<group>"; };
+		692E8DF426EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetAlertTableViewCell.swift; sourceTree = "<group>"; };
+		692E8DF526EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoInternetAlertTableViewCell.xib; sourceTree = "<group>"; };
 		69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		69349AA826E5DB90008D9AF4 /* tutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial.mp4; sourceTree = "<group>"; };
 		69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -613,7 +621,6 @@
 			children = (
 				50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */,
 				4AE97AD426E8E122007344FC /* LanguageSelectionDBHelper.swift */,
-				50193E0726E8876A0052F170 /* CountryWiseLanguageSelectionViewModel.swift */,
 				50193E0726E8876A0052F170 /* CountryFlagListViewModel.swift */,
 			);
 			path = ViewModel;
@@ -632,6 +639,8 @@
 			children = (
 				691FC66326E9D37C00259407 /* AlertTableViewCell.swift */,
 				691FC66426E9D37C00259407 /* AlertTableViewCell.xib */,
+				692E8DF426EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift */,
+				692E8DF526EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -661,6 +670,24 @@
 				693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		692E8DEA26EB19C7003F7636 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				694BECA426E9D060004EFAB5 /* AlertReusable.swift */,
+				692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		692E8DF126EB1B4F003F7636 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				694BECA526E9D060004EFAB5 /* AlertReusable.xib */,
+				692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		69349AB026E5ED74008D9AF4 /* Model */ = {
@@ -711,11 +738,11 @@
 		694BECA326E9CD8B004EFAB5 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				692E8DF126EB1B4F003F7636 /* View */,
+				692E8DEA26EB19C7003F7636 /* ViewController */,
 				691FC66C26E9DC8700259407 /* ViewModel */,
 				691FC66B26E9DC7600259407 /* Model */,
 				691FC66226E9D32A00259407 /* TableViewCell */,
-				694BECA426E9D060004EFAB5 /* AlertReusable.swift */,
-				694BECA526E9D060004EFAB5 /* AlertReusable.xib */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1108,6 +1135,7 @@
 			files = (
 				69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */,
 				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
+				692E8DEE26EB1B47003F7636 /* NoInternetAlert.xib in Resources */,
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
 				506B93C326E74E530085BDDF /* default_languages.xml in Resources */,
 				8782DEF826E098DE003A1681 /* SystemLanguageCell.xib in Resources */,
@@ -1128,8 +1156,8 @@
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
 				8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */,
 				691FC66626E9D37C00259407 /* AlertTableViewCell.xib in Resources */,
-				50193E0F26E888760052F170 /* country_selection_list_en_cn.json in Resources */,
 				69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */,
+				692E8DF726EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 			);
@@ -1243,7 +1271,9 @@
 				4AE97ACF26E8D33D007344FC /* CameraHistoryTable.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4AE97AE826E8E303007344FC /* DataHelperProtocol.swift in Sources */,
+				692E8DF626EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
+				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */,

@@ -27,3 +27,5 @@
 "pronunciation_practice" = "Practice pronunciation";
 "send_an_email" = "Send an email";
 "cancel" = "Cancel";
+"internet_connection_error" = "No Internet connection";
+"connect_via_wifi" = "Connect to Wi-Fi";

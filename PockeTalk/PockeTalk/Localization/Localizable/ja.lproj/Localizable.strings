@@ -27,3 +27,5 @@
 "pronunciation_practice" = "発音練習";
 "send_an_email" = "メールで送る";
 "cancel" = "キャンセル";
+"internet_connection_error" = "インターネット接続がありません";
+"connect_via_wifi" = "Wi-Fiに接続する";

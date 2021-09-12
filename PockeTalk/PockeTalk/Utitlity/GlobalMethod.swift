@@ -190,4 +190,32 @@ class GlobalMethod {
         floatingButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
         return floatingButton
     }
+
+    // No internet alert
+    static func showNoInternetAlert(in viewController: UIViewController? = nil){
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let vc = NoInternetAlert.init()
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            if viewController != nil {
+                viewController?.present(vc, animated: true, completion: nil)
+            } else if let _visibleViewController = self.getVisibleViewController(nil) {
+                _visibleViewController.present(vc, animated: true, completion: nil)
+            } else {
+                if let _window = appDelegate.window, let _rootViewController = _window.rootViewController {
+                    _rootViewController.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+
+    // TTS alert
+    static func showTtsAlert (viewController: UIViewController?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.delegate = viewController as? SpeechControllerDismissDelegate
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        viewController?.present(controller, animated: true, completion: nil)
+    }
 }

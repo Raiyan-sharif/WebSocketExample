@@ -70,6 +70,7 @@ let DIFF_STRING_NOT_MATCHED = "Not Matched"
 
 //TableView Cell identifier
 let KAlertTableViewCell = "AlertTableViewCell"
+let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell";
 
 //Nib name
 let KAlertReusable = "AlertReusable"
