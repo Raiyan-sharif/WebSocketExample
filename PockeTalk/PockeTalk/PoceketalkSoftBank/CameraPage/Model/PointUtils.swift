@@ -385,4 +385,12 @@ public class PointUtils {
         let y = (B.y - A.y) * (B.y - A.y)
         return sqrt(y + x)
     }
+    
+    static func getAngleFromVerticalLine( A: CGPoint!,  B: CGPoint!) -> Float32 {
+        var result: Float32 = 0.0
+        let angle1: Float32 = Float32(((atan2(A.y - B.y, B.x - A.x))))
+        // y1-y2//x2-x1
+        result = Float32(((radToDegree(Double(angle1)))))
+        return result
+    }
 }
