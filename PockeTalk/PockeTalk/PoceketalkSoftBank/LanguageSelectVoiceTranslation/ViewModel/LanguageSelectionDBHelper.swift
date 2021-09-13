@@ -3,12 +3,11 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 9/7/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import SQLite
 
-class LanguageSelectionDBHelper: DataHelperProtocol {
+class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
     let TABLE_NAME = "LanguageSelectionTable"
     let table: Table
 
@@ -16,7 +15,7 @@ class LanguageSelectionDBHelper: DataHelperProtocol {
     let textLanguageCode: Expression<String>
     let cameraOrVoice: Expression<Int64>
 
-    init() {
+    override init() {
         self.id = Expression<Int64>("id")
         self.textLanguageCode = Expression<String>("txt_language_code")
         self.cameraOrVoice = Expression<Int64>("camera_or_voice")

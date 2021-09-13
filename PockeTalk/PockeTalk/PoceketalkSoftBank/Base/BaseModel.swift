@@ -2,12 +2,42 @@
 //  BaseModel.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/7/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import Foundation
 
-public class BaseModel {
-    var jsonData: [String: String] = [:]
+//This the base class of all Model class
+public class BaseModel : NSObject {
+    var mDelegate : BaseDelegate?
+    var mBaseDataList : [BaseData] = []
+    
+    func notify(notifyObject : BaseData) {
+        if mDelegate != nil {
+            mDelegate?.update(data : notifyObject)
+        }
+    }
+    
+    func getCount() -> Int {
+        return mBaseDataList.count
+    }
+    
+    func addItem(item : BaseData) {
+        mBaseDataList.append(item)
+    }
+    
+    func addAtPosition(item : BaseData, at position : Int) {
+        mBaseDataList.insert(item, at: position)
+    }
+    
+    func remove(at index : Int) {
+        mBaseDataList.remove(at: index)
+    }
+    
+    func getItem(at index : Int) -> BaseData {
+        return mBaseDataList[index]
+    }
+    
+    func getList() -> [BaseData] {
+        return mBaseDataList
+    }
 }

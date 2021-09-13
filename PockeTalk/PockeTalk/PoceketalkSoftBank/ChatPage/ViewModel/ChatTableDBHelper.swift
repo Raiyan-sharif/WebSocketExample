@@ -3,12 +3,11 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 9/6/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import SQLite
 
-class ChatTableDBHelper: DataHelperProtocol {
+class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     let TABLE_NAME = "ChatTable"
     let table: Table
 
@@ -22,7 +21,7 @@ class ChatTableDBHelper: DataHelperProtocol {
     let chatIsDelete: Expression<Int64>
     let chatIsFavorite: Expression<Int64>
 
-    init() {
+    override init() {
         self.table = Table(TABLE_NAME)
         self.id = Expression<Int64>("id")
         self.textNative = Expression<String>("txt_native")

@@ -3,12 +3,11 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 9/6/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import SQLite
 
-class CameraHistoryDBHelper: DataHelperProtocol {
+class CameraHistoryDBHelper : BaseModel, DataHelperProtocol {
     let TABLE_NAME = "CameraHistoryTable"
     let table: Table
 
@@ -17,7 +16,7 @@ class CameraHistoryDBHelper: DataHelperProtocol {
     let translatedData: Expression<String>
     let image: Expression<String>
 
-    init() {
+    override init() {
         self.table = Table(TABLE_NAME)
         self.id = Expression<Int64>("id")
         self.detectedData = Expression<String>("detected_data")

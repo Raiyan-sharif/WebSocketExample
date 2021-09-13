@@ -3,12 +3,11 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 9/7/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import SQLite
 
-class LanguageMapDBHelper: DataHelperProtocol {
+class LanguageMapDBHelper : BaseModel, DataHelperProtocol {
     let TABLE_NAME = "LanguageMapTable"
     let table: Table
 
@@ -23,7 +22,7 @@ class LanguageMapDBHelper: DataHelperProtocol {
     let textValueSix: Expression<String>
     let textValueSeven: Expression<String>
 
-    init() {
+    override init() {
         self.table = Table(TABLE_NAME)
         self.id = Expression<Int64>("id")
         self.textCode = Expression<String>("txt_code")
