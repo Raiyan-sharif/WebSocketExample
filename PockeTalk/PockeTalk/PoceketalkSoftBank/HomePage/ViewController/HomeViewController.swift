@@ -31,6 +31,14 @@ class HomeViewController: BaseViewController {
     let trailing : CGFloat = -20
     let width : CGFloat = 50
 
+    ///Top button
+    private lazy var topButton:UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "TopHistoryBtn"), for: .normal)
+        button.addTarget(self, action: #selector(goToHistoryScreen), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNotification()
@@ -74,6 +82,18 @@ class HomeViewController: BaseViewController {
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
         let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        // Add top button
+        view.addSubview(topButton)
+        topButton.translatesAutoresizingMaskIntoConstraints = false
+        topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        topButton.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        // Added down geture
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
     }
 
     //TODO Menu tap event
@@ -145,6 +165,13 @@ class HomeViewController: BaseViewController {
         }
     }
 
+    /// Top button trigger to history screen
+    @objc func goToHistoryScreen () {
+        let historyVC = HistoryViewController()
+        historyVC.modalTransitionStyle = .crossDissolve
+        self.navigationController?.present(historyVC, animated: true, completion: nil)
+    }
+
     /*
     // MARK: - Navigation
 
@@ -193,8 +220,16 @@ class HomeViewController: BaseViewController {
         bottomLangSysLangName.setTitle(nativeLanguage?.sysLangName, for: .normal)
         bottomLangNativeName.text = nativeLanguage?.name
     }
-    
+
     @objc func onVoiceLanguageChanged(notification: Notification) {
         updateLanguageNames()
     }
+
+    // Down ward gesture
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if gesture.state == .ended{
+            self.goToHistoryScreen()
+        }
+    }
+
 }

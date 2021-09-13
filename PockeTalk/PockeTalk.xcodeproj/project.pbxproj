@@ -113,6 +113,14 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		87B56E0426EB2DD000BF613B /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E0326EB2DD000BF613B /* Bindable.swift */; };
+		87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E0A26EB2F9A00BF613B /* HistoryViewModel.swift */; };
+		87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1126EB2FD800BF613B /* HistoryLayout.swift */; };
+		87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1226EB2FD800BF613B /* HistoryCell.swift */; };
+		87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B56E1326EB2FD800BF613B /* HistoryCell.xib */; };
+		87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1926EB2FF600BF613B /* HistoryViewController.swift */; };
+		87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1E26EB302C00BF613B /* HistoryModel.swift */; };
+		87B56E6426EB710100BF613B /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E6326EB710100BF613B /* Extension+String.swift */; };
 		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
 		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
@@ -254,6 +262,14 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		87B56E0326EB2DD000BF613B /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		87B56E0A26EB2F9A00BF613B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		87B56E1126EB2FD800BF613B /* HistoryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLayout.swift; sourceTree = "<group>"; };
+		87B56E1226EB2FD800BF613B /* HistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
+		87B56E1326EB2FD800BF613B /* HistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryCell.xib; sourceTree = "<group>"; };
+		87B56E1926EB2FF600BF613B /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		87B56E1E26EB302C00BF613B /* HistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		87B56E6326EB710100BF613B /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
@@ -406,6 +422,7 @@
 				4AD58E9326DF8C1D0004FC38 /* UserDefaultsUtility.swift */,
 				5007D5C526E71B71005B7C51 /* NotificationNames.swift */,
 				691FC67726EA09FD00259407 /* AlertMenuType.swift */,
+				87B56E0326EB2DD000BF613B /* Bindable.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -414,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				503AEEB126EB0D6F00B03978 /* LanguageSelectCameraTranslation */,
+				87B56E0026EB2D6B00BF613B /* History */,
 				4AE97ADA26E8E1ED007344FC /* ChatPage */,
 				8920067026E734F6005A23F0 /* PronunciationPractice */,
 				5028D54B26E29D18002A5250 /* LanguageSelectVoiceTranslation */,
@@ -547,6 +565,7 @@
 				4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */,
 				89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */,
 				69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */,
+				87B56E6326EB710100BF613B /* Extension+String.swift */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -836,6 +855,14 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		8747F39626EFB2EF003D8292 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				87B56E1926EB2FF600BF613B /* HistoryViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -903,6 +930,43 @@
 			children = (
 				4AE97ADF26E8E27A007344FC /* LanguageMapTable.swift */,
 				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		87B56E0026EB2D6B00BF613B /* History */ = {
+			isa = PBXGroup;
+			children = (
+				8747F39626EFB2EF003D8292 /* ViewController */,
+				87B56E1D26EB301E00BF613B /* Model */,
+				87B56E1026EB2FB000BF613B /* View */,
+				87B56E0926EB2ED000BF613B /* ViewModel */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		87B56E0926EB2ED000BF613B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				87B56E0A26EB2F9A00BF613B /* HistoryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		87B56E1026EB2FB000BF613B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				87B56E1226EB2FD800BF613B /* HistoryCell.swift */,
+				87B56E1326EB2FD800BF613B /* HistoryCell.xib */,
+				87B56E1126EB2FD800BF613B /* HistoryLayout.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87B56E1D26EB301E00BF613B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				87B56E1E26EB302C00BF613B /* HistoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1277,6 +1341,7 @@
 				503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
+				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
@@ -1382,6 +1447,7 @@
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
+				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
@@ -1411,6 +1477,7 @@
 				692E8DF626EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
+				87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
 				3BF7593126EF04F7005D3BDA /* SocketManager.swift in Sources */,
@@ -1418,6 +1485,7 @@
 				4AE97AE426E8E2BC007344FC /* BaseModel.swift in Sources */,
 				4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */,
 				4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */,
+				87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */,
 				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				50675D5D26EB26D800A775E5 /* HistoryListCameraVC.swift in Sources */,
@@ -1437,17 +1505,20 @@
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
+				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionTable.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
+				87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				50193E0826E8876A0052F170 /* CountryFlagListViewModel.swift in Sources */,
 				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
+				87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
 				691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
@@ -1467,6 +1538,7 @@
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
+				87B56E0426EB2DD000BF613B /* Bindable.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
 				89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */,
