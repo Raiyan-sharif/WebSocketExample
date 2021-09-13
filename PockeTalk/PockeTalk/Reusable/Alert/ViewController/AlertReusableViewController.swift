@@ -4,8 +4,11 @@
 //
 
 import UIKit
+protocol ReverseDelegate {
+    func transitionFromReverse()
+}
 
-class AlertReusable: UIViewController {
+class AlertReusableViewController: BaseViewController {
     static var nib: UINib =  UINib.init(nibName: KAlertReusable, bundle: nil)
     /// Views
     @IBOutlet weak var alertTableView: UITableView!
@@ -16,6 +19,7 @@ class AlertReusable: UIViewController {
     let cellHeight : CGFloat = 58.0
     let cornerRadius : CGFloat = 15.0
     let viewAlpha : CGFloat = 0.8
+    var reverseDelegate : ReverseDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +60,13 @@ class AlertReusable: UIViewController {
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
+
+    func reverseTranslation () {
+        DispatchQueue.main.async {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+            self.reverseDelegate?.transitionFromReverse()
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -68,7 +79,7 @@ class AlertReusable: UIViewController {
 
 }
 
-extension AlertReusable: UITableViewDelegate, UITableViewDataSource {
+extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -104,6 +115,7 @@ extension AlertReusable: UITableViewDelegate, UITableViewDataSource {
         case .retranslation :
             break
         case .reverse:
+            self.reverseTranslation()
             break
         case .practice :
             showPracticeView()
@@ -116,7 +128,7 @@ extension AlertReusable: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension AlertReusable : DismissPronunciationDelegate {
+extension AlertReusableViewController : DismissPronunciationDelegate {
     func dismissPro() {
         self.dismiss(animated: true, completion: nil)
         if let transitionView = self.view{

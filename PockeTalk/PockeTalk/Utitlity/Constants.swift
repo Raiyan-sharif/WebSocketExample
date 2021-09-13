@@ -86,7 +86,7 @@ let KAlertTableViewCell = "AlertTableViewCell"
 let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell";
 
 //Nib name
-let KAlertReusable = "AlertReusable"
+let KAlertReusable = "AlertReusableViewController"
 
 //Camera Constants
 let ITTServerURL = URL(string: "server url")! //TODO set server url

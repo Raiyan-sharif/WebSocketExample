@@ -93,8 +93,8 @@
 		69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */; };
 		693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F526E890F600F57533 /* TtsAlertController.swift */; };
 		693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */; };
-		694BECA626E9D060004EFAB5 /* AlertReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694BECA426E9D060004EFAB5 /* AlertReusable.swift */; };
-		694BECA726E9D060004EFAB5 /* AlertReusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694BECA526E9D060004EFAB5 /* AlertReusable.xib */; };
+		694BECA626E9D060004EFAB5 /* AlertReusableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */; };
+		694BECA726E9D060004EFAB5 /* AlertReusableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694BECA526E9D060004EFAB5 /* AlertReusableViewController.xib */; };
 		69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */; };
 		69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */; };
 		69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */; };
@@ -234,8 +234,8 @@
 		69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUILabel.swift; sourceTree = "<group>"; };
 		693D72F526E890F600F57533 /* TtsAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertController.swift; sourceTree = "<group>"; };
 		693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertViewModel.swift; sourceTree = "<group>"; };
-		694BECA426E9D060004EFAB5 /* AlertReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusable.swift; sourceTree = "<group>"; };
-		694BECA526E9D060004EFAB5 /* AlertReusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertReusable.xib; sourceTree = "<group>"; };
+		694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableViewController.swift; sourceTree = "<group>"; };
+		694BECA526E9D060004EFAB5 /* AlertReusableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertReusableViewController.xib; sourceTree = "<group>"; };
 		69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewController.swift; sourceTree = "<group>"; };
 		69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewModel.swift; sourceTree = "<group>"; };
 		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
@@ -764,7 +764,7 @@
 		692E8DEA26EB19C7003F7636 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				694BECA426E9D060004EFAB5 /* AlertReusable.swift */,
+				694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */,
 				692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */,
 			);
 			path = ViewController;
@@ -773,7 +773,7 @@
 		692E8DF126EB1B4F003F7636 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				694BECA526E9D060004EFAB5 /* AlertReusable.xib */,
+				694BECA526E9D060004EFAB5 /* AlertReusableViewController.xib */,
 				692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */,
 			);
 			path = View;
@@ -1284,7 +1284,7 @@
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
-				694BECA726E9D060004EFAB5 /* AlertReusable.xib in Resources */,
+				694BECA726E9D060004EFAB5 /* AlertReusableViewController.xib in Resources */,
 				50193E0E26E888760052F170 /* country_selection_list_en.json in Resources */,
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
 				8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */,
@@ -1377,7 +1377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */,
-				694BECA626E9D060004EFAB5 /* AlertReusable.swift in Sources */,
+				694BECA626E9D060004EFAB5 /* AlertReusableViewController.swift in Sources */,
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,

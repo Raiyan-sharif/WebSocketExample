@@ -7,8 +7,10 @@
 //
 
 import UIKit
-
-class TtsAlertController: UIViewController {
+protocol DismissReverseVieeDelegate {
+    func dismissReverse ()
+}
+class TtsAlertController: BaseViewController {
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
     @IBOutlet weak var fromTranslateLabel: UILabel!
@@ -18,18 +20,27 @@ class TtsAlertController: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var containerView: UIView!
-
+    @IBOutlet weak var crossButton: UIButton!
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var containerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fromLangLabelBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var toLangLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerViewtrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     ///Properties
     var ttsVM : TtsAlertViewModel!
     let cornerRadius : CGFloat = 15
     let fontSize : CGFloat = 20
+    let reverseFontSize : CGFloat = 22
     let trailing : CGFloat = -20
-    let width : CGFloat = 40
+    let width : CGFloat = 50
     let toastVisibleTime : CGFloat = 2.0
     var nativeLanguage : String = ""
     var targetLanguage : String = ""
     var delegate : SpeechControllerDismissDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
+    var microphoneButton : UIButton?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,16 +88,45 @@ class TtsAlertController: UIViewController {
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromTranslateLabel.textColor = UIColor._whiteColor()
 
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        microphoneButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
+        microphoneButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
+
+    /// Update UI for Reverse translation
+    func updateUIForReverse () {
+        self.crossButton.isHidden = false
+        self.bottomView.isHidden = true
+        self.microphoneButton?.isHidden = true
+        self.menuButton.isHidden = true
+        self.backButton.isHidden = true
+
+        self.updateConstraints()
+
+        let reversedToLanguageText = self.toLanguageLabel.text
+        let reveredFromLanguageText = self.fromLanguageLabel.text
+        self.toLanguageLabel.text = reveredFromLanguageText
+        self.fromLanguageLabel.text = reversedToLanguageText
+        self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+        self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+    }
+
+    /// Update constraints for Reverse translation
+    func updateConstraints () {
+        self.containerViewTopConstraint.constant = 20
+        self.containerViewtrailingConstraint.constant = 25
+        self.containerViewBottomConstraint.constant = 25
+        self.containerViewLeadingConstraint.constant = 25
+        self.toLangLabelTopConstraint.constant = 220
+        self.fromLangLabelBottomConstraint.constant = 60
     }
 
     @IBAction func menuTapAction(_ sender: UIButton) {
-        let vc = AlertReusable.init()
-        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
+        vc.reverseDelegate = self
         let navController = UINavigationController.init(rootViewController: vc)
+        navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
 
@@ -100,6 +140,11 @@ class TtsAlertController: UIViewController {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
 
+    // This method get called when cross button is tapped
+    @IBAction func crossActiioin(_ sender: UIButton) {
+        self.delegate?.dismiss()
+        self.dismiss(animated: true, completion: nil)
+    }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
         self.delegate?.dismiss()
@@ -120,4 +165,10 @@ class TtsAlertController: UIViewController {
     }
     */
 
+}
+
+extension TtsAlertController : ReverseDelegate {
+    func transitionFromReverse() {
+        self.updateUIForReverse()
+    }
 }
