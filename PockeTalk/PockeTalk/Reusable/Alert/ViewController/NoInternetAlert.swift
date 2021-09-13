@@ -64,11 +64,11 @@ extension NoInternetAlert: UITableViewDelegate, UITableViewDataSource {
         //internet_connection_error
         switch indexPath.row {
         case 0:
-            defaultCell.configureCell(title: NSLocalizedString("internet_connection_error", comment:""))
+            defaultCell.configureCell(title: "internet_connection_error".localiz())
         case 1:
-            defaultCell.configureCell(title: NSLocalizedString("connect_via_wifi", comment: ""))
+            defaultCell.configureCell(title: "connect_via_wifi".localiz())
         case 2:
-            defaultCell.configureCell(title: NSLocalizedString("cancel", comment: ""))
+            defaultCell.configureCell(title: "cancel".localiz())
         default:
             break
         }

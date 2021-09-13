@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol DismissPronunciationDelegate {
+    func dismissPro()
+}
 class PronunciationPracticeViewController: BaseViewController {
     
     @IBOutlet weak var viewSpeechTextContainer: UIView!
@@ -15,13 +17,18 @@ class PronunciationPracticeViewController: BaseViewController {
     @IBOutlet weak var btnBack: UIButton!
     let width : CGFloat = 50
     let trailing : CGFloat = -20
+    var delegate : DismissPronunciationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpUI()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = true
+    }
     // Initial UI set up
     func setUpUI () {
         self.setUpMicroPhoneIcon()
@@ -60,12 +67,7 @@ class PronunciationPracticeViewController: BaseViewController {
     }
     
     @IBAction func actionBack(_ sender: Any) {
-        self.showHome()
-    }
-    
-    func showHome () {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
-        self.navigationController?.pushViewController(controller, animated: true);
+        self.dismiss(animated: true, completion: nil)
+        self.delegate?.dismissPro()
     }
 }

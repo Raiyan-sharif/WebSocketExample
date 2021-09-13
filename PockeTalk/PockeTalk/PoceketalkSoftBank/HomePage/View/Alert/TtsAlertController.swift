@@ -47,6 +47,11 @@ class TtsAlertController: UIViewController {
         self.populateData()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+
     /// Initial UI set up
     func setUpUI () {
         self.containerView.layer.masksToBounds = true
@@ -81,17 +86,18 @@ class TtsAlertController: UIViewController {
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         vc.items = self.itemsToShowOnContextMenu
-        present(vc, animated: true, completion: nil)
+        let navController = UINavigationController.init(rootViewController: vc)
+        self.navigationController?.present(navController, animated: true, completion: nil)
     }
 
     // Populate item to show on context menu
     func populateData () {
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("history_add_fav", comment: ""), imageName: "icon_favorite_popup.png", menuType: .favorite))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("retranslation", comment: ""), imageName: "", menuType: .retranslation))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("reverse", comment: ""), imageName: "", menuType: .reverse))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("pronunciation_practice", comment: ""), imageName: "", menuType: .practice))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("send_an_email", comment: ""), imageName: "", menuType: .sendMail))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: NSLocalizedString("cancel", comment: ""), imageName: "", menuType: .cancel) )
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
 
     //Dismiss view on back button press

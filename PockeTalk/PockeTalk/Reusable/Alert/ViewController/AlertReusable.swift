@@ -25,6 +25,7 @@ class AlertReusable: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = true
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(items.count)
     }
 
@@ -47,6 +48,13 @@ class AlertReusable: UIViewController {
             UserDefaultsUtility.setBoolValue(true, forKey: kIsAlreadyFavorite)
             cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
         }
+    }
+
+    func showPracticeView () {
+        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     /*
     // MARK: - Navigation
@@ -98,11 +106,21 @@ extension AlertReusable: UITableViewDelegate, UITableViewDataSource {
         case .reverse:
             break
         case .practice :
+            showPracticeView()
             break
         case .sendMail :
             break
         case .cancel :
             self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension AlertReusable : DismissPronunciationDelegate {
+    func dismissPro() {
+        self.dismiss(animated: true, completion: nil)
+        if let transitionView = self.view{
+            UIView.transition(with:transitionView, duration: 0.2, options: .showHideTransitionViews, animations: nil, completion: nil)
         }
     }
 }

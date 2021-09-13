@@ -216,6 +216,7 @@ class GlobalMethod {
         controller.delegate = viewController as? SpeechControllerDismissDelegate
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        viewController?.present(controller, animated: true, completion: nil)
+        let navController = UINavigationController.init(rootViewController: controller)
+        viewController?.navigationController?.present(navController, animated: true, completion: nil)
     }
 }
