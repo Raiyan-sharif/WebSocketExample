@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B9710D126EF01EC00D68DEC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9710D026EF01EC00D68DEC /* MAAudioService.swift */; };
+		3BF7593126EF04F7005D3BDA /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7593026EF04F7005D3BDA /* SocketManager.swift */; };
 		4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137926DDCF59004A925D /* AppDelegate.swift */; };
 		4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137D26DDCF59004A925D /* BaseViewController.swift */; };
 		4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138226DDCF5D004A925D /* Assets.xcassets */; };
@@ -141,6 +143,8 @@
 
 /* Begin PBXFileReference section */
 		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		3B9710D026EF01EC00D68DEC /* MAAudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAudioService.swift; sourceTree = "<group>"; };
+		3BF7593026EF04F7005D3BDA /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137626DDCF59004A925D /* PockeTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PockeTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137926DDCF59004A925D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -302,6 +306,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3B9710CF26EF016000D68DEC /* WebsocketManager */ = {
+			isa = PBXGroup;
+			children = (
+				3B9710D026EF01EC00D68DEC /* MAAudioService.swift */,
+				3BF7593026EF04F7005D3BDA /* SocketManager.swift */,
+			);
+			path = WebsocketManager;
+			sourceTree = "<group>";
+		};
 		4A3AA83426E24E37008902F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +399,7 @@
 		4A66139D26DDEC91004A925D /* Utitlity */ = {
 			isa = PBXGroup;
 			children = (
+				3B9710CF26EF016000D68DEC /* WebsocketManager */,
 				4AD58E5A26DF6EBF0004FC38 /* Constants.swift */,
 				4AD58E5E26DF791E0004FC38 /* GlobalMethod.swift */,
 				4AD58E6226DF7DB60004FC38 /* Reachability.swift */,
@@ -1374,6 +1388,7 @@
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
+				3B9710D126EF01EC00D68DEC /* MAAudioService.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
@@ -1398,6 +1413,7 @@
 				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				4AD58E5B26DF6EBF0004FC38 /* Constants.swift in Sources */,
+				3BF7593126EF04F7005D3BDA /* SocketManager.swift in Sources */,
 				69C99F0F26E7449C00D853AB /* SpeechProcessingViewModel.swift in Sources */,
 				4AE97AE426E8E2BC007344FC /* BaseModel.swift in Sources */,
 				4AE97AD926E8E1E7007344FC /* ChatTable.swift in Sources */,

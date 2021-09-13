@@ -5,6 +5,8 @@ target 'PockeTalk' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+  pod 'Starscream', '~> 4.0.0'
+
   pod 'SQLite.swift', '~> 0.13.0'
 
   pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'

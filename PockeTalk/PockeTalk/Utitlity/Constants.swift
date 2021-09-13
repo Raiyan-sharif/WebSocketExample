@@ -96,3 +96,7 @@ let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
 let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
+
+// Socket url
+let SOCKET_CONNECTION_URL = "ws://localhost:3000" // TODO: Need to change
+

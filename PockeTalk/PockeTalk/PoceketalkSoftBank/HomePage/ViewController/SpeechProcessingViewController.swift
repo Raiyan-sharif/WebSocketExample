@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpeechProcessingViewController: UIViewController {
+class SpeechProcessingViewController: UIViewController{
     ///Views
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
@@ -45,7 +45,8 @@ class SpeechProcessingViewController: UIViewController {
     let springVelocity : CGFloat = 6.0
     var isFromPronunciationPractice: Bool = false
     var nativeLangCode : String = ""
-
+    var service : MAAudioService?
+    var socketManager = SocketManager.sharedInstance
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -54,6 +55,12 @@ class SpeechProcessingViewController: UIViewController {
         nativeLangCode = languageManager.nativeLanguage
         self.setUpUI()
         self.startTimer()
+        socketManager.socketManagerDelegate = self
+        service = MAAudioService(nil)
+        //service?.startRecord()
+//        service?.getData = {[weak self] data in
+//            self?.socketManager.sendVoiceData(data: data)
+//        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -141,6 +148,7 @@ class SpeechProcessingViewController: UIViewController {
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
+        //service?.stopRecord()
         let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
         if (currentTS - self.homeMicTapTimeStamp) <=  1 {
             self.showTutorial()
@@ -190,5 +198,12 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
         if let transitionView = self.view{
             UIView.transition(with:transitionView, duration: TimeInterval(self.transionDuration), options: .showHideTransitionViews, animations: nil, completion: nil)
         }
+    }
+}
+
+extension SpeechProcessingViewController : SocketManagerDelegate{
+    func getText(text: String) {
+    }
+    func getData(data: Data) {
     }
 }
