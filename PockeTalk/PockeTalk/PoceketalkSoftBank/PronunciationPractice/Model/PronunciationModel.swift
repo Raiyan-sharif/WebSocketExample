@@ -1,10 +1,3 @@
-//
-//  PronunciationModel.swift
-//  PockeTalk
-//
-//  Created by Kenedy Joy on 7/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
-//
 
 import Foundation
 import Differ
@@ -15,9 +8,10 @@ class PronunciationModel: BaseModel {
     private let PUNCTUATION_SPACE_NOT_NEEDED_LIST:[Character] = ["՚", "’", "'"]
     private let LANGUAGE_NOT_SPACE_SEPARATED:[String] = ["my", "zh-CN", "zh-TW", "ja", "km", "lo", "th", "yue"]
     private var mLanguageCode:String = ""
+    private let TAG:String = "PronunciationModel"
 
     public func generateDiff(original:String, practice:String, languageCode:String) -> [String] {
-        let diffMode = diffMode(languageCode: languageCode)
+        let diffMode = practiceMode(languageCode: languageCode)
         var modifiedOrginal = Array(original)
         var modifiedPractice = Array(practice)
         var orginalPunctuation = [Int:String]()
@@ -125,7 +119,6 @@ class PronunciationModel: BaseModel {
 
         // false = character mode
         // true = word mode
-        print("Diffmode(true = word mode) :", diffMode)
         if diffMode {
             originalText = String(modifiedOrginal).components(separatedBy: " ")
             practiceText = String(modifiedPractice).components(separatedBy: " ")
@@ -134,13 +127,11 @@ class PronunciationModel: BaseModel {
             practiceText = String(modifiedPractice).map {String($0)}
         }
 
-        print("before algorithm call orginalText : ", originalText)
-        print("before algorithm call practiceText : ", practiceText)
-
         let output = textDiff(original: originalText, practice: practiceText, diffMode: diffMode)
 
-        print("Algorithm output orginalText : ", output[0])
-        print("Algorithm output practiceText : ", output[1])
+        PrintUtility.printLog(tag: TAG, text: "Algorithm output orginalText : \(output[0])")
+        PrintUtility.printLog(tag: TAG, text: "Algorithm output practiceText : \(output[1])")
+
         let okMark = originalText.joined().trimmingCharacters(in: .whitespaces) == practiceText.joined().trimmingCharacters(in: .whitespaces)
 
         var result = [String]()
@@ -172,7 +163,6 @@ class PronunciationModel: BaseModel {
             }
         }
 
-        print("diff algorithm raw output : ", diff)
 
         var outputOrginal = String()
         for (index, element) in original.enumerated() {
@@ -206,7 +196,7 @@ class PronunciationModel: BaseModel {
     }
 
     private func postDiffProcess(output:String, punctuationList:Dictionary<Int, String>, caseSensitive:[Int], addSpaceList:[Int], removeSpaceList:[Int]) -> String {
-        let diffMode = diffMode(languageCode: mLanguageCode)
+        let diffMode = practiceMode(languageCode: mLanguageCode)
         var tempStr = output
 
         if diffMode {
@@ -226,7 +216,7 @@ class PronunciationModel: BaseModel {
         }
 
         for (key, value) in punctuationList.sorted(by: {$0.0 < $1.0}) {
-            print("Dict : ", key, ":", value)
+
             var range = key
             for (index, charcter) in tempStr.enumerated() {
                 if index == range {
@@ -290,12 +280,12 @@ class PronunciationModel: BaseModel {
             }
         }
 
-        print("final output : ", str.joined())
+
         let result = str.joined()
         return result
     }
 
-    private func diffMode(languageCode:String) -> Bool {
+    private func practiceMode(languageCode:String) -> Bool {
         for element in LANGUAGE_NOT_SPACE_SEPARATED {
             if element.contains(languageCode) {
                 return false
