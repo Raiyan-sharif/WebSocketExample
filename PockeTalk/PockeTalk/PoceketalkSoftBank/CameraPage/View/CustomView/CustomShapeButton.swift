@@ -3,6 +3,7 @@
 //  PockeTalk
 //
 //  Created by Md. Moshiour Rahman on 6/9/21.
+//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import Foundation

@@ -89,7 +89,7 @@ let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell";
 let KAlertReusable = "AlertReusableViewController"
 
 //Camera Constants
-//let ITTServerURL = URL(string: "http://test.elsecode.com/json/VisionAPIResponse10.php")! //TODO set server url
+let ITTServerURL = URL(string: "server url")! //TODO set server url
 let IMAGE_WIDTH:Int = 640
 let IMAGE_HEIGHT:Int = 853
 let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
