@@ -2,7 +2,6 @@
 //  CameraViewController.swift
 //  PockeTalk
 //
-//  Created by Md. Moshiour Rahman on 9/2/21.
 //
 
 
@@ -66,7 +65,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
 
     fileprivate func updateLanguageNames() {
-        print("\(HomeViewController.self) updateLanguageNames method called")
         let languageManager = LanguageSelectionManager.shared
         let fromLangCode = CameraLanguageSelectionViewModel.shared.fromLanguage
         let targetLangCode = CameraLanguageSelectionViewModel.shared.targetLanguage
@@ -100,7 +98,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Bloking point start , to open camera screen without camera
-        print("camera camera camera")
         previewLayer.videoGravity = .resizeAspectFill
         previewView.frame = view.bounds
         previewView.layer.addSublayer(previewLayer)
@@ -134,7 +131,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 
     @objc
     func didInterrupted() {
-        print(session.isInterrupted)
+        PrintUtility.printLog(tag: "Session", text: "\(session.isInterrupted)")
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -297,7 +294,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 
             configCamera(device) { device in
                 device.videoZoomFactor = resolvedScale
-                print("zoom: \(resolvedScale)")
                 DispatchQueue.main.async {
                     self.zoomLevel.text = String(format:"%.01f", resolvedScale) + "x"
                 }
@@ -423,14 +419,13 @@ extension CameraViewController {
 
 
     @IBAction func didTouchFlashButton(sender: UIButton) {
-        print("torch on")
         // check if the device has torch
         if activeCamera!.hasTorch {
             // lock your device for configuration
             do {
                 _ = try activeCamera!.lockForConfiguration()
             } catch {
-                print("aaaa")
+                PrintUtility.printLog(tag: "error", text: "")
             }
 
             // if flash is on turn it off, if turn off turn it on
@@ -441,7 +436,7 @@ extension CameraViewController {
                 do {
                     _ = try activeCamera!.setTorchModeOn(level: 1.0)
                 } catch {
-                    print("bbb")
+                    PrintUtility.printLog(tag: "error", text: "")
                 }
             }
             // unlock your device
