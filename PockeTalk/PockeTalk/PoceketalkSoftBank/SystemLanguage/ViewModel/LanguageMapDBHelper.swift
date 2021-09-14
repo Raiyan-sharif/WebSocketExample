@@ -7,7 +7,7 @@
 
 import SQLite
 
-class LanguageMapDBHelper : BaseModel, DataHelperProtocol {
+class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
     let TABLE_NAME = "LanguageMapTable"
     let table: Table
 
@@ -59,12 +59,12 @@ class LanguageMapDBHelper : BaseModel, DataHelperProtocol {
         }
     }
 
-    func insert(item: BaseModel) throws -> Int64 {
+    func insert(item: BaseEntity) throws -> Int64 {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        if let languageMapTable = item as? LanguageMapTable {
+        if let languageMapTable = item as? LanguageMapEntity {
             let insert = table.insert(textCode <- languageMapTable.textCode!, textCodeTr <- languageMapTable.textCodeTr!, textValueOne <- languageMapTable.textValueOne!, textValueTwo <- languageMapTable.textValueTwo!, textValueThree <- languageMapTable.textValueThree!, textValueFour <- languageMapTable.textValueFour!, textValueFive <- languageMapTable.textValueFive!, textValueSix <- languageMapTable.textValueSix!, textValueSeven <- languageMapTable.textValueSeven! )
             do {
                 let rowId = try DB.run(insert)
@@ -79,12 +79,12 @@ class LanguageMapDBHelper : BaseModel, DataHelperProtocol {
         throw DataAccessError.Nil_In_Data
     }
 
-     func delete (item: BaseModel) throws -> Void {
+     func delete (item: BaseEntity) throws -> Void {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        guard let languageMapTable = item as? LanguageMapTable else {
+        guard let languageMapTable = item as? LanguageMapEntity else {
             return
         }
 
@@ -102,28 +102,28 @@ class LanguageMapDBHelper : BaseModel, DataHelperProtocol {
 
     }
 
-     func find(idToFind: Int64) throws -> BaseModel? {
+     func find(idToFind: Int64) throws -> BaseEntity? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
         let query = table.filter(id == idToFind)
         let items = try DB.prepare(query)
         for item in  items {
-            return LanguageMapTable.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven])
+            return LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven])
         }
 
         return nil
 
     }
 
-     func findAll() throws -> [BaseModel]? {
+     func findAll() throws -> [BaseEntity]? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
-        var retArray = [BaseModel]()
+        var retArray = [BaseEntity]()
         let items = try DB.prepare(table)
         for item in items {
-            retArray.append(LanguageMapTable.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven]))
+            retArray.append(LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven]))
         }
 
         return retArray

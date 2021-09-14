@@ -37,12 +37,12 @@ class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
         }
     }
 
-    func insert(item: BaseModel) throws -> Int64 {
+    func insert(item: BaseEntity) throws -> Int64 {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        if let languageSelectionTable = item as? LanguageSelectionTable {
+        if let languageSelectionTable = item as? LanguageSelectionEntity {
             let insert = table.insert(textLanguageCode <- languageSelectionTable.textLanguageCode!, cameraOrVoice <- languageSelectionTable.cameraOrVoice!)
             do {
                 let rowId = try DB.run(insert)
@@ -57,12 +57,12 @@ class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
         throw DataAccessError.Nil_In_Data
     }
 
-    func delete (item: BaseModel) throws -> Void {
+    func delete (item: BaseEntity) throws -> Void {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        guard let languageSelectionTable = item as? LanguageSelectionTable else {
+        guard let languageSelectionTable = item as? LanguageSelectionEntity else {
             return
         }
 
@@ -80,28 +80,28 @@ class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
 
     }
 
-     func find(idToFind: Int64) throws -> BaseModel? {
+     func find(idToFind: Int64) throws -> BaseEntity? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
         let query = table.filter(id == idToFind)
         let items = try DB.prepare(query)
         for item in  items {
-            return LanguageSelectionTable.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice])
+            return LanguageSelectionEntity.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice])
         }
 
         return nil
 
     }
 
-     func findAll() throws -> [BaseModel]? {
+     func findAll() throws -> [BaseEntity]? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
-        var retArray = [BaseModel]()
+        var retArray = [BaseEntity]()
         let items = try DB.prepare(table)
         for item in items {
-            retArray.append(LanguageSelectionTable.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice]))
+            retArray.append(LanguageSelectionEntity.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice]))
         }
 
         return retArray

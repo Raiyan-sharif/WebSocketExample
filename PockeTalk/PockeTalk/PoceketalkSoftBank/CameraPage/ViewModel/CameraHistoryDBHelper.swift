@@ -7,7 +7,7 @@
 
 import SQLite
 
-class CameraHistoryDBHelper : BaseModel, DataHelperProtocol {
+class CameraHistoryDBHelper: BaseModel, DataHelperProtocol {
     let TABLE_NAME = "CameraHistoryTable"
     let table: Table
 
@@ -41,12 +41,12 @@ class CameraHistoryDBHelper : BaseModel, DataHelperProtocol {
         }
     }
 
-    func insert(item: BaseModel) throws -> Int64 {
+    func insert(item: BaseEntity) throws -> Int64 {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        if let cameraHistoryModel = item as? CameraHistoryTable {
+        if let cameraHistoryModel = item as? CameraEntity {
             let insert = table.insert(detectedData <- cameraHistoryModel.detectedData!, translatedData <- cameraHistoryModel.translatedData!, image <- cameraHistoryModel.image!)
             do {
                 let rowId = try DB.run(insert)
@@ -61,11 +61,11 @@ class CameraHistoryDBHelper : BaseModel, DataHelperProtocol {
         throw DataAccessError.Nil_In_Data
     }
 
-    func delete (item: BaseModel) throws -> Void {
+    func delete (item: BaseEntity) throws -> Void {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
-        guard let cameraHistoryModel = item as? CameraHistoryTable else {
+        guard let cameraHistoryModel = item as? CameraEntity else {
             return
         }
         if let findId = cameraHistoryModel.id {
@@ -81,27 +81,27 @@ class CameraHistoryDBHelper : BaseModel, DataHelperProtocol {
         }
     }
 
-    func find(idToFind: Int64) throws -> BaseModel? {
+    func find(idToFind: Int64) throws -> BaseEntity? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
         let query = table.filter(id == idToFind)
         let items = try DB.prepare(query)
         for item in  items {
-            return CameraHistoryTable.init(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image])
+            return CameraEntity.init(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image])
         }
 
         return nil
     }
 
-    func findAll() throws -> [BaseModel]? {
+    func findAll() throws -> [BaseEntity]? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
             throw DataAccessError.Datastore_Connection_Error
         }
-        var retArray = [BaseModel]()
+        var retArray = [BaseEntity]()
         let items = try DB.prepare(table)
         for item in items {
-            retArray.append(CameraHistoryTable(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image]))
+            retArray.append(CameraEntity(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image]))
         }
         return retArray
     }

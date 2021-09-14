@@ -100,3 +100,8 @@ let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 // Socket url
 let SOCKET_CONNECTION_URL = "ws://localhost:3000" // TODO: Need to change
 
+
+
+//MARK: - Database Constants
+
+let rowFetchPerScroll = 500

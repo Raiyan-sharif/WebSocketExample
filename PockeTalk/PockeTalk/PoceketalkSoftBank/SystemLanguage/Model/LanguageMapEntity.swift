@@ -3,11 +3,8 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 9/7/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
-//
 
-class LanguageMapTable: BaseModel {
-    var id: Int64?
+class LanguageMapEntity: BaseEntity {
     var textCode: String?
     var textCodeTr: String?
     var textValueOne: String?
@@ -19,7 +16,6 @@ class LanguageMapTable: BaseModel {
     var textValueSeven: String?
 
     init(id: Int64?, textCode: String, textCodeTr: String?, textValueOne: String?, textValueTwo: String?, textValueThree: String?, textValueFour: String?, textValueFive: String?, textValueSix: String?, textValueSeven: String?) {
-        self.id = id
         self.textCode = textCode
         self.textCodeTr = textCodeTr
         self.textValueOne = textValueOne
@@ -29,6 +25,6 @@ class LanguageMapTable: BaseModel {
         self.textValueFive = textValueFive
         self.textValueSix = textValueSix
         self.textValueSeven = textValueSeven
-        super.init()
+        super.init(baseId: id)
     }
 }
