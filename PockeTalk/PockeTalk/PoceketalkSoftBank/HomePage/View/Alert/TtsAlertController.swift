@@ -94,12 +94,7 @@ class TtsAlertController: BaseViewController {
 
     /// Update UI for Reverse translation
     func updateUIForReverse () {
-        self.crossButton.isHidden = false
-        self.bottomView.isHidden = true
-        self.microphoneButton?.isHidden = true
-        self.menuButton.isHidden = true
-        self.backButton.isHidden = true
-
+        updateViewShowHideStatus()
         self.updateConstraints()
 
         let reversedToLanguageText = self.toLanguageLabel.text
@@ -108,6 +103,23 @@ class TtsAlertController: BaseViewController {
         self.fromLanguageLabel.text = reversedToLanguageText
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+    }
+
+    /// Update UI for Retranslation
+    func updateUIForRetranslation () {
+        self.updateViewShowHideStatus()
+        self.updateConstraints()
+
+        self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+        self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+    }
+
+    func updateViewShowHideStatus () {
+        self.crossButton.isHidden = false
+        self.bottomView.isHidden = true
+        self.microphoneButton?.isHidden = true
+        self.menuButton.isHidden = true
+        self.backButton.isHidden = true
     }
 
     /// Update constraints for Reverse translation
@@ -124,6 +136,7 @@ class TtsAlertController: BaseViewController {
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
         vc.reverseDelegate = self
+        vc.retranslateDelegate = self
         let navController = UINavigationController.init(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -170,5 +183,11 @@ class TtsAlertController: BaseViewController {
 extension TtsAlertController : ReverseDelegate {
     func transitionFromReverse() {
         self.updateUIForReverse()
+    }
+}
+
+extension TtsAlertController : RetranslationDelegate {
+    func showRetranslation() {
+        self.updateUIForRetranslation()
     }
 }

@@ -7,6 +7,9 @@
 
 import UIKit
 import SwiftyXMLParser
+protocol RetranslationDelegate {
+    func showRetranslation ()
+}
 
 class LangSelectVoiceVC: BaseViewController {
 
@@ -32,6 +35,11 @@ class LangSelectVoiceVC: BaseViewController {
     let width : CGFloat = 50
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
+    /// retranslation delegate
+    var retranslationDelegate : RetranslationDelegate?
+
+    /// check if navigation from Retranslation
+    var fromRetranslation : Bool = false
     
     @IBOutlet weak var toolbarTitleLabel: UILabel!
 
@@ -191,7 +199,11 @@ class LangSelectVoiceVC: BaseViewController {
             LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
         }
         NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
+
         self.navigationController?.popViewController(animated: true)
+        if fromRetranslation == true {
+            self.retranslationDelegate?.showRetranslation()
+        }
     }
     
 }

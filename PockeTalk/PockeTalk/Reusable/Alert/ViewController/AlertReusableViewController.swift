@@ -20,6 +20,7 @@ class AlertReusableViewController: BaseViewController {
     let cornerRadius : CGFloat = 15.0
     let viewAlpha : CGFloat = 0.8
     var reverseDelegate : ReverseDelegate?
+    var retranslateDelegate : RetranslationDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,14 @@ class AlertReusableViewController: BaseViewController {
             UserDefaultsUtility.setBoolValue(true, forKey: kIsAlreadyFavorite)
             cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
         }
+    }
+
+    func retranslation () {
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        controller.retranslationDelegate = self
+        controller.fromRetranslation = true
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 
     func showPracticeView () {
@@ -113,6 +122,7 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         case .favorite:
             self.addFavorite(index: indexPath)
         case .retranslation :
+            self.retranslation()
             break
         case .reverse:
             self.reverseTranslation()
@@ -133,6 +143,18 @@ extension AlertReusableViewController : DismissPronunciationDelegate {
         self.dismiss(animated: true, completion: nil)
         if let transitionView = self.view{
             UIView.transition(with:transitionView, duration: 0.2, options: .showHideTransitionViews, animations: nil, completion: nil)
+        }
+    }
+}
+
+extension AlertReusableViewController : RetranslationDelegate {
+    func showRetranslation() {
+        DispatchQueue.main.async {
+            self.navigationController?.dismiss(animated: false, completion: nil)
+            if let transitionView = self.view{
+                UIView.transition(with:transitionView, duration: 0.8, options: .showHideTransitionViews, animations: nil, completion: nil)
+            }
+            self.retranslateDelegate?.showRetranslation()
         }
     }
 }
