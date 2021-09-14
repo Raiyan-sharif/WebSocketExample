@@ -38,3 +38,9 @@
 "Delete the Camera translation history" = "カメラ翻訳の履歴を削除";
 "Clear all Favorite" = "お気に入りを削除";
 "Delete all the data" = "すべてのデータを削除";
+"font_size" = "文字の大きさ";
+"Smallest" = "最小";
+"Small" = "小";
+"Medium" = "標準";
+"Large" = "大";
+"Largest" = "最大";

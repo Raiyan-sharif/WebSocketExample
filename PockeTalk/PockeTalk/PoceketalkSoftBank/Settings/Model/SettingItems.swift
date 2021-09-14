@@ -9,6 +9,7 @@
 import UIKit
 
 enum SettingsItemType: String, CaseIterable {
+    case textSize = "TextSize"
     case languageChange = "Language Change"
     case softBank = "SoftBank"
     case support = "Support"

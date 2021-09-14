@@ -55,6 +55,10 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         switch settingsType
         {
+        case SettingsItemType.textSize.rawValue:
+            let textSizeVC = TextSizeViewController()
+            textSizeVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(textSizeVC, animated: true, completion: nil)
         case SettingsItemType.languageChange.rawValue:
             PrintUtility.printLog(tag: "LanguageChage: ", text: "LanguageChage")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
@@ -76,7 +80,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             self.navigationController?.pushViewController(viewController, animated: true)
             PrintUtility.printLog(tag: "Reset: ", text: "Reset")
         default:
-            print("def")
+            break
 
         }
         
