@@ -2,13 +2,10 @@
 // TtsAlertViewModel.swift
 // PockeTalk
 //
-// Created by Shymosree on 9/8/21.
-// Copyright © 2021 BJIT Inc. All rights reserved.
-//
 
 import UIKit
 
-class TtsAlertViewModel: NSObject {
+class TtsAlertViewModel: BaseModel {
 
      func getLanguage() -> (nativaLanguage : LanguageItem?, targetLanguage : LanguageItem? ) {
         print("\(HomeViewController.self) updateLanguageNames method called")
@@ -18,7 +15,7 @@ class TtsAlertViewModel: NSObject {
 
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
-        print("\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
+        PrintUtility.printLog(tag: "Update Language Names: ", text: "\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
         return (nativeLanguage, targetLanguage)
     }
 

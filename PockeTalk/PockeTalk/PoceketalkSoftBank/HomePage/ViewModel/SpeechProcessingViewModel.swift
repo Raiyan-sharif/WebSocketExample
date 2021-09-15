@@ -2,14 +2,11 @@
 // SpeechProcessingViewModel.swift
 // PockeTalk
 //
-// Created by Shymosree on 9/7/21.
-// Copyright © 2021 BJIT Inc. All rights reserved.
-//
 
 import UIKit
 import SwiftyXMLParser
 
-class SpeechProcessingViewModel: NSObject {
+class SpeechProcessingViewModel: BaseModel {
     var speechProcessingLanList = [SpeechProcessingLanguages]()
 
     override init() {
@@ -29,7 +26,7 @@ class SpeechProcessingViewModel: NSObject {
                     speechProcessingLanList.append(SpeechProcessingLanguages(code: attributes["code"]!, initText: attributes["init_text"]!, exampleText : attributes["ex_text"]!, secText : attributes["sec_text"]!) )
                 }
             } catch {
-                print("Parse Error")
+                PrintUtility.printLog(tag: "LanguageChage: ", text: "Parse Error")
             }
         }
     }
