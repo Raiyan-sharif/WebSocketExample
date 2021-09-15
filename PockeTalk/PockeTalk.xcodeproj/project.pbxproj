@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B86A5BA26F0529800175073 /* BaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5B826F0529800175073 /* BaseData.swift */; };
+		3B86A5BB26F0529800175073 /* BaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5B926F0529800175073 /* BaseDelegate.swift */; };
+		3B86A5C626F0631600175073 /* Reset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5C526F0631600175073 /* Reset.storyboard */; };
+		3B86A5D026F0650900175073 /* ResetItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5CF26F0650900175073 /* ResetItems.swift */; };
+		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
+		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
+		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
 		3B9710D126EF01EC00D68DEC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9710D026EF01EC00D68DEC /* MAAudioService.swift */; };
+		3BD1F97326F196B600DDE606 /* PrintUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD1F97226F196B600DDE606 /* PrintUtility.swift */; };
 		3BF7593126EF04F7005D3BDA /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7593026EF04F7005D3BDA /* SocketManager.swift */; };
 		4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137926DDCF59004A925D /* AppDelegate.swift */; };
 		4A66137E26DDCF59004A925D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137D26DDCF59004A925D /* BaseViewController.swift */; };
@@ -154,7 +162,15 @@
 
 /* Begin PBXFileReference section */
 		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		3B86A5B826F0529800175073 /* BaseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseData.swift; sourceTree = "<group>"; };
+		3B86A5B926F0529800175073 /* BaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDelegate.swift; sourceTree = "<group>"; };
+		3B86A5C526F0631600175073 /* Reset.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reset.storyboard; sourceTree = "<group>"; };
+		3B86A5CF26F0650900175073 /* ResetItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetItems.swift; sourceTree = "<group>"; };
+		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
+		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
+		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
 		3B9710D026EF01EC00D68DEC /* MAAudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAudioService.swift; sourceTree = "<group>"; };
+		3BD1F97226F196B600DDE606 /* PrintUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintUtility.swift; sourceTree = "<group>"; };
 		3BF7593026EF04F7005D3BDA /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137626DDCF59004A925D /* PockeTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PockeTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,6 +344,50 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3B86A5C026F058C000175073 /* Reset */ = {
+			isa = PBXGroup;
+			children = (
+				3B86A5C426F0590500175073 /* Model */,
+				3B86A5C326F058F200175073 /* ViewController */,
+				3B86A5C226F058E500175073 /* View */,
+				3B86A5C126F058D500175073 /* ViewModel */,
+			);
+			path = Reset;
+			sourceTree = "<group>";
+		};
+		3B86A5C126F058D500175073 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3B86A5C226F058E500175073 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B86A5C526F0631600175073 /* Reset.storyboard */,
+				3B86A5D326F0846200175073 /* ResetTableViewCell.swift */,
+				3B86A5D426F0846200175073 /* ResetTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B86A5C326F058F200175073 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3B86A5D126F0675200175073 /* ResetViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		3B86A5C426F0590500175073 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3B86A5CF26F0650900175073 /* ResetItems.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3B9710CF26EF016000D68DEC /* WebsocketManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +481,7 @@
 		4A66139D26DDEC91004A925D /* Utitlity */ = {
 			isa = PBXGroup;
 			children = (
+				3BD1F97226F196B600DDE606 /* PrintUtility.swift */,
 				3B9710CF26EF016000D68DEC /* WebsocketManager */,
 				4AD58E5A26DF6EBF0004FC38 /* Constants.swift */,
 				4AD58E5E26DF791E0004FC38 /* GlobalMethod.swift */,
@@ -487,6 +548,8 @@
 			children = (
 				4AF85B4226F0E69A0039494B /* BaseDelegate.swift */,
 				4AF85B4026F0E68D0039494B /* BaseData.swift */,
+				3B86A5B826F0529800175073 /* BaseData.swift */,
+				3B86A5B926F0529800175073 /* BaseDelegate.swift */,
 				4AE97AE326E8E2BC007344FC /* BaseModel.swift */,
 				4A817E3C26F0621C0035D069 /* BaseEntity.swift */,
 				4A66137D26DDCF59004A925D /* BaseViewController.swift */,
@@ -593,6 +656,7 @@
 		4AF2608A26E073CD009C616E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3B86A5C026F058C000175073 /* Reset */,
 				96D123A326E86B29003F3572 /* ViewModel */,
 				89BC6EC326E21F1D0072BB0A /* View */,
 				89BC6EC226E21EEB0072BB0A /* ViewController */,
@@ -1348,11 +1412,13 @@
 				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
 				50193E0626E864570052F170 /* CountryListCollectionViewCell.xib in Resources */,
 				503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */,
+				3B86A5C626F0631600175073 /* Reset.storyboard in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
+				3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
@@ -1471,6 +1537,7 @@
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
+				3BD1F97326F196B600DDE606 /* PrintUtility.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
@@ -1478,6 +1545,7 @@
 				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				5007D5C626E71B71005B7C51 /* NotificationNames.swift in Sources */,
 				691FC67826EA09FD00259407 /* AlertMenuType.swift in Sources */,
+				3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
@@ -1506,6 +1574,7 @@
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,
 				4AF85B4326F0E69A0039494B /* BaseDelegate.swift in Sources */,
 				8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */,
+				3B86A5D026F0650900175073 /* ResetItems.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
@@ -1520,6 +1589,7 @@
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
+				3B86A5BB26F0529800175073 /* BaseDelegate.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionEntity.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
@@ -1532,8 +1602,10 @@
 				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
 				87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
+				3B86A5BA26F0529800175073 /* BaseData.swift in Sources */,
 				691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
+				3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */,
 				5007495826E7A0E2002FBBE2 /* LanguageItem.swift in Sources */,
 				693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */,
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,

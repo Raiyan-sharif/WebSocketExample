@@ -14,6 +14,7 @@ enum SettingsItemType: String, CaseIterable {
     case support = "Support"
     case userManual = "User Manual"
     case promotion = "Pocketalk Promotion"
+    case reset = "Reset"
     
     static var settingsItems: [String] {
         return SettingsItemType.allCases.map { $0.rawValue }

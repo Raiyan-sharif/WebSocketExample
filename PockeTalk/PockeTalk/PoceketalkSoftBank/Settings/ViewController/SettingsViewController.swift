@@ -56,20 +56,25 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         switch settingsType
         {
         case SettingsItemType.languageChange.rawValue:
-            print("languageChange")
+            PrintUtility.printLog(tag: "LanguageChage: ", text: "LanguageChage")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
         case SettingsItemType.softBank.rawValue:
-            print("softBank")
+            PrintUtility.printLog(tag: "softBank: ", text: "softBank")
             GlobalMethod.showAlert("Todo: Goto softBank screen.")
         case SettingsItemType.support.rawValue:
-            print("support")
+            PrintUtility.printLog(tag: "support: ", text: "support")
             GlobalMethod.openUrlInBrowser(url: SUPPORT_URL)
         case SettingsItemType.userManual.rawValue:
-            print("userManual")
+            PrintUtility.printLog(tag: "userManual: ", text: "userManual")
             GlobalMethod.openUrlInBrowser(url: USER_MANUAL_URL)
         case SettingsItemType.promotion.rawValue:
-            print("promotion")
+            PrintUtility.printLog(tag: "promotion: ", text: "promotion")
             GlobalMethod.openUrlInBrowser(url: PROMOTION_URL)
+        case SettingsItemType.reset.rawValue:
+            let storyboard = UIStoryboard.init(name: "Reset", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "ResetViewController") as! ResetViewController
+            self.navigationController?.pushViewController(viewController, animated: true)
+            PrintUtility.printLog(tag: "Reset: ", text: "Reset")
         default:
             print("def")
 
