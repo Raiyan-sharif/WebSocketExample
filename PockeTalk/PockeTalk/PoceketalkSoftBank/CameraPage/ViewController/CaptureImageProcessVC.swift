@@ -21,6 +21,7 @@ class CaptureImageProcessVC: BaseViewController {
         
         self.viewModel.viewDidLoad(self)
         self.cameraImageView.image = image
+        self.cameraImageView.backgroundColor = UIColor.white
         //self.viewModel.getDetectionData()
         self.viewModel.getITTServerDetectionData(resource: self.viewModel.createRequest())
     }
@@ -37,7 +38,7 @@ class CaptureImageProcessVC: BaseViewController {
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
-    func updateViewWith(textViews: [VerticalTextViewWithCoordinator]) {
+    func updateViewWith(textViews: [TextViewWithCoordinator]) {
         DispatchQueue.main.async {[self] in
             
             if textViews.count > 0 {

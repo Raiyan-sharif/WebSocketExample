@@ -1,19 +1,16 @@
 //
-//  ListVerticalTextViewFromBlockList.swift
+//  ParseTextDetection.swift
 //  PockeTalk
-//
-//  Created by BJIT LTD on 13/9/21.
 //
 
 import Foundation
 
-
-class ListVerticalTextViewFromBlockList {
+class ParseTextDetection {
     
-    func getListVerticalTextViewFromBlockList(detectedBlockList: [BlockDetection], completion: @escaping(_ data: [VerticalTextViewWithCoordinator])-> Void) {
+    func getListVerticalTextViewFromBlockList(detectedBlockList: [BlockDetection], completion: @escaping(_ data: [TextViewWithCoordinator])-> Void) {
         var x = 0
         var y = 0
-        var listBlockVerticalTextView = [VerticalTextViewWithCoordinator]()
+        var listBlockVerticalTextView = [TextViewWithCoordinator]()
         
         
         // TO DO: Delete it when camera functionality implementation is complete
@@ -55,7 +52,7 @@ class ListVerticalTextViewFromBlockList {
             textView.textAlignment = NSTextAlignment.justified
             textView.textColor = UIColor.red
             textView.font = .systemFont(ofSize: 14)
-            textView.backgroundColor = UIColor.green
+            textView.backgroundColor = UIColor.lightGray
             textView.isUserInteractionEnabled = false
 
             textView.text = each.text
@@ -97,25 +94,86 @@ class ListVerticalTextViewFromBlockList {
                     
             blockView.transform = CGAffineTransform(rotationAngle: (CGFloat(angle) * CGFloat.pi/180))
             
-            blockView.bounds.size.width =   width
-            blockView.bounds.size.height = height
+            blockView.bounds.size.width = height
+            blockView.bounds.size.height = width
             
             textView.frame.origin.x = blockView.bounds.origin.x
             textView.frame.origin.y = blockView.bounds.origin.y
             
             blockView.addSubview(textView)
             
-            listBlockVerticalTextView.append(VerticalTextViewWithCoordinator(view: blockView, X1: x, Y1: y))
+            listBlockVerticalTextView.append(TextViewWithCoordinator(view: blockView, X1: x, Y1: y))
             
         }
         
        completion(listBlockVerticalTextView)
     }
 
+func getListHorizontalTextViewFromBlockList(detectedBlockList: [BlockDetection], completion: @escaping(_ data: [TextViewWithCoordinator])-> Void) {
+    var listBlockVerticalTextView = [TextViewWithCoordinator]()
+    
+    for (index, each) in detectedBlockList.enumerated() {
+        let blockView = UITextView(frame:CGRect(x: 0, y: 0, width: 150, height: 75))
+        blockView.backgroundColor = .clear
+        //view.addSubview(blockView)
+
+        let textView = UITextView()
+        textView.contentInsetAdjustmentBehavior = .automatic
+        textView.center = blockView.center
+        textView.textAlignment = NSTextAlignment.justified
+        textView.textColor = UIColor.red
+        textView.font = .systemFont(ofSize: 14)
+        textView.backgroundColor = UIColor.lightGray
+        textView.isUserInteractionEnabled = false
+
+        textView.text = each.text
+        
+        textView.translatesAutoresizingMaskIntoConstraints = true
+            textView.sizeToFit()
+        textView.isScrollEnabled = false
+        
+
+        var width = CGFloat()
+        var height = CGFloat()
+        
+        let angle = PointUtils.getAngleFromVerticalLine(A: CGPoint(x: each.X1!,y: each.Y1!),  B: CGPoint(x: each.X2!,y: each.Y2!))
+        
+        if(!PointUtils.isVerticalBlock(CGPoint(x: each.X1!,y: each.Y1!), CGPoint(x: each.X2!,y: each.Y2!))) { // !Arrays.asList(CameraConstants.RIGHT_TO_LEFT_TEXT).contains(lanCode)
+            
+            width = PointUtils.distanceBetweenPoints(CGPoint(x: each.X1!, y: each.Y1!), CGPoint(x: each.X2!, y: each.Y2!))
+            
+            height = PointUtils.distanceBetweenPoints(CGPoint(x: each.X1!, y: each.Y1!), CGPoint(x: each.X4!, y: each.Y4!))
+            
+            if(each.rightLeftBlock == 0){
+                blockView.transform = CGAffineTransform(rotationAngle: .pi * -1)
+                
+               // verticalTextView.setGravity(Gravity.BOTTOM);
+            }
+        }
+        
+        PrintUtility.printLog(tag: "angle", text: "\(angle)")
+        PrintUtility.printLog(tag: "angle calculation", text: "\(CGFloat(angle))")
+                
+        blockView.transform = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
+        
+        blockView.bounds.size.width =   width
+        blockView.bounds.size.height = height
+        
+        textView.frame.origin.x = blockView.bounds.origin.x
+        textView.frame.origin.y = blockView.bounds.origin.y
+        
+        blockView.addSubview(textView)
+        
+        listBlockVerticalTextView.append(TextViewWithCoordinator(view: blockView, X1: each.X1!, Y1: each.Y1!))
+        
+    }
+    
+   completion(listBlockVerticalTextView)
 }
 
-struct VerticalTextViewWithCoordinator {
+}
+
+struct TextViewWithCoordinator {
     var view: UIView
     var X1, Y1: Int
 }
-

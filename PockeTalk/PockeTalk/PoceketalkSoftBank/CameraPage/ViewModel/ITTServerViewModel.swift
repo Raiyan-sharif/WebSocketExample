@@ -10,16 +10,16 @@ import UIKit
 
 protocol ITTServerViewModelDelegates {
 
-    func updateViewWith(textViews: [VerticalTextViewWithCoordinator])
+    func updateViewWith(textViews: [TextViewWithCoordinator])
 }
 
-class ITTServerViewModel {
+class ITTServerViewModel: BaseModel {
     
     var mXFactor:Float = 1
     var mYFactor:Float = 1
     
     private(set) var loaderdelegate: LoaderDelegate?
-    private(set) var listVerticalTextViewFromBlockList = ListVerticalTextViewFromBlockList()
+    private(set) var parseTextDetection = ParseTextDetection()
     private(set) var delegate: ITTServerViewModelDelegates?
     
     func viewDidLoad<T>(_ vc: T) {
@@ -81,8 +81,12 @@ class ITTServerViewModel {
                                 self!.getBlockListFromJson(data: detectedJSON) { [weak self] (result) in
                                     
                                     DispatchQueue.main.async {
-                                        self?.listVerticalTextViewFromBlockList.getListVerticalTextViewFromBlockList(detectedBlockList: result, completion: { (textViewList) in
-                                            self?.delegate?.updateViewWith(textViews: textViewList)
+                                        self?.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: result, completion: { (listTextView) in
+                                            
+                                            self?.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: result, completion: { (listTV) in
+                                                let textViewList = listTextView + listTV
+                                                self?.delegate?.updateViewWith(textViews: textViewList)
+                                            })
                                         })
                                         self?.loaderdelegate?.hideLoader()
                                     }

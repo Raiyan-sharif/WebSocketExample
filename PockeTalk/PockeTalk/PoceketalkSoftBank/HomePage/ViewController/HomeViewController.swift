@@ -171,7 +171,9 @@ class HomeViewController: BaseViewController {
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+        
+        //TODO change CaptureImageProcessVC to CameraViewController to capture image. This change is made to run on simulator
+        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
             self.navigationController?.pushViewController(cameraViewController, animated: true)
         }
     }
