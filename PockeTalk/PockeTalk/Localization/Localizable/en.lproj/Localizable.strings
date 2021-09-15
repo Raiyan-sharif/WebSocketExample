@@ -44,3 +44,10 @@
 "Medium" = "Medium";
 "Large" = "Large";
 "Largest" = "Largest";
+"msg_history_del_dialog"= "Do you really want to clear your translation history?";
+"msg_camera_history_del_dialog"= "Do you want to delete the camera translation history?";
+"msg_history_del_dialog_favorite" = "Would you like to delete Favorite?";
+"msg_all_data_reset" = "Are you sure you want to delete all the data?\nThis operation cannot be undone";
+"delete_all_data" = "Delete all the data";
+"cancel" = "Cancel";
+"clear" = "Clear";

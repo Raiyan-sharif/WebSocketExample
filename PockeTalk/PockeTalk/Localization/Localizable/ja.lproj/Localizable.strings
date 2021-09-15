@@ -44,3 +44,10 @@
 "Medium" = "標準";
 "Large" = "大";
 "Largest" = "最大";
+"msg_history_del_dialog"= "履歴を削除しますか？";
+"msg_camera_history_del_dialog"= "カメラ翻訳の履歴を削除しますか？";
+"msg_history_del_dialog_favorite" = "お気に入りを削除しますか？";
+"msg_all_data_reset" = "すべてのデータを削除しますか？\nこの操作は元に戻せません";
+"delete_all_data" = "すべてのデータを削除";
+"cancel" = "キャンセル";
+"clear" = "削除";

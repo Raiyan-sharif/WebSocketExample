@@ -9,7 +9,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var labelTopBarTilte: UILabel!
     
     @IBOutlet weak var btnBack: UIButton!
-    
+    private let TAG:String = "ResetViewController"
     
     @IBAction func actionBack(_ sender: Any) {
         navigationController?.popToViewController(ofClass: SettingsViewController.self)
@@ -49,6 +49,40 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         bgColorView.backgroundColor = UIColor._skyBlueColor()
         cell.selectedBackgroundView = bgColorView
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let resetDataType =  ResetItemType.resetItems[indexPath.row]
+        switch resetDataType {
+        case ResetItemType.clearTranslationHistory.rawValue:
+            let alert = AlertDialogUtility.showTranslationHistoryDialog()
+            self.present(alert, animated: true, completion: nil)
+            deSelectTableCell()
+            PrintUtility.printLog(tag: TAG, text: "Translation History")
+        case ResetItemType.deleteCameraHistory.rawValue:
+            let alert = AlertDialogUtility.showCameraTranslationHistoryDialog()
+            self.present(alert, animated: true, completion: nil)
+            deSelectTableCell()
+            PrintUtility.printLog(tag: TAG, text: "Camera History")
+        case ResetItemType.clearFavourite.rawValue:
+            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
+            self.present(alert, animated: true, completion: nil)
+            deSelectTableCell()
+            PrintUtility.printLog(tag: TAG, text: "Favourite Data")
+        case ResetItemType.deleteAllData.rawValue:
+            let alert = AlertDialogUtility.showDeleteAllDataDialog()
+            self.present(alert, animated: true, completion: nil)
+            deSelectTableCell()
+            PrintUtility.printLog(tag: TAG, text: "Delete all data")
+        default:
+            PrintUtility.printLog(tag: TAG, text: "Default click")
+        }
+    }
+    func deSelectTableCell(){
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                 tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
     }
 
 }
