@@ -18,6 +18,11 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var directionImageView: UIImageView!
     @IBOutlet weak var topSysLangName: UILabel!
     @IBOutlet weak var bottomLangNativeName: UILabel!
+    @IBOutlet weak var topCircleImgView: UIImageView!
+    @IBOutlet weak var bottomCircleleImgView: UIImageView!
+    @IBOutlet weak var topClickView: UIView!
+    @IBOutlet weak var bottomClickView: UIView!
+
     //Properties
     var homeVM : HomeViewModel!
     let FontSize : CGFloat = 23.0
@@ -27,6 +32,7 @@ class HomeViewController: BaseViewController {
     let animationDuration : TimeInterval = 1.0
     let trailing : CGFloat = -20
     let width : CGFloat = 100
+    private var selectedTab = 0
 
     ///Top button
     private lazy var topButton:UIButton = {
@@ -88,10 +94,16 @@ class HomeViewController: BaseViewController {
         topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
+        //Hide Circle Imageview at first
+        self.topCircleImgView.isHidden = true
+        self.bottomCircleleImgView.isHidden = true
+
         // Added down geture
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = .down
         self.view.addGestureRecognizer(swipeDown)
+
+
     }
 
     //TODO Menu tap event
@@ -191,16 +203,28 @@ class HomeViewController: BaseViewController {
         GlobalMethod.showAlert("Need implement favorite page")
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+               if touch.view == self.topClickView {
+                topCircleImgView.isHidden = false
+                selectedTab = 0
+               } else if touch.view == self.bottomClickView {
+                bottomCircleleImgView.isHidden = false
+                selectedTab = 1
+               }  else {
+                   return
+               }
+           }
     }
-    */
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            print(self!.selectedTab)
+            self?.topCircleImgView.isHidden = true
+            self?.bottomCircleleImgView.isHidden = true
+            self?.openLanguageSelectionScreen(isNative:self!.selectedTab)
+        }
+    }
 
     override func viewDidDisappear(_ animated: Bool) {
       
@@ -251,5 +275,4 @@ class HomeViewController: BaseViewController {
             self.goToHistoryScreen()
         }
     }
-
 }

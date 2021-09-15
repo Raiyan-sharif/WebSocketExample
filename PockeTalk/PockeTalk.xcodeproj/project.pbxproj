@@ -132,6 +132,7 @@
 		87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1926EB2FF600BF613B /* HistoryViewController.swift */; };
 		87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1E26EB302C00BF613B /* HistoryModel.swift */; };
 		87B56E6426EB710100BF613B /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E6326EB710100BF613B /* Extension+String.swift */; };
+		87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9F4E26F22DA1008B28E7 /* HighLight.swift */; };
 		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
 		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
@@ -331,6 +332,7 @@
 		87B56E1926EB2FF600BF613B /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		87B56E1E26EB302C00BF613B /* HistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		87B56E6326EB710100BF613B /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
+		87EC9F4E26F22DA1008B28E7 /* HighLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighLight.swift; sourceTree = "<group>"; };
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 			children = (
 				693D72F226E8878900F57533 /* Alert */,
 				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
+				87EC9F4E26F22DA1008B28E7 /* HighLight.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1519,7 +1522,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
-				ORGANIZATIONNAME = "Piklu Majumder-401";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					4A66137526DDCF59004A925D = {
 						CreatedOnToolsVersion = 11.0;
@@ -1747,6 +1750,8 @@
 				89495B5126F0ACEA00CEA19D /* BaseData.swift in Sources */,
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
+				89495B2F26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift in Sources */,
+				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
 				500AAFC026E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift in Sources */,
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,
 				4AF85B4326F0E69A0039494B /* BaseDelegate.swift in Sources */,
