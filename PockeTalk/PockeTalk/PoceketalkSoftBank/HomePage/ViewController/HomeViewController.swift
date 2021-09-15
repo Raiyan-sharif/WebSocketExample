@@ -2,6 +2,7 @@
 //  HomeViewController.swift
 //  PockeTalk
 //
+//  Created by Piklu Majumder-401 on 9/1/21.
 
 import UIKit
 
@@ -95,12 +96,10 @@ class HomeViewController: BaseViewController {
 
     //TODO Menu tap event
     @IBAction func menuAction(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Menu", bundle: nil)
-        guard let slideMenuController = storyboard.instantiateViewController(withIdentifier: String(describing: MenuViewController.self)) as? MenuViewController else {
-            return
+        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
+        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
+            self.navigationController?.pushViewController(settinsViewController, animated: true)
         }
-
-        self.navigationController?.pushViewController(slideMenuController, animated: true)
 
     }
 
@@ -168,6 +167,21 @@ class HomeViewController: BaseViewController {
         historyVC.modalTransitionStyle = .crossDissolve
         self.navigationController?.present(historyVC, animated: true, completion: nil)
     }
+
+    /// Navigate to Camera page
+    @IBAction func didTapOnCameraButton(_ sender: UIButton) {
+        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+            self.navigationController?.pushViewController(cameraViewController, animated: true)
+        }
+    }
+
+    /// Naviagete to Favorite page
+    @IBAction func didTapOnFavoriteButton(_ sender: UIButton) {
+        //TODO: Need to implement favorite page
+        GlobalMethod.showAlert("Need implement favorite page")
+    }
+
 
     /*
     // MARK: - Navigation

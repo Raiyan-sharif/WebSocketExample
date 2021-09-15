@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,12 +17,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mjI-JA-TBG">
-                                <rect key="frame" x="20" y="98" width="30" height="30"/>
+                                <rect key="frame" x="10" y="93" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="3jE-i8-ZZ3"/>
                                     <constraint firstAttribute="height" constant="30" id="eKY-mW-Way"/>
                                 </constraints>
-                                <state key="normal" image="btn_menu.9"/>
+                                <state key="normal" image="hamburger_menu_icon"/>
                                 <connections>
                                     <action selector="menuAction:" destination="y8L-Ms-o17" eventType="touchUpInside" id="WSd-GT-g9Y"/>
                                 </connections>
@@ -55,7 +54,7 @@
                                             <constraint firstAttribute="height" constant="100" id="zxU-1q-92e"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0To-dN-20N">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0To-dN-20N">
                                         <rect key="frame" x="20" y="483" width="374" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="cEp-eS-duJ"/>
@@ -76,7 +75,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvf-tD-tHq">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvf-tD-tHq">
                                         <rect key="frame" x="20" y="100" width="374" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="2Vl-o2-DU1"/>
@@ -123,17 +122,41 @@
                                     <constraint firstItem="sZt-1h-ZlQ" firstAttribute="leading" secondItem="c0d-DF-QGv" secondAttribute="leading" constant="10" id="zc5-r4-S0s"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-He-7j5" userLabel="Camera Button">
+                                <rect key="frame" x="374" y="93" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Gb6-Mf-5h4"/>
+                                    <constraint firstAttribute="width" constant="30" id="dQR-yI-K8F"/>
+                                </constraints>
+                                <state key="normal" image="icon_menu_camera"/>
+                                <connections>
+                                    <action selector="didTapOnCameraButton:" destination="y8L-Ms-o17" eventType="touchUpInside" id="QiB-mh-nUT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGf-dW-PHE" userLabel="Favorite Button">
+                                <rect key="frame" x="374" y="127" width="30" height="30"/>
+                                <state key="normal" image="icon_menu_favorite"/>
+                                <connections>
+                                    <action selector="didTapOnFavoriteButton:" destination="y8L-Ms-o17" eventType="touchUpInside" id="tKf-30-e7y"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="eoC-NK-acp"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="mjI-JA-TBG" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="10" id="4mw-nk-BdB"/>
-                            <constraint firstItem="mjI-JA-TBG" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" constant="20" id="5Xt-15-emG"/>
-                            <constraint firstItem="c0d-DF-QGv" firstAttribute="top" secondItem="mjI-JA-TBG" secondAttribute="bottom" constant="30" id="7Ji-Yk-6NC"/>
+                            <constraint firstItem="YGf-dW-PHE" firstAttribute="height" secondItem="oYg-He-7j5" secondAttribute="height" id="1c1-rS-JeI"/>
+                            <constraint firstItem="eoC-NK-acp" firstAttribute="trailing" secondItem="oYg-He-7j5" secondAttribute="trailing" constant="10" id="3P5-I9-dVU"/>
+                            <constraint firstItem="mjI-JA-TBG" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="5" id="4mw-nk-BdB"/>
+                            <constraint firstItem="mjI-JA-TBG" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" constant="10" id="5Xt-15-emG"/>
                             <constraint firstAttribute="bottom" secondItem="c0d-DF-QGv" secondAttribute="bottom" constant="120" id="FMh-at-LwK"/>
                             <constraint firstItem="c0d-DF-QGv" firstAttribute="trailing" secondItem="eoC-NK-acp" secondAttribute="trailing" id="Fge-my-wz3"/>
+                            <constraint firstItem="c0d-DF-QGv" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="70" id="T14-wd-VUO"/>
+                            <constraint firstItem="YGf-dW-PHE" firstAttribute="top" secondItem="oYg-He-7j5" secondAttribute="bottom" constant="4" id="ZOb-K8-OVo"/>
+                            <constraint firstItem="YGf-dW-PHE" firstAttribute="width" secondItem="oYg-He-7j5" secondAttribute="width" id="ZfF-pl-OUm"/>
                             <constraint firstItem="c0d-DF-QGv" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" id="Zvp-Pv-RwV"/>
+                            <constraint firstItem="YGf-dW-PHE" firstAttribute="centerX" secondItem="oYg-He-7j5" secondAttribute="centerX" id="hpb-Ll-gmi"/>
+                            <constraint firstItem="oYg-He-7j5" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="5" id="tIh-z8-UHD"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="eoC-NK-acp"/>
                     </view>
                     <navigationItem key="navigationItem" id="2fX-8O-dpP"/>
                     <connections>
@@ -183,10 +206,10 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yy-FF-Ahr">
                                         <rect key="frame" x="0.0" y="196" width="334" height="492"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="5eo-zD-BPe" secondAttribute="trailing" constant="20" id="6pY-by-5pd"/>
                                     <constraint firstAttribute="bottom" secondItem="5Yy-FF-Ahr" secondAttribute="bottom" constant="50" id="B7j-Wj-xpb"/>
@@ -212,7 +235,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="4Q3-WS-LCe"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4Q3-WS-LCe" firstAttribute="bottom" secondItem="2eN-ke-mdU" secondAttribute="bottom" constant="40" id="AmN-Ku-gp4"/>
@@ -222,6 +244,7 @@
                             <constraint firstItem="2eN-ke-mdU" firstAttribute="leading" secondItem="4Q3-WS-LCe" secondAttribute="leading" constant="40" id="TKN-j0-yte"/>
                             <constraint firstItem="4Q3-WS-LCe" firstAttribute="trailing" secondItem="2eN-ke-mdU" secondAttribute="trailing" constant="40" id="qiS-Gk-w0W"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="4Q3-WS-LCe"/>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="2eN-ke-mdU" id="RPC-22-5o4"/>
@@ -322,7 +345,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="W5T-iP-8ut"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="W5T-iP-8ut" firstAttribute="trailing" secondItem="Swp-UG-DP3" secondAttribute="trailing" constant="20" id="Cbv-u7-JQP"/>
@@ -338,6 +360,7 @@
                             <constraint firstItem="W5T-iP-8ut" firstAttribute="trailing" secondItem="fU0-0Y-PGZ" secondAttribute="trailing" constant="40" id="tLh-jY-dmC"/>
                             <constraint firstItem="fU0-0Y-PGZ" firstAttribute="top" secondItem="Swp-UG-DP3" secondAttribute="bottom" constant="10" id="wbE-va-v3L"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="W5T-iP-8ut"/>
                     </view>
                     <connections>
                         <outlet property="descriptionLabel" destination="fU0-0Y-PGZ" id="0gz-Ld-LCs"/>
@@ -469,7 +492,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="8IZ-xB-7Vz"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="s4c-gQ-DAh" firstAttribute="top" secondItem="Q1b-U2-IaS" secondAttribute="bottom" constant="-20" id="4f4-sx-z33"/>
@@ -485,6 +507,7 @@
                             <constraint firstItem="Q1b-U2-IaS" firstAttribute="leading" secondItem="8IZ-xB-7Vz" secondAttribute="leading" constant="15" id="tJ4-hm-fdf"/>
                             <constraint firstItem="s4c-gQ-DAh" firstAttribute="top" secondItem="GBr-oO-X6J" secondAttribute="bottom" constant="-20" id="xjN-p7-Kty"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="8IZ-xB-7Vz"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="Q1b-U2-IaS" id="AVf-gy-AXt"/>
@@ -534,15 +557,14 @@
         <image name="back_texture_white" width="480" height="640"/>
         <image name="btn_back_tempo" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
-        <image name="btn_menu.9" width="51" height="51"/>
         <image name="demo_mode_reboot_cancel_button" width="90" height="90"/>
         <image name="down_arrow" width="36" height="36"/>
         <image name="gradient_blue_bottom_bg" width="440" height="283"/>
         <image name="gradient_blue_top_bg" width="440" height="283"/>
+        <image name="hamburger_menu_icon" width="45" height="45"/>
         <image name="ic_anim_left_white" width="65" height="64"/>
         <image name="ic_anim_right_white" width="65" height="64"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="icon_menu_camera" width="45" height="45"/>
+        <image name="icon_menu_favorite" width="45" height="45"/>
     </resources>
 </document>
