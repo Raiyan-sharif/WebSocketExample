@@ -20,7 +20,6 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var bottomLangNativeName: UILabel!
     //Properties
     var homeVM : HomeViewModel!
-    var selected : Bool = false
     let FontSize : CGFloat = 23.0
     var animationCounter : Int = 0
     var deviceLanguage : String = ""
@@ -48,6 +47,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
+        setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
     }
     override func viewDidAppear(_ animated: Bool) {
         updateLanguageNames()
@@ -105,15 +105,22 @@ class HomeViewController: BaseViewController {
 
     // This method is called
     @IBAction func switchLanguageDirectionAction(_ sender: UIButton) {
-        if selected == true {
-            selected = false
-            self.directionImageView.image = UIImage(named: "down_arrow")
-            self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
-
-        } else {
-            selected = true
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            setLanguageDirection(isArrowUp: true)
+            UserDefaultsProperty<Bool>(kIsArrowUp).value = true
+        }else{
+            setLanguageDirection(isArrowUp: false)
+            UserDefaultsProperty<Bool>(kIsArrowUp).value = false
+        }
+    }
+    
+    func setLanguageDirection(isArrowUp: Bool){
+        if (isArrowUp){
             self.directionImageView.image = UIImage(named: "up_arrow")
             self.animationChange(transitionToImageView: self.bottomFlipImageView, transitionFromImageView: self.topFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromTop, imageName: "gradient_blue_bottom_bg")
+        }else{
+            self.directionImageView.image = UIImage(named: "down_arrow")
+            self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
         }
     }
 

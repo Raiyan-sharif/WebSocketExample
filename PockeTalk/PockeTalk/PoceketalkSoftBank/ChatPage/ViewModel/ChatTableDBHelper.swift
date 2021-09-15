@@ -17,6 +17,16 @@ enum IsDeleted: Int64 {
     case delete
 }
 
+enum IsTop: Int64 {
+    case noTop
+    case top
+}
+
+enum IsFavourite: Int64 {
+    case noFavourite
+    case favourite
+}
+
 enum RemoveStatus {
     case removeFavorite
     case removeHistory

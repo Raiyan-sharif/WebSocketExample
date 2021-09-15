@@ -450,6 +450,9 @@
                                             <constraint firstAttribute="width" constant="30" id="zrF-Zx-IgY"/>
                                         </constraints>
                                         <state key="normal" image="arrow_back_icon"/>
+                                        <connections>
+                                            <action selector="actionLanguageDirectionChange:" destination="C5R-Lo-wGP" eventType="touchUpInside" id="ueG-zK-2KG"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3je-NL-INB">
                                         <rect key="frame" x="192" y="25" width="150" height="24"/>

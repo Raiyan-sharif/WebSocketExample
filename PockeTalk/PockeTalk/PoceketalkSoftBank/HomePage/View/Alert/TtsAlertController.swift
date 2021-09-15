@@ -38,6 +38,8 @@ class TtsAlertController: BaseViewController {
     var delegate : SpeechControllerDismissDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var microphoneButton : UIButton?
+    var nativeText: String = ""
+    var targetText: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,13 @@ class TtsAlertController: BaseViewController {
 
         if let targetLangName = language.targetLanguage?.name {
             targetLanguage = targetLangName
+        }
+        let stt = self.ttsVM.getTranslationData()
+        if let nativeSTTText = stt.nativeText{
+            nativeText = nativeSTTText
+        }
+        if let targetSTTText = stt.targetText{
+            targetText = targetSTTText
         }
         self.setUpUI()
         self.populateData()
@@ -65,12 +74,12 @@ class TtsAlertController: BaseViewController {
         self.containerView.layer.masksToBounds = true
         self.containerView.layer.cornerRadius = cornerRadius
 
-        self.toLanguageLabel.text = NSLocalizedString("TtsToLanguage", comment: "")
+        self.toLanguageLabel.text = targetText
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
 
-        self.fromLanguageLabel.text = NSLocalizedString("TtsFromLanguage", comment: "")
+        self.fromLanguageLabel.text = nativeText
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromLanguageLabel.textColor = UIColor.gray
@@ -84,9 +93,14 @@ class TtsAlertController: BaseViewController {
         self.fromTranslateLabel.textAlignment = .left
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromTranslateLabel.textColor = UIColor._whiteColor()
-
+        
+        if(LanguageSelectionManager.shared.isArrowUp ?? true){
+            changeTranslationButton.image(for: UIControl.State.normal)
+        }
         microphoneButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
         microphoneButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        
+        setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
     }
 
     /// Update UI for Reverse translation
@@ -127,6 +141,26 @@ class TtsAlertController: BaseViewController {
         self.containerViewLeadingConstraint.constant = 25
         self.toLangLabelTopConstraint.constant = 220
         self.fromLangLabelBottomConstraint.constant = 60
+    }
+    
+    @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            setLanguageDirection(isArrowUp: true)
+            UserDefaultsProperty<Bool>(kIsArrowUp).value = true
+        }else{
+            setLanguageDirection(isArrowUp: false)
+            UserDefaultsProperty<Bool>(kIsArrowUp).value = false
+        }
+        self.delegate?.dismiss()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setLanguageDirection(isArrowUp: Bool){
+        if (isArrowUp){
+            self.changeTranslationButton.setImage(UIImage(named: "arrow_back_icon"), for: UIControl.State.normal)
+        }else{
+            self.changeTranslationButton.setImage(UIImage(named: "arrow_forward"), for: UIControl.State.normal)
+        }
     }
 
     @IBAction func menuTapAction(_ sender: UIButton) {
