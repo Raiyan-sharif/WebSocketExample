@@ -21,13 +21,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xh3-3a-Ruh">
                                 <rect key="frame" x="0.0" y="34" width="414" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-TX-jdk">
-                                        <rect key="frame" x="10" y="7" width="36" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-TX-jdk">
+                                        <rect key="frame" x="5" y="13" width="36" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="66e-aR-zRZ"/>
-                                            <constraint firstAttribute="height" constant="36" id="dUo-v7-ops"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="66e-aR-zRZ"/>
+                                            <constraint firstAttribute="height" constant="24" id="dUo-v7-ops"/>
                                         </constraints>
-                                        <state key="normal" image="arrow.backward" catalog="system"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="chevron.backward" catalog="system">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="OK">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="system" size="15"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="QSE-q6-FMb" eventType="touchUpInside" id="Vs8-fi-uaZ"/>
                                         </connections>
@@ -55,7 +65,7 @@
                                     <constraint firstItem="vfv-Oa-Jjd" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="3eu-Re-WLX"/>
                                     <constraint firstAttribute="trailing" secondItem="vfv-Oa-Jjd" secondAttribute="trailing" constant="10" id="7BE-aC-EtA"/>
                                     <constraint firstAttribute="height" constant="50" id="Fg8-AZ-49U"/>
-                                    <constraint firstItem="2aN-TX-jdk" firstAttribute="leading" secondItem="xh3-3a-Ruh" secondAttribute="leading" constant="10" id="Pf8-28-O32"/>
+                                    <constraint firstItem="2aN-TX-jdk" firstAttribute="leading" secondItem="xh3-3a-Ruh" secondAttribute="leading" constant="5" id="Pf8-28-O32"/>
                                     <constraint firstItem="kr3-Oa-3tp" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="gsH-Vc-ysR"/>
                                     <constraint firstItem="kr3-Oa-3tp" firstAttribute="centerX" secondItem="xh3-3a-Ruh" secondAttribute="centerX" id="kAA-Gp-nyW"/>
                                     <constraint firstItem="2aN-TX-jdk" firstAttribute="centerY" secondItem="xh3-3a-Ruh" secondAttribute="centerY" id="uhX-O4-s2v"/>
@@ -108,6 +118,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnBack" destination="2aN-TX-jdk" id="z0D-dd-cVW"/>
                         <outlet property="btnHistoryList" destination="j5a-GV-dFW" id="BQj-vG-LBw"/>
                         <outlet property="btnLangList" destination="pdz-fq-CgF" id="yz8-EU-nOo"/>
                         <outlet property="tabsView" destination="cHQ-jV-wOB" id="rcL-Td-2SP"/>
@@ -482,6 +493,7 @@
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="btn_country" width="40" height="40"/>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="icon_language_global_unselect" width="20" height="20"/>
         <image name="icon_language_history_unselect" width="20" height="20"/>
         <image name="language_selection_tutorial_bg" width="400" height="340"/>

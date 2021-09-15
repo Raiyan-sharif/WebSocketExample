@@ -10,7 +10,7 @@ import SwiftyXMLParser
 
 class CameraLanguageSelectionViewModel:BaseModel{
     public static let shared: CameraLanguageSelectionViewModel = CameraLanguageSelectionViewModel()
-    let TAG = CameraLanguageSelectionViewModel.self
+    let TAG = "\(CameraLanguageSelectionViewModel.self)"
     private var detectedLanguageItemsCamera = [LanguageItem]()
     public var targetLanguageItemsCamera: [LanguageItem] {
         get{
@@ -56,7 +56,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
 
     func  getLanguageInfoByCode(langCode: String, languageList: [LanguageItem]) -> LanguageItem? {
         for item in languageList{
-            print("\(CameraLanguageSelectionViewModel.self) langcode \(langCode) item.code \(item.code)")
+            PrintUtility.printLog(tag: TAG,text: "langcode \(langCode) item.code \(item.code)")
             if(langCode == item.code){
                 return item
             }
@@ -89,7 +89,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
     }
 
     public func getFromLanguageLanguageList() -> [LanguageItem]{
-        print("\(TAG) item-code getLanguageSelectionCameraData")
+        PrintUtility.printLog(tag: TAG,text: " item-code getLanguageSelectionCameraData")
         let autoRecogItem: LanguageItem?
         detectedLanguageItemsCamera.removeAll()
         if(LanguageManager.shared.currentLanguage.rawValue == systemLanguageCodeEN){
@@ -100,7 +100,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
             detectedLanguageItemsCamera.append(autoRecogItem!)
         }
         for item in LanguageSelectionManager.shared.languageItems{
-            print("\(TAG) item-code \(item.code) camra-contains \(mCameraLanguageCodes.contains(item.code))")
+            PrintUtility.printLog(tag: TAG,text: "item-code \(item.code) camra-contains \(mCameraLanguageCodes.contains(item.code))")
             if mCameraLanguageCodes.contains(item.code){
                 detectedLanguageItemsCamera.append(item)
             }
@@ -109,28 +109,62 @@ class CameraLanguageSelectionViewModel:BaseModel{
     }
 
     func loadCameraLanguageList() -> [String]?{
-        print("\(TAG) loadCameraLanguageList called")
+        PrintUtility.printLog(tag: TAG,text: "loadCameraLanguageList called")
         //let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
-        print("\(TAG) getdata for \(cameraLanguageDetectionCodeJsonFile)")
+        PrintUtility.printLog(tag: TAG,text: "getdata for \(cameraLanguageDetectionCodeJsonFile)")
         if let url = Bundle.main.url(forResource: cameraLanguageDetectionCodeJsonFile, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(DetectionCodes.self, from: data) as DetectionCodes
-                print("\(TAG) cameraDetectionCoded \(jsonData.detectionCodes.count) first-item \(String(describing: jsonData.detectionCodes.first))")
+                PrintUtility.printLog(tag: TAG,text: "cameraDetectionCoded \(jsonData.detectionCodes.count) first-item \(String(describing: jsonData.detectionCodes.first))")
                 return jsonData.detectionCodes
             } catch {
-                print("error:\(error)")
+                PrintUtility.printLog(tag: TAG,text: "error:\(error)")
                 return nil
             }
         }
         return nil
     }
 
+    func insertIntoDb(entity: LanguageSelectionEntity){
+        if let rowid = try? LanguageSelectionDBHelper().insert(item: entity){
+            PrintUtility.printLog(tag: TAG, text: "LanguageListFromDb \(String(describing: rowid)) inserted")
+        }
+    }
+
+    func getSelectedLanguageListFromDb() -> [LanguageItem]{
+        PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) LanguageListFromDb getSelectedLanguageListFromDb")
+        var langList = [LanguageItem]()
+        guard let langListFromDb = try? LanguageSelectionDBHelper().findAll(findFor: LanguageType.camera.rawValue) as? [LanguageSelectionEntity] else {
+            return langList
+        }
+        for item in langListFromDb {
+            //let lang = item as! LanguageSelectionTable
+            PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb cameraOrVocie \(String(describing: item.cameraOrVoice))")
+            let code = item.textLanguageCode
+            let langItem: LanguageItem?
+            if code == getFromLanguageLanguageList()[0].code{
+                langItem = getFromLanguageLanguageList()[0]
+            }else{
+                langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: code!)
+            }
+            PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb code \(String(describing: code)) langItem = \(String(describing: langItem?.name))")
+            langList.append(langItem!)
+
+        }
+        return langList
+    }
+
     func setDefaultLanguage(){
-        getFromLanguageLanguageList()
-        CameraLanguageSelectionViewModel.shared.fromLanguage = detectedLanguageItemsCamera[0].code
+        let langList = getFromLanguageLanguageList()
+        CameraLanguageSelectionViewModel.shared.fromLanguage = langList[0].code
         CameraLanguageSelectionViewModel.shared.targetLanguage =  "en"
+        let fromLangItem = getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.fromLanguage, languageList: langList)
+        let targetLangItem = getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.targetLanguage, languageList: langList)
+
+        insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: fromLangItem?.code, cameraOrVoice: LanguageType.camera.rawValue))
+        insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: targetLangItem?.code, cameraOrVoice: LanguageType.camera.rawValue))
     }
 }
 

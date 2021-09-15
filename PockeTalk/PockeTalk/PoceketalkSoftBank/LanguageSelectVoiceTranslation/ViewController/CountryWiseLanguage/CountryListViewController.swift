@@ -3,13 +3,12 @@
 //  PockeTalk
 //
 //  Created by Sadikul Bari on 8/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
 
-class CountryListViewController: UIViewController {
-
+class CountryListViewController: BaseViewController {
+    let TAG = "\(CountryListViewController.self)"
     @IBOutlet weak var viewEnglishName: UIView!
     @IBOutlet weak var countryNameLabel: UILabel!
     @IBOutlet weak var countryListCollectionView: UICollectionView!
@@ -26,7 +25,7 @@ class CountryListViewController: UIViewController {
     }
 
     @objc func clickOnEnglishButton(_ sender:UITapGestureRecognizer){
-        print("\(CountryListViewController.self) Clickedn on english button")
+        PrintUtility.printLog(tag: TAG, text: " Clickedn on english button")
         if dataShowingAsEnlish{
             dataShowingLanguageCode = sysLangCode
             countryList.removeAll()
@@ -67,7 +66,7 @@ class CountryListViewController: UIViewController {
             viewEnglishName.isHidden = false
         }
         configureCollectionView()
-        
+
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
         self.viewEnglishName.addGestureRecognizer(gesture)
     }
@@ -100,7 +99,7 @@ extension CountryListViewController : UICollectionViewDelegate{
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(CountryListViewController.self) didSelectItemAt clicked")
+        PrintUtility.printLog(tag: TAG, text: " didSelectItemAt clicked")
         let countryItem = countryList[indexPath.row] as CountryListItemElement
         showLanguageListScreen(item: countryItem)
     }

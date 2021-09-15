@@ -3,12 +3,11 @@
 //  PockeTalk
 //
 //  Created by Sadikul Bari on 9/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
 
-class LanguageSettingsTutorialVC: UIViewController {
+class LanguageSettingsTutorialVC: BaseViewController {
 
     @IBAction func onBackPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)

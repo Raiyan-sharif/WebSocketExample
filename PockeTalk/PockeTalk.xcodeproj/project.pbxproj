@@ -75,7 +75,6 @@
 		5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */; };
 		50675D5926EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50675D5826EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift */; };
 		50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50675D5A26EB26C100A775E5 /* LanguageListCameraVC.swift */; };
-		50675D5D26EB26D800A775E5 /* HistoryListCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50675D5C26EB26D800A775E5 /* HistoryListCameraVC.swift */; };
 		50675D5F26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50675D5E26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift */; };
 		50675D6126EB377F00A775E5 /* language_detection_codes.json in Resources */ = {isa = PBXBuildFile; fileRef = 50675D6026EB377F00A775E5 /* language_detection_codes.json */; };
 		506B93C326E74E530085BDDF /* default_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 506B93C226E74E530085BDDF /* default_languages.xml */; };
@@ -275,7 +274,6 @@
 		5064D19926E2A9A4006E6197 /* conversation_languages_en.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_en.xml; sourceTree = "<group>"; };
 		50675D5826EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLanguageSelectionViewModel.swift; sourceTree = "<group>"; };
 		50675D5A26EB26C100A775E5 /* LanguageListCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageListCameraVC.swift; sourceTree = "<group>"; };
-		50675D5C26EB26D800A775E5 /* HistoryListCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListCameraVC.swift; sourceTree = "<group>"; };
 		50675D5E26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageHistoryListCameraVC.swift; sourceTree = "<group>"; };
 		50675D6026EB377F00A775E5 /* language_detection_codes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = language_detection_codes.json; sourceTree = "<group>"; };
 		506B93C226E74E530085BDDF /* default_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default_languages.xml; sourceTree = "<group>"; };
@@ -866,7 +864,6 @@
 			children = (
 				503AEEBA26EB139F00B03978 /* LanguageSelectCameraVC.swift */,
 				50675D5A26EB26C100A775E5 /* LanguageListCameraVC.swift */,
-				50675D5C26EB26D800A775E5 /* HistoryListCameraVC.swift */,
 				50675D5E26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift */,
 			);
 			path = ViewController;

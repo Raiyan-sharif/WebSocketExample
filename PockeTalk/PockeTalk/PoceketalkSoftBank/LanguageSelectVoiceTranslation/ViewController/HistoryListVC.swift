@@ -3,35 +3,30 @@
 //  PockeTalk
 //
 //  Created by Sadikul Bari on 3/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
 
-class HistoryListVC: UIViewController {
-
+class HistoryListVC: BaseViewController {
+    let TAG = "\(HistoryListVC.self)"
     @IBOutlet weak var historyListTableView: UITableView!
     var pageIndex: Int!
-    let languages = [
-        Language(langNativeName: "English",langTranslateName: "English",langCode: "EN"),
-        Language(langNativeName: "Japanese",langTranslateName: "Japanese",langCode: "JP"),
-        Language(langNativeName: "Bangla",langTranslateName: "Bengali",langCode: "BN"),
-    ]
-
-    struct Language {
-        var langNativeName:String
-        var langTranslateName:String
-        var langCode:String
-    }
-
+    var languages = [LanguageItem]()
+    var isNative: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        isNative = UserDefaultsProperty<Int>(kIsNative).value!
+        if isNative == 1{
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
+        }else{
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.targetLanguage
+        }
         historyListTableView.delegate = self
         historyListTableView.dataSource = self
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         historyListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.historyListTableView.backgroundColor = UIColor.clear
-        // Do any additional setup after loading the view.
+        languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
     }
 
 }
@@ -43,22 +38,23 @@ class HistoryListVC: UIViewController {
 
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LangListCell",for: indexPath) as! LangListCell
-            cell.lableLangName.text = ("\(languages[indexPath.row].langNativeName)  \(languages[indexPath.row].langTranslateName)")
-            cell.imageLangItemSelector.isHidden = true
+            let languageItem = languages[indexPath.row]
+            cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
+            PrintUtility.printLog(tag: TAG, text: " value \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value)) languageItem.code \(languageItem.code)")
+            if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
+                cell.imageLangItemSelector.isHidden = false
+                cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
+                PrintUtility.printLog(tag: TAG, text: " matched lang \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value)) languageItem.code \(languageItem.code)")
+            }else{
+                cell.imageLangItemSelector.isHidden = true
+                cell.langListCellContainer.backgroundColor = .black
+            }
             return cell
         }
 
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            //tableView.deselectRow(at: indexPath, animated: false)
-            let cell = historyListTableView.cellForRow(at: indexPath) as! LangListCell
-            cell.langListCellContainer.backgroundColor = ._skyBlueColor()
-            cell.imageLangItemSelector.isHidden = false
+            let languageItem = languages[indexPath.row]
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
+            self.historyListTableView.reloadData()
         }
-
-        func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-            let cell = historyListTableView.cellForRow(at: indexPath) as! LangListCell
-            cell.langListCellContainer.backgroundColor = .black
-            cell.imageLangItemSelector.isHidden = true
-        }
-
     }

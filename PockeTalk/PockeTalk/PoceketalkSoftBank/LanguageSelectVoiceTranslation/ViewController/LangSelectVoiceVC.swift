@@ -12,10 +12,11 @@ protocol RetranslationDelegate {
 }
 
 class LangSelectVoiceVC: BaseViewController {
-
+    let TAG = "\(LangSelectVoiceVC.self)"
     @IBOutlet weak var tabsView: UIView!
     @IBOutlet weak var btnHistoryList: UIButton!
     @IBOutlet weak var btnLangList: UIButton!
+    @IBOutlet weak var btnBack: UIButton!
 
     var currentIndex: Int = 0
     let tagLanguageListVC = "LanguageListVC"
@@ -40,7 +41,7 @@ class LangSelectVoiceVC: BaseViewController {
 
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
-    
+
     @IBOutlet weak var toolbarTitleLabel: UILabel!
 
     @IBAction func onLangSelectButton(_ sender: Any) {
@@ -60,7 +61,7 @@ class LangSelectVoiceVC: BaseViewController {
         controller.isNative = isNative
         self.navigationController?.pushViewController(controller, animated: true);
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaultsProperty<Int>(kIsNative).value = isNative
@@ -120,7 +121,7 @@ class LangSelectVoiceVC: BaseViewController {
         floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // Refresh CollectionView Layout when you rotate the device
@@ -128,7 +129,7 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     func updateButton(index:Int){
-        print("Index position \(index)")
+        PrintUtility.printLog(tag: TAG, text: "Index position \(index)")
         if index == 0{
             btnLangList.backgroundColor = .black
             btnHistoryList.backgroundColor = .gray
@@ -144,7 +145,7 @@ class LangSelectVoiceVC: BaseViewController {
 
     func tabsViewDidSelectItemAt(position: Int) {
 
-        print("current-index \(currentIndex) position \(position)")
+        PrintUtility.printLog(tag: TAG, text: "current-index \(currentIndex) position \(position)")
         // Check if the selected tab cell position is the same with the current position in pageController, if not, then go forward or backward
         if position != currentIndex {
             if position > currentIndex {
@@ -173,31 +174,43 @@ class LangSelectVoiceVC: BaseViewController {
             return contentVC
         }
     }
-    
-    
+
+
     func objectToJson(from object:Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
         }
         return String(data: data, encoding: String.Encoding.utf8)
     }
-    
-    
+
+
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
         //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
     }
 
-    
+
     @IBAction func onBackButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
-        print("\(LangSelectVoiceVC.self) code \(selectedLanguageCode) isnativeval \(isNative)")
+        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if isNative == 1{
             LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
         }else{
             LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
         }
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+        _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+        //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
+        btnBack.isSelected = !btnBack.isSelected
+        btnBack.tintColor = .clear
+
+        if btnBack.isSelected{
+            btnBack.backgroundColor =  ._skyBlueColor()
+           }
+        else{
+            btnBack.backgroundColor =  .white
+         }
         NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
 
         self.navigationController?.popViewController(animated: true)
@@ -205,7 +218,7 @@ class LangSelectVoiceVC: BaseViewController {
             self.retranslationDelegate?.showRetranslation()
         }
     }
-    
+
 }
 
 

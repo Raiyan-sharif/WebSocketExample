@@ -9,7 +9,7 @@ import UIKit
 import SwiftyXMLParser
 
 class LanguageListCameraVC: BaseViewController {
-    let TAG = LanguageListCameraVC.self
+    let TAG = "\(LanguageListCameraVC.self)"
     @IBOutlet weak var langListTableView: UITableView!
     var pageIndex: Int!
     var languageItems = [LanguageItem]()
@@ -28,9 +28,9 @@ class LanguageListCameraVC: BaseViewController {
             languageItems = CameraLanguageSelectionViewModel.shared.targetLanguageItemsCamera
             UserDefaultsProperty<String>(KSelectedLanguageCamera).value = CameraLanguageSelectionViewModel.shared.targetLanguage
         }
-        print("\(TAG) isForFromLanguage \(listShowingForFromLanguage) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value))")
+        PrintUtility.printLog(tag: TAG , text: " isForFromLanguage \(listShowingForFromLanguage) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value))")
         
-        print("\(TAG) LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
+        PrintUtility.printLog(tag: TAG , text: " LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
         langListTableView.delegate = self
         langListTableView.dataSource = self
         let nib = UINib(nibName: "LangListCell", bundle: nil)
@@ -40,7 +40,7 @@ class LanguageListCameraVC: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
-        print("\(TAG) position \(selectedItemPosition)")
+        PrintUtility.printLog(tag: TAG , text: " position \(String(describing: selectedItemPosition))")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
     }
@@ -75,11 +75,11 @@ extension LanguageListCameraVC: UITableViewDataSource,UITableViewDelegate{
 
         let languageItem = languageItems[indexPath.row]
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
-        print("\(TAG) value \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
+        PrintUtility.printLog(tag: TAG , text: " value \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
         if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
             cell.imageLangItemSelector.isHidden = false
             cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
-            print("\(TAG) matched lang \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
+            PrintUtility.printLog(tag: TAG , text: " matched lang \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
         }else{
             cell.imageLangItemSelector.isHidden = true
             cell.langListCellContainer.backgroundColor = .black

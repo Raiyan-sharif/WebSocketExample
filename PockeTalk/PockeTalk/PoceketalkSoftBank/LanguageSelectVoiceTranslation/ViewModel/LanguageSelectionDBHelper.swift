@@ -7,7 +7,13 @@
 
 import SQLite
 
+enum LanguageType: Int64 {
+    case voice
+    case camera
+}
+
 class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
+    let TAG = "\(LanguageSelectionDBHelper.self)"
     let TABLE_NAME = "LanguageSelectionTable"
     let table: Table
 
@@ -43,6 +49,12 @@ class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
         }
 
         if let languageSelectionTable = item as? LanguageSelectionEntity {
+
+            if let itemInDb = try? LanguageSelectionDBHelper().find(entity: languageSelectionTable) as? LanguageSelectionEntity {
+                PrintUtility.printLog(tag: TAG, text: "LanguageListFromDb item \(String(describing: itemInDb.textLanguageCode)) found in db as \(itemInDb.cameraOrVoice)")
+                return -1
+            }
+
             let insert = table.insert(textLanguageCode <- languageSelectionTable.textLanguageCode!, cameraOrVoice <- languageSelectionTable.cameraOrVoice!)
             do {
                 let rowId = try DB.run(insert)
@@ -93,6 +105,35 @@ class LanguageSelectionDBHelper: BaseModel, DataHelperProtocol {
         return nil
 
     }
+
+     func find(entity: BaseEntity) throws -> BaseEntity? {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        guard let itemEntity = entity as? LanguageSelectionEntity else {
+            return nil
+        }
+        let query = table.filter(textLanguageCode == itemEntity.textLanguageCode!  && cameraOrVoice == itemEntity.cameraOrVoice!)
+        let items = try DB.prepare(query)
+        for item in  items {
+            return LanguageSelectionEntity.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice])
+        }
+        return nil
+    }
+
+    func findAll(findFor: Int64) throws -> [BaseEntity]? {
+       guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+           throw DataAccessError.Datastore_Connection_Error
+       }
+       let query = table.filter(cameraOrVoice == findFor)
+       var retArray = [BaseEntity]()
+       let items = try DB.prepare(query)
+       for item in items {
+           retArray.append(LanguageSelectionEntity.init(id: item[id], textLanguageCode: item[textLanguageCode], cameraOrVoice: item[cameraOrVoice]))
+       }
+
+       return retArray
+   }
 
      func findAll() throws -> [BaseEntity]? {
         guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {

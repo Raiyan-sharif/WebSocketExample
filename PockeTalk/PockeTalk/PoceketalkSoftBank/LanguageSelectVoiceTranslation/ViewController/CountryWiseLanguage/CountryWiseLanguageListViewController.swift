@@ -3,13 +3,12 @@
 //  PockeTalk
 //
 //  Created by Sadikul Bari on 9/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
 
-class CountryWiseLanguageListViewController: UIViewController {
-
+class CountryWiseLanguageListViewController: BaseViewController {
+    let TAG = "\(CountryWiseLanguageListViewController.self)"
     @IBOutlet weak var languageListCollectionView: UICollectionView!
     @IBOutlet weak var buttonOk: UIButton!
     @IBOutlet weak var countryNameLabel: UILabel!
@@ -24,13 +23,15 @@ class CountryWiseLanguageListViewController: UIViewController {
 
     @IBAction func onOkButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
-        print("\(LangSelectVoiceVC.self) code \(selectedLanguageCode) isnativeval \(isNative)")
+        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if isNative == 1{
             LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
         }else{
             LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
         }
-        print("\(CountryWiseLanguageListViewController.self) changed language to \(selectedLanguageCode)")
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+        LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+        PrintUtility.printLog(tag: TAG, text: "\(CountryWiseLanguageListViewController.self) changed language to \(selectedLanguageCode)")
         NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         for controller in self.navigationController!.viewControllers as Array {
             if controller.isKind(of: HomeViewController.self) {
@@ -47,7 +48,7 @@ class CountryWiseLanguageListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //buttonOk.backgroundColor = .clear
-        print("\(CountryListViewController.self) isNative \(isNative)")
+        PrintUtility.printLog(tag: TAG, text: " isNative \(isNative)")
         if isNative == 1{
             UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
         }else{
@@ -67,7 +68,7 @@ class CountryWiseLanguageListViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
-        print("\(CountryWiseLanguageListViewController.self) position \(selectedItemPosition)")
+        PrintUtility.printLog(tag: TAG, text: "position \(selectedItemPosition)")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.languageListCollectionView.scrollToItem(at: selectedIndexPath!, at: .centeredVertically, animated: true)
     }
@@ -83,7 +84,7 @@ class CountryWiseLanguageListViewController: UIViewController {
 
     func getSelectedItemPosition() -> Int{
         let selectedLangCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value
-        print("\(CountryWiseLanguageListViewController.self) searching for  \(selectedLangCode)")
+        PrintUtility.printLog(tag: TAG, text: "searching for  \(selectedLangCode)")
         for i in 0...languageList.count - 1 {
             let item = languageList[i]
             if  selectedLangCode == item.code{
@@ -94,13 +95,13 @@ class CountryWiseLanguageListViewController: UIViewController {
     }
 
     func getLanugageList(){
-        print("\(CountryWiseLanguageListViewController.self) getLanugageList \(String(describing: countryListItem?.languageList.count))")
+        PrintUtility.printLog(tag: TAG, text: "getLanugageList \(String(describing: countryListItem?.languageList.count))")
         let languageManager = LanguageSelectionManager.shared
         for item in countryListItem!.languageList{
-            print("\(CountryWiseLanguageListViewController.self) lang-code \(item)")
+            PrintUtility.printLog(tag: TAG, text: "lang-code \(item)")
             let language = languageManager.getLanguageInfoByCode(langCode: item)
             languageList.append(language!)
-            print("\(CountryWiseLanguageListViewController.self) lang-name \(String(describing: language?.name)) size \(String(describing: languageList.count))")
+            PrintUtility.printLog(tag: TAG, text: "lang-name \(String(describing: language?.name)) size \(String(describing: languageList.count))")
         }
     }
 }
@@ -123,7 +124,7 @@ extension CountryWiseLanguageListViewController : UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = languageList[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: langListCollectionViewCell.identifier, for: indexPath) as! langListCollectionViewCell
-        print("\(CountryWiseLanguageListViewController.self) showing as \(dataShowingLanguageCode)")
+        PrintUtility.printLog(tag: TAG, text: "showing as \(dataShowingLanguageCode)")
         if dataShowingLanguageCode == systemLanguageCodeEN{
             cell.languageNameLabel.text = "\(item.englishName) (\(item.name))"
         }else if dataShowingLanguageCode == systemLanguageCodeJP{
@@ -133,7 +134,7 @@ extension CountryWiseLanguageListViewController : UICollectionViewDataSource{
         if UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value == item.code{
             cell.imageLanguageSelection.isHidden = false
             cell.langListItemContainer.backgroundColor = UIColor(hex: "#008FE8")
-            print("\(CountryWiseLanguageListViewController.self) matched lang \(UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value) languageItem.code \(item.code)")
+            PrintUtility.printLog(tag: TAG, text: "matched lang \(String(describing: UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value)) languageItem.code \(item.code)")
         }else{
             cell.imageLanguageSelection.isHidden = true
             cell.langListItemContainer.backgroundColor = .black

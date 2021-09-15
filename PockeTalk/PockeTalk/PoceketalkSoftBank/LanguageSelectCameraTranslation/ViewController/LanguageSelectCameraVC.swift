@@ -8,7 +8,7 @@
 import UIKit
 
 class LanguageSelectCameraVC: BaseViewController {
-    let TAG = LanguageSelectCameraVC.self
+    let TAG = "\(LanguageSelectCameraVC.self)"
     @IBOutlet weak var tabsView: UIView!
     @IBOutlet weak var btnHistoryList: UIButton!
     @IBOutlet weak var btnLangList: UIButton!
@@ -19,7 +19,6 @@ class LanguageSelectCameraVC: BaseViewController {
     let iconGlobalUnSelect = "icon_language_global_unselect.png"
     let iconHistorySelect = "icon_language_history_select.png"
     let iconHistoryUnSelect = "icon_language_history_unselect.png"
-    var languageItems = [LanguageItem]()
     var mLanguageFile = "conversation_languages_en"
     var pageController: UIPageViewController!
     let langListArray:NSMutableArray = NSMutableArray()
@@ -106,7 +105,7 @@ class LanguageSelectCameraVC: BaseViewController {
     }
 
     func updateButton(index:Int){
-        print("Index position \(index)")
+        PrintUtility.printLog(tag: TAG , text: "Index position \(index)")
         if index == 0{
             btnLangList.backgroundColor = .black
             btnHistoryList.backgroundColor = .gray
@@ -122,7 +121,7 @@ class LanguageSelectCameraVC: BaseViewController {
 
     func tabsViewDidSelectItemAt(position: Int) {
 
-        print("current-index \(currentIndex) position \(position)")
+        PrintUtility.printLog(tag: TAG , text: "current-index \(currentIndex) position \(position)")
         // Check if the selected tab cell position is the same with the current position in pageController, if not, then go forward or backward
         if position != currentIndex {
             if position > currentIndex {
@@ -171,14 +170,29 @@ class LanguageSelectCameraVC: BaseViewController {
     @IBAction func onBackButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
         let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
-        print("\(TAG) code \(selectedLanguageCode) isnativeval \(langSelectFor)")
+        PrintUtility.printLog(tag: TAG , text: " isnativeval \(langSelectFor)")
         if langSelectFor! {
-            CameraLanguageSelectionViewModel.shared.fromLanguage = selectedLanguageCode
+            if isLanguageSupportRecognition(code: selectedLanguageCode){
+                PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) has recognition support")
+                CameraLanguageSelectionViewModel.shared.fromLanguage = selectedLanguageCode
+            }
         }else{
             CameraLanguageSelectionViewModel.shared.targetLanguage = selectedLanguageCode
         }
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
+        CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
         self.navigationController?.popViewController(animated: true)
+    }
+
+    func isLanguageSupportRecognition(code: String?) -> Bool{
+        let recogLangList = CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()
+        for item in recogLangList{
+            if code == item.code{
+                return true
+            }
+        }
+        return false
     }
 }
 
@@ -235,7 +249,7 @@ class LanguageSelectCameraVC: BaseViewController {
                 let vc = viewController as! LanguageListCameraVC
                 return vc.pageIndex
             case is HistoryListVC:
-                let vc = viewController as! HistoryListCameraVC
+                let vc = viewController as! LanguageHistoryListCameraVC
                 return vc.pageIndex
             default:
                 let vc = viewController as! LanguageListCameraVC
