@@ -14,7 +14,7 @@ public class PointUtils {
             var detectedLanCode: String = ""
             let pages = dataToParse.pages
             let numOfPages: Int = pages!.count
-            //print("# of pages = \(numOfPages)")
+            PrintUtility.printLog(tag: "# of pages ", text: "\(numOfPages)")
             for page in pages!{
                 let blocks = page.blocks
                 var pageText: String = ""
@@ -52,7 +52,9 @@ public class PointUtils {
                     }
                     var blockText1: String = "(x1,y1)(\(x1),\(y1))(x2,y2)(\(x2),\(y2))(x3,y3)(\(x3),\(y3))(x4,y4)(\(x4),\(y4))"
                     let blockBoundingBoxes = BoundingBoxs(vertices: [Vertexs(x: x1, y: y1), Vertexs(x: x2, y:y2), Vertexs(x:x3,y:y3), Vertexs(x:x4, y:y4)])
-                    //print("Bounding Box: \(blockText1)")
+                    
+                    PrintUtility.printLog(tag: " Bounding Box: ", text: "\(blockText1)")
+                    
                     if(isVerticalBlock(CGPoint(x:x1, y:y1), CGPoint(x: x2, y: y2))){
                         if isBottomTop(y1, y2){
                             bottomTopBlock = intBlockIndex
@@ -95,21 +97,19 @@ public class PointUtils {
                         blockText = blockText + paraText;
                     }
                     for element in listLanguageCodes {
-                        //print("element: \(element)")
+                        //
                     }
                     detectedLanCode = getMaxOccurrenceLanguage(listLanguageCodes, mDetectedLanguageCode)
                     detectedLanCode = getValidCode(detectedLanCode)
                     var blockElement = BlockElement(boundingBox: blockBoundingBoxes, bottomTopBlock: bottomTopBlock, rightLeftBlock: rightLeftBlock, text: blockText, detectedLanguage: detectedLanCode)
                     arrBlockElement.append(blockElement)
                     intBlockIndex += intBlockIndex
-                    //print("Block Text = ",blockText)
                     pageText += blockText
-                    //print(pageText)
                 }
                 blockClass = BlockClass(languageCodeFrom: mDetectedLanguageCode, blocks: arrBlockElement)
             }
         }
-        //print(dataToParse.text)
+        PrintUtility.printLog(tag: " data parse.text ", text: "\(dataToParse.text)")
         return blockClass
     }
     static func parseResponseForLine( dataToParse: FullTextAnnotation!, mDetectedLanguageCode: String, xFactor: Float, yFactor: Float) -> BlockClass{
@@ -118,7 +118,7 @@ public class PointUtils {
             var detectedLanCode: String = ""
             let pages = dataToParse.pages
             let numOfPages: Int = pages!.count
-            //print("# of pages = \(numOfPages)")
+            
             for page in pages!{
                 var pageText: String = ""
                 var intBlockIndex:Int = 0
@@ -330,6 +330,7 @@ public class PointUtils {
             return String(substring)
         }
         // Filipino has the code 'fil' and 'tl'(Tagalog). Our language mapping files uses 'tl' only. So in case we get 'fil' it need to converted to 'tl'
+        
         if languageCode == FILIPINO_FIL_LANGUAGE_CODE {
             return FILIPINO_TL_LANGUAGE_CODE
         }
@@ -384,5 +385,15 @@ public class PointUtils {
         let x = (B.x - A.x) * (B.x - A.x)
         let y = (B.y - A.y) * (B.y - A.y)
         return sqrt(y + x)
+    }
+    static func getAngleFromVerticalLine( A: CGPoint!,  B: CGPoint!) -> Float32 {
+            var result: Float32 = 0.0
+            let angle1: Float32 = Float32(((atan2(A.y - B.y, B.x - A.x))))
+            // y1-y2//x2-x1
+            result = Float32(((radToDegree(Double(angle1)))))
+            return result
+        }
+    static func degreeToRadian(_ number: Double) -> CGFloat {
+        return (CGFloat(number) * .pi) / 180
     }
 }

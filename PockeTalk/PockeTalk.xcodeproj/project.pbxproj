@@ -144,6 +144,27 @@
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
+		89495B2526F0A8C500CEA19D /* BlockDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2426F0A8C500CEA19D /* BlockDetection.swift */; };
+		89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */; };
+		89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2726F0A92300CEA19D /* PointUtils.swift */; };
+		89495B2C26F0A92300CEA19D /* VisionResponseJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2826F0A92300CEA19D /* VisionResponseJSONModel.swift */; };
+		89495B2F26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2E26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift */; };
+		89495B3126F0A97F00CEA19D /* ITTServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3026F0A97F00CEA19D /* ITTServerViewModel.swift */; };
+		89495B3426F0A9FC00CEA19D /* LoaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3326F0A9FC00CEA19D /* LoaderDelegate.swift */; };
+		89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3626F0AA2500CEA19D /* CustomLoaderProgressView.swift */; };
+		89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3726F0AA2600CEA19D /* RotationProgress.swift */; };
+		89495B3E26F0AA2600CEA19D /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3826F0AA2600CEA19D /* Animation.swift */; };
+		89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3926F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift */; };
+		89495B4026F0AA2600CEA19D /* AnimatedSLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */; };
+		89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */; };
+		89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */; };
+		89495B4826F0AAA500CEA19D /* URLRequest+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4526F0AAA500CEA19D /* URLRequest+Request.swift */; };
+		89495B4926F0AAA500CEA19D /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4626F0AAA500CEA19D /* WebService.swift */; };
+		89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */; };
+		89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */; };
+		89495B4E26F0AB2500CEA19D /* URL+Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4D26F0AB2500CEA19D /* URL+Urls.swift */; };
+		89495B5126F0ACEA00CEA19D /* BaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4F26F0ACEA00CEA19D /* BaseData.swift */; };
+		89495B5226F0ACEA00CEA19D /* BaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B5026F0ACEA00CEA19D /* BaseDelegate.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
@@ -310,6 +331,27 @@
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
+		89495B2426F0A8C500CEA19D /* BlockDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockDetection.swift; sourceTree = "<group>"; };
+		89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedJSONModel.swift; sourceTree = "<group>"; };
+		89495B2726F0A92300CEA19D /* PointUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointUtils.swift; sourceTree = "<group>"; };
+		89495B2826F0A92300CEA19D /* VisionResponseJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionResponseJSONModel.swift; sourceTree = "<group>"; };
+		89495B2E26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVerticalTextViewFromBlockList.swift; sourceTree = "<group>"; };
+		89495B3026F0A97F00CEA19D /* ITTServerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITTServerViewModel.swift; sourceTree = "<group>"; };
+		89495B3326F0A9FC00CEA19D /* LoaderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderDelegate.swift; sourceTree = "<group>"; };
+		89495B3626F0AA2500CEA19D /* CustomLoaderProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoaderProgressView.swift; sourceTree = "<group>"; };
+		89495B3726F0AA2600CEA19D /* RotationProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationProgress.swift; sourceTree = "<group>"; };
+		89495B3826F0AA2600CEA19D /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		89495B3926F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorProgressStrokeAnimation.swift; sourceTree = "<group>"; };
+		89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSLayer.swift; sourceTree = "<group>"; };
+		89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLResponse+Extension.swift"; sourceTree = "<group>"; };
+		89495B4526F0AAA500CEA19D /* URLRequest+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Request.swift"; sourceTree = "<group>"; };
+		89495B4626F0AAA500CEA19D /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
+		89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Reusable.swift"; sourceTree = "<group>"; };
+		89495B4D26F0AB2500CEA19D /* URL+Urls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Urls.swift"; sourceTree = "<group>"; };
+		89495B4F26F0ACEA00CEA19D /* BaseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseData.swift; sourceTree = "<group>"; };
+		89495B5026F0ACEA00CEA19D /* BaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDelegate.swift; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
@@ -500,6 +542,7 @@
 				5007D5C526E71B71005B7C51 /* NotificationNames.swift */,
 				691FC67726EA09FD00259407 /* AlertMenuType.swift */,
 				87B56E0326EB2DD000BF613B /* Bindable.swift */,
+				89495B4D26F0AB2500CEA19D /* URL+Urls.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -562,6 +605,8 @@
 				3B86A5B926F0529800175073 /* BaseDelegate.swift */,
 				873F8C3B26F064B900CD5F9B /* BaseData.swift */,
 				873F8C3A26F064B800CD5F9B /* BaseDelegate.swift */,
+				89495B4F26F0ACEA00CEA19D /* BaseData.swift */,
+				89495B5026F0ACEA00CEA19D /* BaseDelegate.swift */,
 				4AE97AE326E8E2BC007344FC /* BaseModel.swift */,
 				4A817E3C26F0621C0035D069 /* BaseEntity.swift */,
 				4A66137D26DDCF59004A925D /* BaseViewController.swift */,
@@ -989,12 +1034,17 @@
 		8782DEFD26E099A7003A1681 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				89495B4426F0AA8600CEA19D /* WebService */,
+				89495B3526F0AA1A00CEA19D /* Loader */,
+				89495B3226F0A9E100CEA19D /* Delegates */,
 				694BECA326E9CD8B004EFAB5 /* Alert */,
 				8782DEFF26E099BF003A1681 /* NibLoadable.swift */,
 				8782DEFE26E099BF003A1681 /* NibOwnerLoadable.swift */,
 				8782DF0126E099BF003A1681 /* Reusable.swift */,
 				8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */,
 				8782DF0026E099BF003A1681 /* UITableView+Reusable.swift */,
+				89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */,
+				89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -1115,6 +1165,37 @@
 				8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */,
 			);
 			path = CropViewController;
+			sourceTree = "<group>";
+		};
+		89495B3226F0A9E100CEA19D /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				89495B3326F0A9FC00CEA19D /* LoaderDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		89495B3526F0AA1A00CEA19D /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */,
+				89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */,
+				89495B3626F0AA2500CEA19D /* CustomLoaderProgressView.swift */,
+				89495B3726F0AA2600CEA19D /* RotationProgress.swift */,
+				89495B3826F0AA2600CEA19D /* Animation.swift */,
+				89495B3926F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift */,
+			);
+			path = Loader;
+			sourceTree = "<group>";
+		};
+		89495B4426F0AA8600CEA19D /* WebService */ = {
+			isa = PBXGroup;
+			children = (
+				89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */,
+				89495B4526F0AAA500CEA19D /* URLRequest+Request.swift */,
+				89495B4626F0AAA500CEA19D /* WebService.swift */,
+			);
+			path = WebService;
 			sourceTree = "<group>";
 		};
 		89A7B65626E5CBE800087537 /* View */ = {
@@ -1263,6 +1344,7 @@
 		96D123A126E86AF2003F3572 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				89495B3026F0A97F00CEA19D /* ITTServerViewModel.swift */,
 				4AE97AD026E8E0E6007344FC /* CameraHistoryDBHelper.swift */,
 			);
 			path = ViewModel;
@@ -1271,6 +1353,11 @@
 		96D123A226E86AFF003F3572 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				89495B2E26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift */,
+				89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */,
+				89495B2726F0A92300CEA19D /* PointUtils.swift */,
+				89495B2826F0A92300CEA19D /* VisionResponseJSONModel.swift */,
+				89495B2426F0A8C500CEA19D /* BlockDetection.swift */,
 				4AE97ACE26E8D33D007344FC /* CameraEntity.swift */,
 			);
 			path = Model;
@@ -1539,7 +1626,9 @@
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
+				89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
+				89495B3126F0A97F00CEA19D /* ITTServerViewModel.swift in Sources */,
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
@@ -1549,8 +1638,11 @@
 				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
 				3B9710D126EF01EC00D68DEC /* MAAudioService.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
+				89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				89495B3426F0A9FC00CEA19D /* LoaderDelegate.swift in Sources */,
+				89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBHelper.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				4AE97AE226E8E294007344FC /* LanguageMapDBHelper.swift in Sources */,
@@ -1567,6 +1659,8 @@
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
 				4AE97ACF26E8D33D007344FC /* CameraEntity.swift in Sources */,
+				4AE97ACF26E8D33D007344FC /* CameraEntity.swift in Sources */,
+				89495B4026F0AA2600CEA19D /* AnimatedSLayer.swift in Sources */,
 				4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */,
 				4AE97AE826E8E303007344FC /* DataHelperProtocol.swift in Sources */,
 				692E8DF626EB1D0B003F7636 /* NoInternetAlertTableViewCell.swift in Sources */,
@@ -1587,9 +1681,13 @@
 				87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */,
 				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
+				89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */,
+				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
 				50675D5D26EB26D800A775E5 /* HistoryListCameraVC.swift in Sources */,
+				89495B5126F0ACEA00CEA19D /* BaseData.swift in Sources */,
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
+				89495B2F26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift in Sources */,
 				500AAFC026E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift in Sources */,
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,
 				4AF85B4326F0E69A0039494B /* BaseDelegate.swift in Sources */,
@@ -1598,28 +1696,35 @@
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
+				89495B2526F0A8C500CEA19D /* BlockDetection.swift in Sources */,
 				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
 				500AAFC326E9B35900A3E4D9 /* langListCollectionViewCell.swift in Sources */,
 				892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				4AD58E9426DF8C1D0004FC38 /* UserDefaultsUtility.swift in Sources */,
+				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
+				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				873F8C4926F0760A00CD5F9B /* FontSelectionCell.swift in Sources */,
+				89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */,
+				89495B2C26F0A92300CEA19D /* VisionResponseJSONModel.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				3B86A5BB26F0529800175073 /* BaseDelegate.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionEntity.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
+				89495B5226F0ACEA00CEA19D /* BaseDelegate.swift in Sources */,
 				87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				4AD58E6326DF7DB60004FC38 /* Reachability.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				50193E0826E8876A0052F170 /* CountryFlagListViewModel.swift in Sources */,
+				89495B4826F0AAA500CEA19D /* URLRequest+Request.swift in Sources */,
 				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
 				87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */,
 				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
@@ -1637,8 +1742,10 @@
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				4AE97AE026E8E27A007344FC /* LanguageMapEntity.swift in Sources */,
 				89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */,
+				89495B4E26F0AB2500CEA19D /* URL+Urls.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
 				50675D5F26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift in Sources */,
+				89495B3E26F0AA2600CEA19D /* Animation.swift in Sources */,
 				503AEEBB26EB139F00B03978 /* LanguageSelectCameraVC.swift in Sources */,
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,
@@ -1648,6 +1755,8 @@
 				4AD58E5F26DF791E0004FC38 /* GlobalMethod.swift in Sources */,
 				89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */,
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
+				89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */,
+				89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,
 				8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatTableDBHelper.swift in Sources */,
