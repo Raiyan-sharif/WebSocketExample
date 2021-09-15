@@ -2,9 +2,6 @@
 //  HomeViewController.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/1/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
-//
 
 import UIKit
 
@@ -29,7 +26,7 @@ class HomeViewController: BaseViewController {
     let toastVisibleTime : Double = 2.0
     let animationDuration : TimeInterval = 1.0
     let trailing : CGFloat = -20
-    let width : CGFloat = 50
+    let width : CGFloat = 100
 
     ///Top button
     private lazy var topButton:UIButton = {

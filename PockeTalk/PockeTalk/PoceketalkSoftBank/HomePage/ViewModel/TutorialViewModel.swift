@@ -2,14 +2,11 @@
 // TutorialViewModel.swift
 // PockeTalk
 //
-// Created by Shymosree on 9/6/21.
-// Copyright © 2021 BJIT Inc. All rights reserved.
-//
 
 import UIKit
 import SwiftyXMLParser
 
-class TutorialViewModel: NSObject {
+class TutorialViewModel: BaseModel {
     var tutorialLanguageList = [TutorialLanguages]()
 
     override init() {
@@ -30,7 +27,7 @@ class TutorialViewModel: NSObject {
                     tutorialLanguageList.append(TutorialLanguages(code: attributes["code"]!, lineOne: attributes["line_1"]!, lineTwo : attributes["line_2"]!) )
                 }
             } catch {
-                print("Parse Error")
+                PrintUtility.printLog(tag: "Error :", text: "Parse Error")
             }
         }
     }

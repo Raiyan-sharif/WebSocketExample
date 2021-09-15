@@ -2,13 +2,10 @@
 // SpeechProcessingViewController.swift
 // PockeTalk
 //
-// Created by Shymosree on 9/7/21.
-// Copyright © 2021 BJIT Inc. All rights reserved.
-//
 
 import UIKit
 
-class SpeechProcessingViewController: UIViewController{
+class SpeechProcessingViewController: BaseViewController{
     ///Views
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
@@ -33,7 +30,7 @@ class SpeechProcessingViewController: UIViewController{
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
     let trailing : CGFloat = -20
-    let width : CGFloat = 50
+    let width : CGFloat = 100
     var homeMicTapTimeStamp : Int = 0
     var isSpeechProvided : Bool = false
     var timer: Timer?

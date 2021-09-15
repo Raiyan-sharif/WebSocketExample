@@ -2,9 +2,6 @@
 // TtsAlertController.swift
 // PockeTalk
 //
-// Created by Shymosree on 9/8/21.
-// Copyright © 2021 BJIT Inc. All rights reserved.
-//
 
 import UIKit
 protocol DismissReverseVieeDelegate {
@@ -34,7 +31,7 @@ class TtsAlertController: BaseViewController {
     let fontSize : CGFloat = 20
     let reverseFontSize : CGFloat = 22
     let trailing : CGFloat = -20
-    let width : CGFloat = 50
+    let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
     var nativeLanguage : String = ""
     var targetLanguage : String = ""
