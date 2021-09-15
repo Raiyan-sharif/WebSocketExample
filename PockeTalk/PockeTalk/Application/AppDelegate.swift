@@ -2,7 +2,6 @@
 //  AppDelegate.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 8/31/21.
 
 import UIKit
 
@@ -15,23 +14,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Database create tables
         _ = try? SQLiteDataStore.sharedInstance.createTables()
 
-        //Set initial view controller
-        if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
-            let navVC = NavigationViewController()
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = navVC
-            window?.makeKeyAndVisible()
-            navVC.pushViewController(SystemLanguageViewController(), animated: false)
-        }else{
-            LanguageSelectionManager.shared.getLanguageSelectionData()
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-            let navigationController = UINavigationController.init(rootViewController: viewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-        }
+        /// Set initial language of the application
+        setInitialLangue()
+
+        LanguageSelectionManager.shared.getLanguageSelectionData()
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        let navigationController = UINavigationController.init(rootViewController: viewController)
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
         return true
+    }
+
+    /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
+    func setInitialLangue () {
+        var locale = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
+        if (locale != systemLanguageCodeEN) && (locale != systemLanguageCodeJP) {
+            locale = systemLanguageCodeEN
+        }
+        LanguageManager.shared.setLanguage(language: Languages(rawValue: locale) ?? .en)
+        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
     }
 }
 
