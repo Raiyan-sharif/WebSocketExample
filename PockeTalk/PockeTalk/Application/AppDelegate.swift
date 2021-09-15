@@ -3,8 +3,6 @@
 //  PockeTalk
 //
 //  Created by Piklu Majumder-401 on 8/31/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
-//
 
 import UIKit
 
@@ -14,6 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        //Database create tables
+        _ = try? SQLiteDataStore.sharedInstance.createTables()
+
         //Set initial view controller
         if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
             let navVC = NavigationViewController()
