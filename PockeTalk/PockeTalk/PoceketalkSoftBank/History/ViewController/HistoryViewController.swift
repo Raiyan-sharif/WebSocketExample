@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HistoryViewControllerDelegates {
+    func historyAllItemsDeleted()
+}
+
 class HistoryViewController: BaseViewController {
 
     ///History Layout to postion the cell
@@ -19,6 +23,8 @@ class HistoryViewController: BaseViewController {
     var  isCollectionViewVisible = false
     var loclItems = [HistoryModel]()
     var historyViewModel:HistoryViewModeling!
+    
+    private(set) var delegate: HistoryViewControllerDelegates?
 
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
@@ -45,6 +51,10 @@ class HistoryViewController: BaseViewController {
         }
         bindData()
 
+    }
+    
+    func initDelegate<T>(_ vc: T) {
+            self.delegate = vc.self as? HistoryViewControllerDelegates
     }
     
     private func setUpCollectionView(){
@@ -85,9 +95,16 @@ class HistoryViewController: BaseViewController {
 
     func bindData(){
         historyViewModel.items.bindAndFire { [weak self] items in
+            if items.count == 0{
+                DispatchQueue.main.async {
+                    self?.dismiss(animated: true, completion: nil)
+                    self?.delegate?.historyAllItemsDeleted()
+                }
+            }
             if items.count > 0{
-                //Todo
-                self?.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             }
         }
     }
@@ -109,11 +126,21 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         }else{
             cell.childView.backgroundColor = UIColor._skyBlueColor()
         }
+        PrintUtility.printLog(tag: "FV:Controller", text: "\(String(describing: item.chatIsLiked))")
+        if item.chatIsLiked == IsLiked.noLike.rawValue{
+            cell.hideFavourite()
+        }else{
+            cell.showAsFavourite()
+        }
+
+        //TODO if fabourite
+
         cell.deleteItem = { [weak self] point in
             guard let `self`  = self else {
                 return
             }
-            let indexpath = collectionView.indexPathForItem(at: point)!
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.historyViewModel.deleteHistory(indexpath.item)
             self.collectionView.performBatchUpdates{
                 self.collectionView.deleteItems(at: [indexpath])
@@ -124,15 +151,15 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             guard let `self`  = self else {
                 return
             }
-            let indexpath = collectionView.indexPathForItem(at: point)!
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            self.historyViewModel.makeFavourite(indexpath.item)
+            self.collectionView.reloadItems(at: [indexpath])
         }
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
-    }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if collectionView.contentSize.height+100 < (scrollView.contentOffset.y+collectionView.bounds.height) && isCollectionViewVisible{
             isCollectionViewVisible = false
             
@@ -170,8 +197,6 @@ extension HistoryViewController:HistoryLayoutDelegate{
         
         let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width, font: font)
         let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width, font: font)
-        //        print(fromHeight)
-        //        print(toHeight)
         return 20 + fromHeight + 120 + toHeight + 40
     }
 }

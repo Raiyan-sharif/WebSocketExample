@@ -191,7 +191,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
         }
 
         var query = table.filter(chatIsDelete == IsDeleted.noDelete.rawValue)
-            .order(id.desc)
+            .order(id.asc)
           //  .limit(lowLimit, offset: rowFaced)
 
         if isFavorite {
@@ -216,6 +216,8 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
 
         let maxFav = try getMaxFavouriteId()!
         let query = table.filter(idToCompare == id)
+        
+        PrintUtility.printLog(tag: "DB", text: "\(isliked.rawValue)")
 
         do {
             try DB.run(query.update(chatIsLiked <- isliked.rawValue, chatIsFavorite <- (maxFav + 1)))
@@ -309,7 +311,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
             throw DataAccessError.Datastore_Connection_Error
         }
 
-        var query = table.filter(chatIsLiked == IsLiked.noLike.rawValue)
+        var query = table.filter(chatIsDelete == IsDeleted.noDelete.rawValue)
         if isFavorite {
             query = table.filter(chatIsLiked == IsLiked.like.rawValue)
         }

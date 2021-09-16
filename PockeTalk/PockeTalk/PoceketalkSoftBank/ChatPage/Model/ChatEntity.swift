@@ -11,7 +11,7 @@ class ChatEntity: BaseEntity {
     let textTranslated: String?
     let textTranslatedLanguage: String?
     let textNativeLanguage: String?
-    let chatIsLiked: Int64?
+    var chatIsLiked: Int64?
     let chatIsTop: Int64?
     let chatIsDelete: Int64?
     let chatIsFavorite: Int64?

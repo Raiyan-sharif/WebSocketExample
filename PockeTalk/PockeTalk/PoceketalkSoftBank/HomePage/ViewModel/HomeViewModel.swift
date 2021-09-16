@@ -13,4 +13,14 @@ class HomeViewModel: BaseModel {
         let current = Locale.current
         return current.localizedString(forLanguageCode : deviceLan)
     }
+    
+    
+    func getHistoryItemCount() -> Int{
+        var historyItemCount = 0
+        do{
+            historyItemCount =  try ChatTableDBHelper().getRowCount(isFavorite: false)
+        } catch{}
+        
+        return historyItemCount
+    }
 }

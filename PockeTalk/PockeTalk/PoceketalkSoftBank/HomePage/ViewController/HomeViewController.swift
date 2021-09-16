@@ -33,7 +33,9 @@ class HomeViewController: BaseViewController {
     let trailing : CGFloat = -20
     let width : CGFloat = 100
     private var selectedTab = 0
-
+    var historyItemCount = 0
+    var swipeDown = UISwipeGestureRecognizer()
+    
     ///Top button
     private lazy var topButton:UIButton = {
         let button = UIButton(type: .custom)
@@ -54,7 +56,10 @@ class HomeViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+        historyItemCount =  homeVM.getHistoryItemCount()
+        updateHistoryViews()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         updateLanguageNames()
     }
@@ -99,11 +104,26 @@ class HomeViewController: BaseViewController {
         self.bottomCircleleImgView.isHidden = true
 
         // Added down geture
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
 
 
+    }
+    
+    func updateHistoryViews(){
+        // Add top button
+        if(historyItemCount>0){
+            view.addSubview(topButton)
+            topButton.translatesAutoresizingMaskIntoConstraints = false
+            topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            topButton.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+            topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            self.view.addGestureRecognizer(swipeDown)
+        }else{
+            topButton.removeFromSuperview()
+            self.view.removeGestureRecognizer(swipeDown)
+        }
     }
 
     //TODO Menu tap event
@@ -184,6 +204,7 @@ class HomeViewController: BaseViewController {
     @objc func goToHistoryScreen () {
         let historyVC = HistoryViewController()
         historyVC.modalTransitionStyle = .crossDissolve
+        historyVC.initDelegate(self)
         self.navigationController?.present(historyVC, animated: true, completion: nil)
     }
 
@@ -277,7 +298,16 @@ class HomeViewController: BaseViewController {
     // Down ward gesture
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .ended{
-            self.goToHistoryScreen()
+            if(historyItemCount > 0){
+                self.goToHistoryScreen()
+            }
         }
+    }
+}
+
+extension HomeViewController: HistoryViewControllerDelegates{
+    func historyAllItemsDeleted() {
+        topButton.removeFromSuperview()
+        self.view.removeGestureRecognizer(swipeDown)
     }
 }

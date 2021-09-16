@@ -3,7 +3,6 @@
 //  PockeTalk
 //
 //  Created by Morshed Alam on 9/6/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
@@ -85,10 +84,10 @@ class HistoryCell: UICollectionViewCell,NibReusable {
                     favImagView.tintColor = UIColor.orange
                     favView.backgroundColor = .orange
                     target!.center = CGPoint(x:self.bounds.maxX*2, y: viewCenter!.y)
-                    self.favouriteItem?(initialCenter)
+                    self.favouriteItem?(self.center)
                 }else{
                     target!.center = CGPoint(x: -self.bounds.maxX*2, y: viewCenter!.y)
-                    self.deleteItem?(initialCenter)
+                    self.deleteItem?(self.center)
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
                     target?.center = self.initialCenter
@@ -99,7 +98,15 @@ class HistoryCell: UICollectionViewCell,NibReusable {
         default: break
         }
     }
-    
+    func showAsFavourite(){
+        favView.isHidden = false
+        favouriteLabel.textColor = .orange
+        favImagView.tintColor = UIColor.orange
+        favView.backgroundColor = .orange
+    }
+    func hideFavourite(){
+        favView.isHidden = true
+    }
 }
 
 enum PanDirection {
