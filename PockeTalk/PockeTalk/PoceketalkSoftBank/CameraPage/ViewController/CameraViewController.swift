@@ -15,6 +15,7 @@ enum Camera {
 
 class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let TAG = CameraViewController.self
+    
     @IBOutlet weak var zoomLevel: UILabel!
     private(set) var camera = Camera.back
 
@@ -150,6 +151,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
+            
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

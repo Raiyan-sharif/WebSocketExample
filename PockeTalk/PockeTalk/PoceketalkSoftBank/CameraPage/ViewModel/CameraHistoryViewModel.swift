@@ -29,11 +29,18 @@ class CameraHistoryViewModel: BaseModel {
     
     func fetchCameraHistoryImages() {
         
-        let imageArr: [UIImage] = [UIImage(named: "image1.jpeg")!, UIImage(named: "images2.png")!, UIImage(named: "images3.jpeg")!,UIImage(named: "images4.png")!]
+        cameraHistoryImages.removeAll()
         
-        for each in imageArr {
-            cameraHistoryImages.append(CameraHistoryDataModel.init(image: each))        }
-        PrintUtility.printLog(tag: "image arr", text: "\(self.cameraHistoryImages)")
+        if let cameraHistoryData = try? CameraHistoryDBHelper().getAllCameraHistoryTables {
+            for each in cameraHistoryData {
+                if let imageData = each.image {
+                    let image = UIImage.convertBase64ToImage(imageString: imageData)
+                    cameraHistoryImages.append(CameraHistoryDataModel.init(image: image))
+                }
+                
+                
+            }
+        }
         
     }
     

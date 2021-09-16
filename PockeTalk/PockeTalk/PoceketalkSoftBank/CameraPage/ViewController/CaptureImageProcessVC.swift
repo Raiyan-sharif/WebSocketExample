@@ -22,6 +22,7 @@ class CaptureImageProcessVC: BaseViewController {
         super.viewDidLoad()
         
         self.viewModel.viewDidLoad(self)
+        self.viewModel.capturedImage = image
         self.cameraImageView.image = image
         self.cameraImageView.backgroundColor = UIColor.white
         //self.viewModel.getDetectionData()

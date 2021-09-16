@@ -15,6 +15,15 @@ class CameraHistoryDBHelper: BaseModel, DataHelperProtocol {
     let detectedData: Expression<String>
     let translatedData: Expression<String>
     let image: Expression<String>
+    
+    var getAllCameraHistoryTables: [CameraEntity]? {
+        if let cameraHistoryTables = try? findAll() as? [CameraEntity] {
+            return cameraHistoryTables
+        } else {
+            
+        }
+        return nil
+    }
 
     override init() {
         self.table = Table(TABLE_NAME)
@@ -103,6 +112,7 @@ class CameraHistoryDBHelper: BaseModel, DataHelperProtocol {
         for item in items {
             retArray.append(CameraEntity(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image]))
         }
+        
         return retArray
     }
 }

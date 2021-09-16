@@ -13,13 +13,13 @@ class CameraHistoryViewController: BaseViewController {
     private let leftSpecing:CGFloat = 16
     private let rightSpecing:CGFloat = 16
     private let totalSub:CGFloat = 48
-        
+    
     private let viewModel = CameraHistoryViewModel()
-
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel.viewDidLoad(self)
@@ -38,7 +38,7 @@ class CameraHistoryViewController: BaseViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-
+    
     
     func setUpViews() {
         
@@ -55,20 +55,20 @@ class CameraHistoryViewController: BaseViewController {
         layout.itemSize = CGSize(width: (width - totalSub) / 2, height: secHeight*1.2)
         layout.minimumInteritemSpacing = 16
         layout.minimumLineSpacing = 16
-
+        
         return layout
-
+        
     }
     
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     func getHistoryImages() {
         self.viewModel.fetchCameraHistoryImages()
     }
-
-
+    
+    
 }
 
 extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -83,12 +83,18 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
         cell.historyImage.image = self.viewModel.cameraHistoryImages[indexPath.item].image
         
         return cell
-        
-        
-    
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryPopUPViewController.self)) as? CameraHistoryPopUPViewController {
+            
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            present(vc, animated: true, completion: nil)
+        }
+    }
     
 }
 

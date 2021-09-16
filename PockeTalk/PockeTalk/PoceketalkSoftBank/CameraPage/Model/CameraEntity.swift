@@ -9,7 +9,7 @@ class CameraEntity: BaseEntity {
     let translatedData: String?
     let image: String?
 
-     init(id: Int64?, detectedData: String?, translatedData: String, image: String) {
+     init(id: Int64?, detectedData: String?, translatedData: String?, image: String) {
         self.detectedData = detectedData
         self.translatedData = translatedData
         self.image = image

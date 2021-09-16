@@ -15,6 +15,8 @@ protocol ITTServerViewModelDelegates {
 
 class ITTServerViewModel: BaseModel {
     
+    var capturedImage: UIImage?
+    
     var mXFactor:Float = 1
     var mYFactor:Float = 1
     
@@ -48,6 +50,7 @@ class ITTServerViewModel: BaseModel {
     
     
     func getITTServerDetectionData(resource: Resource) {
+
         if Reachability.isConnectedToNetwork() {
             self.loaderdelegate?.showLoader()
             
@@ -88,6 +91,7 @@ class ITTServerViewModel: BaseModel {
                                                 self?.delegate?.updateViewWith(textViews: textViewList)
                                             })
                                         })
+                                        self?.saveDataOnDatabase()
                                         self?.loaderdelegate?.hideLoader()
                                     }
                                                                         
@@ -95,7 +99,7 @@ class ITTServerViewModel: BaseModel {
                                 
                                 break
                                 
-                            case .failure(let error):
+                            case .failure(_):
                                 self?.loaderdelegate?.hideLoader()
                                 break
                             }
@@ -116,7 +120,7 @@ class ITTServerViewModel: BaseModel {
                         
                     }
                     break
-                case .failure(let error):
+                case .failure(_):
                     self?.loaderdelegate?.hideLoader()
                     break
                 }
@@ -136,6 +140,19 @@ class ITTServerViewModel: BaseModel {
             }
         }
         completion(self.detectedBlockList)
+    }
+    
+    func saveDataOnDatabase() {
+        
+        if let image = capturedImage {
+            let imageData = UIImage.convertImageToBase64(image: image)
+            _ = try? CameraHistoryDBHelper().insert(item: CameraEntity(id: nil, detectedData: "", translatedData: "", image: imageData))
+        } else {
+            PrintUtility.printLog(tag: "save to database: ", text: "False")
+        }
+        
+        
+        
     }
     
     
