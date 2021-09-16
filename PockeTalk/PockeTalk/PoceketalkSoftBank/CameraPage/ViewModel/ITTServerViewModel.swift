@@ -64,7 +64,7 @@ class ITTServerViewModel: BaseModel {
                             switch result
                             {
                             case .success(let ocrResponse):
-                                PrintUtility.printLog(tag: "OCR Response", text: "\(ocrResponse)")
+                                //PrintUtility.printLog(tag: "OCR Response", text: "\(ocrResponse)")
                                 self?.getScreenProperties()
                                 let response = ocrResponse.responses![0]
                                 let lanCode = response.textAnnotations![0].locale
@@ -76,7 +76,7 @@ class ITTServerViewModel: BaseModel {
                                 let encoder = JSONEncoder()
                                 encoder.outputFormatting = .prettyPrinted
                                 let data = try? encoder.encode(detectedJSON)
-                                //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
+                                PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
                                 
                                 self!.getBlockListFromJson(data: detectedJSON) { [weak self] (result) in
                                     

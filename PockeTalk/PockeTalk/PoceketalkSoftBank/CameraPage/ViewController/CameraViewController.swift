@@ -28,8 +28,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         return AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
     }()
     @IBOutlet weak var btnFromLanguage: RoundButtonWithBorder!
-    
+    @IBOutlet weak var flashButton: UIButton!
     @IBOutlet weak var btnTargetLanguage: RoundButtonWithBorder!
+    @IBOutlet weak var cameraHistoryImageView: UIImageView!
     private lazy var previewView = UIView()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: session)
 
@@ -98,6 +99,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Bloking point start , to open camera screen without camera
+        
+        setUPViews()
+        
         previewLayer.videoGravity = .resizeAspectFill
         previewView.frame = view.bounds
         previewView.layer.addSublayer(previewLayer)
@@ -137,6 +141,19 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    func setUPViews() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
+        self.cameraHistoryImageView.addGestureRecognizer(tap)
+    }
+    
+    @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
+        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -431,10 +448,13 @@ extension CameraViewController {
             // if flash is on turn it off, if turn off turn it on
             if activeCamera!.isTorchActive {
                 activeCamera!.torchMode = AVCaptureDevice.TorchMode.off
+                flashButton.setImage(UIImage(named: "flash"), for: .normal)
+                
             } else {
                 // sets the torch intensity to 100%
                 do {
                     _ = try activeCamera!.setTorchModeOn(level: 1.0)
+                    flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
                 } catch {
                     PrintUtility.printLog(tag: "error", text: "")
                 }

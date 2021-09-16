@@ -10,11 +10,13 @@ import UIKit
 class CaptureImageProcessVC: BaseViewController {
     
     @IBOutlet weak var cameraImageView: UIImageView!
+    @IBOutlet weak var modeSwitchButton: UIButton!
     
     private let viewModel = ITTServerViewModel()
     private let activity = ActivityIndicator()
     
     var image = UIImage()
+    var blockmMode = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,14 @@ class CaptureImageProcessVC: BaseViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func modeSwitchButtonEventListener(_ sender: Any) {
+        if blockmMode {
+            modeSwitchButton.setImage(UIImage(named: "block_mode"), for: .normal)
+        } else {
+            modeSwitchButton.setImage(UIImage(named: "line_mode"), for: .normal)
+        }
     }
     
     
