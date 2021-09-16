@@ -155,8 +155,18 @@ class ITTServerViewModel: BaseModel {
         
     }
     
-    
-    
+    func getLineListFromJson(data: DetectedJSON, completion: @escaping(_ data: [BlockDetection])-> Void)  {
+        
+        if let line = data.line {
+            if let lines = line.blocks {
+                self.detectedBlockList = lines.map({ result -> BlockDetection in
+                    return BlockDetection(X1: result.boundingBox.vertices[0].x, Y1: result.boundingBox.vertices[0].y, X2: result.boundingBox.vertices[1].x, Y2: result.boundingBox.vertices[1].y, X3: result.boundingBox.vertices[2].x, Y3: result.boundingBox.vertices[2].y, X4: result.boundingBox.vertices[3].x, Y4: result.boundingBox.vertices[3].y, bottomTopBlock: result.bottomTopBlock, rightLeftBlock: result.rightLeftBlock, text: result.text, detectedLanguage: result.text)
+                    
+                })
+            }
+        }
+        completion(self.detectedBlockList)
+    }
 }
 
 extension ITTServerViewModel {

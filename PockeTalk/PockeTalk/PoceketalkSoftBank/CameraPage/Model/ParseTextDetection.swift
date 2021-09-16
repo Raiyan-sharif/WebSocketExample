@@ -74,7 +74,7 @@ class ParseTextDetection {
                 height = PointUtils.distanceBetweenPoints(CGPoint(x: each.X1!, y: each.Y1!), CGPoint(x: each.X2!, y: each.Y2!))
                 
                 
-                if(each.bottomTopBlock == 0){
+                if(each.bottomTopBlock != BLOCK_DIRECTION){
                     angle = angle * -1
                     x = each.X2!
                     y = each.Y2!
@@ -144,7 +144,7 @@ func getListHorizontalTextViewFromBlockList(detectedBlockList: [BlockDetection],
             
             height = PointUtils.distanceBetweenPoints(CGPoint(x: each.X1!, y: each.Y1!), CGPoint(x: each.X4!, y: each.Y4!))
             
-            if(each.rightLeftBlock == 0){
+            if(each.rightLeftBlock != BLOCK_DIRECTION){
                 blockView.transform = CGAffineTransform(rotationAngle: .pi * -1)
                 
                // verticalTextView.setGravity(Gravity.BOTTOM);

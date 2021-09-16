@@ -87,7 +87,8 @@ let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell";
 //Nib name
 let KAlertReusable = "AlertReusableViewController"
 
-//Camera Constants
+//MARK: - Camera Constants
+
 //let ITTServerURL = URL(string: "server url")! //TODO set server url
 let IMAGE_WIDTH:Int = 640
 let IMAGE_HEIGHT:Int = 853
@@ -95,6 +96,7 @@ let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
 let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
+let BLOCK_DIRECTION:Int = -1
 
 // Socket url
 let SOCKET_CONNECTION_URL = "ws://localhost:3000" // TODO: Need to change
