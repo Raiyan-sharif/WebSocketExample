@@ -192,12 +192,12 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
 
         var query = table.filter(chatIsDelete == IsDeleted.noDelete.rawValue)
             .order(id.desc)
-            .limit(lowLimit, offset: rowFaced)
+          //  .limit(lowLimit, offset: rowFaced)
 
         if isFavorite {
             query = table.filter(chatIsLiked == IsLiked.like.rawValue)
                 .order(chatIsFavorite.desc)
-                .limit(lowLimit, offset: rowFaced)
+            //    .limit(lowLimit, offset: rowFaced)
         }
 
         var retArray = [BaseEntity]()

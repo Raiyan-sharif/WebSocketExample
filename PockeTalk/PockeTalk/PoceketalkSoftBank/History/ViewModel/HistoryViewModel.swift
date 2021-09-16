@@ -8,24 +8,27 @@
 import Foundation
 
 protocol HistoryViewModeling {
-    var items:Bindable<[HistoryModel]>{ get }
+    var items:Bindable<[BaseEntity]>{ get }
     func deleteHistory(_ item:Int)
 }
 
 class HistoryViewModel:HistoryViewModeling {
-    var items: Bindable<[HistoryModel]> = Bindable([])
-    
+    var items: Bindable<[BaseEntity]> = Bindable([])
+    var chatDataHelper = ChatTableDBHelper()
     init() {
-        var loclItems = [HistoryModel]()
-        // ToDo:
-        for _ in 0..<10{
-            loclItems.append(HistoryModel(FromLanguage: "আমার বাংলা নিয়ে প্রথম কাজ করবার সুযোগ তৈরি হয়েছিল অভ্র^ নামক এক যুগান্তকারী বাংলা সফ্‌টওয়্যার হাতে পাবার মধ্য দিয়ে।", Tolanguage: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content."))
-        }
-        self.items.value = loclItems
+        do{
+            let values =  try chatDataHelper.pickListedItems(isFavorite: false)
+            print(values?.count)
+            items.value = values ?? []
+        } catch {}
     }
-    
     func deleteHistory(_ item: Int) {
+        //Todo: need to fix item deletion correctly
+        do{
+            try chatDataHelper.updateDeleteValue(isDelete: IsDeleted.delete, idToCompare: self.items.value[item].id!)
+        } catch {}
+        
         self.items.value.remove(at: item)
+        
     }
-    
 }

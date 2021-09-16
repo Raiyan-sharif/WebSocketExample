@@ -87,7 +87,7 @@ class HistoryViewController: BaseViewController {
         historyViewModel.items.bindAndFire { [weak self] items in
             if items.count > 0{
                 //Todo
-                // self?.collectionView.reloadData()
+                self?.collectionView.reloadData()
             }
         }
     }
@@ -101,10 +101,10 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: HistoryCell.self)
-        let item = historyViewModel.items.value[indexPath.item]
-        cell.fromLabel.text = item.FromLanguage
-        cell.toLabel.text = item.Tolanguage
-        if indexPath.item % 2  == 0 {
+        let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
+        cell.fromLabel.text = item.textTranslated
+        cell.toLabel.text = item.textNative
+        if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()
         }else{
             cell.childView.backgroundColor = UIColor._skyBlueColor()
@@ -165,11 +165,11 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 extension HistoryViewController:HistoryLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
-        let historyModel = historyViewModel.items.value[indexPath.item]
+        let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
         let font = UIFont.systemFont(ofSize:17)
         
-        let fromHeight = historyModel.FromLanguage.heightWithConstrainedWidth(width: width, font: font)
-        let toHeight = historyModel.Tolanguage.heightWithConstrainedWidth(width: width, font: font)
+        let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width, font: font)
+        let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width, font: font)
         //        print(fromHeight)
         //        print(toHeight)
         return 20 + fromHeight + 120 + toHeight + 40
