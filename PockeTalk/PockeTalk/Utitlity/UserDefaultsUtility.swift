@@ -48,6 +48,13 @@ struct  UserDefaultsUtility {
     static func getStringValue(forKey key: String) -> String {
         return UserDefaults.standard.string(forKey: key) ?? ""
     }
+
+    /// Reset UseDefaults
+    static func resetDefaults() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
+    }
 }
 
 @objc final class PlanGridUserDefaults: NSObject {

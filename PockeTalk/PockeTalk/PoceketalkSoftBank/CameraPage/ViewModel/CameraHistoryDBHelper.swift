@@ -115,4 +115,16 @@ class CameraHistoryDBHelper: BaseModel, DataHelperProtocol {
         
         return retArray
     }
+
+    func deleteCameraHistory() throws {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            throw DataAccessError.Datastore_Connection_Error
+        }
+
+        do {
+            try DB.run(table.delete())
+        } catch _ {
+
+        }
+    }
 }
