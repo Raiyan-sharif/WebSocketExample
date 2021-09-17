@@ -157,6 +157,7 @@
 		89495B5226F0ACEA00CEA19D /* BaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B5026F0ACEA00CEA19D /* BaseDelegate.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
+		8994A7CE26F4A83600657608 /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8994A7CD26F4A83600657608 /* img1.jpg */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
 		89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */; };
 		89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */; };
@@ -352,6 +353,7 @@
 		89495B5026F0ACEA00CEA19D /* BaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDelegate.swift; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		8994A7CD26F4A83600657608 /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TempoControlSelectionAlertController.swift; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/ViewController/TempoControlSelectionAlertController.swift; sourceTree = SOURCE_ROOT; };
 		89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TempoControlSelectionAlert.xib; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/View/TempoControlSelectionAlert.xib; sourceTree = SOURCE_ROOT; };
@@ -1235,6 +1237,7 @@
 				8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */,
 				89C0F7DA26F1E4FC000CD5FC /* CameraHistoryViewController.swift */,
 				89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */,
+				8994A7CD26F4A83600657608 /* img1.jpg */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1552,6 +1555,7 @@
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
+				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
@@ -1720,11 +1724,9 @@
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */,
 				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
-				50675D5D26EB26D800A775E5 /* HistoryListCameraVC.swift in Sources */,
 				89495B5126F0ACEA00CEA19D /* BaseData.swift in Sources */,
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
-				89495B2F26F0A94900CEA19D /* ListVerticalTextViewFromBlockList.swift in Sources */,
 				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
 				500AAFC026E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift in Sources */,
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,

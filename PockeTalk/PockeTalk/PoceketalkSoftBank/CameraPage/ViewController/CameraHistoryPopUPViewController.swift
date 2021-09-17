@@ -27,6 +27,7 @@ class CameraHistoryPopUPViewController: BaseViewController {
         
         self.openBtnContainerView.roundCorners(corners: [.topLeft, .topRight], radius: 15)
         self.cancelBtnContainerView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 15)
+        self.view.layer.opacity = 0.4
 
         let tapForOpen = UITapGestureRecognizer(target: self, action: #selector(self.openButtonEventHandler(sender:)))
         openBtnContainerView.isUserInteractionEnabled = true

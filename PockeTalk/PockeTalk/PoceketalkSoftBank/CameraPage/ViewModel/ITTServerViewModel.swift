@@ -10,7 +10,7 @@ import UIKit
 
 protocol ITTServerViewModelDelegates {
 
-    func updateViewWith(textViews: [TextViewWithCoordinator])
+    func updateView()
 }
 
 class ITTServerViewModel: BaseModel {
@@ -32,10 +32,21 @@ class ITTServerViewModel: BaseModel {
     
     var detectedBlockList = [BlockDetection]() {
         didSet {
-            PrintUtility.printLog(tag: "detectedblockList", text: "\(detectedBlockList)")
+            //PrintUtility.printLog(tag: "detectedblockList", text: "\(detectedBlockList)")
         }
     }
-
+    
+    var blockModeTextViewList = [TextViewWithCoordinator]() {
+        didSet{
+            self.delegate?.updateView()
+        }
+    }
+    
+    var lineModetTextViewList = [TextViewWithCoordinator]() {
+        didSet{
+            self.delegate?.updateView()
+        }
+    }
     
     func createRequest()-> Resource{
         
@@ -49,7 +60,7 @@ class ITTServerViewModel: BaseModel {
     }
     
     
-    func getITTServerDetectionData(resource: Resource) {
+    func getITTServerDetectionData(resource: Resource, completion: @escaping(_ blockData: DetectedJSON?, _ error: Error?)-> Void) {
 
         if Reachability.isConnectedToNetwork() {
             self.loaderdelegate?.showLoader()
@@ -79,27 +90,16 @@ class ITTServerViewModel: BaseModel {
                                 let encoder = JSONEncoder()
                                 encoder.outputFormatting = .prettyPrinted
                                 let data = try? encoder.encode(detectedJSON)
-                                PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
+                                //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
                                 
-                                self!.getBlockListFromJson(data: detectedJSON) { [weak self] (result) in
-                                    
-                                    DispatchQueue.main.async {
-                                        self?.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: result, completion: { (listTextView) in
-                                            
-                                            self?.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: result, completion: { (listTV) in
-                                                let textViewList = listTextView + listTV
-                                                self?.delegate?.updateViewWith(textViews: textViewList)
-                                            })
-                                        })
-                                        self?.saveDataOnDatabase()
-                                        self?.loaderdelegate?.hideLoader()
-                                    }
-                                                                        
-                                }                                
+                                completion(detectedJSON, nil)
+                                                                
+                                self?.saveDataOnDatabase()
                                 
                                 break
                                 
                             case .failure(_):
+                                completion(nil, NetworkError.decodingError)
                                 self?.loaderdelegate?.hideLoader()
                                 break
                             }
@@ -107,20 +107,24 @@ class ITTServerViewModel: BaseModel {
                         
                         break
                     case HTTPStatusCodes.BadRequest:
+                        completion(nil, NetworkError.undefined)
                         self?.loaderdelegate?.hideLoader()
                         break
                         
                     case HTTPStatusCodes.InternalServerError:
+                        completion(nil, NetworkError.offline)
                         self?.loaderdelegate?.hideLoader()
                         break
                         
                     default:
+                        completion(nil, NetworkError.undefined)
                         self?.loaderdelegate?.hideLoader()
                         break
                         
                     }
                     break
                 case .failure(_):
+                    completion(nil, NetworkError.undefined)
                     self?.loaderdelegate?.hideLoader()
                     break
                 }
@@ -129,6 +133,43 @@ class ITTServerViewModel: BaseModel {
     }
     
     
+    func getblockAndLineModeData(_ detectedJSON: DetectedJSON?) {
+                
+        if let detectionData = detectedJSON {
+                        
+            self.getBlockListFromJson(data: detectionData) { [weak self] (result) in
+                
+                self?.getTextViewWithCoordinator(detectedBlockOrLineList: result, completion: {[weak self] textView in
+                    self?.blockModeTextViewList = textView
+                })
+            }
+            
+            self.getLineListFromJson(data: detectionData) { [weak self] (result) in
+                self?.getTextViewWithCoordinator(detectedBlockOrLineList: result, completion: { textView in
+                    self?.lineModetTextViewList = textView
+                    self?.loaderdelegate?.hideLoader()
+                })
+            }
+        } else {
+            PrintUtility.printLog(tag: "Error : ", text: "Unable to get block or line mode data")
+        }
+    }
+    
+    
+    func getTextViewWithCoordinator(detectedBlockOrLineList: [BlockDetection], completion: @escaping(_ textView: [TextViewWithCoordinator])-> Void) {
+        
+        DispatchQueue.main.async {
+            self.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, completion: { (listTextView) in
+                
+                self.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, completion: { (listTV) in
+                    let blockTextViewListtt = listTextView + listTV
+                    
+                    completion(blockTextViewListtt)
+                })
+            })
+        }
+    }
+
     func getBlockListFromJson(data: DetectedJSON, completion: @escaping(_ data: [BlockDetection])-> Void)  {
         
         if let block = data.block {
@@ -150,9 +191,6 @@ class ITTServerViewModel: BaseModel {
         } else {
             PrintUtility.printLog(tag: "save to database: ", text: "False")
         }
-        
-        
-        
     }
     
     func getLineListFromJson(data: DetectedJSON, completion: @escaping(_ data: [BlockDetection])-> Void)  {

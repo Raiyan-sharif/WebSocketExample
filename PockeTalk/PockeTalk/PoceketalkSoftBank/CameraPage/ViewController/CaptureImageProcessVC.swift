@@ -16,7 +16,6 @@ class CaptureImageProcessVC: BaseViewController {
     private let activity = ActivityIndicator()
     
     var image = UIImage()
-    var blockmMode = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +23,17 @@ class CaptureImageProcessVC: BaseViewController {
         self.viewModel.viewDidLoad(self)
         self.viewModel.capturedImage = image
         self.cameraImageView.image = image
-        self.cameraImageView.backgroundColor = UIColor.white
-        //self.viewModel.getDetectionData()
-        self.viewModel.getITTServerDetectionData(resource: self.viewModel.createRequest())
+                
+        self.viewModel.getITTServerDetectionData(resource: self.viewModel.createRequest()) { [weak self] (data, error) in
+            
+            if error != nil {
+                PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
+            } else {
+                if let detectedData = data {
+                    self?.viewModel.getblockAndLineModeData(detectedData)
+                }
+            }
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -38,29 +45,67 @@ class CaptureImageProcessVC: BaseViewController {
     }
     
     @IBAction func modeSwitchButtonEventListener(_ sender: Any) {
-        if blockmMode {
-            modeSwitchButton.setImage(UIImage(named: "block_mode"), for: .normal)
+        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+        if modeSwitchTypes == blockMode {
+            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+            updateView()
         } else {
-            modeSwitchButton.setImage(UIImage(named: "line_mode"), for: .normal)
+            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+            updateView()
         }
+        
     }
-    
     
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
-    func updateViewWith(textViews: [TextViewWithCoordinator]) {
+    func updateView() {
         DispatchQueue.main.async {[self] in
-            
-            if textViews.count > 0 {
+            let blockModeTextViews = self.viewModel.blockModeTextViewList
+            let lineModeTextViews = self.viewModel.lineModetTextViewList
+            if (blockModeTextViews.count != 0 && lineModeTextViews.count != 0) {
+                hideLoader()
                 
-                for i in 0..<textViews.count {
-                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
-                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
-                    self.view.addSubview(textViews[i].view)
+                if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
+                    if modeSwitchType == blockMode {
+                        plotLineOrBlock(using: blockModeTextViews)
+                        
+                    } else {
+                        plotLineOrBlock(using: lineModeTextViews)
+                    }
+                } else {
+                    UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                    plotLineOrBlock(using: blockModeTextViews)
                 }
             }
         }
+    }
+    
+    
+    
+    func plotLineOrBlock(using textViews: [TextViewWithCoordinator]) {
+        
+        
+        let screenRect = UIScreen.main.bounds
+        let screenWidth = screenRect.size.width
+        let screenHeight = screenRect.size.height
+        
+        // TO Do: will remove static image
+        let image = UIImage(named: "img1.jpg")
+        let imageView = UIImageView(image: image!)
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: 340, height: 607) // To do : This will be actual cropped & processed image height width
+        
+        self.view.addSubview(imageView)
+        
+        if textViews.count > 0 {
+            for i in 0..<textViews.count {
+                textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
+                textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
+                self.view.addSubview(textViews[i].view)
+            }
+        }
+        
     }
 }
 
@@ -76,3 +121,5 @@ extension CaptureImageProcessVC: LoaderDelegate{
         activity.hideLoading()
     }
 }
+
+

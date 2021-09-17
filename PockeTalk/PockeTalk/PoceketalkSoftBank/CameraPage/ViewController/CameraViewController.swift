@@ -151,7 +151,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
-            
+
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -161,11 +161,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         super.viewWillAppear(animated)
         registerNotification()
         updateLanguageNames()
-        sessionQueue.async { [unowned self] in
-            if self.sessionSetupSucceeds {
-                self.session.startRunning()
-            }
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -257,6 +252,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         self.session.commitConfiguration()
 
         sessionSetupSucceeds = true
+        
+        sessionQueue.async { [unowned self] in
+            if self.sessionSetupSucceeds {
+                self.session.startRunning()
+            }
+        }
+
     }
 
     private func _setCamera(_ camera: Camera) {

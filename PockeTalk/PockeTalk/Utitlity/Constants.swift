@@ -106,3 +106,9 @@ let rowFetchPerScroll = 500
 
 // Selection of font
 let KFontSelection = "KFontSelection"
+
+// Mode Switching for camera image
+let modeSwitchType = "modeSwitchType"
+let blockMode = "blockMode"
+let lineMode = "lineMode"
+

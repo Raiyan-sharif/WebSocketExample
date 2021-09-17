@@ -22,7 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Initial launch setup
     func setUpinitialLaucnh() {
         /// Set initial language of the application
+        
         setInitialLangue()
+        
 
         LanguageSelectionManager.shared.getLanguageSelectionData()
         self.window = UIWindow(frame: UIScreen.main.bounds)
