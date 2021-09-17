@@ -12,6 +12,7 @@ class LanguageSelectCameraVC: BaseViewController {
     @IBOutlet weak var tabsView: UIView!
     @IBOutlet weak var btnHistoryList: UIButton!
     @IBOutlet weak var btnLangList: UIButton!
+    @IBOutlet weak var layoutBottomBtnContainer: UIView!
     var currentIndex: Int = 0
     let tabsPageViewController = "TabsPageViewController"
 
@@ -24,6 +25,7 @@ class LanguageSelectCameraVC: BaseViewController {
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedLanguageCode = ""
     let width : CGFloat = 50
+    let speechButtonWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
 
@@ -47,6 +49,7 @@ class LanguageSelectCameraVC: BaseViewController {
         updateButton(index:0)
         setupPageViewController()
         setUpMicroPhoneIcon()
+        setUpSpeechButton()
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){
@@ -78,10 +81,11 @@ class LanguageSelectCameraVC: BaseViewController {
         self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
         self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        self.pageController.view.bottomAnchor.constraint(equalTo: layoutBottomBtnContainer.topAnchor)
         ])
         self.pageController.didMove(toParent: self)
     }
+
     // floating microphone button
     func setUpMicroPhoneIcon () {
         let floatingButton = UIButton()
@@ -96,6 +100,25 @@ class LanguageSelectCameraVC: BaseViewController {
         floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
         floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
+
+    func setUpSpeechButton(){
+        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: speechButtonWidth, height: speechButtonWidth, trailing: trailing, bottom: trailing)
+        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+    }
+
+    // TODO microphone tap event
+    @objc func speechButtonTapAction (sender:UIButton) {
+        if Reachability.isConnectedToNetwork() {
+        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionCamera
+            self.navigationController?.pushViewController(controller, animated: true);
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
     }
 
     override func viewDidLayoutSubviews() {

@@ -18,6 +18,7 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak var btnLangList: UIButton!
     @IBOutlet weak var btnBack: UIButton!
 
+    @IBOutlet weak var layoutBottomBtnContainer: UIView!
     var currentIndex: Int = 0
     let tagLanguageListVC = "LanguageListVC"
     let tagHistoryListVC = "HistoryListVC"
@@ -33,8 +34,9 @@ class LangSelectVoiceVC: BaseViewController {
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedLanguageCode = ""
     var isNative: Int = 0
-    let width : CGFloat = 50
     let trailing : CGFloat = -20
+    let width : CGFloat = 100
+    let widthMicrophone : CGFloat = 50
     let toastVisibleTime : Double = 2.0
     /// retranslation delegate
     var retranslationDelegate : RetranslationDelegate?
@@ -71,6 +73,7 @@ class LangSelectVoiceVC: BaseViewController {
         updateButton(index:0)
         setupPageViewController()
         setUpMicroPhoneIcon()
+        setUpSpeechButton()
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){
@@ -102,7 +105,7 @@ class LangSelectVoiceVC: BaseViewController {
         self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
         self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        self.pageController.view.bottomAnchor.constraint(equalTo: layoutBottomBtnContainer.topAnchor)
         ])
         self.pageController.didMove(toParent: self)
     }
@@ -111,15 +114,20 @@ class LangSelectVoiceVC: BaseViewController {
         let floatingButton = UIButton()
         floatingButton.setImage(UIImage(named: "mic"), for: .normal)
         floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingButton.layer.cornerRadius = width/2
+        floatingButton.layer.cornerRadius = widthMicrophone/2
         floatingButton.clipsToBounds = true
         view.addSubview(floatingButton)
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
-        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
+        floatingButton.widthAnchor.constraint(equalToConstant: widthMicrophone).isActive = true
+        floatingButton.heightAnchor.constraint(equalToConstant: widthMicrophone).isActive = true
         floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
         floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
+
+    func setUpSpeechButton(){
+        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
+        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
     }
 
     override func viewDidLayoutSubviews() {
@@ -191,6 +199,21 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
 
+    // TODO microphone tap event
+    @objc func speechButtonTapAction (sender:UIButton) {
+        if Reachability.isConnectedToNetwork() {
+            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
+            self.navigationController?.pushViewController(controller, animated: true);
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
+    }
+
+
     @IBAction func onBackButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
@@ -202,15 +225,6 @@ class LangSelectVoiceVC: BaseViewController {
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
         _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
         //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
-        btnBack.isSelected = !btnBack.isSelected
-        btnBack.tintColor = .clear
-
-        if btnBack.isSelected{
-            btnBack.backgroundColor =  ._skyBlueColor()
-           }
-        else{
-            btnBack.backgroundColor =  .white
-         }
         NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
 
         self.navigationController?.popViewController(animated: true)

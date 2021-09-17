@@ -12,16 +12,23 @@ class CountryListViewController: BaseViewController {
     @IBOutlet weak var viewEnglishName: UIView!
     @IBOutlet weak var countryNameLabel: UILabel!
     @IBOutlet weak var countryListCollectionView: UICollectionView!
+    @IBOutlet weak var layoutBottomButtonContainer: UIView!
     var countryList = [CountryListItemElement]()
     var dataShowingAsEnlish = false
     var dataShowingLanguageCode = LanguageManager.shared.currentLanguage.rawValue
     let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
     var isNative: Int = 0
     let width : CGFloat = 50
+    let speechBtnWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
     @IBAction func onBackButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    fileprivate func setViewBorder() {
+        viewEnglishName.layer.borderWidth = 2
+        viewEnglishName.layer.borderColor = UIColor.gray.cgColor
     }
 
     @objc func clickOnEnglishButton(_ sender:UITapGestureRecognizer){
@@ -30,7 +37,9 @@ class CountryListViewController: BaseViewController {
             dataShowingLanguageCode = sysLangCode
             countryList.removeAll()
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
-            viewEnglishName.backgroundColor = .white
+            countryNameLabel.textColor = .white.color
+            setViewBorder()
+            viewEnglishName.backgroundColor = .clear
             dataShowingAsEnlish = false
             countryNameLabel.text = "Region".localiz()
         }else{
@@ -38,8 +47,10 @@ class CountryListViewController: BaseViewController {
             countryList.removeAll()
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             dataShowingAsEnlish = true
-            viewEnglishName.backgroundColor = ._skyBlueColor()
             countryNameLabel.text = "Region"
+            countryNameLabel.textColor = .white.color
+            viewEnglishName.backgroundColor = ._skyBlueColor()
+            viewEnglishName.layer.borderWidth = 0
         }
         countryListCollectionView.reloadData()
     }
@@ -57,7 +68,11 @@ class CountryListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpMicroPhoneIcon()
+        setUpSpeechButton()
         countryNameLabel.text = "Region".localiz()
+        viewEnglishName.layer.cornerRadius = 15
+        viewEnglishName.backgroundColor = .clear
+        setViewBorder()
         if sysLangCode == systemLanguageCodeEN{
             dataShowingAsEnlish = true
             viewEnglishName.isHidden = true
@@ -71,6 +86,25 @@ class CountryListViewController: BaseViewController {
         self.viewEnglishName.addGestureRecognizer(gesture)
     }
 
+
+    func setUpSpeechButton(){
+        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: speechBtnWidth, height: speechBtnWidth, trailing: trailing, bottom: trailing)
+        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+    }
+
+    // TODO microphone tap event
+    @objc func speechButtonTapAction (sender:UIButton) {
+        if Reachability.isConnectedToNetwork() {
+        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.CountrySelectionByVoice
+            self.navigationController?.pushViewController(controller, animated: true);
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
+    }
 
     // floating microphone button
     func setUpMicroPhoneIcon () {
