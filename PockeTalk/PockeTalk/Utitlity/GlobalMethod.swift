@@ -219,4 +219,9 @@ class GlobalMethod {
         let navController = UINavigationController.init(rootViewController: controller)
         viewController?.navigationController?.present(navController, animated: true, completion: nil)
     }
+
+    /// Accessing Appdelegate instance
+    static func appdelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 }

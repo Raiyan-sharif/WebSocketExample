@@ -43,12 +43,15 @@ public class AlertDialogUtility {
                 try ChatTableDBHelper().deleteChatHistory()
                 try LanguageSelectionDBHelper().deleteLanguageSelectionHistory()
                 try LanguageMapDBHelper().deleteLanguageMapHistory()
-
-                /// Clear UserDefautlts
-               // UserDefaultsUtility.resetDefaults()
             } catch _ {
 
             }
+            /// Clear UserDefautlts
+            UserDefaultsUtility.resetDefaults()
+
+            /// Relaunch Application
+            GlobalMethod.appdelegate().relaunchApplication()
+
         }))
         alert.addAction(UIAlertAction(title: "cancel".localiz(), style: UIAlertAction.Style.cancel, handler: nil))
         return alert

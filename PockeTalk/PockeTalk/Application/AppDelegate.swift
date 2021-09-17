@@ -14,6 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Database create tables
         _ = try? SQLiteDataStore.sharedInstance.createTables()
 
+        //Initial UI setup
+        setUpinitialLaucnh()
+        return true
+    }
+
+    /// Initial launch setup
+    func setUpinitialLaucnh() {
         /// Set initial language of the application
         setInitialLangue()
 
@@ -24,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController.init(rootViewController: viewController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-        return true
     }
 
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
@@ -35,6 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         LanguageManager.shared.setLanguage(language: Languages(rawValue: locale) ?? .en)
         LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
+    }
+
+    // Relaunch Application upon deleting all data
+    func relaunchApplication() {
+        setUpinitialLaucnh()
     }
 }
 
