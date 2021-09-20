@@ -32,14 +32,11 @@ enum RemoveStatus {
     case removeHistory
 }
 
-class ChatTableDBHelper: BaseModel, DataHelperProtocol {
+class ChatDBModel: BaseDBModel {
 
     //MARK: - Properties
 
     let TABLE_NAME = "ChatTable"
-    let table: Table
-
-    let id: Expression<Int64>
     let textNative: Expression<String>
     let textTranslated: Expression<String>
     let textTranslatedLanguage: Expression<String>
@@ -50,7 +47,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     let chatIsFavorite: Expression<Int64>
 
     var getAllChatTables: [ChatEntity]? {
-        if let chatTables = try? findAll() as? [ChatEntity] {
+        if let chatTables = try? findAllEntities() as? [ChatEntity] {
             return chatTables
         }
         return nil
@@ -58,9 +55,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
 
     //MARK: - Initaializers
 
-    override init() {
-        self.table = Table(TABLE_NAME)
-        self.id = Expression<Int64>("id")
+    init() {
         self.textNative = Expression<String>("txt_native")
         self.textTranslated = Expression<String>("txt_translated")
         self.textTranslatedLanguage = Expression<String>("txt_translated_language")
@@ -69,17 +64,14 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
         self.chatIsTop = Expression<Int64>("int_is_top")
         self.chatIsDelete = Expression<Int64>("int_is_delete")
         self.chatIsFavorite = Expression<Int64>("int_is_favorite")
-        super.init()
+        super.init(id: Expression<Int64>("id"), table: Table(TABLE_NAME))
     }
 
     //MARK: - DBHelper Method
 
     func createTable() throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
         do {
-            _ = try DB.run(table.create(ifNotExists: true) {t in
+            let createTableQueryString = table.create(ifNotExists: true) {t in
                 t.column(id, primaryKey: .autoincrement)
                 t.column(textNative)
                 t.column(textTranslated)
@@ -89,60 +81,38 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
                 t.column(chatIsTop)
                 t.column(chatIsDelete)
                 t.column(chatIsFavorite)
-            })
+            }
+
+            try createTable(queryString: createTableQueryString)
+
         } catch _ {
             // Error thrown when table exists
         }
     }
 
     func insert(item: BaseEntity) throws -> Int64 {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         if let chatTableModel = item as? ChatEntity {
-            let insert = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
-            do {
-                let rowId = try DB.run(insert)
-                guard rowId >= 0 else {
-                    throw DataAccessError.Insert_Error
-                }
-                return rowId
-            } catch _ {
-                throw DataAccessError.Insert_Error
-            }
+            let insertStatement = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
+
+           _ = try? insert(queryString: insertStatement)
+
         }
         throw DataAccessError.Nil_In_Data
     }
 
     func delete (item: BaseEntity) throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         guard let chatTableModel = item as? ChatEntity else {
             return
         }
 
         if let findId = chatTableModel.id {
-            let query = table.filter(id == findId)
-            do {
-                let tmp = try DB.run(query.delete())
-                guard tmp == 1 else {
-                    throw DataAccessError.Delete_Error
-                }
-            } catch _ {
-                throw DataAccessError.Delete_Error
-            }
+            try delete(idToDelte: findId)
         }
     }
 
-    func findAll() throws -> [BaseEntity]? {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
+    func findAllEntities() throws -> [BaseEntity]? {
         var retArray = [BaseEntity]()
-        let items = try DB.prepare(table)
+        let items = try findAll()
         for item in items {
             retArray.append(ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite]))
         }
@@ -151,11 +121,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     }
 
     func find(idToFind: Int64) throws -> BaseEntity? {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-        let query = table.filter(id == idToFind)
-        let items = try DB.prepare(query)
+        let items = try find(findId: idToFind)
         for item in  items {
             return ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite])
         }
@@ -165,17 +131,16 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     }
 
     func update(item: BaseEntity) throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         guard let chatTableModel = item as? ChatEntity else {
             return
         }
         if let findId = chatTableModel.id {
             let query = table.filter(id == findId)
             do {
-                try DB.run(query.update(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite!))
+                let updateQuery = query.update(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite!)
+
+                try update(queryUpdate: updateQuery)
+
             } catch _ {
                 throw DataAccessError.Update_Error
             }
@@ -210,30 +175,24 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     }
 
     func updateLikeValue(isliked: IsLiked = .noLike, idToCompare: Int64) throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         let maxFav = try getMaxFavouriteId()!
         let query = table.filter(idToCompare == id)
         
         PrintUtility.printLog(tag: "DB", text: "\(isliked.rawValue)")
 
         do {
-            try DB.run(query.update(chatIsLiked <- isliked.rawValue, chatIsFavorite <- (maxFav + 1)))
+            let updateQuery = query.update(chatIsLiked <- isliked.rawValue, chatIsFavorite <- (maxFav + 1))
+            try update(queryUpdate: updateQuery)
         } catch _ {
             throw DataAccessError.Update_Error
         }
     }
 
     func updateDeleteValue(isDelete: IsDeleted = .noDelete, idToCompare: Int64) throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         let query = table.filter(idToCompare == id)
         do {
-            try DB.run(query.update(chatIsDelete <- isDelete.rawValue))
+            let updateQuery = query.update(chatIsDelete <- isDelete.rawValue)
+            try update(queryUpdate: updateQuery)
         } catch _ {
             throw DataAccessError.Update_Error
         }
@@ -261,21 +220,8 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
         return isDeleted
     }
 
-    func delete(idToDelte: Int64) throws {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
-        let query = table.filter(id == idToDelte)
-        do {
-            try DB.run(query.delete())
-        } catch _ {
-
-        }
-    }
-
     func getLikeStatus(id: Int64) -> IsLiked {
-        if  let chatTables = try? findAll() as? [ChatEntity] {
+        if  let chatTables = try? findAllEntities() as? [ChatEntity] {
             for item in chatTables {
                 if item.id == id {
                     if item.chatIsLiked == IsLiked.like.rawValue {
@@ -290,7 +236,7 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
     }
 
     func getDeletedStatus(id: Int64) -> IsDeleted {
-        if  let chatTables = try? findAll() as? [ChatEntity] {
+        if  let chatTables = try? findAllEntities() as? [ChatEntity] {
             for item in chatTables {
                 if item.id == id {
                     if item.chatIsDelete == IsDeleted.delete.rawValue {
@@ -369,18 +315,6 @@ class ChatTableDBHelper: BaseModel, DataHelperProtocol {
         do {
             try DB.run(deleteQuery.delete())
             try DB.run(table.update(chatIsLiked <- IsLiked.noLike.rawValue))
-        } catch _ {
-
-        }
-    }
-
-    func deleteChatHistory() throws {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
-        do {
-            try DB.run(table.delete())
         } catch _ {
 
         }

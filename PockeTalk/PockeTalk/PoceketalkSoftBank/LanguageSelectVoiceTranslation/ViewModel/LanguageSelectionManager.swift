@@ -123,7 +123,7 @@ public class LanguageSelectionManager{
     }
 
     func insertIntoDb(entity: LanguageSelectionEntity) -> Int{
-        if let rowid = try? LanguageSelectionDBHelper().insert(item: entity){
+        if let rowid = try? LanguageSelectionDBModel().insert(item: entity){
             PrintUtility.printLog(tag: TAG, text: "LanguageListFromDb row-id \(String(describing: rowid))")
             return Int(rowid)
         }
@@ -133,7 +133,7 @@ public class LanguageSelectionManager{
     func getSelectedLanguageListFromDb(cameraOrVoice: Int64) -> [LanguageItem]{
         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) LanguageListFromDb getSelectedLanguageListFromDb \(cameraOrVoice)")
         var langList = [LanguageItem]()
-        guard let langListFromDb = try? LanguageSelectionDBHelper().findAll(findFor: cameraOrVoice) as? [LanguageSelectionEntity] else {
+        guard let langListFromDb = try? LanguageSelectionDBModel().findAll(findFor: cameraOrVoice) as? [LanguageSelectionEntity] else {
             return langList
         }
         for item in langListFromDb {

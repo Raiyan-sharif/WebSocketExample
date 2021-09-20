@@ -128,7 +128,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
     }
 
     func insertIntoDb(entity: LanguageSelectionEntity){
-        if let rowid = try? LanguageSelectionDBHelper().insert(item: entity){
+        if let rowid = try? LanguageSelectionDBModel().insert(item: entity){
             PrintUtility.printLog(tag: TAG, text: "LanguageListFromDb \(String(describing: rowid)) inserted")
         }
     }
@@ -136,7 +136,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
     func getSelectedLanguageListFromDb() -> [LanguageItem]{
         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) LanguageListFromDb getSelectedLanguageListFromDb")
         var langList = [LanguageItem]()
-        guard let langListFromDb = try? LanguageSelectionDBHelper().findAll(findFor: LanguageType.camera.rawValue) as? [LanguageSelectionEntity] else {
+        guard let langListFromDb = try? LanguageSelectionDBModel().findAll(findFor: LanguageType.camera.rawValue) as? [LanguageSelectionEntity] else {
             return langList
         }
         for item in langListFromDb {

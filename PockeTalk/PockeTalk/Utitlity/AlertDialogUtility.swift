@@ -8,7 +8,7 @@ public class AlertDialogUtility {
         let alert = UIAlertController(title: "", message: "msg_history_del_dialog".localiz(), preferredStyle:UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "clear".localiz(), style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) in
                 PrintUtility.printLog(tag: TAG, text: "Handle Ok logic here")
-            _ = ChatTableDBHelper().deleteAllChatHistory(removeStatus: .removeHistory)
+            _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
                 }))
         alert.addAction(UIAlertAction(title: "cancel".localiz(), style: UIAlertAction.Style.cancel, handler: nil))
             return alert
@@ -18,7 +18,7 @@ public class AlertDialogUtility {
         let alert = UIAlertController(title: "", message: "msg_camera_history_del_dialog".localiz(), preferredStyle:UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "clear".localiz(), style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) in
             PrintUtility.printLog(tag: TAG, text: "Handle Ok logic here")
-            _ = try? CameraHistoryDBHelper().deleteCameraHistory()
+            _ = try? CameraHistoryDBModel().deleteAll()
         }))
         alert.addAction(UIAlertAction(title: "cancel".localiz(), style: UIAlertAction.Style.cancel, handler: nil))
         return alert
@@ -28,7 +28,7 @@ public class AlertDialogUtility {
         let alert = UIAlertController(title: "", message: "msg_history_del_dialog_favorite".localiz(), preferredStyle:UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "clear".localiz(), style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) in
                 PrintUtility.printLog(tag: TAG, text: "Handle Ok logic here")
-            _ = ChatTableDBHelper().deleteAllChatHistory(removeStatus: .removeFavorite)
+            _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
                 }))
         alert.addAction(UIAlertAction(title: "cancel".localiz(), style: UIAlertAction.Style.cancel, handler: nil))
             return alert
@@ -39,10 +39,10 @@ public class AlertDialogUtility {
             PrintUtility.printLog(tag: TAG, text: "Handle Ok logic here")
             do {
                 /// Delete all from tables
-                try CameraHistoryDBHelper().deleteCameraHistory()
-                try ChatTableDBHelper().deleteChatHistory()
-                try LanguageSelectionDBHelper().deleteLanguageSelectionHistory()
-                try LanguageMapDBHelper().deleteLanguageMapHistory()
+                try CameraHistoryDBModel().deleteAll()
+                try ChatDBModel().deleteAll()
+                try LanguageSelectionDBModel().deleteAll()
+                try LanguageMapDBModel().deleteAll()
             } catch _ {
 
             }

@@ -15,7 +15,7 @@ protocol HistoryViewModeling{
 
 class HistoryViewModel:BaseModel, HistoryViewModeling {
     var items: Bindable<[BaseEntity]> = Bindable([])
-    var chatDataHelper = ChatTableDBHelper()
+    var chatDataHelper = ChatDBModel()
     override init() {
         do{
             let values =  try chatDataHelper.pickListedItems(isFavorite: false)

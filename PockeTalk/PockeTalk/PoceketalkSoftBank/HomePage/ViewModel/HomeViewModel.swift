@@ -18,7 +18,7 @@ class HomeViewModel: BaseModel {
     func getHistoryItemCount() -> Int{
         var historyItemCount = 0
         do{
-            historyItemCount =  try ChatTableDBHelper().getRowCount(isFavorite: false)
+            historyItemCount =  try ChatDBModel().getRowCount(isFavorite: false)
         } catch{}
         
         return historyItemCount

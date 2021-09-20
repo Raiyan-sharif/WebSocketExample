@@ -29,10 +29,10 @@ class SQLiteDataStore {
 
     func createTables() throws{
         do {
-            try CameraHistoryDBHelper().createTable()
-            try ChatTableDBHelper().createTable()
-            try LanguageMapDBHelper().createTable()
-            try LanguageSelectionDBHelper().createTable()
+            try CameraHistoryDBModel().createTable()
+            try ChatDBModel().createTable()
+            try LanguageMapDBModel().createTable()
+            try LanguageSelectionDBModel().createTable()
         } catch {
             throw DataAccessError.Datastore_Connection_Error
         }

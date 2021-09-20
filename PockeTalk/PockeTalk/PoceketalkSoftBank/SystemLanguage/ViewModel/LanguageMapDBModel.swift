@@ -7,11 +7,9 @@
 
 import SQLite
 
-class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
+class LanguageMapDBModel: BaseDBModel {
     let TABLE_NAME = "LanguageMapTable"
-    let table: Table
 
-    let id: Expression<Int64>
     let textCode: Expression<String>
     let textCodeTr: Expression<String>
     let textValueOne: Expression<String>
@@ -22,9 +20,7 @@ class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
     let textValueSix: Expression<String>
     let textValueSeven: Expression<String>
 
-    override init() {
-        self.table = Table(TABLE_NAME)
-        self.id = Expression<Int64>("id")
+    init() {
         self.textCode = Expression<String>("txt_code")
         self.textCodeTr = Expression<String>("txt_code_tr")
         self.textValueOne = Expression<String>("txt_value_one")
@@ -34,14 +30,12 @@ class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
         self.textValueFive = Expression<String>("txt_value_five")
         self.textValueSix = Expression<String>("txt_value_six")
         self.textValueSeven = Expression<String>("txt_value_seven")
+        super.init(id: Expression<Int64>("id"), table: Table(TABLE_NAME))
     }
 
-     func createTable() throws {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
+    func createTable() throws {
         do {
-            _ = try DB.run(table.create(ifNotExists: true) {t in
+            let createTableQueryString = table.create(ifNotExists: true) {t in
                 t.column(id, primaryKey: .autoincrement)
                 t.column(textCode)
                 t.column(textCodeTr)
@@ -52,62 +46,37 @@ class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
                 t.column(textValueFive)
                 t.column(textValueSix)
                 t.column(textValueSeven)
+            }
 
-                })
+            try createTable(queryString: createTableQueryString)
+
         } catch _ {
             // Error thrown when table exists
         }
     }
 
     func insert(item: BaseEntity) throws -> Int64 {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
         if let languageMapTable = item as? LanguageMapEntity {
-            let insert = table.insert(textCode <- languageMapTable.textCode!, textCodeTr <- languageMapTable.textCodeTr!, textValueOne <- languageMapTable.textValueOne!, textValueTwo <- languageMapTable.textValueTwo!, textValueThree <- languageMapTable.textValueThree!, textValueFour <- languageMapTable.textValueFour!, textValueFive <- languageMapTable.textValueFive!, textValueSix <- languageMapTable.textValueSix!, textValueSeven <- languageMapTable.textValueSeven! )
-            do {
-                let rowId = try DB.run(insert)
-                guard rowId >= 0 else {
-                    throw DataAccessError.Insert_Error
-                }
-                return rowId
-            } catch _ {
-                throw DataAccessError.Insert_Error
-            }
+            let insertStatement = table.insert(textCode <- languageMapTable.textCode!, textCodeTr <- languageMapTable.textCodeTr!, textValueOne <- languageMapTable.textValueOne!, textValueTwo <- languageMapTable.textValueTwo!, textValueThree <- languageMapTable.textValueThree!, textValueFour <- languageMapTable.textValueFour!, textValueFive <- languageMapTable.textValueFive!, textValueSix <- languageMapTable.textValueSix!, textValueSeven <- languageMapTable.textValueSeven! )
+
+            _ = try? insert(queryString: insertStatement)
         }
         throw DataAccessError.Nil_In_Data
     }
 
-     func delete (item: BaseEntity) throws -> Void {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
+    func delete (item: BaseEntity) throws -> Void {
         guard let languageMapTable = item as? LanguageMapEntity else {
             return
         }
 
         if let findId = languageMapTable.id {
-            let query = table.filter(id == findId)
-            do {
-                let tmp = try DB.run(query.delete())
-                guard tmp == 1 else {
-                    throw DataAccessError.Delete_Error
-                }
-            } catch _ {
-                throw DataAccessError.Delete_Error
-            }
+            try delete(idToDelte: findId)
         }
 
     }
 
-     func find(idToFind: Int64) throws -> BaseEntity? {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-        let query = table.filter(id == idToFind)
-        let items = try DB.prepare(query)
+    func find(idToFind: Int64) throws -> BaseEntity? {
+        let items = try find(findId: idToFind)
         for item in  items {
             return LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven])
         }
@@ -116,28 +85,13 @@ class LanguageMapDBHelper: BaseModel, DataHelperProtocol {
 
     }
 
-     func findAll() throws -> [BaseEntity]? {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
+     func findAllEntities() throws -> [BaseEntity]? {
         var retArray = [BaseEntity]()
-        let items = try DB.prepare(table)
+        let items = try findAll()
         for item in items {
             retArray.append(LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven]))
         }
 
         return retArray
-    }
-
-    func deleteLanguageMapHistory() throws {
-        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
-            throw DataAccessError.Datastore_Connection_Error
-        }
-
-        do {
-            try DB.run(table.delete())
-        } catch _ {
-
-        }
     }
 }

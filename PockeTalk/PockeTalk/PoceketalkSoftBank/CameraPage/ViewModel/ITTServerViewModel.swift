@@ -187,7 +187,7 @@ class ITTServerViewModel: BaseModel {
         
         if let image = capturedImage {
             let imageData = UIImage.convertImageToBase64(image: image)
-            _ = try? CameraHistoryDBHelper().insert(item: CameraEntity(id: nil, detectedData: "", translatedData: "", image: imageData))
+            _ = try? CameraHistoryDBModel().insert(item: CameraEntity(id: nil, detectedData: "", translatedData: "", image: imageData))
         } else {
             PrintUtility.printLog(tag: "save to database: ", text: "False")
         }

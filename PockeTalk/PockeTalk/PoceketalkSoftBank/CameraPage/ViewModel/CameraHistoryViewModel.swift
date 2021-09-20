@@ -31,7 +31,7 @@ class CameraHistoryViewModel: BaseModel {
         
         cameraHistoryImages.removeAll()
         
-        if let cameraHistoryData = try? CameraHistoryDBHelper().getAllCameraHistoryTables {
+        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
             for each in cameraHistoryData {
                 if let imageData = each.image {
                     let image = UIImage.convertBase64ToImage(imageString: imageData)

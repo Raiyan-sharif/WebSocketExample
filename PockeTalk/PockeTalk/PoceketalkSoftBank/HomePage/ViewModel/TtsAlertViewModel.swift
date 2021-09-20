@@ -40,7 +40,7 @@ class TtsAlertViewModel: BaseModel {
     func saveChatData(nativeText: String?, nativeLangCode: String?, targetText:String?, targetLangCode: String?){
         let isArrowUp = LanguageSelectionManager.shared.isArrowUp ?? true
         do {
-            _ = try ChatTableDBHelper.init().insert(item: ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangCode, textNativeLanguage: nativeLangCode!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue))
+            _ = try ChatDBModel.init().insert(item: ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangCode, textNativeLanguage: nativeLangCode!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue))
         } catch _ {}
     }
     
