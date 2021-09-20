@@ -80,28 +80,39 @@
                                     <constraint firstAttribute="trailing" secondItem="xdx-6B-AsP" secondAttribute="trailing" id="jcM-ge-AEn"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ryp-If-OJU">
+                                <rect key="frame" x="0.0" y="746" width="414" height="150"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="SzL-yx-3pA"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k89-E8-a95"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ryp-If-OJU" firstAttribute="leading" secondItem="CbJ-XS-RRC" secondAttribute="leading" id="4IH-n3-uq2"/>
                             <constraint firstItem="349-ky-eL4" firstAttribute="leading" secondItem="k89-E8-a95" secondAttribute="leading" id="A12-9m-ECt"/>
                             <constraint firstItem="mOC-LX-0Kl" firstAttribute="leading" secondItem="k89-E8-a95" secondAttribute="leading" id="HHB-zS-tZF"/>
                             <constraint firstItem="mOC-LX-0Kl" firstAttribute="top" secondItem="k89-E8-a95" secondAttribute="top" id="J3U-MQ-m0q"/>
                             <constraint firstItem="mOC-LX-0Kl" firstAttribute="trailing" secondItem="k89-E8-a95" secondAttribute="trailing" id="KjJ-We-ud8"/>
+                            <constraint firstItem="k89-E8-a95" firstAttribute="trailing" secondItem="ryp-If-OJU" secondAttribute="trailing" id="VNj-X2-yfU"/>
                             <constraint firstAttribute="trailing" secondItem="349-ky-eL4" secondAttribute="trailing" id="ab7-oW-KDG"/>
+                            <constraint firstAttribute="bottom" secondItem="ryp-If-OJU" secondAttribute="bottom" id="dmN-KX-3vO"/>
                             <constraint firstItem="349-ky-eL4" firstAttribute="top" secondItem="mOC-LX-0Kl" secondAttribute="bottom" id="gj4-PE-WsC"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnHistoryList" destination="cHc-oM-XuF" id="jhf-xv-rb1"/>
                         <outlet property="btnLangList" destination="Wpf-A2-1uQ" id="FSu-TB-1as"/>
+                        <outlet property="layoutBottomBtnContainer" destination="ryp-If-OJU" id="MPO-1C-tMF"/>
                         <outlet property="tabsView" destination="349-ky-eL4" id="rk9-QQ-OAG"/>
                         <outlet property="toolbarTitleLabel" destination="Ns9-2L-SZQ" id="pBC-Fu-gy3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-10" y="48"/>
+            <point key="canvasLocation" x="-10.144927536231885" y="47.544642857142854"/>
         </scene>
         <!--Language Settings TutorialVC-->
         <scene sceneID="DfV-gh-1Hi">

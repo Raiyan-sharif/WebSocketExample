@@ -44,6 +44,7 @@ class SpeechProcessingViewController: BaseViewController{
     var nativeLangCode : String = ""
     var service : MAAudioService?
     var socketManager = SocketManager.sharedInstance
+    var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -145,15 +146,23 @@ class SpeechProcessingViewController: BaseViewController{
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        //service?.stopRecord()
-        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-        if (currentTS - self.homeMicTapTimeStamp) <=  1 {
-            self.showTutorial()
-        } else {
-            if(isFromPronunciationPractice){
-                self.showPronunciationPracticeResult()
-            }else{
-                self.showTtsAlert()
+        if let purpose = screenOpeningPurpose{
+            switch purpose {
+            case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
+                self.navigationController?.popViewController(animated: true)
+                break
+            default:
+                //service?.stopRecord()
+                let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+                if (currentTS - self.homeMicTapTimeStamp) <=  1 {
+                    self.showTutorial()
+                } else {
+                    if(isFromPronunciationPractice){
+                        self.showPronunciationPracticeResult()
+                    }else{
+                        self.showTtsAlert()
+                    }
+                }
             }
         }
     }
@@ -203,4 +212,11 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
     }
     func getData(data: Data) {
     }
+}
+
+enum SpeechProcessingScreenOpeningPurpose{
+    case HomeSpeechProcessing
+    case LanguageSelectionVoice
+    case CountrySelectionByVoice
+    case LanguageSelectionCamera
 }
