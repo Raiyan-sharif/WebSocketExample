@@ -210,6 +210,14 @@ class HomeViewController: BaseViewController {
         historyVC.initDelegate(self)
         self.navigationController?.present(historyVC, animated: true, completion: nil)
     }
+    
+    /// Top button trigger to history screen
+    @objc func goToFavouriteScreen () {
+        let fv = FavouriteViewController()
+        fv.modalTransitionStyle = .crossDissolve
+        fv.initDelegate(self)
+        self.navigationController?.present(fv, animated: true, completion: nil)
+    }
 
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
@@ -228,8 +236,7 @@ class HomeViewController: BaseViewController {
 
     /// Naviagete to Favorite page
     @IBAction func didTapOnFavoriteButton(_ sender: UIButton) {
-        //TODO: Need to implement favorite page
-        GlobalMethod.showAlert("Need implement favorite page")
+        self.goToFavouriteScreen()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
