@@ -21,7 +21,6 @@ class TutorialViewController: UIViewController {
     var tutorialVM : TutorialViewModel!
     var avPlayer: AVPlayer!
     let cornerRadius : CGFloat = 15
-    let fontSize : CGFloat = 27
     let animationDuration = 0.3
     let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
@@ -57,11 +56,11 @@ class TutorialViewController: UIViewController {
 
         self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
-        self.titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .semibold)
         self.titleLabel.textColor = UIColor._blackColor()
 
         self.infoLabel.text = tutorialLanguage?.lineTwo
-        self.infoLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.infoLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .regular)
         self.infoLabel.setLineHeight(lineHeight: lineSpacing)
         self.infoLabel.textAlignment = .center
         self.infoLabel.textColor = UIColor._blackColor()

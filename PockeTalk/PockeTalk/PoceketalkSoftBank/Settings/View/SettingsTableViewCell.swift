@@ -23,5 +23,8 @@ class SettingsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    override func layoutSubviews() {
+        changeFontSize()
+    }
 }

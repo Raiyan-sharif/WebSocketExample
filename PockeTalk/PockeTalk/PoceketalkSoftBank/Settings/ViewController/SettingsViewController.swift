@@ -3,27 +3,31 @@
 //  PockeTalk
 //
 //  Created by Khairuzzaman Shipon on 9/2/21.
-//  Copyright © 2021 Bjit ltd. on All rights reserved.
 //
 
 import UIKit
 
-class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, fontSizeChanged {
+    func fontSizeChanged(value: Bool) {
+        labelTopBarTitle.font = UIFont.boldSystemFont(ofSize: FontUtility.getFontSize())
+        tableView.reloadData()
+    }
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buttonBack: UIButton!
     @IBOutlet weak var labelTopBarTitle: UILabel!
     @IBOutlet weak var imageViewOk: UIImageView!
-    
+
     @IBAction func actionBack(_ sender: UIButton) {
         navigationController?.popToViewController(ofClass: HomeViewController.self)
     }
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(true)
-            self.navigationController?.navigationBar.isHidden = true
-            self.tableView.reloadData()
-            labelTopBarTitle?.text = "Settings".localiz()
-        }
-    
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = true
+        self.tableView.reloadData()
+        labelTopBarTitle?.text = "Settings".localiz()
+    }
+
     override var prefersStatusBarHidden: Bool{
         return true
     }
@@ -37,11 +41,11 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SettingsItemType.settingsItems.count
     }
-        
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath) as! SettingsTableViewCell
             
@@ -49,15 +53,16 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         return cell
             
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let settingsType =  SettingsItemType.settingsItems[indexPath.row]
-        
+
         switch settingsType
         {
         case SettingsItemType.textSize.rawValue:
             let textSizeVC = TextSizeViewController()
             textSizeVC.modalPresentationStyle = .overCurrentContext
+            textSizeVC.delegate = self
             self.navigationController?.present(textSizeVC, animated: true, completion: nil)
         case SettingsItemType.languageChange.rawValue:
             PrintUtility.printLog(tag: "LanguageChage: ", text: "LanguageChage")
@@ -83,9 +88,9 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             break
 
         }
-        
+
     }
-    
+
 
     /*
     // MARK: - Navigation
@@ -97,4 +102,8 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     */
 
+}
+
+protocol fontSizeChanged : AnyObject {
+    func fontSizeChanged(value: Bool)
 }

@@ -31,8 +31,8 @@ class TtsAlertController: BaseViewController {
     var ttsVM : TtsAlertViewModel!
     var chatEntity : ChatEntity?
     let cornerRadius : CGFloat = 15
-    let fontSize : CGFloat = 20
-    let reverseFontSize : CGFloat = 22
+    let fontSize : CGFloat = FontUtility.getFontSize()
+    let reverseFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
     var nativeLanguage : String = ""

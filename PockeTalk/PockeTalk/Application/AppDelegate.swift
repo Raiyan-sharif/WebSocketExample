@@ -33,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController.init(rootViewController: viewController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+        if  UserDefaultsProperty<String>(KFontSelection).value == nil{
+            UserDefaultsProperty<String>(KFontSelection).value = "Medium"
+            FontUtility.setInitialFontSize()
+        }
     }
 
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.

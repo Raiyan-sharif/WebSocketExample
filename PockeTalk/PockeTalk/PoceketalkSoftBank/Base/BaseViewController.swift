@@ -10,6 +10,7 @@ import UIKit
 class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.changeFontSize()
         self.view.backgroundColor = UIColor._blackColor()
 
         // Do any additional setup after loading the view.
@@ -22,4 +23,3 @@ class BaseViewController: UIViewController {
         }
     }
 }
-

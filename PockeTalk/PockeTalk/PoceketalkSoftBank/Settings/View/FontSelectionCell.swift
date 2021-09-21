@@ -21,5 +21,10 @@ class FontSelectionCell: UITableViewCell,NibReusable {
 
         // Configure the view for the selected state
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        changeFontSize()
+    }
+
 }

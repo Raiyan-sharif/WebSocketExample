@@ -30,6 +30,10 @@ class AlertTableViewCell: UITableViewCell {
         self.imgView.image = UIImage(named: imageName)
     }
 
+    override func layoutSubviews() {
+        changeFontSize()
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

@@ -5,7 +5,7 @@
 
 import UIKit
 
-class NoInternetAlert: UIViewController {
+class NoInternetAlert: BaseViewController {
     /// Views
     @IBOutlet weak var noInternetAlertTableView: UITableView!
 

@@ -24,8 +24,6 @@ class SpeechProcessingViewController: BaseViewController{
     var speechProcessingLanguageList = [SpeechProcessingLanguages]()
     var speechProcessingVM : SpeechProcessingViewModel!
     let cornerRadius : CGFloat = 15
-    let titleFontSize : CGFloat = 30
-    let fontSize : CGFloat = 27
     let animationDuration = 1.5
     let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
@@ -73,7 +71,7 @@ class SpeechProcessingViewController: BaseViewController{
         self.titleLabel.textAlignment = .center
         self.titleLabel.numberOfLines = 0
         self.titleLabel.lineBreakMode = .byWordWrapping
-        self.titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .semibold)
         self.titleLabel.textColor = UIColor._whiteColor()
 
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
@@ -125,13 +123,13 @@ class SpeechProcessingViewController: BaseViewController{
     func showExample () {
         let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
         self.exampleLabel.text = speechLanguage?.exampleText
-        self.exampleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.exampleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
         self.exampleLabel.textAlignment = .center
         self.exampleLabel.textColor = UIColor._whiteColor()
 
         self.descriptionLabel.text = speechLanguage?.secText
         self.descriptionLabel.setLineHeight(lineHeight: lineSpacing)
-        self.descriptionLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.descriptionLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
         self.descriptionLabel.textAlignment = .center
         self.descriptionLabel.textColor = UIColor._whiteColor()
         self.descriptionLabel.numberOfLines = 0

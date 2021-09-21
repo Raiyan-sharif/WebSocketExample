@@ -48,6 +48,7 @@ class HistoryCell: UICollectionViewCell,NibReusable {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
+        changeFontSize()
         // Improve scrolling performance with an explicit shadowPath
         containerView.layer.shadowPath = UIBezierPath(
             roundedRect: containerView.bounds,

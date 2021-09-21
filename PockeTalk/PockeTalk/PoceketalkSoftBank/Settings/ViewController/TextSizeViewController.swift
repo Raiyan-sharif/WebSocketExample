@@ -13,6 +13,7 @@ class TextSizeViewController: BaseViewController {
     private var tableHeight:CGFloat =  0
     private var selecteText:String!
     private let  tableHeaderAndFooterHeight:CGFloat = 60.0
+    weak var delegate: fontSizeChanged?
 
     private lazy var tableView:UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -27,9 +28,6 @@ class TextSizeViewController: BaseViewController {
 
     override func loadView() {
         super.loadView()
-        if  UserDefaultsProperty<String>(KFontSelection).value == nil{
-            UserDefaultsProperty<String>(KFontSelection).value = "Medium"
-        }
         selecteText = UserDefaultsProperty<String>(KFontSelection).value
     }
 
@@ -69,6 +67,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
         if selecteText == dataSource[indexPath.row]{
             cell.imgView.tintColor = UIColor.init(red: 30, green: 168, blue: 148)
             cell.imgView.image = #imageLiteral(resourceName: "Radio_On")
+            delegate?.fontSizeChanged(value: true)
         }else{
             cell.imgView.tintColor = UIColor.init(red: 51, green: 51, blue: 51)
             cell.imgView.image = #imageLiteral(resourceName: "Radion_Off")
@@ -82,6 +81,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selecteText = dataSource[indexPath.row]
+        FontUtility.setFontSize(selectedFont: selecteText)
         tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.dismiss(animated: true, completion: nil)
@@ -95,7 +95,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
         let label = UILabel(frame: CGRect(x: view.bounds.minY + 35, y: 0, width: view.bounds.width, height: tableHeaderAndFooterHeight))
         label.textAlignment = .left
         label.text = "font_size".localiz()
-        label.font = UIFont.boldSystemFont(ofSize: 20.0)
+        label.font = UIFont.boldSystemFont(ofSize: FontUtility.getFontSize())
         label.textColor = UIColor.init(red: 38, green: 38, blue: 38)
         view.addSubview(label)
         return view

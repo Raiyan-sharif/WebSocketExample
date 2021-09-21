@@ -26,7 +26,6 @@ class HomeViewController: BaseViewController {
 
     //Properties
     var homeVM : HomeViewModel!
-    let FontSize : CGFloat = 23.0
     var animationCounter : Int = 0
     var deviceLanguage : String = ""
     let toastVisibleTime : Double = 2.0
@@ -54,6 +53,8 @@ class HomeViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        view.changeFontSize()
+        setUpUI()
         self.navigationController?.navigationBar.isHidden = true
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
         historyItemCount =  homeVM.getHistoryItemCount()
@@ -77,17 +78,16 @@ class HomeViewController: BaseViewController {
 
         //self.topNativeLangNameLable.setTitle("Japanese", for: .normal)
         self.topNativeLangNameLable.titleLabel?.textAlignment = .center
-        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
+        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.topNativeLangNameLable.setTitleColor(UIColor._whiteColor(), for: .normal)
 
         //self.topSysLangName.text = "Japanese"
         self.topSysLangName.textAlignment = .center
-        self.topSysLangName.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
         self.topSysLangName.textColor = UIColor._whiteColor()
 
         self.bottomLangSysLangName.setTitle(deviceLanguage, for: .normal)
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
-        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
+        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomView, width: width, height: width)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)

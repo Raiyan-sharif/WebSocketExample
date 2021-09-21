@@ -3,7 +3,6 @@
 //  PockeTalk
 //
 //  Created by Sadikul Bari on 4/9/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
 //
 
 import UIKit
@@ -24,5 +23,9 @@ class LangListCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    override func layoutSubviews() {
+        changeFontSize()
+    }
+
 }

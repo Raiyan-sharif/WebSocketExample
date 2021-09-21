@@ -3,17 +3,16 @@
 //  PockeTalk
 //
 //  Created by Morshed Alam on 9/2/21.
-//  Copyright © 2021 ___. All rights reserved.
 //
 
 import UIKit
 import SwiftyXMLParser
 
-class SystemLanguageViewController: UIViewController {
-    
+class SystemLanguageViewController: BaseViewController {
+
     /// tableview to show list
     var tableView:UITableView!
-    
+
     ///languageList for all languages
     var languageList = [SystemLanguages]()
 
