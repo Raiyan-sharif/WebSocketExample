@@ -38,6 +38,7 @@ let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
 let kIsShownLanguageSettings = "kIsShownLanguageSettings"
 let kIsAlreadyFavorite = "kIsAlreadyFavorite"
+let kLastSavedChatID = "lastSavedChatID"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"

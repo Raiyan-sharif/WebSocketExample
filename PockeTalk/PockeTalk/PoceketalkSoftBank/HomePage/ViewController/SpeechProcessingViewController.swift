@@ -15,6 +15,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var speechProcessingAnimationView: UIView!
     @IBOutlet weak var speechProcessingRightImgView: UIImageView!
     @IBOutlet weak var speechProcessingLeftImgView: UIImageView!
+    @IBOutlet weak var bottomTalkView: UIView!
     ///Properties
     /// Showing Bengali for now
     let selectedLanguageIndex : Int = 8
@@ -29,7 +30,6 @@ class SpeechProcessingViewController: BaseViewController{
     let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
-    let trailing : CGFloat = -20
     let width : CGFloat = 100
     var homeMicTapTimeStamp : Int = 0
     var isSpeechProvided : Bool = false
@@ -76,8 +76,8 @@ class SpeechProcessingViewController: BaseViewController{
         self.titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
         self.titleLabel.textColor = UIColor._whiteColor()
 
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
 
         self.updateAnimation()
     }
@@ -151,8 +151,8 @@ class SpeechProcessingViewController: BaseViewController{
             case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
                 self.navigationController?.popViewController(animated: true)
                 break
-            default:
-                //service?.stopRecord()
+
+            case .HomeSpeechProcessing :
                 let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
                 if (currentTS - self.homeMicTapTimeStamp) <=  1 {
                     self.showTutorial()
@@ -163,6 +163,8 @@ class SpeechProcessingViewController: BaseViewController{
                         self.showTtsAlert()
                     }
                 }
+                break
+                //service?.stopRecord()
             }
         }
     }

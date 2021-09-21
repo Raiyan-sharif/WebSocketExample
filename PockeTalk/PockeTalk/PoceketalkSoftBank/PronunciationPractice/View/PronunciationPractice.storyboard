@@ -67,12 +67,18 @@
                                     <action selector="actionBack:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gyS-iy-KvS"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rzw-Cn-Wh2">
+                                <rect key="frame" x="0.0" y="742" width="414" height="154"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Rzw-Cn-Wh2" firstAttribute="top" secondItem="CZT-7B-fQF" secondAttribute="bottom" id="0Du-Vg-B6D"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="1an-G7-RJd"/>
+                            <constraint firstAttribute="bottom" secondItem="Rzw-Cn-Wh2" secondAttribute="bottom" id="2h3-WZ-ewB"/>
                             <constraint firstItem="era-wu-Hn2" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="15" id="6YE-Hg-ET8"/>
                             <constraint firstItem="WeU-RP-ahU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="30" id="Cfq-es-tpa"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="CZT-7B-fQF" secondAttribute="bottom" constant="120" id="Egx-2K-ds8"/>
@@ -81,10 +87,13 @@
                             <constraint firstItem="era-wu-Hn2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WAE-uF-39H"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="YWY-Wx-aBV"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="WeU-RP-ahU" secondAttribute="trailing" constant="15" id="ls9-oi-bUt"/>
+                            <constraint firstItem="Rzw-Cn-Wh2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ncK-KE-Fda"/>
+                            <constraint firstItem="Rzw-Cn-Wh2" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="nkt-ts-g2V"/>
                             <constraint firstItem="WeU-RP-ahU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="15" id="wfF-hk-9Ac"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomTalkView" destination="Rzw-Cn-Wh2" id="76r-ya-3L0"/>
                         <outlet property="btnBack" destination="era-wu-Hn2" id="1Jk-HF-Prz"/>
                         <outlet property="labelOriginalText" destination="kEq-cG-2Rz" id="utR-lB-7dm"/>
                         <outlet property="labelPronunciationGuideline" destination="cLc-eo-ed1" id="iOL-E0-Eb7"/>
@@ -213,21 +222,30 @@
                                     <action selector="actionBack:" destination="vEL-Vi-uVQ" eventType="touchUpInside" id="Lx5-qA-NCw"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDb-OR-NmO">
+                                <rect key="frame" x="0.0" y="742" width="414" height="154"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hks-nx-kyW"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="VHi-dG-8vH" firstAttribute="leading" secondItem="hks-nx-kyW" secondAttribute="leading" id="5t0-5J-SKN"/>
                             <constraint firstItem="hks-nx-kyW" firstAttribute="bottom" secondItem="5Ro-b4-WGQ" secondAttribute="bottom" constant="120" id="8FC-jv-7Dd"/>
+                            <constraint firstItem="vDb-OR-NmO" firstAttribute="trailing" secondItem="hks-nx-kyW" secondAttribute="trailing" id="9k8-WW-FPg"/>
+                            <constraint firstAttribute="bottom" secondItem="vDb-OR-NmO" secondAttribute="bottom" id="G1G-CN-hx7"/>
                             <constraint firstItem="VHi-dG-8vH" firstAttribute="top" secondItem="hks-nx-kyW" secondAttribute="top" constant="15" id="VK4-He-EMi"/>
                             <constraint firstItem="hks-nx-kyW" firstAttribute="trailing" secondItem="5YX-Wq-RRm" secondAttribute="trailing" id="WmL-Qi-CM9"/>
+                            <constraint firstItem="vDb-OR-NmO" firstAttribute="top" secondItem="5Ro-b4-WGQ" secondAttribute="bottom" id="b8b-Qu-Guj"/>
                             <constraint firstItem="5YX-Wq-RRm" firstAttribute="top" secondItem="hks-nx-kyW" secondAttribute="top" constant="15" id="ejb-bo-zdi"/>
                             <constraint firstItem="5Ro-b4-WGQ" firstAttribute="leading" secondItem="hks-nx-kyW" secondAttribute="leading" constant="15" id="gLR-ax-IOr"/>
+                            <constraint firstItem="vDb-OR-NmO" firstAttribute="leading" secondItem="hks-nx-kyW" secondAttribute="leading" id="pMV-gi-hKB"/>
                             <constraint firstItem="5Ro-b4-WGQ" firstAttribute="top" secondItem="hks-nx-kyW" secondAttribute="top" constant="30" id="s5x-U9-1uL"/>
                             <constraint firstItem="hks-nx-kyW" firstAttribute="trailing" secondItem="5Ro-b4-WGQ" secondAttribute="trailing" constant="15" id="wmI-At-Xe3"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomTalkView" destination="vDb-OR-NmO" id="XBW-lF-kE6"/>
                         <outlet property="labelFailedOriginalText" destination="hfV-Az-9Fe" id="SWs-fx-Tuu"/>
                         <outlet property="labelFailedPronuncedText" destination="18d-2h-jC5" id="g7F-SL-yfd"/>
                         <outlet property="labelSuccessText" destination="eQT-5s-zyp" id="nGZ-nD-PZh"/>

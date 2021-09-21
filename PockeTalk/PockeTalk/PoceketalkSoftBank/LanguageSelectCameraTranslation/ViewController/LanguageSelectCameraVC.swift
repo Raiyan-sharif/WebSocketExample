@@ -103,8 +103,8 @@ class LanguageSelectCameraVC: BaseViewController {
     }
 
     func setUpSpeechButton(){
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: speechButtonWidth, height: speechButtonWidth, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomBtnContainer, width: speechButtonWidth, height: speechButtonWidth)
+        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
     }
 
     // TODO microphone tap event

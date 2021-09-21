@@ -8,7 +8,7 @@
 import UIKit
 import SwiftyXMLParser
 protocol RetranslationDelegate {
-    func showRetranslation ()
+    func showRetranslation (selectedLanguage : String)
 }
 
 class LangSelectVoiceVC: BaseViewController {
@@ -126,8 +126,8 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     func setUpSpeechButton(){
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomBtnContainer, width: width, height: width)
+        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
     }
 
     override func viewDidLayoutSubviews() {
@@ -217,19 +217,20 @@ class LangSelectVoiceVC: BaseViewController {
     @IBAction func onBackButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
-        if isNative == 1{
-            LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
-        }else{
-            LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+        if !fromRetranslation {
+            if isNative == 1{
+                LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+            }else{
+                LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+            }
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+            //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         }
-        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
-        _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-        //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
-        NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
-
         self.navigationController?.popViewController(animated: true)
         if fromRetranslation == true {
-            self.retranslationDelegate?.showRetranslation()
+            self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
         }
     }
 

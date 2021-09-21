@@ -88,8 +88,8 @@ class CountryListViewController: BaseViewController {
 
 
     func setUpSpeechButton(){
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: speechBtnWidth, height: speechBtnWidth, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomButtonContainer, width: speechBtnWidth, height: speechBtnWidth)
+        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
     }
 
     // TODO microphone tap event

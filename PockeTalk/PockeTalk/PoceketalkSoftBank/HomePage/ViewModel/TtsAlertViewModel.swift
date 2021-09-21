@@ -6,7 +6,8 @@
 import UIKit
 
 class TtsAlertViewModel: BaseModel {
-
+    var savedDataID : Int64?
+    var chatEntity : ChatEntity?
     var speechTexts: [String : String] = [
         "en":"Hello, how are you?",
         "ja":"こんにちは元気ですか？",
@@ -20,40 +21,50 @@ class TtsAlertViewModel: BaseModel {
     ]
     
     //Todo: using sample chat data for now
-    func getTranslationData() -> (nativeText: String?, targetText: String?){
+    func getTranslationData(nativeCode : String, targetCode : String) -> (nativeText: String?, targetText: String?){
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.nativeLanguage
-        let targetLangCode = languageManager.targetLanguage
+
         var nativeText = ""
         var targetText = ""
         if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            nativeText = speechTexts[targetLangCode] ?? "TtsToLanguage".localiz()
-            targetText = speechTexts[nativeLangCode] ?? "TtsFromLanguage".localiz()
+            nativeText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
+            targetText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
         }else{
-            nativeText = speechTexts[nativeLangCode] ?? "TtsFromLanguage".localiz()
-            targetText = speechTexts[targetLangCode] ?? "TtsToLanguage".localiz()
+            nativeText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
+            targetText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
         }
-        saveChatData(nativeText: nativeText, nativeLangCode: nativeLangCode, targetText: targetText, targetLangCode: targetLangCode)
+        let isArrowUp = languageManager.isArrowUp ?? true
+        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
+
+        saveChatData(nativeText: nativeText, nativeLangCode: nativeCode, targetText: targetText, targetLangCode: targetCode, isTop: isTop)
+
+        ///Save last chat id to user defaults
+        UserDefaultsProperty<Int64>(kLastSavedChatID).value = savedDataID
+
         return (nativeText, targetText)
     }
     
-    func saveChatData(nativeText: String?, nativeLangCode: String?, targetText:String?, targetLangCode: String?){
-        let isArrowUp = LanguageSelectionManager.shared.isArrowUp ?? true
+    func saveChatData(nativeText: String?, nativeLangCode: String?, targetText:String?, targetLangCode: String?, isTop : Int64?){
         do {
-            _ = try ChatDBModel.init().insert(item: ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangCode, textNativeLanguage: nativeLangCode!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue))
+            savedDataID = try ChatDBModel.init().insert(item: ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangCode, textNativeLanguage: nativeLangCode!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue))
         } catch _ {}
     }
+
+    /// this method takes the id of last saved chat and returns respective ChatEntity
+    func findLastSavedChat (id : Int64) -> ChatEntity?{
+        do {
+            let baseEntity = try ChatDBModel.init().find(idToFind: id)
+            return baseEntity as? ChatEntity
+        } catch _ { return nil}
+    }
     
-    func getLanguage() -> (nativaLanguage : LanguageItem?, targetLanguage : LanguageItem? ) {
-        print("\(HomeViewController.self) updateLanguageNames method called")
+    func getLanguage(nativeLangCode : String, targetLangCode : String) -> (nativaLanguage : LanguageItem?, targetLanguage : LanguageItem? ) {
+        print("\(TtsAlertViewModel.self) updateLanguageNames method called")
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.nativeLanguage
-        let targetLangCode = languageManager.targetLanguage
 
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         PrintUtility.printLog(tag: "Update Language Names: ", text: "\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
         return (nativeLanguage, targetLanguage)
     }
-
 }

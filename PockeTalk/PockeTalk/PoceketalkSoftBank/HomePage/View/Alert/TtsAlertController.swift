@@ -17,8 +17,10 @@ class TtsAlertController: BaseViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var crossButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var bottomTalkView: UIView!
     @IBOutlet weak var containerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var fromLangLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var toLangLabelTopConstraint: NSLayoutConstraint!
@@ -27,39 +29,36 @@ class TtsAlertController: BaseViewController {
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     ///Properties
     var ttsVM : TtsAlertViewModel!
+    var chatEntity : ChatEntity?
     let cornerRadius : CGFloat = 15
     let fontSize : CGFloat = 20
     let reverseFontSize : CGFloat = 22
-    let trailing : CGFloat = -20
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
     var nativeLanguage : String = ""
     var targetLanguage : String = ""
     var delegate : SpeechControllerDismissDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
-    var microphoneButton : UIButton?
+    var talkButton : UIButton?
     var nativeText: String = ""
     var targetText: String = ""
+    var nativeLangCode : String = ""
+    var targetLangCode : String = ""
+    let animationDuration : CGFloat = 0.6
+    let animationDelay : CGFloat = 0
+    let transform : CGFloat = 0.97
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.ttsVM = TtsAlertViewModel()
-        let language = self.ttsVM.getLanguage()
-        if let nativeLangName = language.nativaLanguage?.name {
-            nativeLanguage = nativeLangName
-        }
 
-        if let targetLangName = language.targetLanguage?.name {
-            targetLanguage = targetLangName
-        }
-        let stt = self.ttsVM.getTranslationData()
-        if let nativeSTTText = stt.nativeText{
-            nativeText = nativeSTTText
-        }
-        if let targetSTTText = stt.targetText{
-            targetText = targetSTTText
-        }
+        /// Initialize Language Manager
+        let languageManager = LanguageSelectionManager.shared
+
+        /// Populate UI with language data
+        self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: languageManager.targetLanguage)
+
         self.setUpUI()
         self.populateData()
     }
@@ -69,10 +68,32 @@ class TtsAlertController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
 
+    func getLanguageInfo (nativeCode : String, targetCode : String) {
+        let language = self.ttsVM.getLanguage(nativeLangCode: nativeCode, targetLangCode: targetCode)
+        if let nativeLangName = language.nativaLanguage?.name, let nativeCode = language.nativaLanguage?.code {
+            nativeLanguage = nativeLangName
+            nativeLangCode = nativeCode
+        }
+
+        if let targetLangName = language.targetLanguage?.name, let targetCode = language.targetLanguage?.code {
+            targetLanguage = targetLangName
+            targetLangCode = targetCode
+        }
+
+        let stt = self.ttsVM.getTranslationData(nativeCode: nativeCode, targetCode: targetCode)
+        if let nativeSTTText = stt.nativeText{
+            nativeText = nativeSTTText
+        }
+        if let targetSTTText = stt.targetText{
+            targetText = targetSTTText
+        }
+    }
+
     /// Initial UI set up
     func setUpUI () {
-        self.containerView.layer.masksToBounds = true
-        self.containerView.layer.cornerRadius = cornerRadius
+        self.backgroundImageView.layer.masksToBounds = true
+        self.backgroundImageView.layer.cornerRadius = cornerRadius
+        self.startAnimation()
 
         self.toLanguageLabel.text = targetText
         self.toLanguageLabel.textAlignment = .center
@@ -97,38 +118,82 @@ class TtsAlertController: BaseViewController {
         if(LanguageSelectionManager.shared.isArrowUp ?? true){
             changeTranslationButton.image(for: UIControl.State.normal)
         }
-        microphoneButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        microphoneButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+        talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
         
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+    }
+
+    /// Start animation on background image view
+    func startAnimation () {
+        self.backgroundImageView.transform = CGAffineTransform.identity
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
+            self.backgroundImageView.transform = CGAffineTransform(scaleX: self.transform, y: self.transform)
+        },completion: { Void in()  })
+    }
+
+    /// Stop animation on background image view
+    func stopAnimation () {
+        self.backgroundImageView.layer.removeAllAnimations()
     }
 
     /// Update UI for Reverse translation
     func updateUIForReverse () {
         updateViewShowHideStatus()
         self.updateConstraints()
+        self.startAnimation()
 
         let reversedToLanguageText = self.toLanguageLabel.text
-        let reveredFromLanguageText = self.fromLanguageLabel.text
-        self.toLanguageLabel.text = reveredFromLanguageText
+        let reversedFromLanguageText = self.fromLanguageLabel.text
+        self.toLanguageLabel.text = reversedFromLanguageText
         self.fromLanguageLabel.text = reversedToLanguageText
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+
+        if let lastSavedChatID = UserDefaultsProperty<Int64>(kLastSavedChatID).value {
+            chatEntity = self.ttsVM.findLastSavedChat(id: lastSavedChatID)
+            self.updateBackgroundImage(topSelected: chatEntity?.chatIsTop ?? 0, featureType: .reverse)
+        }
+
+        self.saveReversedTranslatedDataToDB(nativeText: reversedToLanguageText, targetText: reversedFromLanguageText)
+    }
+
+    /// Save reversed translation data to chat table
+    func saveReversedTranslatedDataToDB (nativeText : String?, targetText : String?) {
+        self.ttsVM.saveChatData(nativeText: nativeText, nativeLangCode: targetLangCode, targetText: targetText, targetLangCode: nativeLangCode, isTop: chatEntity?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue)
     }
 
     /// Update UI for Retranslation
     func updateUIForRetranslation () {
         self.updateViewShowHideStatus()
         self.updateConstraints()
+        self.startAnimation()
 
+        if let lastSavedChatID = UserDefaultsProperty<Int64>(kLastSavedChatID).value {
+            chatEntity = self.ttsVM.findLastSavedChat(id: lastSavedChatID)
+            self.updateBackgroundImage(topSelected: chatEntity?.chatIsTop ?? 0, featureType: .retranslation)
+        }
+
+        /// set translated text on label
+        self.toLanguageLabel.text = targetText
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+
+        self.fromLanguageLabel.text = nativeText
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+    }
+
+    func updateBackgroundImage (topSelected : Int64, featureType : AlertFeatureType) {
+        if featureType == .reverse {
+            self.backgroundImageView.image = topSelected == IsTop.top.rawValue ? UIImage(named: "back_texture_white") : UIImage(named: "slider_back_texture_blue")
+        } else {
+            self.backgroundImageView.image = topSelected == IsTop.top.rawValue ? UIImage(named: "slider_back_texture_blue") : UIImage(named: "back_texture_white")
+        }
     }
 
     func updateViewShowHideStatus () {
         self.crossButton.isHidden = false
         self.bottomView.isHidden = true
-        self.microphoneButton?.isHidden = true
+        self.talkButton?.isHidden = true
         self.menuButton.isHidden = true
         self.backButton.isHidden = true
     }
@@ -158,12 +223,16 @@ class TtsAlertController: BaseViewController {
     func setLanguageDirection(isArrowUp: Bool){
         if (isArrowUp){
             self.changeTranslationButton.setImage(UIImage(named: "arrow_back_icon"), for: UIControl.State.normal)
+            self.backgroundImageView.image = UIImage(named: "back_texture_white")
         }else{
             self.changeTranslationButton.setImage(UIImage(named: "arrow_forward"), for: UIControl.State.normal)
+            self.backgroundImageView.image = UIImage(named: "slider_back_texture_blue")
+
         }
     }
 
     @IBAction func menuTapAction(_ sender: UIButton) {
+        self.stopAnimation()
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
         vc.reverseDelegate = self
@@ -186,11 +255,13 @@ class TtsAlertController: BaseViewController {
 
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
+        self.stopAnimation()
         self.delegate?.dismiss()
         self.dismiss(animated: true, completion: nil)
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
+        self.stopAnimation()
         self.delegate?.dismiss()
         self.dismiss(animated: true, completion: nil)
     }
@@ -218,7 +289,15 @@ extension TtsAlertController : ReverseDelegate {
 }
 
 extension TtsAlertController : RetranslationDelegate {
-    func showRetranslation() {
+    func showRetranslation(selectedLanguage: String) {
+        let languageManager = LanguageSelectionManager.shared
+
+        // Get language data for selected target language and populate UI
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            self.getLanguageInfo(nativeCode: selectedLanguage , targetCode: languageManager.targetLanguage)
+        } else {
+            self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: selectedLanguage)
+        }
         self.updateUIForRetranslation()
     }
 }

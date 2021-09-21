@@ -58,6 +58,11 @@ class AlertReusableViewController: BaseViewController {
     func retranslation () {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            controller.isNative = 1
+        }else{
+            controller.isNative = 0
+        }
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         self.navigationController?.pushViewController(controller, animated: true);
@@ -148,13 +153,13 @@ extension AlertReusableViewController : DismissPronunciationDelegate {
 }
 
 extension AlertReusableViewController : RetranslationDelegate {
-    func showRetranslation() {
+    func showRetranslation(selectedLanguage : String) {
         DispatchQueue.main.async {
             self.navigationController?.dismiss(animated: false, completion: nil)
             if let transitionView = self.view{
                 UIView.transition(with:transitionView, duration: 0.8, options: .showHideTransitionViews, animations: nil, completion: nil)
             }
-            self.retranslateDelegate?.showRetranslation()
+            self.retranslateDelegate?.showRetranslation(selectedLanguage: selectedLanguage)
         }
     }
 }

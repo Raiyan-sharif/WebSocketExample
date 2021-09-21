@@ -22,6 +22,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var bottomCircleleImgView: UIImageView!
     @IBOutlet weak var topClickView: UIView!
     @IBOutlet weak var bottomClickView: UIView!
+    @IBOutlet weak var bottomView: UIView!
 
     //Properties
     var homeVM : HomeViewModel!
@@ -30,7 +31,6 @@ class HomeViewController: BaseViewController {
     var deviceLanguage : String = ""
     let toastVisibleTime : Double = 2.0
     let animationDuration : TimeInterval = 1.0
-    let trailing : CGFloat = -20
     let width : CGFloat = 100
     private var selectedTab = 0
     var historyItemCount = 0
@@ -89,8 +89,8 @@ class HomeViewController: BaseViewController {
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontSize, weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomView, width: width, height: width)
+        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
         // Add top button
         view.addSubview(topButton)
         topButton.translatesAutoresizingMaskIntoConstraints = false
@@ -194,6 +194,7 @@ class HomeViewController: BaseViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
             controller.homeMicTapTimeStamp = currentTS
+            controller.screenOpeningPurpose = .HomeSpeechProcessing
             self.navigationController?.pushViewController(controller, animated: true);
         } else {
             GlobalMethod.showNoInternetAlert()

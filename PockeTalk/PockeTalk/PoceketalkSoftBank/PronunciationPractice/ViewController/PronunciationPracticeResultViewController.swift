@@ -17,8 +17,8 @@ class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var labelFailedPronuncedText: UILabel!
     @IBOutlet weak var viewSuccessContainer: UIView!
     @IBOutlet weak var labelSuccessText: UILabel!
+    @IBOutlet weak var bottomTalkView: UIView!
     let width : CGFloat = 100
-    let trailing : CGFloat = -20
 
     @IBAction func actionBack(_ sender: Any) {
         self.showPronunciationPractice()
@@ -55,8 +55,8 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     // floating microphone button
     func setUpMicroPhoneIcon () {
-        let floatingButton = GlobalMethod.setUpMicroPhoneIcon(view: self.view, width: width, height: width, trailing: trailing, bottom: trailing)
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
     // TODO microphone tap event

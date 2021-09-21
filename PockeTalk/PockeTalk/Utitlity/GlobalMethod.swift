@@ -176,7 +176,7 @@ class GlobalMethod {
     }
 
     // floating microphone button
-    static func setUpMicroPhoneIcon (view : UIView, width : CGFloat, height : CGFloat, trailing : CGFloat, bottom : CGFloat)-> UIButton {
+    static func setUpMicroPhoneIcon (view : UIView, width : CGFloat, height : CGFloat)-> UIButton {
         let floatingButton = UIButton()
         floatingButton.setImage(UIImage(named: "talk_button"), for: .normal)
         floatingButton.backgroundColor = UIColor.clear
@@ -187,7 +187,7 @@ class GlobalMethod {
         floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
         floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
         floatingButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        floatingButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        floatingButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         return floatingButton
     }
 
