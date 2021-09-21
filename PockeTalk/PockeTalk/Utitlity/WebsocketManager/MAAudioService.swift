@@ -21,10 +21,9 @@ func AQAudioQueueInputCallback(inUserData: UnsafeMutableRawPointer?,
         audioService.setAudioData(data: data)
     }
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, nil);
-
-    print("startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
+    PrintUtility.printLog(tag: "MAAudioService", text: "startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
     if (audioService.maxPacketCount <= audioService.startingPacketCount) {
-        audioService.stopRecord()
+        //audioService.stopRecord()
     }
 }
 
@@ -34,14 +33,14 @@ func AQAudioQueueOutputCallback(inUserData: UnsafeMutableRawPointer?,
     let audioService = unsafeBitCast(inUserData!, to:MAAudioService.self)
     audioService.readPackets(inBuffer: inBuffer)
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, nil);
-
-    print("startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
+    PrintUtility.printLog(tag: "MAAudioService", text: "startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
     if (audioService.maxPacketCount <= audioService.startingPacketCount) {
         audioService.startingPacketCount = 0;
     }
 }
 
 class MAAudioService {
+    private let TAG:String = "MAAudioService"
     var getData:((_ data:Data)->())?
     var buffer: UnsafeMutableRawPointer
     var audioQueueObject: AudioQueueRef?
@@ -81,30 +80,40 @@ class MAAudioService {
     }
 
     deinit {
-        buffer.deallocate()
+        //buffer.deallocate()
+        PrintUtility.printLog(tag: TAG, text: "deinit")
     }
 
     func startRecord() {
-        print("startRecord")
+        PrintUtility.printLog(tag: TAG, text: "startRecord")
         guard audioQueueObject == nil else  { return }
         data = nil
         prepareForRecord()
         let err: OSStatus = AudioQueueStart(audioQueueObject!, nil)
-        print("err: \(err)")
+        PrintUtility.printLog(tag: TAG, text: "err: \(err)")
     }
 
+//    func stopRecord() {
+//        data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
+//        AudioQueueStop(audioQueueObject!, true)
+//        AudioQueueDispose(audioQueueObject!, true)
+//        audioQueueObject = nil
+//    }
+    
     func stopRecord() {
-        data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
-        AudioQueueStop(audioQueueObject!, true)
-        AudioQueueDispose(audioQueueObject!, true)
-        audioQueueObject = nil
-    }
+           if let audioQueue = audioQueueObject{
+               data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
+               AudioQueueStop(audioQueue, true)
+               AudioQueueDispose(audioQueue, true)
+               audioQueueObject = nil
+           }
+       }
 
     func play() {
         guard audioQueueObject == nil else  { return }
         prepareForPlay()
         let err: OSStatus = AudioQueueStart(audioQueueObject!, nil)
-        print("err: \(err)")
+        PrintUtility.printLog(tag: TAG, text: "err: \(err)")
     }
 
     func stop() {
@@ -119,7 +128,7 @@ class MAAudioService {
     }
 
     private func prepareForRecord() {
-        print("prepareForRecord")
+        PrintUtility.printLog(tag: TAG, text: "prepareForRecord")
         var audioFormat = self.audioFormat
 
         AudioQueueNewInput(&audioFormat,
@@ -141,7 +150,7 @@ class MAAudioService {
     }
 
     private func prepareForPlay() {
-        print("prepareForPlay")
+        PrintUtility.printLog(tag: TAG, text: "prepareForPlay")
         var audioFormat = self.audioFormat
 
         AudioQueueNewOutput(&audioFormat,
@@ -165,7 +174,7 @@ class MAAudioService {
     }
 
     func readPackets(inBuffer: AudioQueueBufferRef) {
-        print("readPackets")
+        PrintUtility.printLog(tag: TAG, text: "readPackets")
         var numPackets: UInt32 = maxPacketCount - startingPacketCount
         if numPacketsToRead < numPackets {
             numPackets = numPacketsToRead
@@ -186,8 +195,8 @@ class MAAudioService {
     }
 
     func writePackets(inBuffer: AudioQueueBufferRef) {
-        print("writePackets")
-        print("writePackets mAudioDataByteSize: \(inBuffer.pointee.mAudioDataByteSize), numPackets: \(inBuffer.pointee.mAudioDataByteSize / 2)")
+        PrintUtility.printLog(tag: TAG, text: "writePackets")
+        PrintUtility.printLog(tag: TAG, text: "writePackets mAudioDataByteSize: \(inBuffer.pointee.mAudioDataByteSize), numPackets: \(inBuffer.pointee.mAudioDataByteSize / 2)")
         var numPackets: UInt32 = (inBuffer.pointee.mAudioDataByteSize / bytesPerPacket)
         if ((maxPacketCount - startingPacketCount) < numPackets) {
             numPackets = (maxPacketCount - startingPacketCount)

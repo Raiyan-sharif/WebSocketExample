@@ -210,10 +210,12 @@ class GlobalMethod {
     }
 
     // TTS alert
-    static func showTtsAlert (viewController: UIViewController?) {
+    static func showTtsAlert (viewController: UIViewController?, tttValue: String, sttValue : String) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
         controller.delegate = viewController as? SpeechControllerDismissDelegate
+        controller.nativeText = sttValue
+        controller.targetText = tttValue
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         let navController = UINavigationController.init(rootViewController: controller)

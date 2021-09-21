@@ -12,6 +12,7 @@
 		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
 		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
 		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
+		3BA4EF3026FA05A4003D8087 /* WebsocketApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */; };
 		3BD1F97526F1ADF600DDE606 /* AlertDialogUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD1F97426F1ADF600DDE606 /* AlertDialogUtility.swift */; };
 		4A40AC9426F89BC800019A5B /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC8F26F89BC700019A5B /* BaseEntity.swift */; };
 		4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9026F89BC800019A5B /* BaseViewController.swift */; };
@@ -197,6 +198,7 @@
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
 		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
 		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
+		3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsocketApiModel.swift; sourceTree = "<group>"; };
 		3BD1F97426F1ADF600DDE606 /* AlertDialogUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialogUtility.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A40AC8F26F89BC700019A5B /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 		3B9710CF26EF016000D68DEC /* WebsocketManager */ = {
 			isa = PBXGroup;
 			children = (
+				3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */,
 				89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */,
 				89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */,
 			);
@@ -1705,7 +1708,6 @@
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */,
 				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
-				89495B5126F0ACEA00CEA19D /* BaseData.swift in Sources */,
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
@@ -1759,6 +1761,7 @@
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				4AE97AD526E8E122007344FC /* LanguageSelectionDBModel.swift in Sources */,
+				3BA4EF3026FA05A4003D8087 /* WebsocketApiModel.swift in Sources */,
 				89C0F7D826F1CE08000CD5FC /* Bindable.swift in Sources */,
 				4AE97AD526E8E122007344FC /* LanguageSelectionDBModel.swift in Sources */,
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,

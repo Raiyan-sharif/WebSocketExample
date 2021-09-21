@@ -43,7 +43,7 @@ class LangSelectVoiceVC: BaseViewController {
 
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
-
+    var websocketApiModel : WebsocketApiModel?
     @IBOutlet weak var toolbarTitleLabel: UILabel!
 
     @IBAction func onLangSelectButton(_ sender: Any) {
@@ -232,6 +232,8 @@ class LangSelectVoiceVC: BaseViewController {
         if fromRetranslation == true {
             self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
         }
+        websocketApiModel = WebsocketApiModel()
+        self.websocketApiModel?.getAuthenticationKey()
     }
 
 }

@@ -17,6 +17,8 @@ target 'PockeTalk' do
   
   pod 'SwiftRichString'
 
+  pod 'Alamofire', '~> 5.4'
+
   # Pods for PockeTalk
 
   target 'PockeTalkTests' do

@@ -6,6 +6,7 @@
 import UIKit
 
 class SpeechProcessingViewController: BaseViewController{
+    private let TAG:String = "SpeechProcessingViewController"
     ///Views
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
@@ -41,8 +42,11 @@ class SpeechProcessingViewController: BaseViewController{
     var isFromPronunciationPractice: Bool = false
     var nativeLangCode : String = ""
     var service : MAAudioService?
-    var socketManager = SocketManager.sharedInstance
+    //var socketManager = SocketManager.sharedInstance
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
+    var socketManager = SocketManager()
+    var ttt : String = ""
+    var stt : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -53,10 +57,10 @@ class SpeechProcessingViewController: BaseViewController{
         self.startTimer()
         socketManager.socketManagerDelegate = self
         service = MAAudioService(nil)
-        //service?.startRecord()
-//        service?.getData = {[weak self] data in
-//            self?.socketManager.sendVoiceData(data: data)
-//        }
+        service?.startRecord()
+        service?.getData = {[weak self] data in
+            self?.socketManager.sendVoiceData(data: data)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -144,6 +148,7 @@ class SpeechProcessingViewController: BaseViewController{
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
+        service?.stopRecord()
         if let purpose = screenOpeningPurpose{
             switch purpose {
             case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
@@ -158,11 +163,10 @@ class SpeechProcessingViewController: BaseViewController{
                     if(isFromPronunciationPractice){
                         self.showPronunciationPracticeResult()
                     }else{
-                        self.showTtsAlert()
+                        //self.showTtsAlert()
                     }
                 }
                 break
-                //service?.stopRecord()
             }
         }
     }
@@ -176,8 +180,8 @@ class SpeechProcessingViewController: BaseViewController{
         self.present(controller, animated: true, completion: nil)
     }
 
-    func showTtsAlert () {
-        GlobalMethod.showTtsAlert(viewController: self)
+    func showTtsAlert (ttt:String,stt:String) {
+        GlobalMethod.showTtsAlert(viewController: self, tttValue: ttt, sttValue: stt)
     }
     
     func showPronunciationPracticeResult () {
@@ -209,6 +213,27 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 
 extension SpeechProcessingViewController : SocketManagerDelegate{
     func getText(text: String) {
+        let response = convertStringToDictionary(text : text)
+                if let dicc = response as? [String:AnyObject]{
+                    if let str_ttt = dicc["ttt"] as? String{
+                        ttt = str_ttt
+                        PrintUtility.printLog(tag: TAG, text: ttt)
+                    }
+                    if let str_stt = dicc["stt"] as? String{
+                        self.titleLabel.text = str_stt
+                        self.exampleLabel.isHidden = true
+                        self.descriptionLabel.isHidden = true
+                        stt = str_stt
+                        PrintUtility.printLog(tag: TAG, text: stt)
+                    }
+                    if let isFinal = dicc["is_final"] as? Bool{
+                        if isFinal {
+                            service?.stopRecord()
+                            self.showTtsAlert(ttt: ttt,stt: stt)
+                        }
+                    }
+                }
+                PrintUtility.printLog(tag: TAG, text: text)
     }
     func getData(data: Data) {
     }
@@ -219,4 +244,16 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSelectionVoice
     case CountrySelectionByVoice
     case LanguageSelectionCamera
+}
+
+func convertStringToDictionary(text: String) -> [String:AnyObject]? {
+    if let data = text.data(using: .utf8) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
+            return json
+        } catch {
+            PrintUtility.printLog(tag: "SpeechProcessingViewController", text: "Something went wrong")
+        }
+    }
+    return nil
 }

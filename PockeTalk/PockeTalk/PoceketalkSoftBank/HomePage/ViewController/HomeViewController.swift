@@ -34,7 +34,7 @@ class HomeViewController: BaseViewController {
     private var selectedTab = 0
     var historyItemCount = 0
     var swipeDown = UISwipeGestureRecognizer()
-    
+    var websocketApiModel : WebsocketApiModel?
     ///Top button
     private lazy var topButton:UIButton = {
         let button = UIButton(type: .custom)
@@ -49,6 +49,8 @@ class HomeViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.homeVM = HomeViewModel()
         self.setUpUI()
+        websocketApiModel = WebsocketApiModel()
+        self.websocketApiModel?.getAuthenticationKey()
     }
 
     override func viewWillAppear(_ animated: Bool) {

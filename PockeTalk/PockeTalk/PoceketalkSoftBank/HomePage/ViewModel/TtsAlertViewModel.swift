@@ -8,17 +8,17 @@ import UIKit
 class TtsAlertViewModel: BaseModel {
     var savedDataID : Int64?
     var chatEntity : ChatEntity?
-    var speechTexts: [String : String] = [
-        "en":"Hello, how are you?",
-        "ja":"こんにちは元気ですか？",
-        "bn": "হ্যালো, আপনি কেমন আছেন?",
-        "zh": "你好吗？",
-        "ar": "مرحبا كيف حالك؟",
-        "de": "Hallo, wie geht's dir?",
-        "es": "¿Hola como estas?",
-        "it": "Ciao, come stai?",
-        "ko": "안녕하세요. 어떻게 지내세요?"
-    ]
+//    var speechTexts: [String : String] = [
+//        "en":"Hello, how are you?",
+//        "ja":"こんにちは元気ですか？",
+//        "bn": "হ্যালো, আপনি কেমন আছেন?",
+//        "zh": "你好吗？",
+//        "ar": "مرحبا كيف حالك؟",
+//        "de": "Hallo, wie geht's dir?",
+//        "es": "¿Hola como estas?",
+//        "it": "Ciao, come stai?",
+//        "ko": "안녕하세요. 어떻게 지내세요?"
+//    ]
     
     //Todo: using sample chat data for now
     func getTranslationData(nativeCode : String, targetCode : String) -> (nativeText: String?, targetText: String?){
@@ -26,17 +26,17 @@ class TtsAlertViewModel: BaseModel {
 
         var nativeText = ""
         var targetText = ""
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            nativeText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
-            targetText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
-        }else{
-            nativeText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
-            targetText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
-        }
-        let isArrowUp = languageManager.isArrowUp ?? true
-        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
+//        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+//            nativeText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
+//            targetText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
+//        }else{
+//            nativeText = speechTexts[nativeCode] ?? "TtsFromLanguage".localiz()
+//            targetText = speechTexts[targetCode] ?? "TtsToLanguage".localiz()
+//        }
+//        let isArrowUp = languageManager.isArrowUp ?? true
+//        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
 
-        saveChatData(nativeText: nativeText, nativeLangCode: nativeCode, targetText: targetText, targetLangCode: targetCode, isTop: isTop)
+//        saveChatData(nativeText: nativeText, nativeLangCode: nativeCode, targetText: targetText, targetLangCode: targetCode, isTop: isTop)
 
         ///Save last chat id to user defaults
         UserDefaultsProperty<Int64>(kLastSavedChatID).value = savedDataID

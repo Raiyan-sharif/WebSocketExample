@@ -8,6 +8,7 @@ protocol DismissReverseVieeDelegate {
     func dismissReverse ()
 }
 class TtsAlertController: BaseViewController {
+    private let TAG:String = "TtsAlertController"
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
     @IBOutlet weak var fromTranslateLabel: UILabel!
@@ -61,6 +62,11 @@ class TtsAlertController: BaseViewController {
 
         self.setUpUI()
         self.populateData()
+        let isArrowUp = languageManager.isArrowUp ?? true
+        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
+        self.ttsVM.saveChatData(nativeText: nativeText, nativeLangCode: nativeLanguage, targetText: targetText, targetLangCode: targetLanguage, isTop: isTop)
+        PrintUtility.printLog(tag: TAG, text: nativeText)
+        PrintUtility.printLog(tag: TAG, text: targetText)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,13 +86,13 @@ class TtsAlertController: BaseViewController {
             targetLangCode = targetCode
         }
 
-        let stt = self.ttsVM.getTranslationData(nativeCode: nativeCode, targetCode: targetCode)
-        if let nativeSTTText = stt.nativeText{
-            nativeText = nativeSTTText
-        }
-        if let targetSTTText = stt.targetText{
-            targetText = targetSTTText
-        }
+//        let stt = self.ttsVM.getTranslationData(nativeCode: nativeCode, targetCode: targetCode)
+//        if let nativeSTTText = stt.nativeText{
+//            nativeText = nativeSTTText
+//        }
+//        if let targetSTTText = stt.targetText{
+//            targetText = targetSTTText
+//        }
     }
 
     /// Initial UI set up

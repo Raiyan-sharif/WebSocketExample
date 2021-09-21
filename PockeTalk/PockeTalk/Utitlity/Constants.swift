@@ -99,8 +99,6 @@ let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 let BLOCK_DIRECTION:Int = -1
 
-// Socket url
-let SOCKET_CONNECTION_URL = "ws://localhost:3000" // TODO: Need to change
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500
@@ -118,3 +116,16 @@ let FONTSIZE: [CGFloat] = [0.7, 0.85, 1.0, 1.15, 1.3, 1.45]
 let DEFAULT_FONTSIZE: CGFloat = 17.0
 let DEFAULT_FONTSIZE_INDEX: Int = 2
 let FONT_SIZE_KEY: String = "FontSize"
+
+// Socket url connection
+let AUDIO_STREAM_URL = "wss://test.pt-v.com/handsfree/ws/pub/stream"
+let AUDIO_STREAM_URL_ORIGIN = "https://test.pt-v.com"
+let STREAM_ID_ISSURANCE_URL = "https://test.pt-v.com/handsfree/api/pub/create"
+let access_token_key = "X-Access-Key"
+let origin = "Origin"
+let imei = "imei"
+let codec_param = "codec"
+let srclang = "srclang"
+let destlang = "destlang"
+let access_key = "access_key"
+let authentication_key = "authentication_key"
