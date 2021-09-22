@@ -91,10 +91,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         let screenHeight = screenRect.size.height
         
         // TO Do: will remove static image
-        let image = UIImage(named: "img1.jpg")
+        let image = UIImage(named: "vv")
         let imageView = UIImageView(image: image!)
         
-        imageView.frame = CGRect(x: 0, y: 0, width: 340, height: 607) // To do : This will be actual cropped & processed image height width
+        imageView.frame = CGRect(x: 0, y: 0, width: 334, height: 736) // To do : This will be actual cropped & processed image height width
         
         self.view.addSubview(imageView)
         

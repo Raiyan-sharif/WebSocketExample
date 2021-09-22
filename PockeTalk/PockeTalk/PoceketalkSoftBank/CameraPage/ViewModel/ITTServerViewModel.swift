@@ -90,11 +90,11 @@ class ITTServerViewModel: BaseModel {
                                 let encoder = JSONEncoder()
                                 encoder.outputFormatting = .prettyPrinted
                                 let data = try? encoder.encode(detectedJSON)
-                                //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
+                                PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
                                 
                                 completion(detectedJSON, nil)
                                                                 
-                                self?.saveDataOnDatabase()
+                                //self?.saveDataOnDatabase()
                                 
                                 break
                                 
@@ -215,14 +215,16 @@ extension ITTServerViewModel {
         let screenHeight = screenRect.size.height
         let w:Int = Int(screenWidth)
         let h:Int = Int(screenHeight)
-        //PrintUtility.printLog(tag: "screenWidth:", text: "\(screenWidth)")
-        if 640 >= IMAGE_WIDTH {
-            mXFactor = Float(screenWidth) / Float(640)
+        PrintUtility.printLog(tag: "screenWidth: \(screenWidth)", text: "screenHeight: \(screenHeight)")
+        
+        // TODO change constant value to images height/width, following constents are images height and width. Here we have hardcoded those as we are using a test image
+        if 334 >= IMAGE_WIDTH {
+            mXFactor = Float(screenWidth) / Float(334)
         } else {
             mXFactor = 1
         }
         if 860 >= IMAGE_HEIGHT {
-            mXFactor = Float(screenHeight) / Float(860)
+            mYFactor = Float(screenHeight) / Float(860)
         } else {
             mYFactor = 1
         }

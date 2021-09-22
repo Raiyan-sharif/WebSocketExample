@@ -66,7 +66,7 @@ class ParseTextDetection {
             var height = CGFloat()
             
             var angle = PointUtils.getAngleFromVerticalLine(A: CGPoint(x: each.X1!,y: each.Y1!),  B: CGPoint(x: each.X2!,y: each.Y2!))
-            
+            PrintUtility.printLog(tag: "Angle Detected: ", text: "\(angle)")
             if(PointUtils.isVerticalBlock(CGPoint(x: each.X1!,y: each.Y1!), CGPoint(x: each.X2!,y: each.Y2!))) { // !Arrays.asList(CameraConstants.RIGHT_TO_LEFT_TEXT).contains(lanCode)
                 
                 width = PointUtils.distanceBetweenPoints(CGPoint(x: each.X1!, y: each.Y1!), CGPoint(x: each.X4!, y: each.Y4!))
@@ -75,6 +75,7 @@ class ParseTextDetection {
                 
                 
                 if(each.bottomTopBlock != BLOCK_DIRECTION){
+                    PrintUtility.printLog(tag: "BLOCK_DIRECTION", text: "Top-to-bottom Block")
                     angle = angle * -1
                     x = each.X2!
                     y = each.Y2!
@@ -82,6 +83,7 @@ class ParseTextDetection {
                    // verticalTextView.setGravity(Gravity.BOTTOM);
 
                 }else{
+                    PrintUtility.printLog(tag: "BLOCK_DIRECTION", text: "Bottom-to-top Block")
                     angle = abs(angle)
                     x = each.X4!
                     y = each.Y4!
@@ -102,7 +104,10 @@ class ParseTextDetection {
             
             blockView.addSubview(textView)
             
+            PrintUtility.printLog(tag: "BLOCK width:\(height)", text: "height: \(width)")
+            PrintUtility.printLog(tag: "BLOCK x:\(x)", text: "y: \(y)")
             listBlockVerticalTextView.append(TextViewWithCoordinator(view: blockView, X1: x, Y1: y))
+            
             
         }
         
@@ -170,6 +175,9 @@ func getListHorizontalTextViewFromBlockList(detectedBlockList: [BlockDetection],
     
    completion(listBlockVerticalTextView)
 }
+    func getTextArrayFromJSON(){
+        
+    }
 
 }
 
