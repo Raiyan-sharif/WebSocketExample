@@ -177,6 +177,7 @@ public class PointUtils {
                                     }
                                 }
                                 if(getBreakType(breakStr).contains("\n")) {
+                                    PrintUtility.printLog(tag: "Symbol: ", text: symbol.text!)
                                     var lastX1:Int = 0, lastY1:Int = 0;
                                     if let verticeX1 = symbol.boundingBox?.vertices![0].x{
                                         lastX1 = nonMinusPoint(Int(Float(verticeX1) * xFactor))
@@ -220,18 +221,20 @@ public class PointUtils {
 //                                        y4 = y1
 //                                        x1 = x2
 //                                        y1 = y2
-                                        if let verticeX3 = symbol.boundingBox?.vertices![2].x{
+                                        if let verticeX3 = symbol.boundingBox?.vertices![1].x{
                                             x2 = nonMinusPoint(Int(Float(verticeX3) * xFactor))
                                         }
-                                        if let verticeY3 = symbol.boundingBox?.vertices![2].y{
+                                        if let verticeY3 = symbol.boundingBox?.vertices![1].y{
                                             y2 = nonMinusPoint(Int(Float(verticeY3) * yFactor))
                                         }
-                                        if let verticeX4 = symbol.boundingBox?.vertices![3].x{
+                                        if let verticeX4 = symbol.boundingBox?.vertices![2].x{
                                             x3 = nonMinusPoint(Int(Float(verticeX4) * xFactor))
                                         }
-                                        if let verticeY4 = symbol.boundingBox?.vertices![3].y{
+                                        if let verticeY4 = symbol.boundingBox?.vertices![2].y{
                                             y3 = nonMinusPoint(Int(Float(verticeY4) * yFactor))
                                         }
+                                        
+                                        
                                         var blockText4: String = "(x1,y1)(\(x1),\(y1))(x2,y2)(\(x2),\(y2))(x3,y3)(\(x3),\(y3))(x4,y4)(\(x4),\(y4))"
                                         PrintUtility.printLog(tag: "End points else: ", text: blockText4)
                                     }
