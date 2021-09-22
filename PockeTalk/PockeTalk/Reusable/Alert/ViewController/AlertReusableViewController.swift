@@ -139,7 +139,10 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             break
         case .cancel :
             self.dismiss(animated: true, completion: nil)
+        case .delete :
+            break
         }
+     
     }
 }
 

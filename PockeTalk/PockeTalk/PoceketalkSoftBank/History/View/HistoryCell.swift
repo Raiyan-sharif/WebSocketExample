@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HistoryCell: UICollectionViewCell,NibReusable {
+class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusable {
 
     @IBOutlet weak var favouriteStackView: UIStackView!
     @IBOutlet weak var deleteStackView: UIStackView!
@@ -29,7 +29,9 @@ class HistoryCell: UICollectionViewCell,NibReusable {
     var initialCenter:CGPoint!
     var deleteItem:((_ point:CGPoint) -> ())?
     var favouriteItem:((_ tag:CGPoint) -> ())?
-
+    var tappedItem:((_ point:CGPoint) -> ())?
+    var longTappedItem:((_ point:CGPoint) -> ())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         favView.backgroundColor = .clear
@@ -45,6 +47,17 @@ class HistoryCell: UICollectionViewCell,NibReusable {
         let panGestureRecognizer = PanDirectionGestureRecognizer(direction: .horizontal, target: self, action: #selector(handlePanGesture(_:)))
         panGestureRecognizer.cancelsTouchesInView = false
         self.childView.addGestureRecognizer(panGestureRecognizer)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+        tapGesture.delegate = self
+        self.childView.isUserInteractionEnabled = true
+        self.childView.addGestureRecognizer(tapGesture)
+        
+        let longTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        longTapGesture.minimumPressDuration = 0.2
+        longTapGesture.delegate = self
+        longTapGesture.delaysTouchesBegan = true
+        self.childView.addGestureRecognizer(longTapGesture)
     }
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -54,6 +67,17 @@ class HistoryCell: UICollectionViewCell,NibReusable {
             roundedRect: containerView.bounds,
                     cornerRadius: 20
                 ).cgPath
+    }
+    
+    @objc func handleTap(recognizer:UITapGestureRecognizer) {
+        self.tappedItem?(self.center)
+    }
+    
+    @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+        if (gestureRecognizer.state == UIGestureRecognizer.State.ended){
+            self.longTappedItem?(self.center)
+        }
+        
     }
 
     @objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {

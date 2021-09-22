@@ -12,7 +12,9 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.view.changeFontSize()
         self.view.backgroundColor = UIColor._blackColor()
-
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = true
+        }
         // Do any additional setup after loading the view.
     }
 
