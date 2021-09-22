@@ -16,8 +16,10 @@ class FavouriteViewController: BaseViewController {
     var  isCollectionViewVisible = false
     var loclItems = [FavouriteModel]()
     var favouriteViewModel:FavouriteViewModeling!
-    
+    let transionDuration : CGFloat = 0.8
+    let transformation : CGFloat = 0.6
     private(set) var delegate: FavouriteViewControllerDelegates?
+    var itemsToShowOnContextMenu : [AlertItems] = []
 
     ///CollectionView to show favourite item
     private lazy var collectionView:UICollectionView = {
@@ -43,11 +45,20 @@ class FavouriteViewController: BaseViewController {
             self.showCollectionView()
         }
         bindData()
-
+        populateData()
+        
     }
     
     func initDelegate<T>(_ vc: T) {
             self.delegate = vc.self as? FavouriteViewControllerDelegates
+    }
+    
+    // Populate item to show on context menu
+    func populateData () {
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "", menuType: .delete))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
     private func setUpCollectionView(){
@@ -144,7 +155,45 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
                 self.collectionView.deleteItems(at: [indexpath])
             }
         }
+        
+        cell.tappedItem = { [weak self] point in
+            guard let `self`  = self else {
+                return
+            }
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            self.openTTTResult(indexpath.item)
+        }
+        
+        cell.longTappedItem = { [weak self] point in
+            guard let `self`  = self else {
+                return
+            }
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            self.openTTTResultAlert(indexpath.item)
+        }
+        
         return cell
+    }
+    
+    func openTTTResult(_ item: Int){
+        let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.nativeText = chatItem.textNative!
+        controller.targetText = chatItem.textTranslated!
+        controller.modalPresentationStyle = .fullScreen
+        controller.isFromHistoryOrFavourite = true
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func openTTTResultAlert(_ item: Int){
+        let vc = AlertReusableViewController.init()
+        vc.items = self.itemsToShowOnContextMenu
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(vc, animated: true, completion: nil)
     }
 }
 

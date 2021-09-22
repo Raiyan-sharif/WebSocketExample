@@ -48,6 +48,7 @@ class TtsAlertController: BaseViewController {
     let animationDuration : CGFloat = 0.6
     let animationDelay : CGFloat = 0
     let transform : CGFloat = 0.97
+    var isFromHistoryOrFavourite = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +59,9 @@ class TtsAlertController: BaseViewController {
         let languageManager = LanguageSelectionManager.shared
 
         /// Populate UI with language data
-        self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: languageManager.targetLanguage)
+        if isFromHistoryOrFavourite == false{
+            self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: languageManager.targetLanguage)
+        }
 
         self.setUpUI()
         self.populateData()
@@ -128,6 +131,10 @@ class TtsAlertController: BaseViewController {
         talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
         
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+        
+        if isFromHistoryOrFavourite == true{
+            self.bottomView.isHidden = true
+        }
     }
 
     /// Start animation on background image view

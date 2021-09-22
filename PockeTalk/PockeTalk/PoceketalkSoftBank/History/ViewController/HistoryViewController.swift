@@ -23,8 +23,10 @@ class HistoryViewController: BaseViewController {
     var  isCollectionViewVisible = false
     var loclItems = [HistoryModel]()
     var historyViewModel:HistoryViewModeling!
-    
+    let transionDuration : CGFloat = 0.8
+    let transformation : CGFloat = 0.6
     private(set) var delegate: HistoryViewControllerDelegates?
+    var itemsToShowOnContextMenu : [AlertItems] = []
 
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
@@ -50,12 +52,24 @@ class HistoryViewController: BaseViewController {
             self.showCollectionView()
         }
         bindData()
+        populateData()
 
     }
     
     func initDelegate<T>(_ vc: T) {
             self.delegate = vc.self as? HistoryViewControllerDelegates
     }
+    
+    // Populate item to show on context menu
+    func populateData () {
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
+    }
+    
     
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
@@ -156,7 +170,44 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             self.historyViewModel.makeFavourite(indexpath.item)
             self.collectionView.reloadItems(at: [indexpath])
         }
+        
+        cell.tappedItem = { [weak self] point in
+            guard let `self`  = self else {
+                return
+            }
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            self.openTTTResult(indexpath.item)
+        }
+        
+        cell.longTappedItem = { [weak self] point in
+            guard let `self`  = self else {
+                return
+            }
+            let cellPoint =  collectionView.convert(point, from:collectionView)
+            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            self.openTTTResultAlert(indexpath.item)
+        }
         return cell
+    }
+    
+    func openTTTResult(_ item: Int){
+        let chatItem = historyViewModel.items.value[item] as! ChatEntity
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.nativeText = chatItem.textNative!
+        controller.targetText = chatItem.textTranslated!
+        controller.modalPresentationStyle = .fullScreen
+        controller.isFromHistoryOrFavourite = true
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func openTTTResultAlert(_ item: Int){
+        let vc = AlertReusableViewController.init()
+        vc.items = self.itemsToShowOnContextMenu
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(vc, animated: true, completion: nil)
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
