@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraTTSDialog" customModule="PockeTalk" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundTextureImageView" destination="egD-lc-h5g" id="DeB-7D-sCs"/>
+                <outlet property="containerView" destination="5wc-rE-MkF" id="jnt-2T-1xa"/>
+                <outlet property="fromLanguageLabel" destination="mOQ-Wx-brd" id="2Ky-LD-wIy"/>
+                <outlet property="fromTranslateLabel" destination="OxN-Au-O2b" id="QjK-hQ-8k9"/>
+                <outlet property="placeHolderView" destination="wZX-nu-Cal" id="uGj-pd-y4F"/>
+                <outlet property="scrollView" destination="s3u-6W-523" id="HyK-Xs-2A5"/>
+                <outlet property="toLanguageLabel" destination="Rec-Wz-aAh" id="9oa-AY-zKk"/>
+                <outlet property="toTranslateLabel" destination="NKN-Xz-kZH" id="nKH-2d-t76"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="5wc-rE-MkF" userLabel="ContainerView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZX-nu-Cal" userLabel="PlaceHolder View">
+                    <rect key="frame" x="20" y="88" width="374" height="758"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_texture_white" translatesAutoresizingMaskIntoConstraints="NO" id="egD-lc-h5g" userLabel="Background Texture ImageView">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="758"/>
+                        </imageView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3u-6W-523">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="758"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7J-Ae-UuD" userLabel="Scroll ContentView">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="750"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rec-Wz-aAh" userLabel="To Language Label">
+                                            <rect key="frame" x="16" y="20" width="342" height="284.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <string key="text">The education boards are planning to start this year's SSC and equivalent examinations from November 10 to 15. And HSC and equivalent examinations may start in the first week of December.
+
+The education boards are preparing with such a plan. Dhaka Board of Secondary and Higher Education Chairman Nehal Ahmed told Prothom Alo that there are such plans so far. However, no specific date for the start of the test has been fixed yet. Due to the situation, there may be some deviations in this plan.</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aD-cY-bkf" userLabel="To Translate Play Button">
+                                            <rect key="frame" x="16" y="320.5" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="TeP-Mo-h9i"/>
+                                                <constraint firstAttribute="width" constant="50" id="rwJ-Rm-xaO"/>
+                                            </constraints>
+                                            <state key="normal" image="ic_btn_play"/>
+                                            <connections>
+                                                <action selector="didTapOnToPlayButton:" destination="-1" eventType="touchUpInside" id="iJP-ky-v71"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKN-Xz-kZH" userLabel="To Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                            <rect key="frame" x="74" y="320.5" width="280" height="50"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="fkl-ed-zCD"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="fadeLength">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="scrollDuration">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOQ-Wx-brd" userLabel="From Language Label">
+                                            <rect key="frame" x="16" y="400" width="338" height="264"/>
+                                            <string key="text">চলতি বছরের এসএসসি ও সমমানের পরীক্ষা আগামী ১০ থেকে ১৫ নভেম্বরের মধ্যে শুরু করার পরিকল্পনা করছে শিক্ষা বোর্ডগুলো। আর এইচএসসি ও সমমানের পরীক্ষা ডিসেম্বরের প্রথম সপ্তাহে শুরু হতে পারে।
+
+এমন পরিকল্পনা নিয়ে প্রস্তুতি নিচ্ছে শিক্ষা বোর্ডগুলো। ঢাকা মাধ্যমিক ও উচ্চমাধ্যমিক শিক্ষা বোর্ডের চেয়ারম্যান নেহাল আহমেদ প্রথম আলোকে বলেন, এখন পর্যন্ত এমন পরিকল্পনা আছে। তবে এখনো পরীক্ষা শুরুর কোনো সুনির্দিষ্ট তারিখ ঠিক হয়নি। পরিস্থিতির কারণে এ পরিকল্পনায়ও কিছু ব্যত্যয় হতে পারে।</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbb-se-IK5" userLabel="From Translate Play Button">
+                                            <rect key="frame" x="16" y="680" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="3vu-Qb-nH4"/>
+                                                <constraint firstAttribute="width" constant="50" id="hKc-bp-hao"/>
+                                            </constraints>
+                                            <state key="normal" image="ic_btn_play"/>
+                                            <connections>
+                                                <action selector="didTapOnFromPlayButton:" destination="-1" eventType="touchUpInside" id="oH1-3V-fc6"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OxN-Au-O2b" userLabel="From Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                            <rect key="frame" x="74" y="680" width="280" height="50"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="fadeLength">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="scrollDuration">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="leading" secondItem="Y7J-Ae-UuD" secondAttribute="leading" constant="16" id="6Iw-dj-51L"/>
+                                        <constraint firstAttribute="trailing" secondItem="mOQ-Wx-brd" secondAttribute="trailing" constant="20" id="8g2-G1-Nsd"/>
+                                        <constraint firstItem="2aD-cY-bkf" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="BGL-OT-VHm"/>
+                                        <constraint firstItem="mOQ-Wx-brd" firstAttribute="top" secondItem="2aD-cY-bkf" secondAttribute="bottom" constant="29.5" id="E72-W7-Spc"/>
+                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="top" secondItem="Y7J-Ae-UuD" secondAttribute="top" constant="20" id="HB7-kM-l9b"/>
+                                        <constraint firstItem="NKN-Xz-kZH" firstAttribute="centerY" secondItem="2aD-cY-bkf" secondAttribute="centerY" id="MNu-bw-ugL"/>
+                                        <constraint firstItem="mOQ-Wx-brd" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="MfJ-oM-rkg"/>
+                                        <constraint firstItem="OxN-Au-O2b" firstAttribute="centerY" secondItem="nbb-se-IK5" secondAttribute="centerY" id="O0R-aI-Qgf"/>
+                                        <constraint firstItem="OxN-Au-O2b" firstAttribute="width" secondItem="NKN-Xz-kZH" secondAttribute="width" id="OSU-wA-vpQ"/>
+                                        <constraint firstItem="nbb-se-IK5" firstAttribute="leading" secondItem="2aD-cY-bkf" secondAttribute="leading" id="U2F-nz-QDe"/>
+                                        <constraint firstAttribute="bottom" secondItem="nbb-se-IK5" secondAttribute="bottom" constant="20" id="eDz-0n-9CV"/>
+                                        <constraint firstItem="nbb-se-IK5" firstAttribute="top" secondItem="mOQ-Wx-brd" secondAttribute="bottom" constant="16" id="ios-DI-OC1"/>
+                                        <constraint firstItem="OxN-Au-O2b" firstAttribute="height" secondItem="NKN-Xz-kZH" secondAttribute="height" id="lZg-t5-Qyo"/>
+                                        <constraint firstItem="2aD-cY-bkf" firstAttribute="top" secondItem="Rec-Wz-aAh" secondAttribute="bottom" constant="16" id="m1E-DA-1r5"/>
+                                        <constraint firstAttribute="trailing" secondItem="Rec-Wz-aAh" secondAttribute="trailing" constant="16" id="nAj-Aq-f1l"/>
+                                        <constraint firstItem="OxN-Au-O2b" firstAttribute="leading" secondItem="nbb-se-IK5" secondAttribute="trailing" constant="8" id="pTW-cG-pgC"/>
+                                        <constraint firstAttribute="trailing" secondItem="NKN-Xz-kZH" secondAttribute="trailing" constant="20" id="qtl-vk-HHN"/>
+                                        <constraint firstItem="NKN-Xz-kZH" firstAttribute="leading" secondItem="2aD-cY-bkf" secondAttribute="trailing" constant="8" id="vWh-4m-z7p"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="bottom" secondItem="3IB-x1-dYj" secondAttribute="bottom" id="1xN-Ya-yGi"/>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="trailing" secondItem="3IB-x1-dYj" secondAttribute="trailing" id="3Ah-dW-FyF"/>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="top" secondItem="3IB-x1-dYj" secondAttribute="top" id="5fl-7c-IeN"/>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="height" secondItem="1qj-Jx-f4S" secondAttribute="height" priority="500" id="LmD-jo-uZ4"/>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="leading" secondItem="3IB-x1-dYj" secondAttribute="leading" id="a5z-GP-e3Q"/>
+                                <constraint firstItem="Y7J-Ae-UuD" firstAttribute="width" secondItem="1qj-Jx-f4S" secondAttribute="width" id="u00-bW-MGt"/>
+                            </constraints>
+                            <viewLayoutGuide key="contentLayoutGuide" id="3IB-x1-dYj"/>
+                            <viewLayoutGuide key="frameLayoutGuide" id="1qj-Jx-f4S"/>
+                        </scrollView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDk-TE-0Oz" userLabel="Menu Button">
+                            <rect key="frame" x="350" y="1" width="20" height="40"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="z41-NK-P4B"/>
+                                <constraint firstAttribute="height" constant="40" id="zwY-Yq-5vy"/>
+                            </constraints>
+                            <state key="normal" image="btn_menu"/>
+                            <connections>
+                                <action selector="didTapOnMenuButton:" destination="-1" eventType="touchUpInside" id="Q7M-Im-WEZ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="HDk-TE-0Oz" secondAttribute="trailing" constant="4" id="1d8-s6-KJk"/>
+                        <constraint firstItem="egD-lc-h5g" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" id="5wa-pF-3k6"/>
+                        <constraint firstItem="s3u-6W-523" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" id="DQN-71-4PG"/>
+                        <constraint firstAttribute="trailing" secondItem="s3u-6W-523" secondAttribute="trailing" id="HMe-I3-Vou"/>
+                        <constraint firstAttribute="bottom" secondItem="s3u-6W-523" secondAttribute="bottom" id="Ir3-YF-b65"/>
+                        <constraint firstItem="HDk-TE-0Oz" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" constant="1" id="Jsv-nd-cTg"/>
+                        <constraint firstAttribute="trailing" secondItem="egD-lc-h5g" secondAttribute="trailing" id="O2F-h6-ZGT"/>
+                        <constraint firstItem="egD-lc-h5g" firstAttribute="leading" secondItem="wZX-nu-Cal" secondAttribute="leading" id="hA0-MA-JUr"/>
+                        <constraint firstAttribute="bottom" secondItem="egD-lc-h5g" secondAttribute="bottom" id="ltn-Yn-h9g"/>
+                        <constraint firstItem="s3u-6W-523" firstAttribute="leading" secondItem="wZX-nu-Cal" secondAttribute="leading" id="r4K-Bm-cPV"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-gK-jRf" userLabel="Dialog Dismiss Button">
+                    <rect key="frame" x="12" y="80" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="3wE-QM-0Jz"/>
+                        <constraint firstAttribute="width" constant="40" id="chl-do-pjt"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="btn_back"/>
+                    <connections>
+                        <action selector="didTapOnDismissButton:" destination="-1" eventType="touchUpInside" id="fkg-4Q-fUm"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="LLz-gK-jRf" firstAttribute="leading" secondItem="egD-lc-h5g" secondAttribute="leading" constant="-8" id="3b2-Pl-Sxx"/>
+                <constraint firstItem="wZX-nu-Cal" firstAttribute="top" secondItem="iDl-I4-s0Z" secondAttribute="top" constant="44" id="4xi-jU-vWg"/>
+                <constraint firstItem="LLz-gK-jRf" firstAttribute="top" secondItem="egD-lc-h5g" secondAttribute="top" constant="-8" id="Fvb-ma-h7J"/>
+                <constraint firstItem="wZX-nu-Cal" firstAttribute="leading" secondItem="iDl-I4-s0Z" secondAttribute="leading" constant="20" id="bm6-6j-BPX"/>
+                <constraint firstItem="iDl-I4-s0Z" firstAttribute="bottom" secondItem="wZX-nu-Cal" secondAttribute="bottom" constant="16" id="hCu-a6-tBG"/>
+                <constraint firstItem="iDl-I4-s0Z" firstAttribute="trailing" secondItem="wZX-nu-Cal" secondAttribute="trailing" constant="20" id="mzx-kg-F3a"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="iDl-I4-s0Z"/>
+            <point key="canvasLocation" x="137.68115942028987" y="141.96428571428569"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_texture_white" width="480" height="640"/>
+        <image name="btn_back" width="90" height="90"/>
+        <image name="btn_menu" width="60" height="80"/>
+        <image name="ic_btn_play" width="42" height="42"/>
+    </resources>
+</document>

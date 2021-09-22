@@ -18,6 +18,8 @@ let SIZE_HEIGHT: CGFloat                 = UIScreen.main.bounds.size.height
 
 let DISPLAY_SCALE: CGFloat               = SIZE_WIDTH / 375.0
 
+let DIALOG_CORNER_RADIUS: CGFloat = 15.0
+
 
 //MARK: - Link
 let SUPPORT_URL = "https://www.sourcenext.com/" // TODO: Need to change

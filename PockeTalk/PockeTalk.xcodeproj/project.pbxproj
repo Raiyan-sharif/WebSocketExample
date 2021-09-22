@@ -23,6 +23,8 @@
 		4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138226DDCF5D004A925D /* Assets.xcassets */; };
 		4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */; };
 		4A66139126DDCF5E004A925D /* PockeTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66139026DDCF5E004A925D /* PockeTalkTests.swift */; };
+		4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */; };
+		4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */; };
 		4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E9526DF9B520004FC38 /* HomeViewController.swift */; };
 		4AE97ACF26E8D33D007344FC /* CameraEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97ACE26E8D33D007344FC /* CameraEntity.swift */; };
 		4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD026E8E0E6007344FC /* CameraHistoryDBModel.swift */; };
@@ -223,6 +225,8 @@
 		4A66138C26DDCF5E004A925D /* PockeTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PockeTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66139026DDCF5E004A925D /* PockeTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PockeTalkTests.swift; sourceTree = "<group>"; };
 		4A66139226DDCF5E004A925D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraTTSDialog.swift; sourceTree = "<group>"; };
+		4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraTTSDialog.xib; sourceTree = "<group>"; };
 		4AD58E9526DF9B520004FC38 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4AE97ACE26E8D33D007344FC /* CameraEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEntity.swift; sourceTree = "<group>"; };
 		4AE97AD026E8E0E6007344FC /* CameraHistoryDBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHistoryDBModel.swift; sourceTree = "<group>"; };
@@ -625,6 +629,15 @@
 				4A66138726DDCF5D004A925D /* Info.plist */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		4A6E08BC26FB2EBD00147BAC /* CameraTTSDialog */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */,
+				4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */,
+			);
+			path = CameraTTSDialog;
 			sourceTree = "<group>";
 		};
 		4AD58E6426DF811A0004FC38 /* Base */ = {
@@ -1276,6 +1289,7 @@
 		89A7B65626E5CBE800087537 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A6E08BC26FB2EBD00147BAC /* CameraTTSDialog */,
 				89C0F7E026F1EA3F000CD5FC /* Cells */,
 				89A7B65826E5CC0200087537 /* CustomView */,
 				4AF2608426E072D1009C616E /* Camera.storyboard */,
@@ -1610,6 +1624,7 @@
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
+				4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */,
 				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */,
@@ -1799,6 +1814,7 @@
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
+				4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */,
 				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
 				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,

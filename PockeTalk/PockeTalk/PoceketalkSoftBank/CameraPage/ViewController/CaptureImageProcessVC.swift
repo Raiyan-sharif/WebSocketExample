@@ -14,6 +14,11 @@ class CaptureImageProcessVC: BaseViewController {
     
     private let viewModel = ITTServerViewModel()
     private let activity = ActivityIndicator()
+
+    private lazy var cameraTTSDiaolog: CameraTTSDialog = {
+        let cameraTTSDialog = CameraTTSDialog(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: SIZE_HEIGHT))
+        return cameraTTSDialog
+    }()
     
     var image = UIImage()
     
@@ -105,6 +110,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 self.view.addSubview(textViews[i].view)
             }
         }
+
+        /// Just showing the TTS dialog for testing.
+        self.view.addSubview(cameraTTSDiaolog)
+
         
     }
 }
