@@ -184,6 +184,9 @@
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
 		960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationModel.swift */; };
 		963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963D8EA926F4A3E700E32162 /* FontUtility.swift */; };
+		967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */; };
+		967B746226FAD9DA001B1985 /* CustomAlertDailogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967B746126FAD9DA001B1985 /* CustomAlertDailogViewController.swift */; };
+		967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967B746326FAE796001B1985 /* CustomAlertViewModel.swift */; };
 		C106ABCC5CA533EA89885AD3 /* Pods_PockeTalkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -382,6 +385,9 @@
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		963D8EA926F4A3E700E32162 /* FontUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtility.swift; sourceTree = "<group>"; };
+		967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertDialog.storyboard; sourceTree = "<group>"; };
+		967B746126FAD9DA001B1985 /* CustomAlertDailogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertDailogViewController.swift; sourceTree = "<group>"; };
+		967B746326FAE796001B1985 /* CustomAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewModel.swift; sourceTree = "<group>"; };
 		96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -566,7 +572,6 @@
 				89C0F7CC26F1CE08000CD5FC /* UserDefaultsUtility.swift */,
 				89C0F7C826F1CDDD000CD5FC /* URL+Urls.swift */,
 				3B9710CF26EF016000D68DEC /* WebsocketManager */,
-				3BD1F97426F1ADF600DDE606 /* AlertDialogUtility.swift */,
 				963D8EA926F4A3E700E32162 /* FontUtility.swift */,
 			);
 			path = Utitlity;
@@ -915,6 +920,7 @@
 		691FC66C26E9DC8700259407 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				967B746326FAE796001B1985 /* CustomAlertViewModel.swift */,
 				691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */,
 			);
 			path = ViewModel;
@@ -934,6 +940,7 @@
 		692E8DEA26EB19C7003F7636 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				967B746126FAD9DA001B1985 /* CustomAlertDailogViewController.swift */,
 				694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */,
 				692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */,
 			);
@@ -945,6 +952,7 @@
 			children = (
 				694BECA526E9D060004EFAB5 /* AlertReusableViewController.xib */,
 				692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */,
+				967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1620,6 +1628,7 @@
 				50675D6126EB377F00A775E5 /* language_detection_codes.json in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
+				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,
 				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1725,6 +1734,7 @@
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
 				8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */,
 				89C0F7C926F1CDDD000CD5FC /* URL+Urls.swift in Sources */,
+				967B746226FAD9DA001B1985 /* CustomAlertDailogViewController.swift in Sources */,
 				89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
@@ -1790,6 +1800,7 @@
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
+				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
@@ -1836,7 +1847,6 @@
 				50675D5F26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift in Sources */,
 				89495B3E26F0AA2600CEA19D /* Animation.swift in Sources */,
 				503AEEBB26EB139F00B03978 /* LanguageSelectCameraVC.swift in Sources */,
-				3BD1F97526F1ADF600DDE606 /* AlertDialogUtility.swift in Sources */,
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				89C0F7D526F1CE08000CD5FC /* GlobalMethod.swift in Sources */,
 				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,

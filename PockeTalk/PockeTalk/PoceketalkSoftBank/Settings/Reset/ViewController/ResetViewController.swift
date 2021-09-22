@@ -54,23 +54,60 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         let resetDataType =  ResetItemType.resetItems[indexPath.row]
         switch resetDataType {
         case ResetItemType.clearTranslationHistory.rawValue:
-            let alert = AlertDialogUtility.showTranslationHistoryDialog()
-            self.present(alert, animated: true, completion: nil)
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
+                PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
+            }
+            present(alert, animated: true, completion: nil)
+//            let alert = AlertDialogUtility.showTranslationHistoryDialog()
+//            self.present(alert, animated: true, completion: nil)
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Translation History")
         case ResetItemType.deleteCameraHistory.rawValue:
-            let alert = AlertDialogUtility.showCameraTranslationHistoryDialog()
-            self.present(alert, animated: true, completion: nil)
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_camera_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
+                PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                _ = try? CameraHistoryDBModel().deleteAll()
+            }
+            present(alert, animated: true, completion: nil)
+//            let alert = AlertDialogUtility.showCameraTranslationHistoryDialog()
+//            self.present(alert, animated: true, completion: nil)
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Camera History")
         case ResetItemType.clearFavourite.rawValue:
-            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
-            self.present(alert, animated: true, completion: nil)
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
+                PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
+            }
+            present(alert, animated: true, completion: nil)
+//            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
+//            self.present(alert, animated: true, completion: nil)
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Favourite Data")
         case ResetItemType.deleteAllData.rawValue:
-            let alert = AlertDialogUtility.showDeleteAllDataDialog()
-            self.present(alert, animated: true, completion: nil)
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_all_data_reset".localiz(), buttonTitle: "delete_all_data".localiz()) {
+                PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                do {
+                    /// Delete all from tables
+                    try CameraHistoryDBModel().deleteAll()
+                    try ChatDBModel().deleteAll()
+                    try LanguageSelectionDBModel().deleteAll()
+                    try LanguageMapDBModel().deleteAll()
+                } catch _ {
+
+                }
+                /// Clear UserDefautlts
+                UserDefaultsUtility.resetDefaults()
+
+                /// Relaunch Application
+                GlobalMethod.appdelegate().relaunchApplication()
+            }
+            present(alert, animated: true, completion: nil)
+//            let alert = AlertDialogUtility.showDeleteAllDataDialog()
+//            self.present(alert, animated: true, completion: nil)
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Delete all data")
         default:
