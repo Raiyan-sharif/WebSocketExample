@@ -4,9 +4,6 @@
 //
 
 import UIKit
-protocol DismissPronunciationDelegate {
-    func dismissPro()
-}
 class PronunciationPracticeViewController: BaseViewController {
     
     @IBOutlet weak var viewSpeechTextContainer: UIView!
@@ -15,7 +12,6 @@ class PronunciationPracticeViewController: BaseViewController {
     @IBOutlet weak var labelOriginalText: UILabel!
     @IBOutlet weak var bottomTalkView: UIView!
     let width : CGFloat = 100
-    var delegate : DismissPronunciationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +56,6 @@ class PronunciationPracticeViewController: BaseViewController {
     
     @IBAction func actionBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        self.delegate?.dismissPro()
     }
     
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {

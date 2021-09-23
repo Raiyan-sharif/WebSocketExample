@@ -205,6 +205,7 @@
                         <outlet property="bottomLangNativeName" destination="Kdr-me-0xI" id="JvV-um-PTK"/>
                         <outlet property="bottomLangSysLangName" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
                         <outlet property="bottomView" destination="4we-IE-5Qe" id="3Nc-LV-0jS"/>
+                        <outlet property="buttonFav" destination="YGf-dW-PHE" id="ytW-cJ-bhW"/>
                         <outlet property="directionImageView" destination="h3U-SE-DAe" id="Gfl-3C-qml"/>
                         <outlet property="languageChangedDirectionButton" destination="4iA-Ie-wc2" id="KUP-Jo-TPA"/>
                         <outlet property="menuButton" destination="mjI-JA-TBG" id="nfV-ji-sky"/>

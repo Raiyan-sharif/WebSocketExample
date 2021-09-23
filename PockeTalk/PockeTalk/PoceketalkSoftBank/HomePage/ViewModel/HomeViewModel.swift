@@ -23,4 +23,13 @@ class HomeViewModel: BaseModel {
         
         return historyItemCount
     }
+    
+    func getFavouriteItemCount() -> Int{
+        var fvItemCount = 0
+        do{
+            fvItemCount =  try ChatDBModel().getRowCount(isFavorite: true)
+        } catch{}
+        PrintUtility.printLog(tag: "context menu", text: "\(fvItemCount)")
+        return fvItemCount
+    }
 }

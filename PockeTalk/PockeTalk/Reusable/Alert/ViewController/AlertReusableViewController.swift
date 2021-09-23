@@ -4,8 +4,12 @@
 //
 
 import UIKit
-protocol ReverseDelegate {
-    func transitionFromReverse()
+protocol AlertReusableDelegate {
+    func updateFavourite(chatItemModel: HistoryChatItemModel)
+    func transitionFromReverse(chatItemModel: HistoryChatItemModel?)
+    func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
+    func pronunciationPracticeTap (chatItemModel: HistoryChatItemModel?)
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?)
 }
 
 class AlertReusableViewController: BaseViewController {
@@ -19,12 +23,14 @@ class AlertReusableViewController: BaseViewController {
     let cellHeight : CGFloat = 58.0
     let cornerRadius : CGFloat = 15.0
     let viewAlpha : CGFloat = 0.8
-    var reverseDelegate : ReverseDelegate?
-    var retranslateDelegate : RetranslationDelegate?
-
+    var chatItemModel: HistoryChatItemModel?
+    var alertViewModel: AlertReusableViewModel!
+    var delegate : AlertReusableDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        alertViewModel = AlertReusableViewModel()
         self.setUpUI()
     }
 
@@ -46,39 +52,44 @@ class AlertReusableViewController: BaseViewController {
     /// Add to favorites
     func addFavorite (index : IndexPath) {
         let cell = self.alertTableView.cellForRow(at: index) as! AlertTableViewCell
-        if UserDefaultsUtility.getBoolValue(forKey: kIsAlreadyFavorite) == true {
-            UserDefaultsUtility.setBoolValue(false, forKey: kIsAlreadyFavorite)
-            cell.imgView.image = UIImage(named: items[index.row].imageName)
-        } else {
-            UserDefaultsUtility.setBoolValue(true, forKey: kIsAlreadyFavorite)
-            cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
+        
+        if(chatItemModel?.chatItem != nil){
+            alertViewModel.swapLikeValue(chatItemModel!.chatItem!)
+            if chatItemModel!.chatItem?.chatIsLiked == IsLiked.like.rawValue{
+                cell.imgView.image = UIImage(named:"icon_favorite_popup.png")
+                chatItemModel!.chatItem?.chatIsLiked = IsLiked.noLike.rawValue
+            }else{
+                cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
+                chatItemModel!.chatItem?.chatIsLiked = IsLiked.like.rawValue
+            }
+            self.delegate?.updateFavourite(chatItemModel: chatItemModel!)
+        }else{
+            if UserDefaultsUtility.getBoolValue(forKey: kIsAlreadyFavorite) == true {
+                UserDefaultsUtility.setBoolValue(false, forKey: kIsAlreadyFavorite)
+                cell.imgView.image = UIImage(named: items[index.row].imageName)
+            } else {
+                UserDefaultsUtility.setBoolValue(true, forKey: kIsAlreadyFavorite)
+                cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
+            }
         }
     }
 
     func retranslation () {
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            controller.isNative = 1
-        }else{
-            controller.isNative = 0
-        }
-        controller.retranslationDelegate = self
-        controller.fromRetranslation = true
-        self.navigationController?.pushViewController(controller, animated: true);
+        self.delegate?.transitionFromRetranslation(chatItemModel: self.chatItemModel)
+    }
+    
+    func deleteItemPressed () {
+        self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
     }
 
     func showPracticeView () {
-        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.delegate?.pronunciationPracticeTap(chatItemModel: self.chatItemModel)
     }
 
     func reverseTranslation () {
         DispatchQueue.main.async {
             self.navigationController?.dismiss(animated: true, completion: nil)
-            self.reverseDelegate?.transitionFromReverse()
+            self.delegate?.transitionFromReverse(chatItemModel: self.chatItemModel)
         }
     }
     /*
@@ -108,11 +119,20 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         let defaultCell = tableView.dequeueReusableCell(withIdentifier: KAlertTableViewCell) as! AlertTableViewCell
         var imageName = ""
         if items[indexPath.row].menuType == .favorite {
-            if UserDefaultsUtility.getBoolValue(forKey: kIsAlreadyFavorite) == true {
-                imageName = "icon_favorite_select_popup.png"
-            } else {
-                imageName = items[indexPath.row].imageName
+            if(chatItemModel?.chatItem != nil){
+                if chatItemModel!.chatItem?.chatIsLiked == IsLiked.like.rawValue{
+                    imageName = "icon_favorite_select_popup.png"
+                } else {
+                    imageName = items[indexPath.row].imageName
+                }
+            }else{
+                if UserDefaultsUtility.getBoolValue(forKey: kIsAlreadyFavorite) == true {
+                    imageName = "icon_favorite_select_popup.png"
+                } else {
+                    imageName = items[indexPath.row].imageName
+                }
             }
+
         } else {
             imageName = items[indexPath.row].imageName
         }
@@ -125,14 +145,19 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         let type = items[indexPath.row].menuType
         switch type {
         case .favorite:
+            self.dismiss(animated: true, completion: nil)
             self.addFavorite(index: indexPath)
+            break
         case .retranslation :
+            self.dismiss(animated: true, completion: nil)
             self.retranslation()
             break
         case .reverse:
+            self.dismiss(animated: true, completion: nil)
             self.reverseTranslation()
             break
         case .practice :
+            self.dismiss(animated: true, completion: nil)
             showPracticeView()
             break
         case .sendMail :
@@ -140,29 +165,10 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         case .cancel :
             self.dismiss(animated: true, completion: nil)
         case .delete :
+            self.dismiss(animated: true, completion: nil)
+            deleteItemPressed()
             break
         }
      
-    }
-}
-
-extension AlertReusableViewController : DismissPronunciationDelegate {
-    func dismissPro() {
-        self.dismiss(animated: true, completion: nil)
-        if let transitionView = self.view{
-            UIView.transition(with:transitionView, duration: 0.2, options: .showHideTransitionViews, animations: nil, completion: nil)
-        }
-    }
-}
-
-extension AlertReusableViewController : RetranslationDelegate {
-    func showRetranslation(selectedLanguage : String) {
-        DispatchQueue.main.async {
-            self.navigationController?.dismiss(animated: false, completion: nil)
-            if let transitionView = self.view{
-                UIView.transition(with:transitionView, duration: 0.8, options: .showHideTransitionViews, animations: nil, completion: nil)
-            }
-            self.retranslateDelegate?.showRetranslation(selectedLanguage: selectedLanguage)
-        }
     }
 }

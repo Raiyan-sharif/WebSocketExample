@@ -23,7 +23,8 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var topClickView: UIView!
     @IBOutlet weak var bottomClickView: UIView!
     @IBOutlet weak var bottomView: UIView!
-
+    @IBOutlet weak var buttonFav: UIButton!
+    
     //Properties
     var homeVM : HomeViewModel!
     var animationCounter : Int = 0
@@ -33,6 +34,7 @@ class HomeViewController: BaseViewController {
     let width : CGFloat = 100
     private var selectedTab = 0
     var historyItemCount = 0
+    var favouriteItemCount = 0;
     var swipeDown = UISwipeGestureRecognizer()
     var websocketApiModel : WebsocketApiModel?
     ///Top button
@@ -60,7 +62,9 @@ class HomeViewController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
         historyItemCount =  homeVM.getHistoryItemCount()
+        favouriteItemCount = homeVM.getFavouriteItemCount()
         updateHistoryViews()
+        updateFavouriteViews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -125,6 +129,15 @@ class HomeViewController: BaseViewController {
         }else{
             topButton.removeFromSuperview()
             self.view.removeGestureRecognizer(swipeDown)
+        }
+    }
+    
+    func updateFavouriteViews(){
+        // Add top button
+        if( self.favouriteItemCount > 0 ){
+            self.buttonFav.isHidden = false
+        }else{
+            self.buttonFav.isHidden = true
         }
     }
 
@@ -317,8 +330,22 @@ class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController: HistoryViewControllerDelegates{
+    func historyDissmissed() {
+        favouriteItemCount = self.homeVM.getFavouriteItemCount()
+        updateFavouriteViews()
+    }
+    
     func historyAllItemsDeleted() {
         topButton.removeFromSuperview()
+        favouriteItemCount = self.homeVM.getFavouriteItemCount()
+        updateFavouriteViews()
         self.view.removeGestureRecognizer(swipeDown)
+    }
+}
+
+extension HomeViewController : FavouriteViewControllerDelegates {
+    func favouriteAllItemsDeleted() {
+        favouriteItemCount = 0
+        updateFavouriteViews()
     }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 protocol HistoryViewControllerDelegates {
     func historyAllItemsDeleted()
+    func historyDissmissed()
 }
 
 class HistoryViewController: BaseViewController {
@@ -27,6 +28,7 @@ class HistoryViewController: BaseViewController {
     let transformation : CGFloat = 0.6
     private(set) var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
+    var selectedChatItemModel : HistoryChatItemModel?
 
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
@@ -177,7 +179,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
-            self.openTTTResult(indexpath.item)
+            self.openTTTResult(indexpath.item, isReOrRetranslation: false)
         }
         
         cell.longTappedItem = { [weak self] point in
@@ -186,25 +188,29 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
-            self.openTTTResultAlert(indexpath.item)
+            self.openTTTResultAlert(indexpath)
         }
         return cell
     }
     
-    func openTTTResult(_ item: Int){
+    func openTTTResult(_ item: Int, isReOrRetranslation: Bool){
         let chatItem = historyViewModel.items.value[item] as! ChatEntity
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = chatItem.textNative!
-        controller.targetText = chatItem.textTranslated!
+        controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
+        controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
+        controller.isReOrRetranslation = isReOrRetranslation
         controller.modalPresentationStyle = .fullScreen
         controller.isFromHistoryOrFavourite = true
         self.present(controller, animated: true, completion: nil)
     }
     
-    func openTTTResultAlert(_ item: Int){
+    func openTTTResultAlert(_ idx: IndexPath){
+        let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
+        vc.delegate = self
+        vc.chatItemModel = HistoryChatItemModel(chatItem: chatItem, idxPath: idx)
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(vc, animated: true, completion: nil)
@@ -233,10 +239,24 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             CATransaction.setCompletionBlock {
                 self.view.alpha = 0.0
                 self.dismiss(animated: true, completion: nil )
+                self.delegate?.historyDissmissed()
             }
             collectionView.layer.add(transitionAndScale, forKey: nil)
             CATransaction.commit()
         }
+    }
+    
+    func gotoLanguageSelectVoice () {
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            controller.isNative = 1
+        }else{
+            controller.isNative = 0
+        }
+        controller.retranslationDelegate = self
+        controller.fromRetranslation = true
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 }
 
@@ -252,3 +272,56 @@ extension HistoryViewController:HistoryLayoutDelegate{
     }
 }
 
+extension HistoryViewController : RetranslationDelegate{
+    func showRetranslation(selectedLanguage: String) {
+        let chatItem = selectedChatItemModel?.chatItem!
+        
+        //TODO call api for retranslation
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.nativeText = chatItem!.textNative!
+        controller.targetText = chatItem!.textTranslated!
+        controller.isReOrRetranslation = true
+        controller.modalPresentationStyle = .fullScreen
+        controller.isFromHistoryOrFavourite = true
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+
+extension HistoryViewController : AlertReusableDelegate {
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {}
+    
+    func updateFavourite(chatItemModel: HistoryChatItemModel) {
+        PrintUtility.printLog(tag: "ContextMenu: ", text: "updateFavourite>>>")
+        self.historyViewModel.items.value[chatItemModel.idxPath.row] = chatItemModel.chatItem!
+        self.collectionView.reloadItems(at: [chatItemModel.idxPath])
+    }
+    
+    func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {
+        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
+        controller.modalPresentationStyle = .fullScreen
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
+        selectedChatItemModel = chatItemModel
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            controller.isNative = 1
+        }else{
+            controller.isNative = 0
+        }
+        controller.retranslationDelegate = self
+        controller.fromRetranslation = true
+        controller.modalPresentationStyle = .fullScreen
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
+        self.openTTTResult((chatItemModel?.idxPath.row)!, isReOrRetranslation: true)
+    }
+    
+}

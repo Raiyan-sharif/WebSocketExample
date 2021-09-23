@@ -49,7 +49,8 @@ class TtsAlertController: BaseViewController {
     let animationDelay : CGFloat = 0
     let transform : CGFloat = 0.97
     var isFromHistoryOrFavourite = false
-
+    var isReOrRetranslation = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -134,6 +135,9 @@ class TtsAlertController: BaseViewController {
         
         if isFromHistoryOrFavourite == true{
             self.bottomView.isHidden = true
+        }
+        if isReOrRetranslation == true{
+            updateUIForRetranslation()
         }
     }
 
@@ -248,8 +252,7 @@ class TtsAlertController: BaseViewController {
         self.stopAnimation()
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
-        vc.reverseDelegate = self
-        vc.retranslateDelegate = self
+        vc.delegate = self
         let navController = UINavigationController.init(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -295,12 +298,6 @@ class TtsAlertController: BaseViewController {
 
 }
 
-extension TtsAlertController : ReverseDelegate {
-    func transitionFromReverse() {
-        self.updateUIForReverse()
-    }
-}
-
 extension TtsAlertController : RetranslationDelegate {
     func showRetranslation(selectedLanguage: String) {
         let languageManager = LanguageSelectionManager.shared
@@ -313,4 +310,33 @@ extension TtsAlertController : RetranslationDelegate {
         }
         self.updateUIForRetranslation()
     }
+}
+extension TtsAlertController : AlertReusableDelegate {
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {}
+    
+    func updateFavourite(chatItemModel: HistoryChatItemModel) {}
+    
+    func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {
+        let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            controller.isNative = 1
+        }else{
+            controller.isNative = 0
+        }
+        controller.retranslationDelegate = self
+        controller.fromRetranslation = true
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+    
+    func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
+        self.updateUIForReverse()
+    }
+    
 }

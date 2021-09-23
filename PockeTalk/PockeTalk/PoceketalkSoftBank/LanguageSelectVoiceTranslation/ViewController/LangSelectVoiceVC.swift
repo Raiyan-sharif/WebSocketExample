@@ -229,7 +229,12 @@ class LangSelectVoiceVC: BaseViewController {
             //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
             NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         }
-        self.navigationController?.popViewController(animated: true)
+        if self.navigationController != nil{
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            self.dismiss(animated: true, completion: nil)
+        }
+        self.navigationController
         if fromRetranslation == true {
             self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
         }

@@ -20,6 +20,7 @@ class FavouriteViewController: BaseViewController {
     let transformation : CGFloat = 0.6
     private(set) var delegate: FavouriteViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
+    var selectedChatItemModel : HistoryChatItemModel?
 
     ///CollectionView to show favourite item
     private lazy var collectionView:UICollectionView = {
@@ -125,6 +126,18 @@ class FavouriteViewController: BaseViewController {
             }
         }
     }
+    
+    func openTTTResult(_ item: Int, isReOrRetranslation: Bool){
+        let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
+        controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
+        controller.isReOrRetranslation = isReOrRetranslation
+        controller.modalPresentationStyle = .fullScreen
+        controller.isFromHistoryOrFavourite = true
+        self.present(controller, animated: true, completion: nil)
+    }
 }
 
 extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -171,7 +184,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             }
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
-            self.openTTTResultAlert(indexpath.item)
+            self.openTTTResultAlert(indexpath)
         }
         
         return cell
@@ -188,9 +201,12 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
         self.present(controller, animated: true, completion: nil)
     }
     
-    func openTTTResultAlert(_ item: Int){
+    func openTTTResultAlert(_ idx: IndexPath){
+        let chatItem = favouriteViewModel.items.value[idx.item] as! ChatEntity
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
+        vc.delegate = self
+        vc.chatItemModel = HistoryChatItemModel(chatItem: chatItem, idxPath: idx)
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(vc, animated: true, completion: nil)
@@ -208,4 +224,55 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
         return 20 + fromHeight + 120 + toHeight + 40
     }
 }
+extension FavouriteViewController : RetranslationDelegate{
+    func showRetranslation(selectedLanguage: String) {
+        let chatItem = selectedChatItemModel?.chatItem!
+        
+        //TODO call api for retranslation
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+        controller.nativeText = chatItem!.textNative!
+        controller.targetText = chatItem!.textTranslated!
+        controller.isReOrRetranslation = true
+        controller.modalPresentationStyle = .fullScreen
+        controller.isFromHistoryOrFavourite = true
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+
+extension FavouriteViewController : AlertReusableDelegate {
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
+        self.favouriteViewModel.deleteFavourite((chatItemModel?.idxPath.item)!)
+        self.collectionView.performBatchUpdates{
+            self.collectionView.deleteItems(at: [chatItemModel!.idxPath])
+        }
+    }
+    
+    func updateFavourite(chatItemModel: HistoryChatItemModel) {}
+    
+    func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {}
+    
+    func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
+        selectedChatItemModel = chatItemModel
+
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
+            controller.isNative = 1
+        }else{
+            controller.isNative = 0
+        }
+        controller.retranslationDelegate = self
+        controller.fromRetranslation = true
+        controller.modalPresentationStyle = .fullScreen
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
+        self.openTTTResult((chatItemModel?.idxPath.row)!, isReOrRetranslation: true)
+    }
+    
+}
+
 
