@@ -1,11 +1,15 @@
 //  CameraTTSDialog.swift
 //  PockeTalk
 //
-//
-//  Created by Piklu Majumder-401 on 9/21/21.
 
 import UIKit
 import MarqueeLabel
+
+protocol CameraTTSDialogProtocol: AnyObject {
+    func cameraTTSDialogToPlaybutton()
+    func cameraTTSDialogFromPlaybutton()
+    func cameraTTSDialogShowContextMenu()
+}
 
 class CameraTTSDialog: UIView {
 
@@ -20,6 +24,8 @@ class CameraTTSDialog: UIView {
 
     @IBOutlet weak var fromTranslateLabel: MarqueeLabel!
     @IBOutlet weak var toTranslateLabel: MarqueeLabel!
+
+    weak var delegate: CameraTTSDialogProtocol?
 
 
     override func awakeFromNib() {
@@ -99,15 +105,15 @@ class CameraTTSDialog: UIView {
 
 
     @IBAction func didTapOnToPlayButton(_ sender: UIButton) {
-
+        self.delegate?.cameraTTSDialogToPlaybutton()
     }
 
     @IBAction func didTapOnFromPlayButton(_ sender: UIButton) {
-
+        self.delegate?.cameraTTSDialogFromPlaybutton()
     }
 
     @IBAction func didTapOnMenuButton(_ sender: UIButton) {
-
+        self.delegate?.cameraTTSDialogShowContextMenu()
     }
 }
 

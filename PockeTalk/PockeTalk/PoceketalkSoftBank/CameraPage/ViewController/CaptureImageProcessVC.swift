@@ -17,9 +17,16 @@ class CaptureImageProcessVC: BaseViewController {
 
     private lazy var cameraTTSDiaolog: CameraTTSDialog = {
         let cameraTTSDialog = CameraTTSDialog(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: SIZE_HEIGHT))
+        cameraTTSDialog.delegate = self
         return cameraTTSDialog
     }()
-    
+
+    private lazy var cameraTTSContextMenu: CameraTTSContextMenu = {
+        let cameraTTSContextMenu = CameraTTSContextMenu(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: SIZE_HEIGHT))
+        cameraTTSContextMenu.delegate = self
+        return cameraTTSContextMenu
+    }()
+
     var image = UIImage()
     
     override func viewDidLoad() {
@@ -70,11 +77,11 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             let lineModeTextViews = self.viewModel.lineModetTextViewList
             if (blockModeTextViews.count != 0 && lineModeTextViews.count != 0) {
                 hideLoader()
-                
+
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
                     if modeSwitchType == blockMode {
                         plotLineOrBlock(using: blockModeTextViews)
-                        
+
                     } else {
                         plotLineOrBlock(using: lineModeTextViews)
                     }
@@ -129,6 +136,33 @@ extension CaptureImageProcessVC: LoaderDelegate{
     func hideLoader() {
         activity.hideLoading()
     }
+}
+
+//MARK: - CameraTTSDialogProtocol
+
+extension CaptureImageProcessVC: CameraTTSDialogProtocol {
+    func cameraTTSDialogToPlaybutton() {
+        // Action ToLanguage play
+    }
+
+    func cameraTTSDialogFromPlaybutton() {
+        // Action FromLanguage play
+    }
+
+
+    func cameraTTSDialogShowContextMenu() {
+        self.view.addSubview(cameraTTSContextMenu)
+    }
+}
+
+//MARK: - CameraTTSContextMenuProtocol
+
+extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
+    func cameraTTSContextMenuSendMail() {
+        // Send an email implementaiton goes here
+    }
+
+
 }
 
 

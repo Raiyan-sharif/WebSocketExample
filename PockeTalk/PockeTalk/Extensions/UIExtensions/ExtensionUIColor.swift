@@ -137,4 +137,9 @@ extension UIColor {
     static var officialApplePlaceholderGray: UIColor {
         return UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
     }
+
+    // Sepreator color bellow iOS 13
+    static var seperatorColor: UIColor {
+        return UIColor(red: 198.0/255.0, green: 198.0/255.0, blue: 200.0/255.0, alpha: 1.0)
+    }
 }

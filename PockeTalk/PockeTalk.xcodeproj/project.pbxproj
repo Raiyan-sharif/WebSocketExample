@@ -13,12 +13,13 @@
 		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
 		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
 		3BA4EF3026FA05A4003D8087 /* WebsocketApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */; };
-		3BD1F97526F1ADF600DDE606 /* AlertDialogUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD1F97426F1ADF600DDE606 /* AlertDialogUtility.swift */; };
 		4A40AC9426F89BC800019A5B /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC8F26F89BC700019A5B /* BaseEntity.swift */; };
 		4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9026F89BC800019A5B /* BaseViewController.swift */; };
 		4A40AC9626F89BC800019A5B /* BaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9126F89BC800019A5B /* BaseDelegate.swift */; };
 		4A40AC9726F89BC800019A5B /* BaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9226F89BC800019A5B /* BaseData.swift */; };
 		4A40AC9826F89BC800019A5B /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9326F89BC800019A5B /* BaseModel.swift */; };
+		4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A63ADEA26FC51FF0062A85A /* CameraTTSContextMenu.swift */; };
+		4A63ADED26FC52E60062A85A /* CameraTTSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A63ADEC26FC52E60062A85A /* CameraTTSContextMenu.xib */; };
 		4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66137926DDCF59004A925D /* AppDelegate.swift */; };
 		4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138226DDCF5D004A925D /* Assets.xcassets */; };
 		4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */; };
@@ -210,13 +211,14 @@
 		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
 		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
 		3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsocketApiModel.swift; sourceTree = "<group>"; };
-		3BD1F97426F1ADF600DDE606 /* AlertDialogUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialogUtility.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A40AC8F26F89BC700019A5B /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		4A40AC9026F89BC800019A5B /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4A40AC9126F89BC800019A5B /* BaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDelegate.swift; sourceTree = "<group>"; };
 		4A40AC9226F89BC800019A5B /* BaseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseData.swift; sourceTree = "<group>"; };
 		4A40AC9326F89BC800019A5B /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		4A63ADEA26FC51FF0062A85A /* CameraTTSContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTTSContextMenu.swift; sourceTree = "<group>"; };
+		4A63ADEC26FC52E60062A85A /* CameraTTSContextMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CameraTTSContextMenu.xib; sourceTree = "<group>"; };
 		4A66137626DDCF59004A925D /* PockeTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PockeTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66137926DDCF59004A925D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A66138226DDCF5D004A925D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -516,6 +518,15 @@
 				4AF2609A26E0B516009C616E /* MenuViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4A63ADEE26FC96C40062A85A /* CameraTTSContextMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4A63ADEA26FC51FF0062A85A /* CameraTTSContextMenu.swift */,
+				4A63ADEC26FC52E60062A85A /* CameraTTSContextMenu.xib */,
+			);
+			path = CameraTTSContextMenu;
 			sourceTree = "<group>";
 		};
 		4A66136D26DDCF59004A925D = {
@@ -1293,6 +1304,7 @@
 				89C0F7E026F1EA3F000CD5FC /* Cells */,
 				89A7B65826E5CC0200087537 /* CustomView */,
 				4AF2608426E072D1009C616E /* Camera.storyboard */,
+				4A63ADEE26FC96C40062A85A /* CameraTTSContextMenu */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1621,6 +1633,7 @@
 				503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */,
 				3B86A5C626F0631600175073 /* Reset.storyboard in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
+				4A63ADED26FC52E60062A85A /* CameraTTSContextMenu.xib in Resources */,
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
@@ -1740,6 +1753,7 @@
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
+				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
 				4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
