@@ -74,6 +74,7 @@ class LangSelectVoiceVC: BaseViewController {
         setupPageViewController()
         setUpMicroPhoneIcon()
         setUpSpeechButton()
+        //let item = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: LanguageManager.shared.currentLanguage.rawValue,text: "イディッシュ語")
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){

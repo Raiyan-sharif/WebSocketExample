@@ -8,6 +8,7 @@
 import SQLite
 
 class LanguageMapDBModel: BaseDBModel {
+    let TAG = "\(LanguageMapDBModel.self)"
     let TABLE_NAME = "LanguageMapTable"
 
     let textCode: Expression<String>
@@ -62,6 +63,26 @@ class LanguageMapDBModel: BaseDBModel {
             _ = try? insert(queryString: insertStatement)
         }
         throw DataAccessError.Nil_In_Data
+    }
+
+
+    func find(languageCode: String, text: String) throws -> BaseEntity? {
+        let filterQuery = table.filter(languageCode == textCode && (text == textValueOne  || text == textValueTwo
+                                        || text == textValueThree || text == textValueFour || text == textValueFive
+                                        || text == textValueSix || text == textValueSeven))
+        let items = try find(filter: filterQuery)
+        for item in  items {
+            return LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven])
+        }
+        return nil
+   }
+
+    func getRowCount() throws -> Int? {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        let count = try? DB.scalar(table.count)
+        return count
     }
 
     func delete (item: BaseEntity) throws -> Void {

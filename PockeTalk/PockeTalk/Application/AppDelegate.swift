@@ -24,8 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// Set initial language of the application
         
         setInitialLangue()
-        
-
+        LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
         LanguageSelectionManager.shared.getLanguageSelectionData()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)

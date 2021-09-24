@@ -61,6 +61,8 @@
 		50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50193E0A26E8880C0052F170 /* CountryListItem.swift */; };
 		50193E0E26E888760052F170 /* country_selection_list_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 50193E0C26E888760052F170 /* country_selection_list_en.json */; };
 		50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */ = {isa = PBXBuildFile; fileRef = 50193E1026E888870052F170 /* country_selection_list_ja.json */; };
+		501A58FE26FC427600369836 /* language_mapping_by_voice.xml in Resources */ = {isa = PBXBuildFile; fileRef = 501A58FD26FC427600369836 /* language_mapping_by_voice.xml */; };
+		501A590226FC4AF300369836 /* LanguageMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A590126FC4AF300369836 /* LanguageMapViewModel.swift */; };
 		5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D54C26E29D57002A5250 /* LangListCell.swift */; };
 		5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028D54D26E29D57002A5250 /* LangListCell.xib */; };
 		5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55126E29E59002A5250 /* HistoryListVC.swift */; };
@@ -270,6 +272,8 @@
 		50193E0A26E8880C0052F170 /* CountryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListItem.swift; sourceTree = "<group>"; };
 		50193E0C26E888760052F170 /* country_selection_list_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = country_selection_list_en.json; sourceTree = "<group>"; };
 		50193E1026E888870052F170 /* country_selection_list_ja.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = country_selection_list_ja.json; sourceTree = "<group>"; };
+		501A58FD26FC427600369836 /* language_mapping_by_voice.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = language_mapping_by_voice.xml; sourceTree = "<group>"; };
+		501A590126FC4AF300369836 /* LanguageMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageMapViewModel.swift; sourceTree = "<group>"; };
 		5028D54C26E29D57002A5250 /* LangListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangListCell.swift; sourceTree = "<group>"; };
 		5028D54D26E29D57002A5250 /* LangListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangListCell.xib; sourceTree = "<group>"; };
 		5028D55126E29E59002A5250 /* HistoryListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListVC.swift; sourceTree = "<group>"; };
@@ -794,6 +798,7 @@
 			isa = PBXGroup;
 			children = (
 				5007495726E7A0E2002FBBE2 /* LanguageItem.swift */,
+				4AE97ADF26E8E27A007344FC /* LanguageMapEntity.swift */,
 				4AE97AD226E8E10F007344FC /* LanguageSelectionEntity.swift */,
 				50193E0A26E8880C0052F170 /* CountryListItem.swift */,
 			);
@@ -904,6 +909,7 @@
 		50C005C826E77F8700C58957 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				501A58FD26FC427600369836 /* language_mapping_by_voice.xml */,
 				50193E1026E888870052F170 /* country_selection_list_ja.json */,
 				50193E0C26E888760052F170 /* country_selection_list_en.json */,
 				506B93C226E74E530085BDDF /* default_languages.xml */,
@@ -916,9 +922,11 @@
 		50C005C926E77FAC00C58957 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4AE97AE126E8E294007344FC /* LanguageMapDBModel.swift */,
 				50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */,
 				4AE97AD426E8E122007344FC /* LanguageSelectionDBModel.swift */,
 				50193E0726E8876A0052F170 /* CountryFlagListViewModel.swift */,
+				501A590126FC4AF300369836 /* LanguageMapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1126,7 +1134,6 @@
 		8782DF1F26E0B6B9003A1681 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4AE97ADF26E8E27A007344FC /* LanguageMapEntity.swift */,
 				8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */,
 			);
 			path = Model;
@@ -1452,7 +1459,6 @@
 		96D123A026E86AB0003F3572 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				4AE97AE126E8E294007344FC /* LanguageMapDBModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1625,6 +1631,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				501A58FE26FC427600369836 /* language_mapping_by_voice.xml in Resources */,
 				69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */,
 				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
 				692E8DEE26EB1B47003F7636 /* NoInternetAlert.xib in Resources */,
@@ -1855,6 +1862,7 @@
 				798A9D3326F1CD8200353D6B /* ParseTextDetection.swift in Sources */,
 				87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
+				501A590226FC4AF300369836 /* LanguageMapViewModel.swift in Sources */,
 				89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
