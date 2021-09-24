@@ -53,7 +53,8 @@ class CaptureImageProcessVC: BaseViewController {
     }
     
     @IBAction func backButtonEventListener(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
     }
     
     @IBAction func modeSwitchButtonEventListener(_ sender: Any) {

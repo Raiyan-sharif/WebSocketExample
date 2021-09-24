@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class PointUtils {
     static func parseResponseForBlock( dataToParse: FullTextAnnotation!, mDetectedLanguageCode: String, xFactor: Float, yFactor: Float) -> BlockClass{
@@ -413,4 +414,9 @@ public class PointUtils {
     static func degreeToRadian(_ number: Double) -> CGFloat {
         return (CGFloat(number) * .pi) / 180
     }
+    
+    static func radians(_ degrees: CGFloat) -> CGFloat {
+        return degrees / 180 * .pi
+    }
+
 }

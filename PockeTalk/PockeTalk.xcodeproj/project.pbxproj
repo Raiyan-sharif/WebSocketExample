@@ -138,10 +138,13 @@
 		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
 		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
-		8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
+		8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */; };
+		8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */; };
+		8940E31A26FC28EC0083E4FA /* IImageCroppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */; };
+		8940E31C26FC299B0083E4FA /* CropUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31B26FC299B0083E4FA /* CropUtils.swift */; };
 		89495B2526F0A8C500CEA19D /* BlockDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2426F0A8C500CEA19D /* BlockDetection.swift */; };
 		89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */; };
 		89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B2726F0A92300CEA19D /* PointUtils.swift */; };
@@ -185,6 +188,9 @@
 		89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */; };
 		89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */; };
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
+		89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */; };
+		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
+		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
 		960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationModel.swift */; };
 		963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963D8EA926F4A3E700E32162 /* FontUtility.swift */; };
 		967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */; };
@@ -341,11 +347,13 @@
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
-		8935A12626E5D9FB00AC3CA1 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
-		8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
+		8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
+		8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOverlappingView.swift; sourceTree = "<group>"; };
+		8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IImageCroppingViewController.swift; sourceTree = "<group>"; };
+		8940E31B26FC299B0083E4FA /* CropUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropUtils.swift; sourceTree = "<group>"; };
 		89495B2426F0A8C500CEA19D /* BlockDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockDetection.swift; sourceTree = "<group>"; };
 		89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedJSONModel.swift; sourceTree = "<group>"; };
 		89495B2726F0A92300CEA19D /* PointUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointUtils.swift; sourceTree = "<group>"; };
@@ -389,12 +397,14 @@
 		89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHistoryPopUPViewController.swift; sourceTree = "<group>"; };
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureProcessor.swift; sourceTree = "<group>"; };
+		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		963D8EA926F4A3E700E32162 /* FontUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtility.swift; sourceTree = "<group>"; };
 		967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertDialog.storyboard; sourceTree = "<group>"; };
 		967B746126FAD9DA001B1985 /* CustomAlertDailogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertDailogViewController.swift; sourceTree = "<group>"; };
 		967B746326FAE796001B1985 /* CustomAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewModel.swift; sourceTree = "<group>"; };
-		96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PockeTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -552,7 +562,6 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
-				96DE0B3A26E88C07004A971F /* PockeTalk-Bridging-Header.h */,
 				4AE97AEA26E8E30D007344FC /* Database */,
 				8782DEFD26E099A7003A1681 /* Reusable */,
 				8782DECF26E08BEE003A1681 /* Localization */,
@@ -1257,15 +1266,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		8935A12526E5D9E800AC3CA1 /* CropViewController */ = {
-			isa = PBXGroup;
-			children = (
-				8935A12626E5D9FB00AC3CA1 /* CropViewController.h */,
-				8935A12726E5D9FB00AC3CA1 /* CropViewController.swift */,
-			);
-			path = CropViewController;
-			sourceTree = "<group>";
-		};
 		89495B3226F0A9E100CEA19D /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -1305,6 +1305,7 @@
 				89A7B65826E5CC0200087537 /* CustomView */,
 				4AF2608426E072D1009C616E /* Camera.storyboard */,
 				4A63ADEE26FC96C40062A85A /* CameraTTSContextMenu */,
+				8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1312,11 +1313,12 @@
 		89A7B65726E5CBF200087537 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8935A12526E5D9E800AC3CA1 /* CropViewController */,
 				8935A16726E61F8300AC3CA1 /* CameraViewController.swift */,
+				89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */,
 				8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */,
 				89C0F7DA26F1E4FC000CD5FC /* CameraHistoryViewController.swift */,
 				89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */,
+				8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */,
 				8994A7CD26F4A83600657608 /* img1.jpg */,
 			);
 			path = ViewController;
@@ -1326,6 +1328,7 @@
 			isa = PBXGroup;
 			children = (
 				89A7B65926E5CC2000087537 /* CustomShapeButton.swift */,
+				8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1467,6 +1470,7 @@
 		96D123A226E86AFF003F3572 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8940E31B26FC299B0083E4FA /* CropUtils.swift */,
 				89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */,
 				89495B2726F0A92300CEA19D /* PointUtils.swift */,
 				89495B2826F0A92300CEA19D /* VisionResponseJSONModel.swift */,
@@ -1474,6 +1478,8 @@
 				4AE97ACE26E8D33D007344FC /* CameraEntity.swift */,
 				798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */,
 				89C0F7E526F1EC0E000CD5FC /* CameraHistoryDataModel.swift */,
+				89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */,
+				89CE6AC726FDC2D9000ECF17 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1646,6 +1652,7 @@
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
+				8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */,
 				694BECA726E9D060004EFAB5 /* AlertReusableViewController.xib in Resources */,
 				50193E0E26E888760052F170 /* country_selection_list_en.json in Resources */,
 				872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */,
@@ -1761,9 +1768,11 @@
 				89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */,
 				4AE97AE226E8E294007344FC /* LanguageMapDBModel.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
+				89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */,
 				8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */,
 				89C0F7C926F1CDDD000CD5FC /* URL+Urls.swift in Sources */,
 				967B746226FAD9DA001B1985 /* CustomAlertDailogViewController.swift in Sources */,
+				8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */,
 				89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
@@ -1779,7 +1788,6 @@
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				89C0F7E626F1EC0E000CD5FC /* CameraHistoryDataModel.swift in Sources */,
-				8935A12826E5D9FB00AC3CA1 /* CropViewController.swift in Sources */,
 				89C0F7D726F1CE08000CD5FC /* Constants.swift in Sources */,
 				3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
@@ -1817,6 +1825,7 @@
 				8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */,
 				3B86A5D026F0650900175073 /* ResetItems.swift in Sources */,
 				89C0F7D226F1CE08000CD5FC /* AlertMenuType.swift in Sources */,
+				89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
 				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
@@ -1828,6 +1837,7 @@
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
+				89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */,
 				4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */,
 				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
 				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
@@ -1870,6 +1880,7 @@
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,
 				4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */,
 				4AE97AE026E8E27A007344FC /* LanguageMapEntity.swift in Sources */,
+				8940E31A26FC28EC0083E4FA /* IImageCroppingViewController.swift in Sources */,
 				89C0F7D326F1CE08000CD5FC /* Reachability.swift in Sources */,
 				89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
@@ -1880,6 +1891,7 @@
 				50193E0526E864570052F170 /* CountryListCollectionViewCell.swift in Sources */,
 				89C0F7D526F1CE08000CD5FC /* GlobalMethod.swift in Sources */,
 				691FC66526E9D37C00259407 /* AlertTableViewCell.swift in Sources */,
+				8940E31C26FC299B0083E4FA /* CropUtils.swift in Sources */,
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
@@ -2070,7 +2082,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PockeTalk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2095,7 +2107,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "PockeTalk/PockeTalk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

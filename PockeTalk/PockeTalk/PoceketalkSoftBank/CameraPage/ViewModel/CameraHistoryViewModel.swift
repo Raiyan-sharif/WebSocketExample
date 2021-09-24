@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 protocol CameraHistoryViewModelDelegates {
     func updateViewWithImages()

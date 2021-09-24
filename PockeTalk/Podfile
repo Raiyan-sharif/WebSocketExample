@@ -10,9 +10,7 @@ target 'PockeTalk' do
   pod 'SQLite.swift', '~> 0.13.0'
 
   pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
-  
-  pod 'TOCropViewController'
-  
+    
   pod 'Differ'
   
   pod 'SwiftRichString'
