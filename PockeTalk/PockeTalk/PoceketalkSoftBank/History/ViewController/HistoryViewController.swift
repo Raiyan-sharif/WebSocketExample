@@ -67,8 +67,8 @@ class HistoryViewController: BaseViewController {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "", menuType: .delete))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
@@ -84,9 +84,21 @@ class HistoryViewController: BaseViewController {
         topConstraintOfCV.isActive = true
         collectionView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         collectionView.alpha = 0.0
+        
+        self.view.addSubview(backBtn)
 
     }
-
+    private var backBtn:UIButton!{
+        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+        return okBtn
+    }
+    
+    ///Move to next screeen
+    @objc func actionBack () {
+        self.dismiss(animated: true, completion: nil )
+    }
     func showCollectionView(){
         isCollectionViewVisible = true
         collectionView.scrollToItem(at: IndexPath(item: historyViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
@@ -149,8 +161,6 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.showAsFavourite()
         }
 
-        //TODO if fabourite
-
         cell.deleteItem = { [weak self] point in
             guard let `self`  = self else {
                 return
@@ -195,14 +205,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openTTTResult(_ item: Int, isReOrRetranslation: Bool){
         let chatItem = historyViewModel.items.value[item] as! ChatEntity
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
-        controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
-        controller.isReOrRetranslation = isReOrRetranslation
-        controller.modalPresentationStyle = .fullScreen
-        controller.isFromHistoryOrFavourite = true
-        self.present(controller, animated: true, completion: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItem, hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -275,45 +278,49 @@ extension HistoryViewController:HistoryLayoutDelegate{
 extension HistoryViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
         let chatItem = selectedChatItemModel?.chatItem!
+        let isTop = chatItem?.chatIsTop
+        let nativeText = chatItem!.textNative
+        let nativeLangName = chatItem!.textNativeLanguage!
+        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
         
-        //TODO call api for retranslation
+        //TODO call websocket api for ttt
+        let targetText = chatItem!.textTranslated
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = chatItem!.textNative!
-        controller.targetText = chatItem!.textTranslated!
-        controller.isReOrRetranslation = true
-        controller.modalPresentationStyle = .fullScreen
-        controller.isFromHistoryOrFavourite = true
-        self.present(controller, animated: true, completion: nil)
+        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+        
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatEntity, hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: self)
+        self.historyViewModel.addItem(chatEntity)
+    
     }
 }
 
 extension HistoryViewController : AlertReusableDelegate {
-    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {}
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
+        self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
+        self.collectionView.performBatchUpdates{
+            self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
+        }
+    }
     
     func updateFavourite(chatItemModel: HistoryChatItemModel) {
-        PrintUtility.printLog(tag: "ContextMenu: ", text: "updateFavourite>>>")
-        self.historyViewModel.items.value[chatItemModel.idxPath.row] = chatItemModel.chatItem!
-        self.collectionView.reloadItems(at: [chatItemModel.idxPath])
+        self.historyViewModel.items.value[chatItemModel.idxPath!.row] = chatItemModel.chatItem!
+        self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
     }
     
     func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
         controller.modalPresentationStyle = .fullScreen
+        controller.chatItem = chatItemModel?.chatItem
         self.present(controller, animated: true, completion: nil)
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
         selectedChatItemModel = chatItemModel
+        
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            controller.isNative = 1
-        }else{
-            controller.isNative = 0
-        }
+        controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
@@ -321,7 +328,14 @@ extension HistoryViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        self.openTTTResult((chatItemModel?.idxPath.row)!, isReOrRetranslation: true)
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItemModel!.chatItem!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
+        self.historyViewModel.addItem(chatItemModel!.chatItem!)
     }
     
+}
+
+extension HistoryViewController: TtsAlertControllerDelegate{
+    func itemAdded(_ chatItem: ChatEntity) {
+        self.historyViewModel.addItem(chatItem)
+    }
 }

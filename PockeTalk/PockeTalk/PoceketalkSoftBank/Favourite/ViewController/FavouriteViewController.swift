@@ -131,11 +131,12 @@ class FavouriteViewController: BaseViewController {
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
-        controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
-        controller.isReOrRetranslation = isReOrRetranslation
+       // controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
+        //controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
+       // controller.isReOrRetranslation = isReOrRetranslation
         controller.modalPresentationStyle = .fullScreen
-        controller.isFromHistoryOrFavourite = true
+        //controller.isFromHistoryOrFavourite = true
+        //controller.isFromFavourite = true
         self.present(controller, animated: true, completion: nil)
     }
 }
@@ -194,10 +195,10 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = chatItem.textNative!
-        controller.targetText = chatItem.textTranslated!
+        //controller.nativeText = chatItem.textNative!
+        //controller.targetText = chatItem.textTranslated!
         controller.modalPresentationStyle = .fullScreen
-        controller.isFromHistoryOrFavourite = true
+        //controller.isReOrRetranslation = true
         self.present(controller, animated: true, completion: nil)
     }
     
@@ -226,26 +227,28 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
 }
 extension FavouriteViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
+        
         let chatItem = selectedChatItemModel?.chatItem!
+        let isTop = chatItem?.chatIsTop
+        let nativeText = chatItem!.textNative
+        let nativeLangName = chatItem!.textNativeLanguage!
+        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
         
-        //TODO call api for retranslation
+        //TODO call websocket api for ttt
+        let targetText = chatItem!.textTranslated
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        controller.nativeText = chatItem!.textNative!
-        controller.targetText = chatItem!.textTranslated!
-        controller.isReOrRetranslation = true
-        controller.modalPresentationStyle = .fullScreen
-        controller.isFromHistoryOrFavourite = true
-        self.present(controller, animated: true, completion: nil)
+        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+        
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatEntity, hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: nil)
+
     }
 }
 
 extension FavouriteViewController : AlertReusableDelegate {
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
-        self.favouriteViewModel.deleteFavourite((chatItemModel?.idxPath.item)!)
+        self.favouriteViewModel.deleteFavourite((chatItemModel?.idxPath!.item)!)
         self.collectionView.performBatchUpdates{
-            self.collectionView.deleteItems(at: [chatItemModel!.idxPath])
+            self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
         }
     }
     
@@ -255,14 +258,10 @@ extension FavouriteViewController : AlertReusableDelegate {
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
         selectedChatItemModel = chatItemModel
-
+        
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            controller.isNative = 1
-        }else{
-            controller.isNative = 0
-        }
+        controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
@@ -270,7 +269,7 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        self.openTTTResult((chatItemModel?.idxPath.row)!, isReOrRetranslation: true)
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItemModel!.chatItem!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: nil)
     }
     
 }

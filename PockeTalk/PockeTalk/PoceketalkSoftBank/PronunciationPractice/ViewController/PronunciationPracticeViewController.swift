@@ -12,6 +12,7 @@ class PronunciationPracticeViewController: BaseViewController {
     @IBOutlet weak var labelOriginalText: UILabel!
     @IBOutlet weak var bottomTalkView: UIView!
     let width : CGFloat = 100
+    var chatItem: ChatEntity?
     
     override func viewDidLoad() {
         super.viewDidLoad()

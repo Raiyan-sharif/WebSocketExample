@@ -235,8 +235,34 @@ class SpeechProcessingViewController: BaseViewController{
         self.present(controller, animated: true, completion: nil)
     }
 
-    func showTtsAlert (ttt:String,stt:String) {
-        GlobalMethod.showTtsAlert(viewController: self, tttValue: ttt, sttValue: stt)
+    func showTtsAlert ( ttt: String, stt: String ) {
+        let languageManager = LanguageSelectionManager.shared
+        let isArrowUp = languageManager.isArrowUp ?? true
+        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
+        var nativeText = ""
+        var targetText = ""
+        let nativeLangCode = LanguageSelectionManager.shared.nativeLanguage
+        let targetLangCode = LanguageSelectionManager.shared.targetLanguage
+        let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
+        let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
+        var nativeLangName = ""
+        var targetLangName = ""
+        
+        if isArrowUp == true{
+            nativeText = stt
+            targetText = ttt
+            nativeLangName = nativeLanguage?.name ?? ""
+            targetLangName = targetLanguage?.name ?? ""
+        }else{
+            nativeText = ttt
+            targetText = stt
+            nativeLangName = targetLanguage?.name ?? ""
+            targetLangName = nativeLanguage?.name ?? ""
+        }
+        
+        let chatItem =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+        
+        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItem, hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, ttsAlertControllerDelegate: nil)
     }
     
     func showPronunciationPracticeResult () {

@@ -11,6 +11,7 @@ protocol HistoryViewModeling{
     var items:Bindable<[BaseEntity]>{ get }
     func deleteHistory(_ item:Int)
     func makeFavourite(_ item:Int)
+    func addItem(_ chatItem: ChatEntity)
 }
 
 class HistoryViewModel:BaseModel, HistoryViewModeling {
@@ -24,13 +25,8 @@ class HistoryViewModel:BaseModel, HistoryViewModeling {
     }
 
     func deleteHistory(_ item: Int) {
-        do{
-            try chatDataHelper.updateDeleteValue(isDelete: IsDeleted.delete, idToCompare: self.items.value[item].id!)
-            let item = self.items.value[item]
-            self.items.value = self.items.value.filter{$0.id != item.id}
-        } catch {
-
-        }
+        let item = self.items.value[item]
+        self.items.value = self.items.value.filter{$0.id != item.id}
     }
 
 
@@ -47,5 +43,9 @@ class HistoryViewModel:BaseModel, HistoryViewModeling {
                 
             }
         }
+    }
+    
+    func addItem(_ chatItem: ChatEntity){
+        self.items.value.append(chatItem)
     }
 }

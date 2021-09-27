@@ -79,6 +79,9 @@ class AlertReusableViewController: BaseViewController {
     }
     
     func deleteItemPressed () {
+        if(chatItemModel?.chatItem != nil){
+            alertViewModel.deleteChatItem((chatItemModel?.chatItem!)!)
+        }
         self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
     }
 
@@ -87,6 +90,17 @@ class AlertReusableViewController: BaseViewController {
     }
 
     func reverseTranslation () {
+        if(chatItemModel?.chatItem != nil){
+            let isTop = chatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
+            let nativeText = chatItemModel!.chatItem!.textTranslated
+            let targetText = chatItemModel!.chatItem!.textNative
+            let nativeLangName = chatItemModel!.chatItem!.textTranslatedLanguage!
+            let targetLangName = chatItemModel!.chatItem!.textNativeLanguage
+            
+            let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+            self.chatItemModel?.chatItem = chatEntity
+            alertViewModel.saveChatItem(chatItem: chatEntity)
+        }
         DispatchQueue.main.async {
             self.navigationController?.dismiss(animated: true, completion: nil)
             self.delegate?.transitionFromReverse(chatItemModel: self.chatItemModel)

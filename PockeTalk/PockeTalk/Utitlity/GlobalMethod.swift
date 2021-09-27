@@ -208,18 +208,32 @@ class GlobalMethod {
             }
         }
     }
-
+    
     // TTS alert
-    static func showTtsAlert (viewController: UIViewController?, tttValue: String, sttValue : String) {
+    static func showTtsAlert (viewController: UIViewController?, chatItem: ChatEntity, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?) {
+        if saveDataToDB == true{
+            do {
+                let row = try ChatDBModel.init().insert(item: chatItem)
+                chatItem.id = row
+            } catch _ {}
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
         controller.delegate = viewController as? SpeechControllerDismissDelegate
-        controller.nativeText = sttValue
-        controller.targetText = tttValue
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        let navController = UINavigationController.init(rootViewController: controller)
-        viewController?.navigationController?.present(navController, animated: true, completion: nil)
+        controller.chatItem = chatItem
+        controller.hideMenuButton = hideMenuButton
+        controller.hideBottomView = hideBottmSection
+        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
+        if(viewController?.navigationController != nil){
+            let navController = UINavigationController.init(rootViewController: controller)
+            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            viewController?.navigationController?.present(navController, animated: true, completion: nil)
+        }else{
+            controller.modalPresentationStyle = .fullScreen
+            viewController?.present(controller, animated: true, completion: nil)
+        }
     }
 
     /// Accessing Appdelegate instance

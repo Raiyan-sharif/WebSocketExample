@@ -94,8 +94,8 @@ class ChatDBModel: BaseDBModel {
         if let chatTableModel = item as? ChatEntity {
             let insertStatement = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
 
-           _ = try? insert(queryString: insertStatement)
-
+            guard let rowId = try? insert(queryString: insertStatement) else { return -1 }
+            return rowId
         }
         throw DataAccessError.Nil_In_Data
     }

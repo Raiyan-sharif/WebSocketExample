@@ -4,10 +4,10 @@
 //
 
 import UIKit
-protocol DismissReverseVieeDelegate {
-    func dismissReverse ()
+protocol TtsAlertControllerDelegate {
+    func itemAdded(_ chatItem: ChatEntity)
 }
-class TtsAlertController: BaseViewController {
+class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private let TAG:String = "TtsAlertController"
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
@@ -36,91 +36,53 @@ class TtsAlertController: BaseViewController {
     let reverseFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
-    var nativeLanguage : String = ""
-    var targetLanguage : String = ""
     var delegate : SpeechControllerDismissDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var talkButton : UIButton?
-    var nativeText: String = ""
-    var targetText: String = ""
-    var nativeLangCode : String = ""
-    var targetLangCode : String = ""
     let animationDuration : CGFloat = 0.6
     let animationDelay : CGFloat = 0
     let transform : CGFloat = 0.97
-    var isFromHistoryOrFavourite = false
-    var isReOrRetranslation = false
+    var chatItem: ChatEntity?
+    var hideMenuButton = false
+    var hideBottomView = false
+    var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
+    var longTapGesture : UILongPressGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.ttsVM = TtsAlertViewModel()
-
-        /// Initialize Language Manager
-        let languageManager = LanguageSelectionManager.shared
-
-        /// Populate UI with language data
-        if isFromHistoryOrFavourite == false{
-            self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: languageManager.targetLanguage)
-        }
-
         self.setUpUI()
         self.populateData()
-        let isArrowUp = languageManager.isArrowUp ?? true
-        let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
-        self.ttsVM.saveChatData(nativeText: nativeText, nativeLangCode: nativeLanguage, targetText: targetText, targetLangCode: targetLanguage, isTop: isTop)
-        PrintUtility.printLog(tag: TAG, text: nativeText)
-        PrintUtility.printLog(tag: TAG, text: targetText)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
     }
-
-    func getLanguageInfo (nativeCode : String, targetCode : String) {
-        let language = self.ttsVM.getLanguage(nativeLangCode: nativeCode, targetLangCode: targetCode)
-        if let nativeLangName = language.nativaLanguage?.name, let nativeCode = language.nativaLanguage?.code {
-            nativeLanguage = nativeLangName
-            nativeLangCode = nativeCode
-        }
-
-        if let targetLangName = language.targetLanguage?.name, let targetCode = language.targetLanguage?.code {
-            targetLanguage = targetLangName
-            targetLangCode = targetCode
-        }
-
-//        let stt = self.ttsVM.getTranslationData(nativeCode: nativeCode, targetCode: targetCode)
-//        if let nativeSTTText = stt.nativeText{
-//            nativeText = nativeSTTText
-//        }
-//        if let targetSTTText = stt.targetText{
-//            targetText = targetSTTText
-//        }
-    }
-
+    
     /// Initial UI set up
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.layer.cornerRadius = cornerRadius
         self.startAnimation()
 
-        self.toLanguageLabel.text = targetText
+        self.toLanguageLabel.text = chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
 
-        self.fromLanguageLabel.text = nativeText
+        self.fromLanguageLabel.text = chatItem?.textNative 
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromLanguageLabel.textColor = UIColor.gray
 
-        self.toTranslateLabel.text = targetLanguage
+        self.toTranslateLabel.text = chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItem?.textTranslatedLanguage : chatItem?.textNativeLanguage
         self.toTranslateLabel.textAlignment = .right
         self.toTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toTranslateLabel.textColor = UIColor.gray
 
-        self.fromTranslateLabel.text = nativeLanguage
+        self.fromTranslateLabel.text = chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItem?.textNativeLanguage : chatItem?.textTranslatedLanguage
         self.fromTranslateLabel.textAlignment = .left
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromTranslateLabel.textColor = UIColor._whiteColor()
@@ -132,15 +94,28 @@ class TtsAlertController: BaseViewController {
         talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
         
         setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+        longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        longTapGesture!.minimumPressDuration = 0.2
+        longTapGesture!.delegate = self
+        longTapGesture!.delaysTouchesBegan = true
         
-        if isFromHistoryOrFavourite == true{
+        if hideBottomView == true{
             self.bottomView.isHidden = true
         }
-        if isReOrRetranslation == true{
-            updateUIForRetranslation()
+        if hideMenuButton == true{
+            updateUI()
+        }else{
+            self.containerView.addGestureRecognizer(longTapGesture!)
         }
+        self.updateBackgroundImage(topSelected: chatItem?.chatIsTop ?? 0)
     }
-
+    
+    @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+        if (gestureRecognizer.state == UIGestureRecognizer.State.ended){
+            self.openContextMenu()
+        }
+        
+    }
     /// Start animation on background image view
     func startAnimation () {
         self.backgroundImageView.transform = CGAffineTransform.identity
@@ -154,57 +129,37 @@ class TtsAlertController: BaseViewController {
         self.backgroundImageView.layer.removeAllAnimations()
     }
 
-    /// Update UI for Reverse translation
-    func updateUIForReverse () {
+    func updateUI () {
         updateViewShowHideStatus()
         self.updateConstraints()
         self.startAnimation()
 
-        let reversedToLanguageText = self.toLanguageLabel.text
-        let reversedFromLanguageText = self.fromLanguageLabel.text
-        self.toLanguageLabel.text = reversedFromLanguageText
-        self.fromLanguageLabel.text = reversedToLanguageText
+        self.toLanguageLabel.text = chatItem?.textTranslated
+        self.fromLanguageLabel.text = chatItem?.textNative
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
-
-        if let lastSavedChatID = UserDefaultsProperty<Int64>(kLastSavedChatID).value {
-            chatEntity = self.ttsVM.findLastSavedChat(id: lastSavedChatID)
-            self.updateBackgroundImage(topSelected: chatEntity?.chatIsTop ?? 0, featureType: .reverse)
-        }
-
-        self.saveReversedTranslatedDataToDB(nativeText: reversedToLanguageText, targetText: reversedFromLanguageText)
+        
+        self.updateBackgroundImage(topSelected: chatItem?.chatIsTop ?? 0)
+        
+        self.containerView.removeGestureRecognizer(longTapGesture!)
     }
-
-    /// Save reversed translation data to chat table
-    func saveReversedTranslatedDataToDB (nativeText : String?, targetText : String?) {
-        self.ttsVM.saveChatData(nativeText: nativeText, nativeLangCode: targetLangCode, targetText: targetText, targetLangCode: nativeLangCode, isTop: chatEntity?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue)
-    }
-
-    /// Update UI for Retranslation
-    func updateUIForRetranslation () {
+    
+    func UpdateUIForHidingMenu(){
         self.updateViewShowHideStatus()
         self.updateConstraints()
         self.startAnimation()
-
-        if let lastSavedChatID = UserDefaultsProperty<Int64>(kLastSavedChatID).value {
-            chatEntity = self.ttsVM.findLastSavedChat(id: lastSavedChatID)
-            self.updateBackgroundImage(topSelected: chatEntity?.chatIsTop ?? 0, featureType: .retranslation)
-        }
-
-        /// set translated text on label
-        self.toLanguageLabel.text = targetText
-        self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
-
-        self.fromLanguageLabel.text = nativeText
-        self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
+    }
+    
+    func updateUIForFavourite (){
+        self.crossButton.isHidden = false
+        self.bottomView.isHidden = true
+        self.talkButton?.isHidden = true
+        self.menuButton.isHidden = true
+        self.backButton.isHidden = true
     }
 
-    func updateBackgroundImage (topSelected : Int64, featureType : AlertFeatureType) {
-        if featureType == .reverse {
-            self.backgroundImageView.image = topSelected == IsTop.top.rawValue ? UIImage(named: "back_texture_white") : UIImage(named: "slider_back_texture_blue")
-        } else {
-            self.backgroundImageView.image = topSelected == IsTop.top.rawValue ? UIImage(named: "slider_back_texture_blue") : UIImage(named: "back_texture_white")
-        }
+    func updateBackgroundImage (topSelected : Int64) {
+        self.backgroundImageView.image = topSelected == IsTop.top.rawValue ? UIImage(named: "slider_back_texture_blue") : UIImage(named: "back_texture_white")
     }
 
     func updateViewShowHideStatus () {
@@ -227,10 +182,8 @@ class TtsAlertController: BaseViewController {
     
     @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
         if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            setLanguageDirection(isArrowUp: true)
             UserDefaultsProperty<Bool>(kIsArrowUp).value = true
         }else{
-            setLanguageDirection(isArrowUp: false)
             UserDefaultsProperty<Bool>(kIsArrowUp).value = false
         }
         self.delegate?.dismiss()
@@ -240,23 +193,29 @@ class TtsAlertController: BaseViewController {
     func setLanguageDirection(isArrowUp: Bool){
         if (isArrowUp){
             self.changeTranslationButton.setImage(UIImage(named: "arrow_back_icon"), for: UIControl.State.normal)
-            self.backgroundImageView.image = UIImage(named: "back_texture_white")
         }else{
             self.changeTranslationButton.setImage(UIImage(named: "arrow_forward"), for: UIControl.State.normal)
-            self.backgroundImageView.image = UIImage(named: "slider_back_texture_blue")
-
         }
     }
 
     @IBAction func menuTapAction(_ sender: UIButton) {
         self.stopAnimation()
+        self.openContextMenu()
+    }
+    
+    func openContextMenu(){
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
         vc.delegate = self
+        vc.chatItemModel = HistoryChatItemModel.init(chatItem: self.chatItem, idxPath: nil)
         let navController = UINavigationController.init(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        if self.navigationController != nil{
+            self.navigationController?.present(navController, animated: true, completion: nil)
+        }else{
+            self.present(navController, animated: true, completion: nil)
+        }
     }
 
     // Populate item to show on context menu
@@ -271,12 +230,13 @@ class TtsAlertController: BaseViewController {
 
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
-        self.stopAnimation()
-        self.delegate?.dismiss()
-        self.dismiss(animated: true, completion: nil)
+        self.dismissPopUp()
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
+        self.dismissPopUp()
+    }
+    func dismissPopUp(){
         self.stopAnimation()
         self.delegate?.dismiss()
         self.dismiss(animated: true, completion: nil)
@@ -300,43 +260,60 @@ class TtsAlertController: BaseViewController {
 
 extension TtsAlertController : RetranslationDelegate {
     func showRetranslation(selectedLanguage: String) {
-        let languageManager = LanguageSelectionManager.shared
-
-        // Get language data for selected target language and populate UI
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            self.getLanguageInfo(nativeCode: selectedLanguage , targetCode: languageManager.targetLanguage)
-        } else {
-            self.getLanguageInfo(nativeCode: languageManager.nativeLanguage, targetCode: selectedLanguage)
-        }
-        self.updateUIForRetranslation()
+        let isTop = chatItem?.chatIsTop
+        let nativeText = chatItem!.textNative
+        let nativeLangName = chatItem!.textNativeLanguage!
+        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
+        
+        //TODO call websocket api for ttt
+        let targetText = chatItem!.textTranslated
+        
+        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+        self.chatItem = chatEntity
+        ttsVM.saveChatItem(chatItem: chatEntity)
+        self.updateUI()
+        ttsAlertControllerDelegate?.itemAdded(chatEntity)
     }
 }
+
 extension TtsAlertController : AlertReusableDelegate {
-    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {}
+    func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
+        self.dismissPopUp()
+    }
     
     func updateFavourite(chatItemModel: HistoryChatItemModel) {}
     
     func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.chatItem = chatItemModel?.chatItem
+        
+        if(self.navigationController != nil){
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            controller.isNative = 1
-        }else{
-            controller.isNative = 0
-        }
+        controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
-        self.navigationController?.pushViewController(controller, animated: true);
+        if(self.navigationController != nil){
+            self.navigationController?.pushViewController(controller, animated: true)
+        }else{
+            controller.modalPresentationStyle = .fullScreen
+            self.present(controller, animated: true, completion: nil)
+        }
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        self.updateUIForReverse()
+        self.chatItem = chatItemModel?.chatItem
+        self.updateUI()
+        ttsAlertControllerDelegate?.itemAdded(chatItemModel!.chatItem!)
     }
     
 }
