@@ -52,3 +52,4 @@
 "cancel" = "キャンセル";
 "clear" = "削除";
 "delete" = "消去";
+"Socket_fail_message" = "Socket Connected Failed";

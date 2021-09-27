@@ -16,7 +16,7 @@ enum NetworkError: Error {
     
 }
 
-enum Result<T,H> {
+enum Result2<T,H> {
     case success(T,H)
     case failure(H)
 }
@@ -25,7 +25,7 @@ enum HttpMethod: String {
     case get = "GET"
 }
 
-typealias HandlerResult = Result<Data,Error>
+typealias HandlerResult = Result2<Data,Error>
 
 struct Resource {
     let url: URL

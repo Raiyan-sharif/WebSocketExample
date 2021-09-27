@@ -14,11 +14,13 @@ func AQAudioQueueInputCallback(inUserData: UnsafeMutableRawPointer?,
                                inNumberPacketDescriptions: UInt32,
                                inPacketDescs: UnsafePointer<AudioStreamPacketDescription>?) {
     let audioService = unsafeBitCast(inUserData!, to:MAAudioService.self)
-    audioService.writePackets(inBuffer: inBuffer)
+//    audioService.writePackets(inBuffer: inBuffer)
     let datalength = inBuffer.pointee.mAudioDataByteSize
     if datalength > 0{
         let data = Data(bytes: inBuffer.pointee.mAudioData, count: Int(datalength))
         audioService.setAudioData(data: data)
+    }else{
+        audioService.recordHasStop()
     }
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, nil);
     PrintUtility.printLog(tag: "MAAudioService", text: "startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
@@ -41,7 +43,10 @@ func AQAudioQueueOutputCallback(inUserData: UnsafeMutableRawPointer?,
 
 class MAAudioService {
     private let TAG:String = "MAAudioService"
+    var timer:Timer?
     var getData:((_ data:Data)->())?
+    var recordDidStop:(()->())?
+    var getTimer:((_ value:Int)->())?
     var buffer: UnsafeMutableRawPointer
     var audioQueueObject: AudioQueueRef?
     let numPacketsToRead: UInt32 = 1024
@@ -91,6 +96,7 @@ class MAAudioService {
         prepareForRecord()
         let err: OSStatus = AudioQueueStart(audioQueueObject!, nil)
         PrintUtility.printLog(tag: TAG, text: "err: \(err)")
+        setTimer()
     }
 
 //    func stopRecord() {
@@ -99,7 +105,7 @@ class MAAudioService {
 //        AudioQueueDispose(audioQueueObject!, true)
 //        audioQueueObject = nil
 //    }
-    
+
     func stopRecord() {
            if let audioQueue = audioQueueObject{
                data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
@@ -214,6 +220,25 @@ class MAAudioService {
     func setAudioData(data: Data){
         self.getData?(data)
     }
-    
+
+    func setTimer(){
+        var runCount = 0
+       timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            print("Timer fired!")
+            runCount += 1
+
+            if runCount == 30 {
+                timer.invalidate()
+            }
+            self.getTimer?(runCount)
+        }
+    }
+    func timerInvalidate() {
+        timer?.invalidate()
+        timer = nil
+    }
+    func recordHasStop(){
+        self.recordDidStop?()
+    }
     
 }

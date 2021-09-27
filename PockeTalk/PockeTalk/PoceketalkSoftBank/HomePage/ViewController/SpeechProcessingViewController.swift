@@ -11,19 +11,20 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var speechProcessingAnimationImageView
-        : UIImageView!
+    @IBOutlet weak var speechProcessingAnimationImageView: UIImageView!
     @IBOutlet weak var speechProcessingAnimationView: UIView!
     @IBOutlet weak var speechProcessingRightImgView: UIImageView!
     @IBOutlet weak var speechProcessingLeftImgView: UIImageView!
     @IBOutlet weak var bottomTalkView: UIView!
+    var languageHasUpdated = false
+    var socketData = [Data]()
     ///Properties
     /// Showing Bengali for now
     let selectedLanguageIndex : Int = 8
 
     ///languageList for all languages
     var speechProcessingLanguageList = [SpeechProcessingLanguages]()
-    var speechProcessingVM : SpeechProcessingViewModel!
+    var speechProcessingVM : SpeechProcessingViewModeling!
     let cornerRadius : CGFloat = 15
     let animationDuration = 1.5
     let animationDelay = 0
@@ -44,22 +45,25 @@ class SpeechProcessingViewController: BaseViewController{
     var service : MAAudioService?
     //var socketManager = SocketManager.sharedInstance
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
-    var socketManager = SocketManager()
-    var ttt : String = ""
-    var stt : String = ""
+    var socketManager = SocketManager.sharedInstance
+    var isSSTavailable = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        socketManager.connect()
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
         nativeLangCode = languageManager.nativeLanguage
         self.setUpUI()
-        self.startTimer()
+        bindData()
+        if languageHasUpdated {
+            speechProcessingVM.updateLanguage()
+        }
         socketManager.socketManagerDelegate = self
-        service = MAAudioService(nil)
-        service?.startRecord()
-        service?.getData = {[weak self] data in
-            self?.socketManager.sendVoiceData(data: data)
+        self.setUpAudio()
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) { [weak self]  in
+            self?.showExample()
         }
     }
 
@@ -111,16 +115,60 @@ class SpeechProcessingViewController: BaseViewController{
         )
     }
 
-    func startTimer () {
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkTime), userInfo: nil, repeats: true)
-    }
 
-    @objc func checkTime () {
-        totalTime += 1
-        if totalTime > 2 {
-            self.showExample()
-            self.timer?.invalidate()
-            self.timer = nil
+    private func setUpAudio(){
+        service = MAAudioService(nil)
+        service?.getData = {[weak self] data in
+            guard let `self` = self else { return }
+
+            if self.languageHasUpdated{
+                self.socketData.append(data)
+            }else if !self.languageHasUpdated  && self.socketData.count == 0{
+                self.socketManager.sendVoiceData(data: data)
+            }
+        }
+        service?.getTimer = { [weak self] count in
+            guard let `self` = self else { return }
+            if count == 30{
+                self.service?.stopRecord()
+            }
+        }
+        service?.recordDidStop = { [weak self]  in
+            self?.socketManager.sendTextData(text: (self?.speechProcessingVM.getTextFrame())!)
+        }
+
+        service?.startRecord()
+
+    }
+    private func bindData(){
+        speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
+            guard let `self` = self else { return }
+            if isFinal{
+                self.service?.stopRecord()
+                self.service?.timerInvalidate()
+                self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
+            }
+        }
+        speechProcessingVM.getSST_Text.bindAndFire { [weak self] sstText  in
+            guard let `self` = self else { return }
+            if sstText.count > 0{
+                self.isSSTavailable = true
+                self.titleLabel.text = sstText
+                self.exampleLabel.isHidden = true
+                self.descriptionLabel.isHidden = true
+            }
+        }
+        speechProcessingVM.isUpdatedAPI.bindAndFire { [weak self] isUpdated in
+            guard let `self` = self else { return }
+            if isUpdated{
+                if self.socketData.count > 0{
+                    for data in self.socketData.reversed(){
+                        self.socketManager.sendVoiceData(data: data)
+                    }
+                    self.socketData.removeAll()
+                }
+                self.languageHasUpdated = false
+            }
         }
     }
 
@@ -140,35 +188,42 @@ class SpeechProcessingViewController: BaseViewController{
         self.descriptionLabel.lineBreakMode = .byWordWrapping
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        self.timer?.invalidate()
-        self.timer = nil
-    }
-
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         service?.stopRecord()
-        if let purpose = screenOpeningPurpose{
-            switch purpose {
-            case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
-                self.navigationController?.popViewController(animated: true)
-                break
-
-            case .HomeSpeechProcessing :
-                let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-                if (currentTS - self.homeMicTapTimeStamp) <=  1 {
-                    self.showTutorial()
-                } else {
-                    if(isFromPronunciationPractice){
-                        self.showPronunciationPracticeResult()
-                    }else{
-                        //self.showTtsAlert()
-                    }
+        service?.timerInvalidate()
+        var runCount = 0
+         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+             print("Timer fired!")
+             runCount += 1
+             if runCount == 6 {
+                 timer.invalidate()
+                if !self.speechProcessingVM.isFinal.value {
+                    self.navigationController?.popViewController(animated: true)
                 }
-                break
-            }
-        }
+             }
+         }
+        
+//        if let purpose = screenOpeningPurpose{
+//            switch purpose {
+//            case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
+//                self.navigationController?.popViewController(animated: true)
+//                break
+//
+//            case .HomeSpeechProcessing :
+//                let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+//                if (currentTS - self.homeMicTapTimeStamp) <=  1 {
+//                    self.showTutorial()
+//                } else {
+//                    if(isFromPronunciationPractice){
+//                        self.showPronunciationPracticeResult()
+//                    }else{
+//                        //self.showTtsAlert()
+//                    }
+//                }
+//                break
+//            }
+//        }
     }
 
     func showTutorial () {
@@ -212,30 +267,16 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 }
 
 extension SpeechProcessingViewController : SocketManagerDelegate{
+
     func getText(text: String) {
-        let response = convertStringToDictionary(text : text)
-                if let dicc = response as? [String:AnyObject]{
-                    if let str_ttt = dicc["ttt"] as? String{
-                        ttt = str_ttt
-                        PrintUtility.printLog(tag: TAG, text: ttt)
-                    }
-                    if let str_stt = dicc["stt"] as? String{
-                        self.titleLabel.text = str_stt
-                        self.exampleLabel.isHidden = true
-                        self.descriptionLabel.isHidden = true
-                        stt = str_stt
-                        PrintUtility.printLog(tag: TAG, text: stt)
-                    }
-                    if let isFinal = dicc["is_final"] as? Bool{
-                        if isFinal {
-                            service?.stopRecord()
-                            self.showTtsAlert(ttt: ttt,stt: stt)
-                        }
-                    }
-                }
-                PrintUtility.printLog(tag: TAG, text: text)
+        speechProcessingVM.setTextFromScoket(value: text)
     }
+
     func getData(data: Data) {
+
+    }
+    func faildSocketConnection(value: String) {
+        
     }
 }
 
@@ -244,16 +285,4 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSelectionVoice
     case CountrySelectionByVoice
     case LanguageSelectionCamera
-}
-
-func convertStringToDictionary(text: String) -> [String:AnyObject]? {
-    if let data = text.data(using: .utf8) {
-        do {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
-            return json
-        } catch {
-            PrintUtility.printLog(tag: "SpeechProcessingViewController", text: "Something went wrong")
-        }
-    }
-    return nil
 }

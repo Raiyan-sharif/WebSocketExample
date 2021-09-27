@@ -5,8 +5,15 @@
 
 import UIKit
 
-class HomeViewModel: BaseModel {
+protocol HomeViewModeling {
+    func getHistoryItemCount()-> Int
+    func getLanguageName() -> String?
+    func getFavouriteItemCount() -> Int
+}
 
+class HomeViewModel: HomeViewModeling {
+
+    var isUpdatedAPI:Bindable<Bool> = Bindable(false)
     //Get Language Name from language code
     func getLanguageName() -> String? {
         let deviceLan = NSLocale.preferredLanguages[0] as String
@@ -23,7 +30,7 @@ class HomeViewModel: BaseModel {
         
         return historyItemCount
     }
-    
+
     func getFavouriteItemCount() -> Int{
         var fvItemCount = 0
         do{

@@ -37,7 +37,7 @@ class CountryListViewController: BaseViewController {
             dataShowingLanguageCode = sysLangCode
             countryList.removeAll()
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
-            countryNameLabel.textColor = .white.color
+            countryNameLabel.textColor = UIColor.white.color
             setViewBorder()
             viewEnglishName.backgroundColor = .clear
             dataShowingAsEnlish = false
@@ -48,7 +48,7 @@ class CountryListViewController: BaseViewController {
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             dataShowingAsEnlish = true
             countryNameLabel.text = "Region"
-            countryNameLabel.textColor = .white.color
+            countryNameLabel.textColor = UIColor.white.color
             viewEnglishName.backgroundColor = ._skyBlueColor()
             viewEnglishName.layer.borderWidth = 0
         }

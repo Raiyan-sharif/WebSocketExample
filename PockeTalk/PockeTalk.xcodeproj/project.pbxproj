@@ -12,7 +12,6 @@
 		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
 		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
 		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
-		3BA4EF3026FA05A4003D8087 /* WebsocketApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */; };
 		4A40AC9426F89BC800019A5B /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC8F26F89BC700019A5B /* BaseEntity.swift */; };
 		4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9026F89BC800019A5B /* BaseViewController.swift */; };
 		4A40AC9626F89BC800019A5B /* BaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9126F89BC800019A5B /* BaseDelegate.swift */; };
@@ -110,6 +109,8 @@
 		8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8705289026F0ACF100555AF6 /* TextSizeViewController.swift */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
+		8732CAD726FC282200843BFE /* NetworkServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */; };
+		8732CADD26FC285400843BFE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732CADC26FC285400843BFE /* NetworkManager.swift */; };
 		873F8C4926F0760A00CD5F9B /* FontSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873F8C4726F0760A00CD5F9B /* FontSelectionCell.swift */; };
 		873F8C4A26F0760A00CD5F9B /* FontSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 873F8C4826F0760A00CD5F9B /* FontSelectionCell.xib */; };
 		8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8782DEDF26E08D10003A1681 /* Localizable.strings */; };
@@ -123,6 +124,7 @@
 		8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */; };
 		8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */; };
 		8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */; };
+		87AE1C7926FB100B00C23798 /* SocketDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AE1C7826FB100B00C23798 /* SocketDataModel.swift */; };
 		87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E0A26EB2F9A00BF613B /* HistoryViewModel.swift */; };
 		87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1126EB2FD800BF613B /* HistoryLayout.swift */; };
 		87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E1226EB2FD800BF613B /* HistoryCell.swift */; };
@@ -219,7 +221,6 @@
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
 		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
 		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
-		3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsocketApiModel.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A40AC8F26F89BC700019A5B /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		4A40AC9026F89BC800019A5B /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -321,6 +322,8 @@
 		8705289026F0ACF100555AF6 /* TextSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeViewController.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
+		8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceAPI.swift; sourceTree = "<group>"; };
+		8732CADC26FC285400843BFE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		873F8C4726F0760A00CD5F9B /* FontSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionCell.swift; sourceTree = "<group>"; };
 		873F8C4826F0760A00CD5F9B /* FontSelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FontSelectionCell.xib; sourceTree = "<group>"; };
 		8782DEDE26E08D10003A1681 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -335,6 +338,7 @@
 		8782DF0226E099BF003A1681 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		8782DF1926E0AFA6003A1681 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8782DF2026E0B6CE003A1681 /* SystemLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguages.swift; sourceTree = "<group>"; };
+		87AE1C7826FB100B00C23798 /* SocketDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketDataModel.swift; sourceTree = "<group>"; };
 		87B56E0A26EB2F9A00BF613B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		87B56E1126EB2FD800BF613B /* HistoryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLayout.swift; sourceTree = "<group>"; };
 		87B56E1226EB2FD800BF613B /* HistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
@@ -490,16 +494,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		3B9710CF26EF016000D68DEC /* WebsocketManager */ = {
-			isa = PBXGroup;
-			children = (
-				3BA4EF2F26FA05A4003D8087 /* WebsocketApiModel.swift */,
-				89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */,
-				89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */,
-			);
-			path = WebsocketManager;
-			sourceTree = "<group>";
-		};
 		4A3AA83426E24E37008902F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +562,7 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				8732CAD526FC27CE00843BFE /* Network */,
 				4AE97AEA26E8E30D007344FC /* Database */,
 				8782DEFD26E099A7003A1681 /* Reusable */,
 				8782DECF26E08BEE003A1681 /* Localization */,
@@ -601,7 +596,7 @@
 				89C0F7CB26F1CE08000CD5FC /* Reachability.swift */,
 				89C0F7CC26F1CE08000CD5FC /* UserDefaultsUtility.swift */,
 				89C0F7C826F1CDDD000CD5FC /* URL+Urls.swift */,
-				3B9710CF26EF016000D68DEC /* WebsocketManager */,
+				89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */,
 				963D8EA926F4A3E700E32162 /* FontUtility.swift */,
 			);
 			path = Utitlity;
@@ -1005,6 +1000,7 @@
 			children = (
 				69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */,
 				69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */,
+				87AE1C7826FB100B00C23798 /* SocketDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1056,6 +1052,16 @@
 				691FC66226E9D32A00259407 /* TableViewCell */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		8732CAD526FC27CE00843BFE /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */,
+				8732CADC26FC285400843BFE /* NetworkManager.swift */,
+				89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		8747F39626EFB2EF003D8292 /* ViewController */ = {
@@ -1795,6 +1801,7 @@
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
 				89C0F7E226F1EA8C000CD5FC /* CameraHistoryViewModel.swift in Sources */,
+				8732CAD726FC282200843BFE /* NetworkServiceAPI.swift in Sources */,
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				89C0F7E626F1EC0E000CD5FC /* CameraHistoryDataModel.swift in Sources */,
@@ -1886,7 +1893,6 @@
 				692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */,
 				8782DF0626E099BF003A1681 /* Reusable.swift in Sources */,
 				4AE97AD526E8E122007344FC /* LanguageSelectionDBModel.swift in Sources */,
-				3BA4EF3026FA05A4003D8087 /* WebsocketApiModel.swift in Sources */,
 				89C0F7D826F1CE08000CD5FC /* Bindable.swift in Sources */,
 				4AE97AD526E8E122007344FC /* LanguageSelectionDBModel.swift in Sources */,
 				69349AA526E5C18F008D9AF4 /* TutorialViewController.swift in Sources */,
@@ -1907,6 +1913,7 @@
 				5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */,
 				8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */,
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
+				8732CADD26FC285400843BFE /* NetworkManager.swift in Sources */,
 				89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */,
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
 				89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */,
@@ -1915,6 +1922,7 @@
 				8915C21226F9E0D50091BF8B /* FavouriteCell.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
 				8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */,
+				87AE1C7926FB100B00C23798 /* SocketDataModel.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
 				50675D5926EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift in Sources */,
 				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,

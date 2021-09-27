@@ -36,6 +36,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
             FontUtility.setInitialFontSize()
         }
+        generateAccessKey()
+    }
+    
+    func generateAccessKey(){
+        if UserDefaultsProperty<String>(authentication_key).value == nil{
+            NetworkManager.shareInstance.getAuthkey {  data  in
+                guard let data = data else { return }
+                do {
+                    let result = try JSONDecoder().decode(ResultModel.self, from: data)
+                    if result.resultCode == response_ok{
+                        UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                    }
+                }catch{
+                    
+                }
+            }
+        }
     }
 
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
@@ -53,4 +70,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUpinitialLaucnh()
     }
 }
+
 

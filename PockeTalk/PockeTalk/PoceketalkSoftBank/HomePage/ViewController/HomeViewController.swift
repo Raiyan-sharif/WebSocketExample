@@ -25,8 +25,10 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var buttonFav: UIButton!
     
+    var languageHasUpdated = false
+
     //Properties
-    var homeVM : HomeViewModel!
+    var homeVM : HomeViewModeling!
     var animationCounter : Int = 0
     var deviceLanguage : String = ""
     let toastVisibleTime : Double = 2.0
@@ -36,7 +38,6 @@ class HomeViewController: BaseViewController {
     var historyItemCount = 0
     var favouriteItemCount = 0;
     var swipeDown = UISwipeGestureRecognizer()
-    var websocketApiModel : WebsocketApiModel?
     ///Top button
     private lazy var topButton:UIButton = {
         let button = UIButton(type: .custom)
@@ -51,8 +52,7 @@ class HomeViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.homeVM = HomeViewModel()
         self.setUpUI()
-        websocketApiModel = WebsocketApiModel()
-        self.websocketApiModel?.getAuthenticationKey()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +169,8 @@ class HomeViewController: BaseViewController {
             self.directionImageView.image = UIImage(named: "down_arrow")
             self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
         }
+        LanguageSelectionManager.shared.isArrowUp = !LanguageSelectionManager.shared.isArrowUp!
+                languageHasUpdated = true
     }
 
     func animationChange (transitionToImageView : UIImageView, transitionFromImageView : UIImageView, animationOption : UIView.AnimationOptions, imageName : String ){
@@ -209,6 +211,7 @@ class HomeViewController: BaseViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
             controller.homeMicTapTimeStamp = currentTS
+            controller.languageHasUpdated = languageHasUpdated
             controller.screenOpeningPurpose = .HomeSpeechProcessing
             self.navigationController?.pushViewController(controller, animated: true);
         } else {
@@ -296,6 +299,10 @@ class HomeViewController: BaseViewController {
         print("\(HomeViewController.self) isNative \(isNative)")
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        controller.languageHasUpdated = { [weak self] in
+            //self?.homeVM.updateLanguage()
+            self?.languageHasUpdated = true
+        }
         controller.isNative = isNative
         self.navigationController?.pushViewController(controller, animated: true);
     }

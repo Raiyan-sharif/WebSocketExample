@@ -15,7 +15,7 @@ target 'PockeTalk' do
   
   pod 'SwiftRichString'
 
-  pod 'Alamofire', '~> 5.4'
+  pod 'Moya', '~> 15.0'
 
   pod 'MarqueeLabel', '~> 4.3.0'
 

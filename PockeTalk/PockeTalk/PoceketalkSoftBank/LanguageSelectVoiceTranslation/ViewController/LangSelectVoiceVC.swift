@@ -17,6 +17,7 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak var btnHistoryList: UIButton!
     @IBOutlet weak var btnLangList: UIButton!
     @IBOutlet weak var btnBack: UIButton!
+    var languageHasUpdated:(()->())?
 
     @IBOutlet weak var layoutBottomBtnContainer: UIView!
     var currentIndex: Int = 0
@@ -43,7 +44,6 @@ class LangSelectVoiceVC: BaseViewController {
 
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
-    var websocketApiModel : WebsocketApiModel?
     @IBOutlet weak var toolbarTitleLabel: UILabel!
 
     @IBAction func onLangSelectButton(_ sender: Any) {
@@ -220,9 +220,15 @@ class LangSelectVoiceVC: BaseViewController {
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if !fromRetranslation {
             if isNative == 1{
-                LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+                if LanguageSelectionManager.shared.nativeLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+                    self.languageHasUpdated?()
+                }
             }else{
-                LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+                if LanguageSelectionManager.shared.targetLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+                    self.languageHasUpdated?()
+                }
             }
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
@@ -238,8 +244,6 @@ class LangSelectVoiceVC: BaseViewController {
         if fromRetranslation == true {
             self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
         }
-        websocketApiModel = WebsocketApiModel()
-        self.websocketApiModel?.getAuthenticationKey()
     }
 
 }

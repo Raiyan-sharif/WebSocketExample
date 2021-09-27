@@ -52,3 +52,4 @@
 "cancel" = "Cancel";
 "clear" = "Clear";
 "delete" = "Delete";
+"Socket_fail_message" = "Socket Connected Failed";
