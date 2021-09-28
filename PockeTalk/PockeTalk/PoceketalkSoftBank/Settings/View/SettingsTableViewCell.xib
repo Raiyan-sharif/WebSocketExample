@@ -20,15 +20,15 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn6-58-iVf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greaterthan" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Ah-CI-prx">
-                                <rect key="frame" x="291" y="13" width="24" height="17.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navigation_right_icon" translatesAutoresizingMaskIntoConstraints="NO" id="6Ah-CI-prx">
+                                <rect key="frame" x="291" y="9" width="24" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="me6-iq-Aem"/>
-                                    <constraint firstAttribute="height" constant="24" id="rWQ-6Y-hyZ"/>
+                                    <constraint firstAttribute="height" constant="26" id="rWQ-6Y-hyZ"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8N-WE-GYJ">
-                                <rect key="frame" x="10" y="10" width="276" height="24"/>
+                                <rect key="frame" x="10" y="9" width="276" height="26"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -64,6 +64,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="greaterthan" catalog="system" width="128" height="111"/>
+        <image name="navigation_right_icon" width="100" height="100"/>
     </resources>
 </document>

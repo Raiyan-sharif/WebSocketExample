@@ -35,20 +35,20 @@
                                             <constraint firstAttribute="width" constant="24" id="amu-oM-3JD"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXA-Fj-Cob">
-                                        <rect key="frame" x="167.5" y="23" width="79.5" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXA-Fj-Cob">
+                                        <rect key="frame" x="180.5" y="23" width="53" height="24"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkV-Ka-ITq">
-                                        <rect key="frame" x="10" y="18" width="24" height="33.5"/>
+                                        <rect key="frame" x="10" y="22" width="24" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="0aP-sA-fGE"/>
-                                            <constraint firstAttribute="height" constant="40" id="OMP-bq-zgi"/>
+                                            <constraint firstAttribute="height" constant="26" id="OMP-bq-zgi"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" backgroundImage="lessthan" catalog="system"/>
+                                        <state key="normal" backgroundImage="navigation_left_icon"/>
                                         <connections>
                                             <action selector="actionBack:" destination="4GN-QB-Lqr" eventType="touchUpInside" id="80p-Eg-ZXb"/>
                                         </connections>
@@ -93,7 +93,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lessthan" catalog="system" width="128" height="111"/>
+        <image name="navigation_left_icon" width="100" height="100"/>
         <image name="selection_icon" width="45" height="45"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
