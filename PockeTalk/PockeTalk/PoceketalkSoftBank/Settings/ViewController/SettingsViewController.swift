@@ -8,6 +8,7 @@
 import UIKit
 
 class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, fontSizeChanged {
+    
     func fontSizeChanged(value: Bool) {
         labelTopBarTitle.font = UIFont.boldSystemFont(ofSize: FontUtility.getFontSize())
         tableView.reloadData()
@@ -25,7 +26,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
         self.tableView.reloadData()
-        labelTopBarTitle?.text = "Settings".localiz()
+        labelTopBarTitle?.text = "menu".localiz()
     }
 
     override var prefersStatusBarHidden: Bool{
@@ -67,9 +68,9 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         case SettingsItemType.languageChange.rawValue:
             PrintUtility.printLog(tag: "LanguageChage: ", text: "LanguageChage")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
-        case SettingsItemType.softBank.rawValue:
-            PrintUtility.printLog(tag: "softBank: ", text: "softBank")
-            GlobalMethod.showAlert("Todo: Goto softBank screen.")
+//        case SettingsItemType.softBank.rawValue:
+//            PrintUtility.printLog(tag: "softBank: ", text: "softBank")
+//            GlobalMethod.showAlert("Todo: Goto softBank screen.")
         case SettingsItemType.support.rawValue:
             PrintUtility.printLog(tag: "support: ", text: "support")
             GlobalMethod.openUrlInBrowser(url: SUPPORT_URL)

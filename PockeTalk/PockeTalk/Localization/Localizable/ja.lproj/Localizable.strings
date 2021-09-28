@@ -9,6 +9,8 @@
 "Language" = "言語";
 "Settings" = "設定";
 "Language Change" = "言語の変更";
+"menu" = "設定";
+"license_info" = "ライセンス情報";
 "SoftBank" = "SoftBank";
 "Support" = "サポート";
 "User Manual" = "ユーザーマニュアル";
@@ -19,7 +21,7 @@
 "Region" = "地域";
 "TtsToLanguage" = "Hola como estas";
 "TtsFromLanguage" = "Hello how are you?";
-"Language Settings" = "言語設定";
+"Language Settings" = "言語設定(Language Settings)";
 "Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";
 "history_add_fav" = "お気に入りに追加";
 "retranslation" = "他の言語に翻訳";
