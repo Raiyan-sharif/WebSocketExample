@@ -15,6 +15,8 @@ protocol SpeechProcessingViewModeling {
     func setTextFromScoket(value:String)
     var isUpdatedAPI:Bindable<Bool>{ get}
     func updateLanguage()
+    func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
+    func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
 }
 
 class SpeechProcessingViewModel: SpeechProcessingViewModeling {
@@ -30,6 +32,10 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
     var isSSTavailable: Bool = false
 
     var speechProcessingLanList = [SpeechProcessingLanguages]()
+
+    let animationDuration = 0.6
+
+    let animationDelay = 0
 
     init() {
         self.getData()
@@ -100,5 +106,34 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
                 }
             }
         }
+    }
+
+    func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat) {
+        /// Set frame for expanded postion. 'x' will be left shifted, 'y' will be in a bit higher positiion, 'width' will be adjusted with the changed x position, 'height' will be increased according to the changed 'y' posiition.
+        let expandedFrame = CGRect(x: leftImage.frame.origin.x - xPos, y: leftImage.frame.origin.y - yPos, width: leftImage.frame.size.width + xPos, height: leftImage.frame.size.height + yPos)
+
+        /// Set frame for shrinked postion. 'x' will be right shifted, 'y' will be in a lower positiion, 'width' will be adjusted with the changed x position, 'height' will be deccreased according to the changed 'y' posiition.
+        let shrinkedFrame = CGRect(x: leftImage.frame.origin.x + xPos , y: leftImage.frame.origin.y + yPos  , width: leftImage.frame.size.width - xPos  , height: leftImage.frame.size.height - yPos )
+
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
+            leftImage.frame = expandedFrame
+        })
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
+            leftImage.frame = shrinkedFrame
+        })
+    }
+
+    func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat) {
+        /// Set frame for expanded postion. 'x' will be right shifted, 'y' will be in a bit higher positiion, 'width' will be adjusted with the changed x position, 'height' will be increased according to the changed 'y' posiition.
+        let expandedFrame = CGRect(x: rightImage.frame.origin.x + xPos, y: rightImage.frame.origin.y - yPos, width: rightImage.frame.size.width + xPos, height: rightImage.frame.size.height + yPos)
+
+        /// Set frame for shrinked postion. 'x' will be left shifted, 'width' is adjusted as per the shifted 'x' position.
+        let shrinkedFrame = CGRect(x: rightImage.frame.origin.x - xPos, y: rightImage.frame.origin.y , width: rightImage.frame.size.width + xPos   , height: rightImage.frame.size.height + yPos )
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
+            rightImage.frame = shrinkedFrame
+        })
+        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
+            rightImage.frame = expandedFrame
+        })
     }
 }

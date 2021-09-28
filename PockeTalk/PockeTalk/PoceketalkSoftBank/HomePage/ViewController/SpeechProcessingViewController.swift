@@ -13,6 +13,8 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var speechProcessingAnimationImageView: UIImageView!
     @IBOutlet weak var speechProcessingAnimationView: UIView!
+    @IBOutlet weak var speecProcessingRightParentView: UIView!
+    @IBOutlet weak var speechProcessingLeftParentView: UIView!
     @IBOutlet weak var speechProcessingRightImgView: UIImageView!
     @IBOutlet weak var speechProcessingLeftImgView: UIImageView!
     @IBOutlet weak var bottomTalkView: UIView!
@@ -26,8 +28,6 @@ class SpeechProcessingViewController: BaseViewController{
     var speechProcessingLanguageList = [SpeechProcessingLanguages]()
     var speechProcessingVM : SpeechProcessingViewModeling!
     let cornerRadius : CGFloat = 15
-    let animationDuration = 1.5
-    let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
     let width : CGFloat = 100
@@ -48,6 +48,24 @@ class SpeechProcessingViewController: BaseViewController{
     var socketManager = SocketManager.sharedInstance
     var isSSTavailable = false
     var spinnerView : SpinnerView!
+    var ttt : String = ""
+    var stt : String = ""
+    let changedXPos : CGFloat = 15
+    let changedYPos : CGFloat = 20
+    let changedYPosForShrinkedFrame : CGFloat = 10
+
+    @IBOutlet weak var rightImgHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightImgWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
+    var expandedFrame : CGRect?
+    var shrinkedFrame : CGRect?
+    let leftImgWidth : CGFloat = 30
+    let leftImgHeight : CGFloat = 35
+    let rightImgWidth : CGFloat = 45
+    let rightImgHeight : CGFloat = 55
+
     override func viewDidLoad() {
         super.viewDidLoad()
         socketManager.connect()
@@ -73,6 +91,11 @@ class SpeechProcessingViewController: BaseViewController{
         self.navigationController?.navigationBar.isHidden = true
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.updateAnimation()
+    }
+
     /// Initial UI set up
     func setUpUI () {
         addSpinner()
@@ -86,8 +109,6 @@ class SpeechProcessingViewController: BaseViewController{
 
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-
-        self.updateAnimation()
     }
     
     func addSpinner(){
@@ -102,32 +123,22 @@ class SpeechProcessingViewController: BaseViewController{
     }
 
     func updateAnimation () {
-        self.speechProcessingLeftImgView.transform = CGAffineTransform(scaleX: transformation, y: transformation)
-        self.speechProcessingRightImgView.transform = CGAffineTransform(scaleX: transformation, y: transformation)
+        self.leftImgHeightConstraint.isActive = true
+        self.leftImgWidthConstraint.isActive = true
+        self.leftImgHeightConstraint.constant = leftImgHeight
+        self.leftImgWidthConstraint.constant = leftImgWidth
+        self.speechProcessingLeftParentView.layoutIfNeeded()
 
-        UIView.animate(withDuration: animationDuration,
-                       delay: TimeInterval(animationDelay),
-                       usingSpringWithDamping: leftImgDampiing,
-                       initialSpringVelocity: springVelocity,
-                       options: [.repeat, .autoreverse],
-                       animations: {
-                        self.speechProcessingLeftImgView.transform = CGAffineTransform.identity
-                       },
-                       completion: { Void in()  }
-        )
+        self.speechProcessingVM.animateLeftImage(leftImage: self.speechProcessingLeftImgView, yPos: changedYPos, xPos: changedXPos)
 
-        UIView.animate(withDuration: animationDuration,
-                       delay: TimeInterval(animationDelay),
-                       usingSpringWithDamping: rightImgDamping,
-                       initialSpringVelocity: springVelocity,
-                       options: [.repeat, .autoreverse],
-                       animations: {
-                        self.speechProcessingRightImgView.transform = CGAffineTransform.identity
-                       },
-                       completion: { Void in()  }
-        )
+        self.rightImgHeightConstraint.isActive = true
+        self.rightImgWidthConstraint.isActive = true
+        self.rightImgWidthConstraint.constant = rightImgWidth
+        self.rightImgHeightConstraint.constant = rightImgHeight
+        self.speecProcessingRightParentView.layoutIfNeeded()
+
+        self.speechProcessingVM.animateRightImage(rightImage: self.speechProcessingRightImgView, yPos: changedYPos, xPos: changedXPos)
     }
-
 
     private func setUpAudio(){
         service = MAAudioService(nil)
