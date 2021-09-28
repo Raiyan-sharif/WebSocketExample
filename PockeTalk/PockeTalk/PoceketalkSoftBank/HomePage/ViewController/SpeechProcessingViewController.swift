@@ -47,7 +47,7 @@ class SpeechProcessingViewController: BaseViewController{
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
     var socketManager = SocketManager.sharedInstance
     var isSSTavailable = false
-
+    var spinnerView : SpinnerView!
     override func viewDidLoad() {
         super.viewDidLoad()
         socketManager.connect()
@@ -65,6 +65,7 @@ class SpeechProcessingViewController: BaseViewController{
         DispatchQueue.main.asyncAfter(deadline: .now()+0.2) { [weak self]  in
             self?.showExample()
         }
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +75,7 @@ class SpeechProcessingViewController: BaseViewController{
 
     /// Initial UI set up
     func setUpUI () {
+        addSpinner()
         let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
         self.titleLabel.text = speechLanguage?.initText
         self.titleLabel.textAlignment = .center
@@ -86,6 +88,17 @@ class SpeechProcessingViewController: BaseViewController{
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
 
         self.updateAnimation()
+    }
+    
+    func addSpinner(){
+        spinnerView = SpinnerView();
+        self.view.addSubview(spinnerView)
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.isHidden = true
     }
 
     func updateAnimation () {
@@ -144,6 +157,7 @@ class SpeechProcessingViewController: BaseViewController{
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
             if isFinal{
+                self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
                 self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
@@ -190,6 +204,9 @@ class SpeechProcessingViewController: BaseViewController{
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
+        spinnerView.isHidden = false
+        speechProcessingLeftImgView.isHidden = true
+        speechProcessingRightImgView.isHidden = true
         service?.stopRecord()
         service?.timerInvalidate()
         var runCount = 0
@@ -203,6 +220,7 @@ class SpeechProcessingViewController: BaseViewController{
                 }
              }
          }
+        
         
 //        if let purpose = screenOpeningPurpose{
 //            switch purpose {
