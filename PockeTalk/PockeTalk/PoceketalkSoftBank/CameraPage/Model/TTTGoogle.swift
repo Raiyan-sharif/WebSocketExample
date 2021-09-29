@@ -27,7 +27,6 @@ public class TTTGoogle {
                 } else {
                     translatedText = ""
                 }
-                //translatedText = (tttJson?.data.translations[0].translatedText)!
                 PrintUtility.printLog(tag: "TTTGoogle() >> translate() >> ", text: "translatedText: \(translatedText)")
                 completion(translatedText)
             }
