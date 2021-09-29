@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Capture Image ProcessVC-->
+        <!--View Controller-->
         <scene sceneID="J6t-uo-Gqp">
             <objects>
-                <viewController storyboardIdentifier="CaptureImageProcessVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Bu5-KH-bpO" customClass="CaptureImageProcessVC" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Bu5-KH-bpO" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YnK-Nj-MKS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -668,6 +668,64 @@
             </objects>
             <point key="canvasLocation" x="1712" y="350"/>
         </scene>
+        <!--Capture Image ProcessVC-->
+        <scene sceneID="VkW-1R-1gb">
+            <objects>
+                <viewController storyboardIdentifier="CaptureImageProcessVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Xjp-fg-xsO" customClass="CaptureImageProcessVC" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F7O-rh-vj8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qgp-tK-5C2">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Fj-2c-Qhf" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vv" translatesAutoresizingMaskIntoConstraints="NO" id="K6y-Xx-fZA">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="K6y-Xx-fZA" firstAttribute="top" secondItem="6Fj-2c-Qhf" secondAttribute="top" id="XMI-hE-HJp"/>
+                                            <constraint firstAttribute="trailing" secondItem="K6y-Xx-fZA" secondAttribute="trailing" id="bks-8b-Tfd"/>
+                                            <constraint firstAttribute="bottom" secondItem="K6y-Xx-fZA" secondAttribute="bottom" id="ifd-Gf-rXL"/>
+                                            <constraint firstItem="K6y-Xx-fZA" firstAttribute="leading" secondItem="6Fj-2c-Qhf" secondAttribute="leading" id="ubE-4l-hV2"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="6Fj-2c-Qhf" firstAttribute="top" secondItem="Qgp-tK-5C2" secondAttribute="top" id="02z-Fx-Thh"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Fj-2c-Qhf" secondAttribute="trailing" id="6AQ-0f-WfM"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Fj-2c-Qhf" secondAttribute="bottom" id="6Ma-Nj-1Sw"/>
+                                    <constraint firstItem="6Fj-2c-Qhf" firstAttribute="height" secondItem="Qgp-tK-5C2" secondAttribute="height" id="N64-e3-cPS"/>
+                                    <constraint firstItem="6Fj-2c-Qhf" firstAttribute="width" secondItem="Qgp-tK-5C2" secondAttribute="width" id="oai-IM-BaN"/>
+                                    <constraint firstItem="6Fj-2c-Qhf" firstAttribute="leading" secondItem="Qgp-tK-5C2" secondAttribute="leading" id="z8v-aL-MMS"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="nf4-ne-uTN"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="D8F-83-KNh"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CGU-nU-k3h"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Qgp-tK-5C2" firstAttribute="trailing" secondItem="CGU-nU-k3h" secondAttribute="trailing" id="6OD-00-NIR"/>
+                            <constraint firstItem="Qgp-tK-5C2" firstAttribute="top" secondItem="CGU-nU-k3h" secondAttribute="top" id="V4Q-5S-odO"/>
+                            <constraint firstItem="Qgp-tK-5C2" firstAttribute="leading" secondItem="CGU-nU-k3h" secondAttribute="leading" id="tq7-S4-5Xc"/>
+                            <constraint firstItem="CGU-nU-k3h" firstAttribute="bottom" secondItem="Qgp-tK-5C2" secondAttribute="bottom" id="ycS-Cu-FHC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraImageView" destination="K6y-Xx-fZA" id="d4I-cH-u09"/>
+                        <outlet property="scrollView" destination="Qgp-tK-5C2" id="Umm-Yp-0lC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9rx-gJ-Qa1" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="896" y="-319"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="o2B-Pd-RWb">
@@ -686,6 +744,7 @@
         <image name="capture" width="60" height="60"/>
         <image name="flash" width="15" height="23"/>
         <image name="line_mode" width="45" height="45"/>
+        <image name="vv" width="334" height="860"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

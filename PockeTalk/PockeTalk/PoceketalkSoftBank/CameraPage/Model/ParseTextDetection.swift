@@ -133,7 +133,8 @@ class ParseTextDetection {
             
             textView.text = arrTranslatedText[index]
             textView.sizeToFit()
-            
+            textView.isUserInteractionEnabled = true
+            textView.tag = index
             var width = CGFloat()
             var height = CGFloat()
             
