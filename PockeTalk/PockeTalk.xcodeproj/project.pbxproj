@@ -146,6 +146,9 @@
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
+		89396B272704155B00D77760 /* TTTGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B262704155B00D77760 /* TTTGoogle.swift */; };
+		89396B292704156400D77760 /* TTTJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B282704156300D77760 /* TTTJSONModel.swift */; };
+		89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B2A2704176200D77760 /* CustomVerticalTextView.swift */; };
 		8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */; };
 		8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */; };
 		8940E31A26FC28EC0083E4FA /* IImageCroppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */; };
@@ -361,6 +364,9 @@
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
+		89396B262704155B00D77760 /* TTTGoogle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTGoogle.swift; sourceTree = "<group>"; };
+		89396B282704156300D77760 /* TTTJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTJSONModel.swift; sourceTree = "<group>"; };
+		89396B2A2704176200D77760 /* CustomVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVerticalTextView.swift; sourceTree = "<group>"; };
 		8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
 		8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOverlappingView.swift; sourceTree = "<group>"; };
 		8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IImageCroppingViewController.swift; sourceTree = "<group>"; };
@@ -1348,6 +1354,7 @@
 			children = (
 				89A7B65926E5CC2000087537 /* CustomShapeButton.swift */,
 				8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */,
+				89396B2A2704176200D77760 /* CustomVerticalTextView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1498,6 +1505,8 @@
 				89C0F7E526F1EC0E000CD5FC /* CameraHistoryDataModel.swift */,
 				89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */,
 				89CE6AC726FDC2D9000ECF17 /* Photo.swift */,
+				89396B262704155B00D77760 /* TTTGoogle.swift */,
+				89396B282704156300D77760 /* TTTJSONModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1769,6 +1778,7 @@
 				89C0F7D426F1CE08000CD5FC /* UserDefaultsUtility.swift in Sources */,
 				89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */,
 				89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */,
+				89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */,
 				963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */,
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
@@ -1854,6 +1864,7 @@
 				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
 				500AAFC326E9B35900A3E4D9 /* langListCollectionViewCell.swift in Sources */,
 				892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */,
+				89396B292704156400D77760 /* TTTJSONModel.swift in Sources */,
 				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
@@ -1870,6 +1881,7 @@
 				8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */,
 				89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */,
 				89495B2C26F0A92300CEA19D /* VisionResponseJSONModel.swift in Sources */,
+				89396B272704155B00D77760 /* TTTGoogle.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionEntity.swift in Sources */,
