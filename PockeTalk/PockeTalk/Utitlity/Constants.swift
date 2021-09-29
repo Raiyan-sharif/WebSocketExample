@@ -65,6 +65,7 @@ let countryConversationFileNamePrefix = "country_selection_list_"
 let systemLanguageCodeJP = "ja"
 let systemLanguageCodeEN = "en"
 let cameraLanguageDetectionCodeJsonFile = "language_detection_codes"
+let KIsAppLaunchedPreviously = "KisAppFirstTimeLanuced"
 
 // Storyboard identifier
 let KTutorialViewController = "TutorialViewController"

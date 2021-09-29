@@ -252,10 +252,10 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     func gotoLanguageSelectVoice () {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            controller.isNative = 1
+        if LanguageSelectionManager.shared.isArrowUp{
+            controller.isNative = LanguageName.bottomLang.rawValue
         }else{
-            controller.isNative = 0
+            controller.isNative = LanguageName.topLang.rawValue
         }
         controller.retranslationDelegate = self
         controller.fromRetranslation = true

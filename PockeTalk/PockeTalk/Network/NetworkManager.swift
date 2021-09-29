@@ -34,8 +34,8 @@ struct NetworkManager:Network {
         let params = [
             imei : "862793051345020", //Todo Have to remove IMEI number
             codec_param : codec,
-            srclang : LanguageSelectionManager.shared.nativeLanguage,
-            destlang : LanguageSelectionManager.shared.targetLanguage]
+            srclang : LanguageSelectionManager.shared.bottomLanguage,
+            destlang : LanguageSelectionManager.shared.topLanguage]
         provider.request(.authkey(params: params)){ result in
             self.requestCompletion(target: .authkey(params: params), result: result) { data in
                 completion(data)
@@ -45,14 +45,14 @@ struct NetworkManager:Network {
 
     func changeLanguageSettingApi(completion: @escaping (Data?) -> Void) {
         var srcLang = ""
-                var desLang = ""
-                if LanguageSelectionManager.shared.isArrowUp! {
-                    srcLang = LanguageSelectionManager.shared.nativeLanguage
-                    desLang = LanguageSelectionManager.shared.targetLanguage
-                }else{
-                    srcLang = LanguageSelectionManager.shared.targetLanguage
-                    desLang = LanguageSelectionManager.shared.nativeLanguage
-                }
+        var desLang = ""
+        if LanguageSelectionManager.shared.isArrowUp {
+            srcLang = LanguageSelectionManager.shared.bottomLanguage
+            desLang = LanguageSelectionManager.shared.topLanguage
+        }else{
+            srcLang = LanguageSelectionManager.shared.topLanguage
+            desLang = LanguageSelectionManager.shared.bottomLanguage
+        }
         let params:[String:String]  = [
             access_key:UserDefaultsProperty<String>(authentication_key).value ?? "" ,
             srclang : srcLang,

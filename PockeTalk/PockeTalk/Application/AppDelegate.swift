@@ -7,7 +7,7 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -22,10 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Initial launch setup
     func setUpinitialLaucnh() {
         /// Set initial language of the application
-        
         setInitialLangue()
-        LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
-        LanguageSelectionManager.shared.getLanguageSelectionData()
+        if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
+            UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value = true
+            setUpAppFirstLaunch()
+        }
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -38,7 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         generateAccessKey()
     }
-    
+
+    func setUpAppFirstLaunch(){
+        PrintUtility.printLog(tag: TAG, text: "App first launch called.")
+        LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
+        LanguageSelectionManager.shared.getLanguageSelectionData()
+        LanguageSelectionManager.shared.isArrowUp = true
+    }
+
     func generateAccessKey(){
         if UserDefaultsProperty<String>(authentication_key).value == nil{
             NetworkManager.shareInstance.getAuthkey {  data  in

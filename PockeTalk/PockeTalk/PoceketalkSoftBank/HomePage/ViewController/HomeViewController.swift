@@ -7,7 +7,7 @@
 import UIKit
 
 class HomeViewController: BaseViewController {
-
+    let TAG = "\(HomeViewController.self)"
     //Views
     @IBOutlet weak var bottomLangSysLangName: UIButton!
     @IBOutlet weak var languageChangedDirectionButton: UIButton!
@@ -60,7 +60,7 @@ class HomeViewController: BaseViewController {
         view.changeFontSize()
         setUpUI()
         self.navigationController?.navigationBar.isHidden = true
-        setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+        setLanguageDirection()
         historyItemCount =  homeVM.getHistoryItemCount()
         favouriteItemCount = homeVM.getFavouriteItemCount()
         updateHistoryViews()
@@ -91,7 +91,6 @@ class HomeViewController: BaseViewController {
         self.topSysLangName.textAlignment = .center
         self.topSysLangName.textColor = UIColor._whiteColor()
 
-        self.bottomLangSysLangName.setTitle(deviceLanguage, for: .normal)
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
@@ -152,16 +151,18 @@ class HomeViewController: BaseViewController {
 
     // This method is called
     @IBAction func switchLanguageDirectionAction(_ sender: UIButton) {
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            setLanguageDirection(isArrowUp: true)
-            UserDefaultsProperty<Bool>(kIsArrowUp).value = true
+        PrintUtility.printLog(tag: TAG, text: "switchLanguageDirectionAction isArrowUp \(LanguageSelectionManager.shared.isArrowUp)")
+        if LanguageSelectionManager.shared.isArrowUp{
+            LanguageSelectionManager.shared.isArrowUp = false
         }else{
-            setLanguageDirection(isArrowUp: false)
-            UserDefaultsProperty<Bool>(kIsArrowUp).value = false
+            LanguageSelectionManager.shared.isArrowUp = true
         }
+        setLanguageDirection()
     }
     
-    func setLanguageDirection(isArrowUp: Bool){
+    func setLanguageDirection(){
+        let isArrowUp = LanguageSelectionManager.shared.isArrowUp
+        PrintUtility.printLog(tag: TAG, text: "setLanguageDirection isArrowUp \(isArrowUp)")
         if (isArrowUp){
             self.directionImageView.image = UIImage(named: "up_arrow")
             self.animationChange(transitionToImageView: self.bottomFlipImageView, transitionFromImageView: self.topFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromTop, imageName: "gradient_blue_bottom_bg")
@@ -169,8 +170,8 @@ class HomeViewController: BaseViewController {
             self.directionImageView.image = UIImage(named: "down_arrow")
             self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
         }
-        LanguageSelectionManager.shared.isArrowUp = !LanguageSelectionManager.shared.isArrowUp!
-                languageHasUpdated = true
+        //LanguageSelectionManager.shared.isArrowUp = !LanguageSelectionManager.shared.isArrowUp!
+        languageHasUpdated = true
     }
 
     func animationChange (transitionToImageView : UIImageView, transitionFromImageView : UIImageView, animationOption : UIView.AnimationOptions, imageName : String ){
@@ -195,13 +196,13 @@ class HomeViewController: BaseViewController {
 
     // TODO navigate to language selection page
     @IBAction func topLanguageBtnAction(_ sender: UIButton) {
-        openLanguageSelectionScreen(isNative: 0)
+        openLanguageSelectionScreen(isNative: LanguageName.topLang.rawValue)
         //self.showToast(message: kTopLanguageButtonActionToastMessage, seconds: toastVisibleTime)
     }
 
     // TODO navigate to language selection page
     @IBAction func bottomLanguageBtnAction(_ sender: UIButton) {
-        openLanguageSelectionScreen(isNative: 1)
+        openLanguageSelectionScreen(isNative: LanguageName.bottomLang.rawValue)
     }
 
     // TODO microphone tap event
@@ -310,8 +311,8 @@ class HomeViewController: BaseViewController {
     fileprivate func updateLanguageNames() {
         print("\(HomeViewController.self) updateLanguageNames method called")
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.nativeLanguage
-        let targetLangCode = languageManager.targetLanguage
+        let nativeLangCode = languageManager.bottomLanguage
+        let targetLangCode = languageManager.topLanguage
         
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
@@ -323,7 +324,7 @@ class HomeViewController: BaseViewController {
     }
 
     @objc func onVoiceLanguageChanged(notification: Notification) {
-        updateLanguageNames()
+        //updateLanguageNames()
     }
 
     // Down ward gesture

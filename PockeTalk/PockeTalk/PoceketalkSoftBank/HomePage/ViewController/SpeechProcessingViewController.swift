@@ -72,7 +72,7 @@ class SpeechProcessingViewController: BaseViewController{
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
-        nativeLangCode = languageManager.nativeLanguage
+        nativeLangCode = languageManager.bottomLanguage
         self.setUpUI()
         bindData()
         if languageHasUpdated {
@@ -270,8 +270,8 @@ class SpeechProcessingViewController: BaseViewController{
         let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
         var nativeText = ""
         var targetText = ""
-        let nativeLangCode = LanguageSelectionManager.shared.nativeLanguage
-        let targetLangCode = LanguageSelectionManager.shared.targetLanguage
+        let nativeLangCode = LanguageSelectionManager.shared.bottomLanguage
+        let targetLangCode = LanguageSelectionManager.shared.topLanguage
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         var nativeLangName = ""

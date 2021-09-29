@@ -51,7 +51,7 @@ class TutorialViewController: UIViewController {
         self.containerView.layer.cornerRadius = cornerRadius
 
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.nativeLanguage
+        let nativeLangCode = languageManager.bottomLanguage
         let tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: nativeLangCode)
 
         self.titleLabel.text = tutorialLanguage?.lineOne

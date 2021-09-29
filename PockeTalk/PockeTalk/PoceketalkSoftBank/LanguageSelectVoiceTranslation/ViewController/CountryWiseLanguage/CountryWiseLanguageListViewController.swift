@@ -24,10 +24,10 @@ class CountryWiseLanguageListViewController: BaseViewController {
     @IBAction func onOkButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
-        if isNative == 1{
-            LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+        if isNative == LanguageName.bottomLang.rawValue{
+            LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
         }else{
-            LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+            LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
         }
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
         LanguageSelectionManager.shared.insertIntoDb(entity: entity)
@@ -49,10 +49,10 @@ class CountryWiseLanguageListViewController: BaseViewController {
         super.viewDidLoad()
         //buttonOk.backgroundColor = .clear
         PrintUtility.printLog(tag: TAG, text: " isNative \(isNative)")
-        if isNative == 1{
-            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
+        if isNative == LanguageName.bottomLang.rawValue{
+            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
         }else{
-            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.targetLanguage
+            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
         }
         buttonOk.layer.cornerRadius = 15
         if dataShowingLanguageCode == systemLanguageCodeEN{

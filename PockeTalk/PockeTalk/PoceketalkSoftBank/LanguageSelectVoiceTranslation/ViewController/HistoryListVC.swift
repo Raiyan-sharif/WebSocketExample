@@ -16,10 +16,10 @@ class HistoryListVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isNative = UserDefaultsProperty<Int>(kIsNative).value!
-        if isNative == 1{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
+        if isNative == LanguageName.bottomLang.rawValue{
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
         }else{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.targetLanguage
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
         }
         historyListTableView.delegate = self
         historyListTableView.dataSource = self

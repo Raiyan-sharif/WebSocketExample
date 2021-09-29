@@ -8,13 +8,18 @@
 import UIKit
 import SwiftyXMLParser
 
+enum LanguageName: Int{
+    case topLang
+    case bottomLang
+}
+
 public class LanguageSelectionManager{
     public static let shared: LanguageSelectionManager = LanguageSelectionManager()
     let TAG = "\(LanguageSelectionManager.self)"
     var languageItems = [LanguageItem]()
     var mDefaultLanguageFile = "default_languages"
     //var systemLanguageCode = "en"
-    public var nativeLanguage: String {
+    public var bottomLanguage: String {
       get {
         guard let langCode = UserDefaults.standard.string(forKey: nativeLanguageCode) else {
           fatalError("Did you set the default language for the app?")
@@ -26,7 +31,7 @@ public class LanguageSelectionManager{
       }
     }
 
-    public var targetLanguage: String {
+    public var topLanguage: String {
       get {
         guard let langCode = UserDefaults.standard.string(forKey: translatedLanguageCode) else {
           fatalError("Did you set the default language for the app?")
@@ -39,7 +44,7 @@ public class LanguageSelectionManager{
     }
 
 
-    public var isArrowUp: Bool? {
+    public var isArrowUp: Bool {
       get {
         return UserDefaults.standard.bool(forKey: kIsArrowUp)
       }
@@ -101,8 +106,8 @@ public class LanguageSelectionManager{
                     PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(attributes.description)")
                     if systemLanguageCode == attributes["code"]{
                         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(String(describing: attributes["native"])) \(attributes["translate"])")
-                        LanguageSelectionManager.shared.nativeLanguage = attributes["native"]!
-                        LanguageSelectionManager.shared.targetLanguage = attributes["translate"]!
+                        LanguageSelectionManager.shared.bottomLanguage = attributes["native"]!
+                        LanguageSelectionManager.shared.topLanguage = attributes["translate"]!
                         insertDefaultDataToDb(attributes)
                         return
                     }

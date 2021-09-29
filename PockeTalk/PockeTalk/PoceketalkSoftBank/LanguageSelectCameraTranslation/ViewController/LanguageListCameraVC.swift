@@ -30,7 +30,7 @@ class LanguageListCameraVC: BaseViewController {
         }
         PrintUtility.printLog(tag: TAG , text: " isForFromLanguage \(listShowingForFromLanguage) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value))")
         
-        PrintUtility.printLog(tag: TAG , text: " LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
+        PrintUtility.printLog(tag: TAG , text: " LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.bottomLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.topLanguage)")
         langListTableView.delegate = self
         langListTableView.dataSource = self
         let nib = UINib(nibName: "LangListCell", bundle: nil)

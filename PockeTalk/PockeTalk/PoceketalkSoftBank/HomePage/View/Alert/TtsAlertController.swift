@@ -87,13 +87,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromTranslateLabel.textColor = UIColor._whiteColor()
         
-        if(LanguageSelectionManager.shared.isArrowUp ?? true){
+        if(LanguageSelectionManager.shared.isArrowUp){
             changeTranslationButton.image(for: UIControl.State.normal)
         }
         talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
         talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-        
-        setLanguageDirection(isArrowUp: UserDefaultsProperty<Bool>(kIsArrowUp).value ?? true)
+        setLanguageDirection()
         longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         longTapGesture!.minimumPressDuration = 0.2
         longTapGesture!.delegate = self
@@ -181,16 +180,17 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
-        if UserDefaultsProperty<Bool>(kIsArrowUp).value == false{
-            UserDefaultsProperty<Bool>(kIsArrowUp).value = true
+        if LanguageSelectionManager.shared.isArrowUp{
+            LanguageSelectionManager.shared.isArrowUp = false
         }else{
-            UserDefaultsProperty<Bool>(kIsArrowUp).value = false
+            LanguageSelectionManager.shared.isArrowUp = true
         }
         self.delegate?.dismiss()
         self.dismiss(animated: true, completion: nil)
     }
     
-    func setLanguageDirection(isArrowUp: Bool){
+    func setLanguageDirection(){
+        let isArrowUp = LanguageSelectionManager.shared.isArrowUp
         if (isArrowUp){
             self.changeTranslationButton.setImage(UIImage(named: "arrow_back_icon"), for: UIControl.State.normal)
         }else{

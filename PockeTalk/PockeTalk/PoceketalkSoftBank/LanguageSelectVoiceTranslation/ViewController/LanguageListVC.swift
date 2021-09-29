@@ -9,7 +9,7 @@ import UIKit
 import SwiftyXMLParser
 
 class LanguageListVC: BaseViewController {
-
+    let TAG = "\(LanguageListVC.self)"
     @IBOutlet weak var langListTableView: UITableView!
     var pageIndex: Int!
     var languageItems = [LanguageItem]()
@@ -21,14 +21,14 @@ class LanguageListVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isNative = UserDefaultsProperty<Int>(kIsNative).value!
-        if isNative == 1{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.nativeLanguage
+        if isNative == LanguageName.bottomLang.rawValue{
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
         }else{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.targetLanguage
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
         }
-        print("\(LanguageListVC.self) isnative \(isNative) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value))")
+        PrintUtility.printLog(tag: TAG, text:"isnative \(isNative) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value))")
 
-        print("\(LanguageListVC.self) LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.nativeLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.targetLanguage)")
+        PrintUtility.printLog(tag: TAG, text:" LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.bottomLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.topLanguage)")
         languageItems = LanguageSelectionManager.shared.languageItems
         langListTableView.delegate = self
         langListTableView.dataSource = self
@@ -39,7 +39,7 @@ class LanguageListVC: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
-        print("\(LanguageListVC.self) position \(selectedItemPosition)")
+        PrintUtility.printLog(tag: TAG, text:" position \(selectedItemPosition)")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
     }
@@ -74,11 +74,11 @@ extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
         
         let languageItem = languageItems[indexPath.row]
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
-        print("\(LanguageListVC.self) value \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
+        PrintUtility.printLog(tag: TAG, text:" value \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
         if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
             cell.imageLangItemSelector.isHidden = false
             cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
-            print("\(LanguageListVC.self) matched lang \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
+            PrintUtility.printLog(tag: TAG, text:" matched lang \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
         }else{
             cell.imageLangItemSelector.isHidden = true
             cell.langListCellContainer.backgroundColor = .black

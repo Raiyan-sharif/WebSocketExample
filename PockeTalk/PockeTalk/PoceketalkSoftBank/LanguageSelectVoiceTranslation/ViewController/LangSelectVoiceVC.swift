@@ -219,14 +219,14 @@ class LangSelectVoiceVC: BaseViewController {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if !fromRetranslation {
-            if isNative == 1{
-                if LanguageSelectionManager.shared.nativeLanguage != selectedLanguageCode{
-                    LanguageSelectionManager.shared.nativeLanguage = selectedLanguageCode
+            if isNative == LanguageName.bottomLang.rawValue{
+                if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
                     self.languageHasUpdated?()
                 }
             }else{
-                if LanguageSelectionManager.shared.targetLanguage != selectedLanguageCode{
-                    LanguageSelectionManager.shared.targetLanguage = selectedLanguageCode
+                if LanguageSelectionManager.shared.topLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
                     self.languageHasUpdated?()
                 }
             }
