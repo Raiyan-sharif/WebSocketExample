@@ -341,19 +341,16 @@ extension HomeViewController: HistoryViewControllerDelegates{
     func historyDissmissed() {
         favouriteItemCount = self.homeVM.getFavouriteItemCount()
         updateFavouriteViews()
-    }
-    
-    func historyAllItemsDeleted() {
-        topButton.removeFromSuperview()
-        favouriteItemCount = self.homeVM.getFavouriteItemCount()
-        updateFavouriteViews()
-        self.view.removeGestureRecognizer(swipeDown)
+        historyItemCount = self.homeVM.getHistoryItemCount()
+        updateHistoryViews()
     }
 }
 
 extension HomeViewController : FavouriteViewControllerDelegates {
-    func favouriteAllItemsDeleted() {
-        favouriteItemCount = 0
+    func dismissFavouriteView() {
+        favouriteItemCount = self.homeVM.getFavouriteItemCount()
         updateFavouriteViews()
+        historyItemCount = self.homeVM.getHistoryItemCount()
+        updateHistoryViews()
     }
 }

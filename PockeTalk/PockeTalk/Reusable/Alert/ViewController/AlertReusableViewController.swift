@@ -79,9 +79,6 @@ class AlertReusableViewController: BaseViewController {
     }
     
     func deleteItemPressed () {
-        if(chatItemModel?.chatItem != nil){
-            alertViewModel.deleteChatItem((chatItemModel?.chatItem!)!)
-        }
         self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
     }
 
@@ -98,8 +95,10 @@ class AlertReusableViewController: BaseViewController {
             let targetLangName = chatItemModel!.chatItem!.textNativeLanguage
             
             let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+            
+            let row = alertViewModel.saveChatItem(chatItem: chatEntity)
+            chatEntity.id = row
             self.chatItemModel?.chatItem = chatEntity
-            alertViewModel.saveChatItem(chatItem: chatEntity)
         }
         DispatchQueue.main.async {
             self.navigationController?.dismiss(animated: true, completion: nil)

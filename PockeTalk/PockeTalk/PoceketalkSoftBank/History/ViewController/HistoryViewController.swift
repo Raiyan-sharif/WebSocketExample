@@ -8,7 +8,6 @@
 import UIKit
 
 protocol HistoryViewControllerDelegates {
-    func historyAllItemsDeleted()
     func historyDissmissed()
 }
 
@@ -97,8 +96,14 @@ class HistoryViewController: BaseViewController {
     
     ///Move to next screeen
     @objc func actionBack () {
-        self.dismiss(animated: true, completion: nil )
+        self.dismissHistory(animated: true, completion: nil )
     }
+    
+    func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
+        self.delegate?.historyDissmissed()
+        self.dismiss(animated: animated, completion: completion )
+    }
+    
     func showCollectionView(){
         isCollectionViewVisible = true
         collectionView.scrollToItem(at: IndexPath(item: historyViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
@@ -125,8 +130,7 @@ class HistoryViewController: BaseViewController {
         historyViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
                 DispatchQueue.main.async {
-                    self?.dismiss(animated: true, completion: nil)
-                    self?.delegate?.historyAllItemsDeleted()
+                    self?.dismissHistory(animated: true, completion: nil)
                 }
             }
             if items.count > 0{
@@ -189,7 +193,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
-            self.openTTTResult(indexpath.item, isReOrRetranslation: false)
+            self.openTTTResult(indexpath)
         }
         
         cell.longTappedItem = { [weak self] point in
@@ -203,9 +207,9 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
     
-    func openTTTResult(_ item: Int, isReOrRetranslation: Bool){
-        let chatItem = historyViewModel.items.value[item] as! ChatEntity
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItem, hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
+    func openTTTResult(_ idx: IndexPath){
+        let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -241,7 +245,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             
             CATransaction.setCompletionBlock {
                 self.view.alpha = 0.0
-                self.dismiss(animated: true, completion: nil )
+                self.dismissHistory(animated: true, completion: nil )
                 self.delegate?.historyDissmissed()
             }
             collectionView.layer.add(transitionAndScale, forKey: nil)
@@ -288,7 +292,7 @@ extension HistoryViewController : RetranslationDelegate{
         
         let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatEntity, hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: self)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: self)
         self.historyViewModel.addItem(chatEntity)
     
     }
@@ -328,14 +332,24 @@ extension HistoryViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItemModel!.chatItem!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
         self.historyViewModel.addItem(chatItemModel!.chatItem!)
     }
     
 }
 
 extension HistoryViewController: TtsAlertControllerDelegate{
-    func itemAdded(_ chatItem: ChatEntity) {
-        self.historyViewModel.addItem(chatItem)
+    func itemAdded(_ chatItemModel: HistoryChatItemModel) {
+        self.historyViewModel.addItem(chatItemModel.chatItem!)
+    }
+    
+    func itemDeleted(_ chatItemModel: HistoryChatItemModel) {
+        self.historyViewModel.removeItem(chatItemModel.idxPath!.item)
+        self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
+    }
+    
+    func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {
+        self.historyViewModel.replaceItem(chatItemModel.chatItem!, chatItemModel.idxPath!.row)
+        self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
     }
 }

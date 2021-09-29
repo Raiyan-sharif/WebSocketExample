@@ -161,7 +161,7 @@ class ChatDBModel: BaseDBModel {
 
         if isFavorite {
             query = table.filter(chatIsLiked == IsLiked.like.rawValue)
-                .order(chatIsFavorite.desc)
+                .order(chatIsFavorite.asc)
             //    .limit(lowLimit, offset: rowFaced)
         }
 

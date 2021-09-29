@@ -5,7 +5,9 @@
 
 import UIKit
 protocol TtsAlertControllerDelegate {
-    func itemAdded(_ chatItem: ChatEntity)
+    func itemAdded(_ chatItemModel: HistoryChatItemModel)
+    func itemDeleted(_ chatItemModel: HistoryChatItemModel)
+    func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
 }
 class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private let TAG:String = "TtsAlertController"
@@ -42,7 +44,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     let animationDuration : CGFloat = 0.6
     let animationDelay : CGFloat = 0
     let transform : CGFloat = 0.97
-    var chatItem: ChatEntity?
+    var chatItemModel: HistoryChatItemModel?
     var hideMenuButton = false
     var hideBottomView = false
     var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
@@ -61,28 +63,31 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.startAnimation()
+    }
+    
     /// Initial UI set up
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.layer.cornerRadius = cornerRadius
-        self.startAnimation()
 
-        self.toLanguageLabel.text = chatItem?.textTranslated
+        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
 
-        self.fromLanguageLabel.text = chatItem?.textNative 
+        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromLanguageLabel.textColor = UIColor.gray
 
-        self.toTranslateLabel.text = chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItem?.textTranslatedLanguage : chatItem?.textNativeLanguage
+        self.toTranslateLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslatedLanguage : chatItemModel?.chatItem?.textNativeLanguage
         self.toTranslateLabel.textAlignment = .right
         self.toTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toTranslateLabel.textColor = UIColor.gray
 
-        self.fromTranslateLabel.text = chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItem?.textNativeLanguage : chatItem?.textTranslatedLanguage
+        self.fromTranslateLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textNativeLanguage : chatItemModel?.chatItem?.textTranslatedLanguage
         self.fromTranslateLabel.textAlignment = .left
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromTranslateLabel.textColor = UIColor._whiteColor()
@@ -106,7 +111,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         }else{
             self.containerView.addGestureRecognizer(longTapGesture!)
         }
-        self.updateBackgroundImage(topSelected: chatItem?.chatIsTop ?? 0)
+        self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
     }
     
     @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
@@ -133,12 +138,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.updateConstraints()
         self.startAnimation()
 
-        self.toLanguageLabel.text = chatItem?.textTranslated
-        self.fromLanguageLabel.text = chatItem?.textNative
+        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
+        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
         
-        self.updateBackgroundImage(topSelected: chatItem?.chatIsTop ?? 0)
+        self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         
         self.containerView.removeGestureRecognizer(longTapGesture!)
     }
@@ -207,7 +212,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         let vc = AlertReusableViewController.init()
         vc.items = self.itemsToShowOnContextMenu
         vc.delegate = self
-        vc.chatItemModel = HistoryChatItemModel.init(chatItem: self.chatItem, idxPath: nil)
+        vc.chatItemModel = self.chatItemModel
         let navController = UINavigationController.init(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -223,6 +228,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "", menuType: .delete))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
@@ -260,28 +266,32 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
 
 extension TtsAlertController : RetranslationDelegate {
     func showRetranslation(selectedLanguage: String) {
-        let isTop = chatItem?.chatIsTop
-        let nativeText = chatItem!.textNative
-        let nativeLangName = chatItem!.textNativeLanguage!
+        let isTop = chatItemModel?.chatItem?.chatIsTop
+        let nativeText = chatItemModel?.chatItem!.textNative
+        let nativeLangName = chatItemModel?.chatItem!.textNativeLanguage!
         let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
         
         //TODO call websocket api for ttt
-        let targetText = chatItem!.textTranslated
+        let targetText = chatItemModel?.chatItem!.textTranslated
         
-        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
-        self.chatItem = chatEntity
+        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+        self.chatItemModel?.chatItem = chatEntity
         ttsVM.saveChatItem(chatItem: chatEntity)
         self.updateUI()
-        ttsAlertControllerDelegate?.itemAdded(chatEntity)
+        ttsAlertControllerDelegate?.itemAdded(HistoryChatItemModel(chatItem: chatEntity, idxPath: nil))
     }
 }
 
 extension TtsAlertController : AlertReusableDelegate {
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
+        ttsVM.deleteChatItemFromHistory(chatItem: chatItemModel!.chatItem!)
+        ttsAlertControllerDelegate?.itemDeleted(chatItemModel!)
         self.dismissPopUp()
     }
     
-    func updateFavourite(chatItemModel: HistoryChatItemModel) {}
+    func updateFavourite(chatItemModel: HistoryChatItemModel) {
+        ttsAlertControllerDelegate?.updatedFavourite(chatItemModel)
+    }
     
     func pronunciationPracticeTap(chatItemModel: HistoryChatItemModel?) {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
@@ -311,9 +321,9 @@ extension TtsAlertController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        self.chatItem = chatItemModel?.chatItem
+        self.chatItemModel?.chatItem = chatItemModel?.chatItem
         self.updateUI()
-        ttsAlertControllerDelegate?.itemAdded(chatItemModel!.chatItem!)
+        ttsAlertControllerDelegate?.itemAdded(chatItemModel!)
     }
     
 }

@@ -1,7 +1,7 @@
 import UIKit
 
 protocol FavouriteViewControllerDelegates {
-    func favouriteAllItemsDeleted()
+    func dismissFavouriteView()
 }
 
 class FavouriteViewController: BaseViewController {
@@ -108,15 +108,14 @@ class FavouriteViewController: BaseViewController {
     
     ///Move to next screeen
     @objc func actionBack () {
-        self.dismiss(animated: true, completion: nil )
+        self.dismissFavourite(animated: true, completion: nil )
     }
 
     func bindData(){
         favouriteViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
                 DispatchQueue.main.async {
-                    self?.dismiss(animated: true, completion: nil)
-                    self?.delegate?.favouriteAllItemsDeleted()
+                    self?.dismissFavourite(animated: true, completion: nil)
                 }
             }
             if items.count > 0{
@@ -127,18 +126,11 @@ class FavouriteViewController: BaseViewController {
         }
     }
     
-    func openTTTResult(_ item: Int, isReOrRetranslation: Bool){
-        let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-       // controller.nativeText = !isReOrRetranslation ? chatItem.textNative! : chatItem.textTranslated!
-        //controller.targetText = !isReOrRetranslation ? chatItem.textTranslated! : chatItem.textNative!
-       // controller.isReOrRetranslation = isReOrRetranslation
-        controller.modalPresentationStyle = .fullScreen
-        //controller.isFromHistoryOrFavourite = true
-        //controller.isFromFavourite = true
-        self.present(controller, animated: true, completion: nil)
+    func dismissFavourite(animated: Bool, completion: (() -> Void)? = nil) {
+        self.delegate?.dismissFavouriteView()
+        self.dismiss(animated: animated, completion: completion )
     }
+
 }
 
 extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -193,13 +185,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func openTTTResult(_ item: Int){
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
-        //controller.nativeText = chatItem.textNative!
-        //controller.targetText = chatItem.textTranslated!
-        controller.modalPresentationStyle = .fullScreen
-        //controller.isReOrRetranslation = true
-        self.present(controller, animated: true, completion: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: nil)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -239,7 +225,7 @@ extension FavouriteViewController : RetranslationDelegate{
         
         let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatEntity, hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: nil)
 
     }
 }
@@ -269,7 +255,7 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItemModel!.chatItem!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: nil)
     }
     
 }

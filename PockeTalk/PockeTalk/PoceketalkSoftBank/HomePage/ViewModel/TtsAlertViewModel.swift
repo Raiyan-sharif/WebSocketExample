@@ -22,4 +22,12 @@ class TtsAlertViewModel: BaseModel {
         } catch _ {}
     }
     
+    func deleteChatItemFromHistory(chatItem: ChatEntity){
+        if(chatItem.id == nil){
+            chatItem.id = UserDefaultsProperty<Int64>(kLastSavedChatID).value
+        }
+        do{
+            try ChatDBModel().updateDeleteValue(isDelete: IsDeleted.delete, idToCompare: chatItem.id!)
+        } catch {}
+    }
 }

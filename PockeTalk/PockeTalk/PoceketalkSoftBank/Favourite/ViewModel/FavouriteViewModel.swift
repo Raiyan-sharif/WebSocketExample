@@ -16,14 +16,13 @@ class FavouriteViewModel:BaseModel, FavouriteViewModeling {
     }
 
     func deleteFavourite(_ item: Int) {
-        if let chatEntity = self.items.value[item] as? ChatEntity{
-        do{
-            try chatDataHelper.updateLikeValue(isliked: IsLiked.noLike, idToCompare: chatEntity.id!)
-            let item = self.items.value[item]
-            self.items.value = self.items.value.filter{$0.id != item.id}
-        } catch {
-
+        let item = self.items.value[item]
+        if(item.id == nil){
+            item.id = UserDefaultsProperty<Int64>(kLastSavedChatID).value
         }
+        do{
+            try chatDataHelper.updateLikeValue(isliked: IsLiked.noLike, idToCompare: item.id!)
+            self.items.value = self.items.value.filter{$0.id != item.id}
+        } catch {}
     }
-}
 }

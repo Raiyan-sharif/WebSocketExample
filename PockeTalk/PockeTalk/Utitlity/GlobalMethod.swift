@@ -210,18 +210,20 @@ class GlobalMethod {
     }
     
     // TTS alert
-    static func showTtsAlert (viewController: UIViewController?, chatItem: ChatEntity, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?) {
+    static func showTtsAlert (viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?) {
+        let chatItem = chatItemModel.chatItem!
         if saveDataToDB == true{
             do {
                 let row = try ChatDBModel.init().insert(item: chatItem)
                 chatItem.id = row
+                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
             } catch _ {}
         }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
         controller.delegate = viewController as? SpeechControllerDismissDelegate
-        controller.chatItem = chatItem
+        controller.chatItemModel = chatItemModel
         controller.hideMenuButton = hideMenuButton
         controller.hideBottomView = hideBottmSection
         controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate

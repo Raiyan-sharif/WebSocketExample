@@ -291,7 +291,7 @@ class SpeechProcessingViewController: BaseViewController{
         
         let chatItem =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItem: chatItem, hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, ttsAlertControllerDelegate: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, ttsAlertControllerDelegate: nil)
     }
     
     func showPronunciationPracticeResult () {

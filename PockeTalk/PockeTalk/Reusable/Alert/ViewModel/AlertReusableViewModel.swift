@@ -18,19 +18,13 @@ class AlertReusableViewModel {
         } catch {}
     }
     
-    func deleteChatItem(_ chatItem: ChatEntity){
-        if(chatItem.id == nil){
-            chatItem.id = UserDefaultsProperty<Int64>(kLastSavedChatID).value
-        }
-        do{
-            try ChatDBModel().updateDeleteValue(isDelete: IsDeleted.delete, idToCompare: chatItem.id!)
-        } catch {}
-    }
-    
-    func saveChatItem(chatItem: ChatEntity){
+    func saveChatItem(chatItem: ChatEntity)-> Int64{
         do {
-            _ = try ChatDBModel.init().insert(item: chatItem)
+            let row = try ChatDBModel.init().insert(item: chatItem)
+            UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            return row
         } catch _ {}
+        return -1
     }
 
 }
