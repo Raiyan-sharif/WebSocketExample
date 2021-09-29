@@ -55,6 +55,7 @@ class MAAudioService {
     var maxPacketCount: UInt32
     let bytesPerPacket: UInt32 = 2
     let seconds: UInt32 = 10
+    var isRecordStop = true
     var audioFormat: AudioStreamBasicDescription {
         return AudioStreamBasicDescription(mSampleRate: 48000,
                                            mFormatID: kAudioFormatLinearPCM,
@@ -68,7 +69,7 @@ class MAAudioService {
     }
     var data: NSData? {
         didSet {
-            NotificationCenter.default.post(name: .audioServiceDidUpdateData, object: self)
+           // NotificationCenter.default.post(name: .audioServiceDidUpdateData, object: self)
         }
     }
 
@@ -85,18 +86,21 @@ class MAAudioService {
     }
 
     deinit {
-        //buffer.deallocate()
+        buffer.deallocate()
         PrintUtility.printLog(tag: TAG, text: "deinit")
     }
 
     func startRecord() {
         PrintUtility.printLog(tag: TAG, text: "startRecord")
         guard audioQueueObject == nil else  { return }
-        data = nil
+        //free(buffer)
+       // data = nil
+        isRecordStop = false
         prepareForRecord()
         let err: OSStatus = AudioQueueStart(audioQueueObject!, nil)
         PrintUtility.printLog(tag: TAG, text: "err: \(err)")
         setTimer()
+
     }
 
 //    func stopRecord() {
@@ -108,10 +112,12 @@ class MAAudioService {
 
     func stopRecord() {
            if let audioQueue = audioQueueObject{
-               data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
+               //data = NSData(bytesNoCopy: buffer, length: Int(maxPacketCount * bytesPerPacket))
+               isRecordStop = true
                AudioQueueStop(audioQueue, true)
                AudioQueueDispose(audioQueue, true)
                audioQueueObject = nil
+
            }
        }
 
@@ -238,7 +244,10 @@ class MAAudioService {
         timer = nil
     }
     func recordHasStop(){
-        self.recordDidStop?()
+        if isRecordStop{
+            isRecordStop = false
+            self.recordDidStop?()
+        }
     }
     
 }

@@ -52,6 +52,7 @@ class HomeViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.homeVM = HomeViewModel()
         self.setUpUI()
+        SocketManager.sharedInstance.connect()
 
     }
 

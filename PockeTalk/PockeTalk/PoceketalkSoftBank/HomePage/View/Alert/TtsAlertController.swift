@@ -250,18 +250,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
+       // self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
+        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+        self.dismiss(animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension TtsAlertController : RetranslationDelegate {

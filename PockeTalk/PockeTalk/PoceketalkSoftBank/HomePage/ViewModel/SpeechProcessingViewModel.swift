@@ -14,12 +14,15 @@ protocol SpeechProcessingViewModeling {
     func getSpeechLanguageInfoByCode(langCode: String) -> SpeechProcessingLanguages?
     func setTextFromScoket(value:String)
     var isUpdatedAPI:Bindable<Bool>{ get}
+    var isGettingActualData:Bool {set get}
     func updateLanguage()
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
 }
 
 class SpeechProcessingViewModel: SpeechProcessingViewModeling {
+
+    var isGettingActualData:Bool = false
 
     var isUpdatedAPI: Bindable<Bool> = Bindable(false)
 

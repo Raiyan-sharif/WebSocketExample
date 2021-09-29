@@ -18,6 +18,12 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var speechProcessingRightImgView: UIImageView!
     @IBOutlet weak var speechProcessingLeftImgView: UIImageView!
     @IBOutlet weak var bottomTalkView: UIView!
+    @IBOutlet weak var rightImgHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightImgWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
+
     var languageHasUpdated = false
     var socketData = [Data]()
     ///Properties
@@ -48,27 +54,20 @@ class SpeechProcessingViewController: BaseViewController{
     var socketManager = SocketManager.sharedInstance
     var isSSTavailable = false
     var spinnerView : SpinnerView!
-    var ttt : String = ""
-    var stt : String = ""
+
     let changedXPos : CGFloat = 15
     let changedYPos : CGFloat = 20
     let changedYPosForShrinkedFrame : CGFloat = 10
-
-    @IBOutlet weak var rightImgHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightImgWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftImgHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
     var expandedFrame : CGRect?
     var shrinkedFrame : CGRect?
     let leftImgWidth : CGFloat = 30
     let leftImgHeight : CGFloat = 35
     let rightImgWidth : CGFloat = 45
     let rightImgHeight : CGFloat = 55
+    static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        socketManager.connect()
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
@@ -83,7 +82,9 @@ class SpeechProcessingViewController: BaseViewController{
         DispatchQueue.main.asyncAfter(deadline: .now()+0.2) { [weak self]  in
             self?.showExample()
         }
-        
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didPressMicroBtn(_:)), name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -158,7 +159,15 @@ class SpeechProcessingViewController: BaseViewController{
             }
         }
         service?.recordDidStop = { [weak self]  in
-            self?.socketManager.sendTextData(text: (self?.speechProcessingVM.getTextFrame())!)
+            guard let `self` = self else { return }
+            self.timer?.invalidate()
+            if self.speechProcessingVM.isGettingActualData{
+                self.speechProcessingVM.isGettingActualData = false
+                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame())
+            }else{
+                self.spinnerView.isHidden = true
+                self.navigationController?.popViewController(animated: true)
+            }
         }
 
         service?.startRecord()
@@ -221,8 +230,7 @@ class SpeechProcessingViewController: BaseViewController{
         service?.stopRecord()
         service?.timerInvalidate()
         var runCount = 0
-         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-             print("Timer fired!")
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
              runCount += 1
              if runCount == 6 {
                  timer.invalidate()
@@ -231,8 +239,7 @@ class SpeechProcessingViewController: BaseViewController{
                 }
              }
          }
-        
-        
+
 //        if let purpose = screenOpeningPurpose{
 //            switch purpose {
 //            case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
@@ -253,6 +260,23 @@ class SpeechProcessingViewController: BaseViewController{
 //                break
 //            }
 //        }
+    }
+
+
+    @objc func didPressMicroBtn(_ notification: Notification) {
+        self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)?.initText
+        self.exampleLabel.isHidden = false
+        self.descriptionLabel.isHidden = false
+        speechProcessingLeftImgView.isHidden = false
+        speechProcessingRightImgView.isHidden = false
+
+        self.speechProcessingVM.isGettingActualData = false
+        speechProcessingVM.isFinal.value = false
+        service?.startRecord()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(SpeechProcessingViewController.didPressMicroBtn)
     }
 
     func showTutorial () {
@@ -324,6 +348,7 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 extension SpeechProcessingViewController : SocketManagerDelegate{
 
     func getText(text: String) {
+        speechProcessingVM.isGettingActualData = true
         speechProcessingVM.setTextFromScoket(value: text)
     }
 
