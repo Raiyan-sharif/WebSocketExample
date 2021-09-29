@@ -24,6 +24,8 @@
 		4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138226DDCF5D004A925D /* Assets.xcassets */; };
 		4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A66138426DDCF5D004A925D /* LaunchScreen.storyboard */; };
 		4A66139126DDCF5E004A925D /* PockeTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66139026DDCF5E004A925D /* PockeTalkTests.swift */; };
+		4A68C52A270440A0007DB329 /* ConfiguraitonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A68C529270440A0007DB329 /* ConfiguraitonFactory.swift */; };
+		4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A68C52B27044136007DB329 /* InitialDBConfiguration.swift */; };
 		4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */; };
 		4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */; };
 		4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E9526DF9B520004FC38 /* HomeViewController.swift */; };
@@ -242,6 +244,8 @@
 		4A66138C26DDCF5E004A925D /* PockeTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PockeTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A66139026DDCF5E004A925D /* PockeTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PockeTalkTests.swift; sourceTree = "<group>"; };
 		4A66139226DDCF5E004A925D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A68C529270440A0007DB329 /* ConfiguraitonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguraitonFactory.swift; sourceTree = "<group>"; };
+		4A68C52B27044136007DB329 /* InitialDBConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialDBConfiguration.swift; sourceTree = "<group>"; };
 		4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraTTSDialog.swift; sourceTree = "<group>"; };
 		4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraTTSDialog.xib; sourceTree = "<group>"; };
 		4AD58E9526DF9B520004FC38 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -741,6 +745,7 @@
 			children = (
 				4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */,
 				4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */,
+				4AF495D9270486E400FEAC61 /* MIgrations */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -798,6 +803,15 @@
 				4AF2608B26E07801009C616E /* ExtensionString.swift */,
 			);
 			path = DataExtensions;
+			sourceTree = "<group>";
+		};
+		4AF495D9270486E400FEAC61 /* MIgrations */ = {
+			isa = PBXGroup;
+			children = (
+				4A68C529270440A0007DB329 /* ConfiguraitonFactory.swift */,
+				4A68C52B27044136007DB329 /* InitialDBConfiguration.swift */,
+			);
+			path = MIgrations;
 			sourceTree = "<group>";
 		};
 		5007495626E7A0CB002FBBE2 /* Model */ = {
@@ -1787,6 +1801,7 @@
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
 				89495B3126F0A97F00CEA19D /* ITTServerViewModel.swift in Sources */,
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
+				4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
@@ -1844,6 +1859,7 @@
 				8915C20F26F9DFED0091BF8B /* FavouriteLayout.swift in Sources */,
 				87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */,
 				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
+				4A68C52A270440A0007DB329 /* ConfiguraitonFactory.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */,
 				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
