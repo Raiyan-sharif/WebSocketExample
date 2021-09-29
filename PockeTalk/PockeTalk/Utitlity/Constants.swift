@@ -41,6 +41,8 @@ let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
 let kIsShownLanguageSettings = "kIsShownLanguageSettings"
 let kIsAlreadyFavorite = "kIsAlreadyFavorite"
 let kLastSavedChatID = "lastSavedChatID"
+let kUserDefaultDatabaseOldVersion = "databaseOldVersion"
+
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"

@@ -18,8 +18,7 @@ class SQLiteDataStore {
         ).first!
 
         let dbPath = ("\(documentDirectory)/\(DataBaseConstant.DATABASE_NAME)")
-        print(dbPath)
-
+        PrintUtility.printLog(tag: String(describing: type(of: self)), text: "DataBase path: \(dbPath)")
         do {
             dataBaseConnection = try Connection(dbPath)
         } catch _ {
