@@ -7,6 +7,7 @@
 import AVFoundation
 import Photos
 import UIKit
+import MarqueeLabel
 
 enum Camera {
     case front, back
@@ -24,6 +25,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
     
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var toLangLabel: MarqueeLabel!
+    @IBOutlet weak var fromLangLabel: MarqueeLabel!
     var activeCamera: AVCaptureDevice?
     lazy var backCamera: AVCaptureDevice? = {
         return AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
@@ -43,6 +47,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var sessionSetupSucceeds = false
     private var captureProcessors: [Int64: PhotoCaptureProcessor] = [:]
     private var videoOrientation: AVCaptureVideoOrientation = .portrait
+
+    /// Circle drawing properties
+    let startAngle : CGFloat = 0
+    let endAngle : CGFloat = CGFloat(Double.pi * 2)
+    let radius : CGFloat = 25
+    let lineWidth : CGFloat = 2
+    let removeTime : Double = 0.5
+    let zoomLabelBorderWidth : CGFloat = 2.0
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
@@ -68,11 +80,11 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
         let targetLang = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         if(fromLang?.code == CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()[0].code){
-            btnFromLanguage.setTitle("\(fromLang!.sysLangName)", for: .normal)
+            fromLangLabel.text = "\(fromLang!.sysLangName)"
         }else{
-            btnFromLanguage.setTitle("\(fromLang!.sysLangName) (\(fromLang!.name))", for: .normal)
+            fromLangLabel.text = "\(fromLang!.sysLangName) (\(fromLang!.name))"
         }
-        btnTargetLanguage.setTitle("\(targetLang!.sysLangName) (\(targetLang!.name))", for: .normal)
+        toLangLabel.text = "\(targetLang!.sysLangName) (\(targetLang!.name))"
     }
     
     @objc func onCameraLanguageChanged(notification: Notification) {
@@ -93,7 +105,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUPViews()
         previewLayer.videoGravity = .resizeAspectFill
         previewView.frame = view.bounds
@@ -135,9 +146,21 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         return true
     }
     
+    @IBAction func menuTapAction(_ sender: UIButton) {
+        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
+        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
+            self.navigationController?.pushViewController(settinsViewController, animated: true)
+        }
+    }
     func setUPViews() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
+
+        /// Make zoom label round shaped
+        self.zoomLevel.layer.masksToBounds = true
+        self.zoomLevel.layer.cornerRadius = self.zoomLevel.frame.size.width/2
+        self.zoomLevel.layer.borderWidth = zoomLabelBorderWidth
+        self.zoomLevel.layer.borderColor = UIColor.white.cgColor
     }
     
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
@@ -217,7 +240,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc
     private func handlePinch(_ pinch: UIPinchGestureRecognizer) {
         guard sessionSetupSucceeds,  let device = activeCamera else { return }
-        
+        self.zoomLevel.isHidden = true
         switch pinch.state {
         case .began:
             initialScale = device.videoZoomFactor
@@ -232,6 +255,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             configCamera(device) { device in
                 device.videoZoomFactor = resolvedScale
                 DispatchQueue.main.async {
+                    self.zoomLevel.isHidden = false
                     self.zoomLevel.text = String(format:"%.01f", resolvedScale) + "x"
                 }
             }
@@ -302,7 +326,58 @@ extension CameraViewController {
         startConfirmController(uiImage: uiImage)
 
     }
-    
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        ///Get the preview screen size to determine the focuspoint
+        let screenSize = previewView.bounds.size
+        if let touchPoint = touches.first {
+            let x = touchPoint.location(in: previewView).y / screenSize.height
+            let y = 1.0 - touchPoint.location(in: previewView).x / screenSize.width
+            let focusPoint = CGPoint(x: x, y: y)
+
+            let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
+
+            if let device = backCamera {
+                do {
+                    try device.lockForConfiguration()
+                    device.focusPointOfInterest = focusPoint
+
+                    /// Pass the touch point of camera preview view as center point
+                    pointInCamera(centerPoint: touchPoint.location(in: previewView))
+                    device.focusMode = .autoFocus
+                    device.exposurePointOfInterest = focusPoint
+                    device.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
+                    device.unlockForConfiguration()
+                }
+                catch {
+                    /// ignore for now
+                }
+            }
+        }
+    }
+
+    func pointInCamera(centerPoint:CGPoint){
+        ///Get the path based on the center point
+        let circlePath = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: startAngle, endAngle:endAngle, clockwise: true)
+
+        ///Draw the layer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = circlePath.cgPath
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = lineWidth
+
+        view.layer.addSublayer(shapeLayer)
+        self.zoomLevel.isHidden = false
+
+        ///Remove the circle
+        DispatchQueue.main.asyncAfter(deadline: .now() + removeTime) {
+            self.zoomLevel.isHidden = true
+            shapeLayer.removeFromSuperlayer()
+        }
+
+    }
+
     private func startConfirmController(uiImage: UIImage) {
         let vc = ImageCroppingViewController(image: uiImage, croppingParameters: croppingParameters)
         vc.onCompletion = { [weak self] image, asset in
