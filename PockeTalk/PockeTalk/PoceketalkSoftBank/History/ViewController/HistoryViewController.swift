@@ -100,8 +100,12 @@ class HistoryViewController: BaseViewController {
     }
     
     func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
+        if self.presentingViewController == nil{
+            self.dismiss(animated: animated, completion: completion)
+        }else{
+            self.presentingViewController?.dismiss(animated: animated, completion: completion)
+        }
         self.delegate?.historyDissmissed()
-        self.dismiss(animated: animated, completion: completion )
     }
     
     func showCollectionView(){
@@ -345,7 +349,9 @@ extension HistoryViewController: TtsAlertControllerDelegate{
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.removeItem(chatItemModel.idxPath!.item)
-        self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
+        self.collectionView.performBatchUpdates{
+            self.collectionView.deleteItems(at: [chatItemModel.idxPath!])
+        }
     }
     
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {
