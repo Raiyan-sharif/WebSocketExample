@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func generateAccessKey(){
-        if UserDefaultsProperty<String>(authentication_key).value == nil{
+       // if UserDefaultsProperty<String>(authentication_key).value == nil{
             NetworkManager.shareInstance.getAuthkey {  data  in
                 guard let data = data else { return }
                 do {
@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                 }
             }
-        }
+       // }
     }
 
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
