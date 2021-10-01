@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -798,7 +798,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraImageView" destination="K6y-Xx-fZA" id="d4I-cH-u09"/>
-                        <outlet property="scrollView" destination="Qgp-tK-5C2" id="Umm-Yp-0lC"/>
+                        <outlet property="scrollView" destination="Qgp-tK-5C2" id="VWZ-aG-Bso"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rx-gJ-Qa1" sceneMemberID="firstResponder"/>
@@ -809,6 +809,12 @@
     <designables>
         <designable name="Am8-TN-Ufv"/>
         <designable name="epG-7y-AJz"/>
+        <designable name="o2B-Pd-RWb">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="tLv-Px-5aU">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
     </designables>
     <resources>
         <image name="Algeria" width="150" height="100"/>

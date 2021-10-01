@@ -242,13 +242,13 @@ class HomeViewController: BaseViewController {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         
         //TODO change CaptureImageProcessVC to CameraViewController to capture image. This change is made to run on simulator
-        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
-            self.navigationController?.pushViewController(cameraViewController, animated: true)
-        }
-        
-//        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+//        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
 //            self.navigationController?.pushViewController(cameraViewController, animated: true)
 //        }
+        
+        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+            self.navigationController?.pushViewController(cameraViewController, animated: true)
+        }
 
         
     }

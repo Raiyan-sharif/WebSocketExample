@@ -19,6 +19,8 @@ target 'PockeTalk' do
 
   pod 'MarqueeLabel', '~> 4.3.0'
 
+  pod 'Alamofire', '~> 5.0'
+
   # Pods for PockeTalk
 
   target 'PockeTalkTests' do
