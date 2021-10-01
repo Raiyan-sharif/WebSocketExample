@@ -151,4 +151,16 @@ public class LanguageSelectionManager{
         }
         return langList
     }
+
+    func findLanugageCodeAndSelect(_ text: String) {
+        PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
+        let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
+        let stringFromSpeech = text.replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range: nil)
+        let codeFromLanguageMap = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: systemLanguage, text: stringFromSpeech) as? LanguageMapEntity
+        PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates stringFromSpeech \(stringFromSpeech) codeFromLanguageMap = \(String(describing: codeFromLanguageMap?.textCodeTr))")
+        if let langCode = codeFromLanguageMap?.textCodeTr{
+            let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
+            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
+        }
+    }
 }

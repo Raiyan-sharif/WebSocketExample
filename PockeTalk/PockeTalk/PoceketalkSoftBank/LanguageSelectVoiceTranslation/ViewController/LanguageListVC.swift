@@ -21,6 +21,7 @@ class LanguageListVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isNative = UserDefaultsProperty<Int>(kIsNative).value!
+        PrintUtility.printLog(tag: TAG, text:"KSelectedLanguageVoice \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value)")
         if isNative == LanguageName.bottomLang.rawValue{
             UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
         }else{
@@ -53,7 +54,7 @@ class LanguageListVC: BaseViewController {
 
     func getSelectedItemPosition() -> Int{
         let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
-        for i in 0...languageItems.count{
+        for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
                 return i
