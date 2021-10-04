@@ -17,7 +17,7 @@ protocol Network {
 
 
 struct NetworkManager:Network {
-
+    let TAG = "\(NetworkManager.self)"
     static let APIKEY = "APIKEY"
 
     static let shareInstance = NetworkManager()
@@ -58,6 +58,7 @@ struct NetworkManager:Network {
             srclang : srcLang,
             destlang : desLang
         ]
+        PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang)")
         provider.request(.changeLanguage(params: params)){ result in
             self.requestCompletion(target: .changeLanguage(params: params), result: result) { data in
                 completion(data)

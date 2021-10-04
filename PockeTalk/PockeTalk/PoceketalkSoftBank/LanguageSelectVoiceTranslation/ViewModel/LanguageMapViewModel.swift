@@ -25,7 +25,17 @@ public class LanguageMapViewModel{
                 let xml =  try XML.parse(contents)
                 for item in xml["language", "item"] {
                     let attributes = item.attributes
-                    let item = LanguageMapEntity(id: 0, textCode: attributes["code"] ?? "", textCodeTr: attributes["code_tr"] ?? "", textValueOne: attributes["val1"] ?? "", textValueTwo: attributes["val2"] ?? "", textValueThree: attributes["val3"] ?? "", textValueFour: attributes["val4"] ?? "", textValueFive: attributes["val5"] ?? "", textValueSix: attributes["val6"] ?? "", textValueSeven: attributes["val7"] ?? "")
+                    let item = LanguageMapEntity(
+                        id: 0,
+                        textCode: attributes["code"] ?? "",
+                        textCodeTr: attributes["code_tr"] ?? "",
+                        textValueOne: attributes["val1"] ?? "",
+                        textValueTwo: attributes["val2"] ?? "",
+                        textValueThree: attributes["val3"] ?? "",
+                        textValueFour: attributes["val4"] ?? "",
+                        textValueFive: attributes["val5"] ?? "",
+                        textValueSix: attributes["val6"] ?? "",
+                        textValueSeven: attributes["val7"] ?? "")
                     _ = insertIntoDb(entity: item)
                     PrintUtility.printLog(tag: TAG,text: "language_map sysLangCode\(attributes["code"] ?? "")  targetCode\(attributes["code_tr"] ?? "") values\(attributes["val1"] ?? "")")
                 }

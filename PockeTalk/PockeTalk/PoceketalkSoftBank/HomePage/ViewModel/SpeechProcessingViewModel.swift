@@ -104,6 +104,7 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
                 do {
                     let result = try JSONDecoder().decode(ResultModel.self, from: data)
                     self?.isUpdatedAPI.value = result.resultCode == "OK"
+                    PrintUtility.printLog(tag: "SpeechViewController", text: "result.resultCode \(result.resultCode)")
                 }catch{
                     self?.isUpdatedAPI.value = false
                 }

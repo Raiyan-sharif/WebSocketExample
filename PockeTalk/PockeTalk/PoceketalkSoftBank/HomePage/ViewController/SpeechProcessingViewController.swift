@@ -5,6 +5,9 @@
 
 import UIKit
 
+protocol SpeechProcessingVCDelegates {
+    func proceedWithSpeechText(text: String)
+}
 class SpeechProcessingViewController: BaseViewController{
     private let TAG:String = "SpeechProcessingViewController"
     ///Views
@@ -23,7 +26,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var leftImgHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
-
+    var speechProcessingDelegate: SpeechProcessingVCDelegates?
     var languageHasUpdated = false
     var socketData = [Data]()
     ///Properties
@@ -47,7 +50,7 @@ class SpeechProcessingViewController: BaseViewController{
     let rightImgDamping : CGFloat = 0.05
     let springVelocity : CGFloat = 6.0
     var isFromPronunciationPractice: Bool = false
-    var nativeLangCode : String = ""
+    var speechLangCode : String = ""
     var service : MAAudioService?
     //var socketManager = SocketManager.sharedInstance
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
@@ -66,16 +69,34 @@ class SpeechProcessingViewController: BaseViewController{
     let rightImgHeight : CGFloat = 55
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
 
+    func initDelegate<T>(_ vc: T) {
+        self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
-        nativeLangCode = languageManager.bottomLanguage
         self.setUpUI()
         bindData()
         if languageHasUpdated {
             speechProcessingVM.updateLanguage()
+        }
+        PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
+        if let purpose = self.screenOpeningPurpose{
+            switch purpose {
+            case .HomeSpeechProcessing:
+                if languageManager.isArrowUp{
+                    speechLangCode = languageManager.bottomLanguage
+                }else{
+                    speechLangCode = languageManager.topLanguage
+                }
+                break
+            case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice:
+                speechLangCode = LanguageManager.shared.currentLanguage.rawValue
+                break
+            }
         }
         socketManager.socketManagerDelegate = self
         self.setUpAudio()
@@ -100,7 +121,8 @@ class SpeechProcessingViewController: BaseViewController{
     /// Initial UI set up
     func setUpUI () {
         addSpinner()
-        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
+        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
+        PrintUtility.printLog(tag: TAG, text: "Speech language code \(speechLangCode)")
         self.titleLabel.text = speechLanguage?.initText
         self.titleLabel.textAlignment = .center
         self.titleLabel.numberOfLines = 0
@@ -180,7 +202,25 @@ class SpeechProcessingViewController: BaseViewController{
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
-                self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
+                if let purpose = self.screenOpeningPurpose{
+                    switch purpose {
+                    case .CountrySelectionByVoice:
+                        self.speechProcessingDelegate?.proceedWithSpeechText(text: self.speechProcessingVM.getSST_Text.value)
+                        self.navigationController?.popViewController(animated: true)
+                        break
+                    case .LanguageSelectionVoice:
+                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        self.navigationController?.popViewController(animated: true)
+                        break
+                    case .LanguageSelectionCamera:
+                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        self.navigationController?.popViewController(animated: true)
+                        break
+                    case .HomeSpeechProcessing :
+                        self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
+                        break
+                    }
+                }
             }
         }
         speechProcessingVM.getSST_Text.bindAndFire { [weak self] sstText  in
@@ -207,7 +247,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
 
     func showExample () {
-        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)
+        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
         self.exampleLabel.text = speechLanguage?.exampleText
         self.exampleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
         self.exampleLabel.textAlignment = .center
@@ -240,31 +280,11 @@ class SpeechProcessingViewController: BaseViewController{
              }
          }
 
-//        if let purpose = screenOpeningPurpose{
-//            switch purpose {
-//            case .LanguageSelectionVoice, .LanguageSelectionCamera,  .CountrySelectionByVoice:
-//                self.navigationController?.popViewController(animated: true)
-//                break
-//
-//            case .HomeSpeechProcessing :
-//                let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-//                if (currentTS - self.homeMicTapTimeStamp) <=  1 {
-//                    self.showTutorial()
-//                } else {
-//                    if(isFromPronunciationPractice){
-//                        self.showPronunciationPracticeResult()
-//                    }else{
-//                        //self.showTtsAlert()
-//                    }
-//                }
-//                break
-//            }
-//        }
     }
 
 
     @objc func didPressMicroBtn(_ notification: Notification) {
-        self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: nativeLangCode)?.initText
+        self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
         self.exampleLabel.isHidden = false
         self.descriptionLabel.isHidden = false
         speechProcessingLeftImgView.isHidden = false
@@ -296,6 +316,7 @@ class SpeechProcessingViewController: BaseViewController{
         var targetText = ""
         let nativeLangCode = LanguageSelectionManager.shared.bottomLanguage
         let targetLangCode = LanguageSelectionManager.shared.topLanguage
+        PrintUtility.printLog(tag: TAG, text: "nativeLangCode \(nativeLangCode) targetLangCode \(targetLangCode)")
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         var nativeLangName = ""
