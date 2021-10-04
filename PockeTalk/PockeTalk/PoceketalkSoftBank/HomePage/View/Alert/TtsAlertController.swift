@@ -229,7 +229,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
         if(hideBottomView){
-            self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "", menuType: .delete))
+            self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "Delete_icon.png", menuType: .delete))
         }
         self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
