@@ -63,11 +63,23 @@ class CaptureImageProcessVC: BaseViewController {
         PrintUtility.printLog(tag: "Compressed Image heightInPoints: \(heightInPoints1)", text: ", widthInPoints: \(widthInPoints1)")
         
         //image = resizeImage(image: image)
-        image = resizeImage(image: image, targetSize: CGSize.init(width: 390, height: 844))
+        var resizeWidth: Int = Int(image.size.width)
+        var resizeHeight: Int = Int(image.size.height)
+        if(image.size.width > CGFloat(IMAGE_WIDTH)) {
+            resizeWidth = Int(IMAGE_WIDTH)
+        }
+        
+        if(image.size.height > CGFloat(IMAGE_HEIGHT)){
+            resizeHeight = Int(IMAGE_HEIGHT)
+        }
+        
+        image = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
+        
+        //image = resizeImage(image: image, targetSize: CGSize.init(width: 390, height: 844))
         let heightInPoints2 = image.size.height
         let widthInPoints2 = image.size.width
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
-        self.cameraImageView.image = image
+        //self.cameraImageView.image = image
         
         //        GoogleCloudOCR().detect(from: image) { ocrResult in
         //            guard let ocrResult = ocrResult else {
@@ -164,6 +176,9 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         let widthInPoints = image.size.width
         let widthInPixels = widthInPoints * image.scale
         
+        PrintUtility.printLog(tag: "Before ploting image Width: \(widthInPoints)", text: ", Height: \(heightInPoints)")
+        PrintUtility.printLog(tag: "Before ploting image widthInPixels: \(widthInPixels)", text: ", heightInPixels: \(heightInPixels)")
+        
         imageView.frame = CGRect(x: 0, y: 0, width: widthInPixels, height: heightInPixels) // To do : This will be actual cropped & processed image height width
         
         self.view.addSubview(imageView)
@@ -211,45 +226,6 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         UIGraphicsEndImageContext()
         
         return newImage!
-    }
-    
-    //image compression
-    func resizeImage(image: UIImage) -> UIImage {
-        var actualHeight: Float = Float(image.size.height)
-        var actualWidth: Float = Float(image.size.width)
-        let maxHeight: Float = 844.0
-        let maxWidth: Float = 390.0
-        var imgRatio: Float = actualWidth / actualHeight
-        let maxRatio: Float = maxWidth / maxHeight
-        let compressionQuality: Float = 0.5
-        //50 percent compression
-        
-        if actualHeight > maxHeight || actualWidth > maxWidth {
-            if imgRatio < maxRatio {
-                //adjust width according to maxHeight
-                imgRatio = maxHeight / actualHeight
-                actualWidth = imgRatio * actualWidth
-                actualHeight = maxHeight
-            }
-            else if imgRatio > maxRatio {
-                //adjust height according to maxWidth
-                imgRatio = maxWidth / actualWidth
-                actualHeight = imgRatio * actualHeight
-                actualWidth = maxWidth
-            }
-            else {
-                actualHeight = maxHeight
-                actualWidth = maxWidth
-            }
-        }
-        
-        let rect = CGRect(x: 0.0, y: 0.0, width: CGFloat(actualWidth), height: CGFloat(actualHeight))
-        UIGraphicsBeginImageContext(rect.size)
-        image.draw(in: rect)
-        let img = UIGraphicsGetImageFromCurrentImageContext()
-        let imageData = img!.jpegData(compressionQuality: CGFloat(compressionQuality))
-        UIGraphicsEndImageContext()
-        return UIImage(data: imageData!)!
     }
     
     override func viewDidAppear(_ animated: Bool) {
