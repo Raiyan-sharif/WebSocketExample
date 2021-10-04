@@ -19,13 +19,33 @@ class ImageCroppingViewController: BaseViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var cropButton: UIButton!
     @IBOutlet weak var centeredView: UIView!
-    
+    @IBOutlet weak var menuButton: UIButton!
+    var cropBtn: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setImage(UIImage(named: "cropButton"), for: .normal)
+        button.addTarget(self, action: #selector(cropButtonEventListener(_:)), for: .touchUpInside)
+        return button
+    }()
+
+    var cancelBtn: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setImage(UIImage(named: "demo_mode_reboot_cancel_button"), for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonEventListener(_:)), for: .touchUpInside)
+        return button
+    }()
     private let overlappingView = CustomOverlappingView()
     private var cropViewLeadingConstraint = NSLayoutConstraint()
     private var cropViewtopConstraint = NSLayoutConstraint()
     private var cropViewWidth = NSLayoutConstraint()
     private var cropViewHeight = NSLayoutConstraint()
     private var layoutForFirstTime = true
+
+    ///Floating button properties
+    let offset : CGFloat = 30
+    let width : CGFloat = 60
+    let height : CGFloat = 60
+    let leadingForRightBtn : CGFloat = 50
+    let trailingForLeftBtn : CGFloat = -50
     
     var cropFunctionality: CropUtils! {
         didSet {
@@ -101,7 +121,7 @@ class ImageCroppingViewController: BaseViewController {
         
         loadScrollView()
         loadCropOverlay()
-        
+
         if let image = image {
             configureWithImage(image)
             centerScrollViewContent()
@@ -133,6 +153,33 @@ class ImageCroppingViewController: BaseViewController {
             }
             
         }
+    }
+
+    /// Inital set up of crop and cancel button
+    func setUpButtons () {
+        /// get full view height
+        let screenBounds = UIScreen.main.bounds
+        let viewHeight = screenBounds.height
+
+        view.addSubview(cropBtn)
+        cropBtn.translatesAutoresizingMaskIntoConstraints = false
+        cropBtn.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor,constant: leadingForRightBtn)
+            .isActive = true
+        cropBtn.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(viewHeight - (viewHeight/2 + (imageView.frame.size.height/2 - offset )))).isActive = true
+        cropBtn.heightAnchor.constraint(equalToConstant: height).isActive = true
+        cropBtn.widthAnchor.constraint(equalToConstant: width).isActive = true
+        cropBtn.layer.cornerRadius = width/2
+        cropBtn.layer.masksToBounds = true
+
+        view.addSubview(cancelBtn)
+        cancelBtn.translatesAutoresizingMaskIntoConstraints = false
+        cancelBtn.trailingAnchor.constraint(equalTo: scrollView.centerXAnchor,constant: trailingForLeftBtn)
+            .isActive = true
+        cancelBtn.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(viewHeight - (viewHeight/2 + (imageView.frame.size.height/2 - offset)))).isActive = true
+        cancelBtn.heightAnchor.constraint(equalToConstant: height).isActive = true
+        cancelBtn.widthAnchor.constraint(equalToConstant: width).isActive = true
+        cancelBtn.layer.cornerRadius = width/2
+        cancelBtn.layer.masksToBounds = true
     }
     
     private func loadOverlappingViewConstraint() {
@@ -171,6 +218,7 @@ class ImageCroppingViewController: BaseViewController {
             self.imageView.frame.size.height = height
             
             self.centerScrollViewContent()
+            self.setUpButtons()
         }
         
         
@@ -237,13 +285,26 @@ class ImageCroppingViewController: BaseViewController {
         let screenSize  = scrollView.frame.size
         let offx = screenSize.width > realImgSize.width ? (screenSize.width - realImgSize.width) / 2 : 0
         let offy = screenSize.height > realImgSize.height ? (screenSize.height - realImgSize.height) / 2 : 0
-        scrollView.contentInset = UIEdgeInsets(top: offy,
+
+        /// Check safe area inset available or not
+        let window = UIApplication.shared.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let bottomPadding = window?.safeAreaInsets.bottom ?? 0
+
+        /// Set scrollview content inset based on safe area
+        scrollView.contentInset = UIEdgeInsets(top: offy-(topPadding ),
                                                left: offx,
-                                               bottom: offy,
+                                               bottom: offy-(bottomPadding ),
                                                right: offx)
     }
-    
-    
+
+    @IBAction func menuTapAction(_ sender: UIButton) {
+        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
+        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
+            self.navigationController?.pushViewController(settinsViewController, animated: true)
+        }
+    }
+
     @IBAction func cancelButtonEventListener(_ sender: Any) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {

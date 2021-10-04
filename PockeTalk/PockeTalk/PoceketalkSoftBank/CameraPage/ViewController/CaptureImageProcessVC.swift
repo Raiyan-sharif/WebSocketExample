@@ -9,6 +9,8 @@ import UIKit
 
 class CaptureImageProcessVC: BaseViewController {
     
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cameraImageView: UIImageView!
     
@@ -264,6 +266,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         
     }
     
+    @IBAction func menuAction(_ sender: UIButton) {
+        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
+        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
+            self.navigationController?.pushViewController(settinsViewController, animated: true)
+        }
+    }
+
     @objc func backButtonEventListener(_ button: UIButton) {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
@@ -273,7 +282,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func setupModeSwitchButton() {
         NSLayoutConstraint.activate([
             modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            modeSwitchButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            modeSwitchButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
             modeSwitchButton.heightAnchor.constraint(equalToConstant: 60),
             modeSwitchButton.widthAnchor.constraint(equalToConstant: 60)
         ])
@@ -284,7 +293,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func setupBackButton() {
         NSLayoutConstraint.activate([
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            backButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
             backButton.heightAnchor.constraint(equalToConstant: 60),
             backButton.widthAnchor.constraint(equalToConstant: 60)
         ])
