@@ -105,6 +105,22 @@ class AlertReusableViewController: BaseViewController {
             self.delegate?.transitionFromReverse(chatItemModel: self.chatItemModel)
         }
     }
+
+    /// Dynamically update table view height
+    func updateTableViewHeight () {
+        UIView.animate(withDuration: 0, animations: {
+            self.alertTableView.layoutIfNeeded()
+        }) { (complete) in
+            var heightOfTableView: CGFloat = 0.0
+            // Get visible cells and sum up their heights
+            let cells = self.alertTableView.visibleCells
+            for cell in cells {
+                heightOfTableView += cell.frame.height
+            }
+            // Edit heightOfTableViewConstraint's constant to update height of table view
+            self.tableViewHeightConstraint.constant = heightOfTableView
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -156,6 +172,11 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             title = items[indexPath.row].title
         }
         defaultCell.configureCell(title: title, imageName: imageName)
+
+        ///Update tableview height for visible cells
+        if indexPath.row == items.count-1{
+            self.updateTableViewHeight()
+        }
         return defaultCell
 
     }
