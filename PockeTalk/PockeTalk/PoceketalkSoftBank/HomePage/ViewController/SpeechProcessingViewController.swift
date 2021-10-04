@@ -6,7 +6,7 @@
 import UIKit
 
 protocol SpeechProcessingVCDelegates {
-    func proceedWithSpeechText(text: String)
+    func searchCountry(text: String)
 }
 class SpeechProcessingViewController: BaseViewController{
     private let TAG:String = "SpeechProcessingViewController"
@@ -51,6 +51,7 @@ class SpeechProcessingViewController: BaseViewController{
     let springVelocity : CGFloat = 6.0
     var isFromPronunciationPractice: Bool = false
     var speechLangCode : String = ""
+    var countrySearchspeechLangCode: String = ""
     var service : MAAudioService?
     //var socketManager = SocketManager.sharedInstance
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
@@ -94,7 +95,11 @@ class SpeechProcessingViewController: BaseViewController{
                 }
                 break
             case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice:
-                speechLangCode = LanguageManager.shared.currentLanguage.rawValue
+                if countrySearchspeechLangCode != "" {
+                    speechLangCode = countrySearchspeechLangCode
+                } else {
+                    speechLangCode = LanguageManager.shared.currentLanguage.rawValue
+                }
                 break
             }
         }
@@ -205,7 +210,7 @@ class SpeechProcessingViewController: BaseViewController{
                 if let purpose = self.screenOpeningPurpose{
                     switch purpose {
                     case .CountrySelectionByVoice:
-                        self.speechProcessingDelegate?.proceedWithSpeechText(text: self.speechProcessingVM.getSST_Text.value)
+                        self.speechProcessingDelegate?.searchCountry(text: self.speechProcessingVM.getSST_Text.value)
                         self.navigationController?.popViewController(animated: true)
                         break
                     case .LanguageSelectionVoice:

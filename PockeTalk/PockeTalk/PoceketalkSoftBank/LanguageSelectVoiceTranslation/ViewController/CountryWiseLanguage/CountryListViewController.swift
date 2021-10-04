@@ -100,6 +100,8 @@ class CountryListViewController: BaseViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
             controller.homeMicTapTimeStamp = currentTS
             controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.CountrySelectionByVoice
+            controller.countrySearchspeechLangCode = dataShowingLanguageCode
+            controller.initDelegate(self)
             self.navigationController?.pushViewController(controller, animated: true);
         } else {
             GlobalMethod.showNoInternetAlert()
@@ -180,5 +182,42 @@ extension CountryListViewController : UICollectionViewDelegateFlowLayout{
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension CountryListViewController: SpeechProcessingVCDelegates{
+
+    func searchCountry(text: String) {
+        PrintUtility.printLog(tag: TAG, text: "speech text \(text)")
+        let seconds = 0.2
+        // Without DispatchQueue CountryWiseLanguageListViewController is opening and closing immediately. After using DispatchQueue the problem is not happening
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            if let countryItem = self.findCountryName(text){
+                let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "CountryWiseLanguageListViewController")as! CountryWiseLanguageListViewController
+                controller.countryListItem = countryItem
+                controller.dataShowingLanguageCode = self.dataShowingLanguageCode
+                controller.isNative = self.isNative
+                self.navigationController?.pushViewController(controller, animated: true);
+            }
+        }
+    }
+
+    func findCountryName(_ text: String) -> CountryListItemElement?{
+        let stringFromSpeech = text.replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range: nil)
+        for item in countryList{
+            PrintUtility.printLog(tag: TAG, text: "countryname \(item.countryName.en) search for \(stringFromSpeech)")
+            var countryName = ""
+            switch dataShowingLanguageCode {
+                case systemLanguageCodeJP:
+                    countryName = item.countryName.ja
+                default:
+                    countryName = item.countryName.en
+            }
+            if countryName == stringFromSpeech{
+                return item
+            }
+        }
+        return nil
     }
 }
