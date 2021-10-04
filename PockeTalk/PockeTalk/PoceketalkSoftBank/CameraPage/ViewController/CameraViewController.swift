@@ -18,6 +18,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let TAG = CameraViewController.self
     var minimumSize: CGSize = CGSize(width: 60, height: 60)
     @IBOutlet weak var zoomLevel: UILabel!
+    @IBOutlet weak var cameraPreviewView: UIView!
     var camera = Camera.back
     lazy var session = AVCaptureSession()
     lazy var photoOutput = AVCapturePhotoOutput()
@@ -47,7 +48,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var sessionSetupSucceeds = false
     private var captureProcessors: [Int64: PhotoCaptureProcessor] = [:]
     private var videoOrientation: AVCaptureVideoOrientation = .portrait
-
+    
     /// Circle drawing properties
     let startAngle : CGFloat = 0
     let endAngle : CGFloat = CGFloat(Double.pi * 2)
@@ -106,9 +107,10 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUPViews()
-        previewLayer.videoGravity = .resizeAspectFill
-        previewView.frame = view.bounds
-        cropImageRect = previewView.frame
+        previewLayer.videoGravity = .resize
+        previewView = cameraPreviewView
+        previewView.frame = cameraPreviewView.bounds
+        cropImageRect = cameraPreviewView.frame
         previewView.layer.addSublayer(previewLayer)
         view.insertSubview(previewView, at: 0)
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -155,7 +157,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     func setUPViews() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
-
+        
         /// Make zoom label round shaped
         self.zoomLevel.layer.masksToBounds = true
         self.zoomLevel.layer.cornerRadius = self.zoomLevel.frame.size.width/2
@@ -247,7 +249,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             self.photoOutput.capturePhoto(with: settings, delegate: processor)
         }
     }
-                
+    
     @objc
     private func handlePinch(_ pinch: UIPinchGestureRecognizer) {
         guard sessionSetupSucceeds,  let device = activeCamera else { return }
@@ -329,15 +331,16 @@ extension CameraViewController {
                 
                 self.capturedImage = image
             }
-            layoutCameraResult(uiImage: image!)
+            //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
+            layoutCameraResult(uiImage: capturedImage)
         }
     }
     
     internal func layoutCameraResult(uiImage: UIImage) {
         startConfirmController(uiImage: uiImage)
-
+        
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         ///Get the preview screen size to determine the focuspoint
         let screenSize = previewView.bounds.size
@@ -345,14 +348,14 @@ extension CameraViewController {
             let x = touchPoint.location(in: previewView).y / screenSize.height
             let y = 1.0 - touchPoint.location(in: previewView).x / screenSize.width
             let focusPoint = CGPoint(x: x, y: y)
-
+            
             let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
-
+            
             if let device = backCamera {
                 do {
                     try device.lockForConfiguration()
                     device.focusPointOfInterest = focusPoint
-
+                    
                     /// Pass the touch point of camera preview view as center point
                     pointInCamera(centerPoint: touchPoint.location(in: previewView))
                     device.focusMode = .autoFocus
@@ -366,29 +369,29 @@ extension CameraViewController {
             }
         }
     }
-
+    
     func pointInCamera(centerPoint:CGPoint){
         ///Get the path based on the center point
         let circlePath = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: startAngle, endAngle:endAngle, clockwise: true)
-
+        
         ///Draw the layer
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.cgPath
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.lineWidth = lineWidth
-
+        
         view.layer.addSublayer(shapeLayer)
         self.zoomLevel.isHidden = false
-
+        
         ///Remove the circle
         DispatchQueue.main.asyncAfter(deadline: .now() + removeTime) {
             self.zoomLevel.isHidden = true
             shapeLayer.removeFromSuperlayer()
         }
-
+        
     }
-
+    
     private func startConfirmController(uiImage: UIImage) {
         let vc = ImageCroppingViewController(image: uiImage, croppingParameters: croppingParameters)
         vc.onCompletion = { [weak self] image, asset in
@@ -404,7 +407,7 @@ extension CameraViewController {
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     @IBAction func didTouchFlashButton(sender: UIButton) {
         if activeCamera!.hasTorch {
             // lock your device for configuration

@@ -127,6 +127,7 @@ class ImageCroppingViewController: BaseViewController {
             centerScrollViewContent()
         }
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,11 +137,6 @@ class ImageCroppingViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-    }
-    
-    public override func viewDidLayoutSubviews() {
-        
-        super.viewDidLayoutSubviews()
         
         if layoutForFirstTime {
             layoutForFirstTime = false
@@ -153,6 +149,13 @@ class ImageCroppingViewController: BaseViewController {
             }
             
         }
+
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
     }
 
     /// Inital set up of crop and cancel button
@@ -306,12 +309,7 @@ class ImageCroppingViewController: BaseViewController {
     }
 
     @IBAction func cancelButtonEventListener(_ sender: Any) {
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
-            vc.image = image!
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        
+        self.navigationController?.popViewController(animated: true)
     }
     @IBAction func cropButtonEventListener(_ sender: Any) {
         guard let image = imageView.image else {

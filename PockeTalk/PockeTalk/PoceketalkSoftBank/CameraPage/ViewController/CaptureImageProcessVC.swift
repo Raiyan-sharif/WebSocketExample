@@ -4,7 +4,6 @@
 //
 //
 
-
 import UIKit
 
 class CaptureImageProcessVC: BaseViewController {
@@ -47,6 +46,7 @@ class CaptureImageProcessVC: BaseViewController {
     
     var image = UIImage()
     //var image = UIImage(named: "vv")
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +81,12 @@ class CaptureImageProcessVC: BaseViewController {
         let heightInPoints2 = image.size.height
         let widthInPoints2 = image.size.width
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
-        //self.cameraImageView.image = image
+        
+        let heightInPixels = heightInPoints * image.scale
+        let widthInPixels = widthInPoints * image.scale
+        cameraImageView.frame = CGRect(x: 0, y: 0, width: widthInPixels, height: heightInPixels)
+        
+        self.cameraImageView.image = image
         
         //        GoogleCloudOCR().detect(from: image) { ocrResult in
         //            guard let ocrResult = ocrResult else {
@@ -89,7 +94,7 @@ class CaptureImageProcessVC: BaseViewController {
         //            }
         //            print("OcrResult: \(ocrResult)")
         //        }
-        
+                
         self.iTTServerViewModel.getITTData(from: image) { [weak self] (data, error) in
             
             if error != nil {
@@ -100,43 +105,52 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
+        scrollView.delegate = self
+        scrollView.maximumZoomScale = 3.0
+        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
+        scrollView.addGestureRecognizer(scrollViewTap)
         
-        //        self.viewModel.getITTServerDetectionData(resource: self.viewModel.createRequest()) { [weak self] (data, error) in
-        //
-        //            if error != nil {
-        //                PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
-        //            } else {
-        //                if let detectedData = data {
-        //                    self?.viewModel.getblockAndLineModeData(detectedData)
-        //                }
-        //            }
-        //        }
+    }
+
+    @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
+        let view = sender.view
+        let touchpoint = sender.location(in: view)
+        
+        var textViews = [TextViewWithCoordinator]()
+        if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
+            
+            if modeSwitchType == blockMode {
+                textViews.removeAll()
+                textViews = self.iTTServerViewModel.blockModeTextViewList
+                
+            } else {
+                textViews.removeAll()
+                textViews = self.iTTServerViewModel.lineModetTextViewList
+            }
+        }
+        
+        for (index,each) in textViews.enumerated() {
+            let zoomScale = scrollView.zoomScale
+            var x = each.view.frame
+            x.origin.x = each.view.frame.origin.x * zoomScale
+            x.origin.y = each.view.frame.origin.y * zoomScale
+            x.size.width = each.view.frame.size.width * zoomScale
+            x.size.height = each.view.frame.size.height * zoomScale
+            
+            if (x.contains(touchpoint)) {
+                PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
+                PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
+            }
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    //    @IBAction func backButtonEventListener(_ sender: Any) {
-    //        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-    //            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
-    //    }
-    
-    //    @IBAction func modeSwitchButtonEventListener(_ sender: Any) {
-    //        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
-    //        if modeSwitchTypes == blockMode {
-    //            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
-    //            updateView()
-    //        } else {
-    //            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
-    //            updateView()
-    //        }
-    //
-    //    }
-    
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
+    
     func updateView() {
         DispatchQueue.main.async {[self] in
             let blockModeTextViews = self.iTTServerViewModel.blockModeTextViewList
@@ -170,26 +184,36 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         
         // TO Do: will remove static image
         //let image1 = UIImage(named: "vv")
-        let imageView = UIImageView(image: image)
         
-        let heightInPoints = image.size.height
-        let heightInPixels = heightInPoints * image.scale
-        
-        let widthInPoints = image.size.width
-        let widthInPixels = widthInPoints * image.scale
-        
-        PrintUtility.printLog(tag: "Before ploting image Width: \(widthInPoints)", text: ", Height: \(heightInPoints)")
-        PrintUtility.printLog(tag: "Before ploting image widthInPixels: \(widthInPixels)", text: ", heightInPixels: \(heightInPixels)")
-        
-        imageView.frame = CGRect(x: 0, y: 0, width: widthInPixels, height: heightInPixels) // To do : This will be actual cropped & processed image height width
-        
-        self.view.addSubview(imageView)
+        //        let imageView = UIImageView(image: image)
+        //
+        //        let heightInPoints = image.size.height
+        //        let heightInPixels = heightInPoints * image.scale
+        //
+        //        let widthInPoints = image.size.width
+        //        let widthInPixels = widthInPoints * image.scale
+        //
+        //        imageView.frame = CGRect(x: 0, y: 0, width: widthInPixels, height: heightInPixels) // To do : This will be actual cropped & processed image height width
+        //
+        //        self.view.addSubview(imageView)
         
         if textViews.count > 0 {
             for i in 0..<textViews.count {
-                textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
-                textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
-                self.view.addSubview(textViews[i].view)
+                DispatchQueue.main.async {
+                    let height = textViews[i].view.frame.size.height
+                    let width = textViews[i].view.frame.size.width
+                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
+                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
+                    textViews[i].view.frame.size.height = height
+                    textViews[i].view.frame.size.width = width
+                    textViews[i].view.backgroundColor = .gray.withAlphaComponent(0.4)
+                    textViews[i].view.tag = i
+                    
+                    self.cameraImageView.addSubview(textViews[i].view)
+                    textViews[i].view.isUserInteractionEnabled = true
+                    
+                }
+                
             }
         }
         
@@ -302,6 +326,15 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
 }
 
+extension CaptureImageProcessVC: UIScrollViewDelegate {
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return cameraImageView
+    }
+    
+}
+
+
 extension CaptureImageProcessVC: LoaderDelegate{
     
     func showLoader() {
@@ -356,5 +389,3 @@ extension UIImage {
         return jpegData(compressionQuality: jpegQuality.rawValue)
     }
 }
-
-
