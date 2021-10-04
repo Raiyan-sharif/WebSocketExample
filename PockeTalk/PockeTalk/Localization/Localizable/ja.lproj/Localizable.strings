@@ -24,6 +24,7 @@
 "Language Settings" = "言語設定(Language Settings)";
 "Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";
 "history_add_fav" = "お気に入りに追加";
+"history_remove_fav" = "お気に入りから削除";
 "retranslation" = "他の言語に翻訳";
 "reverse" = "逆翻訳";
 "pronunciation_practice" = "発音練習";
@@ -53,5 +54,5 @@
 "delete_all_data" = "すべてのデータを削除";
 "cancel" = "キャンセル";
 "clear" = "削除";
-"delete" = "消去";
+"delete" = "履歴から削除";
 "Socket_fail_message" = "Socket Connected Failed";

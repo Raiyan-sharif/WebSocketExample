@@ -131,25 +131,31 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         // Obtain table view cells.
         let defaultCell = tableView.dequeueReusableCell(withIdentifier: KAlertTableViewCell) as! AlertTableViewCell
         var imageName = ""
+        var title = ""
         if items[indexPath.row].menuType == .favorite {
             if(chatItemModel?.chatItem != nil){
                 if chatItemModel!.chatItem?.chatIsLiked == IsLiked.like.rawValue{
                     imageName = "icon_favorite_select_popup.png"
+                    title = "history_remove_fav".localiz()
                 } else {
                     imageName = items[indexPath.row].imageName
+                    title = items[indexPath.row].title
                 }
             }else{
                 if UserDefaultsUtility.getBoolValue(forKey: kIsAlreadyFavorite) == true {
                     imageName = "icon_favorite_select_popup.png"
+                    title = "history_remove_fav".localiz()
                 } else {
                     imageName = items[indexPath.row].imageName
+                    title = items[indexPath.row].title
                 }
             }
 
         } else {
             imageName = items[indexPath.row].imageName
+            title = items[indexPath.row].title
         }
-        defaultCell.configureCell(title: items[indexPath.row].title, imageName: imageName)
+        defaultCell.configureCell(title: title, imageName: imageName)
         return defaultCell
 
     }

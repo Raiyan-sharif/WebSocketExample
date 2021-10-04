@@ -24,6 +24,7 @@
 "Language Settings" = "Language Settings";
 "Speech Guideline" = "Hold down the button and say the language you want to search for.";
 "history_add_fav" = "Add to Favorite";
+"history_remove_fav" = "Remove From Favorite";
 "retranslation" = "Translate into other languages";
 "reverse" = "Reverse translation";
 "pronunciation_practice" = "Practice pronunciation";
@@ -53,5 +54,5 @@
 "delete_all_data" = "Delete all the data";
 "cancel" = "Cancel";
 "clear" = "Clear";
-"delete" = "Delete";
+"delete" = "Delete from History";
 "Socket_fail_message" = "Socket Connected Failed";
