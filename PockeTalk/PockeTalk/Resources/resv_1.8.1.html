@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebViewCommunication</title>
+    <body>
+        <h1>Hello</h1>
+    </body>
+    <script src="responsivevoice_1.8.1.js"></script>
+    <script type="text/javascript">
+        function voiceStartCallback() {
+            //interface.start()
+            webkit.messageHandlers.iosListener.postMessage("Start");
+            console.log("Voice started");
+        }
+
+        function voiceEndCallback() {
+            //interface.end()
+            webkit.messageHandlers.iosListener.postMessage("end");
+            console.log("Voice ended");
+        }
+        
+        var parameters = {
+            onstart: voiceStartCallback,
+            onend: voiceEndCallback,
+            rate:"1.0",
+            volume:"1"
+        }
+
+        function setPitchRate(rate){
+            parameters.rate = rate;
+        }
+        
+        function play(voice,text){
+            responsiveVoice.clickEvent();
+           // responsiveVoice.setDefaultVoice(voice);
+           // responsiveVoice.speak(text);
+            responsiveVoice.speak(text, voice, parameters);
+        }
+        
+        function cancel() {
+            responsiveVoice.cancel();
+        }
+
+        function isSpeaking() {
+            responsiveVoice.isPlaying();
+        }
+            //setTimeout(sayIt, 3000);
+        </script>
+</head>

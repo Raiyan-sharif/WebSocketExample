@@ -12,6 +12,9 @@
 		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
 		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
 		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
+		3BA8E134270B18D20095D036 /* resv_1.8.1.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BA8E132270B18D20095D036 /* resv_1.8.1.html */; };
+		3BA8E135270B18D20095D036 /* responsivevoice_1.8.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */; };
+		3BC7D754270C098400F4B184 /* TTSResponsiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */; };
 		3BF2A22A27031C3A0025353F /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2A22927031C3A0025353F /* SpinnerView.swift */; };
 		4A40AC9426F89BC800019A5B /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC8F26F89BC700019A5B /* BaseEntity.swift */; };
 		4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A40AC9026F89BC800019A5B /* BaseViewController.swift */; };
@@ -229,6 +232,9 @@
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
 		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
 		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
+		3BA8E132270B18D20095D036 /* resv_1.8.1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = resv_1.8.1.html; sourceTree = "<group>"; };
+		3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = responsivevoice_1.8.1.js; sourceTree = "<group>"; };
+		3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSResponsiveView.swift; sourceTree = "<group>"; };
 		3BF2A22927031C3A0025353F /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A40AC8F26F89BC700019A5B /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
@@ -616,6 +622,7 @@
 				963D8EA926F4A3E700E32162 /* FontUtility.swift */,
 				3BF2A22927031C3A0025353F /* SpinnerView.swift */,
 				4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */,
+				3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -655,6 +662,8 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */,
+				3BA8E132270B18D20095D036 /* resv_1.8.1.html */,
 				69349AA826E5DB90008D9AF4 /* tutorial.mp4 */,
 				4A66138226DDCF5D004A925D /* Assets.xcassets */,
 			);
@@ -1691,6 +1700,8 @@
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
+				3BA8E135270B18D20095D036 /* responsivevoice_1.8.1.js in Resources */,
+				3BA8E134270B18D20095D036 /* resv_1.8.1.html in Resources */,
 				4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */,
 				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
@@ -1909,6 +1920,7 @@
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionEntity.swift in Sources */,
+				3BC7D754270C098400F4B184 /* TTSResponsiveView.swift in Sources */,
 				4AF2608C26E07801009C616E /* ExtensionString.swift in Sources */,
 				798A9D3326F1CD8200353D6B /* ParseTextDetection.swift in Sources */,
 				87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */,

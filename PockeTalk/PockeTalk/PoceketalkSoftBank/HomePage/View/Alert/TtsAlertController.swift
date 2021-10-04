@@ -4,12 +4,15 @@
 //
 
 import UIKit
+import WebKit
 protocol TtsAlertControllerDelegate {
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
 }
 class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
+    
+    
     private let TAG:String = "TtsAlertController"
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
@@ -49,13 +52,17 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     var hideBottomView = false
     var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
     var longTapGesture : UILongPressGestureRecognizer?
-    
+    var wkView:WKWebView!
+    var ttsResponsiveView = TTSResponsiveView()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
         self.populateData()
+        ttsResponsiveView.ttsResponsiveViewDelegate = self
+        self.view.addSubview(ttsResponsiveView)
+        ttsResponsiveView.isHidden = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -71,13 +78,13 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.layer.cornerRadius = cornerRadius
-
-        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
+        self.toLanguageLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
+        //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
-
-        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
+        self.fromLanguageLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
+        //self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.fromLanguageLabel.textColor = UIColor.gray
@@ -321,3 +328,24 @@ extension TtsAlertController : AlertReusableDelegate {
     }
     
 }
+
+extension TtsAlertController : TTSResponsiveViewDelegate {
+    func userContentController(message: WKScriptMessage) {
+        if(message.name == "iosListener"){
+            PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
+            if message.body as! String == "end"{
+                stopAnimation ()
+            }
+        }
+    }
+    
+    func webView() {
+        let translateText = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
+        PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
+        ttsResponsiveView.TTSPlay(voice: "US English Female",text: translateText ??  "")
+    }
+    
+    
+}
+
+
