@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="cancelButton" destination="ASf-ZD-cIs" id="Biv-aA-8AC"/>
                 <outlet property="cropButton" destination="yRi-ES-LfN" id="nkh-ci-kpe"/>
+                <outlet property="menuButton" destination="lVr-vb-hVO" id="w0f-Af-Tuj"/>
                 <outlet property="scrollView" destination="oUR-U3-uEM" id="wLv-IC-0QI"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bPM-fb-VLM"/>
             </connections>
@@ -23,8 +24,8 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUR-U3-uEM">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-mb-AK0">
-                            <rect key="frame" x="81" y="485" width="158" height="64"/>
+                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-mb-AK0">
+                            <rect key="frame" x="81" y="474" width="158" height="64"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASf-ZD-cIs">
                                     <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -33,9 +34,6 @@
                                         <constraint firstAttribute="width" constant="64" id="YWt-e6-Bvy"/>
                                     </constraints>
                                     <state key="normal" image="cropCancelButton"/>
-                                    <connections>
-                                        <action selector="cancelButtonEventListener:" destination="-1" eventType="touchUpInside" id="5rC-IB-rVX"/>
-                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRi-ES-LfN">
                                     <rect key="frame" x="94" y="0.0" width="64" height="64"/>
@@ -44,22 +42,32 @@
                                         <constraint firstAttribute="width" constant="64" id="urS-JS-i1S"/>
                                     </constraints>
                                     <state key="normal" image="cropButton"/>
-                                    <connections>
-                                        <action selector="cropButtonEventListener:" destination="-1" eventType="touchUpInside" id="Ls1-dA-Tqg"/>
-                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVr-vb-hVO">
+                            <rect key="frame" x="16" y="20" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="EWE-ZA-T7P"/>
+                                <constraint firstAttribute="height" constant="30" id="SFa-Rx-74b"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="hamburger_menu_icon"/>
+                            <connections>
+                                <action selector="menuTapAction:" destination="-1" eventType="touchUpInside" id="b7h-Df-fcL"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="lVr-vb-hVO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="1jG-pL-6G0"/>
                 <constraint firstAttribute="trailing" secondItem="oUR-U3-uEM" secondAttribute="trailing" id="7A6-HH-MEu"/>
                 <constraint firstAttribute="bottom" secondItem="oUR-U3-uEM" secondAttribute="bottom" id="8mU-82-Hf6"/>
                 <constraint firstItem="oUR-U3-uEM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="92s-g3-wfK"/>
                 <constraint firstItem="oUR-U3-uEM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Cuy-cw-jOk"/>
                 <constraint firstItem="oUR-U3-uEM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="J3N-Vr-euu"/>
+                <constraint firstItem="lVr-vb-hVO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="XCa-Rb-Fhg"/>
                 <constraint firstItem="2fv-mb-AK0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="a0H-lq-Eg1"/>
                 <constraint firstAttribute="bottom" secondItem="oUR-U3-uEM" secondAttribute="bottom" id="iw9-Cg-Kkk"/>
                 <constraint firstItem="oUR-U3-uEM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kDN-mM-6KE"/>
@@ -88,5 +96,6 @@
     <resources>
         <image name="cropButton" width="44" height="44"/>
         <image name="cropCancelButton" width="44" height="44"/>
+        <image name="hamburger_menu_icon" width="45" height="45"/>
     </resources>
 </document>
