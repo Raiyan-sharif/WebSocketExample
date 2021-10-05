@@ -28,6 +28,7 @@
 		4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A68C52B27044136007DB329 /* InitialDBConfiguration.swift */; };
 		4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */; };
 		4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */; };
+		4AB51D16270AF56B007D254A /* RuntimePermissionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */; };
 		4AD58E9626DF9B520004FC38 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD58E9526DF9B520004FC38 /* HomeViewController.swift */; };
 		4AE97ACF26E8D33D007344FC /* CameraEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97ACE26E8D33D007344FC /* CameraEntity.swift */; };
 		4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AD026E8E0E6007344FC /* CameraHistoryDBModel.swift */; };
@@ -249,6 +250,7 @@
 		4A68C52B27044136007DB329 /* InitialDBConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialDBConfiguration.swift; sourceTree = "<group>"; };
 		4A6E08B826FB2EB600147BAC /* CameraTTSDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraTTSDialog.swift; sourceTree = "<group>"; };
 		4A6E08B926FB2EB600147BAC /* CameraTTSDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraTTSDialog.xib; sourceTree = "<group>"; };
+		4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimePermissionUtil.swift; sourceTree = "<group>"; };
 		4AD58E9526DF9B520004FC38 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4AE97ACE26E8D33D007344FC /* CameraEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEntity.swift; sourceTree = "<group>"; };
 		4AE97AD026E8E0E6007344FC /* CameraHistoryDBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHistoryDBModel.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */,
 				963D8EA926F4A3E700E32162 /* FontUtility.swift */,
 				3BF2A22927031C3A0025353F /* SpinnerView.swift */,
+				4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -1892,6 +1895,7 @@
 				89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */,
 				4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */,
 				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
+				4AB51D16270AF56B007D254A /* RuntimePermissionUtil.swift in Sources */,
 				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,

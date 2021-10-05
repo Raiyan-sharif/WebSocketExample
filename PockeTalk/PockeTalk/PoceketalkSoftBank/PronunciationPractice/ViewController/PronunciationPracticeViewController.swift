@@ -47,12 +47,20 @@ class PronunciationPracticeViewController: BaseViewController {
     
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "SpeechProcessingViewController")as! SpeechProcessingViewController
-        controller.homeMicTapTimeStamp = currentTS
-        controller.isFromPronunciationPractice = true
-        self.navigationController?.pushViewController(controller, animated: true);
+        RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+            if isGranted {
+                let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "SpeechProcessingViewController")as! SpeechProcessingViewController
+                controller.homeMicTapTimeStamp = currentTS
+                controller.isFromPronunciationPractice = true
+                self.navigationController?.pushViewController(controller, animated: true);
+            } else {
+                GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
+                    GlobalMethod.openSettingsApplication()
+                }
+            }
+        }
     }
     
     @IBAction func actionBack(_ sender: Any) {

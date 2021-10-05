@@ -209,13 +209,23 @@ class HomeViewController: BaseViewController {
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         if Reachability.isConnectedToNetwork() {
-            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-            controller.homeMicTapTimeStamp = currentTS
-            controller.languageHasUpdated = languageHasUpdated
-            controller.screenOpeningPurpose = .HomeSpeechProcessing
-            self.navigationController?.pushViewController(controller, animated: true);
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+                        controller.homeMicTapTimeStamp = currentTS
+                        controller.languageHasUpdated = self.languageHasUpdated
+                        controller.screenOpeningPurpose = .HomeSpeechProcessing
+                        self.navigationController?.pushViewController(controller, animated: true);
+
+                } else {
+                    GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
+                        GlobalMethod.openSettingsApplication()
+                    }
+
+                }
+            }
         } else {
             GlobalMethod.showNoInternetAlert()
         }
@@ -239,16 +249,26 @@ class HomeViewController: BaseViewController {
 
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        
+
         //TODO change CaptureImageProcessVC to CameraViewController to capture image. This change is made to run on simulator
-//        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
-//            self.navigationController?.pushViewController(cameraViewController, animated: true)
-//        }
-        
-        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
-            self.navigationController?.pushViewController(cameraViewController, animated: true)
+        //        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+        //            self.navigationController?.pushViewController(cameraViewController, animated: true)
+        //        }
+
+        RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
+            if isGranted {
+                let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+                if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+                    self?.navigationController?.pushViewController(cameraViewController, animated: true)
+                }
+            } else {
+
+                GlobalMethod.showAlert(title: kCameraUsageTitle, message: kCameraUsageMessage, in: self) {
+                    GlobalMethod.openSettingsApplication()
+                }
+            }
         }
+        
 
         
     }

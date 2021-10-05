@@ -242,4 +242,41 @@ class GlobalMethod {
     static func appdelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
+
+    // Show alert when runtime permission is disabled
+
+    static func showAlert(title : String, message: String, in viewController: UIViewController? = nil, compleationHandler: @escaping () -> Void ) {
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            // Init alert
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let allowAccessAction = UIAlertAction(title: kActionAllowAccess, style: .default, handler: {action in
+                compleationHandler()
+            })
+
+            let cancelAction = UIAlertAction(title: kActionCancel, style: .default, handler: nil)
+
+            alertController.addAction(cancelAction)
+            alertController.addAction(allowAccessAction)
+
+
+            alertController.preferredAction = allowAccessAction
+
+            // Show alert
+            if viewController != nil {
+                viewController?.present(alertController, animated: true, completion: nil)
+            } else if let visibleViewController = self.getVisibleViewController(nil) {
+                visibleViewController.present(alertController, animated: true, completion: nil)
+            } else {
+                if let _window = appDelegate.window, let rootViewController = _window.rootViewController {
+                    rootViewController.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+
+    // Open app permission in Setting Application
+
+    static func openSettingsApplication() {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+    }
 }

@@ -203,12 +203,20 @@ class LangSelectVoiceVC: BaseViewController {
     // TODO microphone tap event
     @objc func speechButtonTapAction (sender:UIButton) {
         if Reachability.isConnectedToNetwork() {
-            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-            controller.homeMicTapTimeStamp = currentTS
-            controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
-            self.navigationController?.pushViewController(controller, animated: true);
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                    let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+                    controller.homeMicTapTimeStamp = currentTS
+                    controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
+                    self.navigationController?.pushViewController(controller, animated: true);
+                } else {
+                    GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
+                        GlobalMethod.openSettingsApplication()
+                    }
+                }
+            }
         } else {
             GlobalMethod.showNoInternetAlert()
         }

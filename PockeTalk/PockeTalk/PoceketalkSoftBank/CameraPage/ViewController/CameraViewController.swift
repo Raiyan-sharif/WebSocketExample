@@ -217,13 +217,24 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         processor.orientation = orientation
         processor.completion = { [unowned self] processor in
             if let photo = processor.photo {
-                PHPhotoLibrary.shared().performChanges({
-                    // Add the captured photo's file data as the main resource for the Photos asset.
-                    let creationRequest = PHAssetCreationRequest.forAsset()
-                    creationRequest.addResource(with: .photo, data: photo.fileDataRepresentation()!, options: nil)
-                }, completionHandler: nil)
-                
-                completion?(Photo(photo: photo, orientation: processor.orientation))
+                RuntimePermissionUtil().requestAuthorizationPermissionForUsingPhotoLibrary { (isAuthorized) in
+                    if isAuthorized {
+                        PHPhotoLibrary.shared().performChanges({
+                            // Add the captured photo's file data as the main resource for the Photos asset.
+                            let creationRequest = PHAssetCreationRequest.forAsset()
+                            creationRequest.addResource(with: .photo, data: photo.fileDataRepresentation()!, options: nil)
+                        }, completionHandler: nil)
+
+                        completion?(Photo(photo: photo, orientation: processor.orientation))
+
+                    } else {
+                        GlobalMethod.showAlert(title: kPhotosUsageTitle, message: kPhotosUsageMessage, in: self) {
+                            GlobalMethod.openSettingsApplication()
+                        }
+
+                    }
+                }
+
             }
             
             if let settings = processor.settings {

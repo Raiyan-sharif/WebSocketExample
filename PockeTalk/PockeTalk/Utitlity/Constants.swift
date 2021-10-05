@@ -49,6 +49,19 @@ let kMenuActionToastMessage = "Navigate to menu screen"
 let kTopLanguageButtonActionToastMessage = "Navigate to top language selection screen screen"
 let kBottomLanguageButtonActionToastMessage = "Navigate to language selection screen"
 
+// Alert message, title and action for app specific permission
+
+let kActionAllowAccess = "Allow access"
+let kActionCancel = "Cancel"
+let kMicrophoneUsageTitle = "Can't use microphone"
+let kMicrophoneUsageMessage = "PockeTalk needs permission to use the microphone"
+let kPhotosUsageTitle = "Can't use photos"
+let kPhotosUsageMessage = "PockeTalk needs permission to access the photo library"
+let kCameraUsageTitle = "Can't use camera"
+let kCameraUsageMessage = "PockeTalk needs permission to use the camera"
+
+
+
 
 // Language selection voice
 let KSelectedLanguageVoice = "KSelectedLanguageVoice"
