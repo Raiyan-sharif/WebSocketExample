@@ -76,6 +76,7 @@ class SpeechProcessingViewController: BaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        SocketManager.sharedInstance.connect()
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
