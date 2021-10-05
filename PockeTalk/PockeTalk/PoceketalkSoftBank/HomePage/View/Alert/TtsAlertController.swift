@@ -258,9 +258,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.dismissPopUp()
     }
     func dismissPopUp(){
-        self.stopAnimation()
-        self.delegate?.dismiss()
-        self.dismiss(animated: true, completion: nil)
+        if let historyVC = self.presentingViewController?.presentingViewController  as? HistoryViewController{
+            historyVC.dismiss(animated: true, completion: nil)
+        }else if let favVC = self.presentingViewController?.presentingViewController  as? FavouriteViewController{
+            favVC.dismiss(animated: true, completion: nil)
+        }else{
+            self.stopAnimation()
+            self.delegate?.dismiss()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
     // TODO microphone tap event

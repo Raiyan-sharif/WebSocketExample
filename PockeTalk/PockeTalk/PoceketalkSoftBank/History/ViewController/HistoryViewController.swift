@@ -25,6 +25,8 @@ class HistoryViewController: BaseViewController {
     var historyViewModel:HistoryViewModeling!
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
+    let buttonWidth : CGFloat = 100
+
     private(set) var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
@@ -38,6 +40,11 @@ class HistoryViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.register(cellType: HistoryCell.self)
         return collectionView
+    }()
+
+    private lazy var bottmView:UIView = {
+        let view = UIView()
+        return view
     }()
 
     override func loadView() {
@@ -74,6 +81,15 @@ class HistoryViewController: BaseViewController {
     
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
+        self.view.addSubview(bottmView)
+
+        bottmView.translatesAutoresizingMaskIntoConstraints = false
+        bottmView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottmView.heightAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
@@ -81,12 +97,32 @@ class HistoryViewController: BaseViewController {
         widthConstraintOfCV.isActive = true
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth).isActive = true
         collectionView.alpha = 0.0
         
         self.view.addSubview(backBtn)
 
+        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
+        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+
     }
+
+
+    @objc func microphoneTapAction (sender:UIButton) {
+        if Reachability.isConnectedToNetwork() {
+            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            controller.languageHasUpdated = false
+            controller.screenOpeningPurpose = .HomeSpeechProcessing
+            self.present(controller, animated: true, completion: nil)
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
+
+    }
+
     private var backBtn:UIButton!{
         let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
@@ -114,9 +150,9 @@ class HistoryViewController: BaseViewController {
         collectionView.alpha = 1.0
         let transitionAnimation = CABasicAnimation(keyPath: "position.y")
         transitionAnimation.fromValue = view.layer.position.y -
-            view.frame.size.height
-        transitionAnimation.toValue = view.layer.position.y
-        
+            collectionView.bounds.height
+        transitionAnimation.toValue = view.layer.position.y - buttonWidth/2
+
         let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
         scalAnimation.fromValue = 0.5
         scalAnimation.toValue = 1.0
@@ -277,8 +313,8 @@ extension HistoryViewController:HistoryLayoutDelegate{
         let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
         let font = UIFont.systemFont(ofSize:17)
         
-        let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width, font: font)
-        let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width, font: font)
+        let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
+        let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         return 20 + fromHeight + 120 + toHeight + 40
     }
 }
