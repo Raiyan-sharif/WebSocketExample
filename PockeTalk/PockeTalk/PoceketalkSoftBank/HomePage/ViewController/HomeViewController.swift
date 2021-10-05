@@ -5,6 +5,7 @@
 //  Created by Piklu Majumder-401 on 9/1/21.
 
 import UIKit
+import SwiftRichString
 
 class HomeViewController: BaseViewController {
     let TAG = "\(HomeViewController.self)"
@@ -26,7 +27,9 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var buttonFav: UIButton!
     
     var languageHasUpdated = false
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
     //Properties
     var homeVM : HomeViewModeling!
     var animationCounter : Int = 0
@@ -60,20 +63,32 @@ class HomeViewController: BaseViewController {
         super.viewWillAppear(true)
         view.changeFontSize()
         setUpUI()
+        setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         setLanguageDirection()
         historyItemCount =  homeVM.getHistoryItemCount()
         favouriteItemCount = homeVM.getFavouriteItemCount()
         updateHistoryViews()
         updateFavouriteViews()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         updateLanguageNames()
+        
     }
     // Initial UI set up
     func setUpUI () {
          ///Check whether tutorial has already been displayed
+        navigationController?.navigationBar.barTintColor = UIColor.black
+        tabBarController?.tabBar.tintColor = UIColor.white
+        tabBarController?.tabBar.barTintColor = UIColor.white
+        
+        let sharedApplication = UIApplication.shared
+        sharedApplication.delegate?.window??.tintColor = UIColor.white
+
+         
+//
         if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
           UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
             self.dislayTutorialScreen()

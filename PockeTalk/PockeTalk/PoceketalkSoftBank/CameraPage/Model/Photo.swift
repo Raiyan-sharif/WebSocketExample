@@ -19,7 +19,7 @@ class Photo {
     }
     
     func image() -> UIImage? {
-        guard let cgImage = photo.cgImageRepresentation()?.takeUnretainedValue() else { return nil }
+        guard let cgImage = photo.cgImageRepresentation() else { return nil }
         
         let imageOrientation: UIImage.Orientation
         switch orientation {
@@ -32,7 +32,7 @@ class Photo {
         case .landscapeLeft:
             imageOrientation = .down
         }
-        return UIImage(cgImage: cgImage, scale: 1, orientation: imageOrientation)
+        return UIImage(cgImage: cgImage as! CGImage, scale: 1, orientation: imageOrientation)
     }
     
     func getResizedImage(image: UIImage, visibleLayerFrame: CGRect, completion: @escaping(_ textView: [TextViewWithCoordinator])-> Void) {

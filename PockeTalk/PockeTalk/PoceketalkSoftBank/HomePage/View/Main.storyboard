@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -159,7 +159,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Gb6-Mf-5h4"/>
                                     <constraint firstAttribute="width" constant="30" id="dQR-yI-K8F"/>
                                 </constraints>
-                                <state key="normal" image="icon_menu_camera"/>
+                                <state key="normal" image="camera.fill" catalog="system"/>
                                 <connections>
                                     <action selector="didTapOnCameraButton:" destination="y8L-Ms-o17" eventType="touchUpInside" id="QiB-mh-nUT"/>
                                 </connections>
@@ -178,6 +178,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eoC-NK-acp"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="height" secondItem="oYg-He-7j5" secondAttribute="height" id="1c1-rS-JeI"/>
                             <constraint firstItem="eoC-NK-acp" firstAttribute="trailing" secondItem="oYg-He-7j5" secondAttribute="trailing" constant="10" id="3P5-I9-dVU"/>
@@ -663,6 +664,7 @@
         <image name="back_texture_white" width="480" height="640"/>
         <image name="btn_back_tempo" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
+        <image name="camera.fill" catalog="system" width="128" height="94"/>
         <image name="demo_mode_reboot_cancel_button" width="90" height="90"/>
         <image name="down_arrow" width="36" height="36"/>
         <image name="gradient_blue_bottom_bg" width="440" height="283"/>
@@ -670,7 +672,6 @@
         <image name="hamburger_menu_icon" width="30" height="30"/>
         <image name="ic_anim_left_white" width="65" height="64"/>
         <image name="ic_anim_right_white" width="65" height="64"/>
-        <image name="icon_menu_camera" width="30" height="30"/>
         <image name="icon_menu_favorite" width="30" height="30"/>
         <image name="tap_home_bg" width="60" height="60"/>
         <systemColor name="systemBackgroundColor">
