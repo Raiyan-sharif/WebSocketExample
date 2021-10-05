@@ -213,7 +213,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openTTTResult(_ idx: IndexPath){
         let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -296,7 +296,7 @@ extension HistoryViewController : RetranslationDelegate{
         
         let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, ttsAlertControllerDelegate: self)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, fromHistory: true, ttsAlertControllerDelegate: self)
         self.historyViewModel.addItem(chatEntity)
     
     }
@@ -320,6 +320,7 @@ extension HistoryViewController : AlertReusableDelegate {
         let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController")as! PronunciationPracticeViewController
         controller.modalPresentationStyle = .fullScreen
         controller.chatItem = chatItemModel?.chatItem
+        controller.isFromHistory = true
         self.present(controller, animated: true, completion: nil)
     }
     
@@ -336,7 +337,7 @@ extension HistoryViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, ttsAlertControllerDelegate: self)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self)
         self.historyViewModel.addItem(chatItemModel!.chatItem!)
     }
     

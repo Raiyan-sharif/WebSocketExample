@@ -10,9 +10,14 @@ protocol TtsAlertControllerDelegate {
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
 }
-class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
-    
-    
+protocol Pronunciation {
+    func dismissPro(dict:[String : String])
+}
+class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation {
+    func dismissPro(dict:[String : String]) {
+        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
+        self.dismiss(animated: true, completion: nil)
+    }
     private let TAG:String = "TtsAlertController"
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
@@ -54,6 +59,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     var longTapGesture : UILongPressGestureRecognizer?
     var wkView:WKWebView!
     var ttsResponsiveView = TTSResponsiveView()
+    var isFromHistory : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -298,7 +304,8 @@ extension TtsAlertController : AlertReusableDelegate {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
         vc.chatItem = chatItemModel?.chatItem
-        
+        vc.delegate = self
+        vc.isFromHistory = isFromHistory
         if(self.navigationController != nil){
             self.navigationController?.pushViewController(vc, animated: true)
         }else{

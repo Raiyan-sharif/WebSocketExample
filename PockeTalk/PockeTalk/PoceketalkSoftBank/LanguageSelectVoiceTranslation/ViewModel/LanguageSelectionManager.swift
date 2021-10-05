@@ -62,6 +62,15 @@ public class LanguageSelectionManager{
         return nil
     }
 
+    func  getLanguageCodeByName(langName: String) -> LanguageItem? {
+        for item in languageItems{
+            if(langName == item.name){
+                return item
+            }
+        }
+        return nil
+    }
+
     ///Get data from XML
     public func getLanguageSelectionData(){
         let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue

@@ -5,10 +5,30 @@
 
 import UIKit
 
+protocol PronunciationResult {
+    func dismissResultHome()
+    func dismissResultHistory()
+}
+
 protocol SpeechProcessingVCDelegates {
     func searchCountry(text: String)
 }
-class SpeechProcessingViewController: BaseViewController{
+
+class SpeechProcessingViewController: BaseViewController, PronunciationResult{
+
+    func dismissResultHistory() {
+        presentingViewController?.presentingViewController?.dismiss(animated: false, completion: {
+            self.pronunciationDelegate?.dismissPronunciationFromHistory()
+        })
+    }
+    func dismissResultHome() {
+        pronunciationView.isHidden = true
+        isFromPronunciationPractice = false
+        screenOpeningPurpose = .HomeSpeechProcessing
+        let index = UserDefaultsProperty<Int64>(kLastSavedChatID).value!
+        let chat = TtsAlertViewModel().findLastSavedChat(id: Int64(index))
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chat, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: false, fromHistory: false, ttsAlertControllerDelegate: nil)
+    }
     private let TAG:String = "SpeechProcessingViewController"
     ///Views
     @IBOutlet weak var titleLabel: UILabel!
@@ -27,6 +47,8 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
     var speechProcessingDelegate: SpeechProcessingVCDelegates?
+    @IBOutlet weak var pronunciationView: UIView!
+    @IBOutlet weak var pronunciationLable: UILabel!
     var languageHasUpdated = false
     var socketData = [Data]()
     ///Properties
@@ -50,6 +72,7 @@ class SpeechProcessingViewController: BaseViewController{
     let rightImgDamping : CGFloat = 0.05
     let springVelocity : CGFloat = 6.0
     var isFromPronunciationPractice: Bool = false
+    var isHistoryPronunciation: Bool = false
     var speechLangCode : String = ""
     var countrySearchspeechLangCode: String = ""
     var service : MAAudioService?
@@ -68,7 +91,10 @@ class SpeechProcessingViewController: BaseViewController{
     let leftImgHeight : CGFloat = 35
     let rightImgWidth : CGFloat = 45
     let rightImgHeight : CGFloat = 55
+    var pronunciationText : String = ""
+    var pronunciationLanguageCode : String = ""
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
+    var pronunciationDelegate : DismissPronunciationFromHistory?
 
     func initDelegate<T>(_ vc: T) {
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
@@ -77,6 +103,7 @@ class SpeechProcessingViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         let languageManager = LanguageSelectionManager.shared
+        pronunciationView.isHidden = true
         if let purpose = self.screenOpeningPurpose{
             switch purpose {
             case .HomeSpeechProcessing:
@@ -92,6 +119,9 @@ class SpeechProcessingViewController: BaseViewController{
                 } else {
                     speechLangCode = LanguageManager.shared.currentLanguage.rawValue
                 }
+                break
+            case .PronunciationPractice:
+//                speechLangCode = pronunciationLanguageCode
                 break
             }
         }
@@ -135,6 +165,10 @@ class SpeechProcessingViewController: BaseViewController{
         self.titleLabel.lineBreakMode = .byWordWrapping
         self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .semibold)
         self.titleLabel.textColor = UIColor._whiteColor()
+
+        if isFromPronunciationPractice {
+            FromPronunciation()
+        }
 
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
@@ -194,7 +228,12 @@ class SpeechProcessingViewController: BaseViewController{
                 self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame())
             }else{
                 self.spinnerView.isHidden = true
-                self.navigationController?.popViewController(animated: true)
+//                self.navigationController?.popViewController(animated: true)
+                if(self.navigationController != nil){
+                    self.navigationController?.popViewController(animated: true)
+                }else{
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
 
@@ -225,6 +264,8 @@ class SpeechProcessingViewController: BaseViewController{
                     case .HomeSpeechProcessing :
                         self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
                         break
+                    case .PronunciationPractice:
+                        self.showPronunciationPracticeResult(stt: self.speechProcessingVM.getSST_Text.value)
                     }
                 }
             }
@@ -288,8 +329,35 @@ class SpeechProcessingViewController: BaseViewController{
 
     }
 
+    func FromPronunciation() {
+        screenOpeningPurpose = .PronunciationPractice
+        pronunciationView.isHidden = false
+        speechLangCode = pronunciationLanguageCode
+//        LanguageSelectionManager.shared.topLanguage = pronunciationLanguageCode
+//        LanguageSelectionManager.shared.bottomLanguage = pronunciationLanguageCode
+        self.languageHasUpdated = true
+        speechProcessingVM.updateLanguage()
+        pronunciationLable.text = pronunciationText
+        self.pronunciationView.layer.cornerRadius = 20
+        self.pronunciationView.layer.masksToBounds = true
+        self.pronunciationView.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
+    }
 
     @objc func didPressMicroBtn(_ notification: Notification) {
+        if let string = notification.userInfo?["vc"] as? String {
+            if string == "PronunciationPracticeViewController" {
+                isFromPronunciationPractice = true
+                pronunciationText = (notification.userInfo?["text"] as! String)
+                pronunciationLanguageCode = (notification.userInfo?["langCode"] as! String)
+                FromPronunciation()
+            } else if string == "PronunciationPracticeResultViewController" {
+                isFromPronunciationPractice = true
+                pronunciationView.isHidden = false
+                pronunciationText = (notification.userInfo?["text"] as! String)
+                pronunciationLanguageCode = (notification.userInfo?["langCode"] as! String)
+                FromPronunciation()
+            }
+        }
         self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
         self.exampleLabel.isHidden = false
         self.descriptionLabel.isHidden = false
@@ -342,13 +410,24 @@ class SpeechProcessingViewController: BaseViewController{
         
         let chatItem =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, ttsAlertControllerDelegate: nil)
+        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil)
     }
     
-    func showPronunciationPracticeResult () {
+    func showPronunciationPracticeResult (stt:String) {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeResultViewController")as! PronunciationPracticeResultViewController
-        self.navigationController?.pushViewController(controller, animated: true);
+        controller.practiceText = stt
+        controller.delegate = self
+        controller.isFromHistory = isHistoryPronunciation
+        controller.orginalText = pronunciationText
+        controller.languageCode = pronunciationLanguageCode
+        if(self.navigationController != nil){
+            self.navigationController?.pushViewController(controller, animated: true)
+        }else{
+            controller.modalPresentationStyle = .fullScreen
+            self.present(controller, animated: true, completion: nil)
+        }
+//        self.navigationController?.pushViewController(controller, animated: true);
     }
 
     /*
@@ -392,4 +471,5 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSelectionVoice
     case CountrySelectionByVoice
     case LanguageSelectionCamera
+    case PronunciationPractice
 }
