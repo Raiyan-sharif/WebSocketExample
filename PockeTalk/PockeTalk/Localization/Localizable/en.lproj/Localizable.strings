@@ -56,3 +56,4 @@
 "clear" = "Clear";
 "delete" = "Delete from History";
 "Socket_fail_message" = "Socket Connected Failed";
+"OK" = "OK";

@@ -15,6 +15,7 @@ class GlobalMethod {
     static let screenSize: CGRect = UIScreen.main.bounds
     static let isWideScreen: Bool = GlobalMethod.screenSize.height >= 568.0
     static let displayScale: CGFloat = GlobalMethod.screenSize.width / 375.0
+    static let standardTableViewCellHeight: CGFloat = 44.0 * displayScale
 
     // Fonts
     static let mainFont: UIFont = UIFont.systemFont(ofSize: 15.0 * GlobalMethod.displayScale)

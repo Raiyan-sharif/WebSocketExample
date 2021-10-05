@@ -27,6 +27,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         self.navigationController?.navigationBar.isHidden = true
         self.tableView.reloadData()
         labelTopBarTitle?.text = "menu".localiz()
+        self.title = kTitleOk.localiz()
     }
 
     override var prefersStatusBarHidden: Bool{

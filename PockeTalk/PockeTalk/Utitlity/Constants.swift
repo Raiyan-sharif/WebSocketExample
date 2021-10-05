@@ -59,6 +59,7 @@ let kPhotosUsageTitle = "Can't use photos"
 let kPhotosUsageMessage = "PockeTalk needs permission to access the photo library"
 let kCameraUsageTitle = "Can't use camera"
 let kCameraUsageMessage = "PockeTalk needs permission to use the camera"
+let kTitleOk = "OK"
 
 
 

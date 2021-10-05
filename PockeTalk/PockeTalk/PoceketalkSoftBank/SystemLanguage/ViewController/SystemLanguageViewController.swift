@@ -20,7 +20,16 @@ class SystemLanguageViewController: BaseViewController {
     override func loadView() {
         view = UIView()
         view.backgroundColor = .black
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController!.navigationBar.barStyle = .black
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.tintColor = .white
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+
+
     }
+
     private var selectedLanguage:String?
     
     private var rightBtn:UIButton!{
@@ -33,12 +42,12 @@ class SystemLanguageViewController: BaseViewController {
         okBtn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
         return okBtn
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //Get data from XML
@@ -67,13 +76,14 @@ class SystemLanguageViewController: BaseViewController {
     
     /// Setup all the UI here
     private func setUpUI() {
+        self.title = "Language".localiz()
         tableView = UITableView(frame: .zero, style: .plain)
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             .isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.dataSource = self
         tableView.delegate = self
@@ -84,7 +94,7 @@ class SystemLanguageViewController: BaseViewController {
         
         //Check selected language
         if let isSelected = UserDefaultsProperty<Bool>(KFirstInitialized).value, isSelected{
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
+           // self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
             self.title = "Language".localiz()
         }else{
             self.title = "Language"
@@ -146,7 +156,7 @@ extension SystemLanguageViewController:UITableViewDataSource{
         cell.selectionStyle = .none
         cell.nameLabel.text = languageItem.langName
         if UserDefaultsProperty<String>(KSelectedLanguage).value == languageItem.lanType{
-            cell.imgView.image = #imageLiteral(resourceName: "selection_icon")
+            cell.imgView.image = #imageLiteral(resourceName: "ic_check_circle_white_selected")
             cell.contentView.backgroundColor = UIColor(hex: "#008FE8")
         }else{
             cell.imgView.image = nil
@@ -162,13 +172,17 @@ extension SystemLanguageViewController:UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languageList[indexPath.row]
         if UserDefaultsProperty<String>(KSelectedLanguage).value == nil{
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
+            //self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
         }
         UserDefaultsProperty<Bool>(KFirstInitialized).value = true
         UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
         LanguageManager.shared.setLanguage(language: Languages(rawValue: languageItem.lanType) ?? .en)
-        self.title = "Language".localiz()
+        //self.title = "Language".localiz()
         selectedLanguage = languageItem.lanType
         self.tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return GlobalMethod.standardTableViewCellHeight
     }
 }
