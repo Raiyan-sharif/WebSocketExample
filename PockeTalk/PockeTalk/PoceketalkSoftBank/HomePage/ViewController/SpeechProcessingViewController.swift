@@ -76,16 +76,7 @@ class SpeechProcessingViewController: BaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        SocketManager.sharedInstance.connect()
-        // Do any additional setup after loading the view.
-        self.speechProcessingVM = SpeechProcessingViewModel()
         let languageManager = LanguageSelectionManager.shared
-        self.setUpUI()
-        bindData()
-        if languageHasUpdated {
-            speechProcessingVM.updateLanguage()
-        }
-        PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
         if let purpose = self.screenOpeningPurpose{
             switch purpose {
             case .HomeSpeechProcessing:
@@ -103,6 +94,15 @@ class SpeechProcessingViewController: BaseViewController{
                 }
                 break
             }
+        }
+        SocketManager.sharedInstance.connect()
+        // Do any additional setup after loading the view.
+        self.speechProcessingVM = SpeechProcessingViewModel()
+        self.setUpUI()
+        bindData()
+        PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
+        if languageHasUpdated {
+            speechProcessingVM.updateLanguage()
         }
         socketManager.socketManagerDelegate = self
         self.setUpAudio()
