@@ -70,6 +70,7 @@ class LangSelectVoiceVC: BaseViewController {
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
         toolbarTitleLabel.text = "Language".localiz()
+        toolbarTitleLabel.textColor = UIColor.white
         updateButton(index:0)
         setupPageViewController()
         setUpMicroPhoneIcon()
@@ -141,11 +142,11 @@ class LangSelectVoiceVC: BaseViewController {
         PrintUtility.printLog(tag: TAG, text: "Index position \(index)")
         if index == 0{
             btnLangList.backgroundColor = .black
-            btnHistoryList.backgroundColor = .gray
+            btnHistoryList.backgroundColor = .darkGray
             btnLangList.setImage(UIImage(named: iconGlobalSelect), for: UIControl.State.normal)
             btnHistoryList.setImage(UIImage(named: iconHistoryUnSelect), for: UIControl.State.normal)
         }else{
-            btnLangList.backgroundColor = .gray
+            btnLangList.backgroundColor = .darkGray
             btnHistoryList.backgroundColor = .black
             btnLangList.setImage(UIImage(named: iconGlobalUnSelect), for: UIControl.State.normal)
             btnHistoryList.setImage(UIImage(named: iconHistorySelect), for: UIControl.State.normal)
