@@ -12,9 +12,13 @@ class CaptureImageProcessVC: BaseViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cameraImageView: UIImageView!
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
     
     private let iTTServerViewModel = ITTServerViewModel()
     private let activity = ActivityIndicator()
+    
+    var imageView = UIImageView()
     
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -45,6 +49,8 @@ class CaptureImageProcessVC: BaseViewController {
     }()
     
     var image = UIImage()
+    var imageWidth = CGFloat()
+    var imageHeight = CGFloat()
     //var image = UIImage(named: "vv")
 
     
@@ -75,18 +81,31 @@ class CaptureImageProcessVC: BaseViewController {
             resizeHeight = Int(IMAGE_HEIGHT)
         }
         
-        image = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
+        //image = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
         
-        //image = resizeImage(image: image, targetSize: CGSize.init(width: 390, height: 844))
         let heightInPoints2 = image.size.height
         let widthInPoints2 = image.size.width
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
         
         let heightInPixels = heightInPoints * image.scale
         let widthInPixels = widthInPoints * image.scale
-        cameraImageView.frame = CGRect(x: 0, y: 0, width: widthInPixels, height: heightInPixels)
+        cameraImageView.backgroundColor = .black
+
         
-        self.cameraImageView.image = image
+        if imageWidth>self.view.frame.width {
+            imageWidth = self.view.frame.width
+        }
+        let image1 = resizeImage(image: image, targetSize: CGSize(width: imageWidth, height: imageHeight))
+        
+        imageView.image = image1
+        
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: imageWidth  , height:  imageHeight)
+        cameraImageView.addSubview(imageView)
+        imageView.center = cameraImageView.center
+        
+       
+        //self.cameraImageView.contentMode = .scaleAspectFit
         
         //        GoogleCloudOCR().detect(from: image) { ocrResult in
         //            guard let ocrResult = ocrResult else {
@@ -95,8 +114,8 @@ class CaptureImageProcessVC: BaseViewController {
         //            print("OcrResult: \(ocrResult)")
         //        }
                 
-        self.iTTServerViewModel.getITTData(from: image) { [weak self] (data, error) in
-            
+        self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
+
             if error != nil {
                 PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
             } else {
@@ -105,38 +124,42 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
+        
         scrollView.delegate = self
         scrollView.maximumZoomScale = 3.0
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
         scrollView.addGestureRecognizer(scrollViewTap)
-        
+                
     }
+
 
     @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
         let view = sender.view
         let touchpoint = sender.location(in: view)
-        
         var textViews = [TextViewWithCoordinator]()
         if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-            
+
             if modeSwitchType == blockMode {
                 textViews.removeAll()
                 textViews = self.iTTServerViewModel.blockModeTextViewList
-                
+
             } else {
                 textViews.removeAll()
                 textViews = self.iTTServerViewModel.lineModetTextViewList
             }
         }
-        
+
         for (index,each) in textViews.enumerated() {
             let zoomScale = scrollView.zoomScale
             var x = each.view.frame
-            x.origin.x = each.view.frame.origin.x * zoomScale
-            x.origin.y = each.view.frame.origin.y * zoomScale
+
+            x.origin.x = (each.view.frame.origin.x * zoomScale) + (imageView.frame.origin.x*zoomScale)
+            x.origin.y = (each.view.frame.origin.y * zoomScale) + (imageView.frame.origin.y*zoomScale)
+            
             x.size.width = each.view.frame.size.width * zoomScale
             x.size.height = each.view.frame.size.height * zoomScale
-            
+
+
             if (x.contains(touchpoint)) {
                 PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                 PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
@@ -174,9 +197,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     
-    
     func plotLineOrBlock(using textViews: [TextViewWithCoordinator]) {
-        
         
         let screenRect = UIScreen.main.bounds
         let screenWidth = screenRect.size.width
@@ -209,7 +230,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
                     textViews[i].view.tag = i
                     
-                    self.cameraImageView.addSubview(textViews[i].view)
+                    self.imageView.addSubview(textViews[i].view)
                     textViews[i].view.isUserInteractionEnabled = true
                     
                 }
@@ -300,6 +321,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func backButtonEventListener(_ button: UIButton) {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        
     }
     
     
