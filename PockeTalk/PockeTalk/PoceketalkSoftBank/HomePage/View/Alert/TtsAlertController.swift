@@ -60,12 +60,16 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var wkView:WKWebView!
     var ttsResponsiveView = TTSResponsiveView()
     var isFromHistory : Bool = false
+    var voice : String = ""
+    var rate : String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
         self.populateData()
+        self.getTtsValue()
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
@@ -126,7 +130,36 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
     }
-    
+
+    /// Retreive tts value from respective language code
+    func getTtsValue () {
+        let languageManager = LanguageSelectionManager.shared
+        let nativeLangCode = languageManager.bottomLanguage
+        let targetLangCode = languageManager.topLanguage
+
+        if let value = self.ttsVM.getTtsValueByCode(code: LanguageSelectionManager.shared.isArrowUp ? targetLangCode : nativeLangCode) {
+            voice = value
+        }
+
+        /// Multiple tts_value will be seperated by # in future.
+        if !voice.isEmpty && voice.contains(KMultipleTtsValueSeparator){
+            voice = voice.components(separatedBy: KMultipleTtsValueSeparator)[0]
+            if voice.contains(KVoiceAndTempoSeparator){
+                let ttsValue = voice
+                voice = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[0]
+                rate = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[1]
+            }
+        } else {
+            /// For now if any tts value contains "_", after splitting, the first portion will be counted as voice and the other portioin will be counted as rate
+            if !voice.isEmpty && voice.contains(KVoiceAndTempoSeparator){
+                let ttsValue = voice
+                voice = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[0]
+                rate = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[1]
+            }
+        }
+
+    }
+
     @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizer.State.ended){
             self.openContextMenu()
@@ -355,7 +388,7 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     func webView() {
         let translateText = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
         PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
-        ttsResponsiveView.TTSPlay(voice: "US English Female",text: translateText ??  "")
+        ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
     }
     
     

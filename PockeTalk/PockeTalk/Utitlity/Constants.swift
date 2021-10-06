@@ -151,3 +151,7 @@ let response_ok = "OK"
 let base_url = "https://test.pt-v.com"
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
+
+//TTS dialog
+let KMultipleTtsValueSeparator = "#"
+let KVoiceAndTempoSeparator = "_"

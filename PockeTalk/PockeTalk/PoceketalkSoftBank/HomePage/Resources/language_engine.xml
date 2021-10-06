@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><!--Purpose
+Some languages are not included here, those languages STT and TTS are not supported
+Multiple tts_value will be seperated by # -->
+<engine name="engine">
+    <item code="eu" stt_engine=""></item>
+    <item code="yue" stt_engine="" tts_value="Chinese (Hong Kong) Female"></item>
+    <item code="zh-TW" stt_engine="" tts_value="Chinese Taiwan Female"></item>
+    <item code="en" stt_engine="" tts_value="US English Female"></item>
+    <item code="en-GB" stt_engine="" tts_value="UK English Female"></item>
+    <item code="en-IN" stt_engine="" tts_value="US English Female"></item>
+    <item code="en-AU" stt_engine="" tts_value="Australian Female"></item>
+    <item code="en-PH" stt_engine="" tts_value="US English Female"></item>
+    <item code ="en-SO" stt_engine="" tts_value="US English Female_-2.0"></item>
+    <item code="ar" stt_engine="" tts_value="Arabic Male"></item>
+    <item code="ca" stt_engine=""></item>
+    <item code="da" stt_engine="" tts_value="Danish Female"></item>
+    <item code="nl" stt_engine="" tts_value="Dutch Female"></item>
+    <item code="fi" stt_engine="" tts_value="Finnish Female"></item>
+    <item code="fr" stt_engine="" tts_value="French Female"></item>
+    <item code="fr-CA" stt_engine="" tts_value="French Canadian Female"></item>
+    <item code="de" stt_engine="" tts_value="Deutsch Female"></item>
+    <item code="el" stt_engine="" tts_value="Greek Female"></item>
+    <item code="hu" stt_engine="" tts_value="Hungarian Female"></item>
+    <item code="id" stt_engine="" tts_value="Indonesian Female"></item>
+    <item code="it" stt_engine="" tts_value="Italian Female"></item>
+    <item code="no" stt_engine="" tts_value="Norwegian Female"></item>
+    <item code="pl" stt_engine="" tts_value="Polish Female"></item>
+    <item code="pt" stt_engine="" tts_value="Portuguese Female"></item>
+    <item code="pt-BR" stt_engine="" tts_value="Brazilian Portuguese Female"></item>
+    <item code="ro" stt_engine="" tts_value="Romanian Male"></item>
+    <item code="ru" stt_engine="" tts_value="Russian Female"></item>
+    <item code="sk" stt_engine="" tts_value="Slovak Female"></item>
+    <item code="es" stt_engine="" tts_value="Spanish Female"></item>
+    <item code="es-US" stt_engine="" tts_value="Spanish Female"></item>
+    <item code="es-AR" stt_engine="" tts_value="Spanish Latin American Female"></item>
+    <item code="es-CO" stt_engine="" tts_value="Spanish Latin American Female"></item>
+    <item code="sv" stt_engine="" tts_value="Swedish Female"></item>
+    <item code="tr" stt_engine="" tts_value="Turkish Female"></item>
+    <item code="hy" stt_engine="" tts_value="Armenian Male_0.2"></item>
+    <item code="ja" stt_engine="" tts_value="Japanese Female"></item>
+    <item code="ko" stt_engine="" tts_value="Korean Female"></item>
+    <item code="hr" stt_engine=""></item>
+    <item code="hi" stt_engine=""></item>
+    <item code="is" stt_engine="" tts_value="Icelandic Male_1.0"></item>
+    <item code="sr" stt_engine="" tts_value="Serbian Male_1.0"></item>
+    <item code="sw" stt_engine="" tts_value="Swahili Male_0.2"></item>
+    <item code="ta" stt_engine="" ></item>
+    <item code="af" stt_engine="" tts_value="Afrikaans Male_1.0"></item>
+    <item code="sq" stt_engine="" tts_value="Albanian Male_0.2"></item>
+    <item code="bs" stt_engine="" tts_value="Bosnian Male_0.2"></item>
+    <item code="eo" tts_value="Esperanto Male_0.2"></item>
+    <item code="la" tts_value="Latin Female"></item>
+    <item code="mk" stt_engine="" tts_value="Macedonian Male_0.2"></item>
+    <item code="cy" tts_value="Welsh Male_0.2"></item>
+    <item code="lv" stt_engine="" tts_value="Latvian Male_1.0"></item>
+    <item code="th" stt_engine="" tts_value="Thai Female"></item>
+    <item code="vi" stt_engine="" tts_value="Vietnamese Male"></item>
+    <item code="iw" stt_engine=""></item>
+    <item code="cs" stt_engine=""></item>    
+    <item code="my" stt_engine=""></item>
+    <item code="zh-CN" stt_engine="" tts_value="Chinese Female"></item>
+    <item code="am" stt_engine=""></item>
+    <item code="az" stt_engine=""></item>
+    <item code="bn" stt_engine="" tts_value="Bangla Bangladesh Female"></item>
+    <item code="bg" stt_engine=""></item>
+    <item code="gl" stt_engine=""></item>
+    <item code="ka" stt_engine=""></item>
+    <item code="gu" stt_engine=""></item>
+    <item code="jw" stt_engine=""></item>
+    <item code="kn" stt_engine=""></item>
+    <item code="lo" stt_engine=""></item>
+    <item code="lt" stt_engine=""></item>
+    <item code="ms" stt_engine=""></item>
+    <item code="ml" stt_engine=""></item>
+    <item code="mr" stt_engine=""></item>
+    <item code="ne" stt_engine="" tts_value="Nepali"></item>
+    <item code="fa" stt_engine=""></item>
+    <item code="si" stt_engine="" tts_value="Sinhala"></item>
+    <item code="sl" stt_engine=""></item>
+    <item code="su" stt_engine=""></item>
+    <item code="te" stt_engine=""></item>
+    <item code="uk" stt_engine="" tts_value="Ukrainian Female"></item>
+    <item code="ur" stt_engine=""></item>
+    <item code="zu" stt_engine=""></item>
+    <item code="tl" stt_engine="" tts_value="Filipino Female"></item>
+    <item code="km" stt_engine=""></item>
+    <item code="et" stt_engine=""></item>
+    <item code="mn" stt_engine=""></item>
+    <item code="pa" stt_engine=""></item>
+    <item code="uz" stt_engine=""></item>
+</engine>
