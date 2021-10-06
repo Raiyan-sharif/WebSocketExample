@@ -43,6 +43,14 @@ public class LanguageSelectionManager{
       }
     }
 
+    public var tempSourceLanguage: String? {
+      get {
+        return UserDefaults.standard.string(forKey: tempSrcLanguageCode)
+      }
+      set {
+        UserDefaults.standard.set(newValue, forKey: tempSrcLanguageCode)
+      }
+    }
 
     public var isArrowUp: Bool {
       get {

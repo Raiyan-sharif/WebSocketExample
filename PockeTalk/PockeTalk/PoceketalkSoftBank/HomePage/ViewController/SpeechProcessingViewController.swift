@@ -112,6 +112,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         if let purpose = self.screenOpeningPurpose{
             switch purpose {
             case .HomeSpeechProcessing:
+                languageManager.tempSourceLanguage = nil
                 if languageManager.isArrowUp{
                     speechLangCode = languageManager.bottomLanguage
                 }else{
@@ -124,6 +125,8 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 } else {
                     speechLangCode = LanguageManager.shared.currentLanguage.rawValue
                 }
+                languageManager.tempSourceLanguage = speechLangCode
+                languageHasUpdated = true
                 break
             case .PronunciationPractice:
                 speechLangCode = pronunciationLanguageCode
@@ -263,6 +266,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
+                LanguageSelectionManager.shared.tempSourceLanguage = nil
                 if let purpose = self.screenOpeningPurpose{
                     switch purpose {
                     case .CountrySelectionByVoice:

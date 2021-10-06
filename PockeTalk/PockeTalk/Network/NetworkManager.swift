@@ -53,6 +53,11 @@ struct NetworkManager:Network {
             srcLang = LanguageSelectionManager.shared.topLanguage
             desLang = LanguageSelectionManager.shared.bottomLanguage
         }
+
+        if let src = LanguageSelectionManager.shared.tempSourceLanguage {
+            srcLang = src
+        }
+
         let params:[String:String]  = [
             access_key:UserDefaultsProperty<String>(authentication_key).value ?? "" ,
             srclang : srcLang,
