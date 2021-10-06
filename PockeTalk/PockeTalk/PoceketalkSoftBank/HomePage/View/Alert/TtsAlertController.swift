@@ -88,12 +88,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.layer.cornerRadius = cornerRadius
-        self.toLanguageLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
+        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
-        self.fromLanguageLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
+        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         //self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
@@ -119,6 +119,11 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         longTapGesture!.minimumPressDuration = 0.2
         longTapGesture!.delegate = self
         longTapGesture!.delaysTouchesBegan = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+        tapGesture.delegate = self
+        self.containerView.isUserInteractionEnabled = true
+        self.containerView.addGestureRecognizer(tapGesture)
         
         if hideBottomView == true{
             self.bottomView.isHidden = true
@@ -166,6 +171,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
         
     }
+    @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
+        playTTS()
+    }
     /// Start animation on background image view
     func startAnimation () {
         self.backgroundImageView.transform = CGAffineTransform.identity
@@ -192,6 +200,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         
         self.containerView.removeGestureRecognizer(longTapGesture!)
+        playTTS()
     }
     
     func UpdateUIForHidingMenu(){
@@ -291,15 +300,16 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.dismissPopUp()
     }
     func dismissPopUp(){
+        stopTTS()
+        self.stopAnimation()
         if let historyVC = self.presentingViewController?.presentingViewController  as? HistoryViewController{
             historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else if let favVC = self.presentingViewController?.presentingViewController  as? FavouriteViewController{
             favVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else{
-            self.stopAnimation()
-            self.delegate?.dismiss()
             self.dismiss(animated: true, completion: nil)
         }
+        self.delegate?.dismiss()
     }
 
     // TODO microphone tap event
@@ -307,6 +317,18 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
        // self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
         NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func playTTS(){
+        let translateText = chatItemModel?.chatItem?.textTranslated
+        PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
+        startAnimation()
+        ttsResponsiveView.TTSPlay(voice: "US English Female",text: translateText ??  "")
+    }
+    
+    func stopTTS(){
+        //TODO stop tts
+        //ttsResponsiveView.stopTTS()
     }
 }
 
@@ -386,9 +408,7 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     }
     
     func webView() {
-        let translateText = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslated : chatItemModel?.chatItem?.textNative
-        PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
-        ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
+        playTTS()
     }
     
     

@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import WebKit
 
 protocol DismissPronunciationFromHistory {
     func dismissPronunciationFromHistory()
@@ -30,11 +31,16 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var languageCode: String = ""
     var delegate: Pronunciation?
     var isFromHistory: Bool = false
+    var ttsResponsiveView = TTSResponsiveView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setUpUI()
+        
+        ttsResponsiveView.ttsResponsiveViewDelegate = self
+        self.view.addSubview(ttsResponsiveView)
+        ttsResponsiveView.isHidden = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -102,6 +108,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
 
     @IBAction func actionBack(_ sender: Any) {
+        stopTTS()
         if(self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
         }else{
@@ -110,6 +117,32 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-        GlobalMethod.showAlert("TODO: PLAY TTS!")
+        playTTS()
     }
+    func playTTS(){
+        let translateText = chatItem?.textTranslated
+        PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
+        //startAnimation()
+        ttsResponsiveView.TTSPlay(voice: "US English Female",text: translateText ??  "")
+    }
+    func stopTTS(){
+        //TODO stop tts
+        //ttsResponsiveView.stopTTS()
+    }
+}
+
+extension PronunciationPracticeViewController : TTSResponsiveViewDelegate {
+    func userContentController(message: WKScriptMessage) {
+        if(message.name == "iosListener"){
+            if message.body as! String == "end"{
+                //stopAnimation ()
+            }
+        }
+    }
+    
+    func webView() {
+        playTTS()
+    }
+    
+    
 }

@@ -384,26 +384,24 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
 
     func showTtsAlert ( ttt: String, stt: String ) {
         let languageManager = LanguageSelectionManager.shared
-        let isArrowUp = languageManager.isArrowUp ?? true
+        let isArrowUp = languageManager.isArrowUp
         let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
         var nativeText = ""
         var targetText = ""
         let nativeLangCode = LanguageSelectionManager.shared.bottomLanguage
         let targetLangCode = LanguageSelectionManager.shared.topLanguage
-        PrintUtility.printLog(tag: TAG, text: "nativeLangCode \(nativeLangCode) targetLangCode \(targetLangCode)")
+        PrintUtility.printLog(tag: TAG, text: "nativeLangCode \(nativeLangCode) targetLangCode \(targetLangCode)  isArrowUp: \(isArrowUp)" )
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         var nativeLangName = ""
         var targetLangName = ""
-        
+        PrintUtility.printLog(tag: TAG, text: "nativeLang \(nativeLanguage?.name) targetLang \(targetLanguage?.name)")
+        nativeText = stt
+        targetText = ttt
         if isArrowUp == true{
-            nativeText = stt
-            targetText = ttt
             nativeLangName = nativeLanguage?.name ?? ""
             targetLangName = targetLanguage?.name ?? ""
         }else{
-            nativeText = ttt
-            targetText = stt
             nativeLangName = targetLanguage?.name ?? ""
             targetLangName = nativeLanguage?.name ?? ""
         }

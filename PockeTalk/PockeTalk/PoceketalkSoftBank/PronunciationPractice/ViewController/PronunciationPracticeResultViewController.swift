@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftRichString
+import WebKit
 
 class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var viewContainer: UIView!
@@ -23,8 +24,10 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var languageCode : String = ""
     var delegate : PronunciationResult?
     var isFromHistory : Bool = false
+    var ttsResponsiveView = TTSResponsiveView()
 
     @IBAction func actionBack(_ sender: Any) {
+        stopTTS()
         if isFromHistory {
             self.delegate?.dismissResultHistory()
             self.dismiss(animated: false, completion: nil)
@@ -44,6 +47,9 @@ class PronunciationPracticeResultViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
+        ttsResponsiveView.ttsResponsiveViewDelegate = self
+        self.view.addSubview(ttsResponsiveView)
+        ttsResponsiveView.isHidden = true
     }
 
     // Initial UI set up
@@ -54,12 +60,13 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
         self.viewContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
         showResultView()
+        
         let tapForTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnTTSText(sender:)))
         labelFailedOriginalText.isUserInteractionEnabled = true
         labelFailedOriginalText.addGestureRecognizer(tapForTTS)
-
+        let tapForTTSSuccess = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnTTSText(sender:)))
         labelSuccessText.isUserInteractionEnabled = true
-        labelSuccessText.addGestureRecognizer(tapForTTS)
+        labelSuccessText.addGestureRecognizer(tapForTTSSuccess)
 
     }
 
@@ -112,6 +119,31 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-        GlobalMethod.showAlert("TODO: PLAY TTS!")
+        playTTS()
     }
+    
+    func playTTS(){
+        PrintUtility.printLog(tag: "Translate ", text: orginalText)
+        //startAnimation()
+        ttsResponsiveView.TTSPlay(voice: "US English Female",text: orginalText)
+    }
+    func stopTTS(){
+        //TODO stop tts
+        //ttsResponsiveView.stopTTS()
+    }
+}
+extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
+    func userContentController(message: WKScriptMessage) {
+        if(message.name == "iosListener"){
+            if message.body as! String == "end"{
+                //stopAnimation ()
+            }
+        }
+    }
+    
+    func webView() {
+        //playTTS()
+    }
+    
+    
 }
