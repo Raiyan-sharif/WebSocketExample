@@ -323,7 +323,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         let translateText = chatItemModel?.chatItem?.textTranslated
         PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
         startAnimation()
-        ttsResponsiveView.TTSPlay(voice: "US English Female",text: translateText ??  "")
+        ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
     }
     
     func stopTTS(){
