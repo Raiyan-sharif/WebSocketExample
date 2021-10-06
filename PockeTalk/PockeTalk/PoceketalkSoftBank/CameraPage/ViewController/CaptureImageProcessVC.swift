@@ -206,7 +206,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
                     textViews[i].view.frame.size.height = height
                     textViews[i].view.frame.size.width = width
-                    textViews[i].view.backgroundColor = .gray.withAlphaComponent(0.4)
+                    textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
                     textViews[i].view.tag = i
                     
                     self.cameraImageView.addSubview(textViews[i].view)

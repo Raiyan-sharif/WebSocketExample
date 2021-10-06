@@ -292,9 +292,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     func dismissPopUp(){
         if let historyVC = self.presentingViewController?.presentingViewController  as? HistoryViewController{
-            historyVC.dismiss(animated: true, completion: nil)
+            historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else if let favVC = self.presentingViewController?.presentingViewController  as? FavouriteViewController{
-            favVC.dismiss(animated: true, completion: nil)
+            favVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else{
             self.stopAnimation()
             self.delegate?.dismiss()
