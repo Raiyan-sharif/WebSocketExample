@@ -41,6 +41,7 @@ class HomeViewController: BaseViewController {
     var historyItemCount = 0
     var favouriteItemCount = 0;
     var swipeDown = UISwipeGestureRecognizer()
+    private var selectedTouchView:UIView!
     ///Top button
     private lazy var topButton:UIButton = {
         let button = UIButton(type: .custom)
@@ -298,9 +299,11 @@ class HomeViewController: BaseViewController {
                if touch.view == self.topClickView {
                 topCircleImgView.isHidden = false
                 selectedTab = 0
+                selectedTouchView = topCircleImgView
                } else if touch.view == self.bottomClickView {
                 bottomCircleleImgView.isHidden = false
                 selectedTab = 1
+                selectedTouchView = bottomCircleleImgView
                }  else {
                    return
                }
@@ -308,10 +311,12 @@ class HomeViewController: BaseViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if selectedTouchView == nil { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             print(self!.selectedTab)
             self?.topCircleImgView.isHidden = true
             self?.bottomCircleleImgView.isHidden = true
+            self?.selectedTouchView = nil
             self?.openLanguageSelectionScreen(isNative:self!.selectedTab)
         }
     }
