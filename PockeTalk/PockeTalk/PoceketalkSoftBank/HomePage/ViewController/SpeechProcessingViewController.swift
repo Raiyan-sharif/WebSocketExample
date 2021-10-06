@@ -25,6 +25,11 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         pronunciationView.isHidden = true
         isFromPronunciationPractice = false
         screenOpeningPurpose = .HomeSpeechProcessing
+        if LanguageSelectionManager.shared.isArrowUp{
+            speechLangCode = LanguageSelectionManager.shared.bottomLanguage
+        }else{
+            speechLangCode = LanguageSelectionManager.shared.topLanguage
+        }
         let index = UserDefaultsProperty<Int64>(kLastSavedChatID).value!
         let chat = TtsAlertViewModel().findLastSavedChat(id: Int64(index))
         GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chat, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: false, fromHistory: false, ttsAlertControllerDelegate: nil)
@@ -121,7 +126,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 }
                 break
             case .PronunciationPractice:
-//                speechLangCode = pronunciationLanguageCode
+                speechLangCode = pronunciationLanguageCode
                 break
             }
         }
@@ -229,10 +234,21 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
             }else{
                 self.spinnerView.isHidden = true
 //                self.navigationController?.popViewController(animated: true)
-                if(self.navigationController != nil){
-                    self.navigationController?.popViewController(animated: true)
-                }else{
-                    self.dismiss(animated: true, completion: nil)
+                if self.isFromPronunciationPractice && !self.isHistoryPronunciation {
+                    let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
+                    vc.orginalText = self.pronunciationText
+                    vc.languageCode = self.pronunciationLanguageCode
+                    vc.isFromSpeechProcessing = true
+                    vc.speechDelegate = self
+//                    self.present(vc, animated: false, completion: nil)
+                    self.navigationController?.pushViewController(vc, animated: false)
+                } else {
+                    if(self.navigationController != nil){
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -333,8 +349,8 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         screenOpeningPurpose = .PronunciationPractice
         pronunciationView.isHidden = false
         speechLangCode = pronunciationLanguageCode
-//        LanguageSelectionManager.shared.topLanguage = pronunciationLanguageCode
-//        LanguageSelectionManager.shared.bottomLanguage = pronunciationLanguageCode
+        LanguageSelectionManager.shared.topLanguage = pronunciationLanguageCode
+        LanguageSelectionManager.shared.bottomLanguage = pronunciationLanguageCode
         self.languageHasUpdated = true
         speechProcessingVM.updateLanguage()
         pronunciationLable.text = pronunciationText

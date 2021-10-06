@@ -32,6 +32,8 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var delegate: Pronunciation?
     var isFromHistory: Bool = false
     var ttsResponsiveView = TTSResponsiveView()
+    var isFromSpeechProcessing: Bool = false
+    var speechDelegate : PronunciationResult?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +92,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
                     controller.isHistoryPronunciation = self.isFromHistory
                     NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
                     self.present(controller, animated: true, completion: nil)
+                } else if self.isFromSpeechProcessing {
+                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+//                    self.dismiss(animated: false, completion: nil)
+                    self.navigationController?.popViewController(animated: false)
                 } else {
                     var dict = [String:String]()
                     dict["vc"] = "PronunciationPracticeViewController"
@@ -109,6 +115,9 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
 
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
+        if isFromSpeechProcessing {
+            speechDelegate?.dismissResultHome()
+        }
         if(self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
         }else{
