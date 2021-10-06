@@ -20,6 +20,10 @@ class ImageCroppingViewController: BaseViewController {
     @IBOutlet weak var cropButton: UIButton!
     @IBOutlet weak var centeredView: UIView!
     @IBOutlet weak var menuButton: UIButton!
+    
+    var imageFrameWidth = CGFloat()
+    var imageFrameHeight = CGFloat()
+    
     var cropBtn: UIButton = {
         let button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "cropButton"), for: .normal)
@@ -325,12 +329,19 @@ class ImageCroppingViewController: BaseViewController {
                                          width: (image.size.width * cropRect.width),
                                          height: (image.size.height * cropRect.height))
             croppedImage = image.crop(rect: resizedCropRect)
+            
+            imageFrameHeight = imageView.frame.size.height*cropRect.height
+            imageFrameWidth = imageView.frame.size.height*cropRect.width
+
+            
         }
         
         
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
             vc.image = croppedImage
+            vc.imageHeight = imageFrameHeight
+            vc.imageWidth = imageFrameWidth
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
