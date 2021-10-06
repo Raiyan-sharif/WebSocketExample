@@ -116,6 +116,7 @@
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
 		798A9D3326F1CD8200353D6B /* ParseTextDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */; };
 		79CA3BBB2706FC7D00884682 /* GoogleCloudOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */; };
+		79CA3BBD270D539D00884682 /* TranslatedTextJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */; };
 		8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8705289026F0ACF100555AF6 /* TextSizeViewController.swift */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
@@ -342,6 +343,7 @@
 		69C99F1626E744EA00D853AB /* hello_mapping_new.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = hello_mapping_new.xml; sourceTree = "<group>"; };
 		798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTextDetection.swift; sourceTree = "<group>"; };
 		79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudOCR.swift; sourceTree = "<group>"; };
+		79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedTextJSONModel.swift; sourceTree = "<group>"; };
 		8705289026F0ACF100555AF6 /* TextSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeViewController.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
@@ -1542,6 +1544,7 @@
 				89396B262704155B00D77760 /* TTTGoogle.swift */,
 				89396B282704156300D77760 /* TTTJSONModel.swift */,
 				79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */,
+				79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1975,6 +1978,7 @@
 				8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */,
 				8732CADD26FC285400843BFE /* NetworkManager.swift in Sources */,
 				89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */,
+				79CA3BBD270D539D00884682 /* TranslatedTextJSONModel.swift in Sources */,
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
 				89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */,
 				89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */,

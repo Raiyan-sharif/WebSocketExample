@@ -14,6 +14,7 @@ protocol ITTServerViewModelDelegates {
 
 class ITTServerViewModel: BaseModel {
     
+    private let TAG = "\(ITTServerViewModel.self)"
     var capturedImage: UIImage?
     
     var mXFactor:Float = 1
@@ -49,9 +50,13 @@ class ITTServerViewModel: BaseModel {
     }
     
     var detectedJSON: DetectedJSON?
-    var mTranslatedText = [String]()
+    var blockTranslatedText = [String]()
+    var lineTranslatedText = [String]()
     var blockListFromJson = [BlockDetection]()
     var lineListFromJson = [BlockDetection]()
+    var mBlockData: BlockData = BlockData(translatedText: [], languageCodeTo: "")
+    var mLineData: BlockData = BlockData(translatedText: [], languageCodeTo: "")
+    var mTranslatedJSON = TranslatedTextJSONModel(block: BlockData(translatedText: [], languageCodeTo: ""), line: BlockData(translatedText: [], languageCodeTo: ""))
     
     func createRequest()-> Resource{
         
@@ -98,7 +103,7 @@ class ITTServerViewModel: BaseModel {
                     
                     completion(detectedJSON, nil)
                     
-                    self.saveDataOnDatabase()
+                    //self.saveDataOnDatabase()
                 } else {
                     self.loaderdelegate?.hideLoader()
                     PrintUtility.printLog(tag: "", text: "No text detected from image.")
@@ -210,19 +215,34 @@ class ITTServerViewModel: BaseModel {
                 let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
                 
                 TTTGoogle.translate(source: sourceLan!, target: targetLan!, text: detectedText!) { [self] text in
-                    self.mTranslatedText.append(text!)
+                    
+                    if type == "blockMode" {
+                        blockTranslatedText.append(text!)
+                    } else {
+                        lineTranslatedText.append(text!)
+                    }
                     
                     if index == arrayBlocks.count-1 {
+                        
+                        PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
                         if type == "blockMode" {
-                            self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.mTranslatedText, completion: {[weak self] textView in
+                            mBlockData = BlockData(translatedText: blockTranslatedText, languageCodeTo: targetLan!)
+                            self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.blockTranslatedText, completion: {[weak self] textView in
                                 self?.blockModeTextViewList = textView
                             })
                         } else {
-                            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.mTranslatedText, completion: { textView in
+                            mLineData = BlockData(translatedText: lineTranslatedText, languageCodeTo: targetLan!)
+                            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
                                 self.lineModetTextViewList = textView
                                 self.loaderdelegate?.hideLoader()
                             })
                         }
+                        self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
+                        let encoder = JSONEncoder()
+                        encoder.outputFormatting = .prettyPrinted
+                        let data = try? encoder.encode(self.mTranslatedJSON)
+                        PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
+                        self.saveDataOnDatabase()
                     } else {
                         PrintUtility.printLog(tag: "completion ", text: " \(index) false")
                     }
@@ -230,6 +250,7 @@ class ITTServerViewModel: BaseModel {
                 }
                 self.semaphore.wait()
             }
+            
         }
     }
 
@@ -264,10 +285,19 @@ class ITTServerViewModel: BaseModel {
     }
 
     func saveDataOnDatabase() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try? encoder.encode(self.detectedJSON)
+        //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
+        
+        let encoder1 = JSONEncoder()
+        encoder1.outputFormatting = .prettyPrinted
+        let data1 = try? encoder1.encode(self.mTranslatedJSON)
+        //PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data1!, encoding: .utf8)!)")
         
         if let image = capturedImage {
             let imageData = UIImage.convertImageToBase64(image: image)
-            _ = try? CameraHistoryDBModel().insert(item: CameraEntity(id: nil, detectedData: "", translatedData: "", image: imageData))
+            _ = try? CameraHistoryDBModel().insert(item: CameraEntity(id: nil, detectedData: String(data: data!, encoding: .utf8)!, translatedData: String(data: data1!, encoding: .utf8)!, image: imageData))
         } else {
             PrintUtility.printLog(tag: "save to database: ", text: "False")
         }

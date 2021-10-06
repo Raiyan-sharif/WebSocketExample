@@ -43,7 +43,7 @@ class CaptureImageProcessVC: BaseViewController {
     }()
     
     private lazy var cameraTTSContextMenu: CameraTTSContextMenu = {
-        let cameraTTSContextMenu = CameraTTSContextMenu(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: SIZE_HEIGHT))
+        let cameraTTSContextMenu = CameraTTSContextMenu(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: 600))
         cameraTTSContextMenu.delegate = self
         return cameraTTSContextMenu
     }()
@@ -161,8 +161,20 @@ class CaptureImageProcessVC: BaseViewController {
 
 
             if (x.contains(touchpoint)) {
-                PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
-                PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
+                
+                if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
+                    
+                    if modeSwitchType == blockMode {
+                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: "")
+                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
+                        PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
+                        
+                    } else {
+                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: "")
+                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
+                        PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
+                    }
+                }
             }
         }
     }
@@ -243,10 +255,16 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             setupModeSwitchButton()
         }
         
+    }
+    
+    func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
+        cameraTTSDiaolog.fromLanguageLabel.text = nativeText
+        cameraTTSDiaolog.fromTranslateLabel.text = nativeLanguage
+        cameraTTSDiaolog.toLanguageLabel.text = translateText
+        cameraTTSDiaolog.toTranslateLabel.text = translateLanguage
+        
         /// Just showing the TTS dialog for testing.
-        //self.view.addSubview(cameraTTSDiaolog)
-        
-        
+        self.view.addSubview(cameraTTSDiaolog)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
