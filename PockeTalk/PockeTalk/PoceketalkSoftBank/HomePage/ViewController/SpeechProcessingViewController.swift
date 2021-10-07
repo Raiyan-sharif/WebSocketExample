@@ -104,9 +104,12 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     func initDelegate<T>(_ vc: T) {
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        SocketManager.sharedInstance.connect()
         let languageManager = LanguageSelectionManager.shared
         pronunciationView.isHidden = true
         if let purpose = self.screenOpeningPurpose{
@@ -133,7 +136,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 break
             }
         }
-        SocketManager.sharedInstance.connect()
+        
         // Do any additional setup after loading the view.
         self.speechProcessingVM = SpeechProcessingViewModel()
         self.setUpUI()

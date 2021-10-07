@@ -81,6 +81,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func relaunchApplication() {
         setUpinitialLaucnh()
     }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        relaunchApplication()
+    }
+    
 }
 
 
