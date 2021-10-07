@@ -25,7 +25,10 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var delegate : PronunciationResult?
     var isFromHistory : Bool = false
     var ttsResponsiveView = TTSResponsiveView()
-
+    var voice : String = ""
+    var rate : String = "1.0"
+    var isSpeaking : Bool = false
+    
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
         if isFromHistory {
@@ -47,6 +50,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
+        self.getTtsValue()
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
@@ -69,6 +73,12 @@ class PronunciationPracticeResultViewController: BaseViewController {
         labelSuccessText.addGestureRecognizer(tapForTTSSuccess)
 
     }
+    /// Retreive tts value from respective language code
+    func getTtsValue () {
+        let item = TTSEngine.shared.getTtsValue(langCode: languageCode)
+        self.voice = item.voice
+        self.rate = item.rate
+    }
 
     // floating microphone button
     func setUpMicroPhoneIcon () {
@@ -78,6 +88,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
+        self.stopTTS()
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
                 var dict = [String:String]()
@@ -119,31 +130,31 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-        playTTS()
-    }
-    
-    func playTTS(){
-        PrintUtility.printLog(tag: "Translate ", text: orginalText)
-        //startAnimation()
-        ttsResponsiveView.TTSPlay(voice: "US English Female",text: orginalText)
-    }
-    func stopTTS(){
-        //TODO stop tts
-        //ttsResponsiveView.stopTTS()
-    }
-}
-extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
-    func userContentController(message: WKScriptMessage) {
-        if(message.name == "iosListener"){
-            if message.body as! String == "end"{
-                //stopAnimation ()
-            }
+        if(!isSpeaking){
+            playTTS()
         }
     }
     
-    func webView() {
-        //playTTS()
+    func playTTS(){
+        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.setRate(rate: rate)
+        PrintUtility.printLog(tag: "Translate ", text: orginalText )
+        ttsResponsiveView.TTSPlay(voice: voice,text: orginalText )
+    }
+    func stopTTS(){
+        ttsResponsiveView.stopTTS()
+    }
+}
+extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
+    func speakingStatusChanged(isSpeaking: Bool) {
+        self.isSpeaking = isSpeaking
     }
     
+    func onVoiceEnd() { }
     
+    func onReady() {
+        if(!isSpeaking){
+            playTTS()
+        }
+    }
 }
