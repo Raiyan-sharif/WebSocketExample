@@ -165,15 +165,28 @@ class CaptureImageProcessVC: BaseViewController {
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
                     
                     if modeSwitchType == blockMode {
-                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: "")
+                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: "en")
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: "")
+                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: "en")
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
+                }
+            }
+        }
+    }
+    
+    func fetchDataFromDB() {
+        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+            for (index,each) in cameraHistoryData.enumerated() {
+                if let detectedData = each.detectedData {
+                    PrintUtility.printLog(tag: "detectedData data for index \(index)", text: detectedData)
+                }
+                if let translatedData = each.translatedData {
+                    PrintUtility.printLog(tag: "translated data for index \(index)", text: translatedData)
                 }
             }
         }
@@ -259,12 +272,22 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
         cameraTTSDiaolog.fromLanguageLabel.text = nativeText
-        cameraTTSDiaolog.fromTranslateLabel.text = nativeLanguage
+        
+        let nativeLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: nativeLanguage)
+        cameraTTSDiaolog.fromTranslateLabel.text = getTTSDialogLanguageName(languageItem: nativeLangItem!)
         cameraTTSDiaolog.toLanguageLabel.text = translateText
-        cameraTTSDiaolog.toTranslateLabel.text = translateLanguage
+        
+        let targetLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: translateLanguage)
+        cameraTTSDiaolog.toTranslateLabel.text = getTTSDialogLanguageName(languageItem: targetLangItem!)
         
         /// Just showing the TTS dialog for testing.
         self.view.addSubview(cameraTTSDiaolog)
+    }
+    
+    func getTTSDialogLanguageName(languageItem: LanguageItem) -> String{
+        var result: String = ""
+        result = languageItem.sysLangName + "(" + languageItem.name + ")"
+        return result
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

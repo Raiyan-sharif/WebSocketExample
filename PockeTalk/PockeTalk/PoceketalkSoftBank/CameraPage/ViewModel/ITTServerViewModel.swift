@@ -94,14 +94,14 @@ class ITTServerViewModel: BaseModel {
                     //PrintUtility.printLog(tag: "mDetectedLanguageCode: ", text: "\(lanCode!)")
                     let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor)
                     var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor:self.mXFactor, yFactor:self.mYFactor)
-                    let detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
+                    self.detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
                     
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
-                    let data = try? encoder.encode(detectedJSON)
+                    let data = try? encoder.encode(self.detectedJSON)
                     //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
                     
-                    completion(detectedJSON, nil)
+                    completion(self.detectedJSON, nil)
                     
                     //self.saveDataOnDatabase()
                 } else {
@@ -236,13 +236,14 @@ class ITTServerViewModel: BaseModel {
                                 self.lineModetTextViewList = textView
                                 self.loaderdelegate?.hideLoader()
                             })
+                            
+                            self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
+                            let encoder = JSONEncoder()
+                            encoder.outputFormatting = .prettyPrinted
+                            let data = try? encoder.encode(self.mTranslatedJSON)
+                            PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
+                            self.saveDataOnDatabase()
                         }
-                        self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
-                        let encoder = JSONEncoder()
-                        encoder.outputFormatting = .prettyPrinted
-                        let data = try? encoder.encode(self.mTranslatedJSON)
-                        PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
-                        self.saveDataOnDatabase()
                     } else {
                         PrintUtility.printLog(tag: "completion ", text: " \(index) false")
                     }
