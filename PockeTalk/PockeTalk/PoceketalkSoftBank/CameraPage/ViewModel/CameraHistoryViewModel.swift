@@ -39,11 +39,18 @@ class CameraHistoryViewModel: BaseModel {
                     let image = UIImage.convertBase64ToImage(imageString: imageData)
                     cameraHistoryImages.append(CameraHistoryDataModel.init(image: image))
                 }
-                
-                
             }
         }
-        
+    }
+    
+    func fetchTranslatedText() {
+        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+            for (index,each) in cameraHistoryData.enumerated() {
+                if let translatedData = each.translatedData {
+                    PrintUtility.printLog(tag: "translated data for index \(index)", text: translatedData)
+                }
+            }
+        }
     }
     
 }

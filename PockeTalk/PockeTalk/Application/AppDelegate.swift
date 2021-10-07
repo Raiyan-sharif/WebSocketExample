@@ -47,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
         LanguageSelectionManager.shared.getLanguageSelectionData()
         LanguageSelectionManager.shared.isArrowUp = true
+        CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
+        
     }
 
     func generateAccessKey(){
