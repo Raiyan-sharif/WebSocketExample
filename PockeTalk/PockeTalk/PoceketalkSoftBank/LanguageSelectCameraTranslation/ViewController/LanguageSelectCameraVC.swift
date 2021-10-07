@@ -119,9 +119,7 @@ class LanguageSelectCameraVC: BaseViewController {
                     controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionCamera
                     self.navigationController?.pushViewController(controller, animated: true);
                 } else {
-                    GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
-                        GlobalMethod.openSettingsApplication()
-                    }
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                 }
             }
         } else {

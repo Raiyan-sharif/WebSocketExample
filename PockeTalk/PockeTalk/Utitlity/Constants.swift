@@ -53,13 +53,14 @@ let kBottomLanguageButtonActionToastMessage = "Navigate to language selection sc
 
 let kActionAllowAccess = "Allow access"
 let kActionCancel = "Cancel"
-let kMicrophoneUsageTitle = "Can't use microphone"
+let kMicrophoneUsageTitle = #""PockeTalk" Would Like to Access the Microphone"#
 let kMicrophoneUsageMessage = "PockeTalk needs permission to use the microphone"
 let kPhotosUsageTitle = "Can't use photos"
 let kPhotosUsageMessage = "PockeTalk needs permission to access the photo library"
-let kCameraUsageTitle = "Can't use camera"
+let kCameraUsageTitle = #""PockeTalk" Would Like to Access the Camera"#
 let kCameraUsageMessage = "PockeTalk needs permission to use the camera"
 let kTitleOk = "OK"
+let kNotAllow = "Don't Allow"
 
 
 

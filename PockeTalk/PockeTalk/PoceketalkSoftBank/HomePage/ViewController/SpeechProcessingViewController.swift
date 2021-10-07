@@ -100,6 +100,9 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     var pronunciationLanguageCode : String = ""
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
     var pronunciationDelegate : DismissPronunciationFromHistory?
+    var isShowTutorial : Bool = false
+    let timeDifferenceToShowTutorial : Int = 1
+    let waitingTimeToShowExampleText : Double = 2.0
 
     func initDelegate<T>(_ vc: T) {
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
@@ -147,8 +150,11 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         }
         socketManager.socketManagerDelegate = self
         self.setUpAudio()
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) { [weak self]  in
-            self?.showExample()
+        DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
+            /// after 2 second of interval, check if server data is available. If not available show the example text
+            if self!.isSSTavailable == false {
+                self?.showExample()
+            }
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(didPressMicroBtn(_:)), name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
@@ -239,7 +245,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame())
             }else{
                 self.spinnerView.isHidden = true
-//                self.navigationController?.popViewController(animated: true)
+                //                self.navigationController?.popViewController(animated: true)
                 if self.isFromPronunciationPractice && !self.isHistoryPronunciation {
                     let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeViewController") as! PronunciationPracticeViewController
@@ -247,8 +253,10 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                     vc.languageCode = self.pronunciationLanguageCode
                     vc.isFromSpeechProcessing = true
                     vc.speechDelegate = self
-//                    self.present(vc, animated: false, completion: nil)
+                    //                    self.present(vc, animated: false, completion: nil)
                     self.navigationController?.pushViewController(vc, animated: false)
+                } else if self.isShowTutorial == true {
+                    self.showTutorial()
                 } else {
                     if(self.navigationController != nil){
                         self.navigationController?.popViewController(animated: true)
@@ -334,22 +342,30 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-        spinnerView.isHidden = false
-        speechProcessingLeftImgView.isHidden = true
-        speechProcessingRightImgView.isHidden = true
-        service?.stopRecord()
-        service?.timerInvalidate()
-        var runCount = 0
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
-             runCount += 1
-             if runCount == 6 {
-                 timer.invalidate()
-                if !self.speechProcessingVM.isFinal.value {
-                    self.navigationController?.popViewController(animated: true)
-                }
+        let currentTs = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let timeGap = self.speechProcessingVM.getTimeDifference(startTime: homeMicTapTimeStamp, endTime: currentTs)
+        if timeGap <= timeDifferenceToShowTutorial {
+            /// show tutorial screen if talk button got tapped within 1 sec of tapping talk button of Home
+            self.isShowTutorial = true
+            service?.timerInvalidate()
+            service?.stopRecord()
+        } else {
+            spinnerView.isHidden = false
+            speechProcessingLeftImgView.isHidden = true
+            speechProcessingRightImgView.isHidden = true
+            service?.stopRecord()
+            service?.timerInvalidate()
+            var runCount = 0
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
+                 runCount += 1
+                 if runCount == 6 {
+                     timer.invalidate()
+                    if !self.speechProcessingVM.isFinal.value {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                 }
              }
-         }
-
+        }
     }
 
     func FromPronunciation() {

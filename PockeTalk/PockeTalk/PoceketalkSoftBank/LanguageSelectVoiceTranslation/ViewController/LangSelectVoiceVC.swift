@@ -213,9 +213,7 @@ class LangSelectVoiceVC: BaseViewController {
                     controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
                     self.navigationController?.pushViewController(controller, animated: true);
                 } else {
-                    GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
-                        GlobalMethod.openSettingsApplication()
-                    }
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                 }
             }
         } else {

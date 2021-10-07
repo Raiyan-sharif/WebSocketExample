@@ -18,6 +18,7 @@ protocol SpeechProcessingViewModeling {
     func updateLanguage()
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
+    func getTimeDifference (startTime : Int, endTime : Int) -> Int
 }
 
 class SpeechProcessingViewModel: SpeechProcessingViewModeling {
@@ -139,5 +140,10 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
         UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
             rightImage.frame = expandedFrame
         })
+    }
+
+    /// Calculate time difference
+    func getTimeDifference (startTime : Int, endTime : Int) -> Int {
+        return endTime - startTime
     }
 }

@@ -34,7 +34,7 @@ class CustomAlertViewModel:BaseModel {
         return alertVC
     }
 
-    func alertDialogWithTitleWithActionButton(title:String, message:String, buttonTitle:String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
+    func alertDialogWithTitleWithActionButton(title:String, message:String, buttonTitle:String,cancelTitle : String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
         let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
         alertVC.alertTitle = title
@@ -43,7 +43,7 @@ class CustomAlertViewModel:BaseModel {
         alertVC.noTitleShown = false
         alertVC.noActionButton = false
         alertVC.buttonAction = completion
-
+        alertVC.cancelButtonTitle = cancelTitle
         return alertVC
     }
 

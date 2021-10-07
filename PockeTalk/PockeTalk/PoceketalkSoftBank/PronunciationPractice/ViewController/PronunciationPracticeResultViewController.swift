@@ -102,9 +102,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
                     self.dismiss(animated: true, completion: nil)
                 }
             } else {
-                GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
-                    GlobalMethod.openSettingsApplication()
-                }
+                GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
         }
     }

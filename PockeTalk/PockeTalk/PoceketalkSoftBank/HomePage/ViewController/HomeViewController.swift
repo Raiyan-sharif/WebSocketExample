@@ -227,18 +227,16 @@ class HomeViewController: BaseViewController {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
-                        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                        controller.homeMicTapTimeStamp = currentTS
-                        controller.languageHasUpdated = self.languageHasUpdated
-                        controller.screenOpeningPurpose = .HomeSpeechProcessing
-                        self.navigationController?.pushViewController(controller, animated: true);
+                    let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+                    controller.homeMicTapTimeStamp = currentTS
+                    controller.languageHasUpdated = self.languageHasUpdated
+                    controller.screenOpeningPurpose = .HomeSpeechProcessing
+                    self.navigationController?.pushViewController(controller, animated: true);
 
                 } else {
-                    GlobalMethod.showAlert(title: kMicrophoneUsageTitle, message: kMicrophoneUsageMessage, in: self) {
-                        GlobalMethod.openSettingsApplication()
-                    }
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
 
                 }
             }
@@ -282,10 +280,7 @@ class HomeViewController: BaseViewController {
                     self?.navigationController?.pushViewController(cameraViewController, animated: true)
                 }
             } else {
-
-                GlobalMethod.showAlert(title: kCameraUsageTitle, message: kCameraUsageMessage, in: self) {
-                    GlobalMethod.openSettingsApplication()
-                }
+                GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
             }
         }
         

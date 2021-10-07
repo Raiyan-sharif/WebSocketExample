@@ -19,6 +19,7 @@ class CustomAlertDailogViewController: BaseViewController {
     var alertTitle = String()
     var alertMessage = String()
     var alertButton = String()
+    var cancelButtonTitle = String()
     var noTitleShown = Bool()
     var noActionButton = Bool()
     var buttonAction:(() -> Void)?
@@ -32,10 +33,28 @@ class CustomAlertDailogViewController: BaseViewController {
     func setupUI() {
         alertView.layer.cornerRadius = 12
         titleView.layer.cornerRadius = 12
-        cancelButton.setTitle("cancel".localiz(), for: .normal)
+
         titleLable.text = alertTitle
+        titleLable.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .bold)
+        titleLable.textAlignment = .center
+        titleLable.numberOfLines = 0
+        titleLable.lineBreakMode = .byWordWrapping
+
         messageLable.text = alertMessage
+        messageLable.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
+        messageLable.textAlignment = .center
+        messageLable.numberOfLines = 0
+        messageLable.lineBreakMode = .byWordWrapping
+
+        if cancelButtonTitle.isEmpty {
+            cancelButton.setTitle("cancel".localiz(), for: .normal)
+        } else {
+            cancelButton.setTitle(cancelButtonTitle, for: .normal)
+        }
+        cancelButton.setTitleColor(UIColor.systemBlue, for: .normal)
+
         actionButton.setTitle(alertButton, for: .normal)
+        actionButton.setTitleColor(UIColor.systemBlue, for: .normal)
         titleView.visiblity(gone: noTitleShown, dimension: 60)
         actionButton.visiblity(gone: noActionButton)
     }

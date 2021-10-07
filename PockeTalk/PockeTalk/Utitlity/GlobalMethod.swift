@@ -281,4 +281,17 @@ class GlobalMethod {
     static func openSettingsApplication() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }
+
+    /// show microphone, camera, photo library permission alert
+    static func showPermissionAlert (viewController : UIViewController?, title : String, message : String) {
+        let alertService = CustomAlertViewModel()
+        let alert = alertService.alertDialogWithTitleWithActionButton(title: title, message:message, buttonTitle: kTitleOk, cancelTitle: kNotAllow) {
+        }
+        alert.buttonAction = {
+            GlobalMethod.openSettingsApplication()
+        }
+        alert.modalPresentationStyle = .overCurrentContext
+        alert.modalTransitionStyle = .crossDissolve
+        viewController?.present(alert, animated: true, completion: nil)
+    }
 }
