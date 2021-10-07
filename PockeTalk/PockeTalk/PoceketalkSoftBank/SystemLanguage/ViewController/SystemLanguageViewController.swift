@@ -45,6 +45,7 @@ class SystemLanguageViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.title = "Language".localiz()
         self.navigationController?.navigationBar.isHidden = false
     }
 
@@ -76,7 +77,6 @@ class SystemLanguageViewController: BaseViewController {
     
     /// Setup all the UI here
     private func setUpUI() {
-        self.title = "Language".localiz()
         tableView = UITableView(frame: .zero, style: .plain)
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -152,16 +152,19 @@ extension SystemLanguageViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let languageItem = languageList[indexPath.row]
+        let currentLangType = LanguageManager.shared.currentLanguage.rawValue
+
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: SystemLanguageCell.self)
         cell.selectionStyle = .none
         cell.nameLabel.text = languageItem.langName
-        if UserDefaultsProperty<String>(KSelectedLanguage).value == languageItem.lanType{
+        if languageItem.lanType == currentLangType {
             cell.imgView.image = #imageLiteral(resourceName: "ic_check_circle_white_selected")
             cell.contentView.backgroundColor = UIColor(hex: "#008FE8")
-        }else{
+        } else {
             cell.imgView.image = nil
             cell.contentView.backgroundColor = .black
         }
+
         return cell
     }
 
@@ -186,3 +189,11 @@ extension SystemLanguageViewController:UITableViewDelegate{
         return GlobalMethod.standardTableViewCellHeight
     }
 }
+
+
+//let currentLangType = LanguageManager.shared.currentLanguage.rawValue
+//if languageItem.lanType == currentLangType {
+//    cell.nameLabel.text = languageItem.langName
+//    cell.imgView.image = #imageLiteral(resourceName: "ic_check_circle_white_selected")
+//    UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
+//}
