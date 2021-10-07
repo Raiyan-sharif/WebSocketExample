@@ -252,6 +252,8 @@ class HomeViewController: BaseViewController {
         let historyVC = HistoryViewController()
         historyVC.modalTransitionStyle = .crossDissolve
         historyVC.initDelegate(self)
+        self.topCircleImgView.isHidden = true
+        self.bottomCircleleImgView.isHidden = true
         self.navigationController?.present(historyVC, animated: true, completion: nil)
     }
     
