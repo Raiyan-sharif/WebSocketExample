@@ -61,8 +61,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var ttsResponsiveView = TTSResponsiveView()
     var isFromHistory : Bool = false
     var voice : String = ""
-    var rate : String = ""
-
+    var rate : String = "1.0"
+    var isSpeaking : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -172,7 +172,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         
     }
     @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
-        playTTS()
+        if(!isSpeaking){
+            playTTS()
+        }
+        
     }
     /// Start animation on background image view
     func startAnimation () {
@@ -200,7 +203,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         
         self.containerView.removeGestureRecognizer(longTapGesture!)
-        playTTS()
+        if(!isSpeaking){
+            playTTS()
+        }
     }
     
     func UpdateUIForHidingMenu(){
@@ -320,10 +325,13 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     
     func playTTS(){
+        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.setRate(rate: rate)
         let translateText = chatItemModel?.chatItem?.textTranslated
         PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
         startAnimation()
         ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
+        
     }
     
     func stopTTS(){
@@ -399,16 +407,42 @@ extension TtsAlertController : AlertReusableDelegate {
 
 extension TtsAlertController : TTSResponsiveViewDelegate {
     func userContentController(message: WKScriptMessage) {
-        if(message.name == "iosListener"){
+        switch message.name {
+            case iosListener:
+                    
             PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
             if message.body as! String == "end"{
+                isSpeaking = false
                 stopAnimation ()
+                ttsResponsiveView.stopEngineProcess()
             }
-        }
+            
+            case speakingListener:
+            PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \(message.body)")
+            if(message.body as! Bool == true){
+                isSpeaking = false
+                PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \("playing")")
+            }else{
+                isSpeaking = true
+                PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \("not playing")")
+            }
+            default:
+                break;
+            }
+//        if(message.name == "iosListener"){
+//            PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
+//            if message.body as! String == "end"{
+//                stopAnimation ()
+//                ttsResponsiveView.stopEngineProcess()
+//            }
+//
+//        }
     }
     
     func webView() {
-        playTTS()
+        if(!isSpeaking){
+            playTTS()
+        }
     }
     
     

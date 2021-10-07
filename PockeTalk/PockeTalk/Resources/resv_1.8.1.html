@@ -43,7 +43,8 @@
         }
 
         function isSpeaking() {
-            responsiveVoice.isPlaying();
+            webkit.messageHandlers.speakingListener.postMessage(responsiveVoice.isPlaying());
+            //responsiveVoice.isPlaying();
         }
             //setTimeout(sayIt, 3000);
         </script>

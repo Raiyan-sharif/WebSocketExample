@@ -157,3 +157,5 @@ let language_channge_url = "/handsfree/api/pub/lang"
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
+let iosListener = "iosListener"
+let speakingListener = "speakingListener"

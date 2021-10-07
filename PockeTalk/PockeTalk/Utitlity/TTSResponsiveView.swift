@@ -19,13 +19,17 @@ class TTSResponsiveView : UIView {
     init(){
         super.init(frame: .zero)
         let contentController = WKUserContentController()
-             contentController.add(
-                 self as WKScriptMessageHandler,
-                 name: "iosListener"
-             )
-
-             let config = WKWebViewConfiguration()
-             config.userContentController = contentController
+        contentController.add(
+            self as WKScriptMessageHandler,
+            name: iosListener
+        )
+        contentController.add(
+            self as WKScriptMessageHandler,
+            name: speakingListener
+        )
+        
+        let config = WKWebViewConfiguration()
+        config.userContentController = contentController
         wkView = WKWebView(frame: .zero, configuration: config)
         self.addSubview(wkView)
 
@@ -59,6 +63,35 @@ class TTSResponsiveView : UIView {
             // PrintUtility.printLog(tag: self.TAG, text: result as Any as! String)
         }
     }
+    
+    func setRate(rate:String) {
+        PrintUtility.printLog(tag: "Pitch rate", text: rate)
+        wkView.evaluateJavaScript("setPitchRate('\(rate)')")  { (result, error) in
+            guard error == nil else {
+                return
+            }
+            // PrintUtility.printLog(tag: self.TAG, text: result as Any as! String)
+        }
+    }
+    
+    func stopEngineProcess() {
+        wkView.evaluateJavaScript("cancel()")  { (result, error) in
+            guard error == nil else {
+                return
+            }
+            // PrintUtility.printLog(tag: self.TAG, text: result as Any as! String)
+        }
+    }
+    
+    func isSpeaking() {
+        wkView.evaluateJavaScript("isSpeaking()")  { (result, error) in
+            guard error == nil else {
+                return
+            }
+        }
+    }
+    
+    
     
 }
 
