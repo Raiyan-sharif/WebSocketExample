@@ -356,8 +356,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         screenOpeningPurpose = .PronunciationPractice
         pronunciationView.isHidden = false
         speechLangCode = pronunciationLanguageCode
-        LanguageSelectionManager.shared.topLanguage = pronunciationLanguageCode
-        LanguageSelectionManager.shared.bottomLanguage = pronunciationLanguageCode
+        LanguageSelectionManager.shared.tempSourceLanguage = pronunciationLanguageCode
         self.languageHasUpdated = true
         speechProcessingVM.updateLanguage()
         pronunciationLable.text = pronunciationText
