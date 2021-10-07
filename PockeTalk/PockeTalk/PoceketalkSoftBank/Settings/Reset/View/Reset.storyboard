@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,13 +33,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UB3-zl-gXJ">
-                                        <rect key="frame" x="10" y="18" width="24" height="33.5"/>
+                                        <rect key="frame" x="10" y="22" width="24" height="26"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Mmf-Ki-p0T"/>
+                                            <constraint firstAttribute="height" constant="26" id="Mmf-Ki-p0T"/>
                                             <constraint firstAttribute="width" constant="24" id="QNa-ww-8fb"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" backgroundImage="lessthan" catalog="system"/>
+                                        <state key="normal" backgroundImage="icon_arrow_left.9"/>
                                         <connections>
                                             <action selector="actionBack:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="c8l-Cj-i7S"/>
                                         </connections>
@@ -88,7 +88,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lessthan" catalog="system" width="128" height="111"/>
+        <image name="icon_arrow_left.9" width="22" height="22"/>
         <image name="selection_icon" width="45" height="45"/>
     </resources>
 </document>
