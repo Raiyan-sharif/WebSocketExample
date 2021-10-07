@@ -23,6 +23,7 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
 
     //forces the system to do one layout pass
     var isHeightCalculated: Bool = false
+    var initialColor:UIColor!
 
     /// Records the view's center for use as an offset while dragging
     var viewCenter: CGPoint!
@@ -37,12 +38,13 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         favView.backgroundColor = .clear
         containerView.layer.shadowRadius = 10.0
         containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.5
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        containerView.layer.shadowOpacity = 0.2
+        containerView.layer.shadowOffset = CGSize(width: 0, height: -1)
 //        containerView.dropShadow(color: .black, opacity: 0.5, offSet: CGSize(width: 0, height: 5), radius: 10, scale: true)
         childView.layer.cornerRadius = 20
         childView.center = self.center
         favView.layer.cornerRadius = 2
+        containerView.backgroundColor = initialColor
 
         let panGestureRecognizer = PanDirectionGestureRecognizer(direction: .horizontal, target: self, action: #selector(handlePanGesture(_:)))
         panGestureRecognizer.cancelsTouchesInView = false
@@ -63,10 +65,10 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         super.layoutSubviews()
         changeFontSize()
         // Improve scrolling performance with an explicit shadowPath
-        containerView.layer.shadowPath = UIBezierPath(
-            roundedRect: containerView.bounds,
-                    cornerRadius: 20
-                ).cgPath
+//        containerView.layer.shadowPath = UIBezierPath(
+//            roundedRect: containerView.bounds,
+//                    cornerRadius: 20
+//                ).cgPath
     }
     
     @objc func handleTap(recognizer:UITapGestureRecognizer) {
@@ -118,6 +120,7 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
                     target?.center = self.initialCenter
                 })
             }else{
+                containerView.backgroundColor = initialColor
                 target?.center = self.initialCenter
             }
         default: break

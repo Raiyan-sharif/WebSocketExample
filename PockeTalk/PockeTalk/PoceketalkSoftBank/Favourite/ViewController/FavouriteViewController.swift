@@ -106,6 +106,7 @@ class FavouriteViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = false
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
             GlobalMethod.showNoInternetAlert()
