@@ -63,6 +63,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var voice : String = ""
     var rate : String = "1.0"
     var isSpeaking : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -139,34 +140,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     /// Retreive tts value from respective language code
     func getTtsValue () {
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.bottomLanguage
-        let targetLangCode = languageManager.topLanguage
-
-        if let value = self.ttsVM.getTtsValueByCode(code: LanguageSelectionManager.shared.isArrowUp ? targetLangCode : nativeLangCode) {
-            voice = value
-        }
-
-        /// Multiple tts_value will be seperated by # in future.
-        if !voice.isEmpty && voice.contains(KMultipleTtsValueSeparator){
-            voice = voice.components(separatedBy: KMultipleTtsValueSeparator)[0]
-            if voice.contains(KVoiceAndTempoSeparator){
-                let ttsValue = voice
-                voice = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[0]
-                rate = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[1]
-            }
-        } else {
-            /// For now if any tts value contains "_", after splitting, the first portion will be counted as voice and the other portioin will be counted as rate
-            if !voice.isEmpty && voice.contains(KVoiceAndTempoSeparator){
-                let ttsValue = voice
-                voice = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[0]
-                rate = ttsValue.components(separatedBy: KVoiceAndTempoSeparator)[1]
-            }
-        }
-
+        let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
+        let item = TTSEngine.shared.getTtsValue(langCode: targetLanguageItem!.code)
+        self.voice = item.voice
+        self.rate = item.rate
     }
 
     @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizer.State.ended){
+            self.stopTTS()
             self.openContextMenu()
         }
         
@@ -264,6 +246,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 
     @IBAction func menuTapAction(_ sender: UIButton) {
+        self.stopTTS()
         self.stopAnimation()
         self.openContextMenu()
     }
@@ -321,6 +304,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     @objc func microphoneTapAction (sender:UIButton) {
        // self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
         NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+        self.stopTTS()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -335,8 +319,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     
     func stopTTS(){
-        //TODO stop tts
-        //ttsResponsiveView.stopTTS()
+        ttsResponsiveView.stopTTS()
+        stopAnimation()
     }
 }
 
@@ -352,6 +336,7 @@ extension TtsAlertController : RetranslationDelegate {
         
         let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         self.chatItemModel?.chatItem = chatEntity
+        self.getTtsValue()
         ttsVM.saveChatItem(chatItem: chatEntity)
         self.updateUI()
         ttsAlertControllerDelegate?.itemAdded(HistoryChatItemModel(chatItem: chatEntity, idxPath: nil))
@@ -399,6 +384,7 @@ extension TtsAlertController : AlertReusableDelegate {
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
         self.chatItemModel?.chatItem = chatItemModel?.chatItem
+        self.getTtsValue()
         self.updateUI()
         ttsAlertControllerDelegate?.itemAdded(chatItemModel!)
     }
@@ -406,46 +392,20 @@ extension TtsAlertController : AlertReusableDelegate {
 }
 
 extension TtsAlertController : TTSResponsiveViewDelegate {
-    func userContentController(message: WKScriptMessage) {
-        switch message.name {
-            case iosListener:
-                    
-            PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
-            if message.body as! String == "end"{
-                isSpeaking = false
-                stopAnimation ()
-                ttsResponsiveView.stopEngineProcess()
-            }
-            
-            case speakingListener:
-            PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \(message.body)")
-            if(message.body as! Bool == true){
-                isSpeaking = false
-                PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \("playing")")
-            }else{
-                isSpeaking = true
-                PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \("not playing")")
-            }
-            default:
-                break;
-            }
-//        if(message.name == "iosListener"){
-//            PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
-//            if message.body as! String == "end"{
-//                stopAnimation ()
-//                ttsResponsiveView.stopEngineProcess()
-//            }
-//
-//        }
+    
+    func onVoiceEnd() {
+        stopAnimation ()
     }
     
-    func webView() {
+    func speakingStatusChanged(isSpeaking: Bool) {
+        self.isSpeaking = isSpeaking
+    }
+    
+    func onReady() {
         if(!isSpeaking){
             playTTS()
         }
     }
-    
-    
 }
 
 
