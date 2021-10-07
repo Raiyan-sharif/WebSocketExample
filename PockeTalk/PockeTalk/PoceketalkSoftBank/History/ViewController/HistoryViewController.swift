@@ -88,7 +88,7 @@ class HistoryViewController: BaseViewController {
         bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottmView.heightAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
+        bottmView.clipsToBounds =  true
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -116,6 +116,7 @@ class HistoryViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = false
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
             GlobalMethod.showNoInternetAlert()
@@ -151,7 +152,7 @@ class HistoryViewController: BaseViewController {
         let transitionAnimation = CABasicAnimation(keyPath: "position.y")
         transitionAnimation.fromValue = view.layer.position.y -
             collectionView.bounds.height
-        transitionAnimation.toValue = view.layer.position.y - buttonWidth/2
+        transitionAnimation.toValue = view.layer.position.y - buttonWidth/2 
 
         let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
         scalAnimation.fromValue = 0.5
@@ -195,8 +196,10 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.toLabel.text = item.textNative
         if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()
+            cell.initialColor = UIColor._lightGrayColor()
         }else{
             cell.childView.backgroundColor = UIColor._skyBlueColor()
+            cell.initialColor = UIColor._skyBlueColor()
         }
         PrintUtility.printLog(tag: "FV:Controller", text: "\(String(describing: item.chatIsLiked))")
         if item.chatIsLiked == IsLiked.noLike.rawValue{
