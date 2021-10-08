@@ -74,9 +74,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
 
     /// Retreive tts value from respective language code
     func getTtsValue () {
-        let languageManager = LanguageSelectionManager.shared
-        let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItem?.textTranslatedLanguage ?? languageCode)
-        let item = TTSEngine.shared.getTtsValue(langCode: targetLanguageItem!.code)
+        let item = TTSEngine.shared.getTtsValue(langCode: languageCode)
         self.voice = item.voice
         self.rate = item.rate
     }
@@ -145,11 +143,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         }
     }
     func playTTS(){
-        let translateText = chatItem?.textTranslated        
         ttsResponsiveView.isSpeaking()
         ttsResponsiveView.setRate(rate: rate)
-        PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
-        ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
+        PrintUtility.printLog(tag: "Translate ", text: orginalText)
+        ttsResponsiveView.TTSPlay(voice: voice,text: orginalText)
     }
     func stopTTS(){
         ttsResponsiveView.stopTTS()

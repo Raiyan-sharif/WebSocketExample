@@ -150,10 +150,12 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         }
         socketManager.socketManagerDelegate = self
         self.setUpAudio()
-        DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
-            /// after 2 second of interval, check if server data is available. If not available show the example text
-            if self!.isSSTavailable == false {
-                self?.showExample()
+        if !isFromPronunciationPractice {
+            DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
+                /// after 2 second of interval, check if server data is available. If not available show the example text
+                if self!.isSSTavailable == false {
+                    self?.showExample()
+                }
             }
         }
 
