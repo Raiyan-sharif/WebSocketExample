@@ -59,8 +59,8 @@ class ParseTextDetection: BaseModel {
             textView.minimumScaleFactor = 0.5
             
             
-            textView.text = each.text
-            //textView.text = arrTranslatedText[index]
+            //textView.text = each.text
+            textView.text = arrTranslatedText[index]
             //textView.text = "From now on, translation history will be available only if you have signed in \n # and it will be managed from my proof. Translation history will\n be deleted during this upgrade (0), \nso be sure to save the translations you want \nto easily access and maximize later.\n From now on, if you just sign in, \nthe translation will be done and it\n will be considered as Mama&#39;s Activity.\n The translation history will be \ndeleted during this upgrade / downgrade,\n so you can easily engage after the hunger strike."
             
             textView.sizeToFit()
@@ -131,8 +131,8 @@ class ParseTextDetection: BaseModel {
             textView.adjustsFontSizeToFitWidth = true
             textView.minimumScaleFactor = 0.5
             
-            textView.text = each.text
-            //textView.text = arrTranslatedText[index]
+            //textView.text = each.text
+            textView.text = arrTranslatedText[index]
             textView.sizeToFit()
             textView.isUserInteractionEnabled = true
             textView.tag = index

@@ -16,9 +16,12 @@ class CaptureImageProcessVC: BaseViewController {
     @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
     
     private let iTTServerViewModel = ITTServerViewModel()
+    private let cameraHistoryViewModel = CameraHistoryViewModel()
     private let activity = ActivityIndicator()
     
     var imageView = UIImageView()
+    var fromHistoryVC: Bool = false
+    var cameraHistoryImageIndex = Int()
     
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -57,8 +60,18 @@ class CaptureImageProcessVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        cameraImageView.center = self.view.center
         self.iTTServerViewModel.viewDidLoad(self)
-        self.iTTServerViewModel.capturedImage = image
+        fromHistoryVC ? setUpViewForHistoryVC() : setUpViewForCapturedImage()
+        
+        scrollView.delegate = self
+        scrollView.maximumZoomScale = 3.0
+        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
+        scrollView.addGestureRecognizer(scrollViewTap)
+                
+    }
+    
+    func setUpViewForCapturedImage() {
         
         let heightInPoints = image.size.height
         let widthInPoints = image.size.width
@@ -80,38 +93,31 @@ class CaptureImageProcessVC: BaseViewController {
         if(image.size.height > CGFloat(IMAGE_HEIGHT)){
             resizeHeight = Int(IMAGE_HEIGHT)
         }
-        
         //image = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
         
         let heightInPoints2 = image.size.height
         let widthInPoints2 = image.size.width
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
         
-        let heightInPixels = heightInPoints * image.scale
-        let widthInPixels = widthInPoints * image.scale
         cameraImageView.backgroundColor = .black
 
-        
         if imageWidth>self.view.frame.width {
             imageWidth = self.view.frame.width
         }
         let image1 = resizeImage(image: image, targetSize: CGSize(width: imageWidth, height: imageHeight))
-        
         imageView.image = image1
-        
+        self.iTTServerViewModel.capturedImage = image1
         
         imageView.frame = CGRect(x: 0, y: 0, width: imageWidth  , height:  imageHeight)
         cameraImageView.addSubview(imageView)
         imageView.center = cameraImageView.center
         
-       
         //self.cameraImageView.contentMode = .scaleAspectFit
         
         //        GoogleCloudOCR().detect(from: image) { ocrResult in
         //            guard let ocrResult = ocrResult else {
         //                fatalError("Did not recognize any text in this image")
         //            }
-        //            print("OcrResult: \(ocrResult)")
         //        }
                 
         self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
@@ -124,12 +130,22 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
+    }
+    
+    func setUpViewForHistoryVC() {
+        imageView.image = image
+        imageView.frame = CGRect(x: 0, y: 0, width: image.size.width  , height:  image.size.height)
+        cameraImageView.addSubview(imageView)
+        imageView.center = cameraImageView.center
         
-        scrollView.delegate = self
-        scrollView.maximumZoomScale = 3.0
-        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
-        scrollView.addGestureRecognizer(scrollViewTap)
-                
+        self.cameraHistoryViewModel.fetchDetectedAndTranslatedText(for: cameraHistoryImageIndex)
+        
+        if ((self.cameraHistoryViewModel.detectedData) != nil && self.cameraHistoryViewModel.translatedData != nil) {
+            
+            self.iTTServerViewModel.getTextviewListForCameraHistory(detectedData: self.cameraHistoryViewModel.detectedData, translatedData: self.cameraHistoryViewModel.translatedData)
+        } else {
+            PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
+        }
     }
 
 
@@ -163,14 +179,18 @@ class CaptureImageProcessVC: BaseViewController {
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-                    
+                    let translatedData = self.cameraHistoryViewModel.translatedData
                     if modeSwitchType == blockMode {
-                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: "en")
+                        
+                        let translateLanguage = translatedData?.block?.languageCodeTo
+                        
+                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage!)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: "en")
+                        let translateLanguage = translatedData?.line?.languageCodeTo
+                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage!)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
@@ -281,7 +301,9 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         cameraTTSDiaolog.toTranslateLabel.text = getTTSDialogLanguageName(languageItem: targetLangItem!)
         
         /// Just showing the TTS dialog for testing.
+        
         self.view.addSubview(cameraTTSDiaolog)
+        removeFloatingButton()
     }
     
     func getTTSDialogLanguageName(languageItem: LanguageItem) -> String{
@@ -326,6 +348,11 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        removeFloatingButton()
+    }
+    
+    func removeFloatingButton() {
         if let view = UIApplication.shared.keyWindow, modeSwitchButton.isDescendant(of: view) {
             modeSwitchButton.removeFromSuperview()
         }
@@ -360,9 +387,12 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
 
     @objc func backButtonEventListener(_ button: UIButton) {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
-        
+        if fromHistoryVC {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        }
     }
     
     
@@ -414,6 +444,18 @@ extension CaptureImageProcessVC: LoaderDelegate{
 //MARK: - CameraTTSDialogProtocol
 
 extension CaptureImageProcessVC: CameraTTSDialogProtocol {
+    func removeDialogEvent() {
+        
+        if let view = UIApplication.shared.keyWindow {
+            view.addSubview(backButton)
+            setupBackButton()
+        }
+        if let view = UIApplication.shared.keyWindow {
+            view.addSubview(modeSwitchButton)
+            setupModeSwitchButton()
+        }
+    }
+    
     func cameraTTSDialogToPlaybutton() {
         // Action ToLanguage play
     }

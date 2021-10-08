@@ -88,12 +88,16 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryPopUPViewController.self)) as? CameraHistoryPopUPViewController {
-            
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-            present(vc, animated: true, completion: nil)
+        
+        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+            if let image = self.viewModel.cameraHistoryImages[indexPath.item].image {
+                vc.image = image
+                vc.fromHistoryVC = true
+                vc.cameraHistoryImageIndex = indexPath.row
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
+
     }
     
 }

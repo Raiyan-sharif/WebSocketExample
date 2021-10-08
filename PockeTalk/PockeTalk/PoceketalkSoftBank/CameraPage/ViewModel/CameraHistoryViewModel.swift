@@ -15,12 +15,24 @@ protocol CameraHistoryViewModelDelegates {
 
 class CameraHistoryViewModel: BaseModel {
     
-    
     var cameraHistoryImages =  [CameraHistoryDataModel]() {
         didSet {
             self.delegate?.updateViewWithImages()
         }
     }
+    
+    var detectedData: DetectedJSON! {
+        didSet {
+            PrintUtility.printLog(tag: "detected data from sqlite : ", text: "\(String(describing: detectedData))")
+        }
+    }
+    var translatedData: TranslatedTextJSONModel! {
+        didSet {
+            PrintUtility.printLog(tag: "translated data from sqlite : ", text: "\(String(describing: translatedData))")
+        }
+    }
+    
+    
     
     private(set) var delegate: CameraHistoryViewModelDelegates?
     
@@ -32,9 +44,8 @@ class CameraHistoryViewModel: BaseModel {
     func fetchCameraHistoryImages() {
         
         cameraHistoryImages.removeAll()
-        
         if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            for each in cameraHistoryData {
+            for each in cameraHistoryData.reversed() {
                 if let imageData = each.image {
                     let image = UIImage.convertBase64ToImage(imageString: imageData)
                     cameraHistoryImages.append(CameraHistoryDataModel.init(image: image))
@@ -43,11 +54,24 @@ class CameraHistoryViewModel: BaseModel {
         }
     }
     
-    func fetchTranslatedText() {
+    func fetchDetectedAndTranslatedText(for index: Int) {
         if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            for (index,each) in cameraHistoryData.enumerated() {
-                if let translatedData = each.translatedData {
-                    PrintUtility.printLog(tag: "translated data for index \(index)", text: translatedData)
+            
+            if let detectedData = cameraHistoryData.reversed()[index].detectedData {
+                do {
+                    let data = try JSONDecoder().decode(DetectedJSON.self, from: Data(detectedData.utf8))
+                    self.detectedData = data
+                } catch let error {
+                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
+                }
+            }
+            
+            if let translatedData = cameraHistoryData.reversed()[index].translatedData {
+                do {
+                    let data = try JSONDecoder().decode(TranslatedTextJSONModel.self, from: Data(translatedData.utf8))
+                    self.translatedData = data
+                } catch let error {
+                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
                 }
             }
         }
