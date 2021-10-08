@@ -9,13 +9,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
-
-
-
         //Initial UI setup
         setUpinitialLaucnh()
         return true
@@ -23,11 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// Initial launch setup
     func setUpinitialLaucnh() {
-        /// Set initial language of the application
-        setInitialLangue()
+        // Set initial language of the application
+        // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
             UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value = true
             setUpAppFirstLaunch()
+        }else{
+            LanguageSelectionManager.shared.loadLanguageListData()
         }
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -44,11 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setUpAppFirstLaunch(){
         PrintUtility.printLog(tag: TAG, text: "App first launch called.")
+        setInitialLanguage()
+        LanguageSelectionManager.shared.loadLanguageListData()
         LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
-        LanguageSelectionManager.shared.getLanguageSelectionData()
         LanguageSelectionManager.shared.isArrowUp = true
+        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
         CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
-        
     }
 
     func generateAccessKey(){
@@ -61,31 +61,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         UserDefaultsProperty<String>(authentication_key).value = result.accessKey
                     }
                 }catch{
-                    
                 }
             }
        // }
     }
 
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
-    func setInitialLangue () {
+    func setInitialLanguage () {
         var locale = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
         if (locale != systemLanguageCodeEN) && (locale != systemLanguageCodeJP) {
             locale = systemLanguageCodeEN
         }
         LanguageManager.shared.setLanguage(language: Languages(rawValue: locale) ?? .en)
-        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
     }
 
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         setUpinitialLaucnh()
     }
-    
+
     func applicationWillEnterForeground(_ application: UIApplication) {
         relaunchApplication()
     }
-    
 }
 
 

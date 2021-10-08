@@ -31,17 +31,6 @@ class SystemLanguageViewController: BaseViewController {
     }
 
     private var selectedLanguage:String?
-    
-    private var rightBtn:UIButton!{
-        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        okBtn.setTitle("OK", for: .normal)
-        okBtn.titleLabel?.textColor = .white
-        okBtn.backgroundColor = UIColor(hex:"#008FE8")
-        okBtn.layer.cornerRadius = 10
-        okBtn.clipsToBounds = true
-        okBtn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
-        return okBtn
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -129,20 +118,6 @@ class SystemLanguageViewController: BaseViewController {
             }
         }
     }
-    
-    ///Move to next screeen
-    @objc func nextAction () {
-        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
-        CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
-        if UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value == nil{
-            UserDefaultsProperty<Bool>(kIsShownLanguageSettings).value = true
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController")as! HomeViewController
-            self.navigationController?.pushViewController(controller, animated: true);
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
 }
 
 extension SystemLanguageViewController:UITableViewDataSource{
@@ -180,6 +155,8 @@ extension SystemLanguageViewController:UITableViewDelegate{
         UserDefaultsProperty<Bool>(KFirstInitialized).value = true
         UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
         LanguageManager.shared.setLanguage(language: Languages(rawValue: languageItem.lanType) ?? .en)
+        LanguageSelectionManager.shared.loadLanguageListData()
+        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
         //self.title = "Language".localiz()
         selectedLanguage = languageItem.lanType
         self.tableView.reloadData()

@@ -228,11 +228,13 @@ class LangSelectVoiceVC: BaseViewController {
         if !fromRetranslation {
             if isNative == LanguageName.bottomLang.rawValue{
                 if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.isBottomLanguageChanged = true
                     LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
                     self.languageHasUpdated?()
                 }
             }else{
                 if LanguageSelectionManager.shared.topLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.isTopLanguageChanged = true
                     LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
                     self.languageHasUpdated?()
                 }

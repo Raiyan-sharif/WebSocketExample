@@ -52,6 +52,24 @@ public class LanguageSelectionManager{
       }
     }
 
+    public var isTopLanguageChanged: Bool? {
+      get {
+        return UserDefaults.standard.bool(forKey: KisTopLanguageChanged)
+      }
+      set {
+        UserDefaults.standard.set(newValue, forKey: KisTopLanguageChanged)
+      }
+    }
+
+    public var isBottomLanguageChanged: Bool? {
+      get {
+        return UserDefaults.standard.bool(forKey: KisBottomLanguageChanged)
+      }
+      set {
+        UserDefaults.standard.set(newValue, forKey: KisBottomLanguageChanged)
+      }
+    }
+
     public var isArrowUp: Bool {
       get {
         return UserDefaults.standard.bool(forKey: kIsArrowUp)
@@ -80,7 +98,8 @@ public class LanguageSelectionManager{
     }
 
     ///Get data from XML
-    public func getLanguageSelectionData(){
+    // Load all language list from xml
+    public func loadLanguageListData(){
         let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
         let mLanguageFile = "\(languageConversationFileNamePrefix)\(systemLanguageCode)"
         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
@@ -123,8 +142,12 @@ public class LanguageSelectionManager{
                     PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(attributes.description)")
                     if systemLanguageCode == attributes["code"]{
                         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(String(describing: attributes["native"])) \(attributes["translate"])")
-                        LanguageSelectionManager.shared.bottomLanguage = attributes["native"]!
-                        LanguageSelectionManager.shared.topLanguage = attributes["translate"]!
+                        if LanguageSelectionManager.shared.isBottomLanguageChanged == false {
+                            LanguageSelectionManager.shared.bottomLanguage = attributes["native"]!
+                        }
+                        if LanguageSelectionManager.shared.isTopLanguageChanged == false {
+                            LanguageSelectionManager.shared.topLanguage = attributes["translate"]!
+                        }
                         insertDefaultDataToDb(attributes)
                         return
                     }
@@ -140,7 +163,6 @@ public class LanguageSelectionManager{
     func setLanguageAccordingToSystemLanguage(){
         let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         PrintUtility.printLog(tag: TAG,text: "\(LanguageManager.self) sysLangCode \(sysLangCode)")
-        LanguageSelectionManager.shared.getLanguageSelectionData()
         LanguageSelectionManager.shared.setDefaultLanguageSettings(systemLanguageCode: sysLangCode)
     }
 
