@@ -9,6 +9,7 @@ protocol CameraTTSDialogProtocol: AnyObject {
     func cameraTTSDialogToPlaybutton()
     func cameraTTSDialogFromPlaybutton()
     func cameraTTSDialogShowContextMenu()
+    func removeDialogEvent()
 }
 
 class CameraTTSDialog: UIView {
@@ -96,6 +97,7 @@ class CameraTTSDialog: UIView {
     }
 
     func dismissDialog() {
+        self.delegate?.removeDialogEvent()
         self.removeFromSuperview()
     }
 

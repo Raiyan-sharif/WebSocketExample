@@ -203,7 +203,6 @@ class ITTServerViewModel: BaseModel {
         }
     }
     
-    
     func translateText(arrayBlocks: [BlockDetection], type: String) {
         //var mTranslatedText = [String]()
         
@@ -314,6 +313,38 @@ class ITTServerViewModel: BaseModel {
             }
         }
         return self.detectedLineList
+    }
+}
+
+// Get text view list for Camera Histoy Image
+
+extension ITTServerViewModel {
+    
+    func getTextviewListForCameraHistory(detectedData: DetectedJSON, translatedData: TranslatedTextJSONModel) {
+        self.blockListFromJson = self.getBlockListFromJson(data: detectedData)
+        self.lineListFromJson = self.getLineListFromJson(data: detectedData)
+        
+        blockTranslatedText.removeAll()
+        if let data = translatedData.block {
+            for each in data.translatedText {
+                blockTranslatedText.append(each)
+            }
+        }
+        lineTranslatedText.removeAll()
+        if let data = translatedData.line {
+            for each in data.translatedText {
+                lineTranslatedText.append(each)
+            }
+        }
+        self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.blockTranslatedText, completion: {[weak self] textView in
+            self?.blockModeTextViewList = textView
+        })
+        
+        self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
+            self.lineModetTextViewList = textView
+            self.loaderdelegate?.hideLoader()
+        })
+        
     }
 }
 
