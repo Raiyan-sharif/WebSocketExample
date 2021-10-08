@@ -103,6 +103,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     var isShowTutorial : Bool = false
     let timeDifferenceToShowTutorial : Int = 1
     let waitingTimeToShowExampleText : Double = 2.0
+    let waitngISFinalSecond = 2.0
 
     func initDelegate<T>(_ vc: T) {
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
@@ -244,7 +245,14 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
             self.timer?.invalidate()
             if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
-                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame())
+                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.waitngISFinalSecond) { [weak self ] in
+                        guard let `self` = self else { return }
+                        if !self.speechProcessingVM.isFinal.value{
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                })
             }else{
                 self.spinnerView.isHidden = true
                 //                self.navigationController?.popViewController(animated: true)
@@ -357,16 +365,16 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
             speechProcessingRightImgView.isHidden = true
             service?.stopRecord()
             service?.timerInvalidate()
-            var runCount = 0
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
-                 runCount += 1
-                 if runCount == 6 {
-                     timer.invalidate()
-                    if !self.speechProcessingVM.isFinal.value {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                 }
-             }
+//            var runCount = 0
+//            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
+//                 runCount += 1
+//                 if runCount == 6 {
+//                     timer.invalidate()
+//                    if !self.speechProcessingVM.isFinal.value {
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                 }
+//             }
         }
     }
 

@@ -37,8 +37,8 @@ class SocketManager: NSObject {
         PrintUtility.printLog(tag: TAG, text: "send data(\(data)")
         socket.write(data: data)
     }
-    func sendTextData(text:String){
-        socket.write(string: text)
+    func sendTextData(text:String,completion: (() -> ())?){
+        socket.write(string: text, completion: completion)
     }
     func updateRequestKey(auth_key : String){
         PrintUtility.printLog(tag: TAG, text: auth_key)
