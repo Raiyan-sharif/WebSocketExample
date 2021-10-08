@@ -211,7 +211,7 @@ class GlobalMethod {
     }
     
     // TTS alert
-    static func showTtsAlert (viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?) {
+    static func showTtsAlert (viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool) {
         let chatItem = chatItemModel.chatItem!
         if saveDataToDB == true{
             do {
@@ -229,6 +229,7 @@ class GlobalMethod {
         controller.hideBottomView = hideBottmSection
         controller.isFromHistory = fromHistory
         controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
+        controller.isRecreation = isRecreation
         if(viewController?.navigationController != nil){
             let navController = UINavigationController.init(rootViewController: controller)
             controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

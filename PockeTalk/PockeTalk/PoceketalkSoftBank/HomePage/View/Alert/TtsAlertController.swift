@@ -63,6 +63,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var voice : String = ""
     var rate : String = "1.0"
     var isSpeaking : Bool = false
+    var isRecreation: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.startAnimation()
+        if(!isRecreation){
+            self.startAnimation()
+            
+        }
     }
     
     /// Initial UI set up
@@ -399,10 +403,13 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     
     func speakingStatusChanged(isSpeaking: Bool) {
         self.isSpeaking = isSpeaking
+        if(!isSpeaking){
+            stopAnimation()
+        }
     }
     
     func onReady() {
-        if(!isSpeaking){
+        if(!isSpeaking && !isRecreation){
             playTTS()
         }
     }

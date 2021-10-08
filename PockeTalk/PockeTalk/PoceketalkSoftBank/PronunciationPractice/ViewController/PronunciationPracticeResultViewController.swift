@@ -150,9 +150,5 @@ extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate 
     
     func onVoiceEnd() { }
     
-    func onReady() {
-        if(!isSpeaking){
-            playTTS()
-        }
-    }
+    func onReady() {}
 }
