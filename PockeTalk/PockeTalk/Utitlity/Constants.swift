@@ -160,3 +160,8 @@ let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
 let iosListener = "iosListener"
 let speakingListener = "speakingListener"
+
+// api key
+// TO DO : This will update/change in future
+let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
+let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"

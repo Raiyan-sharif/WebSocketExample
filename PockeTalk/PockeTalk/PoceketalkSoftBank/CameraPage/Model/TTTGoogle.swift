@@ -40,7 +40,7 @@ public class TTTGoogle {
         let scheme = "https"
         let host = "www.googleapis.com"
         let path = "/language/translate/v2"
-        let queryItem = URLQueryItem(name: "key", value: "")
+        let queryItem = URLQueryItem(name: "key", value: queryItemApiKey)
         let queryItem2 = URLQueryItem(name: "target", value: target)
         let queryItem1 = URLQueryItem(name: "source", value: source)
         let queryItem3 = URLQueryItem(name: "q", value: text)

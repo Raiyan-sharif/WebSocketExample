@@ -182,15 +182,15 @@ class CaptureImageProcessVC: BaseViewController {
                     let translatedData = self.cameraHistoryViewModel.translatedData
                     if modeSwitchType == blockMode {
                         
-                        let translateLanguage = translatedData?.block?.languageCodeTo
+                        let translateLanguage = translatedData?.block?.languageCodeTo ?? "en"
                         
-                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage!)
+                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        let translateLanguage = translatedData?.line?.languageCodeTo
-                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage!)
+                        let translateLanguage = translatedData?.line?.languageCodeTo ?? "en"
+                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
