@@ -109,11 +109,41 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
     }
     
+    @objc func appMovedToBackground() {
+        //SocketManager.sharedInstance.disconnect()
+        PrintUtility.printLog(tag: TAG, text: "App moved to background! SpeechController")
+        if let vc = self.navigationController?.children.last, vc is SpeechProcessingViewController{
+            PrintUtility.printLog(tag: "Foreground", text: "last Background")
+            service?.timerInvalidate()
+            service?.stopRecord()
+        }
+        
+    }
+    @objc func appBecomeActive() {
+        self.titleLabel.text = ""
+        self.exampleLabel.text = ""
+        self.descriptionLabel.text = ""
+        
+//        if let vc = self.navigationController?.children.last, vc is SpeechProcessingViewController{
+//            PrintUtility.printLog(tag: "Foreground", text: "last")
+//            service?.startRecord()
+//        }
+        
+        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
+           //topVC.view.addSubview(forgotPwdView)
+            service?.startRecord()
+        }
+        addSpinner()
+        updateAnimation ()
+    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         SocketManager.sharedInstance.connect()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         let languageManager = LanguageSelectionManager.shared
         pronunciationView.isHidden = true
         if let purpose = self.screenOpeningPurpose{
@@ -154,8 +184,9 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         if !isFromPronunciationPractice {
             DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
                 /// after 2 second of interval, check if server data is available. If not available show the example text
-                if self!.isSSTavailable == false {
-                    self?.showExample()
+            guard let `self` = self else { return }
+            if self.isSSTavailable == false {
+                self.showExample()
                 }
             }
         }
@@ -287,6 +318,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
+                //SocketManager.sharedInstance.disconnect()
                 LanguageSelectionManager.shared.tempSourceLanguage = nil
                 if let purpose = self.screenOpeningPurpose{
                     switch purpose {
@@ -519,3 +551,23 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSelectionCamera
     case PronunciationPractice
 }
+
+
+extension UIApplication {
+
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
+    }
+}
+
+

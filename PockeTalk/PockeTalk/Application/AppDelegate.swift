@@ -81,7 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        relaunchApplication()
+        SocketManager.sharedInstance.connect()
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        SocketManager.sharedInstance.disconnect()
     }
 }
 
