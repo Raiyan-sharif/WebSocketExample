@@ -96,9 +96,12 @@ class HistoryViewController: BaseViewController {
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
         let margin = view.safeAreaLayoutGuide
+        let window = UIApplication.shared.windows.first
+        let topPadding = window?.safeAreaInsets.top
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
+//        collectionView.bottomAnchor.constraint(equalTo: bottmView)
         collectionView.alpha = 0.0
         
         self.view.addSubview(backBtn)
@@ -127,7 +130,8 @@ class HistoryViewController: BaseViewController {
 
     private var backBtn:UIButton!{
         guard let window = UIApplication.shared.keyWindow else {return nil}
-        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: 30, width: 40, height: 40))
+        let topPadding = window.safeAreaInsets.top
+        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
         okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
         okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
         return okBtn

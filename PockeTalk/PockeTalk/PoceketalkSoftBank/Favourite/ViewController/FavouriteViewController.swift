@@ -85,9 +85,12 @@ class FavouriteViewController: BaseViewController {
             .isActive = true
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
-        topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant:0)
+        let margin = view.safeAreaLayoutGuide
+        let window = UIApplication.shared.windows.first
+        let topPadding = window?.safeAreaInsets.top
+        topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
         collectionView.alpha = 0.0
 
         self.view.addSubview(backBtn)
@@ -137,7 +140,9 @@ class FavouriteViewController: BaseViewController {
     }
     
     private var backBtn:UIButton!{
-        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        guard let window = UIApplication.shared.keyWindow else {return nil}
+        let topPadding = window.safeAreaInsets.top
+        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
         okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
         okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
         return okBtn
