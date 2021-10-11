@@ -45,6 +45,16 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
+        
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+    }
+    
+    @objc func willResignActive(_ notification: Notification) {
+        self.stopTTS()
     }
 
     override func viewWillAppear(_ animated: Bool) {

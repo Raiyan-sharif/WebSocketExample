@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,6 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pronunciation_bg" translatesAutoresizingMaskIntoConstraints="NO" id="ONa-3e-mnS">
+                                <rect key="frame" x="0.0" y="77" width="414" height="665"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZT-7B-fQF">
                                 <rect key="frame" x="0.0" y="642" width="414" height="100"/>
                                 <subviews>
@@ -38,7 +41,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WeU-RP-ahU">
                                 <rect key="frame" x="15" y="74" width="384" height="553"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello how are you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEq-cG-2Rz">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello how are you. What are you doing now. Donot copy anything." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEq-cG-2Rz">
                                         <rect key="frame" x="5" y="15" width="374" height="523"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -48,10 +51,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="kEq-cG-2Rz" secondAttribute="bottom" constant="15" id="3V5-Mu-fPP"/>
+                                    <constraint firstItem="kEq-cG-2Rz" firstAttribute="top" secondItem="WeU-RP-ahU" secondAttribute="top" constant="15" id="74l-TL-yW1"/>
                                     <constraint firstItem="kEq-cG-2Rz" firstAttribute="top" secondItem="WeU-RP-ahU" secondAttribute="top" constant="15" id="8AU-5t-SM3"/>
+                                    <constraint firstItem="kEq-cG-2Rz" firstAttribute="leading" secondItem="WeU-RP-ahU" secondAttribute="leading" constant="5" id="aYr-xh-xOC"/>
                                     <constraint firstItem="kEq-cG-2Rz" firstAttribute="leading" secondItem="WeU-RP-ahU" secondAttribute="leading" constant="5" id="c5n-Dd-aPN"/>
                                     <constraint firstAttribute="trailing" secondItem="kEq-cG-2Rz" secondAttribute="trailing" constant="5" id="cS7-Yo-b76"/>
                                     <constraint firstItem="kEq-cG-2Rz" firstAttribute="centerY" secondItem="WeU-RP-ahU" secondAttribute="centerY" id="g6X-Rb-RNb"/>
+                                    <constraint firstAttribute="bottom" secondItem="kEq-cG-2Rz" secondAttribute="bottom" constant="15" id="goG-Qp-u3M"/>
+                                    <constraint firstAttribute="trailing" secondItem="kEq-cG-2Rz" secondAttribute="trailing" constant="5" id="k7t-Fj-SHK"/>
                                     <constraint firstItem="kEq-cG-2Rz" firstAttribute="centerX" secondItem="WeU-RP-ahU" secondAttribute="centerX" id="swk-DP-re1"/>
                                 </constraints>
                             </view>
@@ -79,9 +86,13 @@
                             <constraint firstItem="Rzw-Cn-Wh2" firstAttribute="top" secondItem="CZT-7B-fQF" secondAttribute="bottom" id="0Du-Vg-B6D"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="1an-G7-RJd"/>
                             <constraint firstAttribute="bottom" secondItem="Rzw-Cn-Wh2" secondAttribute="bottom" id="2h3-WZ-ewB"/>
+                            <constraint firstItem="ONa-3e-mnS" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="33" id="4PL-YI-8k2"/>
+                            <constraint firstItem="ONa-3e-mnS" firstAttribute="bottom" secondItem="CZT-7B-fQF" secondAttribute="bottom" id="4VV-ha-g8U"/>
                             <constraint firstItem="era-wu-Hn2" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="15" id="6YE-Hg-ET8"/>
                             <constraint firstItem="WeU-RP-ahU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="30" id="Cfq-es-tpa"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="CZT-7B-fQF" secondAttribute="bottom" constant="120" id="Egx-2K-ds8"/>
+                            <constraint firstItem="ONa-3e-mnS" firstAttribute="leading" secondItem="CZT-7B-fQF" secondAttribute="leading" id="FdT-6B-bsX"/>
+                            <constraint firstItem="ONa-3e-mnS" firstAttribute="trailing" secondItem="CZT-7B-fQF" secondAttribute="trailing" id="I8I-m8-TzS"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="top" secondItem="WeU-RP-ahU" secondAttribute="bottom" constant="15" id="IqR-6a-n0g"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="JWI-5i-fHG"/>
                             <constraint firstItem="era-wu-Hn2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WAE-uF-39H"/>
@@ -262,6 +273,7 @@
         <image name="btn_back" width="90" height="90"/>
         <image name="btn_speed" width="90" height="90"/>
         <image name="mark_ok" width="212" height="146"/>
+        <image name="pronunciation_bg" width="480" height="800"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
