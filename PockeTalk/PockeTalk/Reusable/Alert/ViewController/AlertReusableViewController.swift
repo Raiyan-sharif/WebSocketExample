@@ -26,6 +26,7 @@ class AlertReusableViewController: BaseViewController {
     var chatItemModel: HistoryChatItemModel?
     var alertViewModel: AlertReusableViewModel!
     var delegate : AlertReusableDelegate?
+    let toastDisplayTime : Double = 2.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,12 +190,14 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             self.addFavorite(index: indexPath)
             break
         case .retranslation :
-            self.dismiss(animated: true, completion: nil)
-            self.retranslation()
+            self.showToast(message: kTranslateIntoOtherLanguageUnderDevelopment, seconds: toastDisplayTime)
+            /// ToDo in next version
+            //self.retranslation()
             break
         case .reverse:
-            self.dismiss(animated: true, completion: nil)
-            self.reverseTranslation()
+            self.showToast(message: kReverseTranslationUnderDevelopment, seconds: toastDisplayTime)
+            /// ToDo in next version
+            //self.reverseTranslation()
             break
         case .practice :
             self.dismiss(animated: true, completion: nil)
