@@ -292,6 +292,8 @@ class ITTServerViewModel: BaseModel {
         
         let encoder1 = JSONEncoder()
         encoder1.outputFormatting = .prettyPrinted
+        PrintUtility.printLog(tag: "translated language in save func: ", text: "\(String(describing: self.mTranslatedJSON.block?.languageCodeTo))")
+        PrintUtility.printLog(tag: "translated line language in save func: ", text: "\(String(describing: self.mTranslatedJSON.line?.languageCodeTo))")
         let data1 = try? encoder1.encode(self.mTranslatedJSON)
         //PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data1!, encoding: .utf8)!)")
         

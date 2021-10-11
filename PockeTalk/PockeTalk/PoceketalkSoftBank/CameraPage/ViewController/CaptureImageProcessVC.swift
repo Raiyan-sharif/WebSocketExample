@@ -77,7 +77,7 @@ class CaptureImageProcessVC: BaseViewController {
         let widthInPoints = image.size.width
         PrintUtility.printLog(tag: "Captured Image heightInPoints: \(heightInPoints)", text: ", widthInPoints: \(widthInPoints)")
         
-        image = UIImage(data: image.jpeg(.lowest)!)!
+        image = UIImage(data: image.jpeg(.medium)!)!
         
         let heightInPoints1 = image.size.height
         let widthInPoints1 = image.size.width
@@ -130,6 +130,9 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
+        
+        
+        
     }
     
     func setUpViewForHistoryVC() {
@@ -179,18 +182,18 @@ class CaptureImageProcessVC: BaseViewController {
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-                    let translatedData = self.cameraHistoryViewModel.translatedData
+                    let translatedData = getTranslatedToLanguage()
                     if modeSwitchType == blockMode {
                         
-                        let translateLanguage = translatedData?.block?.languageCodeTo ?? "en"
-                        
-                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage)
+                        let translateLanguage = translatedData.block?.languageCodeTo
+                        PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(translateLanguage)")
+                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage!)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        let translateLanguage = translatedData?.line?.languageCodeTo ?? "en"
-                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage)
+                        let translateLanguage = translatedData.line?.languageCodeTo
+                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage!)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
@@ -199,17 +202,23 @@ class CaptureImageProcessVC: BaseViewController {
         }
     }
     
-    func fetchDataFromDB() {
+    func getTranslatedToLanguage() -> TranslatedTextJSONModel {
+        var translatedToLanguage: TranslatedTextJSONModel!
+        let count = cameraHistoryViewModel.fetchImageCount()
+        
         if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            for (index,each) in cameraHistoryData.enumerated() {
-                if let detectedData = each.detectedData {
-                    PrintUtility.printLog(tag: "detectedData data for index \(index)", text: detectedData)
-                }
-                if let translatedData = each.translatedData {
-                    PrintUtility.printLog(tag: "translated data for index \(index)", text: translatedData)
+            if let translatedData = cameraHistoryData[count-1].translatedData {
+                do {
+                    let data = try JSONDecoder().decode(TranslatedTextJSONModel.self, from: Data(translatedData.utf8))
+                    
+                    translatedToLanguage = data
+                } catch let error {
+                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
                 }
             }
         }
+
+        return translatedToLanguage
     }
     
     override var prefersStatusBarHidden: Bool {

@@ -54,6 +54,14 @@ class CameraHistoryViewModel: BaseModel {
         }
     }
     
+    func fetchImageCount() -> Int {
+        var count = Int()
+        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+            count = cameraHistoryData.count
+        }
+        return count
+    }
+    
     func fetchDetectedAndTranslatedText(for index: Int) {
         if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
             
