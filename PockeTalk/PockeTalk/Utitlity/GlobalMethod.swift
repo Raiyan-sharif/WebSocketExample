@@ -295,4 +295,42 @@ class GlobalMethod {
         alert.modalTransitionStyle = .crossDissolve
         viewController?.present(alert, animated: true, completion: nil)
     }
+
+
+
+}
+
+class GlobalAlternative{
+
+    func showTtsAlert(viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool) {
+
+       let chatItem = chatItemModel.chatItem!
+       if saveDataToDB == true{
+           do {
+               let row = try ChatDBModel.init().insert(item: chatItem)
+               chatItem.id = row
+               UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+           } catch _ {}
+       }
+
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let controller = storyboard.instantiateViewController(withIdentifier: KTtsAlertController)as! TtsAlertController
+       controller.delegate = viewController as? SpeechControllerDismissDelegate
+       controller.chatItemModel = chatItemModel
+       controller.hideMenuButton = hideMenuButton
+       controller.hideBottomView = hideBottmSection
+       controller.isFromHistory = fromHistory
+       controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
+       controller.isRecreation = isRecreation
+
+       if(viewController?.navigationController != nil){
+           let navController = UINavigationController.init(rootViewController: controller)
+           controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+           controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+           viewController?.navigationController?.present(navController, animated: true, completion: nil)
+       }else{
+           controller.modalPresentationStyle = .fullScreen
+           viewController?.present(controller, animated: true, completion: nil)
+       }
+   }
 }

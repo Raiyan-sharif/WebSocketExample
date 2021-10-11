@@ -103,7 +103,7 @@ class CountryListViewController: BaseViewController {
                     controller.homeMicTapTimeStamp = currentTS
                     controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.CountrySelectionByVoice
                     controller.countrySearchspeechLangCode = self.dataShowingLanguageCode
-                    controller.initDelegate(self)
+                   // controller.initDelegate(self)
                     self.navigationController?.pushViewController(controller, animated: true);
                 } else {
                     GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)

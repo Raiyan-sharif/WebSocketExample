@@ -22,7 +22,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var practiceText : String = ""
     var orginalText : String = ""
     var languageCode : String = ""
-    var delegate : PronunciationResult?
+    weak var delegate : PronunciationResult?
     var isFromHistory : Bool = false
     var ttsResponsiveView = TTSResponsiveView()
     var voice : String = ""
@@ -31,9 +31,11 @@ class PronunciationPracticeResultViewController: BaseViewController {
     
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
+        LanguageSelectionManager.shared.tempSourceLanguage = nil
         if isFromHistory {
-            self.delegate?.dismissResultHistory()
-            self.dismiss(animated: false, completion: nil)
+            if let historyVC = self.presentingViewController?.presentingViewController  as? PronunciationPracticeViewController{
+                historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
         } else {
             self.delegate?.dismissResultHome()
             self.navigationController?.popViewController(animated: true)

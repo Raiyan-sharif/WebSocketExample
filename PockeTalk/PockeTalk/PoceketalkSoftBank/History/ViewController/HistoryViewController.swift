@@ -118,7 +118,7 @@ class HistoryViewController: BaseViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
             controller.homeMicTapTimeStamp = currentTS
-            controller.languageHasUpdated = false
+            controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)

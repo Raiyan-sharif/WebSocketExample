@@ -25,7 +25,7 @@ class TutorialViewController: UIViewController {
     let animationDelay = 0
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
-    var delegate : SpeechControllerDismissDelegate?
+    weak var delegate : SpeechControllerDismissDelegate?
 
     /// Showing Bengali for now
     let selectedLanguageIndex : Int = 8

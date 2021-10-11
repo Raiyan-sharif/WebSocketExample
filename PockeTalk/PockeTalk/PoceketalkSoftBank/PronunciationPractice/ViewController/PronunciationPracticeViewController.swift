@@ -33,7 +33,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var isFromHistory: Bool = false
     var ttsResponsiveView = TTSResponsiveView()
     var isFromSpeechProcessing: Bool = false
-    var speechDelegate : PronunciationResult?
+    weak var speechDelegate : PronunciationResult?
     var voice : String = ""
     var rate : String = "1.0"
     var isSpeaking : Bool = false
@@ -130,6 +130,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         if isFromSpeechProcessing {
             speechDelegate?.dismissResultHome()
         }
+        LanguageSelectionManager.shared.tempSourceLanguage = nil
         if(self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
         }else{

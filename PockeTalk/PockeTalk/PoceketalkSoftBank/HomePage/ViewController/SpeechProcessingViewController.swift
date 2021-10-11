@@ -5,31 +5,29 @@
 
 import UIKit
 
-protocol PronunciationResult {
+protocol PronunciationResult : class{
     func dismissResultHome()
-    func dismissResultHistory()
 }
 
-protocol SpeechProcessingVCDelegates {
+protocol SpeechProcessingVCDelegates:class {
     func searchCountry(text: String)
 }
 
 class SpeechProcessingViewController: BaseViewController, PronunciationResult{
 
-    func dismissResultHistory() {
-        presentingViewController?.presentingViewController?.dismiss(animated: false, completion: {
-            self.pronunciationDelegate?.dismissPronunciationFromHistory()
-        })
-    }
     func dismissResultHome() {
         pronunciationView.isHidden = true
         isFromPronunciationPractice = false
         screenOpeningPurpose = .HomeSpeechProcessing
         if LanguageSelectionManager.shared.isArrowUp{
             speechLangCode = LanguageSelectionManager.shared.bottomLanguage
+            LanguageSelectionManager.shared.tempSourceLanguage = LanguageSelectionManager.shared.bottomLanguage
         }else{
             speechLangCode = LanguageSelectionManager.shared.topLanguage
+            LanguageSelectionManager.shared.tempSourceLanguage = LanguageSelectionManager.shared.topLanguage
         }
+        self.languageHasUpdated = true
+        self.speechProcessingVM.updateLanguage()
         let index = UserDefaultsProperty<Int64>(kLastSavedChatID).value!
         let chat = TtsAlertViewModel().findLastSavedChat(id: Int64(index))
         GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chat, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: false, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: true)
@@ -51,7 +49,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     @IBOutlet weak var leftImgHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftImgTopConstraint: NSLayoutConstraint!
-    var speechProcessingDelegate: SpeechProcessingVCDelegates?
+    weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
     @IBOutlet weak var pronunciationView: UIView!
     @IBOutlet weak var pronunciationLable: UILabel!
     var languageHasUpdated = false
@@ -103,22 +101,22 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     var isShowTutorial : Bool = false
     let timeDifferenceToShowTutorial : Int = 1
     let waitingTimeToShowExampleText : Double = 2.0
-    let waitngISFinalSecond = 2.0
+    let waitngISFinalSecond:Int = 6
 
     func initDelegate<T>(_ vc: T) {
         self.speechProcessingDelegate = vc.self as? SpeechProcessingVCDelegates
     }
-    
-    @objc func appMovedToBackground() {
-        //SocketManager.sharedInstance.disconnect()
-        PrintUtility.printLog(tag: TAG, text: "App moved to background! SpeechController")
-        if let vc = self.navigationController?.children.last, vc is SpeechProcessingViewController{
-            PrintUtility.printLog(tag: "Foreground", text: "last Background")
-            service?.timerInvalidate()
-            service?.stopRecord()
-        }
-        
-    }
+
+//    @objc func appMovedToBackground() {
+//        //SocketManager.sharedInstance.disconnect()
+//        PrintUtility.printLog(tag: TAG, text: "App moved to background! SpeechController")
+//        if let vc = self.navigationController?.children.last, vc is SpeechProcessingViewController{
+//            PrintUtility.printLog(tag: "Foreground", text: "last Background")
+//            service?.timerInvalidate()
+//            service?.stopRecord()
+//        }
+//
+//    }
     @objc func appBecomeActive() {
         self.titleLabel.text = ""
         self.exampleLabel.text = ""
@@ -142,8 +140,14 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         super.viewDidLoad()
         SocketManager.sharedInstance.connect()
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [weak self](notification) in
+            guard let `self` = self else { return }
+            PrintUtility.printLog(tag: "Foreground", text: "last Background")
+            self.service?.timerInvalidate()
+            self.service?.stopRecord()
+        }
         let languageManager = LanguageSelectionManager.shared
         pronunciationView.isHidden = true
         if let purpose = self.screenOpeningPurpose{
@@ -273,16 +277,21 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         }
         service?.recordDidStop = { [weak self]  in
             guard let `self` = self else { return }
-            self.timer?.invalidate()
             if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
-                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + self.waitngISFinalSecond) { [weak self ] in
+                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: { [weak self] in
+                    guard let `self` = self else { return }
+                    var runCount = 0
+                    self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] innerTimer in
                         guard let `self` = self else { return }
-                        if !self.speechProcessingVM.isFinal.value{
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }
+                         runCount += 1
+                        if runCount == self.waitngISFinalSecond {
+                            innerTimer.invalidate()
+                            if !self.speechProcessingVM.isFinal.value {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                         }
+                     }
                 })
             }else{
                 self.spinnerView.isHidden = true
@@ -315,6 +324,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
             if isFinal{
+                self.timer?.invalidate()
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
@@ -397,16 +407,6 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
             speechProcessingRightImgView.isHidden = true
             service?.stopRecord()
             service?.timerInvalidate()
-//            var runCount = 0
-//            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
-//                 runCount += 1
-//                 if runCount == 6 {
-//                     timer.invalidate()
-//                    if !self.speechProcessingVM.isFinal.value {
-//                        self.navigationController?.popViewController(animated: true)
-//                    }
-//                 }
-//             }
         }
     }
 
@@ -488,7 +488,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         
         let chatItem =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: false)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: false)
     }
     
     func showPronunciationPracticeResult (stt:String) {

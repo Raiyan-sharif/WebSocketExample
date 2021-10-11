@@ -5,7 +5,7 @@
 
 import UIKit
 import WebKit
-protocol TtsAlertControllerDelegate {
+protocol TtsAlertControllerDelegate : class{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
@@ -46,7 +46,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     let reverseFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
-    var delegate : SpeechControllerDismissDelegate?
+   weak var delegate : SpeechControllerDismissDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var talkButton : UIButton?
     let animationDuration : CGFloat = 0.6
@@ -55,7 +55,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var chatItemModel: HistoryChatItemModel?
     var hideMenuButton = false
     var hideBottomView = false
-    var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
+    weak var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
     var longTapGesture : UILongPressGestureRecognizer?
     var wkView:WKWebView!
     var ttsResponsiveView = TTSResponsiveView()
@@ -64,7 +64,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var rate : String = "1.0"
     var isSpeaking : Bool = false
     var isRecreation: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -298,18 +298,37 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else if let favVC = self.presentingViewController?.presentingViewController  as? FavouriteViewController{
             favVC.presentingViewController?.dismiss(animated: true, completion: nil)
+        }else if let ttsVC = self.presentingViewController?.presentingViewController?.presentingViewController as? HistoryViewController{
+            ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else{
-            self.dismiss(animated: true, completion: nil)
+            if let nav = self.presentingViewController, nav is UINavigationController{
+                self.dismiss(animated: true) {
+                    (nav as! UINavigationController).popViewController(animated: true)
+                }
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
-        self.delegate?.dismiss()
+       // self.delegate?.dismiss()
     }
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
        // self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
-        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
         self.stopTTS()
-        self.dismiss(animated: true, completion: nil)
+        if isFromHistory {
+            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+            controller.homeMicTapTimeStamp = currentTS
+            controller.languageHasUpdated = true
+            controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.modalPresentationStyle = .fullScreen
+            self.present(controller, animated: true, completion: nil)
+        } else {
+            NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func playTTS(){
