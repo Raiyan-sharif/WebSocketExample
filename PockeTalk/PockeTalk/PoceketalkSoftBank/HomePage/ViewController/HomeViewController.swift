@@ -117,7 +117,6 @@ class HomeViewController: BaseViewController {
         view.addSubview(topButton)
         topButton.translatesAutoresizingMaskIntoConstraints = false
         topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        topButton.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
@@ -138,9 +137,11 @@ class HomeViewController: BaseViewController {
             view.addSubview(topButton)
             topButton.translatesAutoresizingMaskIntoConstraints = false
             topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            topButton.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            let window = UIApplication.shared.keyWindow
+            let topPadding = window?.safeAreaInsets.top
             topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            topButton.heightAnchor.constraint(equalToConstant: 150).isActive = true
+            topButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -((topPadding ?? 0) - 10)).isActive = true
             self.view.addGestureRecognizer(swipeDown)
         }else{
             topButton.removeFromSuperview()
