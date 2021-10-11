@@ -50,6 +50,8 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         panGestureRecognizer.cancelsTouchesInView = false
         self.childView.addGestureRecognizer(panGestureRecognizer)
         
+        self.childView.backgroundColor = UIColor(patternImage: UIImage(named: "back_texture_white.png")!)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
         tapGesture.delegate = self
         self.childView.isUserInteractionEnabled = true

@@ -65,7 +65,7 @@ class FavouriteViewController: BaseViewController {
     func populateData () {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "Delete_icon.png", menuType: .delete))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "delete_from_fv".localiz(), imageName: "Delete_icon.png", menuType: .delete))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
@@ -187,7 +187,12 @@ class FavouriteViewController: BaseViewController {
         self.delegate?.dismissFavouriteView()
         self.dismiss(animated: animated, completion: completion )
     }
-
+    
+    func actualNumberOfLines(width:CGFloat, text:String, font:UIFont) -> Int {
+           let rect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+           let labelSize = text.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font as Any], context: nil)
+           return Int(ceil(CGFloat(labelSize.height) / font.lineHeight))
+    }
 }
 
 extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -261,11 +266,17 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
 extension FavouriteViewController:FavouriteLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let favouriteModel = favouriteViewModel.items.value[indexPath.item] as! ChatEntity
-        let font = UIFont.systemFont(ofSize:17)
-        
+        let font = UIFont.systemFont(ofSize: 20, weight: .regular)
+
         let fromHeight = favouriteModel.textTranslated!.heightWithConstrainedWidth(width: width, font: font)
         let toHeight = favouriteModel.textNative!.heightWithConstrainedWidth(width: width, font: font)
-        return 20 + fromHeight + 120 + toHeight + 40
+        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 20, text: favouriteModel.textTranslated!, font: font)
+        if(count == 1){
+            return 20 + fromHeight + 40 + toHeight + 40
+        }else if(count == 2){
+            return 20 + fromHeight + 60 + toHeight + 40
+        }
+        return 20 + fromHeight + 100 + toHeight + 40
     }
 }
 extension FavouriteViewController : RetranslationDelegate{

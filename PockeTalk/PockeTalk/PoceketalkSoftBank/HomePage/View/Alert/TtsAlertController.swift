@@ -64,6 +64,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var rate : String = "1.0"
     var isSpeaking : Bool = false
     var isRecreation: Bool = false
+    var isFromSpeechProcessing = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -310,7 +311,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
-        self.dismissPopUp()
+        stopTTS()
+        self.stopAnimation()
+        self.dismiss(animated: true, completion: nil)
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
@@ -319,22 +322,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     func dismissPopUp(){
         stopTTS()
         self.stopAnimation()
-        if let historyVC = self.presentingViewController?.presentingViewController  as? HistoryViewController{
-            historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
-        }else if let favVC = self.presentingViewController?.presentingViewController  as? FavouriteViewController{
-            favVC.presentingViewController?.dismiss(animated: true, completion: nil)
-        }else if let ttsVC = self.presentingViewController?.presentingViewController?.presentingViewController as? HistoryViewController{
-            ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
-        }else{
-            if let nav = self.presentingViewController, nav is UINavigationController{
-                self.dismiss(animated: false) {
-                    (nav as! UINavigationController).popViewController(animated: false)
-                }
-            } else {
-                self.dismiss(animated: true, completion: nil)
+        if(isFromSpeechProcessing){
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+               appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
+               (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
             }
+        }else{
+            self.dismiss(animated: true, completion: nil)
         }
-       // self.delegate?.dismiss()
+        
     }
 
     // TODO microphone tap event
@@ -423,12 +419,8 @@ extension TtsAlertController : AlertReusableDelegate {
         vc.chatItem = chatItemModel?.chatItem
         vc.delegate = self
         vc.isFromHistory = isFromHistory
-        if(self.navigationController != nil){
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        }
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {

@@ -12,7 +12,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
     private let TAG:String = "ResetViewController"
     
     @IBAction func actionBack(_ sender: Any) {
-        navigationController?.popToViewController(ofClass: SettingsViewController.self)
+        if self.navigationController != nil{
+            navigationController?.popToViewController(ofClass: SettingsViewController.self)
+        }else{
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

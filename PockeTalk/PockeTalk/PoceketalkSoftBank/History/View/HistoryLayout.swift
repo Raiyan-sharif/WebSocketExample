@@ -34,7 +34,7 @@ class HistoryLayout: UICollectionViewLayout {
 
         for item in 0..<limit {
             let indexPath = IndexPath(item: item, section: 0)
-            let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT-40)
+            let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT-60)
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             let frame = CGRect(x: left, y: top, width: width!, height: height)
             
@@ -42,7 +42,7 @@ class HistoryLayout: UICollectionViewLayout {
             attribute.zIndex = item
             // let gap = self.itemGap
             self.attributes.append(attribute)
-            top += height-70
+            top += height - 25
 
         }
         if self.attributes.count > 0 {

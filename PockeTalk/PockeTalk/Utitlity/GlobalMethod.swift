@@ -302,8 +302,7 @@ class GlobalMethod {
 
 class GlobalAlternative{
 
-    func showTtsAlert(viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool) {
-
+    func showTtsAlert(viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false) {
        let chatItem = chatItemModel.chatItem!
        if saveDataToDB == true{
            do {
@@ -322,7 +321,7 @@ class GlobalAlternative{
        controller.isFromHistory = fromHistory
        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
        controller.isRecreation = isRecreation
-
+       controller.isFromSpeechProcessing = fromSpeech
        if(viewController?.navigationController != nil){
            let navController = UINavigationController.init(rootViewController: controller)
            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

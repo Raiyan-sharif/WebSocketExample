@@ -305,7 +305,11 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        if(self.navigationController == nil){
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     var croppingParameters: CropUtils {

@@ -55,6 +55,7 @@
 "cancel" = "Cancel";
 "clear" = "Clear";
 "delete" = "Delete from History";
+"delete_from_fv" = "Delete";
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "OK";
 "no_stt_msg" = "Language is not supported";

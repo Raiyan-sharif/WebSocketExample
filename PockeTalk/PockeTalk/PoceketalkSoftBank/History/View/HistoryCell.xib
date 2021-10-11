@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -61,17 +61,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LsQ-eZ-RYL">
                                 <rect key="frame" x="0.0" y="0.0" width="293" height="191"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8gy-eb-rSu">
-                                        <rect key="frame" x="0.0" y="20" width="293" height="61"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8gy-eb-rSu">
+                                        <rect key="frame" x="5" y="20" width="283" height="151"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U60-ox-9aR">
-                                                <rect key="frame" x="0.0" y="0.0" width="293" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="283" height="75.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-Hy-fyJ">
-                                                <rect key="frame" x="0.0" y="40.5" width="293" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="75.5" width="283" height="75.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -81,11 +81,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="8gy-eb-rSu" secondAttribute="bottom" priority="250" id="2TQ-jE-W1c"/>
+                                    <constraint firstAttribute="bottom" secondItem="8gy-eb-rSu" secondAttribute="bottom" constant="20" id="2TQ-jE-W1c"/>
                                     <constraint firstItem="8gy-eb-rSu" firstAttribute="top" secondItem="LsQ-eZ-RYL" secondAttribute="top" constant="20" id="7FX-3x-ELI"/>
                                     <constraint firstItem="8gy-eb-rSu" firstAttribute="leading" secondItem="LsQ-eZ-RYL" secondAttribute="leading" id="K7y-gF-mNi"/>
-                                    <constraint firstAttribute="trailing" secondItem="8gy-eb-rSu" secondAttribute="trailing" id="Kkp-7H-YId"/>
-                                    <constraint firstItem="8gy-eb-rSu" firstAttribute="leading" secondItem="LsQ-eZ-RYL" secondAttribute="leading" id="q4M-Cb-KLX"/>
+                                    <constraint firstAttribute="trailing" secondItem="8gy-eb-rSu" secondAttribute="trailing" constant="5" id="Kkp-7H-YId"/>
+                                    <constraint firstItem="8gy-eb-rSu" firstAttribute="leading" secondItem="LsQ-eZ-RYL" secondAttribute="leading" constant="5" id="q4M-Cb-KLX"/>
                                     <constraint firstAttribute="trailing" secondItem="8gy-eb-rSu" secondAttribute="trailing" id="tpv-hR-bka"/>
                                 </constraints>
                             </view>

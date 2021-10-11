@@ -26,6 +26,8 @@ class HistoryViewController: BaseViewController {
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
     let buttonWidth : CGFloat = 100
+    
+    var navController: UINavigationController?
 
     private(set) var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
@@ -43,6 +45,11 @@ class HistoryViewController: BaseViewController {
     }()
 
     private lazy var bottmView:UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var topView:UIView = {
         let view = UIView()
         return view
     }()
@@ -83,13 +90,23 @@ class HistoryViewController: BaseViewController {
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
         self.view.addSubview(bottmView)
-
+        self.view.addSubview(topView)
+        let window = UIApplication.shared.windows.first
+        
         bottmView.translatesAutoresizingMaskIntoConstraints = false
         bottmView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottmView.heightAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottmView.clipsToBounds =  true
+        bottmView.backgroundColor = UIColor.black
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        topView.heightAnchor.constraint(equalToConstant: (window?.safeAreaInsets.top ?? 20) + 55).isActive = true
+        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topView.clipsToBounds =  true
+        topView.backgroundColor = UIColor.black
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -97,7 +114,6 @@ class HistoryViewController: BaseViewController {
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
         let margin = view.safeAreaLayoutGuide
-        let window = UIApplication.shared.windows.first
         let topPadding = window?.safeAreaInsets.top
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
@@ -105,7 +121,8 @@ class HistoryViewController: BaseViewController {
 //        collectionView.bottomAnchor.constraint(equalTo: bottmView)
         collectionView.alpha = 0.0
         
-        self.view.addSubview(backBtn)
+        self.view.addSubview(btnMenu)
+        self.view.addSubview(cameraButton)
         
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
@@ -144,18 +161,54 @@ class HistoryViewController: BaseViewController {
         }
     }
 
-    private var backBtn:UIButton!{
+    private var btnMenu: UIButton!{
         guard let window = UIApplication.shared.keyWindow else {return nil}
-        let topPadding = window.safeAreaInsets.top
-        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
-        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
-        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
-        return okBtn
+        PrintUtility.printLog(tag: "SafeArea", text: " \(window.safeAreaInsets.top)")
+        let btnMenu = UIButton(frame: CGRect(x: window.safeAreaInsets.left + 10, y: window.safeAreaInsets.top + 5, width: 30, height: 30))
+        btnMenu.setImage(UIImage(named: "hamburger_menu_icon.png"), for: UIControl.State.normal)
+        btnMenu.addTarget(self, action: #selector(actionMenu), for: .touchUpInside)
+        return btnMenu
+    }
+    
+    private var cameraButton: UIButton!{
+        guard let window = UIApplication.shared.keyWindow else {return nil}
+        PrintUtility.printLog(tag: "SafeArea", text: " \(window.frame.width)")
+        let cameraButton = UIButton(frame: CGRect(x: window.frame.width - 40, y: window.safeAreaInsets.top + 5, width: 30, height: 30))
+        if #available(iOS 13.0, *) {
+            cameraButton.setImage(UIImage(systemName: "camera.fill"), for: UIControl.State.normal)
+        } else {
+            // Fallback on earlier versions
+        }
+        cameraButton.addTarget(self, action: #selector(actionCamera), for: .touchUpInside)
+        return cameraButton
     }
     
     ///Move to next screeen
-    @objc func actionBack () {
-        self.dismissHistory(animated: true, completion: nil )
+    @objc func actionCamera () {
+        RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
+            if isGranted {
+                let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+                if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+                    self?.navController?.pushViewController(cameraViewController, animated: true)
+                }
+            } else {
+                GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
+            }
+        }
+    }
+    
+    ///Move to next screeen
+    @objc func actionMenu () {
+        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
+        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
+            let transition = CATransition()
+                        transition.duration = 0.5
+                        transition.type = CATransitionType.push
+                        transition.subtype = CATransitionSubtype.fromLeft
+            transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.navController?.pushViewController(settinsViewController, animated: false)
+        }
     }
     
     func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
@@ -174,7 +227,7 @@ class HistoryViewController: BaseViewController {
         let transitionAnimation = CABasicAnimation(keyPath: "position.y")
         transitionAnimation.fromValue = view.layer.position.y -
             collectionView.bounds.height
-        transitionAnimation.toValue = view.layer.position.y - buttonWidth/2 
+        transitionAnimation.toValue = view.layer.position.y - buttonWidth
 
         let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
         scalAnimation.fromValue = 0.5
@@ -341,19 +394,33 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         controller.fromRetranslation = true
         self.navigationController?.pushViewController(controller, animated: true);
     }
+    
+    func actualNumberOfLines(width:CGFloat, text:String, font:UIFont) -> Int {
+        let rect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let labelSize = text.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font as Any], context: nil)
+        return Int(ceil(CGFloat(labelSize.height) / font.lineHeight))
+    }
 }
 
 
 extension HistoryViewController:HistoryLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
-        let font = UIFont.systemFont(ofSize:17)
+        let font = UIFont.systemFont(ofSize: 20, weight: .regular)
         
         let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
-        return 20 + fromHeight + 120 + toHeight + 40
+        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 20, text: historyModel.textTranslated!, font: font)
+        if(count == 1){
+            return 20 + fromHeight + 40 + toHeight + 40
+        }else if(count == 2){
+            return 20 + fromHeight + 60 + toHeight + 40
+        }
+        PrintUtility.printLog(tag: "HistoryViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
+        return 20 + fromHeight + 100 + toHeight + 40
     }
 }
+
 
 extension HistoryViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {

@@ -265,12 +265,17 @@ class HomeViewController: BaseViewController {
     /// Top button trigger to history screen
     @objc func goToHistoryScreen () {
         let historyVC = HistoryViewController()
-        historyVC.modalPresentationStyle = .fullScreen
-        historyVC.modalTransitionStyle = .crossDissolve
         historyVC.initDelegate(self)
         self.topCircleImgView.isHidden = true
         self.bottomCircleleImgView.isHidden = true
-        self.navigationController?.present(historyVC, animated: true, completion: nil)
+        
+        let navController = UINavigationController(rootViewController: historyVC)
+                navController.modalPresentationStyle = .overFullScreen
+                navController.modalTransitionStyle = .crossDissolve
+                navController.navigationBar.isHidden = true
+        
+        historyVC.navController = navController
+        self.present(navController, animated: true, completion: nil)
     }
     
     /// Top button trigger to history screen

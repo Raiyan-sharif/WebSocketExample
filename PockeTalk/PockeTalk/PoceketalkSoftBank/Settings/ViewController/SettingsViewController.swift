@@ -20,7 +20,17 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var imageViewOk: UIImageView!
 
     @IBAction func actionBack(_ sender: UIButton) {
-        navigationController?.popToViewController(ofClass: HomeViewController.self)
+        let transition = CATransition()
+                    transition.duration = 0.5
+                    transition.type = CATransitionType.push
+                    transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        if(self.navigationController == nil){
+            self.dismiss(animated: false, completion: nil)
+        }else{
+            self.navigationController?.popViewController(animated: false)
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

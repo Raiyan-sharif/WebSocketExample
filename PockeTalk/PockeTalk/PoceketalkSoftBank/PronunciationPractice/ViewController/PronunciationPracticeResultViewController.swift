@@ -34,11 +34,24 @@ class PronunciationPracticeResultViewController: BaseViewController {
         LanguageSelectionManager.shared.tempSourceLanguage = nil
         if isFromHistory {
             if let historyVC = self.presentingViewController?.presentingViewController  as? PronunciationPracticeViewController{
-                historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
+                if(historyVC.presentingViewController != nil){
+                    historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
+                }else{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                if let nav = self.presentingViewController?.presentingViewController, nav is UINavigationController{
+                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false) {
+                    }
+                }
             }
         } else {
             self.delegate?.dismissResultHome()
-            self.navigationController?.popViewController(animated: true)
+            if(self.navigationController != nil){
+                self.navigationController?.popViewController(animated: true)
+            }else{
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 
