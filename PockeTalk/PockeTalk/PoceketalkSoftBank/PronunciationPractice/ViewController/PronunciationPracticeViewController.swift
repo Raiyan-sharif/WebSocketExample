@@ -127,10 +127,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
 
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
+        LanguageSelectionManager.shared.tempSourceLanguage = nil
         if isFromSpeechProcessing {
             speechDelegate?.dismissResultHome()
         }
-        LanguageSelectionManager.shared.tempSourceLanguage = nil
         if(self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
         }else{

@@ -30,7 +30,8 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         self.speechProcessingVM.updateLanguage()
         let index = UserDefaultsProperty<Int64>(kLastSavedChatID).value!
         let chat = TtsAlertViewModel().findLastSavedChat(id: Int64(index))
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chat, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: false, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: true)
+        self.dismiss(animated: false, completion: nil)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chat, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: false, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: true)
     }
     private let TAG:String = "SpeechProcessingViewController"
     ///Views
@@ -303,8 +304,12 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                     vc.languageCode = self.pronunciationLanguageCode
                     vc.isFromSpeechProcessing = true
                     vc.speechDelegate = self
-                    //                    self.present(vc, animated: false, completion: nil)
-                    self.navigationController?.pushViewController(vc, animated: false)
+                    if(self.navigationController != nil){
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 } else if self.isShowTutorial == true {
                     self.showTutorial()
                 } else {
