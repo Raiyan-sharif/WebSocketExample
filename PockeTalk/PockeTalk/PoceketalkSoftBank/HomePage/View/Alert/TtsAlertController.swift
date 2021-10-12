@@ -302,8 +302,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
         }else{
             if let nav = self.presentingViewController, nav is UINavigationController{
-                self.dismiss(animated: true) {
-                    (nav as! UINavigationController).popViewController(animated: true)
+                self.dismiss(animated: false) {
+                    (nav as! UINavigationController).popViewController(animated: false)
                 }
             } else {
                 self.dismiss(animated: true, completion: nil)
