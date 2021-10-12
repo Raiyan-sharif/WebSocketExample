@@ -5,7 +5,7 @@ protocol FavouriteViewControllerDelegates {
 }
 
 class FavouriteViewController: BaseViewController {
-
+    let TAG = "\(FavouriteViewController.self)"
     ///Favourite Layout to postion the cell
     let favouritelayout = FavouriteLayout()
     ///Collection View top constraint
@@ -101,7 +101,7 @@ class FavouriteViewController: BaseViewController {
     }
 
 
-    @objc func microphoneTapAction (sender:UIButton) {
+    fileprivate func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -114,7 +114,22 @@ class FavouriteViewController: BaseViewController {
         } else {
             GlobalMethod.showNoInternetAlert()
         }
+    }
 
+    @objc func microphoneTapAction (sender:UIButton) {
+        let languageManager = LanguageSelectionManager.shared
+        var speechLangCode = ""
+        if languageManager.isArrowUp{
+            speechLangCode = languageManager.bottomLanguage
+        }else{
+            speechLangCode = languageManager.topLanguage
+        }
+        if languageManager.hasSttSupport(languageCode: speechLangCode){
+            proceedToTakeVoiceInput()
+        }else {
+            showToast(message: "no_stt_msg".localiz(), seconds: 2)
+            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
+        }
     }
 
     func showCollectionView(){

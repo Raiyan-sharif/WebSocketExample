@@ -12,7 +12,7 @@ protocol HistoryViewControllerDelegates {
 }
 
 class HistoryViewController: BaseViewController {
-
+    let TAG = "\(HistoryViewController.self)"
     ///History Layout to postion the cell
     let historylayout = HistoryLayout()
     ///Collection View top constraint
@@ -60,8 +60,6 @@ class HistoryViewController: BaseViewController {
             self.showCollectionView()
         }
         bindData()
-        populateData()
-
     }
     
     func initDelegate<T>(_ vc: T) {
@@ -69,12 +67,15 @@ class HistoryViewController: BaseViewController {
     }
     
     // Populate item to show on context menu
-    func populateData () {
+    func populateData (withPronounciation: Bool) {
+        self.itemsToShowOnContextMenu.removeAll()
         self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "Delete_icon.png", menuType: .delete))
-        self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        if withPronounciation{
+            self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        }
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
@@ -112,7 +113,7 @@ class HistoryViewController: BaseViewController {
     }
 
 
-    @objc func microphoneTapAction (sender:UIButton) {
+    fileprivate func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -125,7 +126,22 @@ class HistoryViewController: BaseViewController {
         } else {
             GlobalMethod.showNoInternetAlert()
         }
+    }
 
+    @objc func microphoneTapAction (sender:UIButton) {
+        let languageManager = LanguageSelectionManager.shared
+        var speechLangCode = ""
+        if languageManager.isArrowUp{
+            speechLangCode = languageManager.bottomLanguage
+        }else{
+            speechLangCode = languageManager.topLanguage
+        }
+        if languageManager.hasSttSupport(languageCode: speechLangCode){
+            proceedToTakeVoiceInput()
+        }else {
+            showToast(message: "no_stt_msg".localiz(), seconds: 2)
+            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
+        }
     }
 
     private var backBtn:UIButton!{
@@ -262,8 +278,19 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
-        let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
         let vc = AlertReusableViewController.init()
+        let languageManager = LanguageSelectionManager.shared
+        let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
+        let language = languageManager.getLanguageCodeByName(langName: chatItem.textTranslatedLanguage!)
+
+        if languageManager.hasSttSupport(languageCode: language!.code){
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code)")
+            populateData(withPronounciation: true)
+        }else{
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code)")
+            populateData(withPronounciation: false)
+            //showToast(message: "no_stt_msg".localiz(), seconds: 2)
+        }
         vc.items = self.itemsToShowOnContextMenu
         vc.delegate = self
         vc.chatItemModel = HistoryChatItemModel(chatItem: chatItem, idxPath: idx)

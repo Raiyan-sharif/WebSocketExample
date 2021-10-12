@@ -72,4 +72,17 @@ func getData () {
         }
         return nil
     }
+
+    // get stt value of the respective item
+    public func getSttValue(langCode: String) -> String? {
+        for item in languageEngineList{
+            if(langCode == item.code){
+                PrintUtility.printLog(tag: TAG, text: "checkSttSupport getSttValue \(item.sttEngine)")
+                if item.sttEngine != nil{
+                    return item.sttEngine
+                }
+            }
+        }
+        return nil
+    }
 }

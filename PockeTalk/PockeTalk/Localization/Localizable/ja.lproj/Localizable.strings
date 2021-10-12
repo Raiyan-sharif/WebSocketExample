@@ -57,3 +57,4 @@
 "delete" = "履歴から削除";
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "わかっ";
+"no_stt_msg" = "言語はサポートされていません";

@@ -202,4 +202,14 @@ public class LanguageSelectionManager{
             UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
         }
     }
+
+    func hasSttSupport(languageCode: String) -> Bool{
+        let langitem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: languageCode)
+        let sttValue = TTSEngine.shared.getSttValue(langCode: languageCode)
+        PrintUtility.printLog(tag: TAG, text: "checkSttSupport \(sttValue) langitem \(langitem?.name) code \(langitem?.code)")
+        if sttValue == nil{
+            return false
+        }
+        return true
+    }
 }

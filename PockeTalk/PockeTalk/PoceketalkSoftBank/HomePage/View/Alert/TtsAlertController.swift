@@ -70,7 +70,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         // Do any additional setup after loading the view.
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
-        self.populateData()
         self.getTtsValue()
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
@@ -257,6 +256,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     
     func openContextMenu(){
         let vc = AlertReusableViewController.init()
+        let languageManager = LanguageSelectionManager.shared
+        let language = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem?.textTranslatedLanguage)!)
+        if languageManager.hasSttSupport(languageCode: language!.code){
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code)")
+            populateData(withPronounciation: true)
+        }else{
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code)")
+            populateData(withPronounciation: false)
+        }
         vc.items = self.itemsToShowOnContextMenu
         vc.delegate = self
         vc.chatItemModel = self.chatItemModel
@@ -271,14 +279,17 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 
     // Populate item to show on context menu
-    func populateData () {
+    func populateData (withPronounciation: Bool) {
+        self.itemsToShowOnContextMenu.removeAll()
         self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
         if(hideBottomView){
             self.itemsToShowOnContextMenu.append(AlertItems(title: "delete".localiz(), imageName: "Delete_icon.png", menuType: .delete))
         }
-        self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        if withPronounciation {
+            self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
+        }
         self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }

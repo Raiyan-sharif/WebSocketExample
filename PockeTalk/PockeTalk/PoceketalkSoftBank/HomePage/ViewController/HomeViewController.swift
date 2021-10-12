@@ -224,7 +224,7 @@ class HomeViewController: BaseViewController {
     }
 
     // TODO microphone tap event
-    @objc func microphoneTapAction (sender:UIButton) {
+    fileprivate func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
@@ -243,6 +243,22 @@ class HomeViewController: BaseViewController {
             }
         } else {
             GlobalMethod.showNoInternetAlert()
+        }
+    }
+
+    @objc func microphoneTapAction (sender:UIButton) {
+        let languageManager = LanguageSelectionManager.shared
+        var speechLangCode = ""
+        if languageManager.isArrowUp{
+            speechLangCode = languageManager.bottomLanguage
+        }else{
+            speechLangCode = languageManager.topLanguage
+        }
+        if languageManager.hasSttSupport(languageCode: speechLangCode){
+            proceedToTakeVoiceInput()
+        }else {
+            showToast(message: "no_stt_msg".localiz(), seconds: 2)
+            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
         }
     }
 

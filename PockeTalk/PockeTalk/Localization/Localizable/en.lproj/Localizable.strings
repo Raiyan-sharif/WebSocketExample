@@ -57,3 +57,4 @@
 "delete" = "Delete from History";
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "OK";
+"no_stt_msg" = "Language is not supported";
