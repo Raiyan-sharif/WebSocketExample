@@ -289,7 +289,8 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                         if runCount == self.waitngISFinalSecond {
                             innerTimer.invalidate()
                             if !self.speechProcessingVM.isFinal.value {
-                                self.navigationController?.popViewController(animated: true)
+                                //self.navigationController?.popViewController(animated: true)
+                                self.loaderInvisible()
                             }
                          }
                      }
@@ -313,11 +314,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 } else if self.isShowTutorial == true {
                     self.showTutorial()
                 } else {
-                    if(self.navigationController != nil){
-                        self.navigationController?.popViewController(animated: true)
-                    }else{
-                        self.dismiss(animated: true, completion: nil)
-                    }
+                    self.loaderInvisible()
                 }
             }
         }
@@ -325,6 +322,24 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         service?.startRecord()
 
     }
+    
+    private func loaderInvisible(){
+        if(self.navigationController != nil){
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            //self.dismiss(animated: true, completion: nil)
+            if let historyVC = self.presentingViewController  as? HistoryViewController{
+                historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
+            }else if let favVC = self.presentingViewController  as? FavouriteViewController{
+                favVC.presentingViewController?.dismiss(animated: true, completion: nil)
+            }else if let ttsVC = self.presentingViewController?.presentingViewController as? HistoryViewController{
+                ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
+            }else{
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     private func bindData(){
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
