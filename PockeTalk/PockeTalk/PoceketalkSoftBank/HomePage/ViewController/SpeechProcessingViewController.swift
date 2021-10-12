@@ -280,20 +280,25 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
             guard let `self` = self else { return }
             if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
-                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: { [weak self] in
-                    guard let `self` = self else { return }
-                    var runCount = 0
-                    self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] innerTimer in
+                self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: {
+                    DispatchQueue.main.async  { [weak self] in
                         guard let `self` = self else { return }
-                         runCount += 1
-                        if runCount == self.waitngISFinalSecond {
-                            innerTimer.invalidate()
-                            if !self.speechProcessingVM.isFinal.value {
-                                //self.navigationController?.popViewController(animated: true)
-                                self.loaderInvisible()
-                            }
+                        var runCount = 0
+                        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] innerTimer in
+                            guard let `self` = self else { return }
+                             runCount += 1
+                            if runCount == self.waitngISFinalSecond {
+                                innerTimer.invalidate()
+                                if !self.speechProcessingVM.isFinal.value {
+                                    //self.navigationController?.popViewController(animated: true)
+                                    self.loaderInvisible()
+                                }
+                             }
                          }
-                     }
+                    }
+                    
+                    
+                    
                 })
             }else{
                 self.spinnerView.isHidden = true
@@ -314,7 +319,20 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
                 } else if self.isShowTutorial == true {
                     self.showTutorial()
                 } else {
-                    self.loaderInvisible()
+                    if(self.navigationController != nil){
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        //self.dismiss(animated: true, completion: nil)
+                        if let historyVC = self.presentingViewController  as? HistoryViewController{
+                            historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
+                        }else if let favVC = self.presentingViewController  as? FavouriteViewController{
+                            favVC.presentingViewController?.dismiss(animated: true, completion: nil)
+                        }else if let ttsVC = self.presentingViewController?.presentingViewController as? HistoryViewController{
+                            ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
+                        }else{
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 }
             }
         }
@@ -327,18 +345,11 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         if(self.navigationController != nil){
             self.navigationController?.popViewController(animated: true)
         }else{
-            //self.dismiss(animated: true, completion: nil)
-            if let historyVC = self.presentingViewController  as? HistoryViewController{
-                historyVC.presentingViewController?.dismiss(animated: true, completion: nil)
-            }else if let favVC = self.presentingViewController  as? FavouriteViewController{
-                favVC.presentingViewController?.dismiss(animated: true, completion: nil)
-            }else if let ttsVC = self.presentingViewController?.presentingViewController as? HistoryViewController{
-                ttsVC.presentingViewController?.dismiss(animated: true, completion: nil)
-            }else{
-                self.dismiss(animated: true, completion: nil)
-            }
+            self.dismiss(animated: true, completion: nil)
         }
     }
+    
+    
     
     private func bindData(){
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
