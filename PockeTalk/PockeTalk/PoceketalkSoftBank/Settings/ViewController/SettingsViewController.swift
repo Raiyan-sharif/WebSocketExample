@@ -58,6 +58,11 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let settingsType =  SettingsItemType.settingsItems[indexPath.row]
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.contentView.backgroundColor = UIColor.black
+            cell.selectedBackgroundView?.backgroundColor = .clear
+            
+        }
 
         switch settingsType
         {
@@ -67,7 +72,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             textSizeVC.delegate = self
             self.navigationController?.present(textSizeVC, animated: true, completion: nil)
         case SettingsItemType.languageChange.rawValue:
-            PrintUtility.printLog(tag: "LanguageChage: ", text: "LanguageChage")
+            PrintUtility.printLog(tag: "LanguageChange: ", text: "LanguageChange")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
 //        case SettingsItemType.softBank.rawValue:
 //            PrintUtility.printLog(tag: "softBank: ", text: "softBank")
