@@ -277,11 +277,16 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 DispatchQueue.main.async {
                     let height = textViews[i].view.frame.size.height
                     let width = textViews[i].view.frame.size.width
-                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
-                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
-                    textViews[i].view.frame.size.height = height
-                    textViews[i].view.frame.size.width = width
-                    textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
+//                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
+//                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
+//                    textViews[i].view.frame.size.height = height
+//                    textViews[i].view.frame.size.width = width
+                    //textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
+                    // To do : Delete when implementation finished
+                    let array: [UIColor] = [.gray, .red, .green, .brown, .blue, .cyan, .orange]
+                    let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+                    textViews[i].view.backgroundColor = array[randomIndex].withAlphaComponent(0.4)
+                    
                     textViews[i].view.tag = i
                     
                     self.imageView.addSubview(textViews[i].view)

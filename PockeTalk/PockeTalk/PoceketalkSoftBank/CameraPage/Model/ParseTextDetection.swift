@@ -99,12 +99,24 @@ class ParseTextDetection: BaseModel {
                 PrintUtility.printLog(tag: "angle calculation", text: "\(CGFloat(angle))")
                 
                 //TO DO: Need To Update
-//                if (angle != 90 || angle != -90) {
-//                    textView.setAnchorPoint(CGPoint(x: 0, y: 1))
-//                    textView.transform = CGAffineTransform(rotationAngle: ((CGFloat(angle) * CGFloat.pi/180) + (90 / 180.0 * CGFloat.pi)))
-//                }
+                //                if (angle != 90 || angle != -90) {
+                //                    textView.setAnchorPoint(CGPoint(x: 0, y: 1))
+                //                    textView.transform = CGAffineTransform(rotationAngle: ((CGFloat(angle) * CGFloat.pi/180) + (90 / 180.0 * CGFloat.pi)))
+                //                }
+                
                 
                 textView.frame = CGRect(x: CGFloat(x), y: CGFloat(y), width: width, height: height)
+                
+                if angle > 0 {
+                    //
+                } else {
+                    angle = abs(angle)
+                    angle = -90 + angle
+                }
+                
+                textView.setAnchorPoint(CGPoint(x: 0, y: 1))
+                textView.transform = CGAffineTransform(rotationAngle: ((CGFloat(angle) * CGFloat.pi/180) + (90 / 180.0 * CGFloat.pi)))
+                
                 
                 PrintUtility.printLog(tag: "BLOCK width:\(height)", text: "height: \(width)")
                 PrintUtility.printLog(tag: "BLOCK x:\(x)", text: "y: \(y)")
@@ -158,13 +170,37 @@ class ParseTextDetection: BaseModel {
                 PrintUtility.printLog(tag: "angle calculation horizontal", text: "\(CGFloat(angle))")
                 
                 
-                textView.setAnchorPoint(CGPoint(x: 0, y: 0))
-                textView.transform = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
+                //                textView.setAnchorPoint(CGPoint(x: 0, y: 0))
+                //                textView.transform = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
                 
                 textView.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
                 
+                let view1 = UIView()
+                view1.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
                 
-                listBlockVerticalTextView.append(TextViewWithCoordinator(view: textView, X1: each.X1!, Y1: each.Y1!))
+                //                view1.setAnchorPoint(CGPoint(x: 0, y: 0))
+                //                view1.transform = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
+                
+                view1.addSubview(textView)
+                textView.backgroundColor = .clear
+                textView.translatesAutoresizingMaskIntoConstraints = false
+                textView.leadingAnchor.constraint(equalTo: view1.leadingAnchor, constant: 0).isActive = true
+                textView.trailingAnchor.constraint(equalTo: view1.trailingAnchor, constant: 0).isActive = true
+                textView.topAnchor.constraint(equalTo: view1.topAnchor, constant: 0).isActive = true
+                textView.bottomAnchor.constraint(equalTo: view1.bottomAnchor, constant: 0).isActive = true
+                
+                
+                let  transA = CGAffineTransform(translationX: view1.frame.size.width/2,y: view1.frame.size.height/2)
+                let  rotation = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
+                let  transB = CGAffineTransform(translationX: -view1.frame.size.width/2,y: -view1.frame.size.height/2)
+                
+                
+                let transform = transA.concatenating(rotation).concatenating(transB)
+                view1.transform = view1.transform.concatenating(transform)
+                //textView.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
+                
+                
+                listBlockVerticalTextView.append(TextViewWithCoordinator(view: view1, X1: each.X1!, Y1: each.Y1!))
             }
             
         }
