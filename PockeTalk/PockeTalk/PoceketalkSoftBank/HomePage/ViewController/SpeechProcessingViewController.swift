@@ -387,10 +387,13 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         speechProcessingVM.getSST_Text.bindAndFire { [weak self] sstText  in
             guard let `self` = self else { return }
             if sstText.count > 0{
-                self.isSSTavailable = true
-                self.titleLabel.text = sstText
-                self.exampleLabel.isHidden = true
-                self.descriptionLabel.isHidden = true
+                DispatchQueue.main.async {
+                    self.isSSTavailable = true
+                    self.titleLabel.text = sstText
+                    self.exampleLabel.isHidden = true
+                    self.descriptionLabel.isHidden = true
+                }
+                
             }
         }
         speechProcessingVM.isUpdatedAPI.bindAndFire { [weak self] isUpdated in
