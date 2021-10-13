@@ -103,11 +103,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.layer.cornerRadius = cornerRadius
         self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
+        self.fromLanguageLabel.sizeToFit()
+        
         //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
         self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
         self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
+        self.fromLanguageLabel.sizeToFit()
+        
         //self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.textAlignment = .center
         self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
@@ -235,8 +239,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.containerViewtrailingConstraint.constant = 25
         self.containerViewBottomConstraint.constant = 25
         self.containerViewLeadingConstraint.constant = 25
-        self.toLangLabelTopConstraint.constant = 220
-        self.fromLangLabelBottomConstraint.constant = 60
+        //self.toLangLabelTopConstraint.constant = 220
+        //self.fromLangLabelBottomConstraint.constant = 60
     }
     
     @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
