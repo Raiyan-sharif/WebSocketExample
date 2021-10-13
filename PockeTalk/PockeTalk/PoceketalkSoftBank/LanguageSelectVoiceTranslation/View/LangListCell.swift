@@ -13,6 +13,7 @@ class LangListCell: UITableViewCell {
     @IBOutlet weak var imageLangItemSelector: UIImageView!
     @IBOutlet weak var lableLangName: UILabel!
 
+    @IBOutlet weak var imageNoVoice: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

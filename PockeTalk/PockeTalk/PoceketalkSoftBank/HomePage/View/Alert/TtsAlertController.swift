@@ -158,7 +158,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     func getTtsValue () {
         let languageManager = LanguageSelectionManager.shared
         let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
-        let item = TTSEngine.shared.getTtsValue(langCode: targetLanguageItem!.code)
+        let item = LanguageEngineParser.shared.getTtsValue(langCode: targetLanguageItem!.code)
         self.voice = item.voice
         self.rate = item.rate
     }
@@ -355,17 +355,32 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    func playTTS(){
+
+    fileprivate func proceedAndPlayTTS() {
         ttsResponsiveView.isSpeaking()
         ttsResponsiveView.setRate(rate: rate)
         let translateText = chatItemModel?.chatItem?.textTranslated
         PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")
         startAnimation()
         ttsResponsiveView.TTSPlay(voice: voice,text: translateText ??  "")
-        
     }
-    
+
+    func playTTS(){
+        let languageManager = LanguageSelectionManager.shared
+        if let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!){
+            if(languageManager.hasTtsSupport(languageCode: targetLanguageItem.code)){
+                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(targetLanguageItem.code)")
+                proceedAndPlayTTS()
+            }else{
+                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(targetLanguageItem.code)")
+                let seconds = 1.0
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.stopTTS()
+                }
+            }
+        }
+    }
+
     func stopTTS(){
         ttsResponsiveView.stopTTS()
         stopAnimation()

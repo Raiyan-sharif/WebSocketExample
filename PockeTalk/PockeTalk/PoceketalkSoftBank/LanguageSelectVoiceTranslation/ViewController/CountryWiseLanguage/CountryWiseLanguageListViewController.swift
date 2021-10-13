@@ -132,11 +132,18 @@ extension CountryWiseLanguageListViewController : UICollectionViewDataSource{
         }
 
         if UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value == item.code{
+            let languageManager = LanguageSelectionManager.shared
+            if(languageManager.hasTtsSupport(languageCode: item.code)){
+                cell.imageviewNoVoice.isHidden = true
+            }else{
+                cell.imageviewNoVoice.isHidden = false
+            }
             cell.imageLanguageSelection.isHidden = false
             cell.langListItemContainer.backgroundColor = UIColor(hex: "#008FE8")
             PrintUtility.printLog(tag: TAG, text: "matched lang \(String(describing: UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value)) languageItem.code \(item.code)")
         }else{
             cell.imageLanguageSelection.isHidden = true
+            cell.imageviewNoVoice.isHidden = true
             cell.langListItemContainer.backgroundColor = .black
         }
         return cell

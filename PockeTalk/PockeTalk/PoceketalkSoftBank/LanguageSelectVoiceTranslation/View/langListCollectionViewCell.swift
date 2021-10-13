@@ -11,6 +11,7 @@ class langListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var languageNameLabel: UILabel!
     @IBOutlet weak var imageLanguageSelection: UIImageView!
     @IBOutlet weak var langListItemContainer: UIView!
+    @IBOutlet weak var imageviewNoVoice: UIImageView!
     static let identifier = "langListCollectionViewCell"
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -87,7 +87,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
     /// Retreive tts value from respective language code
     func getTtsValue () {
-        let item = TTSEngine.shared.getTtsValue(langCode: languageCode)
+        let item = LanguageEngineParser.shared.getTtsValue(langCode: languageCode)
         self.voice = item.voice
         self.rate = item.rate
     }

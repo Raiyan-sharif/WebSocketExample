@@ -77,11 +77,18 @@ extension LanguageListCameraVC: UITableViewDataSource,UITableViewDelegate{
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
         PrintUtility.printLog(tag: TAG , text: " value \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
         if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
+            let languageManager = LanguageSelectionManager.shared
+            if(languageManager.hasTtsSupport(languageCode: languageItem.code)){
+                cell.imageNoVoice.isHidden = true
+            }else{
+                cell.imageNoVoice.isHidden = false
+            }
             cell.imageLangItemSelector.isHidden = false
             cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
             PrintUtility.printLog(tag: TAG , text: " matched lang \(UserDefaultsProperty<String>(KSelectedLanguageCamera).value) languageItem.code \(languageItem.code)")
         }else{
             cell.imageLangItemSelector.isHidden = true
+            cell.imageNoVoice.isHidden = true
             cell.langListCellContainer.backgroundColor = .black
         }
         return cell

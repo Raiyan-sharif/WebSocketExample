@@ -1,8 +1,8 @@
 import UIKit
 import SwiftyXMLParser
 
-public class TTSEngine{
-    public static let shared: TTSEngine = TTSEngine()
+public class LanguageEngineParser{
+    public static let shared: LanguageEngineParser = LanguageEngineParser()
     let TAG = "\(LanguageSelectionManager.self)"
     var languageEngineList = [LangueEngineModel]()
     let fileName = "language_engine"
@@ -11,14 +11,15 @@ public class TTSEngine{
     let childElement = "item"
     let code = "code"
     let sttEngine = "stt_engine"
+    let ttsEngine = "tts_engine"
     let ttsValue = "tts_value"
     let errorTitle = "Error :"
     let errorDescription = "Parse Error"
-    
+
     private init() {
         self.getData()
     }
-    
+
     ///Get data from XML
 func getData () {
     if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
@@ -29,7 +30,7 @@ func getData () {
             // enumerate child Elements in the parent Element
             for item in xml[parentElement,childElement] {
                 let attributes = item.attributes
-                languageEngineList.append(LangueEngineModel(code: attributes[code], sttEngine: attributes[sttEngine],ttsValue: attributes[ttsValue]))
+                languageEngineList.append(LangueEngineModel(code: attributes[code], sttEngine: attributes[sttEngine],ttsValue: attributes[ttsValue],ttsEngine: attributes[ttsEngine]))
             }
         } catch {
             PrintUtility.printLog(tag: errorTitle, text: errorDescription)
@@ -39,8 +40,8 @@ func getData () {
     public func getTtsValue(langCode: String) -> (voice: String, rate: String) {
         var voice : String = ""
         var rate : String = "1.0"
-        
-        if let value = TTSEngine.shared.getTtsValueByCode(code: langCode) {
+
+        if let value = LanguageEngineParser.shared.getTtsValueByCode(code: langCode) {
             voice = value
         }
 
@@ -62,7 +63,7 @@ func getData () {
         }
         return ( voice, rate)
     }
-    
+
     // This method is called to retrive tts value from respective language code
     public func  getTtsValueByCode(code: String) -> String? {
         for item in languageEngineList{
@@ -80,6 +81,19 @@ func getData () {
                 PrintUtility.printLog(tag: TAG, text: "checkSttSupport getSttValue \(item.sttEngine)")
                 if item.sttEngine != nil{
                     return item.sttEngine
+                }
+            }
+        }
+        return nil
+    }
+
+    // get TTS Engine name of the respective item
+    public func getTtsEngineName(langCode: String) -> String? {
+        for item in languageEngineList{
+            if(langCode == item.code){
+                PrintUtility.printLog(tag: TAG, text: "checkTtsSupport getTtsValue \(item.ttsValue)")
+                if item.ttsEngine != nil{
+                    return item.ttsEngine
                 }
             }
         }

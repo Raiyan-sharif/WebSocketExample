@@ -15,5 +15,8 @@ struct LangueEngineModel {
 
     /// tts_value
     var ttsValue : String?
+
+    // tts_engine
+    var ttsEngine : String?
 }
 

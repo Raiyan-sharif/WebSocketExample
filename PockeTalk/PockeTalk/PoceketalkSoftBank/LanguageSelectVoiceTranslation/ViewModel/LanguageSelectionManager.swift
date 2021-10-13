@@ -205,9 +205,19 @@ public class LanguageSelectionManager{
 
     func hasSttSupport(languageCode: String) -> Bool{
         let langitem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: languageCode)
-        let sttValue = TTSEngine.shared.getSttValue(langCode: languageCode)
+        let sttValue = LanguageEngineParser.shared.getSttValue(langCode: languageCode)
         PrintUtility.printLog(tag: TAG, text: "checkSttSupport \(sttValue) langitem \(langitem?.name) code \(langitem?.code)")
         if sttValue == nil{
+            return false
+        }
+        return true
+    }
+
+    func hasTtsSupport(languageCode: String) -> Bool{
+        let langitem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: languageCode)
+        let ttsValue = LanguageEngineParser.shared.getTtsEngineName(langCode: languageCode)
+        PrintUtility.printLog(tag: TAG, text: "checkTtsSupport \(ttsValue) langitem \(langitem?.name) code \(langitem?.code)")
+        if ttsValue == nil{
             return false
         }
         return true
