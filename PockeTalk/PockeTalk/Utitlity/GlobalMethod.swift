@@ -56,9 +56,11 @@ class GlobalMethod {
         if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
             // Init alert
             let alertController: UIAlertController = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+            let okActionAlert = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
                 completion?()
-            }))
+            })
+            okActionAlert.setValue(UIColor.black, forKey: "titleTextColor")
+            alertController.addAction(okActionAlert)
 
             // Show alert
             if viewController != nil {
