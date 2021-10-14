@@ -1,8 +1,13 @@
-
+//
+//  ResetListTableViewCell.swift
+//  PockeTalk
+//
+//  Created by Sadikul Bari on 14/10/21.
+//
 
 import UIKit
 
-class ResetTableViewCell: UITableViewCell {
+class ResetListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
@@ -15,9 +20,5 @@ class ResetTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
-    override func layoutSubviews() {
-        changeFontSize()
-    }
-
+    
 }

@@ -10,8 +10,6 @@
 		3B86A5C626F0631600175073 /* Reset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5C526F0631600175073 /* Reset.storyboard */; };
 		3B86A5D026F0650900175073 /* ResetItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5CF26F0650900175073 /* ResetItems.swift */; };
 		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
-		3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D326F0846200175073 /* ResetTableViewCell.swift */; };
-		3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5D426F0846200175073 /* ResetTableViewCell.xib */; };
 		3BA8E134270B18D20095D036 /* resv_1.8.1.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BA8E132270B18D20095D036 /* resv_1.8.1.html */; };
 		3BA8E135270B18D20095D036 /* responsivevoice_1.8.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */; };
 		3BC7D754270C098400F4B184 /* TTSResponsiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */; };
@@ -76,6 +74,8 @@
 		5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55626E29FB7002A5250 /* LanguageListVC.swift */; };
 		5028D55926E29FE5002A5250 /* TabsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028D55826E29FE5002A5250 /* TabsPageViewController.swift */; };
 		5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */; };
+		502939A22717F2B8004EB8C0 /* ResetListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502939A02717F2B8004EB8C0 /* ResetListTableViewCell.swift */; };
+		502939A32717F2B8004EB8C0 /* ResetListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502939A12717F2B8004EB8C0 /* ResetListTableViewCell.xib */; };
 		503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 503AEEB826EB0EE000B03978 /* LanguageSelectCamera.storyboard */; };
 		503AEEBB26EB139F00B03978 /* LanguageSelectCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503AEEBA26EB139F00B03978 /* LanguageSelectCameraVC.swift */; };
 		5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */; };
@@ -234,8 +234,6 @@
 		3B86A5C526F0631600175073 /* Reset.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reset.storyboard; sourceTree = "<group>"; };
 		3B86A5CF26F0650900175073 /* ResetItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetItems.swift; sourceTree = "<group>"; };
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
-		3B86A5D326F0846200175073 /* ResetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTableViewCell.swift; sourceTree = "<group>"; };
-		3B86A5D426F0846200175073 /* ResetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetTableViewCell.xib; sourceTree = "<group>"; };
 		3BA8E132270B18D20095D036 /* resv_1.8.1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = resv_1.8.1.html; sourceTree = "<group>"; };
 		3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = responsivevoice_1.8.1.js; sourceTree = "<group>"; };
 		3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSResponsiveView.swift; sourceTree = "<group>"; };
@@ -305,6 +303,8 @@
 		5028D55626E29FB7002A5250 /* LanguageListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageListVC.swift; sourceTree = "<group>"; };
 		5028D55826E29FE5002A5250 /* TabsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsPageViewController.swift; sourceTree = "<group>"; };
 		5028D55A26E2A0D0002A5250 /* LanguageSelectVoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LanguageSelectVoice.storyboard; sourceTree = "<group>"; };
+		502939A02717F2B8004EB8C0 /* ResetListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetListTableViewCell.swift; sourceTree = "<group>"; };
+		502939A12717F2B8004EB8C0 /* ResetListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetListTableViewCell.xib; sourceTree = "<group>"; };
 		503AEEB826EB0EE000B03978 /* LanguageSelectCamera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageSelectCamera.storyboard; sourceTree = "<group>"; };
 		503AEEBA26EB139F00B03978 /* LanguageSelectCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectCameraVC.swift; sourceTree = "<group>"; };
 		5064D19526E2A93D006E6197 /* conversation_languages_ja.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ja.xml; sourceTree = "<group>"; };
@@ -502,8 +502,8 @@
 			isa = PBXGroup;
 			children = (
 				3B86A5C526F0631600175073 /* Reset.storyboard */,
-				3B86A5D326F0846200175073 /* ResetTableViewCell.swift */,
-				3B86A5D426F0846200175073 /* ResetTableViewCell.xib */,
+				502939A02717F2B8004EB8C0 /* ResetListTableViewCell.swift */,
+				502939A12717F2B8004EB8C0 /* ResetListTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1717,8 +1717,8 @@
 				3BA8E134270B18D20095D036 /* resv_1.8.1.html in Resources */,
 				4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */,
 				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
+				502939A32717F2B8004EB8C0 /* ResetListTableViewCell.xib in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
-				3B86A5D626F0846200175073 /* ResetTableViewCell.xib in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
@@ -1866,7 +1866,6 @@
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				89C0F7E626F1EC0E000CD5FC /* CameraHistoryDataModel.swift in Sources */,
 				89C0F7D726F1CE08000CD5FC /* Constants.swift in Sources */,
-				3B86A5D526F0846200175073 /* ResetTableViewCell.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
 				69C99F0B26E73C7D00D853AB /* SpeechProcessingViewController.swift in Sources */,
@@ -1923,6 +1922,7 @@
 				4AB51D16270AF56B007D254A /* RuntimePermissionUtil.swift in Sources */,
 				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
+				502939A22717F2B8004EB8C0 /* ResetListTableViewCell.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */,

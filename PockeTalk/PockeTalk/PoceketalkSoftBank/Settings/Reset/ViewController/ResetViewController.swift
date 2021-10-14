@@ -35,8 +35,10 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "ResetTableViewCell", bundle: nil), forCellReuseIdentifier: "ResetTableViewCell")
+        tableView.register(UINib(nibName: "ResetListTableViewCell", bundle: nil), forCellReuseIdentifier: "ResetTableViewCell")
         tableView.separatorColor = .gray
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         tableView.tableFooterView = UIView()
     }
     
@@ -46,9 +48,10 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ResetTableViewCell") as! ResetTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResetTableViewCell") as! ResetListTableViewCell
         cell.titleLabel?.text = ResetItemType.resetItems[indexPath.row].localiz()
         print(ResetItemType.resetItems[indexPath.row].localiz())
+        cell.backgroundColor = .black
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor._skyBlueColor()
         cell.selectedBackgroundView = bgColorView
