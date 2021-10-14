@@ -8,6 +8,8 @@ import UIKit
 
 class CaptureImageProcessVC: BaseViewController {
     
+    private let TAG = "\(CaptureImageProcessVC.self)"
+    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -22,6 +24,11 @@ class CaptureImageProcessVC: BaseViewController {
     var imageView = UIImageView()
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
+    
+    var mTranslatedText: String = ""
+    var mDetectedText: String = ""
+    var mTranslatedLanguage: String = ""
+    var mDetectedLanguage: String = ""
     
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -105,6 +112,7 @@ class CaptureImageProcessVC: BaseViewController {
             imageWidth = self.view.frame.width
         }
         let image1 = resizeImage(image: image, targetSize: CGSize(width: imageWidth, height: imageHeight))
+        PrintUtility.printLog(tag: "Resized Image1 heightInPoints: \(image1.size.height)", text: ", widthInPoints: \(image1.size.width)")
         imageView.image = image1
         self.iTTServerViewModel.capturedImage = image1
         
@@ -144,6 +152,11 @@ class CaptureImageProcessVC: BaseViewController {
         self.cameraHistoryViewModel.fetchDetectedAndTranslatedText(for: cameraHistoryImageIndex)
         
         if ((self.cameraHistoryViewModel.detectedData) != nil && self.cameraHistoryViewModel.translatedData != nil) {
+            
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try? encoder.encode(self.cameraHistoryViewModel.detectedData)
+            PrintUtility.printLog(tag: TAG, text: "setUpViewForHistoryVC() >> Detected Data: \(String(data: data!, encoding: .utf8)!)")
             
             self.iTTServerViewModel.getTextviewListForCameraHistory(detectedData: self.cameraHistoryViewModel.detectedData, translatedData: self.cameraHistoryViewModel.translatedData)
         } else {
@@ -185,16 +198,24 @@ class CaptureImageProcessVC: BaseViewController {
                     let translatedData = fromHistoryVC ? self.cameraHistoryViewModel.translatedData : getTranslatedToLanguage()
                     if modeSwitchType == blockMode {
                         
-                        let translateLanguage = translatedData?.block?.languageCodeTo
-                        PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(translateLanguage)")
-                        showTTSDialog(nativeText: self.iTTServerViewModel.blockListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.blockTranslatedText[index], translateLanguage: translateLanguage!)
-                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
+                        mTranslatedText = self.iTTServerViewModel.blockTranslatedText[index]
+                        mDetectedText = self.iTTServerViewModel.blockListFromJson[index].text!
+                        mTranslatedLanguage = (translatedData?.block!.languageCodeTo)!
+                        mDetectedLanguage = self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!
+                        
+                        PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(mTranslatedLanguage)")
+                        showTTSDialog(nativeText: mDetectedText, nativeLanguage: mDetectedLanguage, translateText: mTranslatedText, translateLanguage: mTranslatedLanguage)
+                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        let translateLanguage = translatedData?.line?.languageCodeTo
-                        showTTSDialog(nativeText: self.iTTServerViewModel.lineListFromJson[index].text!, nativeLanguage: self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!, translateText: self.iTTServerViewModel.lineTranslatedText[index], translateLanguage: translateLanguage!)
-                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag)")
+                        mTranslatedText = self.iTTServerViewModel.lineTranslatedText[index]
+                        mDetectedText = self.iTTServerViewModel.lineListFromJson[index].text!
+                        mTranslatedLanguage = (translatedData?.line!.languageCodeTo)!
+                        mDetectedLanguage = self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!
+                        
+                        showTTSDialog(nativeText: mDetectedText, nativeLanguage: mDetectedLanguage, translateText: mTranslatedText, translateLanguage: mTranslatedLanguage)
+                        PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
                 }
@@ -281,19 +302,14 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
 //                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
 //                    textViews[i].view.frame.size.height = height
 //                    textViews[i].view.frame.size.width = width
-                    //textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
-                    // To do : Delete when implementation finished
-                    let array: [UIColor] = [.gray, .red, .green, .brown, .blue, .cyan, .orange]
-                    let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
-                    textViews[i].view.backgroundColor = array[randomIndex].withAlphaComponent(0.4)
+                    textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
+                    
                     
                     textViews[i].view.tag = i
                     
                     self.imageView.addSubview(textViews[i].view)
                     textViews[i].view.isUserInteractionEnabled = true
-                    
                 }
-                
             }
         }
         

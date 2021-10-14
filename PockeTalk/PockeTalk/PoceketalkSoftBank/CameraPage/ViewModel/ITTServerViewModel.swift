@@ -260,11 +260,11 @@ class ITTServerViewModel: BaseModel {
         DispatchQueue.main.async {
             self.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { (listTextView) in
                 
-                self.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { (listTV) in
+                self.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { [self] (listTV) in
                     let textViewList = listTextView + listTV
-                    PrintUtility.printLog(tag: "textViewList", text: "\(textViewList.count)")
-                    PrintUtility.printLog(tag: "listTextView", text: "\(listTextView.count)")
-                    PrintUtility.printLog(tag: "listTV", text: "\(listTV.count)")
+                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Total textView: \(textViewList.count)")
+                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Vertical TextView: \(listTextView.count)")
+                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Horizontal TextView: \(listTV.count)")
                     completion(textViewList)
                 })
             })
