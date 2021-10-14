@@ -352,10 +352,13 @@ class HomeViewController: BaseViewController {
     
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
     }
     
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
     }
     
     func openLanguageSelectionScreen(isNative: Int){
@@ -387,6 +390,10 @@ class HomeViewController: BaseViewController {
 
     @objc func onVoiceLanguageChanged(notification: Notification) {
         //updateLanguageNames()
+    }
+    
+    @objc func onArrowChanged(notification: Notification) {
+        setLanguageDirection()
     }
 
     // Down ward gesture

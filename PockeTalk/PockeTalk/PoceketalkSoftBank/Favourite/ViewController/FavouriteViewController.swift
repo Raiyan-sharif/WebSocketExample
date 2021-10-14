@@ -23,6 +23,7 @@ class FavouriteViewController: BaseViewController {
     private(set) var delegate: FavouriteViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
+    var deletedCellHeight = CGFloat()
 
     ///CollectionView to show favourite item
     private lazy var collectionView:UICollectionView = {
@@ -107,7 +108,7 @@ class FavouriteViewController: BaseViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
             controller.homeMicTapTimeStamp = currentTS
-            controller.languageHasUpdated = false
+            controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
@@ -151,6 +152,10 @@ class FavouriteViewController: BaseViewController {
         transitionAndScale.animations = [ transitionAnimation, scalAnimation]
         transitionAndScale.duration = 1.0
         collectionView.layer.add(transitionAndScale, forKey: nil)
+        let diff = collectionView.frame.height - collectionView.contentSize.height
+        if diff > 0 {
+            collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
+        }
 
     }
     
@@ -176,8 +181,13 @@ class FavouriteViewController: BaseViewController {
                 }
             }
             if items.count > 0{
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    guard let `self` = self else { return }
+                    let collectionViewHeight = self.collectionView.frame.height
+                    let diff = CGFloat(collectionViewHeight) - CGFloat(self.collectionView.contentSize.height - self.deletedCellHeight)
+                    if diff > 0 {
+                        self.collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
+                    }
                 }
             }
         }
@@ -219,6 +229,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.favouriteViewModel.deleteFavourite(indexpath.item)
+            self.deletedCellHeight = cell.frame.height
             self.collectionView.performBatchUpdates{
                 self.collectionView.deleteItems(at: [indexpath])
             }

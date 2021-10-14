@@ -26,6 +26,7 @@ class HistoryViewController: BaseViewController {
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
     let buttonWidth : CGFloat = 100
+    var deletedCellHeight = CGFloat()
     
     var navController: UINavigationController?
 
@@ -67,6 +68,30 @@ class HistoryViewController: BaseViewController {
             self.showCollectionView()
         }
         bindData()
+        
+        let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToDismiss))
+        swipeToDismiss.direction = .up
+        self.view.addGestureRecognizer(swipeToDismiss)
+    }
+    
+    @objc func swipeToDismiss(gesture: UIGestureRecognizer) {
+
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+            switch swipeGesture.direction {
+            case .right:
+                break
+            case .down:
+                break
+            case .left:
+                break
+            case .up:
+                dismissHistoryWithAnimation()
+                break
+            default:
+                break
+            }
+        }
     }
     
     func initDelegate<T>(_ vc: T) {
@@ -239,6 +264,11 @@ class HistoryViewController: BaseViewController {
         transitionAndScale.animations = [ transitionAnimation, scalAnimation]
         transitionAndScale.duration = 1.0
         collectionView.layer.add(transitionAndScale, forKey: nil)
+        let diff = collectionView.frame.height - collectionView.contentSize.height
+        if diff > 0 {
+            collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
+        }
+        PrintUtility.printLog(tag: "contentSize.height", text: "\(collectionView.contentSize.height)")
 
     }
 
@@ -250,8 +280,15 @@ class HistoryViewController: BaseViewController {
                 }
             }
             if items.count > 0{
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    guard let `self` = self else { return }
+                    
+                    let collectionViewHeight = self.collectionView.frame.height
+                    
+                    let diff = CGFloat(collectionViewHeight) - CGFloat(self.collectionView.contentSize.height - self.deletedCellHeight)
+                    if diff > 0 {
+                        self.collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
+                    }
                 }
             }
         }
@@ -290,6 +327,8 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.historyViewModel.deleteHistory(indexpath.item)
+            self.deletedCellHeight = cell.frame.height
+            PrintUtility.printLog(tag: "cell Height", text: "\(self.deletedCellHeight)")
             self.collectionView.performBatchUpdates{
                 self.collectionView.deleteItems(at: [indexpath])
             }
@@ -355,31 +394,34 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if collectionView.contentSize.height+100 < (scrollView.contentOffset.y+collectionView.bounds.height) && isCollectionViewVisible{
             isCollectionViewVisible = false
-            
-            CATransaction.begin()
-            let transitionAnimation = CABasicAnimation(keyPath: "position.y")
-            transitionAnimation.fromValue = view.layer.position.y
-            
-            transitionAnimation.toValue = view.layer.position.y - SIZE_HEIGHT
-            
-            let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
-            scalAnimation.fromValue = 1.0
-            scalAnimation.toValue = 0.3
-
-            let transitionAndScale = CAAnimationGroup()
-            transitionAndScale.duration = 1.0
-            transitionAndScale.fillMode = .forwards
-            transitionAndScale.isRemovedOnCompletion = false
-            transitionAndScale.animations = [ transitionAnimation, scalAnimation]
-            
-            CATransaction.setCompletionBlock {
-                self.view.alpha = 0.0
-                self.dismissHistory(animated: true, completion: nil )
-                self.delegate?.historyDissmissed()
-            }
-            collectionView.layer.add(transitionAndScale, forKey: nil)
-            CATransaction.commit()
+            dismissHistoryWithAnimation()
         }
+    }
+    
+    func dismissHistoryWithAnimation() {
+        CATransaction.begin()
+        let transitionAnimation = CABasicAnimation(keyPath: "position.y")
+        transitionAnimation.fromValue = view.layer.position.y
+        
+        transitionAnimation.toValue = view.layer.position.y - SIZE_HEIGHT
+        
+        let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scalAnimation.fromValue = 1.0
+        scalAnimation.toValue = 0.3
+
+        let transitionAndScale = CAAnimationGroup()
+        transitionAndScale.duration = 1.0
+        transitionAndScale.fillMode = .forwards
+        transitionAndScale.isRemovedOnCompletion = false
+        transitionAndScale.animations = [ transitionAnimation, scalAnimation]
+        
+        CATransaction.setCompletionBlock {
+            self.view.alpha = 0.0
+            self.dismissHistory(animated: true, completion: nil )
+            self.delegate?.historyDissmissed()
+        }
+        collectionView.layer.add(transitionAndScale, forKey: nil)
+        CATransaction.commit()
     }
     
     func gotoLanguageSelectVoice () {
@@ -492,6 +534,7 @@ extension HistoryViewController: TtsAlertControllerDelegate{
         self.collectionView.performBatchUpdates{
             self.collectionView.deleteItems(at: [chatItemModel.idxPath!])
         }
+
     }
     
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {

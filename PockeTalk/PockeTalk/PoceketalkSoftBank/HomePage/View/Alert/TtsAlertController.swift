@@ -252,7 +252,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             LanguageSelectionManager.shared.isArrowUp = true
         }
         self.delegate?.dismiss()
-        self.dismiss(animated: true, completion: nil)
+        self.dismissPopUp()
     }
     
     func setLanguageDirection(){
@@ -324,6 +324,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         stopTTS()
         self.stopAnimation()
         if(isFromSpeechProcessing){
+            NotificationCenter.default.post(name: .languageSelectionArrowNotification, object: nil)
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
                (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
