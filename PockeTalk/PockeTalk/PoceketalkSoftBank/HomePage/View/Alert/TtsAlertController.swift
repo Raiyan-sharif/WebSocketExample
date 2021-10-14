@@ -148,7 +148,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             self.bottomView.isHidden = true
         }
         if hideMenuButton == true{
-            updateUI()
+            //updateUI()
+            updateUIForFavourite ()
         }else{
             self.containerView.addGestureRecognizer(longTapGesture!)
         }
@@ -217,7 +218,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     func updateUIForFavourite (){
         self.crossButton.isHidden = false
         self.bottomView.isHidden = true
-        self.talkButton?.isHidden = true
+        self.talkButton?.isHidden = false
         self.menuButton.isHidden = true
         self.backButton.isHidden = true
     }
