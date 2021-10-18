@@ -20,8 +20,5 @@ class BaseViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !Reachability.isConnectedToNetwork() {
-            GlobalMethod.showAlert("No Internet conneciton")
-        }
     }
 }
