@@ -46,11 +46,6 @@ class ParseTextDetection: BaseModel {
         
         for (index, each) in detectedBlockList.enumerated() {
             
-            //            let blockView = UIView(frame:CGRect(x: 0, y: 0, width: 150, height: 200))
-            //            blockView.backgroundColor = .green
-            //            blockView.backgroundColor = .clear
-            //view.addSubview(blockView)
-            
             let textView = VerticalTextView()
             textView.textColor = .red
             textView.backgroundColor = .gray
@@ -104,7 +99,6 @@ class ParseTextDetection: BaseModel {
                 //                    textView.transform = CGAffineTransform(rotationAngle: ((CGFloat(angle) * CGFloat.pi/180) + (90 / 180.0 * CGFloat.pi)))
                 //                }
                 
-                
                 textView.frame = CGRect(x: CGFloat(x), y: CGFloat(y), width: width, height: height)
                 
                 if angle > 0 {
@@ -120,7 +114,7 @@ class ParseTextDetection: BaseModel {
                 
                 PrintUtility.printLog(tag: "BLOCK width:\(height)", text: "height: \(width)")
                 PrintUtility.printLog(tag: "BLOCK x:\(x)", text: "y: \(y)")
-                listBlockVerticalTextView.append(TextViewWithCoordinator(view: textView, X1: x, Y1: y))
+                listBlockVerticalTextView.append(TextViewWithCoordinator(view: textView, X1: x, Y1: y, translatedText: arrTranslatedText[index], detectedText: each.text!))
             }
         }
         
@@ -168,11 +162,6 @@ class ParseTextDetection: BaseModel {
                 
                 PrintUtility.printLog(tag: "angle", text: "\(angle)")
                 PrintUtility.printLog(tag: "angle calculation horizontal", text: "\(CGFloat(angle))")
-                
-                
-                //                textView.setAnchorPoint(CGPoint(x: 0, y: 0))
-                //                textView.transform = CGAffineTransform(rotationAngle: (CGFloat(angle * -1) * CGFloat.pi/180))
-                
                 textView.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
                 
                 let view1 = UIView()
@@ -200,7 +189,7 @@ class ParseTextDetection: BaseModel {
                 //textView.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
                 
                 
-                listBlockVerticalTextView.append(TextViewWithCoordinator(view: view1, X1: each.X1!, Y1: each.Y1!))
+                listBlockVerticalTextView.append(TextViewWithCoordinator(view: view1, X1: each.X1!, Y1: each.Y1!, translatedText: arrTranslatedText[index], detectedText: each.text!))
             }
             
         }
@@ -212,7 +201,12 @@ class ParseTextDetection: BaseModel {
     }
     
 }
+
+
 struct TextViewWithCoordinator {
     var view: UIView
     var X1, Y1: Int
+    var translatedText: String
+    var detectedText : String
 }
+
