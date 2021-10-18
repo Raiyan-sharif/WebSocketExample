@@ -49,6 +49,7 @@ let kMenuActionToastMessage = "Navigate to menu screen"
 let kTopLanguageButtonActionToastMessage = "Navigate to top language selection screen screen"
 let kBottomLanguageButtonActionToastMessage = "Navigate to language selection screen"
 let kReverseTranslationUnderDevelopment = "Reverse translatioin module is under development"
+let kShareTranslationUnderDevelopment = "Share module is under development"
 let kTranslateIntoOtherLanguageUnderDevelopment = "Translate into other language module is under development"
 
 // Alert message, title and action for app specific permission

@@ -204,6 +204,7 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             showPracticeView()
             break
         case .sendMail :
+            self.showToast(message: kShareTranslationUnderDevelopment, seconds: toastDisplayTime)
             break
         case .cancel :
             self.dismiss(animated: true, completion: nil)
