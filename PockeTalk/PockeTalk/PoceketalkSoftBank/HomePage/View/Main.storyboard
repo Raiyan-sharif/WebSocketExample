@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -357,10 +357,10 @@
                                 <rect key="frame" x="80" y="516" width="254" height="100"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7u4-Ra-XUy">
-                                        <rect key="frame" x="0.0" y="0.0" width="127" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="127" height="75"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_anim_left_white" translatesAutoresizingMaskIntoConstraints="NO" id="mKS-wv-k3s">
-                                                <rect key="frame" x="92" y="65" width="30" height="35"/>
+                                                <rect key="frame" x="92" y="40" width="30" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="BwD-M2-qS7"/>
@@ -375,10 +375,10 @@
                                         </constraints>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8H-po-OU3">
-                                        <rect key="frame" x="127" y="0.0" width="127" height="100"/>
+                                        <rect key="frame" x="127" y="0.0" width="127" height="75"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_anim_right_white" translatesAutoresizingMaskIntoConstraints="NO" id="KZB-Rz-ncD">
-                                                <rect key="frame" x="5" y="45" width="40" height="55"/>
+                                                <rect key="frame" x="5" y="20" width="40" height="55"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="BSG-gC-9cL"/>
@@ -399,10 +399,10 @@
                                     <constraint firstAttribute="height" constant="100" id="QP4-Ta-uhq"/>
                                     <constraint firstItem="y8H-po-OU3" firstAttribute="width" secondItem="hnk-i8-DXa" secondAttribute="width" multiplier="0.5" id="RBt-Dw-26s"/>
                                     <constraint firstItem="y8H-po-OU3" firstAttribute="top" secondItem="hnk-i8-DXa" secondAttribute="top" id="SRD-4h-VPS"/>
-                                    <constraint firstAttribute="bottom" secondItem="7u4-Ra-XUy" secondAttribute="bottom" id="THh-yS-ec1"/>
+                                    <constraint firstAttribute="bottom" secondItem="7u4-Ra-XUy" secondAttribute="bottom" constant="25" id="THh-yS-ec1"/>
                                     <constraint firstItem="7u4-Ra-XUy" firstAttribute="top" secondItem="hnk-i8-DXa" secondAttribute="top" id="Vc2-l2-YF2"/>
                                     <constraint firstItem="y8H-po-OU3" firstAttribute="leading" secondItem="7u4-Ra-XUy" secondAttribute="trailing" id="dU4-dG-Z4T"/>
-                                    <constraint firstAttribute="bottom" secondItem="y8H-po-OU3" secondAttribute="bottom" id="ieQ-Yz-9wL"/>
+                                    <constraint firstAttribute="bottom" secondItem="y8H-po-OU3" secondAttribute="bottom" constant="25" id="ieQ-Yz-9wL"/>
                                     <constraint firstItem="7u4-Ra-XUy" firstAttribute="leading" secondItem="hnk-i8-DXa" secondAttribute="leading" id="vXJ-gw-UMV"/>
                                 </constraints>
                             </view>
@@ -736,11 +736,6 @@
             <point key="canvasLocation" x="-186.95652173913044" y="-41.517857142857139"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="4iA-Ie-wc2">
-            <size key="intrinsicContentSize" width="120" height="120"/>
-        </designable>
-    </designables>
     <resources>
         <image name="arrow_back_icon" width="50" height="50"/>
         <image name="arrow_circular_bg" width="120" height="120"/>
