@@ -38,7 +38,7 @@ class LanguageListVC: BaseViewController {
         self.langListTableView.backgroundColor = UIColor.clear
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
         PrintUtility.printLog(tag: TAG, text:" position \(selectedItemPosition)")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
