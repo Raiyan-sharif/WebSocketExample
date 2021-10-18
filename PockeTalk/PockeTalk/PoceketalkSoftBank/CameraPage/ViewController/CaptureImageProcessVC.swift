@@ -199,7 +199,7 @@ class CaptureImageProcessVC: BaseViewController {
                         mTranslatedLanguage = (translatedData?.block!.languageCodeTo)!
                         mDetectedLanguage = self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!
                         PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(mTranslatedLanguage)")
-                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: mDetectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
+                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: textViews[index].detectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
@@ -207,7 +207,7 @@ class CaptureImageProcessVC: BaseViewController {
                         mTranslatedLanguage = (translatedData?.line!.languageCodeTo)!
                         mDetectedLanguage = self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!
                         
-                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: mDetectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
+                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: textViews[index].detectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }

@@ -55,6 +55,7 @@ class ParseTextDetection: BaseModel {
             
             
             //textView.text = each.text
+            
             textView.text = arrTranslatedText[index]
             //textView.text = "From now on, translation history will be available only if you have signed in \n # and it will be managed from my proof. Translation history will\n be deleted during this upgrade (0), \nso be sure to save the translations you want \nto easily access and maximize later.\n From now on, if you just sign in, \nthe translation will be done and it\n will be considered as Mama&#39;s Activity.\n The translation history will be \ndeleted during this upgrade / downgrade,\n so you can easily engage after the hunger strike."
             
@@ -114,7 +115,7 @@ class ParseTextDetection: BaseModel {
                 
                 PrintUtility.printLog(tag: "BLOCK width:\(height)", text: "height: \(width)")
                 PrintUtility.printLog(tag: "BLOCK x:\(x)", text: "y: \(y)")
-                listBlockVerticalTextView.append(TextViewWithCoordinator(view: textView, X1: x, Y1: y, translatedText: arrTranslatedText[index], detectedText: each.text!))
+                listBlockVerticalTextView.append(TextViewWithCoordinator(view: textView, X1: x, Y1: y, translatedText: arrTranslatedText[index], detectedText: each.text!, detectedLanguage: each.detectedLanguage!))
             }
         }
         
@@ -189,7 +190,7 @@ class ParseTextDetection: BaseModel {
                 //textView.frame = CGRect(x: CGFloat(each.X1!), y: CGFloat(each.Y1!), width: width, height: height)
                 
                 
-                listBlockVerticalTextView.append(TextViewWithCoordinator(view: view1, X1: each.X1!, Y1: each.Y1!, translatedText: arrTranslatedText[index], detectedText: each.text!))
+                listBlockVerticalTextView.append(TextViewWithCoordinator(view: view1, X1: each.X1!, Y1: each.Y1!, translatedText: arrTranslatedText[index], detectedText: each.text!, detectedLanguage: each.detectedLanguage!))
             }
             
         }
@@ -208,5 +209,6 @@ struct TextViewWithCoordinator {
     var X1, Y1: Int
     var translatedText: String
     var detectedText : String
+    var detectedLanguage: String
 }
 
