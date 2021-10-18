@@ -25,8 +25,6 @@ class CaptureImageProcessVC: BaseViewController {
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
     
-    var mTranslatedText: String = ""
-    var mDetectedText: String = ""
     var mTranslatedLanguage: String = ""
     var mDetectedLanguage: String = ""
     
@@ -62,7 +60,7 @@ class CaptureImageProcessVC: BaseViewController {
     var imageWidth = CGFloat()
     var imageHeight = CGFloat()
     //var image = UIImage(named: "vv")
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +73,7 @@ class CaptureImageProcessVC: BaseViewController {
         scrollView.maximumZoomScale = 3.0
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
         scrollView.addGestureRecognizer(scrollViewTap)
-                
+        
     }
     
     func setUpViewForCapturedImage() {
@@ -107,7 +105,7 @@ class CaptureImageProcessVC: BaseViewController {
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
         
         cameraImageView.backgroundColor = .black
-
+        
         if imageWidth>self.view.frame.width {
             imageWidth = self.view.frame.width
         }
@@ -127,9 +125,9 @@ class CaptureImageProcessVC: BaseViewController {
         //                fatalError("Did not recognize any text in this image")
         //            }
         //        }
-                
+        
         self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
-
+            
             if error != nil {
                 PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
             } else {
@@ -163,58 +161,53 @@ class CaptureImageProcessVC: BaseViewController {
             PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
         }
     }
-
-
+    
+    
     @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
         let view = sender.view
         let touchpoint = sender.location(in: view)
         var textViews = [TextViewWithCoordinator]()
         if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-
+            
             if modeSwitchType == blockMode {
                 textViews.removeAll()
                 textViews = self.iTTServerViewModel.blockModeTextViewList
-
+                
             } else {
                 textViews.removeAll()
                 textViews = self.iTTServerViewModel.lineModetTextViewList
             }
         }
-
+        
         for (index,each) in textViews.enumerated() {
             let zoomScale = scrollView.zoomScale
             var x = each.view.frame
-
+            
             x.origin.x = (each.view.frame.origin.x * zoomScale) + (imageView.frame.origin.x*zoomScale)
             x.origin.y = (each.view.frame.origin.y * zoomScale) + (imageView.frame.origin.y*zoomScale)
-            
             x.size.width = each.view.frame.size.width * zoomScale
             x.size.height = each.view.frame.size.height * zoomScale
-
-
+            
+            
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
                     let translatedData = fromHistoryVC ? self.cameraHistoryViewModel.translatedData : getTranslatedToLanguage()
+                    
+                    
                     if modeSwitchType == blockMode {
-                        
-                        mTranslatedText = self.iTTServerViewModel.blockTranslatedText[index]
-                        mDetectedText = self.iTTServerViewModel.blockListFromJson[index].text!
                         mTranslatedLanguage = (translatedData?.block!.languageCodeTo)!
                         mDetectedLanguage = self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!
-                        
                         PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(mTranslatedLanguage)")
-                        showTTSDialog(nativeText: mDetectedText, nativeLanguage: mDetectedLanguage, translateText: mTranslatedText, translateLanguage: mTranslatedLanguage)
+                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: mDetectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
                         
                     } else {
-                        mTranslatedText = self.iTTServerViewModel.lineTranslatedText[index]
-                        mDetectedText = self.iTTServerViewModel.lineListFromJson[index].text!
                         mTranslatedLanguage = (translatedData?.line!.languageCodeTo)!
                         mDetectedLanguage = self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!
                         
-                        showTTSDialog(nativeText: mDetectedText, nativeLanguage: mDetectedLanguage, translateText: mTranslatedText, translateLanguage: mTranslatedLanguage)
+                        showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: mDetectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
                         PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
                     }
@@ -238,7 +231,7 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
-
+        
         return translatedToLanguage
     }
     
@@ -298,10 +291,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 DispatchQueue.main.async {
                     let height = textViews[i].view.frame.size.height
                     let width = textViews[i].view.frame.size.width
-//                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
-//                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
-//                    textViews[i].view.frame.size.height = height
-//                    textViews[i].view.frame.size.width = width
+                    //                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
+                    //                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
+                    //                    textViews[i].view.frame.size.height = height
+                    //                    textViews[i].view.frame.size.width = width
                     textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
                     
                     
@@ -415,7 +408,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             self.navigationController?.pushViewController(settinsViewController, animated: true)
         }
     }
-
+    
     @objc func backButtonEventListener(_ button: UIButton) {
         if fromHistoryVC {
             self.navigationController?.popViewController(animated: true)

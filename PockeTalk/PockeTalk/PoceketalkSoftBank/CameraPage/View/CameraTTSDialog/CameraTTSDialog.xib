@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,10 +36,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="374" height="758"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7J-Ae-UuD" userLabel="Scroll ContentView">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="750"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="760"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rec-Wz-aAh" userLabel="To Language Label">
-                                            <rect key="frame" x="16" y="20" width="342" height="284.5"/>
+                                            <rect key="frame" x="16" y="30" width="342" height="284.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <string key="text">The education boards are planning to start this year's SSC and equivalent examinations from November 10 to 15. And HSC and equivalent examinations may start in the first week of December.
 
@@ -48,7 +49,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aD-cY-bkf" userLabel="To Translate Play Button">
-                                            <rect key="frame" x="16" y="320.5" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="330.5" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="TeP-Mo-h9i"/>
                                                 <constraint firstAttribute="width" constant="50" id="rwJ-Rm-xaO"/>
@@ -59,13 +60,13 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKN-Xz-kZH" userLabel="To Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                            <rect key="frame" x="74" y="320.5" width="280" height="50"/>
+                                            <rect key="frame" x="74" y="330.5" width="280" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="fkl-ed-zCD"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" systemColor="systemBlueColor"/>
                                             <nil key="highlightedColor"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="fadeLength">
@@ -77,7 +78,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOQ-Wx-brd" userLabel="From Language Label">
-                                            <rect key="frame" x="16" y="400" width="338" height="264"/>
+                                            <rect key="frame" x="16" y="410" width="338" height="264"/>
                                             <string key="text">চলতি বছরের এসএসসি ও সমমানের পরীক্ষা আগামী ১০ থেকে ১৫ নভেম্বরের মধ্যে শুরু করার পরিকল্পনা করছে শিক্ষা বোর্ডগুলো। আর এইচএসসি ও সমমানের পরীক্ষা ডিসেম্বরের প্রথম সপ্তাহে শুরু হতে পারে।
 
 এমন পরিকল্পনা নিয়ে প্রস্তুতি নিচ্ছে শিক্ষা বোর্ডগুলো। ঢাকা মাধ্যমিক ও উচ্চমাধ্যমিক শিক্ষা বোর্ডের চেয়ারম্যান নেহাল আহমেদ প্রথম আলোকে বলেন, এখন পর্যন্ত এমন পরিকল্পনা আছে। তবে এখনো পরীক্ষা শুরুর কোনো সুনির্দিষ্ট তারিখ ঠিক হয়নি। পরিস্থিতির কারণে এ পরিকল্পনায়ও কিছু ব্যত্যয় হতে পারে।</string>
@@ -86,7 +87,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbb-se-IK5" userLabel="From Translate Play Button">
-                                            <rect key="frame" x="16" y="680" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="690" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="3vu-Qb-nH4"/>
                                                 <constraint firstAttribute="width" constant="50" id="hKc-bp-hao"/>
@@ -97,10 +98,10 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OxN-Au-O2b" userLabel="From Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                            <rect key="frame" x="74" y="680" width="280" height="50"/>
+                                            <rect key="frame" x="74" y="690" width="280" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" systemColor="systemBlueColor"/>
                                             <nil key="highlightedColor"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="fadeLength">
@@ -118,7 +119,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                         <constraint firstAttribute="trailing" secondItem="mOQ-Wx-brd" secondAttribute="trailing" constant="20" id="8g2-G1-Nsd"/>
                                         <constraint firstItem="2aD-cY-bkf" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="BGL-OT-VHm"/>
                                         <constraint firstItem="mOQ-Wx-brd" firstAttribute="top" secondItem="2aD-cY-bkf" secondAttribute="bottom" constant="29.5" id="E72-W7-Spc"/>
-                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="top" secondItem="Y7J-Ae-UuD" secondAttribute="top" constant="20" id="HB7-kM-l9b"/>
+                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="top" secondItem="Y7J-Ae-UuD" secondAttribute="top" constant="30" id="HB7-kM-l9b"/>
                                         <constraint firstItem="NKN-Xz-kZH" firstAttribute="centerY" secondItem="2aD-cY-bkf" secondAttribute="centerY" id="MNu-bw-ugL"/>
                                         <constraint firstItem="mOQ-Wx-brd" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="MfJ-oM-rkg"/>
                                         <constraint firstItem="OxN-Au-O2b" firstAttribute="centerY" secondItem="nbb-se-IK5" secondAttribute="centerY" id="O0R-aI-Qgf"/>
@@ -160,7 +161,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemBrownColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="HDk-TE-0Oz" secondAttribute="trailing" constant="4" id="1d8-s6-KJk"/>
                         <constraint firstItem="egD-lc-h5g" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" id="5wa-pF-3k6"/>
@@ -186,6 +187,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="iDl-I4-s0Z"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
@@ -196,14 +198,27 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                 <constraint firstItem="iDl-I4-s0Z" firstAttribute="bottom" secondItem="wZX-nu-Cal" secondAttribute="bottom" constant="16" id="hCu-a6-tBG"/>
                 <constraint firstItem="iDl-I4-s0Z" firstAttribute="trailing" secondItem="wZX-nu-Cal" secondAttribute="trailing" constant="20" id="mzx-kg-F3a"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="iDl-I4-s0Z"/>
             <point key="canvasLocation" x="137.68115942028987" y="141.96428571428569"/>
         </view>
     </objects>
+    <designables>
+        <designable name="NKN-Xz-kZH">
+            <size key="intrinsicContentSize" width="99.5" height="20.5"/>
+        </designable>
+        <designable name="OxN-Au-O2b">
+            <size key="intrinsicContentSize" width="99.5" height="20.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="back_texture_white" width="480" height="640"/>
         <image name="btn_back" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
         <image name="ic_btn_play" width="42" height="42"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
