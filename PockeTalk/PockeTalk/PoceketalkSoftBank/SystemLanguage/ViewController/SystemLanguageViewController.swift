@@ -24,9 +24,18 @@ class SystemLanguageViewController: BaseViewController {
         self.navigationController!.navigationBar.barStyle = .black
         self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .white
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: FontUtility.getFontSize())]
+            navBarAppearance.titleTextAttributes = attributes
+            navBarAppearance.buttonAppearance.normal.titleTextAttributes = attributes
+            navBarAppearance.doneButtonAppearance.normal.titleTextAttributes = attributes
+            navBarAppearance.backgroundColor = #colorLiteral(red: 0.07058823529, green: 0.07058823529, blue: 0.07058823529, alpha: 1)
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        } else {
+            let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: FontUtility.getFontSize())]
+            navigationController?.navigationBar.titleTextAttributes = textAttributes
+        }
 
     }
 
