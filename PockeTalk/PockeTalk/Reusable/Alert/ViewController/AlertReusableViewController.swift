@@ -10,6 +10,7 @@ protocol AlertReusableDelegate {
     func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
     func pronunciationPracticeTap (chatItemModel: HistoryChatItemModel?)
     func onDeleteItem(chatItemModel: HistoryChatItemModel?)
+    func onSharePressed(chatItemModel: HistoryChatItemModel?)
 }
 
 class AlertReusableViewController: BaseViewController {
@@ -85,6 +86,11 @@ class AlertReusableViewController: BaseViewController {
 
     func showPracticeView () {
         self.delegate?.pronunciationPracticeTap(chatItemModel: self.chatItemModel)
+    }
+
+    func shareTranslation () {
+        PrintUtility.printLog(tag: "TAG", text: "shareJson shareTranslation delegate calling")
+        self.delegate?.onSharePressed(chatItemModel: self.chatItemModel)
     }
 
     func reverseTranslation () {
@@ -204,7 +210,9 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             showPracticeView()
             break
         case .sendMail :
-            self.showToast(message: kShareTranslationUnderDevelopment, seconds: toastDisplayTime)
+            PrintUtility.printLog(tag: "TAG", text: "shareJson sendmail button pressed")
+            self.dismiss(animated: true, completion: nil)
+            shareTranslation()
             break
         case .cancel :
             self.dismiss(animated: true, completion: nil)

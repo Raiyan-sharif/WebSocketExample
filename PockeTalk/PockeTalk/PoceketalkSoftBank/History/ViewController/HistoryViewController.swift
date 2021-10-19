@@ -484,6 +484,10 @@ extension HistoryViewController : RetranslationDelegate{
 }
 
 extension HistoryViewController : AlertReusableDelegate {
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
+
+    }
+
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
         self.collectionView.performBatchUpdates{

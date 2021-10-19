@@ -384,6 +384,25 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         ttsResponsiveView.stopTTS()
         stopAnimation()
     }
+
+    func shareData(chatItemModel: HistoryChatItemModel?){
+        let languageManager = LanguageSelectionManager.shared
+        let tranlatedLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textTranslatedLanguage)!)?.englishName ?? ""
+        let tranlatedText = chatItemModel?.chatItem?.textTranslated ?? ""
+
+        let nativeLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textNativeLanguage)!)?.englishName ?? ""
+        let nativeText = chatItemModel?.chatItem?.textNative ?? ""
+
+        let sharedData = "Translated language: \(tranlatedLang)\n" + "\(tranlatedText) \n\n" +
+        "Original language: \(nativeLang)\n" + "\(nativeText)"
+
+        let dataToSend = [sharedData]
+
+        PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
+        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
 
 extension TtsAlertController : RetranslationDelegate {
@@ -406,6 +425,11 @@ extension TtsAlertController : RetranslationDelegate {
 }
 
 extension TtsAlertController : AlertReusableDelegate {
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
+        PrintUtility.printLog(tag: TAG, text: "TtsAlertController shareJson called")
+        self.shareData(chatItemModel: chatItemModel)
+    }
+
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.dismissPopUp()
         ttsVM.deleteChatItemFromHistory(chatItem: chatItemModel!.chatItem!)

@@ -310,6 +310,10 @@ extension FavouriteViewController : RetranslationDelegate{
 }
 
 extension FavouriteViewController : AlertReusableDelegate {
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
+
+    }
+
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.favouriteViewModel.deleteFavourite((chatItemModel?.idxPath!.item)!)
         self.collectionView.performBatchUpdates{
