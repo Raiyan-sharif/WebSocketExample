@@ -15,8 +15,6 @@ class CameraHistoryViewController: BaseViewController {
     private let totalSub:CGFloat = 48
     
     private let viewModel = CameraHistoryViewModel()
-    
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -38,7 +36,6 @@ class CameraHistoryViewController: BaseViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
     
     func setUpViews() {
         
@@ -94,6 +91,10 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
                 vc.image = image
                 vc.fromHistoryVC = true
                 vc.cameraHistoryImageIndex = indexPath.row
+                if let id = self.viewModel.cameraHistoryImages[indexPath.item].dbID {
+                    vc.historyID = id
+                }
+                
             }
             self.navigationController?.pushViewController(vc, animated: true)
         }
