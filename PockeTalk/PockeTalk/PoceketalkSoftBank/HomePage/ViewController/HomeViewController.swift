@@ -320,11 +320,21 @@ class HomeViewController: BaseViewController {
                if touch.view == self.topClickView {
                 topCircleImgView.isHidden = false
                 selectedTab = 0
+               DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                   self?.topCircleImgView.isHidden = true
+                   self?.bottomCircleleImgView.isHidden = true
+                   self?.selectedTouchView = nil
+               }
                 selectedTouchView = topCircleImgView
                } else if touch.view == self.bottomClickView {
                 bottomCircleleImgView.isHidden = false
                 selectedTab = 1
                 selectedTouchView = bottomCircleleImgView
+               DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                   self?.topCircleImgView.isHidden = true
+                   self?.bottomCircleleImgView.isHidden = true
+                   self?.selectedTouchView = nil
+               }
                }  else {
                    return
                }
