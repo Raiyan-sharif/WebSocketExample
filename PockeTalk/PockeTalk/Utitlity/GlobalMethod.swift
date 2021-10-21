@@ -234,6 +234,7 @@ class GlobalMethod {
         controller.isRecreation = isRecreation
         if(viewController?.navigationController != nil){
             let navController = UINavigationController.init(rootViewController: controller)
+            navController.modalPresentationStyle = .fullScreen
             controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
             viewController?.navigationController?.present(navController, animated: true, completion: nil)

@@ -102,6 +102,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     /// Initial UI set up
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
+        self.backgroundImageView.sizeToFit()
         self.backgroundImageView.layer.cornerRadius = cornerRadius
         self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.fromLanguageLabel.sizeToFit()
