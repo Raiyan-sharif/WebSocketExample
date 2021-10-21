@@ -33,7 +33,7 @@ class CaptureImageProcessVC: BaseViewController {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "line_mode"), for: .normal)
-        button.addTarget(self, action: #selector(fabTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(modeSwitchButtonEventListener(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -142,9 +142,6 @@ class CaptureImageProcessVC: BaseViewController {
                 }
             }
         }
-        
-        
-        
     }
     
     func setUpViewForHistoryVC() {
@@ -225,15 +222,10 @@ class CaptureImageProcessVC: BaseViewController {
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
+                                        
+                    let id = try? CameraHistoryDBModel().getMaxId()
                     
-                    let imageIndex = cameraHistoryViewModel.fetchImageCount()-1
-                    var id = Int64()
-                    if let data = try? CameraHistoryDBModel().findAllEntities() {
-                        id = data[imageIndex].id!
-                    }
-                    
-                    let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) :  CameraHistoryDBModel().getTranslatedData(id: id)
-                    
+                    let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) :  CameraHistoryDBModel().getTranslatedData(id: Int64(id!))
                     
                     if modeSwitchType == blockMode {
                         mTranslatedLanguage = (translatedData.block!.languageCodeTo)
@@ -406,22 +398,23 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         }
     }
     
-    @objc func fabTapped(_ button: UIButton) {
+    @objc func modeSwitchButtonEventListener(_ button: UIButton) {
         
-        let index = cameraHistoryViewModel.fetchImageCount()-1
-        var id = Int64()
-        if let data = try? CameraHistoryDBModel().findAllEntities() {
-            id = data[index].id!
+        let id = try? CameraHistoryDBModel().getMaxId()
+        if !fromHistoryVC {
+            self.iTTServerViewModel.historyID = Int64(id!)
+            self.iTTServerViewModel.fromHistoryVC = false
         }
         
+        self.iTTServerViewModel.historyID = fromHistoryVC ? historyID : Int64(id!)
         
-        let translatedData = fromHistoryVC ? try? CameraHistoryDBModel().getTranslatedData(id: historyID) : try? CameraHistoryDBModel().getTranslatedData(id: id)
+        let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) : CameraHistoryDBModel().getTranslatedData(id: Int64(id!))
         
         let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
         PrintUtility.printLog(tag: "translated data : -", text: "\(String(describing: translatedData))")
         if modeSwitchTypes == blockMode {
             
-            if let data = translatedData?.line {
+            if let data = translatedData.line {
                 if data.translatedText.count > 0 {
                     UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
                     
@@ -438,7 +431,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 }
             }
         } else {
-            if let data = translatedData?.block {
+            if let data = translatedData.block {
                 if data.translatedText.count > 0 {
                     UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
                     for each in self.iTTServerViewModel.lineModetTextViewList {

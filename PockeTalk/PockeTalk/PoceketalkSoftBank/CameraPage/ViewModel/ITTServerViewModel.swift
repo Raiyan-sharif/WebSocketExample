@@ -34,6 +34,7 @@ class ITTServerViewModel: BaseModel {
     var detectedLineList = [BlockDetection]()
     
     var historyID = Int64()
+    var fromHistoryVC = Bool()
     
     let dispatchQueue = DispatchQueue(label: "myQueue", qos: .background)
     let semaphore = DispatchSemaphore(value: 0)
@@ -244,8 +245,6 @@ class ITTServerViewModel: BaseModel {
                             })
                             
                         }
-                        
-                        
                         if isFromHistoryVC {
                             PrintUtility.printLog(tag: "index", text: "\(historyID)")
                             updateDataOnDatabase(id: historyID)
@@ -255,7 +254,16 @@ class ITTServerViewModel: BaseModel {
                             encoder.outputFormatting = .prettyPrinted
                             let data = try? encoder.encode(self.mTranslatedJSON)
                             PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
-                            self.saveDataOnDatabase()
+                            PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
+                            
+                            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+                                if entities.contains(where: { $0.id == historyID }) {
+                                    updateDataOnDatabase(id: historyID)
+                                } else {
+                                    self.saveDataOnDatabase()
+                                }
+
+                            }
                         }
                         
                     } else {
