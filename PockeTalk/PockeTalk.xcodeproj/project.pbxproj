@@ -180,8 +180,11 @@
 		89495B4926F0AAA500CEA19D /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4626F0AAA500CEA19D /* WebService.swift */; };
 		89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */; };
 		89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */; };
+		89519669271EC6F900151DC8 /* TempoEngineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89519668271EC6F900151DC8 /* TempoEngineModel.swift */; };
+		8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */; };
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
 		897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */; };
+		8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */ = {isa = PBXBuildFile; fileRef = 8988B7972721763000FBBA40 /* engine-tempo-value.json */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		8994A7CE26F4A83600657608 /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8994A7CD26F4A83600657608 /* img1.jpg */; };
@@ -409,8 +412,11 @@
 		89495B4626F0AAA500CEA19D /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Reusable.swift"; sourceTree = "<group>"; };
+		89519668271EC6F900151DC8 /* TempoEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineModel.swift; sourceTree = "<group>"; };
+		8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineValueParser.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
+		8988B7972721763000FBBA40 /* engine-tempo-value.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "engine-tempo-value.json"; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		8994A7CD26F4A83600657608 /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
@@ -632,6 +638,7 @@
 				4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */,
 				3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */,
 				897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */,
+				8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -671,6 +678,7 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8988B7972721763000FBBA40 /* engine-tempo-value.json */,
 				3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */,
 				3BA8E132270B18D20095D036 /* resv_1.8.1.html */,
 				69349AA826E5DB90008D9AF4 /* tutorial.mp4 */,
@@ -1421,6 +1429,7 @@
 			isa = PBXGroup;
 			children = (
 				89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */,
+				89519668271EC6F900151DC8 /* TempoEngineModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1734,6 +1743,7 @@
 				692E8DF726EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib in Resources */,
 				50675D6126EB377F00A775E5 /* language_detection_codes.json in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
+				8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,
 				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
@@ -1878,6 +1888,7 @@
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
 				89C0F7DB26F1E4FC000CD5FC /* CameraHistoryViewController.swift in Sources */,
+				8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */,
 				87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				89C0F7D926F1CE08000CD5FC /* PrintUtility.swift in Sources */,
@@ -1897,6 +1908,7 @@
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
+				89519669271EC6F900151DC8 /* TempoEngineModel.swift in Sources */,
 				4A40AC9626F89BC800019A5B /* BaseDelegate.swift in Sources */,
 				500AAFC026E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift in Sources */,
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,

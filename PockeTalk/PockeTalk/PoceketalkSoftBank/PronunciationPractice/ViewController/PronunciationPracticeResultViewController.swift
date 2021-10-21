@@ -10,6 +10,7 @@ import SwiftRichString
 import WebKit
 
 class PronunciationPracticeResultViewController: BaseViewController {
+    let TAG = "\(PronunciationPracticeResultViewController.self)"
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet var viewRoot: UIView!
     @IBOutlet weak var viewFailureContainer: UIView!
@@ -60,6 +61,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         let vc = TempoControlSelectionAlertController.init()
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        vc.delegate = self
         present(vc, animated: true, completion: nil)
     }
     override func viewDidLoad() {
@@ -75,6 +77,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         }
+        UserDefaultsProperty<String>(kTempoControlSpeed).value = TempoControlSpeedType.standard.rawValue
     }
     
     @objc func willResignActive(_ notification: Notification) {
@@ -176,4 +179,20 @@ extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate 
     func onVoiceEnd() { }
     
     func onReady() {}
+}
+extension PronunciationPracticeResultViewController: TempoControlSelectionDelegate{
+    func onStandardSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .standard)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
+    
+    func onSlowSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .slow)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
+    
+    func onVerySlowSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .verySlow)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
 }
