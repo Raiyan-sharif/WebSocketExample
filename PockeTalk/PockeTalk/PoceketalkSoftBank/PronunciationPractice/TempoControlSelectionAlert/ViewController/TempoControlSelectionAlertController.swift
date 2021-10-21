@@ -1,5 +1,11 @@
 import UIKit
 
+protocol TempoControlSelectionDelegate {
+    func onStandardSelection()
+    func onSlowSelection()
+    func onVerySlowSelection()
+}
+
 class TempoControlSelectionAlertController: BaseViewController {
     static var nib: UINib =  UINib.init(nibName: KAlertTempoControlSelectionAlert, bundle: nil)
     
@@ -14,9 +20,8 @@ class TempoControlSelectionAlertController: BaseViewController {
     @IBOutlet weak var viewContainerVerySlow: UIView!
     @IBOutlet weak var labelVerySlow: UILabel!
     @IBOutlet weak var ivVerySlow: UIImageView!
-    
-    let kTempoControlSpeed = "kTempoControlSpeed"
-    
+    var delegate: TempoControlSelectionDelegate?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -58,6 +63,7 @@ class TempoControlSelectionAlertController: BaseViewController {
     @objc func actionSelectStandard(sender:UITapGestureRecognizer) {
         print("actionSelectStandard")
         self.selectStandard()
+        self.delegate?.onStandardSelection()
         self.dismiss(animated: true)
     }
     func selectStandard(){
@@ -72,6 +78,7 @@ class TempoControlSelectionAlertController: BaseViewController {
     @objc func actionSelectSlow(sender:UITapGestureRecognizer) {
         print("actionSelectSlow")
         self.selectSlow()
+        self.delegate?.onSlowSelection()
         self.dismiss(animated: true)
     }
     func selectSlow(){
@@ -86,6 +93,7 @@ class TempoControlSelectionAlertController: BaseViewController {
     @objc func actionSelectVerySlow(sender:UITapGestureRecognizer) {
         print("actionSelectVerySlow")
         self.selectVerySlow()
+        self.delegate?.onVerySlowSelection()
         self.dismiss(animated: true)
     }
     func selectVerySlow(){

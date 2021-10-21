@@ -18,6 +18,7 @@ class TTSResponsiveView : UIView {
     var wkView:WKWebView!
     var ttsResponsiveViewDelegate : TTSResponsiveViewDelegate?
     private let TAG:String = "TTSResponsiveView"
+    public let engineName = "Responsive"
 
     init(){
         super.init(frame: .zero)

@@ -1,0 +1,76 @@
+{
+  "engine_value": [
+    {
+      "engine_name": "Responsive",
+      "normal": {
+        "tempo_rate": "1.0"
+      },
+      "slow": {
+        "tempo_rate": "0.7"
+      },
+      "verySlow": {
+        "tempo_rate": "0.5"
+      }
+    },
+    {
+      "engine_name": "Nict",
+      "normal": {
+        "tempo_rate": "1.0f"
+      },
+      "slow": {
+        "tempo_rate": "0.7"
+      },
+      "verySlow": {
+        "tempo_rate": "0.5"
+      }
+    },
+    {
+      "engine_name": "ToshibaJP",
+      "normal": {
+        "tempo_rate": "0"
+      },
+      "slow": {
+        "tempo_rate": "-5"
+      },
+      "verySlow": {
+        "tempo_rate": "-7"
+      }
+    },
+    {
+      "engine_name": "ToshibaEN",
+      "normal": {
+        "tempo_rate": "1"
+      },
+      "slow": {
+        "tempo_rate": "-2"
+      },
+      "verySlow": {
+        "tempo_rate": "-5"
+      }
+    },
+    {
+      "engine_name": "Hoya",
+      "normal": {
+        "tempo_rate": "100"
+      },
+      "slow": {
+        "tempo_rate": "65"
+      },
+      "verySlow": {
+        "tempo_rate": "50"
+      }
+    },
+    {
+      "engine_name": "Microsoft",
+      "normal": {
+        "tempo_rate": "1.0f"
+      },
+      "slow": {
+        "tempo_rate": "0.7"
+      },
+      "verySlow": {
+        "tempo_rate": "0.5"
+      }
+    }
+  ]
+}
