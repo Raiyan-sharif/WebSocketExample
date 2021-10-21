@@ -24,6 +24,7 @@ class CaptureImageProcessVC: BaseViewController {
     var imageView = UIImageView()
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
+    var historyID = Int64()
     
     var mTranslatedLanguage: String = ""
     var mDetectedLanguage: String = ""
@@ -56,6 +57,10 @@ class CaptureImageProcessVC: BaseViewController {
         return cameraTTSContextMenu
     }()
     
+    //    let modeSwitchType: String = {
+    //        return UserDefaults.standard.string(forKey: "modeSwitchType") ?? "blockMode"
+    //    }()
+    
     var image = UIImage()
     var imageWidth = CGFloat()
     var imageHeight = CGFloat()
@@ -64,7 +69,6 @@ class CaptureImageProcessVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         cameraImageView.center = self.view.center
         self.iTTServerViewModel.viewDidLoad(self)
         fromHistoryVC ? setUpViewForHistoryVC() : setUpViewForCapturedImage()
@@ -132,7 +136,9 @@ class CaptureImageProcessVC: BaseViewController {
                 PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
             } else {
                 if let detectedData = data {
-                    self?.iTTServerViewModel.getblockAndLineModeData(detectedData)
+                    let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+                    PrintUtility.printLog(tag: "previously selected mode: ", text: "\(String(describing: modeSwitchTypes))")
+                    self?.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self!.fromHistoryVC)
                 }
             }
         }
@@ -146,18 +152,45 @@ class CaptureImageProcessVC: BaseViewController {
         imageView.frame = CGRect(x: 0, y: 0, width: image.size.width  , height:  image.size.height)
         cameraImageView.addSubview(imageView)
         imageView.center = cameraImageView.center
+        self.iTTServerViewModel.capturedImage = image
         
-        self.cameraHistoryViewModel.fetchDetectedAndTranslatedText(for: cameraHistoryImageIndex)
+        PrintUtility.printLog(tag: "row index", text: "\(historyID)")
+        self.iTTServerViewModel.historyID = historyID
+        let translatedData: TranslatedTextJSONModel? = CameraHistoryDBModel().getTranslatedData(id: historyID)
+        let detectedData: DetectedJSON? = CameraHistoryDBModel().getDetectedData(id: historyID)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try? encoder.encode(translatedData)
+        let detectedData1 = try? encoder.encode(detectedData)
+        //PrintUtility.printLog(tag: TAG, text: " translatedData setUpViewForHistoryVC() >> Detected Data: \(String(data: data!, encoding: .utf8)!)")
+        //PrintUtility.printLog(tag: TAG, text: " detected setUpViewForHistoryVC() >> Detected Data: \(String(data: detectedData1!, encoding: .utf8)!)")
         
-        if ((self.cameraHistoryViewModel.detectedData) != nil && self.cameraHistoryViewModel.translatedData != nil) {
+        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+        if let detectedData = detectedData, let translatedData = translatedData {
             
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            let data = try? encoder.encode(self.cameraHistoryViewModel.detectedData)
-            PrintUtility.printLog(tag: TAG, text: "setUpViewForHistoryVC() >> Detected Data: \(String(data: data!, encoding: .utf8)!)")
+            let data = translatedData
+            let blockData = data.block?.translatedText
+            let lineData = data.line?.translatedText
+            self.iTTServerViewModel.detectedJSON = detectedData
             
-            self.iTTServerViewModel.getTextviewListForCameraHistory(detectedData: self.cameraHistoryViewModel.detectedData, translatedData: self.cameraHistoryViewModel.translatedData)
-        } else {
+            PrintUtility.printLog(tag: "block data count : \(String(describing: blockData?.count))", text: "line data count: \(String(describing: lineData?.count))")
+            if (( blockData!.count > 0) && (lineData!.count > 0)) {
+                self.iTTServerViewModel.getTextviewListForCameraHistory(detectedData: detectedData, translatedData: translatedData)
+            } else if (blockData!.count>0) {
+                if modeSwitchTypes != blockMode {
+                    UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                }
+                self.iTTServerViewModel.getSelectedModeTextViewListFromHistory(detectedData: detectedData, translatedData: translatedData, selectedMode: blockMode)
+                
+            } else if (lineData!.count > 0) {
+                if modeSwitchTypes != lineMode {
+                    UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                }
+                self.iTTServerViewModel.getSelectedModeTextViewListFromHistory(detectedData: detectedData, translatedData: translatedData, selectedMode: lineMode)
+            }
+        }
+        
+        else {
             PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
         }
     }
@@ -192,47 +225,35 @@ class CaptureImageProcessVC: BaseViewController {
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-                    let translatedData = fromHistoryVC ? self.cameraHistoryViewModel.translatedData : getTranslatedToLanguage()
+                    
+                    let imageIndex = cameraHistoryViewModel.fetchImageCount()-1
+                    var id = Int64()
+                    if let data = try? CameraHistoryDBModel().findAllEntities() {
+                        id = data[imageIndex].id!
+                    }
+                    
+                    let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) :  CameraHistoryDBModel().getTranslatedData(id: id)
                     
                     
                     if modeSwitchType == blockMode {
-                        mTranslatedLanguage = (translatedData?.block!.languageCodeTo)!
+                        mTranslatedLanguage = (translatedData.block!.languageCodeTo)
                         mDetectedLanguage = self.iTTServerViewModel.blockListFromJson[index].detectedLanguage!
                         PrintUtility.printLog(tag: "translateLanguage block mode: ", text: "\(mTranslatedLanguage)")
                         showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: textViews[index].detectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
-                        PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.blockListFromJson[index].text)")
+                        PrintUtility.printLog(tag: "text:", text: "\(String(describing: self.iTTServerViewModel.blockListFromJson[index].text))")
                         
                     } else {
-                        mTranslatedLanguage = (translatedData?.line!.languageCodeTo)!
+                        mTranslatedLanguage = (translatedData.line!.languageCodeTo)
                         mDetectedLanguage = self.iTTServerViewModel.lineListFromJson[index].detectedLanguage!
                         
                         showTTSDialog(nativeText: textViews[index].detectedText, nativeLanguage: textViews[index].detectedLanguage, translateText: textViews[index].translatedText, translateLanguage: mTranslatedLanguage)
                         PrintUtility.printLog(tag: "touched view tag :", text: "\(each.view.tag), index: \(index)")
-                        PrintUtility.printLog(tag: "text:", text: "\(self.iTTServerViewModel.lineListFromJson[index].text)")
+                        PrintUtility.printLog(tag: "text:", text: "\(String(describing: self.iTTServerViewModel.lineListFromJson[index].text))")
                     }
                 }
             }
         }
-    }
-    
-    func getTranslatedToLanguage() -> TranslatedTextJSONModel {
-        var translatedToLanguage: TranslatedTextJSONModel!
-        let count = cameraHistoryViewModel.fetchImageCount()
-        
-        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            if let translatedData = cameraHistoryData[count-1].translatedData {
-                do {
-                    let data = try JSONDecoder().decode(TranslatedTextJSONModel.self, from: Data(translatedData.utf8))
-                    
-                    translatedToLanguage = data
-                } catch let error {
-                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
-                }
-            }
-        }
-        
-        return translatedToLanguage
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -246,21 +267,29 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         DispatchQueue.main.async {[self] in
             let blockModeTextViews = self.iTTServerViewModel.blockModeTextViewList
             let lineModeTextViews = self.iTTServerViewModel.lineModetTextViewList
-            if (blockModeTextViews.count != 0 && lineModeTextViews.count != 0) {
-                hideLoader()
-                
-                if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-                    if modeSwitchType == blockMode {
-                        plotLineOrBlock(using: blockModeTextViews)
-                        
-                    } else {
-                        plotLineOrBlock(using: lineModeTextViews)
+            PrintUtility.printLog(tag: "blockModeTextViews & lineModeTextViews", text: "\(self.iTTServerViewModel.blockModeTextViewList.count), \(self.iTTServerViewModel.lineModetTextViewList.count)")
+            //if (blockModeTextViews.count != 0 || lineModeTextViews.count != 0) {
+            hideLoader()
+            
+            if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
+                PrintUtility.printLog(tag: "modeSwitchType for update Views", text: "\(modeSwitchType)")
+                if modeSwitchType == blockMode {
+                    for each in lineModeTextViews {
+                        each.view.removeFromSuperview()
                     }
-                } else {
-                    UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
                     plotLineOrBlock(using: blockModeTextViews)
+                    
+                } else {
+                    for each in blockModeTextViews {
+                        each.view.removeFromSuperview()
+                    }
+                    plotLineOrBlock(using: lineModeTextViews)
                 }
+            } else {
+                UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                plotLineOrBlock(using: blockModeTextViews)
             }
+            // }
         }
     }
     
@@ -268,8 +297,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func plotLineOrBlock(using textViews: [TextViewWithCoordinator]) {
         
         let screenRect = UIScreen.main.bounds
-        let screenWidth = screenRect.size.width
-        let screenHeight = screenRect.size.height
+        _ = screenRect.size.width
+        _ = screenRect.size.height
         
         // TO Do: will remove static image
         //let image1 = UIImage(named: "vv")
@@ -289,14 +318,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         if textViews.count > 0 {
             for i in 0..<textViews.count {
                 DispatchQueue.main.async {
-                    let height = textViews[i].view.frame.size.height
-                    let width = textViews[i].view.frame.size.width
-                    //                    textViews[i].view.frame.origin.x = CGFloat(Float(textViews[i].X1))
-                    //                    textViews[i].view.frame.origin.y = CGFloat(Float(textViews[i].Y1))
-                    //                    textViews[i].view.frame.size.height = height
-                    //                    textViews[i].view.frame.size.width = width
                     textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
-                    
                     
                     textViews[i].view.tag = i
                     
@@ -385,22 +407,55 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     @objc func fabTapped(_ button: UIButton) {
-        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
-        if modeSwitchTypes == blockMode {
-            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
-            for each in self.iTTServerViewModel.blockModeTextViewList {
-                each.view.removeFromSuperview()
-            }
-            updateView()
-        } else {
-            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
-            for each in self.iTTServerViewModel.lineModetTextViewList {
-                each.view.removeFromSuperview()
-            }
-            updateView()
+        
+        let index = cameraHistoryViewModel.fetchImageCount()-1
+        var id = Int64()
+        if let data = try? CameraHistoryDBModel().findAllEntities() {
+            id = data[index].id!
         }
         
+        
+        let translatedData = fromHistoryVC ? try? CameraHistoryDBModel().getTranslatedData(id: historyID) : try? CameraHistoryDBModel().getTranslatedData(id: id)
+        
+        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+        PrintUtility.printLog(tag: "translated data : -", text: "\(String(describing: translatedData))")
+        if modeSwitchTypes == blockMode {
+            
+            if let data = translatedData?.line {
+                if data.translatedText.count > 0 {
+                    UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                    
+                    for each in self.iTTServerViewModel.blockModeTextViewList {
+                        each.view.removeFromSuperview()
+                    }
+                    updateView()
+                } else {
+                    activity.showLoading(view: self.view)
+                    if let detectedData = self.iTTServerViewModel.detectedJSON {
+                        self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
+                        UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                    }
+                }
+            }
+        } else {
+            if let data = translatedData?.block {
+                if data.translatedText.count > 0 {
+                    UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                    for each in self.iTTServerViewModel.lineModetTextViewList {
+                        each.view.removeFromSuperview()
+                    }
+                    updateView()
+                } else {
+                    activity.showLoading(view: self.view)
+                    if let detectedData = self.iTTServerViewModel.detectedJSON {
+                        self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
+                        UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                    }
+                }
+            }
+        }
     }
+    
     
     @IBAction func menuAction(_ sender: UIButton) {
         let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
@@ -486,7 +541,6 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func cameraTTSDialogFromPlaybutton() {
         // Action FromLanguage play
     }
-    
     
     func cameraTTSDialogShowContextMenu() {
         self.view.addSubview(cameraTTSContextMenu)

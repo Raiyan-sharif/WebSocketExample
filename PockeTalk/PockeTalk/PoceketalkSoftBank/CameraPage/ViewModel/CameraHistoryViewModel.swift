@@ -45,11 +45,13 @@ class CameraHistoryViewModel: BaseModel {
         
         cameraHistoryImages.removeAll()
         if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            for each in cameraHistoryData.reversed() {
-                if let imageData = each.image {
+            
+            for index in stride(from: cameraHistoryData.count-1, to: -1, by: -1) {
+                if let imageData = cameraHistoryData[index].image {
                     let image = UIImage.convertBase64ToImage(imageString: imageData)
-                    cameraHistoryImages.append(CameraHistoryDataModel.init(image: image))
+                    cameraHistoryImages.append(CameraHistoryDataModel.init(image: image, dbID: cameraHistoryData[index].id))
                 }
+                
             }
         }
     }
@@ -60,29 +62,6 @@ class CameraHistoryViewModel: BaseModel {
             count = cameraHistoryData.count
         }
         return count
-    }
-    
-    func fetchDetectedAndTranslatedText(for index: Int) {
-        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-            
-            if let detectedData = cameraHistoryData.reversed()[index].detectedData {
-                do {
-                    let data = try JSONDecoder().decode(DetectedJSON.self, from: Data(detectedData.utf8))
-                    self.detectedData = data
-                } catch let error {
-                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
-                }
-            }
-            
-            if let translatedData = cameraHistoryData.reversed()[index].translatedData {
-                do {
-                    let data = try JSONDecoder().decode(TranslatedTextJSONModel.self, from: Data(translatedData.utf8))
-                    self.translatedData = data
-                } catch let error {
-                    PrintUtility.printLog(tag: "ERROR :", text: error.localizedDescription)
-                }
-            }
-        }
     }
     
 }
