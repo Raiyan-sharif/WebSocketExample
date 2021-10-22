@@ -53,7 +53,23 @@ class SystemLanguageViewController: BaseViewController {
         getData()
         //Set the UI
         setUpUI()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
+
+    private var leftBtn:UIButton!{
+        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        okBtn.setTitle("OK", for: .normal)
+        okBtn.setImage(UIImage(named: "icon_arrow_left.9"), for: .normal)
+        okBtn.titleLabel?.textColor = .white
+        okBtn.clipsToBounds = true
+        okBtn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return okBtn
+    }
+
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+
     ///Get data from XML
     private func getData(){
         if let path = Bundle.main.path(forResource: "system_languages", ofType: "xml") {
