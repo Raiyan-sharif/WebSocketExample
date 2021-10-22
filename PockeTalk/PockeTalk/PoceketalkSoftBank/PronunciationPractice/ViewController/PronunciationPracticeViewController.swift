@@ -6,7 +6,7 @@
 import UIKit
 import WebKit
 
-protocol DismissPronunciationFromHistory {
+protocol DismissPronunciationFromHistory: AnyObject {
     func dismissPronunciationFromHistory()
 }
 
