@@ -507,8 +507,8 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
         var nativeLangName = ""
         var targetLangName = ""
         PrintUtility.printLog(tag: TAG, text: "nativeLang \(nativeLanguage?.name) targetLang \(targetLanguage?.name)")
-        nativeText = stt
-        targetText = ttt
+        nativeText = GlobalMethod.removeQuotationMark(input: stt)
+        targetText = GlobalMethod.removeQuotationMark(input: ttt)
         if isArrowUp == true{
             nativeLangName = nativeLanguage?.name ?? ""
             targetLangName = targetLanguage?.name ?? ""
@@ -525,7 +525,7 @@ class SpeechProcessingViewController: BaseViewController, PronunciationResult{
     func showPronunciationPracticeResult (stt:String) {
         let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeResultViewController")as! PronunciationPracticeResultViewController
-        controller.practiceText = stt
+        controller.practiceText = GlobalMethod.removeQuotationMark(input: stt)
         controller.delegate = self
         controller.isFromHistory = isHistoryPronunciation
         controller.orginalText = pronunciationText

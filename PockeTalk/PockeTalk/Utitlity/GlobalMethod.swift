@@ -299,7 +299,29 @@ class GlobalMethod {
         viewController?.present(alert, animated: true, completion: nil)
     }
 
-
+    static func removeQuotationMark (input : String) -> String {
+        var output = Array(input)
+        var index = 0
+        while index < output.count {
+            let element = output[index]
+            if element == "\"" {
+                if index == 0 || index == output.count - 1 {
+                    output.remove(at: index)
+                    index -= 1
+                } else if (index > 0) && output[index - 1] == " " {
+                    output.remove(at: index)
+                    index -= 1
+                } else if (index < output.count - 1) && output[index + 1] == " " {
+                    output.remove(at: index)
+                    index -= 1
+                } else {
+                    output[index] = " "
+                }
+            }
+            index += 1
+        }
+        return String(output)
+    }
 
 }
 
