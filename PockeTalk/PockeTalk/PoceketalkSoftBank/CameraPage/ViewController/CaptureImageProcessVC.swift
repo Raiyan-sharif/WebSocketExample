@@ -35,7 +35,12 @@ class CaptureImageProcessVC: BaseViewController {
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "line_mode"), for: .normal)
+        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+        if modeSwitchTypes == blockMode {
+            button.setImage(UIImage(named: blockMode), for: .normal)
+        } else {
+            button.setImage(UIImage(named: lineMode), for: .normal)
+        }
         button.addTarget(self, action: #selector(modeSwitchButtonEventListener(_:)), for: .touchUpInside)
         return button
     }()
@@ -420,7 +425,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
         PrintUtility.printLog(tag: "translated data : -", text: "\(String(describing: translatedData))")
         if modeSwitchTypes == blockMode {
-            
+            modeSwitchButton.setImage(UIImage(named: lineMode), for: .normal)
             if let data = translatedData.line {
                 if data.translatedText.count > 0 {
                     UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
@@ -438,6 +443,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 }
             }
         } else {
+            modeSwitchButton.setImage(UIImage(named: blockMode), for: .normal)
             if let data = translatedData.block {
                 if data.translatedText.count > 0 {
                     UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
