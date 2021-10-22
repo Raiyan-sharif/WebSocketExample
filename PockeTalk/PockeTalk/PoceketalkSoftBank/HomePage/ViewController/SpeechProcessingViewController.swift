@@ -103,7 +103,7 @@ class SpeechProcessingViewController: BaseViewController{
         }
         
         ///show example text
-        hasExampleText()
+        setExampleText()
         PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
     }
     
@@ -311,10 +311,9 @@ class SpeechProcessingViewController: BaseViewController{
         service?.startRecord()
     }
     
-    private func hasExampleText() {
+    private func setExampleText() {
         if !isFromPronunciationPractice {
             DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
-                /// after 2 second of interval, check if server data is available. If not available show the example text
                 guard let `self` = self else { return }
                 if self.isSSTavailable == false {
                     self.showExampleText()
@@ -325,8 +324,10 @@ class SpeechProcessingViewController: BaseViewController{
     
     private func showExampleText() {
         let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
-        self.exampleLabel.text = speechLanguage?.exampleText
-        self.descriptionLabel.text = speechLanguage?.secText
+        exampleLabel.isHidden = false
+        descriptionLabel.isHidden = false
+        exampleLabel.text = speechLanguage?.exampleText
+        descriptionLabel.text = speechLanguage?.secText
     }
     
     private func showTutorial () {
@@ -428,9 +429,12 @@ class SpeechProcessingViewController: BaseViewController{
                 fromPronunciation()
             }
         }
+        
         self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
-        self.exampleLabel.isHidden = false
-        self.descriptionLabel.isHidden = false
+        
+        isSSTavailable = false
+        setExampleText()
+        
         speechProcessingLeftImgView.isHidden = false
         speechProcessingRightImgView.isHidden = false
         
