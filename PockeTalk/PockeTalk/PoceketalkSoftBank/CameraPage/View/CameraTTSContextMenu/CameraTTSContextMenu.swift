@@ -77,8 +77,8 @@ class CameraTTSContextMenu: UIView {
     }
 
     func setUpDataInput() {
-        self.sendEmailButton.setTitle("Send an email", for: .normal)
-        self.cancelButton.setTitle("Cancel", for: .normal)
+        self.sendEmailButton.setTitle("send_an_email".localiz(), for: .normal)
+        self.cancelButton.setTitle("cancel".localiz(), for: .normal)
     }
 
     func dismissContextMenu() {
@@ -87,6 +87,7 @@ class CameraTTSContextMenu: UIView {
 
     @IBAction func didTapOnSendMailButton(_ sender: UIButton) {
         self.delegate?.cameraTTSContextMenuSendMail()
+        dismissContextMenu()
     }
 
     @IBAction func didTapOnCancelButton(_ sender: UIButton) {
