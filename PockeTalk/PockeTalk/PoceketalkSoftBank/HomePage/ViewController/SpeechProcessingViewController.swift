@@ -447,6 +447,9 @@ class SpeechProcessingViewController: BaseViewController{
     private func fromPronunciation() {
         screenOpeningPurpose = .PronunciationPractice
         pronunciationView.isHidden = false
+        titleLabel.isHidden = true
+        exampleLabel.isHidden = true
+        descriptionLabel.isHidden = true
         speechLangCode = pronunciationLanguageCode
         LanguageSelectionManager.shared.tempSourceLanguage = pronunciationLanguageCode
         self.languageHasUpdated = true
@@ -528,6 +531,9 @@ class SpeechProcessingViewController: BaseViewController{
 extension SpeechProcessingViewController: PronunciationResult {
     func dismissResultHome() {
         pronunciationView.isHidden = true
+        titleLabel.isHidden = false
+        exampleLabel.isHidden = false
+        descriptionLabel.isHidden = false
         isFromPronunciationPractice = false
         screenOpeningPurpose = .HomeSpeechProcessing
         if LanguageSelectionManager.shared.isArrowUp{
