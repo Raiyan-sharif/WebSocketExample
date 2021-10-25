@@ -24,6 +24,7 @@ class FavouriteViewController: BaseViewController {
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
     var deletedCellHeight = CGFloat()
+    weak var speechProDismissDelegateFromFav : SpeechProcessingDismissDelegate?
 
     ///CollectionView to show favourite item
     private lazy var collectionView:UICollectionView = {
@@ -110,6 +111,8 @@ class FavouriteViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.speechProcessingDismissDelegate = self
+            controller.isFromTutorial = false
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
@@ -258,7 +261,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func openTTTResult(_ item: Int){
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: nil, isRecreation: false)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: nil, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -343,4 +346,8 @@ extension FavouriteViewController : AlertReusableDelegate {
     
 }
 
-
+extension FavouriteViewController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        self.speechProDismissDelegateFromFav?.showTutorial()
+    }
+}

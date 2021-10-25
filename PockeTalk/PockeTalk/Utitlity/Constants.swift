@@ -43,6 +43,7 @@ let kIsAlreadyFavorite = "kIsAlreadyFavorite"
 let kLastSavedChatID = "lastSavedChatID"
 let kUserDefaultDatabaseOldVersion = "databaseOldVersion"
 let kTempoControlSpeed = "kTempoControlSpeed"
+let kUserDefaultIsSpeechProcessingDisplayedFirstTime = "kUserDefaultIsSpeechProcessingDisplayedFirstTime"
 
 
 //MARK: - Toast Message Title

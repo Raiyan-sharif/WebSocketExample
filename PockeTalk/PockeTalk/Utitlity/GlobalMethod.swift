@@ -347,6 +347,8 @@ class GlobalAlternative{
        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
        controller.isRecreation = isRecreation
        controller.isFromSpeechProcessing = fromSpeech
+       controller.currentTSDelegate = viewController as? CurrentTSDelegate
+       controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
        if(viewController?.navigationController != nil){
            let navController = UINavigationController.init(rootViewController: controller)
            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

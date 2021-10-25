@@ -16,8 +16,10 @@ class TutorialViewController: UIViewController {
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var crossButton: UIButton!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var bottomTalkView: UIView!
 
     ///Properties
+    let TAG = "\(TutorialViewController.self)"
     var tutorialVM : TutorialViewModel!
     var avPlayer: AVPlayer!
     let cornerRadius : CGFloat = 15
@@ -26,11 +28,18 @@ class TutorialViewController: UIViewController {
     let animatedViewTransformation : CGFloat = 0.01
     let lineSpacing : CGFloat = 0.5
     weak var delegate : SpeechControllerDismissDelegate?
+    let width : CGFloat = 100
+    weak var navController: UINavigationController?
+    let waitingTimeToShowSpeechProcessing : Double = 0.4
+    let toastVisibleTime : Double = 2.0
+    weak var speechProDismissDelegateFromTutorial : SpeechProcessingDismissDelegate?
+
 
     /// Showing Bengali for now
     let selectedLanguageIndex : Int = 8
     ///languageList for all languages
     var tutorialLanguageList = [TutorialLanguages]()
+    weak var talkBtn : UIButton?
 
 
     override func viewDidLoad() {
@@ -38,6 +47,14 @@ class TutorialViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tutorialVM = TutorialViewModel()
         self.setUpUI()
+    }
+
+    deinit {
+        self.deinitGotCalled()
+    }
+
+    func deinitGotCalled () {
+        PrintUtility.printLog(tag: TAG, text: "Tutorial deinit Got Called")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -69,6 +86,57 @@ class TutorialViewController: UIViewController {
         self.infoLabel.setLineHeight(lineHeight: lineSpacing)
         self.infoLabel.textAlignment = .center
         self.infoLabel.textColor = UIColor._blackColor()
+
+        talkBtn = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+        talkBtn?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
+
+    @objc func microphoneTapAction (sender : UIButton) {
+        sender.isUserInteractionEnabled = false
+        let languageManager = LanguageSelectionManager.shared
+        var speechLangCode = ""
+        if languageManager.isArrowUp{
+            speechLangCode = languageManager.bottomLanguage
+        }else{
+            speechLangCode = languageManager.topLanguage
+        }
+        if languageManager.hasSttSupport(languageCode: speechLangCode){
+            proceedToTakeVoiceInput()
+
+        }else {
+            showToast(message: "no_stt_msg".localiz(), seconds: toastVisibleTime)
+            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
+        }
+    }
+
+    fileprivate func proceedToTakeVoiceInput() {
+        if Reachability.isConnectedToNetwork() {
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessing) {
+                        self.moveToSpeechProcessing()
+                        self.talkBtn?.isUserInteractionEnabled = true
+                    }
+                } else {
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
+
+                }
+            }
+        } else {
+            GlobalMethod.showNoInternetAlert()
+        }
+    }
+
+    func moveToSpeechProcessing() {
+        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+        controller.homeMicTapTimeStamp = currentTS
+        controller.languageHasUpdated = true
+        controller.screenOpeningPurpose = .HomeSpeechProcessing
+        controller.isFromTutorial = true
+        controller.speechProcessingDismissDelegate = self
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 
     /// This method is called to play tutorial video using AVPlayer
@@ -88,11 +156,15 @@ class TutorialViewController: UIViewController {
 
     // Dismiss tutorial view with animation
     @IBAction func crossActiion(_ sender: UIButton) {
+
         UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
             self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
         }, completion: { _ in
             self.delegate?.dismiss()
-            self.dismiss(animated: true, completion: nil)
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
+            }
         })
     }
     /*
@@ -105,4 +177,10 @@ class TutorialViewController: UIViewController {
     }
     */
 
+}
+
+extension TutorialViewController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        self.speechProDismissDelegateFromTutorial?.showTutorial()
+    }
 }
