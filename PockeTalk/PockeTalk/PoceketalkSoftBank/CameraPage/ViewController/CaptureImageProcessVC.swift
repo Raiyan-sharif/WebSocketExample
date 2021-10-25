@@ -55,7 +55,7 @@ class CaptureImageProcessVC: BaseViewController {
     }()
     
     private lazy var cameraTTSContextMenu: CameraTTSContextMenu = {
-        let cameraTTSContextMenu = CameraTTSContextMenu(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: 600))
+        let cameraTTSContextMenu = CameraTTSContextMenu(frame: CGRect(x: 0, y: 0, width: SIZE_WIDTH, height: SIZE_HEIGHT))
         cameraTTSContextMenu.delegate = self
         return cameraTTSContextMenu
     }()
