@@ -23,6 +23,9 @@ class CameraHistoryViewController: BaseViewController {
         self.viewModel.viewDidLoad(self)
         getHistoryImages()
         setUpViews()
+        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTappedEvent))
+        collectionView.addGestureRecognizer(tapGesture)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +68,22 @@ class CameraHistoryViewController: BaseViewController {
         self.viewModel.fetchCameraHistoryImages()
     }
     
+    @objc func longTappedEvent(recognizer: UILongPressGestureRecognizer)  {
+        if let indexPath = self.collectionView?.indexPathForItem(at: recognizer.location(in: self.collectionView)) {
+            
+            let cell = self.collectionView?.cellForItem(at: indexPath)
+            
+            let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+            if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryPopUPViewController.self)) as? CameraHistoryPopUPViewController {
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }
+        } else {
+            PrintUtility.printLog(tag: "CameraHistoryViewController", text: "Tapped on history image")
+        }
+    }
+
     
 }
 

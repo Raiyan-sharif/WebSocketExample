@@ -581,10 +581,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         NSLayoutConstraint.activate([
             modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             modeSwitchButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
-            modeSwitchButton.heightAnchor.constraint(equalToConstant: 60),
-            modeSwitchButton.widthAnchor.constraint(equalToConstant: 60)
+            modeSwitchButton.heightAnchor.constraint(equalToConstant: 35),
+            modeSwitchButton.widthAnchor.constraint(equalToConstant: 35)
         ])
-        modeSwitchButton.layer.cornerRadius = 30
+        modeSwitchButton.layer.cornerRadius = 17.5
         modeSwitchButton.layer.masksToBounds = true
     }
     
@@ -592,10 +592,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         NSLayoutConstraint.activate([
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             backButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
-            backButton.heightAnchor.constraint(equalToConstant: 60),
-            backButton.widthAnchor.constraint(equalToConstant: 60)
+            backButton.heightAnchor.constraint(equalToConstant: 35),
+            backButton.widthAnchor.constraint(equalToConstant: 35)
         ])
-        backButton.layer.cornerRadius = 30
+        backButton.layer.cornerRadius = 17.5
         backButton.layer.masksToBounds = true
     }
 }

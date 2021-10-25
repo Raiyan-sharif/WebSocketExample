@@ -14,7 +14,9 @@ class CameraHistoryPopUPViewController: BaseViewController {
     @IBOutlet weak var shareBtnContainerView: UIView!
     @IBOutlet weak var deleteBtnContainerView: UIView!
     @IBOutlet weak var cancelBtnContainerView: UIView!
-    
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
+    let viewAlpha : CGFloat = 0.6
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +26,10 @@ class CameraHistoryPopUPViewController: BaseViewController {
     
     func setUpViews() {
         
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(viewAlpha)
         
-        self.openBtnContainerView.roundCorners(corners: [.topLeft, .topRight], radius: 15)
-        self.cancelBtnContainerView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 15)
-        self.view.layer.opacity = 0.4
+        containerView.layer.cornerRadius = 15.0
+        self.containerView.layer.masksToBounds = true
 
         let tapForOpen = UITapGestureRecognizer(target: self, action: #selector(self.openButtonEventHandler(sender:)))
         openBtnContainerView.isUserInteractionEnabled = true
