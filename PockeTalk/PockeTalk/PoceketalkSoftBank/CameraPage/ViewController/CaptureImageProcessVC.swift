@@ -25,7 +25,10 @@ class CaptureImageProcessVC: BaseViewController {
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
     var historyID = Int64()
-    
+    var fromLanguage: String = ""
+    var toLanguage: String = ""
+    var gNativeLanguage: String = ""
+    var gTranslateLanguage: String = ""
     var mTranslatedLanguage: String = ""
     var mDetectedLanguage: String = ""
     
@@ -333,9 +336,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         let nativeLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: nativeLanguage)
         cameraTTSDiaolog.fromTranslateLabel.text = getTTSDialogLanguageName(languageItem: nativeLangItem!)
         cameraTTSDiaolog.toLanguageLabel.text = translateText
+        fromLanguage = nativeLangItem!.sysLangName
+        toLanguage = translateText
         
         let targetLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: translateLanguage)
         cameraTTSDiaolog.toTranslateLabel.text = getTTSDialogLanguageName(languageItem: targetLangItem!)
+        gNativeLanguage = targetLangItem!.sysLangName
+        gTranslateLanguage = nativeText
         
         /// Just showing the TTS dialog for testing.
         
@@ -538,6 +545,17 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func cameraTTSDialogShowContextMenu() {
         self.view.addSubview(cameraTTSContextMenu)
     }
+    func shareTranslation(){
+        let sharedData = "Translated language: \(gNativeLanguage)\n" + "\(toLanguage) \n\n" +
+        "Original language: \(fromLanguage)\n" + "\(gTranslateLanguage)"
+
+        let dataToSend = [sharedData]
+
+        PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
+        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
 
 //MARK: - CameraTTSContextMenuProtocol
@@ -545,6 +563,9 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
 extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
     func cameraTTSContextMenuSendMail() {
         // Send an email implementaiton goes here
+        PrintUtility.printLog(tag: "TAG", text: "Share in Camera")
+        self.dismiss(animated: true, completion: nil)
+        shareTranslation()
     }
 }
 
