@@ -50,6 +50,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResetTableViewCell") as! ResetListTableViewCell
         cell.titleLabel?.text = ResetItemType.resetItems[indexPath.row].localiz()
+        cell.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize())
         print(ResetItemType.resetItems[indexPath.row].localiz())
         cell.backgroundColor = .black
         let bgColorView = UIView()
