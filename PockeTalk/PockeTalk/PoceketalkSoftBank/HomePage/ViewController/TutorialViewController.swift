@@ -51,8 +51,13 @@ class TutorialViewController: UIViewController {
         self.containerView.layer.cornerRadius = cornerRadius
 
         let languageManager = LanguageSelectionManager.shared
-        let nativeLangCode = languageManager.bottomLanguage
-        let tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: nativeLangCode)
+        var tutorialLangCode = ""
+        if languageManager.isArrowUp{
+            tutorialLangCode = languageManager.bottomLanguage
+        }else{
+            tutorialLangCode = languageManager.topLanguage
+        }
+        let tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: tutorialLangCode)
 
         self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
