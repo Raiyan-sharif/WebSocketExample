@@ -117,21 +117,25 @@ class PronunciationPracticeResultViewController: BaseViewController {
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
-        RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-            if isGranted {
-                var dict = [String:String]()
-                dict["vc"] = "PronunciationPracticeResultViewController"
-                dict["text"] = self.orginalText
-                dict["langCode"] = self.languageCode
-                NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
-                if(self.navigationController != nil){
-                    self.navigationController?.popViewController(animated: true)
-                }else{
-                    self.dismiss(animated: true, completion: nil)
+        if Reachability.isConnectedToNetwork() {
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                    var dict = [String:String]()
+                    dict["vc"] = "PronunciationPracticeResultViewController"
+                    dict["text"] = self.orginalText
+                    dict["langCode"] = self.languageCode
+                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
+                    if(self.navigationController != nil){
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                } else {
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                 }
-            } else {
-                GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
+        } else {
+            GlobalMethod.showNoInternetAlert(in: self)
         }
     }
 
