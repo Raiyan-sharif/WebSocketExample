@@ -12,7 +12,7 @@ class CustomAlertViewModel:BaseModel {
     func alertDialogWithoutTitleWithActionButton(message:String, buttonTitle:String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
         let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
-        alertVC.alertTitle = "title"
+        //alertVC.alertTitle = "title"
         alertVC.alertMessage = message
         alertVC.alertButton = buttonTitle
         alertVC.noTitleShown = true
@@ -25,7 +25,7 @@ class CustomAlertViewModel:BaseModel {
     func alertDialogWithoutTitleWithoutActionButton(message:String) -> CustomAlertDailogViewController {
         let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
-        alertVC.alertTitle = "title"
+        //alertVC.alertTitle = "title"
         alertVC.alertMessage = message
         alertVC.alertButton = "buttonTitle"
         alertVC.noTitleShown = true
