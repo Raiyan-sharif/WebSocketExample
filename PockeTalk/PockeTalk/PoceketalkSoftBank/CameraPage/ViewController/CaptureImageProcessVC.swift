@@ -32,6 +32,16 @@ class CaptureImageProcessVC: BaseViewController {
     var mTranslatedLanguage: String = ""
     var mDetectedLanguage: String = ""
     
+    var ttsResponsiveView = TTSResponsiveView()
+    var voice : String = ""
+    var rate : String = "1.0"
+    var isSpeaking : Bool = false
+    var nativeLang : String = ""
+    var targetLang : String = ""
+    var nativeText: String = ""
+    var targetText: String = ""
+    var playNative = true
+
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -86,6 +96,20 @@ class CaptureImageProcessVC: BaseViewController {
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapped))
         scrollView.addGestureRecognizer(scrollViewTap)
         
+        ttsResponsiveView.ttsResponsiveViewDelegate = self
+        self.view.addSubview(ttsResponsiveView)
+        ttsResponsiveView.isHidden = true
+        
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+        
+    }
+    
+    @objc func willResignActive(_ notification: Notification) {
+        self.stopTTS()
     }
     
     func setUpViewForCapturedImage() {
@@ -259,6 +283,48 @@ class CaptureImageProcessVC: BaseViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    func playTTS(){
+        var lang = ""
+        var text = ""
+        if(playNative){
+            lang = nativeLang
+            text = nativeText
+        }else{
+            lang = targetLang
+            text = targetText
+        }
+        
+        let languageManager = LanguageSelectionManager.shared
+        if(languageManager.hasTtsSupport(languageCode: lang)){
+                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(lang)")
+            PrintUtility.printLog(tag: "Translate ", text: "lang: \(lang) text: \(text)" )
+
+            getTtsValue(langCode: lang)
+            ttsResponsiveView.checkSpeakingStatus()
+            ttsResponsiveView.setRate(rate: rate)
+            ttsResponsiveView.TTSPlay(voice: voice,text: text )
+            }else{
+                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(lang)")
+                let seconds = 1.0
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.stopTTS()
+                }
+            }
+    }
+    func stopTTS(){
+        ttsResponsiveView.stopTTS()
+    }
+    
+    /// Retreive tts value from respective language code
+    func getTtsValue (langCode: String) {
+        let item = LanguageEngineParser.shared.getTtsValue(langCode: langCode)
+        self.voice = item.voice
+        self.rate = item.rate
+        PrintUtility.printLog(tag: "getTtsValue ", text: "voice: \(voice) rate: \(rate)" )
+
+    }
+    
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
@@ -348,12 +414,43 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         cameraTTSDiaolog.toTranslateLabel.text = getTTSDialogLanguageName(languageItem: targetLangItem!)
         gNativeLanguage = targetLangItem!.sysLangName
         gTranslateLanguage = nativeText
-        
+        self.nativeText = nativeText
+        self.nativeLang = nativeLanguage
+        self.targetText = translateText
+        self.targetLang = translateLanguage
         /// Just showing the TTS dialog for testing.
+        let tapForNativeTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnNativeTTSText(sender:)))
+        cameraTTSDiaolog.fromLanguageLabel.isUserInteractionEnabled = true
+        cameraTTSDiaolog.fromLanguageLabel.addGestureRecognizer(tapForNativeTTS)
+        
+        let tapForTargetTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnTargetTTSText(sender:)))
+        cameraTTSDiaolog.toLanguageLabel.isUserInteractionEnabled = true
+        cameraTTSDiaolog.toLanguageLabel.addGestureRecognizer(tapForTargetTTS)
         
         self.view.addSubview(cameraTTSDiaolog)
         removeFloatingButton()
     }
+    
+    @objc func actionTappedOnNativeTTSText(sender:UITapGestureRecognizer) {
+        //ttsResponsiveView.isSpeaking()
+        playNative = true
+        if(!isSpeaking){
+            playTTS()
+        }else{
+            stopTTS()
+        }
+    }
+    
+    @objc func actionTappedOnTargetTTSText(sender:UITapGestureRecognizer) {
+        //ttsResponsiveView.isSpeaking()
+        playNative = false
+        if(!isSpeaking){
+            playTTS()
+        }else{
+            stopTTS()
+        }
+    }
+    
     
     func getTTSDialogLanguageName(languageItem: LanguageItem) -> String{
         var result: String = ""
@@ -529,7 +626,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
 
 extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func removeDialogEvent() {
-        
+        self.stopTTS()
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(backButton)
             setupBackButton()
@@ -541,11 +638,21 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     }
     
     func cameraTTSDialogToPlaybutton() {
-        // Action ToLanguage play
+        playNative = false
+        if(!isSpeaking){
+            playTTS()
+        }else{
+            stopTTS()
+        }
     }
     
     func cameraTTSDialogFromPlaybutton() {
-        // Action FromLanguage play
+        playNative = true
+        if(!isSpeaking){
+            playTTS()
+        }else{
+            stopTTS()
+        }
     }
     
     func cameraTTSDialogShowContextMenu() {
@@ -590,4 +697,15 @@ extension UIImage {
     func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
         return jpegData(compressionQuality: jpegQuality.rawValue)
     }
+}
+
+extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
+    func speakingStatusChanged(isSpeaking: Bool) {
+        self.isSpeaking = isSpeaking
+        PrintUtility.printLog(tag: TAG, text: " speaking: \(isSpeaking)")
+    }
+    
+    func onVoiceEnd() { }
+    
+    func onReady() {}
 }

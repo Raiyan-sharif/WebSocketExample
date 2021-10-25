@@ -366,7 +366,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 
     fileprivate func proceedAndPlayTTS() {
-        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.checkSpeakingStatus()
         ttsResponsiveView.setRate(rate: rate)
         let translateText = chatItemModel?.chatItem?.textTranslated
         PrintUtility.printLog(tag: "Translate ", text: translateText ?? "")

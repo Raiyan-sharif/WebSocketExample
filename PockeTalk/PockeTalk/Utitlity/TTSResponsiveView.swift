@@ -92,7 +92,7 @@ class TTSResponsiveView : UIView {
         stopEngineProcess()
     }
     
-    func isSpeaking() {
+    func checkSpeakingStatus() {
         wkView.evaluateJavaScript("isSpeaking()")  { (result, error) in
             guard error == nil else {
                 return
@@ -110,6 +110,9 @@ extension TTSResponsiveView: WKScriptMessageHandler, WKNavigationDelegate {
             case iosListener:
                     
             PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
+            if message.body as! String == "Start"{
+                self.ttsResponsiveViewDelegate?.speakingStatusChanged(isSpeaking: true)
+            }
             if message.body as! String == "end"{
                 stopEngineProcess()
                 self.ttsResponsiveViewDelegate?.onVoiceEnd()

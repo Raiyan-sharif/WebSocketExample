@@ -166,7 +166,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
     
     func playTTS(){
-        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.checkSpeakingStatus()
         ttsResponsiveView.setRate(rate: rate)
         PrintUtility.printLog(tag: "Translate ", text: orginalText )
         ttsResponsiveView.TTSPlay(voice: voice,text: orginalText )
