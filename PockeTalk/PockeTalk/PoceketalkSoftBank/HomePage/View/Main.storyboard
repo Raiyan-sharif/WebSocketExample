@@ -242,10 +242,6 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2eN-ke-mdU">
                                 <rect key="frame" x="10" y="100" width="394" height="516"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yy-FF-Ahr">
-                                        <rect key="frame" x="0.0" y="122" width="394" height="344"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eo-zD-BPe">
                                         <rect key="frame" x="20" y="40" width="354" height="21"/>
                                         <constraints>
@@ -264,14 +260,19 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZsX-C3-ICu">
+                                        <rect key="frame" x="0.0" y="131" width="394" height="355"/>
+                                        <connections>
+                                            <segue destination="vsC-PY-be6" kind="embed" identifier="ChildVC" id="bch-Fu-XtC"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="5eo-zD-BPe" secondAttribute="trailing" constant="20" id="6pY-by-5pd"/>
-                                    <constraint firstAttribute="bottom" secondItem="5Yy-FF-Ahr" secondAttribute="bottom" constant="50" id="B7j-Wj-xpb"/>
-                                    <constraint firstItem="5Yy-FF-Ahr" firstAttribute="height" secondItem="2eN-ke-mdU" secondAttribute="height" multiplier="2:3" id="E1H-LP-sfO"/>
-                                    <constraint firstAttribute="trailing" secondItem="5Yy-FF-Ahr" secondAttribute="trailing" id="ILv-4s-Srx"/>
-                                    <constraint firstItem="5Yy-FF-Ahr" firstAttribute="leading" secondItem="2eN-ke-mdU" secondAttribute="leading" id="c7G-E8-Bdc"/>
+                                    <constraint firstItem="ZsX-C3-ICu" firstAttribute="leading" secondItem="2eN-ke-mdU" secondAttribute="leading" id="LK6-nX-4WW"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZsX-C3-ICu" secondAttribute="trailing" id="QQ4-cM-Lql"/>
+                                    <constraint firstItem="ZsX-C3-ICu" firstAttribute="top" secondItem="yCI-Ga-E7w" secondAttribute="bottom" id="XkY-O1-hhV"/>
                                     <constraint firstItem="yCI-Ga-E7w" firstAttribute="leading" secondItem="2eN-ke-mdU" secondAttribute="leading" constant="50" id="eUg-Sv-22d"/>
                                     <constraint firstItem="yCI-Ga-E7w" firstAttribute="top" secondItem="5eo-zD-BPe" secondAttribute="bottom" constant="10" id="fMJ-dN-G7U"/>
                                     <constraint firstAttribute="trailing" secondItem="yCI-Ga-E7w" secondAttribute="trailing" constant="50" id="iFL-tz-V59"/>
@@ -308,6 +309,7 @@
                             <constraint firstItem="2eN-ke-mdU" firstAttribute="leading" secondItem="4Q3-WS-LCe" secondAttribute="leading" constant="10" id="TKN-j0-yte"/>
                             <constraint firstItem="UHN-YM-8ce" firstAttribute="bottom" secondItem="4Q3-WS-LCe" secondAttribute="bottom" id="aJP-PE-f2z"/>
                             <constraint firstItem="UHN-YM-8ce" firstAttribute="trailing" secondItem="4Q3-WS-LCe" secondAttribute="trailing" id="fda-bP-Kkj"/>
+                            <constraint firstItem="UHN-YM-8ce" firstAttribute="top" secondItem="ZsX-C3-ICu" secondAttribute="bottom" constant="30" id="lzc-20-fM2"/>
                             <constraint firstItem="4Q3-WS-LCe" firstAttribute="trailing" secondItem="2eN-ke-mdU" secondAttribute="trailing" constant="10" id="qiS-Gk-w0W"/>
                         </constraints>
                     </view>
@@ -317,7 +319,7 @@
                         <outlet property="crossButton" destination="1gE-4T-4yt" id="Z1s-q2-SGx"/>
                         <outlet property="infoLabel" destination="yCI-Ga-E7w" id="zO5-5Y-Kfa"/>
                         <outlet property="titleLabel" destination="5eo-zD-BPe" id="IU4-IH-nIJ"/>
-                        <outlet property="videoView" destination="5Yy-FF-Ahr" id="Tab-bY-MIH"/>
+                        <outlet property="tutorialContainerView" destination="ZsX-C3-ICu" id="qug-t1-46g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BXC-XL-LPn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -773,6 +775,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xaL-g6-GNY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-186.95652173913044" y="-41.517857142857139"/>
+        </scene>
+        <!--Tutorial Container View Controller-->
+        <scene sceneID="qOq-ER-pm2">
+            <objects>
+                <viewController id="vsC-PY-be6" customClass="TutorialContainerViewController" customModule="PockeTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0k1-uq-G6d">
+                        <rect key="frame" x="0.0" y="0.0" width="394" height="355"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PAZ-Yz-yRr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2219" y="621"/>
         </scene>
     </scenes>
     <designables>

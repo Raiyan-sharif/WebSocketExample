@@ -4,77 +4,66 @@
 //
 
 import UIKit
-import AVKit
-protocol SpeechControllerDismissDelegate : class {
+
+//MARK: - SpeechControllerDismissDelegate
+protocol SpeechControllerDismissDelegate : AnyObject {
     func dismiss()
 }
 
-class TutorialViewController: UIViewController {
-    ///Views
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var crossButton: UIButton!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var bottomTalkView: UIView!
-
+class TutorialViewController: BaseViewController {
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var infoLabel: UILabel!
+    @IBOutlet weak private var crossButton: UIButton!
+    @IBOutlet weak private var containerView: UIView!
+    @IBOutlet weak private var bottomTalkView: UIView!
+    @IBOutlet weak private var tutorialContainerView: UIView!
+    
     ///Properties
-    let TAG = "\(TutorialViewController.self)"
-    var tutorialVM : TutorialViewModel!
-    var avPlayer: AVPlayer!
-    let cornerRadius : CGFloat = 15
-    let animationDuration = 0.3
-    let animationDelay = 0
-    let animatedViewTransformation : CGFloat = 0.01
-    let lineSpacing : CGFloat = 0.5
-    weak var delegate : SpeechControllerDismissDelegate?
-    let width : CGFloat = 100
-    weak var navController: UINavigationController?
-    let waitingTimeToShowSpeechProcessing : Double = 0.4
-    let toastVisibleTime : Double = 2.0
+    private let TAG = "\(TutorialViewController.self)"
+    private var tutorialVM : TutorialViewModel!
+    
+    private var selectedLanguageCode = String()
+    private var tutorialLanguage: TutorialLanguages?
+
+    private let cornerRadius : CGFloat = 15
+    private let lineSpacing : CGFloat = 0.5
+    private let width : CGFloat = 100
+    
+    private let toastVisibleTime : Double = 2.0
+    private let animationDuration = 0.3
+    private let animationDelay = 0
+    private let animatedViewTransformation : CGFloat = 0.01
+    private let waitingTimeToShowSpeechProcessing : Double = 0.4
+    
+    private let ttsResponsiveView = TTSResponsiveView()
+    private var voice : String = ""
+    private var rate : String = "1.0"
+    private static let toChildContainer = "ChildVC"
+    
     weak var speechProDismissDelegateFromTutorial : SpeechProcessingDismissDelegate?
+    weak var delegate : SpeechControllerDismissDelegate?
+    weak var navController: UINavigationController?
+    weak private var talkBtn : UIButton?
 
-
-    /// Showing Bengali for now
-    let selectedLanguageIndex : Int = 8
-    ///languageList for all languages
-    var tutorialLanguageList = [TutorialLanguages]()
-    weak var talkBtn : UIButton?
-
-
+    //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.tutorialVM = TutorialViewModel()
-        self.setUpUI()
+        tutorialVM = TutorialViewModel()
+
+        setTutorialLanguageCode()
+        setUpUI()
+        setupTTSView()
+        registerForNotification()
     }
 
     deinit {
-        self.deinitGotCalled()
-    }
-
-    func deinitGotCalled () {
         PrintUtility.printLog(tag: TAG, text: "Tutorial deinit Got Called")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.playVideo()
-    }
-
-    /// Initial UI set up
-    func setUpUI () {
+    //MARK: - Initial Setup
+    private func setUpUI () {
         self.containerView.layer.masksToBounds = true
         self.containerView.layer.cornerRadius = cornerRadius
-
-        let languageManager = LanguageSelectionManager.shared
-        var tutorialLangCode = ""
-        if languageManager.isArrowUp{
-            tutorialLangCode = languageManager.bottomLanguage
-        }else{
-            tutorialLangCode = languageManager.topLanguage
-        }
-        let tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: tutorialLangCode)
 
         self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
@@ -90,17 +79,36 @@ class TutorialViewController: UIViewController {
         talkBtn = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
         talkBtn?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
+    
+    private func setTutorialLanguageCode() {
+        let languageManager = LanguageSelectionManager.shared
+        
+        languageManager.isArrowUp ? (selectedLanguageCode = languageManager.bottomLanguage) :
+                                    (selectedLanguageCode = languageManager.topLanguage)
+        
+        tutorialLanguage = self.tutorialVM.getTutorialLanguageInfoByCode(langCode: selectedLanguageCode)
+    }
+    
+    private func setupTTSView() {
+        ttsResponsiveView.ttsResponsiveViewDelegate = self
+        self.view.addSubview(ttsResponsiveView)
+        ttsResponsiveView.isHidden = true
+        getTTSValue()
+    }
+    
+    private func registerForNotification() {
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+    }
 
-    @objc func microphoneTapAction (sender : UIButton) {
+    //MARK: - IBActions
+    @objc private func microphoneTapAction (sender : UIButton) {
         sender.isUserInteractionEnabled = false
         let languageManager = LanguageSelectionManager.shared
-        var speechLangCode = ""
-        if languageManager.isArrowUp{
-            speechLangCode = languageManager.bottomLanguage
-        }else{
-            speechLangCode = languageManager.topLanguage
-        }
-        if languageManager.hasSttSupport(languageCode: speechLangCode){
+        if languageManager.hasSttSupport(languageCode: selectedLanguageCode){
             proceedToTakeVoiceInput()
 
         }else {
@@ -108,14 +116,29 @@ class TutorialViewController: UIViewController {
             PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
         }
     }
+    
+    @IBAction private func crossActiion(_ sender: UIButton) {
+        UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
+            self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
+        }, completion: { _ in
+            self.delegate?.dismiss()
+            self.stopTTS()
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
+            }
+        })
+    }
 
-    fileprivate func proceedToTakeVoiceInput() {
+    //MARK: - View Transactions
+    private func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessing) {
                         self.moveToSpeechProcessing()
                         self.talkBtn?.isUserInteractionEnabled = true
+                        self.stopTTS()
                     }
                 } else {
                     GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
@@ -127,7 +150,7 @@ class TutorialViewController: UIViewController {
         }
     }
 
-    func moveToSpeechProcessing() {
+    private func moveToSpeechProcessing() {
         let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
@@ -138,49 +161,67 @@ class TutorialViewController: UIViewController {
         controller.speechProcessingDismissDelegate = self
         self.navigationController?.pushViewController(controller, animated: true);
     }
-
-    /// This method is called to play tutorial video using AVPlayer
-    func playVideo () {
-        guard let path = Bundle.main.path(forResource: "tutorial", ofType: "mp4") else {
-            return
-        }
-        let videoURL = NSURL(fileURLWithPath: path)
-
-        // Create an AVPlayer, passing it the local video url path
-        let player = AVPlayer(url: videoURL as URL)
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = videoView.bounds
-        self.videoView.layer.addSublayer(playerLayer)
-        player.play()
-    }
-
-    // Dismiss tutorial view with animation
-    @IBAction func crossActiion(_ sender: UIButton) {
-
-        UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
-            self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
-        }, completion: { _ in
-            self.delegate?.dismiss()
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
-                (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
-            }
-        })
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == TutorialViewController.toChildContainer {
+            if let childCV = segue.destination as? TutorialContainerViewController {
+                childCV.playVideoCallback = { [weak self] in
+                    self?.stopTTS()
+                    self?.playTTS()
+                }
+            }
+        }
     }
-    */
 
+    //MARK: - Utils
+    ///TTS functionalities
+    private func getTTSValue() {
+        let item = LanguageEngineParser.shared.getTtsValue(langCode: selectedLanguageCode)
+        self.voice = item.voice
+        self.rate = item.rate
+    }
+    
+    private func playTTS(){
+        let languageManager = LanguageSelectionManager.shared
+        
+        if(languageManager.hasTtsSupport(languageCode: selectedLanguageCode)){
+            PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(selectedLanguageCode)")
+            proceedAndPlayTTS()
+        }else{
+            PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(selectedLanguageCode)")
+            let seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.stopTTS()
+            }
+        }
+    }
+
+    private func stopTTS(){
+        ttsResponsiveView.stopTTS()
+    }
+    
+    private func proceedAndPlayTTS() {
+        ttsResponsiveView.checkSpeakingStatus()
+        ttsResponsiveView.setRate(rate: rate)
+        PrintUtility.printLog(tag: "Translate ", text: tutorialLanguage?.lineTwo ?? "")
+        ttsResponsiveView.TTSPlay(voice: voice, text: tutorialLanguage?.lineTwo ?? "")
+    }
+    
+    @objc private func willResignActive(_ notification: Notification) {
+        stopTTS()
+    }
 }
 
+//MARK: - SpeechProcessingDismissDelegate
 extension TutorialViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         self.speechProDismissDelegateFromTutorial?.showTutorial()
     }
+}
+
+//MARK: - TTSResponsiveViewDelegate
+extension TutorialViewController: TTSResponsiveViewDelegate{
+    func speakingStatusChanged(isSpeaking: Bool) {}
+    func onReady() {}
+    func onVoiceEnd() {}
 }
