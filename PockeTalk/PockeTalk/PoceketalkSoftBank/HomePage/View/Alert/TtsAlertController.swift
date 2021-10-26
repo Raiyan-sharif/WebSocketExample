@@ -13,6 +13,11 @@ protocol TtsAlertControllerDelegate : class{
 protocol Pronunciation {
     func dismissPro(dict:[String : String])
 }
+
+protocol CurrentTSDelegate : class {
+    func passCurrentTSValue (currentTS : Int)
+}
+
 class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation {
     func dismissPro(dict:[String : String]) {
         NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
@@ -65,6 +70,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var isSpeaking : Bool = false
     var isRecreation: Bool = false
     var isFromSpeechProcessing = false
+    weak var currentTSDelegate : CurrentTSDelegate?
+    weak var speechProDismissDelegateFromTTS : SpeechProcessingDismissDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -347,9 +354,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.speechProcessingDismissDelegate = self
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
+            let currentTs = GlobalMethod.getCurrentTimeStamp(with: 0)
+            self.currentTSDelegate?.passCurrentTSValue(currentTS: currentTs)
             NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
             self.dismiss(animated: true, completion: nil)
         }
@@ -493,4 +503,8 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     }
 }
 
-
+extension TtsAlertController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        self.speechProDismissDelegateFromTTS?.showTutorial()
+    }
+}

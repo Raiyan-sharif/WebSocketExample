@@ -33,6 +33,7 @@ class HistoryViewController: BaseViewController {
     private(set) var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
+    weak var speechProDismissDelegateFromHistory : SpeechProcessingDismissDelegate?
 
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
@@ -163,6 +164,8 @@ class HistoryViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.speechProcessingDismissDelegate = self
+            controller.isFromTutorial = false
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
@@ -366,7 +369,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openTTTResult(_ idx: IndexPath){
         let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -544,5 +547,12 @@ extension HistoryViewController: TtsAlertControllerDelegate{
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.replaceItem(chatItemModel.chatItem!, chatItemModel.idxPath!.row)
         self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
+    }
+}
+
+extension HistoryViewController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        self.speechProDismissDelegateFromHistory?.showTutorial()
+
     }
 }

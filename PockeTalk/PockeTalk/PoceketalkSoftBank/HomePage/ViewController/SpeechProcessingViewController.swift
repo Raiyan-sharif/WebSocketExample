@@ -15,6 +15,10 @@ protocol SpeechProcessingVCDelegates: AnyObject{
     func searchCountry(text: String)
 }
 
+protocol SpeechProcessingDismissDelegate : class {
+    func showTutorial()
+}
+
 class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var exampleLabel: UILabel!
@@ -31,37 +35,39 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak private var pronunciationView: UIView!
     @IBOutlet weak private var pronunciationLable: UILabel!
-    
+
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
     weak var pronunciationDelegate : DismissPronunciationFromHistory?
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
-    
+
+    var isFromTutorial : Bool = false
+
     var languageHasUpdated = false
     private var socketData = [Data]()
     private let selectedLanguageIndex : Int = 8
     private var speechProcessingLanguageList = [SpeechProcessingLanguages]()
     private var speechProcessingVM : SpeechProcessingViewModeling!
-    
+
     private let lineSpacing : CGFloat = 0.5
     private let width : CGFloat = 100
     var homeMicTapTimeStamp : Int = 0
-    
+
     private var isSpeechProvided : Bool = false
     private var timer: Timer?
     private var totalTime = 0
-    
+
     private let transionDuration : CGFloat = 0.8
     private let transformation : CGFloat = 0.6
     private let leftImgDampiing : CGFloat = 0.10
     private let rightImgDamping : CGFloat = 0.05
     private let springVelocity : CGFloat = 6.0
-    
+
     var isFromPronunciationPractice: Bool = false
     var isHistoryPronunciation: Bool = false
     private var speechLangCode : String = "en"
     var countrySearchspeechLangCode: String = ""
-    
+
     private var service : MAAudioService?
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
     private var socketManager = SocketManager.sharedInstance
@@ -78,6 +84,7 @@ class SpeechProcessingViewController: BaseViewController{
     
     var pronunciationText : String = ""
     var pronunciationLanguageCode : String = ""
+    weak var speechProcessingDismissDelegate : SpeechProcessingDismissDelegate?
     
     private var isShowTutorial : Bool = false
     private let timeDifferenceToShowTutorial : Int = 1
@@ -289,10 +296,26 @@ class SpeechProcessingViewController: BaseViewController{
                         self.present(vc, animated: true, completion: nil)
                     }
                 } else if self.isShowTutorial == true {
-                    self.showTutorial()
+                    if(self.navigationController != nil){
+                        if self.isFromTutorial {
+                            self.navigationController?.popViewController(animated: false)
+                            self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                        } else {
+                            self.navigationController?.popViewController(animated: false)
+                        }
+                    }else{
+                        self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                    }
+                    self.speechProcessingDismissDelegate?.showTutorial()
                 } else {
                     if(self.navigationController != nil){
-                        self.navigationController?.popViewController(animated: true)
+                        if self.isFromTutorial {
+                            self.navigationController?.popViewController(animated: false)
+                            self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                        } else {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+
                     }else{
                         //self.dismiss(animated: true, completion: nil)
                         if let historyVC = self.presentingViewController  as? HistoryViewController{
@@ -310,7 +333,7 @@ class SpeechProcessingViewController: BaseViewController{
         }
         service?.startRecord()
     }
-    
+
     private func setExampleText() {
         if !isFromPronunciationPractice {
             DispatchQueue.main.asyncAfter(deadline: .now() + waitingTimeToShowExampleText) { [weak self]  in
@@ -520,11 +543,16 @@ class SpeechProcessingViewController: BaseViewController{
     
     private func loaderInvisible(){
         if(self.navigationController != nil){
-            self.navigationController?.popViewController(animated: true)
+            if isFromTutorial{
+                self.navigationController?.popViewController(animated: false)
+                self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
         }else{
             self.dismiss(animated: true, completion: nil)
-        }
     }
+ }
 }
 
 //MARK: - PronunciationResult
@@ -583,5 +611,8 @@ enum SpeechProcessingScreenOpeningPurpose{
     case PronunciationPractice
 }
 
-
-
+extension SpeechProcessingViewController : CurrentTSDelegate {
+    func passCurrentTSValue(currentTS: Int) {
+        self.homeMicTapTimeStamp = currentTS
+    }
+}

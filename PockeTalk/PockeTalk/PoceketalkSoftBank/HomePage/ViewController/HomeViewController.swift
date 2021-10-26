@@ -37,11 +37,12 @@ class HomeViewController: BaseViewController {
     private var favouriteItemCount = 0;
     private var swipeDown = UISwipeGestureRecognizer()
     private var selectedTouchView:UIView!
+    let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-    
+
     private lazy var topButton:UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "TopHistoryBtn"), for: .normal)
@@ -221,23 +222,22 @@ class HomeViewController: BaseViewController {
     private func dislayTutorialScreen () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(controller, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: controller)
+        navController.modalPresentationStyle = .overFullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        controller.navController = navController
+        controller.speechProDismissDelegateFromTutorial = self
+        self.present(navController, animated: true, completion: nil)
     }
     
     private func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
-                    let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.homeMicTapTimeStamp = currentTS
-                    controller.languageHasUpdated = self.languageHasUpdated
-                    controller.screenOpeningPurpose = .HomeSpeechProcessing
-                    self.navigationController?.pushViewController(controller, animated: true);
-                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessingFromHome) {
+                        self.displaySpeechProcessing()
+                    }
                 } else {
                     GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                     
@@ -247,26 +247,40 @@ class HomeViewController: BaseViewController {
             GlobalMethod.showNoInternetAlert()
         }
     }
-    
+
     @objc private func goToHistoryScreen () {
         let historyVC = HistoryViewController()
         historyVC.initDelegate(self)
         self.topCircleImgView.isHidden = true
         self.bottomCircleleImgView.isHidden = true
-        
         let navController = UINavigationController(rootViewController: historyVC)
         navController.modalPresentationStyle = .overFullScreen
         navController.modalTransitionStyle = .crossDissolve
         navController.navigationBar.isHidden = true
-        
         historyVC.navController = navController
+        historyVC.speechProDismissDelegateFromHistory = self
         self.present(navController, animated: true, completion: nil)
     }
+
+
+    func displaySpeechProcessing () {
+        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+        controller.homeMicTapTimeStamp = currentTS
+        controller.languageHasUpdated = self.languageHasUpdated
+        controller.screenOpeningPurpose = .HomeSpeechProcessing
+        controller.speechProcessingDismissDelegate = self
+        controller.isFromTutorial = true
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+
     
     @objc private func goToFavouriteScreen () {
         let fv = FavouriteViewController()
         fv.modalPresentationStyle = .fullScreen
         fv.modalTransitionStyle = .crossDissolve
+        fv.speechProDismissDelegateFromFav = self
         fv.initDelegate(self)
         self.navigationController?.present(fv, animated: true, completion: nil)
     }
@@ -399,5 +413,13 @@ extension HomeViewController : FavouriteViewControllerDelegates {
         updateFavouriteViews()
         historyItemCount = self.homeVM.getHistoryItemCount()
         updateHistoryViews()
+    }
+}
+
+extension HomeViewController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        DispatchQueue.main.async {
+            self.dislayTutorialScreen()
+        }
     }
 }
