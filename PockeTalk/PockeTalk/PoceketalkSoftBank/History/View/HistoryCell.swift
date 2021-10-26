@@ -109,8 +109,7 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
             let translationX = abs(translation.x)
             if translationX > childView.bounds.width/2 {
                 if velocity.x > 0 {
-                    favouriteLabel.textColor = .orange
-                    favImagView.tintColor = UIColor.orange
+                    favImagView.tintColor = .yellow
                     favView.backgroundColor = .orange
                     target!.center = CGPoint(x:self.bounds.maxX*2, y: viewCenter!.y)
                     self.favouriteItem?(self.center)
@@ -128,14 +127,16 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         default: break
         }
     }
+    
     func showAsFavourite(){
         favView.isHidden = false
-        favouriteLabel.textColor = .orange
-        favImagView.tintColor = UIColor.orange
+        favImagView.tintColor = .yellow
         favView.backgroundColor = .orange
     }
     func hideFavourite(){
         favView.isHidden = true
+        favImagView.tintColor = .white
+        favView.backgroundColor = .white
     }
 }
 
