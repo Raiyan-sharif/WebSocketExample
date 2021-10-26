@@ -614,10 +614,10 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBY-Wh-Idv">
-                                        <rect key="frame" x="344" y="10" width="20" height="40"/>
+                                        <rect key="frame" x="334" y="10" width="30" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="Ied-rb-UYJ"/>
-                                            <constraint firstAttribute="height" constant="40" id="kXi-pf-a4U"/>
+                                            <constraint firstAttribute="width" constant="30" id="Ied-rb-UYJ"/>
+                                            <constraint firstAttribute="width" secondItem="QBY-Wh-Idv" secondAttribute="height" multiplier="1:2" id="iTb-Ne-aDe"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="btn_menu"/>
                                         <connections>

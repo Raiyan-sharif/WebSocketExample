@@ -314,7 +314,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         if withPronounciation {
             self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
         }
-        self.itemsToShowOnContextMenu.append(AlertItems(title: "send_an_email".localiz(), imageName: "", menuType: .sendMail))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "share".localiz(), imageName: "", menuType: .sendMail))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
 

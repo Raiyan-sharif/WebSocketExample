@@ -77,7 +77,7 @@ class CameraTTSContextMenu: UIView {
     }
 
     func setUpDataInput() {
-        self.sendEmailButton.setTitle("send_an_email".localiz(), for: .normal)
+        self.sendEmailButton.setTitle("share".localiz(), for: .normal)
         self.cancelButton.setTitle("cancel".localiz(), for: .normal)
     }
 
