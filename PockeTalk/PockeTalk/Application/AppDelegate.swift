@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
         setUpinitialLaucnh()
+        Connectivity.shareInstance.startMonitorNetwork()
         return true
     }
 
@@ -81,10 +82,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        Connectivity.shareInstance.startMonitorNetwork()
         SocketManager.sharedInstance.connect()
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         SocketManager.sharedInstance.disconnect()
+        Connectivity.shareInstance.stopMonitorNetwork()
     }
 }
 

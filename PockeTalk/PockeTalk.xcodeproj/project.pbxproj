@@ -185,6 +185,7 @@
 		895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B2945272A86F60032C40C /* TutorialContainerViewController.swift */; };
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
 		897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */; };
+		89858F462727FD2000264686 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89858F452727FD2000264686 /* Connectivity.swift */; };
 		8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */ = {isa = PBXBuildFile; fileRef = 8988B7972721763000FBBA40 /* engine-tempo-value.json */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
@@ -419,6 +420,7 @@
 		895B2945272A86F60032C40C /* TutorialContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContainerViewController.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
+		89858F452727FD2000264686 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		8988B7972721763000FBBA40 /* engine-tempo-value.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "engine-tempo-value.json"; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1122,6 +1124,7 @@
 				8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */,
 				8732CADC26FC285400843BFE /* NetworkManager.swift */,
 				89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */,
+				89858F452727FD2000264686 /* Connectivity.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1926,6 +1929,7 @@
 				4AEF501126DFA0080052B6EB /* Extension+UIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
 				89495B2526F0A8C500CEA19D /* BlockDetection.swift in Sources */,
+				89858F462727FD2000264686 /* Connectivity.swift in Sources */,
 				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
 				500AAFC326E9B35900A3E4D9 /* langListCollectionViewCell.swift in Sources */,
 				892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */,

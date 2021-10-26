@@ -90,7 +90,8 @@ class SpeechProcessingViewController: BaseViewController{
     private let timeDifferenceToShowTutorial : Int = 1
     private let waitingTimeToShowExampleText : Double = 2.0
     private let waitngISFinalSecond:Int = 6
-    
+    var isNetworkConnected = true
+
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +113,7 @@ class SpeechProcessingViewController: BaseViewController{
         ///show example text
         setExampleText()
         PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
+        Connectivity.shareInstance.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -259,6 +261,10 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
+                if !self.isNetworkConnected{
+                    self.loaderInvisible()
+                    return
+                }
                 self.socketManager.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: {
                     DispatchQueue.main.async  { [weak self] in
                         guard let `self` = self else { return }
@@ -368,6 +374,10 @@ class SpeechProcessingViewController: BaseViewController{
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
             if isFinal{
+                if !self.isNetworkConnected{
+                    self.loaderInvisible()
+                    return
+                }
                 self.timer?.invalidate()
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
@@ -619,5 +629,11 @@ enum SpeechProcessingScreenOpeningPurpose{
 extension SpeechProcessingViewController : CurrentTSDelegate {
     func passCurrentTSValue(currentTS: Int) {
         self.homeMicTapTimeStamp = currentTS
+    }
+}
+
+extension SpeechProcessingViewController : ConnectivityDelegate{
+    func checkInternetConnection(_ state: ConnectionState, isLowDataMode: Bool) {
+        isNetworkConnected = state == .connected
     }
 }
