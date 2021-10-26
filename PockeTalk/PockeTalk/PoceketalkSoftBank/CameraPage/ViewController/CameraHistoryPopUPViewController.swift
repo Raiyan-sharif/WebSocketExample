@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol CameraHistoryPopUPDelegates {
+    func openImageFromHistoryPopUp(index: Int)
+    func shareImageFromHistoryPopUp(id: Int64)
+    func deleteImageFromFistoryPopUp(index: Int, id: Int64)
+}
+
 class CameraHistoryPopUPViewController: BaseViewController {
-    
     
     @IBOutlet weak var openBtnContainerView: UIView!
     @IBOutlet weak var shareBtnContainerView: UIView!
@@ -18,6 +23,11 @@ class CameraHistoryPopUPViewController: BaseViewController {
     @IBOutlet weak var stackView: UIStackView!
     let viewAlpha : CGFloat = 0.6
     
+    let cameraHistoryDBModel = CameraHistoryDBModel()
+    var delegate: CameraHistoryPopUPDelegates?
+    
+    var id = Int64()
+    var index = Int()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +35,8 @@ class CameraHistoryPopUPViewController: BaseViewController {
     }
     
     func setUpViews() {
+        
+        PrintUtility.printLog(tag: "CameraHistoryPopUPViewController", text: "id: \(id)")
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(viewAlpha)
         
@@ -48,21 +60,27 @@ class CameraHistoryPopUPViewController: BaseViewController {
         cancelBtnContainerView.addGestureRecognizer(tapForCancel)
     }
     
+    
     @objc func openButtonEventHandler(sender:UITapGestureRecognizer) {
         self.dismiss(animated: true)
+        self.delegate?.openImageFromHistoryPopUp(index: index)
     }
 
     @objc func shareButtonEventHandler(sender:UITapGestureRecognizer) {
         self.dismiss(animated: true)
+        self.delegate?.shareImageFromHistoryPopUp(id: id)
     }
 
     @objc func deleteButtonEventHandler(sender:UITapGestureRecognizer) {
+
+        try? cameraHistoryDBModel.delete(item: CameraEntity(id: id, detectedData: nil, translatedData: nil, image: nil))
         self.dismiss(animated: true)
+        self.delegate?.deleteImageFromFistoryPopUp(index: index, id: id)
+        
     }
     
     @objc func cancelButtonEventHandler(sender:UITapGestureRecognizer) {
         self.dismiss(animated: true)
     }
 
-    
 }

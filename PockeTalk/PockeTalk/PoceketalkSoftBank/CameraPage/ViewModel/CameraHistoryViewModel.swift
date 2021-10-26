@@ -56,7 +56,57 @@ class CameraHistoryViewModel: BaseModel {
         }
     }
     
+    func getIDWiseTranslatedAndDetectedData(id: Int64)  -> String{
+        
+        var sharedText = ""
+        var sharedTranslatedtext = ""
+        var sharedDetectedText = ""
+        let translatedData: TranslatedTextJSONModel? = CameraHistoryDBModel().getTranslatedData(id: id)
+        let detectedData: DetectedJSON? = CameraHistoryDBModel().getDetectedData(id: id)
+        
+        if let detectedData = detectedData, let translatedData = translatedData {
+            
+            let data = translatedData
+            let lineData = data.line
+            let blockData = data.block
+            if lineData!.translatedText.count > 0 {
+                
+                let detectedData = detectedData.line?.blocks
+                for each in lineData!.translatedText{
+                    sharedTranslatedtext = sharedTranslatedtext + each + "\n"
+                }
+                for each in detectedData!{
+                    sharedDetectedText = sharedDetectedText + each.text + "\n"
+                }
+                
+                sharedText = "Translated language: \(getLanguageTitle(lanCode: lineData!.languageCodeTo))\n" + "\(sharedTranslatedtext) \n" +
+                "Original language: \(getLanguageTitle(lanCode: detectedData![0].detectedLanguage))\n" + "\(sharedDetectedText)"
+                
+            } else if (blockData!.translatedText.count>0){
+                let translatedData = data.block
+                let detectedData = detectedData.block?.blocks
+                for each in translatedData!.translatedText{
+                    sharedTranslatedtext = sharedTranslatedtext + each + "\n\n"
+                }
+                
+                for each in detectedData! {
+                    sharedDetectedText = sharedDetectedText + each.text + "\n"
+                }
+                
+                sharedText = "Translated language: \(getLanguageTitle(lanCode: translatedData!.languageCodeTo))\n" + "\(sharedTranslatedtext) \n\n" +
+                "Original language: \(getLanguageTitle(lanCode: detectedData![0].detectedLanguage))\n" + "\(sharedDetectedText)"
+            }
+        }
+        
+        return sharedText
+    }
     
+    func getLanguageTitle(lanCode: String)  -> String {
+        let lan = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: lanCode)
+        
+        return lan!.sysLangName
+    }
+
 }
 
 

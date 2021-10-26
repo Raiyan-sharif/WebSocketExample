@@ -14,6 +14,7 @@ class CameraHistoryViewController: BaseViewController {
     private let rightSpecing:CGFloat = 16
     private let totalSub:CGFloat = 48
     
+    let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
     private let viewModel = CameraHistoryViewModel()
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -71,10 +72,14 @@ class CameraHistoryViewController: BaseViewController {
     @objc func longTappedEvent(recognizer: UILongPressGestureRecognizer)  {
         if let indexPath = self.collectionView?.indexPathForItem(at: recognizer.location(in: self.collectionView)) {
             
-            let cell = self.collectionView?.cellForItem(at: indexPath)
-            
-            let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+            //let cell = self.collectionView?.cellForItem(at: indexPath)
+
             if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryPopUPViewController.self)) as? CameraHistoryPopUPViewController {
+                if let id = self.viewModel.cameraHistoryImages[indexPath.item].dbID {
+                    vc.id = id
+                }
+                vc.index = indexPath.item
+                vc.delegate = self
                 vc.modalPresentationStyle = .overFullScreen
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
@@ -102,9 +107,7 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        
+                
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
             if let image = self.viewModel.cameraHistoryImages[indexPath.item].image {
                 vc.image = image
@@ -128,6 +131,41 @@ extension CameraHistoryViewController: CameraHistoryViewModelDelegates {
             collectionView.reloadData()
         }
     }
+}
+
+extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
+    func deleteImageFromFistoryPopUp(index: Int, id: Int64) {
+        if (self.viewModel.cameraHistoryImages[index].dbID == id) {
+            self.viewModel.cameraHistoryImages.remove(at: index)
+            self.collectionView.reloadData()
+        }
+    }
     
     
+    func openImageFromHistoryPopUp(index: Int) {
+        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+            if let image = self.viewModel.cameraHistoryImages[index].image {
+                vc.image = image
+                vc.fromHistoryVC = true
+                vc.cameraHistoryImageIndex = index
+                if let id = self.viewModel.cameraHistoryImages[index].dbID {
+                    vc.historyID = id
+                }
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
+    }
+    
+    func shareImageFromHistoryPopUp(id: Int64) {
+        
+        let text = self.viewModel.getIDWiseTranslatedAndDetectedData(id: id)
+        let dataToSend = [text]
+
+        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+
 }
