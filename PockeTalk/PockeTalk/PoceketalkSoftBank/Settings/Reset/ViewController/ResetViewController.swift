@@ -66,6 +66,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
+                self.showSuccessAlert(title: "history_cleared".localiz())
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showTranslationHistoryDialog()
@@ -77,6 +78,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_camera_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 _ = try? CameraHistoryDBModel().deleteAll()
+                self.showSuccessAlert(title: "camera_history_cleared".localiz())
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showCameraTranslationHistoryDialog()
@@ -88,6 +90,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
+                self.showSuccessAlert(title: "favorite_history_cleared".localiz())
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
@@ -128,6 +131,12 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                  tableView.deselectRow(at: indexPath, animated: true)
             }
         }
+    }
+
+    func showSuccessAlert(title: String){
+        let successAlert = CustomAlertViewModel()
+        let dialog = successAlert.alertDialogWithoutTitleWithOkButton(message: title)
+        self.present(dialog, animated: true, completion: nil)
     }
 
 }

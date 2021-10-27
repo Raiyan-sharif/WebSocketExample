@@ -61,3 +61,6 @@
 "no_stt_msg" = "Language is not supported";
 "open" = "Open";
 "delete_from_Camera_History" = "Delete";
+"history_cleared" = "History has been cleared.";
+"camera_history_cleared" = "Camera translation history has been cleared.";
+"favorite_history_cleared" = "Favorite has been deleted.";
