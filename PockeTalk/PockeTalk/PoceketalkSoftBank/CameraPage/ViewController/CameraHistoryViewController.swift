@@ -138,6 +138,9 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
         if (self.viewModel.cameraHistoryImages[index].dbID == id) {
             self.viewModel.cameraHistoryImages.remove(at: index)
             self.collectionView.reloadData()
+            if self.viewModel.cameraHistoryImages.count == 0 {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     

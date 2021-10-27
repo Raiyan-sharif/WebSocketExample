@@ -59,3 +59,5 @@
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "わかっ";
 "no_stt_msg" = "言語はサポートされていません";
+"open" = "開ける";
+"delete_from_Camera_History" = "消去";

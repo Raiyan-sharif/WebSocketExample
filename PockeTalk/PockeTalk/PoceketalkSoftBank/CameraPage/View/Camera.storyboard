@@ -135,10 +135,11 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Kl6-5d-E11">
-                                <rect key="frame" x="338" y="70" width="60" height="70"/>
+                                <rect key="frame" x="348" y="70" width="50" height="60"/>
+                                <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="7Hz-be-mSj"/>
-                                    <constraint firstAttribute="height" constant="70" id="Ld1-ya-Ymd"/>
+                                    <constraint firstAttribute="width" constant="50" id="7Hz-be-mSj"/>
+                                    <constraint firstAttribute="height" constant="60" id="Ld1-ya-Ymd"/>
                                 </constraints>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-Xi-qgB">
@@ -687,10 +688,14 @@
                     </view>
                     <connections>
                         <outlet property="cancelBtnContainerView" destination="HAr-ef-4tu" id="Iju-H1-Oyh"/>
+                        <outlet property="cancelLabel" destination="a0i-lw-A8K" id="75h-jR-TE8"/>
                         <outlet property="containerView" destination="ya9-Ud-iRB" id="zdL-Qa-FUa"/>
                         <outlet property="deleteBtnContainerView" destination="w8I-fe-XqL" id="2Qv-Q7-OXg"/>
+                        <outlet property="deleteLabel" destination="uzS-Q4-z1k" id="wPl-bQ-hRH"/>
                         <outlet property="openBtnContainerView" destination="O46-w5-Ill" id="iPa-ae-Or3"/>
+                        <outlet property="openLabel" destination="2yh-WK-FSO" id="kVO-fR-HcZ"/>
                         <outlet property="shareBtnContainerView" destination="vBG-cb-4gc" id="fnH-dH-Xy9"/>
+                        <outlet property="shareLabel" destination="Bx1-eJ-VWc" id="zZ6-Mn-sin"/>
                         <outlet property="stackView" destination="hFB-rC-uXr" id="qjG-di-qD2"/>
                     </connections>
                 </viewController>
@@ -801,6 +806,9 @@
         <image name="flash" width="15" height="23"/>
         <image name="hamburger_menu_icon" width="45" height="45"/>
         <image name="icon_menu_camera" width="45" height="45"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

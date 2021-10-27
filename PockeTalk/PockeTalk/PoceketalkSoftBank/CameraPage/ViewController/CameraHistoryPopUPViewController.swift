@@ -21,6 +21,12 @@ class CameraHistoryPopUPViewController: BaseViewController {
     @IBOutlet weak var cancelBtnContainerView: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var shareLabel: UILabel!
+    @IBOutlet weak var deleteLabel: UILabel!
+    @IBOutlet weak var cancelLabel: UILabel!
+
+
     let viewAlpha : CGFloat = 0.6
     
     let cameraHistoryDBModel = CameraHistoryDBModel()
@@ -35,14 +41,11 @@ class CameraHistoryPopUPViewController: BaseViewController {
     }
     
     func setUpViews() {
-        
-        PrintUtility.printLog(tag: "CameraHistoryPopUPViewController", text: "id: \(id)")
-        
+        setUpLocalizationString()
         self.view.backgroundColor = UIColor.black.withAlphaComponent(viewAlpha)
-        
         containerView.layer.cornerRadius = 15.0
         self.containerView.layer.masksToBounds = true
-
+        
         let tapForOpen = UITapGestureRecognizer(target: self, action: #selector(self.openButtonEventHandler(sender:)))
         openBtnContainerView.isUserInteractionEnabled = true
         openBtnContainerView.addGestureRecognizer(tapForOpen)
@@ -81,6 +84,13 @@ class CameraHistoryPopUPViewController: BaseViewController {
     
     @objc func cancelButtonEventHandler(sender:UITapGestureRecognizer) {
         self.dismiss(animated: true)
+    }
+    
+    func setUpLocalizationString() {
+        openLabel.text = "open".localiz()
+        shareLabel.text = "share".localiz()
+        deleteLabel.text = "delete_from_Camera_History".localiz()
+        cancelLabel.text =  "cancel".localiz()
     }
 
 }

@@ -57,6 +57,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let removeTime : Double = 0.5
     let zoomLabelBorderWidth : CGFloat = 2.0
     
+    /// Camera History
+    private let cameraHistoryViewModel = CameraHistoryViewModel()
+    
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
@@ -155,6 +158,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     func setUPViews() {
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
         
@@ -173,9 +177,17 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.cameraHistoryViewModel.fetchCameraHistoryImages()
+        if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
+            cameraHistoryImageView.isHidden = true
+        } else {
+            cameraHistoryImageView.isHidden = false
+            cameraHistoryImageView.image = self.cameraHistoryViewModel.cameraHistoryImages[0].image
+        }
+        
         sessionQueue.async { [unowned self] in
             if self.sessionSetupSucceeds {
                 self.session.startRunning()

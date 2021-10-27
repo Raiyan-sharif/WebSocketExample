@@ -59,3 +59,5 @@
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "OK";
 "no_stt_msg" = "Language is not supported";
+"open" = "Open";
+"delete_from_Camera_History" = "Delete";
