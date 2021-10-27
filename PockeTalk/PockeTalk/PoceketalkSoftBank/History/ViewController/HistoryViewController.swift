@@ -50,11 +50,6 @@ class HistoryViewController: BaseViewController {
         let view = UIView()
         return view
     }()
-    
-    private lazy var topView:UIView = {
-        let view = UIView()
-        return view
-    }()
 
     override func loadView() {
         view = UIView()
@@ -116,7 +111,6 @@ class HistoryViewController: BaseViewController {
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
         self.view.addSubview(bottmView)
-        self.view.addSubview(topView)
         let window = UIApplication.shared.windows.first
         
         bottmView.translatesAutoresizingMaskIntoConstraints = false
@@ -126,13 +120,6 @@ class HistoryViewController: BaseViewController {
         bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottmView.clipsToBounds =  true
         bottmView.backgroundColor = UIColor.black
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        topView.heightAnchor.constraint(equalToConstant: (window?.safeAreaInsets.top ?? 20) + 55).isActive = true
-        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topView.clipsToBounds =  true
-        topView.backgroundColor = UIColor.black
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -144,11 +131,9 @@ class HistoryViewController: BaseViewController {
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
         collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
-//        collectionView.bottomAnchor.constraint(equalTo: bottmView)
         collectionView.alpha = 0.0
         
-        self.view.addSubview(btnMenu)
-        self.view.addSubview(cameraButton)
+        self.view.addSubview(backBtn)
         
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
@@ -156,6 +141,17 @@ class HistoryViewController: BaseViewController {
     }
 
 
+    private var backBtn:UIButton!{
+            guard let window = UIApplication.shared.keyWindow else {return nil}
+            let topPadding = window.safeAreaInsets.top
+            let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+            okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+            okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+            return okBtn
+    }
+    @objc func actionBack () {
+            self.dismissHistory(animated: true, completion: nil )
+    }
     fileprivate func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
@@ -457,12 +453,12 @@ extension HistoryViewController:HistoryLayoutDelegate{
         let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         let count = self.actualNumberOfLines(width: SIZE_WIDTH - 20, text: historyModel.textTranslated!, font: font)
         if(count == 1){
-            return 20 + fromHeight + 40 + toHeight + 40
-        }else if(count == 2){
             return 20 + fromHeight + 60 + toHeight + 40
+        }else if(count == 2){
+            return 20 + fromHeight + 100 + toHeight + 40
         }
         PrintUtility.printLog(tag: "HistoryViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
-        return 20 + fromHeight + 100 + toHeight + 40
+        return 20 + fromHeight + 20 + 120 + toHeight + 40
     }
 }
 
