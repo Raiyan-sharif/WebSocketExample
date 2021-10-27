@@ -80,12 +80,10 @@ class ITTServerViewModel: BaseModel {
             GoogleCloudOCR().detect(from: image) { ocrResult in
                 guard let ocrResponse = ocrResult else {
                     self.loaderdelegate?.hideLoader()
-                    let alertService = CustomAlertViewModel()
-                    let alert = alertService.alertDialogWithoutTitleWithActionButton(message:"Did not recognize any text in this image", buttonTitle: "clear".localiz()) {
-                        //self.loaderdelegate?.hideLoader()
-                    }
+                    PrintUtility.printLog(tag: self.TAG, text: "Network error")
+                    let error = NSError(domain: "Camera", code: 001, userInfo: [ NSLocalizedDescriptionKey: "error_network"])
+                    completion(nil, error as Error)
                     return
-                    //fatalError("Did not recognize any text in this image")
                 }
                 
                 //PrintUtility.printLog(tag: "OCR Response: ", text: "\(ocrResponse)")
@@ -110,11 +108,9 @@ class ITTServerViewModel: BaseModel {
                     //self.saveDataOnDatabase()
                 } else {
                     self.loaderdelegate?.hideLoader()
-                    PrintUtility.printLog(tag: "", text: "No text detected from image.")
-                    let alertService = CustomAlertViewModel()
-                    let alert = alertService.alertDialogWithoutTitleWithActionButton(message:"Did not recognize any text in this image", buttonTitle: "clear".localiz()) {
-                        
-                    }
+                    PrintUtility.printLog(tag: self.TAG, text: "No text detected from image.")
+                    let error = NSError(domain: "Camera", code: 001, userInfo: [ NSLocalizedDescriptionKey: "error_no_text_detected"])
+                    completion(nil, error as Error)
                 }
                 
                 
@@ -221,56 +217,61 @@ class ITTServerViewModel: BaseModel {
                 let sourceLan = block.detectedLanguage
                 let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
                 
-                TTTGoogle.translate(source: sourceLan!, target: targetLan!, text: detectedText!) { [self] text in
-                    
-                    if type == blockMode {
-                        blockTranslatedText.append(text!)
-                    } else {
-                        lineTranslatedText.append(text!)
-                    }
-                    
-                    if index == arrayBlocks.count-1 {
+                if Reachability.isConnectedToNetwork() {
+                    TTTGoogle.translate(source: sourceLan!, target: targetLan!, text: detectedText!) { [self] text in
                         
-                        PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
-                        if type == "blockMode" {
-                            mBlockData = BlockData(translatedText: blockTranslatedText, languageCodeTo: targetLan!)
-                            self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.blockTranslatedText, completion: {[weak self] textView in
-                                self?.blockModeTextViewList = textView
-                            })
+                        if type == blockMode {
+                            blockTranslatedText.append(text!)
                         } else {
-                            mLineData = BlockData(translatedText: lineTranslatedText, languageCodeTo: targetLan!)
-                            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
-                                self.lineModetTextViewList = textView
-                                self.loaderdelegate?.hideLoader()
-                            })
-                            
+                            lineTranslatedText.append(text!)
                         }
-                        if isFromHistoryVC {
-                            PrintUtility.printLog(tag: "index", text: "\(historyID)")
-                            updateDataOnDatabase(id: historyID)
-                        } else {
-                            self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
-                            let encoder = JSONEncoder()
-                            encoder.outputFormatting = .prettyPrinted
-                            let data = try? encoder.encode(self.mTranslatedJSON)
-                            PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
-                            PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
+                        
+                        if index == arrayBlocks.count-1 {
                             
-                            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
-                                if entities.contains(where: { $0.id == historyID }) {
-                                    updateDataOnDatabase(id: historyID)
-                                } else {
-                                    self.saveDataOnDatabase()
-                                }
-
+                            PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
+                            if type == "blockMode" {
+                                mBlockData = BlockData(translatedText: blockTranslatedText, languageCodeTo: targetLan!)
+                                self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.blockTranslatedText, completion: {[weak self] textView in
+                                    self?.blockModeTextViewList = textView
+                                })
+                            } else {
+                                mLineData = BlockData(translatedText: lineTranslatedText, languageCodeTo: targetLan!)
+                                self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
+                                    self.lineModetTextViewList = textView
+                                    self.loaderdelegate?.hideLoader()
+                                })
+                                
                             }
+                            if isFromHistoryVC {
+                                PrintUtility.printLog(tag: "index", text: "\(historyID)")
+                                updateDataOnDatabase(id: historyID)
+                            } else {
+                                self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
+                                let encoder = JSONEncoder()
+                                encoder.outputFormatting = .prettyPrinted
+                                let data = try? encoder.encode(self.mTranslatedJSON)
+                                PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
+                                PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
+                                
+                                if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+                                    if entities.contains(where: { $0.id == historyID }) {
+                                        updateDataOnDatabase(id: historyID)
+                                    } else {
+                                        self.saveDataOnDatabase()
+                                    }
+
+                                }
+                            }
+                            
+                        } else {
+                            PrintUtility.printLog(tag: "completion ", text: " \(index) false")
                         }
-                        
-                    } else {
-                        PrintUtility.printLog(tag: "completion ", text: " \(index) false")
+                        self.semaphore.signal()
                     }
-                    self.semaphore.signal()
+                } else {
+                    GlobalMethod.showNoInternetAlert()
                 }
+                
                 self.semaphore.wait()
             }
             

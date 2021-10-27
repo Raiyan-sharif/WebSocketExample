@@ -162,12 +162,26 @@ class CaptureImageProcessVC: BaseViewController {
         self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
             
             if error != nil {
+                if error?.localizedDescription == "error_no_text_detected"{
+                    PrintUtility.printLog(tag: self!.TAG, text: "Error message: \(error!.localizedDescription)")
+                    self!.showErrorAlert(message: "error_no_text_detected".localiz())
+                }
+                
+                if error?.localizedDescription == "error_network"{
+                    PrintUtility.printLog(tag: self!.TAG, text: "Error message: \(error!.localizedDescription)")
+                    self!.showErrorAlert(message: "error_network".localiz())
+                }
+                
                 PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
             } else {
                 if let detectedData = data {
-                    let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
-                    PrintUtility.printLog(tag: "previously selected mode: ", text: "\(String(describing: modeSwitchTypes))")
-                    self?.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self!.fromHistoryVC)
+                    if Reachability.isConnectedToNetwork() {
+                        let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
+                        PrintUtility.printLog(tag: "previously selected mode: ", text: "\(String(describing: modeSwitchTypes))")
+                        self?.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self!.fromHistoryVC)
+                    } else {
+                        GlobalMethod.showNoInternetAlert()
+                    }
                 }
             }
         }
@@ -319,6 +333,15 @@ class CaptureImageProcessVC: BaseViewController {
         self.rate = item.rate
         PrintUtility.printLog(tag: "getTtsValue ", text: "voice: \(voice) rate: \(rate)" )
 
+    }
+    
+    func showErrorAlert(message: String){
+        let alertService = CustomAlertViewModel()
+        let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
@@ -535,11 +558,16 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     }
                     updateView()
                 } else {
-                    activity.showLoading(view: self.view)
-                    if let detectedData = self.iTTServerViewModel.detectedJSON {
-                        self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
-                        UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                    if Reachability.isConnectedToNetwork() {
+                        activity.showLoading(view: self.view)
+                        if let detectedData = self.iTTServerViewModel.detectedJSON {
+                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
+                            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                        }
+                    } else {
+                        GlobalMethod.showNoInternetAlert()
                     }
+                    
                 }
             }
         } else {
@@ -552,11 +580,16 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     }
                     updateView()
                 } else {
-                    activity.showLoading(view: self.view)
-                    if let detectedData = self.iTTServerViewModel.detectedJSON {
-                        self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
-                        UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                    if Reachability.isConnectedToNetwork() {
+                        activity.showLoading(view: self.view)
+                        if let detectedData = self.iTTServerViewModel.detectedJSON {
+                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
+                            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                        }
+                    } else {
+                        GlobalMethod.showNoInternetAlert()
                     }
+                    
                 }
             }
         }

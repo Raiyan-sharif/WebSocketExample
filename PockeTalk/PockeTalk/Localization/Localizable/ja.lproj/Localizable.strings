@@ -64,3 +64,5 @@
 "history_cleared" = "削除しました";
 "camera_history_cleared" = "カメラ翻訳の履歴を削除しました。";
 "favorite_history_cleared" = "削除しました。";
+"error_no_text_detected" = "画像からテキストが検出されませんでした";
+"error_network" = "ネットワークエラー。";

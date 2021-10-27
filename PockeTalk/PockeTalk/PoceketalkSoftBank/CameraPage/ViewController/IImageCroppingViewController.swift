@@ -327,13 +327,16 @@ class ImageCroppingViewController: BaseViewController {
             
         }
         
-        
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
-            vc.image = croppedImage
-            vc.imageHeight = imageFrameHeight
-            vc.imageWidth = imageFrameWidth
-            self.navigationController?.pushViewController(vc, animated: true)
+        if Reachability.isConnectedToNetwork() {
+            let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+            if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+                vc.image = croppedImage
+                vc.imageHeight = imageFrameHeight
+                vc.imageWidth = imageFrameWidth
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            GlobalMethod.showNoInternetAlert()
         }
     }
     
