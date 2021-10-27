@@ -21,9 +21,9 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
 
     @IBAction func actionBack(_ sender: UIButton) {
         let transition = CATransition()
-                    transition.duration = 0.5
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromRight
+        transition.duration = kSettingsScreenTransitionDuration
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         if(self.navigationController == nil){
