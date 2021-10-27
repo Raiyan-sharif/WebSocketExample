@@ -19,8 +19,6 @@ class ImageCroppingViewController: BaseViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var cropButton: UIButton!
     @IBOutlet weak var centeredView: UIView!
-    @IBOutlet weak var menuButton: UIButton!
-    
     var imageFrameWidth = CGFloat()
     var imageFrameHeight = CGFloat()
     
@@ -303,13 +301,6 @@ class ImageCroppingViewController: BaseViewController {
                                                left: offx,
                                                bottom: offy-(bottomPadding ),
                                                right: offx)
-    }
-
-    @IBAction func menuTapAction(_ sender: UIButton) {
-        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
-        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
-        }
     }
 
     @IBAction func cancelButtonEventListener(_ sender: Any) {

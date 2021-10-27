@@ -26,7 +26,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
     
-    @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
     @IBOutlet weak var fromLangLabel: MarqueeLabel!
     var activeCamera: AVCaptureDevice?
@@ -147,18 +146,16 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         PrintUtility.printLog(tag: "Session", text: "\(session.isInterrupted)")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
     
-    @IBAction func menuTapAction(_ sender: UIButton) {
-        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
-        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
-        }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
-    func setUPViews() {
 
+    func setUPViews() {
+        changeStatusBarColor()
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
         
@@ -168,6 +165,22 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         self.zoomLevel.layer.borderWidth = zoomLabelBorderWidth
         self.zoomLevel.layer.borderColor = UIColor.white.cgColor
     }
+    
+    func changeStatusBarColor() {
+        if #available(iOS 13.0, *) {
+                let app = UIApplication.shared
+                let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+
+                let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
+                statusbarView.backgroundColor = UIColor.black
+                view.addSubview(statusbarView)
+            } else {
+                let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+                statusBar?.backgroundColor = UIColor.red
+            }
+
+    }
+    
     
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)

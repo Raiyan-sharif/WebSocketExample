@@ -18,6 +18,13 @@ class CameraHistoryViewController: BaseViewController {
     private let viewModel = CameraHistoryViewModel()
     @IBOutlet weak var collectionView: UICollectionView!
     
+    lazy var backButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "btn_back"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonEventListener(_:)), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +38,25 @@ class CameraHistoryViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        if let view = UIApplication.shared.keyWindow {
+            view.addSubview(backButton)
+            //setupBackButton()
+            backButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
+                backButton.heightAnchor.constraint(equalToConstant: 35),
+                backButton.widthAnchor.constraint(equalToConstant: 35)
+            ])
+            backButton.layer.cornerRadius = 17.5
+            backButton.layer.masksToBounds = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(true)
+        removeFloatingButton()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -61,7 +83,7 @@ class CameraHistoryViewController: BaseViewController {
         
     }
     
-    @IBAction func backButtonEventListener(_ sender: Any) {
+    @objc func backButtonEventListener(_ button: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -122,6 +144,14 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
         }
 
     }
+    
+    func removeFloatingButton() {
+
+        if let backButtonView = UIApplication.shared.keyWindow, backButton.isDescendant(of: backButtonView) {
+            backButton.removeFromSuperview()
+        }
+    }
+
     
 }
 

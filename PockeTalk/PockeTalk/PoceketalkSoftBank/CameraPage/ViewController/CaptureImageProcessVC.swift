@@ -10,7 +10,6 @@ class CaptureImageProcessVC: BaseViewController {
     
     private let TAG = "\(CaptureImageProcessVC.self)"
     
-    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cameraImageView: UIImageView!
@@ -140,8 +139,6 @@ class CaptureImageProcessVC: BaseViewController {
         let widthInPoints2 = image.size.width
         PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
         
-        cameraImageView.backgroundColor = .black
-        
         if imageWidth>self.view.frame.width {
             imageWidth = self.view.frame.width
         }
@@ -152,7 +149,7 @@ class CaptureImageProcessVC: BaseViewController {
         
         imageView.frame = CGRect(x: 0, y: 0, width: imageWidth  , height:  imageHeight)
         cameraImageView.addSubview(imageView)
-        imageView.center = cameraImageView.center
+        setUpImageViewConstraint()
         
         //self.cameraImageView.contentMode = .scaleAspectFit
         
@@ -180,7 +177,7 @@ class CaptureImageProcessVC: BaseViewController {
         imageView.image = image
         imageView.frame = CGRect(x: 0, y: 0, width: image.size.width  , height:  image.size.height)
         cameraImageView.addSubview(imageView)
-        imageView.center = cameraImageView.center
+        setUpImageViewConstraint()
         self.iTTServerViewModel.capturedImage = image
         
         PrintUtility.printLog(tag: "row index", text: "\(historyID)")
@@ -223,7 +220,6 @@ class CaptureImageProcessVC: BaseViewController {
             PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
         }
     }
-    
     
     @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
         let view = sender.view
@@ -398,6 +394,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             view.addSubview(modeSwitchButton)
             setupModeSwitchButton()
         }
+        backButton.isUserInteractionEnabled = true
         
     }
     
@@ -484,12 +481,18 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         return newImage!
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(backButton)
-            setupBackButton()
+            backButton.isUserInteractionEnabled = false
+            setupBackButton(view)
         }
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -559,14 +562,6 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         }
     }
     
-    
-    @IBAction func menuAction(_ sender: UIButton) {
-        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
-        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
-        }
-    }
-    
     @objc func backButtonEventListener(_ button: UIButton) {
         if fromHistoryVC {
             self.navigationController?.popViewController(animated: true)
@@ -576,11 +571,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         }
     }
     
-    
     func setupModeSwitchButton() {
         NSLayoutConstraint.activate([
             modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            modeSwitchButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
+            modeSwitchButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
             modeSwitchButton.heightAnchor.constraint(equalToConstant: 35),
             modeSwitchButton.widthAnchor.constraint(equalToConstant: 35)
         ])
@@ -588,16 +582,25 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         modeSwitchButton.layer.masksToBounds = true
     }
     
-    func setupBackButton() {
+    func setupBackButton(_ view: UIView) {
+        backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            backButton.topAnchor.constraint(equalTo: topBarView.bottomAnchor, constant:0),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
             backButton.heightAnchor.constraint(equalToConstant: 35),
             backButton.widthAnchor.constraint(equalToConstant: 35)
         ])
         backButton.layer.cornerRadius = 17.5
         backButton.layer.masksToBounds = true
     }
+    
+    func setUpImageViewConstraint() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let xConstraint = NSLayoutConstraint(item: imageView, attribute: .centerX, relatedBy: .equal, toItem: self.cameraImageView, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self.cameraImageView, attribute: .centerY, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([xConstraint, yConstraint])
+    }
+    
 }
 
 extension CaptureImageProcessVC: UIScrollViewDelegate {
@@ -629,7 +632,7 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
         self.stopTTS()
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(backButton)
-            setupBackButton()
+            setupBackButton(view)
         }
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(modeSwitchButton)
