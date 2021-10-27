@@ -163,7 +163,13 @@ class HomeViewController: BaseViewController {
     @IBAction private func menuAction(_ sender: UIButton) {
         let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
         if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
+            let transition = CATransition()
+            transition.duration = kSettingsScreenTransitionDuration
+            transition.type = CATransitionType.moveIn
+            transition.subtype = CATransitionSubtype.fromLeft
+            transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.pushViewController(settinsViewController, animated: false)
         }
     }
     
