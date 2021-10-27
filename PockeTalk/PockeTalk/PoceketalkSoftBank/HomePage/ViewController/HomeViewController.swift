@@ -30,7 +30,7 @@ class HomeViewController: BaseViewController {
     private var animationCounter : Int = 0
     private var deviceLanguage : String = ""
     private let toastVisibleTime : Double = 2.0
-    private let animationDuration : TimeInterval = 1.0
+    private let animationDuration : TimeInterval = 0.1
     private let width : CGFloat = 100
     private var selectedTab = 0
     private var historyItemCount = 0
@@ -287,6 +287,7 @@ class HomeViewController: BaseViewController {
     
     //MARK: - Utils
     private func setLanguageDirection(){
+        self.languageChangedDirectionButton.isUserInteractionEnabled = false
         let isArrowUp = LanguageSelectionManager.shared.isArrowUp
         PrintUtility.printLog(tag: TAG, text: "setLanguageDirection isArrowUp \(isArrowUp)")
         if (isArrowUp){
@@ -304,10 +305,12 @@ class HomeViewController: BaseViewController {
                           duration: animationDuration,
                           options: animationOption,
                           animations: {
-            transitionToImageView.isHidden = false
-            transitionFromImageView.isHidden = true
-            transitionToImageView.image = UIImage(named: imageName)
-        }, completion: nil)
+                            transitionToImageView.isHidden = false
+                            transitionFromImageView.isHidden = true
+                            transitionToImageView.image = UIImage(named: imageName)
+                          }, completion: {_ in
+                            self.languageChangedDirectionButton.isUserInteractionEnabled = true
+                          })
     }
     
     
