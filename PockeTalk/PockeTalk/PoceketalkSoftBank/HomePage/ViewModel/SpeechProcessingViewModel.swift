@@ -10,6 +10,8 @@ protocol SpeechProcessingViewModeling {
     var getSST_Text:Bindable<String>{ get }
     var getTTT_Text:String{ get }
     var isFinal:Bindable<Bool> { get }
+    var getSrcLang_Text:String{ get }
+    var getDestLang_Text:String{ get }
     func getTextFrame() -> String
     func getSpeechLanguageInfoByCode(langCode: String) -> SpeechProcessingLanguages?
     func setTextFromScoket(value:String)
@@ -33,6 +35,10 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
 
     var getTTT_Text: String = ""
 
+    var getSrcLang_Text:String = ""
+    
+    var getDestLang_Text:String = ""
+    
     var isSSTavailable: Bool = false
 
     var speechProcessingLanList = [SpeechProcessingLanguages]()
@@ -89,6 +95,17 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
                 {
                     getTTT_Text =  tttText
                 }
+                
+                if let srcLang = socketData.srclang
+                {
+                    getSrcLang_Text = srcLang
+                }
+                
+                if let destLang = socketData.destlang
+                {
+                    getDestLang_Text = destLang
+                }
+                
                 if let is_Final = socketData.isFinal{
                     isFinal.value = is_Final
                 }

@@ -322,6 +322,14 @@ class GlobalMethod {
         }
         return String(output)
     }
+    
+    static func getRetranslationAndReverseTranslationData(sttdata: String, srcLang: String, destlang: String)-> String {
+           PrintUtility.printLog(tag: "TTT SRC TEXT", text: sttdata)
+           PrintUtility.printLog(tag: "TTT SRC LANG", text: srcLang)
+           PrintUtility.printLog(tag: "TTT DEST LANG", text: destlang)
+           let jsonData = try! JSONEncoder().encode(["stt": sttdata, "srclang": srcLang,"destlang": destlang])
+           return String(data: jsonData, encoding: .utf8)!
+    }
 
 }
 

@@ -66,4 +66,13 @@ class HistoryViewModel:BaseModel, HistoryViewModeling {
     func replaceItem(_ chatItem: ChatEntity, _ idx: Int){
         self.items.value[idx] = chatItem
     }
+    
+    func saveChatItem(chatItem: ChatEntity)-> Int64{
+        do {
+            let row = try ChatDBModel.init().insert(item: chatItem)
+            UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            return row
+        } catch _ {}
+        return -1
+    }
 }

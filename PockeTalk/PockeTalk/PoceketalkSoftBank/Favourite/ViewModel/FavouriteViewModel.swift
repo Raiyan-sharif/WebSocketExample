@@ -25,4 +25,12 @@ class FavouriteViewModel:BaseModel, FavouriteViewModeling {
             self.items.value = self.items.value.filter{$0.id != item.id}
         } catch {}
     }
+    func saveChatItem(chatItem: ChatEntity)-> Int64{
+            do {
+                let row = try ChatDBModel.init().insert(item: chatItem)
+                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+                return row
+            } catch _ {}
+            return -1
+    }
 }

@@ -15,17 +15,21 @@ class FavouriteViewController: BaseViewController {
 
     var  isCollectionViewVisible = false
     var loclItems = [FavouriteModel]()
-    var favouriteViewModel:FavouriteViewModeling!
+    var favouriteViewModel: FavouriteViewModel!
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
     let buttonWidth : CGFloat = 100
+    private var spinnerView : SpinnerView!
 
     private(set) var delegate: FavouriteViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
     var deletedCellHeight = CGFloat()
     weak var speechProDismissDelegateFromFav : SpeechProcessingDismissDelegate?
-
+    var isReverse = false
+    private var socketManager = SocketManager.sharedInstance
+    private var speechProcessingVM : SpeechProcessingViewModeling!
+    
     ///CollectionView to show favourite item
     private lazy var collectionView:UICollectionView = {
         let collectionView = UICollectionView(frame:.zero ,collectionViewLayout:favouritelayout)
@@ -54,9 +58,12 @@ class FavouriteViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
             self.showCollectionView()
         }
-        bindData()
+        //bindData()
         populateData()
-        
+        self.speechProcessingVM = SpeechProcessingViewModel()
+        bindData()
+        //SocketManager.sharedInstance.connect()
+        socketManager.socketManagerDelegate = self
     }
     
     func initDelegate<T>(_ vc: T) {
@@ -74,7 +81,7 @@ class FavouriteViewController: BaseViewController {
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
         self.view.addSubview(bottmView)
-
+        addSpinner()
         bottmView.translatesAutoresizingMaskIntoConstraints = false
         bottmView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -162,6 +169,17 @@ class FavouriteViewController: BaseViewController {
 
     }
     
+    private func addSpinner(){
+        spinnerView = SpinnerView();
+        self.view.addSubview(spinnerView)
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.isHidden = true
+    }
+    
     private var backBtn:UIButton!{
         guard let window = UIApplication.shared.keyWindow else {return nil}
         let topPadding = window.safeAreaInsets.top
@@ -194,6 +212,33 @@ class FavouriteViewController: BaseViewController {
                 }
             }
         }
+        
+        speechProcessingVM.isFinal.bindAndFire{[weak self] isFinal  in
+                    guard let `self` = self else { return }
+                    if isFinal{
+                        SocketManager.sharedInstance.disconnect()
+                        PrintUtility.printLog(tag: "TTT text: ",text: self.speechProcessingVM.getTTT_Text)
+                        PrintUtility.printLog(tag: "TTT src: ", text: self.speechProcessingVM.getSrcLang_Text)
+                        PrintUtility.printLog(tag: "TTT dest: ", text: self.speechProcessingVM.getDestLang_Text)
+                        var isTop = self.selectedChatItemModel?.chatItem?.chatIsTop
+                        var nativeText = self.selectedChatItemModel?.chatItem!.textNative
+                        var nativeLangName = self.selectedChatItemModel?.chatItem?.textNativeLanguage
+                        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: self.speechProcessingVM.getDestLang_Text)?.name
+                        if(self.isReverse){
+                            isTop = self.selectedChatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
+                            nativeText = self.selectedChatItemModel?.chatItem!.textTranslated
+                            nativeLangName = self.selectedChatItemModel?.chatItem?.textTranslatedLanguage
+                        }
+                        
+                        let targetText = self.speechProcessingVM.getTTT_Text
+                        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+                        let row = self.favouriteViewModel.saveChatItem(chatItem: chatEntity)
+                        chatEntity.id = row
+                        self.selectedChatItemModel?.chatItem = chatEntity
+                        self.spinnerView.isHidden = true
+                        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+                    }
+                }
     }
     
     func dismissFavourite(animated: Bool, completion: (() -> Void)? = nil) {
@@ -261,7 +306,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func openTTTResult(_ item: Int){
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: nil, isRecreation: false)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -295,20 +340,16 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
 }
 extension FavouriteViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
-        
+        spinnerView.isHidden = false
         let chatItem = selectedChatItemModel?.chatItem!
-        let isTop = chatItem?.chatIsTop
+        self.isReverse = false
         let nativeText = chatItem!.textNative
         let nativeLangName = chatItem!.textNativeLanguage!
-        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
-        
-        //TODO call websocket api for ttt
-        let targetText = chatItem!.textTranslated
-        
-        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
-        
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, fromHistory: true, ttsAlertControllerDelegate: nil, isRecreation: false)
-
+        SocketManager.sharedInstance.connect()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
+            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+        }
     }
 }
 
@@ -341,8 +382,32 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: nil, isRecreation: false)
+        spinnerView.isHidden = false
+        selectedChatItemModel = chatItemModel
+        self.isReverse = true
+        let nativeText = selectedChatItemModel?.chatItem?.textTranslated
+        let nativeLangName = selectedChatItemModel?.chatItem!.textTranslatedLanguage
+        let targetLangName = selectedChatItemModel?.chatItem!.textNativeLanguage!
+        
+        SocketManager.sharedInstance.connect()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+        }
     }
+}
+
+extension FavouriteViewController : SocketManagerDelegate{
+    func faildSocketConnection(value: String) {
+        PrintUtility.printLog(tag: TAG, text: value)
+    }
+    
+    func getText(text: String) {
+        speechProcessingVM.setTextFromScoket(value: text)
+        PrintUtility.printLog(tag: "Retranslation: ", text: text)
+    }
+    
+    func getData(data: Data) {}
     
 }
 
@@ -350,4 +415,19 @@ extension FavouriteViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         self.speechProDismissDelegateFromFav?.showTutorial()
     }
+}
+
+extension FavouriteViewController : TtsAlertControllerDelegate{
+    func itemAdded(_ chatItemModel: HistoryChatItemModel) {}
+    
+    func itemDeleted(_ chatItemModel: HistoryChatItemModel) {}
+    
+    func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {}
+    
+    func dismissed() {
+        //SocketManager.sharedInstance.connect()
+        socketManager.socketManagerDelegate = self
+    }
+    
+    
 }
