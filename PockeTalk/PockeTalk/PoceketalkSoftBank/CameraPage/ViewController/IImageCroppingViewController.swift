@@ -304,8 +304,15 @@ class ImageCroppingViewController: BaseViewController {
     }
 
     @IBAction func cancelButtonEventListener(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        for viewController in viewControllers {
+            if viewController is CameraViewController {
+                self.navigationController?.popToViewController(viewController, animated: true)
+            }
+        }
     }
+    
     @IBAction func cropButtonEventListener(_ sender: Any) {
         guard let image = imageView.image else {
             return
@@ -333,6 +340,7 @@ class ImageCroppingViewController: BaseViewController {
                 vc.image = croppedImage
                 vc.imageHeight = imageFrameHeight
                 vc.imageWidth = imageFrameWidth
+                vc.originalImage = image
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         } else {

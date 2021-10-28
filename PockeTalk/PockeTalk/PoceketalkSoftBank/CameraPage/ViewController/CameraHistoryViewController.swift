@@ -44,10 +44,10 @@ class CameraHistoryViewController: BaseViewController {
             //setupBackButton()
             backButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
-                backButton.heightAnchor.constraint(equalToConstant: 35),
-                backButton.widthAnchor.constraint(equalToConstant: 35)
+                backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0),
+                backButton.heightAnchor.constraint(equalToConstant: 45),
+                backButton.widthAnchor.constraint(equalToConstant: 45)
             ])
             backButton.layer.cornerRadius = 17.5
             backButton.layer.masksToBounds = true
