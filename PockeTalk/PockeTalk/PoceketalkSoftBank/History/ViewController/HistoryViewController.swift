@@ -338,11 +338,15 @@ class HistoryViewController: BaseViewController {
                 GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
                 self.historyViewModel.addItem(chatEntity)
                 self.collectionView.reloadData()
-                let item = self.collectionView(self.collectionView, numberOfItemsInSection: 0) - 1
-                let lastItemIndex = IndexPath(item: item, section: 0)
-                self.collectionView.scrollToItem(at: lastItemIndex, at: .top, animated: true)
+                self.scrollToBottom()
             }
         }
+    }
+    
+    func scrollToBottom(){
+        let item = self.collectionView(self.collectionView, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = IndexPath(item: item, section: 0)
+        self.collectionView.scrollToItem(at: lastItemIndex, at: .top, animated: true)
     }
 
 }
@@ -597,6 +601,8 @@ extension HistoryViewController: TtsAlertControllerDelegate{
     
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.addItem(chatItemModel.chatItem!)
+        self.collectionView.reloadData()
+        self.scrollToBottom()
     }
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {
