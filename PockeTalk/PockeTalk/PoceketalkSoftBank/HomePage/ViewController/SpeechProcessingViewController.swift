@@ -271,6 +271,7 @@ class SpeechProcessingViewController: BaseViewController{
                                 if !self.speechProcessingVM.isFinal.value {
                                     //self.navigationController?.popViewController(animated: true)
                                     self.loaderInvisible()
+                                    SocketManager.sharedInstance.disconnect()
                                 }
                             }
                         }
@@ -371,6 +372,7 @@ class SpeechProcessingViewController: BaseViewController{
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
+                SocketManager.sharedInstance.disconnect()
                 //SocketManager.sharedInstance.disconnect()
                 LanguageSelectionManager.shared.tempSourceLanguage = nil
                 if let purpose = self.screenOpeningPurpose{
@@ -438,6 +440,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func didPressMicroBtn(_ notification: Notification) {
+        SocketManager.sharedInstance.connect()
         if let string = notification.userInfo?["vc"] as? String {
             if string == "PronunciationPracticeViewController" {
                 isFromPronunciationPractice = true
@@ -558,6 +561,7 @@ class SpeechProcessingViewController: BaseViewController{
 //MARK: - PronunciationResult
 extension SpeechProcessingViewController: PronunciationResult {
     func dismissResultHome() {
+        SocketManager.sharedInstance.connect()
         pronunciationView.isHidden = true
         titleLabel.isHidden = false
         exampleLabel.isHidden = false
