@@ -40,6 +40,8 @@ class CaptureImageProcessVC: BaseViewController {
     var nativeText: String = ""
     var targetText: String = ""
     var playNative = true
+    
+    var isClickable = true
 
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -78,6 +80,7 @@ class CaptureImageProcessVC: BaseViewController {
     //        return UserDefaults.standard.string(forKey: "modeSwitchType") ?? "blockMode"
     //    }()
     
+    var originalImage = UIImage()
     var image = UIImage()
     var imageWidth = CGFloat()
     var imageHeight = CGFloat()
@@ -338,11 +341,40 @@ class CaptureImageProcessVC: BaseViewController {
     func showErrorAlert(message: String){
         let alertService = CustomAlertViewModel()
         let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {
-            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+            self.startConfirmController()
+            
         }
         self.present(alert, animated: true, completion: nil)
     }
+    
+    open var onCompletion: CameraViewCompletion?
+
+    private func startConfirmController() {
+        PrintUtility.printLog(tag: "original Image", text: "\(originalImage)")
+        let vc = ImageCroppingViewController(image: originalImage, croppingParameters: CropUtils(enabled: true, resizeable: true, dragable: true, minimumSize: CGSize(width: 80, height: 80)))
+        vc.onCompletion = { [weak self] image, asset in
+            defer {
+                self?.dismiss(animated: true, completion: nil)
+            }
+            
+            guard let image = image else {
+                return
+            }
+            self?.onCompletion?(image, asset)
+            self?.onCompletion = nil
+            
+            
+        }
+        
+        let transition = CATransition()
+        transition.duration = 0.4
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
+
+
     
 }
 
@@ -417,7 +449,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             view.addSubview(modeSwitchButton)
             setupModeSwitchButton()
         }
-        backButton.isUserInteractionEnabled = true
+        //backButton.isUserInteractionEnabled = true
         
     }
     
@@ -508,7 +540,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         super.viewWillAppear(true)
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(backButton)
-            backButton.isUserInteractionEnabled = false
+            //backButton.isUserInteractionEnabled = false
             setupBackButton(view)
         }
 
@@ -559,7 +591,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     updateView()
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        activity.showLoading(view: self.view)
+                        showLoader()
                         if let detectedData = self.iTTServerViewModel.detectedJSON {
                             self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
                             UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
@@ -581,7 +613,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     updateView()
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        activity.showLoading(view: self.view)
+                        showLoader()
                         if let detectedData = self.iTTServerViewModel.detectedJSON {
                             self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
                             UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
@@ -596,20 +628,26 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     @objc func backButtonEventListener(_ button: UIButton) {
-        if fromHistoryVC {
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        if isClickable {
+            if fromHistoryVC {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                for viewController in viewControllers {
+                    if viewController is CameraViewController {
+                        self.navigationController?.popToViewController(viewController, animated: true)
+                    }
+                }
+            }
         }
     }
     
     func setupModeSwitchButton() {
         NSLayoutConstraint.activate([
-            modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            modeSwitchButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
-            modeSwitchButton.heightAnchor.constraint(equalToConstant: 35),
-            modeSwitchButton.widthAnchor.constraint(equalToConstant: 35)
+            modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            modeSwitchButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0),
+            modeSwitchButton.heightAnchor.constraint(equalToConstant: 45),
+            modeSwitchButton.widthAnchor.constraint(equalToConstant: 45)
         ])
         modeSwitchButton.layer.cornerRadius = 17.5
         modeSwitchButton.layer.masksToBounds = true
@@ -618,10 +656,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func setupBackButton(_ view: UIView) {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20),
-            backButton.heightAnchor.constraint(equalToConstant: 35),
-            backButton.widthAnchor.constraint(equalToConstant: 35)
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0),
+            backButton.heightAnchor.constraint(equalToConstant: 45),
+            backButton.widthAnchor.constraint(equalToConstant: 45)
         ])
         backButton.layer.cornerRadius = 17.5
         backButton.layer.masksToBounds = true
@@ -641,20 +679,20 @@ extension CaptureImageProcessVC: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return cameraImageView
     }
-    
 }
-
 
 extension CaptureImageProcessVC: LoaderDelegate{
     
     func showLoader() {
         DispatchQueue.main.async { [self] in
             activity.showLoading(view: self.view)
+            isClickable = false
         }
     }
     
     func hideLoader() {
         activity.hideLoading()
+        isClickable = true
     }
 }
 
