@@ -350,10 +350,16 @@ class GlobalAlternative{
        controller.currentTSDelegate = viewController as? CurrentTSDelegate
        controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
        if(viewController?.navigationController != nil){
-           let navController = UINavigationController.init(rootViewController: controller)
-           controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-           controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-           viewController?.navigationController?.present(navController, animated: true, completion: nil)
+           if fromHistory {
+               controller.modalPresentationStyle = .fullScreen
+               viewController?.present(controller, animated: true, completion: nil)
+           } else {
+               let navController = UINavigationController.init(rootViewController: controller)
+               controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+               controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+               viewController?.navigationController?.present(navController, animated: true, completion: nil)
+           }
+           
        }else{
            controller.modalPresentationStyle = .fullScreen
            viewController?.present(controller, animated: true, completion: nil)
