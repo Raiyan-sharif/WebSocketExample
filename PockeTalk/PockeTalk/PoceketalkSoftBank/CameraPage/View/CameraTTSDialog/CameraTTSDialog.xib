@@ -149,11 +149,11 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                             <viewLayoutGuide key="frameLayoutGuide" id="1qj-Jx-f4S"/>
                         </scrollView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDk-TE-0Oz" userLabel="Menu Button">
-                            <rect key="frame" x="340" y="1" width="30" height="60"/>
+                            <rect key="frame" x="350" y="1" width="20" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="HDk-TE-0Oz" secondAttribute="height" multiplier="1:2" id="kkJ-NT-yuW"/>
-                                <constraint firstAttribute="width" constant="30" id="z41-NK-P4B"/>
+                                <constraint firstAttribute="width" constant="20" id="z41-NK-P4B"/>
                             </constraints>
                             <state key="normal" image="btn_menu"/>
                             <connections>

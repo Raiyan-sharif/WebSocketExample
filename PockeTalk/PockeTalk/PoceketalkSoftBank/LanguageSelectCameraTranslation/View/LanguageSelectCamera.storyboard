@@ -20,19 +20,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mOC-LX-0Kl">
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBk-ng-YKR">
-                                        <rect key="frame" x="10" y="7" width="36" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="gBk-ng-YKR">
+                                        <rect key="frame" x="10" y="15" width="60" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="qlV-MW-baH"/>
-                                            <constraint firstAttribute="height" constant="36" id="yyS-kW-lkR"/>
+                                            <constraint firstAttribute="width" constant="60" id="qlV-MW-baH"/>
+                                            <constraint firstAttribute="height" constant="40" id="yyS-kW-lkR"/>
                                         </constraints>
-                                        <state key="normal" image="arrow.backward" catalog="system"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                        <color key="tintColor" systemColor="systemTealColor"/>
+                                        <state key="normal" title="OK" image="icon_arrow_left_press.9">
+                                            <color key="titleColor" systemColor="systemTealColor"/>
+                                            <color key="titleShadowColor" systemColor="systemTealColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="uza-25-FhL"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ns9-2L-SZQ">
-                                        <rect key="frame" x="207" y="25" width="0.0" height="0.0"/>
+                                        <rect key="frame" x="207" y="35" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -40,11 +45,11 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="gBk-ng-YKR" firstAttribute="centerY" secondItem="Ns9-2L-SZQ" secondAttribute="centerY" id="JCD-uD-X9c"/>
+                                    <constraint firstItem="gBk-ng-YKR" firstAttribute="centerY" secondItem="mOC-LX-0Kl" secondAttribute="centerY" id="2yP-tr-E0e"/>
                                     <constraint firstItem="gBk-ng-YKR" firstAttribute="leading" secondItem="mOC-LX-0Kl" secondAttribute="leading" constant="10" id="Z3X-iP-ThE"/>
                                     <constraint firstItem="Ns9-2L-SZQ" firstAttribute="centerX" secondItem="mOC-LX-0Kl" secondAttribute="centerX" id="kmq-Pk-LBG"/>
+                                    <constraint firstItem="Ns9-2L-SZQ" firstAttribute="centerY" secondItem="mOC-LX-0Kl" secondAttribute="centerY" id="koq-Ut-tMD"/>
                                     <constraint firstAttribute="height" constant="70" id="qeD-q7-jaP"/>
-                                    <constraint firstItem="gBk-ng-YKR" firstAttribute="top" secondItem="mOC-LX-0Kl" secondAttribute="top" constant="7" id="vKG-Pd-hCD"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="349-ky-eL4">
@@ -90,6 +95,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k89-E8-a95"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ryp-If-OJU" firstAttribute="leading" secondItem="CbJ-XS-RRC" secondAttribute="leading" id="4IH-n3-uq2"/>
                             <constraint firstItem="349-ky-eL4" firstAttribute="leading" secondItem="k89-E8-a95" secondAttribute="leading" id="A12-9m-ECt"/>
@@ -103,6 +109,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="back_btn" destination="gBk-ng-YKR" id="LYJ-YJ-pzu"/>
                         <outlet property="btnHistoryList" destination="cHc-oM-XuF" id="jhf-xv-rb1"/>
                         <outlet property="btnLangList" destination="Wpf-A2-1uQ" id="FSu-TB-1as"/>
                         <outlet property="layoutBottomBtnContainer" destination="ryp-If-OJU" id="MPO-1C-tMF"/>
@@ -270,11 +277,15 @@
     </scenes>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="icon_arrow_left_press.9" width="22" height="22"/>
         <image name="icon_language_global_unselect" width="20" height="20"/>
         <image name="icon_language_history_unselect" width="20" height="20"/>
         <image name="language_selection_tutorial_bg" width="400" height="340"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
