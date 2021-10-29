@@ -354,10 +354,10 @@
                             <constraint firstItem="z9H-3t-dMP" firstAttribute="trailing" secondItem="Knt-JB-Zvg" secondAttribute="trailing" id="8qO-yf-znd"/>
                             <constraint firstItem="nck-kP-O6U" firstAttribute="top" secondItem="eYi-MQ-jBl" secondAttribute="bottom" id="Bpa-56-XlA"/>
                             <constraint firstItem="Jc0-9V-ody" firstAttribute="top" secondItem="Knt-JB-Zvg" secondAttribute="top" constant="50" id="C6s-TL-ZtB"/>
-                            <constraint firstItem="eYi-MQ-jBl" firstAttribute="leading" secondItem="Knt-JB-Zvg" secondAttribute="leading" id="CcB-Gr-5cr"/>
+                            <constraint firstItem="eYi-MQ-jBl" firstAttribute="leading" secondItem="Z9i-EB-zEu" secondAttribute="leading" id="CcB-Gr-5cr"/>
                             <constraint firstItem="nck-kP-O6U" firstAttribute="trailing" secondItem="Knt-JB-Zvg" secondAttribute="trailing" id="ClF-zU-h4a"/>
                             <constraint firstItem="Jc0-9V-ody" firstAttribute="leading" secondItem="Knt-JB-Zvg" secondAttribute="leading" id="DZS-sv-P95"/>
-                            <constraint firstItem="eYi-MQ-jBl" firstAttribute="trailing" secondItem="Knt-JB-Zvg" secondAttribute="trailing" id="Gpv-Ga-QSW"/>
+                            <constraint firstItem="eYi-MQ-jBl" firstAttribute="trailing" secondItem="Z9i-EB-zEu" secondAttribute="trailing" id="Gpv-Ga-QSW"/>
                             <constraint firstItem="Jc0-9V-ody" firstAttribute="trailing" secondItem="Knt-JB-Zvg" secondAttribute="trailing" id="GxJ-sf-30n"/>
                             <constraint firstItem="eYi-MQ-jBl" firstAttribute="top" secondItem="Knt-JB-Zvg" secondAttribute="top" id="Haa-MM-Z6G"/>
                             <constraint firstItem="Kl6-5d-E11" firstAttribute="top" secondItem="Knt-JB-Zvg" secondAttribute="top" constant="10" id="K7j-sy-cS1"/>
@@ -378,6 +378,7 @@
                         <outlet property="btnTargetLanguage" destination="mDG-4S-Fzy" id="drc-d2-Res"/>
                         <outlet property="cameraHistoryImageView" destination="Kl6-5d-E11" id="3dY-m1-YPr"/>
                         <outlet property="cameraPreviewView" destination="eYi-MQ-jBl" id="KEa-gL-6P9"/>
+                        <outlet property="captureButton" destination="nE9-Ii-sPT" id="HUT-7I-KCx"/>
                         <outlet property="flashButton" destination="ZHo-9c-46i" id="olQ-C6-UoV"/>
                         <outlet property="fromLangLabel" destination="746-Wj-e8f" id="QNt-gw-xpD"/>
                         <outlet property="toLangLabel" destination="SxB-WJ-q9L" id="ziE-zX-AH3"/>
@@ -727,7 +728,7 @@
         <image name="background" width="373" height="482"/>
         <image name="blackView" width="450" height="600"/>
         <image name="btn_back" width="90" height="90"/>
-        <image name="flash" width="10" height="15.333333015441895"/>
+        <image name="flash" width="30" height="46"/>
         <image name="icon_menu_camera" width="30" height="30"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

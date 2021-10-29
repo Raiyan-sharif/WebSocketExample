@@ -435,10 +435,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         if textViews.count > 0 {
             for i in 0..<textViews.count {
                 DispatchQueue.main.async {
-                    textViews[i].view.backgroundColor = UIColor.gray.withAlphaComponent(0.4)
-                    
+                    textViews[i].view.backgroundColor = UIColor(rgb: 0x000000).withAlphaComponent(0.5)
                     textViews[i].view.tag = i
-                    
                     self.imageView.addSubview(textViews[i].view)
                     textViews[i].view.isUserInteractionEnabled = true
                 }

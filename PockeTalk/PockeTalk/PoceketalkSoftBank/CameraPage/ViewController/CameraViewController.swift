@@ -26,6 +26,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
     
+    @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
     @IBOutlet weak var fromLangLabel: MarqueeLabel!
     var activeCamera: AVCaptureDevice?
@@ -53,7 +54,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let endAngle : CGFloat = CGFloat(Double.pi * 2)
     let radius : CGFloat = 25
     let lineWidth : CGFloat = 2
-    let removeTime : Double = 0.5
+    let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
     
     /// Camera History
@@ -111,7 +112,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         setUPViews()
         previewLayer.videoGravity = .resize
         previewView = cameraPreviewView
-        previewView.frame = cameraPreviewView.bounds
+        previewView.frame = cameraPreviewView.frame
         cropImageRect = cameraPreviewView.frame
         previewView.layer.addSublayer(previewLayer)
         view.insertSubview(previewView, at: 0)
@@ -155,6 +156,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
 
     func setUPViews() {
+        captureButton.isExclusiveTouch = true
         changeStatusBarColor()
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
@@ -192,7 +194,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
@@ -203,6 +204,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         
         sessionQueue.async { [unowned self] in
             if self.sessionSetupSucceeds {
+                do {
+                    try activeCamera?.lockForConfiguration()
+                    activeCamera?.videoZoomFactor = 1.0
+                    activeCamera?.unlockForConfiguration()
+                }catch {
+                    return
+                }
                 self.session.startRunning()
             }
         }
@@ -224,7 +232,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         super.viewWillLayoutSubviews()
         previewLayer.frame = previewView.layer.bounds
     }
-    
     
     func takePhoto(_ completion: ((Photo) -> Void)? = nil) {
         guard sessionSetupSucceeds else { return }
@@ -363,7 +370,7 @@ extension CameraViewController {
                 self.capturedImage = image
             }
             //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
-            layoutCameraResult(uiImage: capturedImage)
+            layoutCameraResult(uiImage: image!)
         }
     }
     
@@ -379,7 +386,8 @@ extension CameraViewController {
             let x = touchPoint.location(in: previewView).y / screenSize.height
             let y = 1.0 - touchPoint.location(in: previewView).x / screenSize.width
             let focusPoint = CGPoint(x: x, y: y)
-            
+            let location = touchPoint.location(in: previewView)
+            let focusCircleLocation = CGPoint(x: location.x, y: location.y+radius)
             let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
             
             if let device = backCamera {
@@ -388,7 +396,7 @@ extension CameraViewController {
                     device.focusPointOfInterest = focusPoint
                     
                     /// Pass the touch point of camera preview view as center point
-                    pointInCamera(centerPoint: touchPoint.location(in: previewView))
+                    pointInCamera(centerPoint: focusCircleLocation)
                     device.focusMode = .autoFocus
                     device.exposurePointOfInterest = focusPoint
                     device.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
