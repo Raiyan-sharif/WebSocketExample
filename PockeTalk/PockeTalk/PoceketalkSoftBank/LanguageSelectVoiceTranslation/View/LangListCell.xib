@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,8 +28,8 @@
                                     <constraint firstAttribute="height" constant="0.5" id="pmF-Fx-egg"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish(Spain) (Espanol)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ER-zx-xxN">
-                                <rect key="frame" x="10" y="13" width="221" height="24"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish(Spain) (Espanol)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ER-zx-xxN" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                <rect key="frame" x="10" y="13" width="335" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -48,17 +48,27 @@
                                     <constraint firstAttribute="width" constant="30" id="zDR-pX-iO2"/>
                                 </constraints>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl7-Fu-Fq9">
+                                <rect key="frame" x="10" y="25" width="335" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="jl7-Fu-Fq9" firstAttribute="leading" secondItem="3uH-u2-c4F" secondAttribute="leading" constant="10" id="6aw-Nq-cFO"/>
                             <constraint firstItem="0Le-5b-3vD" firstAttribute="leading" secondItem="3uH-u2-c4F" secondAttribute="leading" id="9M7-89-B8V"/>
                             <constraint firstAttribute="trailing" secondItem="Jrd-9N-qVe" secondAttribute="trailing" constant="10" id="Dti-Vi-3VU"/>
                             <constraint firstAttribute="trailing" secondItem="0Le-5b-3vD" secondAttribute="trailing" id="F4D-EK-f5j"/>
+                            <constraint firstAttribute="trailing" secondItem="jl7-Fu-Fq9" secondAttribute="trailing" constant="50" id="KES-J3-JzC"/>
                             <constraint firstItem="0ER-zx-xxN" firstAttribute="leading" secondItem="3uH-u2-c4F" secondAttribute="leading" constant="10" id="LyR-FG-oc5"/>
                             <constraint firstAttribute="height" constant="50" id="Sbq-Jj-WNs"/>
                             <constraint firstItem="0ER-zx-xxN" firstAttribute="centerY" secondItem="3uH-u2-c4F" secondAttribute="centerY" id="WOO-il-8Ej"/>
                             <constraint firstItem="Jrd-9N-qVe" firstAttribute="centerY" secondItem="3uH-u2-c4F" secondAttribute="centerY" id="WjQ-L2-Zm0"/>
+                            <constraint firstAttribute="trailing" secondItem="0ER-zx-xxN" secondAttribute="trailing" constant="50" id="eoN-5c-qmN"/>
                             <constraint firstItem="pIV-gf-dBK" firstAttribute="centerY" secondItem="3uH-u2-c4F" secondAttribute="centerY" id="fS9-3L-02o"/>
+                            <constraint firstItem="jl7-Fu-Fq9" firstAttribute="centerY" secondItem="3uH-u2-c4F" secondAttribute="centerY" id="jzR-Me-RWS"/>
                             <constraint firstItem="Jrd-9N-qVe" firstAttribute="leading" secondItem="pIV-gf-dBK" secondAttribute="trailing" constant="5" id="nuf-kf-LnH"/>
                             <constraint firstAttribute="bottom" secondItem="0Le-5b-3vD" secondAttribute="bottom" id="ya3-YA-cSd"/>
                         </constraints>
@@ -77,10 +87,18 @@
                 <outlet property="imageNoVoice" destination="pIV-gf-dBK" id="reI-I8-k9L"/>
                 <outlet property="lableLangName" destination="0ER-zx-xxN" id="iyH-jg-8ai"/>
                 <outlet property="langListCellContainer" destination="3uH-u2-c4F" id="p25-dn-mF9"/>
+                <outlet property="langNameUnSelecteLabel" destination="jl7-Fu-Fq9" id="7nO-wF-0FA"/>
+                <outlet property="selectedLabelTrailingConstraint" destination="eoN-5c-qmN" id="L8V-3e-1Ax"/>
+                <outlet property="unselectedLabelTrailingConstraint" destination="KES-J3-JzC" id="Hx7-wI-oCB"/>
             </connections>
             <point key="canvasLocation" x="186.23188405797103" y="85.379464285714278"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="0ER-zx-xxN">
+            <size key="intrinsicContentSize" width="221" height="24"/>
+        </designable>
+    </designables>
     <resources>
         <image name="ic_check_circle_white_selected" width="24" height="24"/>
         <image name="icon_novoice" width="25" height="25"/>
