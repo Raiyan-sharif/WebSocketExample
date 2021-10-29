@@ -20,6 +20,11 @@ let DISPLAY_SCALE: CGFloat               = SIZE_WIDTH / 375.0
 
 let DIALOG_CORNER_RADIUS: CGFloat = 15.0
 let kSettingsScreenTransitionDuration = 0.5
+let kTtsAvailableTrailingConstant : CGFloat = 85.0
+let kTtsNotAvailableTrailingConstant : CGFloat = 50.0
+let kUnselectedLanguageTrailingConstant : CGFloat = 10.0
+let kMarqueeLabelTrailingBufferForLanguageScreen : CGFloat = 50.0
+let kMarqueeLabelScrollingSpeenForLanguageScreen : CGFloat = 30.0
 
 
 //MARK: - Link
