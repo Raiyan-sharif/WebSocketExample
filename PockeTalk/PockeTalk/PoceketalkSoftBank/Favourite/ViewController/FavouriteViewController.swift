@@ -325,17 +325,17 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
 extension FavouriteViewController:FavouriteLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let favouriteModel = favouriteViewModel.items.value[indexPath.item] as! ChatEntity
-        let font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        let font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
+        
+        let fromHeight = favouriteModel.textTranslated!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
+        let toHeight = favouriteModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
+        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 80, text: favouriteModel.textTranslated!, font: font)
 
-        let fromHeight = favouriteModel.textTranslated!.heightWithConstrainedWidth(width: width, font: font)
-        let toHeight = favouriteModel.textNative!.heightWithConstrainedWidth(width: width, font: font)
-        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 20, text: favouriteModel.textTranslated!, font: font)
-        if(count == 1){
-            return 20 + fromHeight + 40 + toHeight + 40
-        }else if(count == 2){
-            return 20 + fromHeight + 60 + toHeight + 40
-        }
-        return 20 + fromHeight + 100 + toHeight + 40
+        PrintUtility.printLog(tag: "FavouriteViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
+        PrintUtility.printLog(tag: "FavouriteViewController", text: "Font \(FontUtility.getFontSizeIndex())")
+        
+        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40
+        
     }
 }
 extension FavouriteViewController : RetranslationDelegate{
