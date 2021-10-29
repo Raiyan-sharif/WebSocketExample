@@ -78,7 +78,8 @@ class ParseTextDetection: BaseModel {
                     textView = VerticalTextView()
                 }
                 
-                textView.textColor = .red
+                textView.textColor = .white
+                //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize)
                 textView.backgroundColor = .gray
                 textView.numberOfLines = 0
                 textView.adjustsFontSizeToFitWidth = true
@@ -141,7 +142,8 @@ class ParseTextDetection: BaseModel {
         for (index, each) in detectedBlockList.enumerated() {
             
             let textView = UILabel()
-            textView.textColor = .red
+            textView.textColor = .white
+            //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize)
             textView.backgroundColor = .gray
             textView.numberOfLines = 0
             textView.adjustsFontSizeToFitWidth = true

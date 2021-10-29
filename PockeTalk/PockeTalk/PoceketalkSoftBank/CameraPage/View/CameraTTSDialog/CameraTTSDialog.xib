@@ -27,19 +27,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZX-nu-Cal" userLabel="PlaceHolder View">
-                    <rect key="frame" x="20" y="88" width="374" height="758"/>
+                    <rect key="frame" x="20" y="89" width="374" height="728"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_texture_white" translatesAutoresizingMaskIntoConstraints="NO" id="egD-lc-h5g" userLabel="Background Texture ImageView">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="758"/>
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="728"/>
                         </imageView>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3u-6W-523">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="758"/>
+                            <rect key="frame" x="0.0" y="30" width="374" height="678"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7J-Ae-UuD" userLabel="Scroll ContentView">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="760"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="750"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rec-Wz-aAh" userLabel="To Language Label">
-                                            <rect key="frame" x="16" y="30" width="342" height="284.5"/>
+                                            <rect key="frame" x="16" y="10" width="342" height="284.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <string key="text">The education boards are planning to start this year's SSC and equivalent examinations from November 10 to 15. And HSC and equivalent examinations may start in the first week of December.
 
@@ -49,7 +49,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aD-cY-bkf" userLabel="To Translate Play Button">
-                                            <rect key="frame" x="16" y="330.5" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="310.5" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="TeP-Mo-h9i"/>
                                                 <constraint firstAttribute="width" constant="50" id="rwJ-Rm-xaO"/>
@@ -60,7 +60,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKN-Xz-kZH" userLabel="To Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                            <rect key="frame" x="74" y="330.5" width="280" height="50"/>
+                                            <rect key="frame" x="74" y="310.5" width="280" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="fkl-ed-zCD"/>
@@ -78,7 +78,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="600" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOQ-Wx-brd" userLabel="From Language Label">
-                                            <rect key="frame" x="16" y="410" width="338" height="264"/>
+                                            <rect key="frame" x="16" y="390" width="338" height="264"/>
                                             <string key="text">চলতি বছরের এসএসসি ও সমমানের পরীক্ষা আগামী ১০ থেকে ১৫ নভেম্বরের মধ্যে শুরু করার পরিকল্পনা করছে শিক্ষা বোর্ডগুলো। আর এইচএসসি ও সমমানের পরীক্ষা ডিসেম্বরের প্রথম সপ্তাহে শুরু হতে পারে।
 
 এমন পরিকল্পনা নিয়ে প্রস্তুতি নিচ্ছে শিক্ষা বোর্ডগুলো। ঢাকা মাধ্যমিক ও উচ্চমাধ্যমিক শিক্ষা বোর্ডের চেয়ারম্যান নেহাল আহমেদ প্রথম আলোকে বলেন, এখন পর্যন্ত এমন পরিকল্পনা আছে। তবে এখনো পরীক্ষা শুরুর কোনো সুনির্দিষ্ট তারিখ ঠিক হয়নি। পরিস্থিতির কারণে এ পরিকল্পনায়ও কিছু ব্যত্যয় হতে পারে।</string>
@@ -87,7 +87,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbb-se-IK5" userLabel="From Translate Play Button">
-                                            <rect key="frame" x="16" y="690" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="670" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="3vu-Qb-nH4"/>
                                                 <constraint firstAttribute="width" constant="50" id="hKc-bp-hao"/>
@@ -98,7 +98,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Englisth (US)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OxN-Au-O2b" userLabel="From Translate Label" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                            <rect key="frame" x="74" y="690" width="280" height="50"/>
+                                            <rect key="frame" x="74" y="670" width="280" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" systemColor="systemBlueColor"/>
@@ -119,13 +119,13 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                                         <constraint firstAttribute="trailing" secondItem="mOQ-Wx-brd" secondAttribute="trailing" constant="20" id="8g2-G1-Nsd"/>
                                         <constraint firstItem="2aD-cY-bkf" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="BGL-OT-VHm"/>
                                         <constraint firstItem="mOQ-Wx-brd" firstAttribute="top" secondItem="2aD-cY-bkf" secondAttribute="bottom" constant="29.5" id="E72-W7-Spc"/>
-                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="top" secondItem="Y7J-Ae-UuD" secondAttribute="top" constant="30" id="HB7-kM-l9b"/>
+                                        <constraint firstItem="Rec-Wz-aAh" firstAttribute="top" secondItem="Y7J-Ae-UuD" secondAttribute="top" constant="10" id="HB7-kM-l9b"/>
                                         <constraint firstItem="NKN-Xz-kZH" firstAttribute="centerY" secondItem="2aD-cY-bkf" secondAttribute="centerY" id="MNu-bw-ugL"/>
                                         <constraint firstItem="mOQ-Wx-brd" firstAttribute="leading" secondItem="Rec-Wz-aAh" secondAttribute="leading" id="MfJ-oM-rkg"/>
                                         <constraint firstItem="OxN-Au-O2b" firstAttribute="centerY" secondItem="nbb-se-IK5" secondAttribute="centerY" id="O0R-aI-Qgf"/>
                                         <constraint firstItem="OxN-Au-O2b" firstAttribute="width" secondItem="NKN-Xz-kZH" secondAttribute="width" id="OSU-wA-vpQ"/>
                                         <constraint firstItem="nbb-se-IK5" firstAttribute="leading" secondItem="2aD-cY-bkf" secondAttribute="leading" id="U2F-nz-QDe"/>
-                                        <constraint firstAttribute="bottom" secondItem="nbb-se-IK5" secondAttribute="bottom" constant="20" id="eDz-0n-9CV"/>
+                                        <constraint firstAttribute="bottom" secondItem="nbb-se-IK5" secondAttribute="bottom" constant="30" id="eDz-0n-9CV"/>
                                         <constraint firstItem="nbb-se-IK5" firstAttribute="top" secondItem="mOQ-Wx-brd" secondAttribute="bottom" constant="16" id="ios-DI-OC1"/>
                                         <constraint firstItem="OxN-Au-O2b" firstAttribute="height" secondItem="NKN-Xz-kZH" secondAttribute="height" id="lZg-t5-Qyo"/>
                                         <constraint firstItem="2aD-cY-bkf" firstAttribute="top" secondItem="Rec-Wz-aAh" secondAttribute="bottom" constant="16" id="m1E-DA-1r5"/>
@@ -165,9 +165,9 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="HDk-TE-0Oz" secondAttribute="trailing" constant="4" id="1d8-s6-KJk"/>
                         <constraint firstItem="egD-lc-h5g" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" id="5wa-pF-3k6"/>
-                        <constraint firstItem="s3u-6W-523" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" id="DQN-71-4PG"/>
+                        <constraint firstItem="s3u-6W-523" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" constant="30" id="DQN-71-4PG"/>
                         <constraint firstAttribute="trailing" secondItem="s3u-6W-523" secondAttribute="trailing" id="HMe-I3-Vou"/>
-                        <constraint firstAttribute="bottom" secondItem="s3u-6W-523" secondAttribute="bottom" id="Ir3-YF-b65"/>
+                        <constraint firstAttribute="bottom" secondItem="s3u-6W-523" secondAttribute="bottom" constant="20" id="Ir3-YF-b65"/>
                         <constraint firstItem="HDk-TE-0Oz" firstAttribute="top" secondItem="wZX-nu-Cal" secondAttribute="top" constant="1" id="Jsv-nd-cTg"/>
                         <constraint firstAttribute="trailing" secondItem="egD-lc-h5g" secondAttribute="trailing" id="O2F-h6-ZGT"/>
                         <constraint firstItem="egD-lc-h5g" firstAttribute="leading" secondItem="wZX-nu-Cal" secondAttribute="leading" id="hA0-MA-JUr"/>
@@ -176,7 +176,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-gK-jRf" userLabel="Dialog Dismiss Button">
-                    <rect key="frame" x="12" y="80" width="40" height="40"/>
+                    <rect key="frame" x="12" y="81" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="3wE-QM-0Jz"/>
                         <constraint firstAttribute="width" constant="40" id="chl-do-pjt"/>
@@ -192,10 +192,10 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="LLz-gK-jRf" firstAttribute="leading" secondItem="egD-lc-h5g" secondAttribute="leading" constant="-8" id="3b2-Pl-Sxx"/>
-                <constraint firstItem="wZX-nu-Cal" firstAttribute="top" secondItem="iDl-I4-s0Z" secondAttribute="top" constant="44" id="4xi-jU-vWg"/>
+                <constraint firstItem="wZX-nu-Cal" firstAttribute="top" secondItem="iDl-I4-s0Z" secondAttribute="top" constant="45" id="4xi-jU-vWg"/>
                 <constraint firstItem="LLz-gK-jRf" firstAttribute="top" secondItem="egD-lc-h5g" secondAttribute="top" constant="-8" id="Fvb-ma-h7J"/>
                 <constraint firstItem="wZX-nu-Cal" firstAttribute="leading" secondItem="iDl-I4-s0Z" secondAttribute="leading" constant="20" id="bm6-6j-BPX"/>
-                <constraint firstItem="iDl-I4-s0Z" firstAttribute="bottom" secondItem="wZX-nu-Cal" secondAttribute="bottom" constant="16" id="hCu-a6-tBG"/>
+                <constraint firstItem="iDl-I4-s0Z" firstAttribute="bottom" secondItem="wZX-nu-Cal" secondAttribute="bottom" constant="45" id="hCu-a6-tBG"/>
                 <constraint firstItem="iDl-I4-s0Z" firstAttribute="trailing" secondItem="wZX-nu-Cal" secondAttribute="trailing" constant="20" id="mzx-kg-F3a"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="141.96428571428569"/>
