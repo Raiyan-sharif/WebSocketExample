@@ -335,7 +335,7 @@ class HistoryViewController: BaseViewController {
                 self.selectedChatItemModel?.chatItem = chatEntity
              
                 self.spinnerView.isHidden = true
-                GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+                GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false, hideTalkButton: true)
                 self.historyViewModel.addItem(chatEntity)
                 self.collectionView.reloadData()
                 self.scrollToBottom()
@@ -521,16 +521,20 @@ extension HistoryViewController:HistoryLayoutDelegate{
 
 extension HistoryViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
-        spinnerView.isHidden = false
-        let chatItem = selectedChatItemModel?.chatItem!
-        self.isReverse = false
-        SocketManager.sharedInstance.connect()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            let nativeText = chatItem!.textNative
-            let nativeLangName = chatItem!.textNativeLanguage!
+        if Reachability.isConnectedToNetwork() {
+            spinnerView.isHidden = false
+            let chatItem = selectedChatItemModel?.chatItem!
+            self.isReverse = false
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                let nativeText = chatItem!.textNative
+                let nativeLangName = chatItem!.textNativeLanguage!
                     
-            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
-            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else{
+            GlobalMethod.showNoInternetAlert()
         }
     }
 }
@@ -574,18 +578,22 @@ extension HistoryViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        self.spinnerView.isHidden = false
-        SocketManager.sharedInstance.connect()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self!.selectedChatItemModel = chatItemModel
+        if Reachability.isConnectedToNetwork() {
+            self.spinnerView.isHidden = false
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self!.selectedChatItemModel = chatItemModel
 
-            self!.isReverse = true
-            let nativeText = self!.selectedChatItemModel?.chatItem?.textTranslated
-            let nativeLangName = self!.selectedChatItemModel?.chatItem!.textTranslatedLanguage
-            let targetLangName = self!.selectedChatItemModel?.chatItem!.textNativeLanguage!
+                self!.isReverse = true
+                let nativeText = self!.selectedChatItemModel?.chatItem?.textTranslated
+                let nativeLangName = self!.selectedChatItemModel?.chatItem!.textTranslatedLanguage
+                let targetLangName = self!.selectedChatItemModel?.chatItem!.textNativeLanguage!
 
-            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
-            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else{
+            GlobalMethod.showNoInternetAlert()
         }
         
     }

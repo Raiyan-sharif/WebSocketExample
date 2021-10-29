@@ -236,7 +236,7 @@ class FavouriteViewController: BaseViewController {
                         chatEntity.id = row
                         self.selectedChatItemModel?.chatItem = chatEntity
                         self.spinnerView.isHidden = true
-                        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+                        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false, hideTalkButton: true)
                     }
                 }
     }
@@ -340,15 +340,19 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
 }
 extension FavouriteViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
-        spinnerView.isHidden = false
-        let chatItem = selectedChatItemModel?.chatItem!
-        self.isReverse = false
-        let nativeText = chatItem!.textNative
-        let nativeLangName = chatItem!.textNativeLanguage!
-        SocketManager.sharedInstance.connect()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
-            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+        if Reachability.isConnectedToNetwork() {
+            spinnerView.isHidden = false
+            let chatItem = selectedChatItemModel?.chatItem!
+            self.isReverse = false
+            let nativeText = chatItem!.textNative
+            let nativeLangName = chatItem!.textNativeLanguage!
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else {
+            GlobalMethod.showNoInternetAlert()
         }
     }
 }
@@ -382,17 +386,22 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        spinnerView.isHidden = false
-        selectedChatItemModel = chatItemModel
-        self.isReverse = true
-        let nativeText = selectedChatItemModel?.chatItem?.textTranslated
-        let nativeLangName = selectedChatItemModel?.chatItem!.textTranslatedLanguage
-        let targetLangName = selectedChatItemModel?.chatItem!.textNativeLanguage!
-        
-        SocketManager.sharedInstance.connect()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
-            self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+        if Reachability.isConnectedToNetwork() {
+            spinnerView.isHidden = false
+            selectedChatItemModel = chatItemModel
+            self.isReverse = true
+            let nativeText = selectedChatItemModel?.chatItem?.textTranslated
+            let nativeLangName = selectedChatItemModel?.chatItem!.textTranslatedLanguage
+            let targetLangName = selectedChatItemModel?.chatItem!.textNativeLanguage!
+            
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else {
+            print("No internet!")
+            GlobalMethod.showNoInternetAlert()
         }
     }
 }

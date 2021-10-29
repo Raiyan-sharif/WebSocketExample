@@ -284,11 +284,13 @@ class HomeViewController: BaseViewController {
     
     @objc private func goToFavouriteScreen () {
         let fv = FavouriteViewController()
-        fv.modalPresentationStyle = .fullScreen
-        fv.modalTransitionStyle = .crossDissolve
         fv.speechProDismissDelegateFromFav = self
         fv.initDelegate(self)
-        self.navigationController?.present(fv, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: fv)
+        navController.modalPresentationStyle = .overFullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        self.present(navController, animated: true, completion: nil)
     }
     
     //MARK: - Utils
