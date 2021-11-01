@@ -289,6 +289,7 @@ class HomeViewController: BaseViewController {
         navController.modalPresentationStyle = .overFullScreen
         navController.modalTransitionStyle = .crossDissolve
         navController.navigationBar.isHidden = true
+        fv.navController = navController
         self.present(navController, animated: true, completion: nil)
     }
     
