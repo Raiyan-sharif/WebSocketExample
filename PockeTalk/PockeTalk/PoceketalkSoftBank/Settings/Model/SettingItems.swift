@@ -2,8 +2,6 @@
 //  SettingItems.swift
 //  PockeTalk
 //
-//  Created by BJIT LTD on 6/9/21.
-//
 
 import UIKit
 

@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 8/31/21.
-//
 
 import UIKit
 

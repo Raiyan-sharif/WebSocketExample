@@ -2,8 +2,6 @@
 //  LanguageMapDataHelper.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/7/21.
-//
 
 import SQLite
 

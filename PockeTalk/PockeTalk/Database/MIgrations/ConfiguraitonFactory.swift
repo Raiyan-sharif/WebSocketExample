@@ -2,8 +2,6 @@
 //  ConfiguraitonFactory.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/29/21.
-//
 
 import Foundation
 

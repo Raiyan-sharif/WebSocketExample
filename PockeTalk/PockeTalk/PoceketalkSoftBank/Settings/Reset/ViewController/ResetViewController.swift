@@ -1,4 +1,7 @@
-
+//
+//  ResetViewController.swift
+//  PockeTalk
+//
 
 import UIKit
 

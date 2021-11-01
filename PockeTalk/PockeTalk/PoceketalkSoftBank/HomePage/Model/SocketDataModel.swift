@@ -2,8 +2,6 @@
 //  SocketDataModel.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/22/21.
-//
 
 import Foundation
 

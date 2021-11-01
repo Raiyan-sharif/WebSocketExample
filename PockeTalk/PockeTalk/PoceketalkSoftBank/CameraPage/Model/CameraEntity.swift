@@ -2,7 +2,6 @@
 //  CameraHistoryTable.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/7/21.
 
 class CameraEntity: BaseEntity {
     let detectedData: String?

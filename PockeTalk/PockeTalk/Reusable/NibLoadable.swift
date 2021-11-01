@@ -1,3 +1,7 @@
+//
+// NibLoadable.swift
+// PockeTalk
+//
 
 import UIKit
 

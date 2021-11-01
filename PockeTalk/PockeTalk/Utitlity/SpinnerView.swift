@@ -2,8 +2,6 @@
 //  SpinnerView.swift
 //  PockeTalk
 //
-//  Created by Jishnu on 28/9/21.
-//
 
 import Foundation
 

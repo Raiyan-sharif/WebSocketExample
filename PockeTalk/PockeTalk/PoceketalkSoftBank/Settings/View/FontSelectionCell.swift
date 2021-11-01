@@ -2,8 +2,6 @@
 //  FontSelectionCell.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/14/21.
-//
 
 import UIKit
 

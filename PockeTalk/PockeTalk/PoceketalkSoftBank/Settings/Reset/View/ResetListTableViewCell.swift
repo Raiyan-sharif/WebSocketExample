@@ -2,8 +2,6 @@
 //  ResetListTableViewCell.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 14/10/21.
-//
 
 import UIKit
 

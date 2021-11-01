@@ -2,8 +2,6 @@
 //  RuntimePermissionUtil.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 10/1/21.
-//
 
 import AVFoundation
 import Photos

@@ -2,8 +2,6 @@
 //  Extension+UIApplication.swift
 //  PockeTalk
 //
-//  Created by BJIT on 21/10/21.
-//
 
 import UIKit
 

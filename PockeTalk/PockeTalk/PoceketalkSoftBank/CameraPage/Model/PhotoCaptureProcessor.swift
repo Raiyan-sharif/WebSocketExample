@@ -2,8 +2,6 @@
 //  PhotoCaptureProcessor.swift
 //  PockeTalk
 //
-//  Created by BJIT LTD on 24/9/21.
-//
 
 import Foundation
 import AVFoundation

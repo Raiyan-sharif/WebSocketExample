@@ -2,8 +2,6 @@
 //  LanguageSelectCameraVC.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 10/9/21.
-//
 
 import UIKit
 

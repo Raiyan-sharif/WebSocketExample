@@ -1,3 +1,7 @@
+//
+//  ResetItemType
+//  PockeTalk
+//
 
 import Foundation
 

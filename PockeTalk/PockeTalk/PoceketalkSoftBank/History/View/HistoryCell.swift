@@ -2,8 +2,6 @@
 //  HistoryCell.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/6/21.
-//
 
 import UIKit
 

@@ -2,8 +2,6 @@
 //  PronunciationPracticeResultViewController.swift
 //  PockeTalk
 //
-//  Created by Khairuzzaman Shipon on 8/9/21.
-//
 
 import UIKit
 import SwiftRichString

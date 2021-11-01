@@ -1,5 +1,5 @@
 //  Animation.swift
-//  Custom Loader
+//  PockeTalk
 //
 //
 

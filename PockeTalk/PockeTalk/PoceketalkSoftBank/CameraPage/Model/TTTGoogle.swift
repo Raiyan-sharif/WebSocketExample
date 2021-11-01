@@ -2,8 +2,6 @@
 //  TTTGoogle.swift
 //  PockeTalk
 //
-//  Created by Hajjaz Bin Ibrahim on 27/9/21.
-//
 
 import Foundation
 

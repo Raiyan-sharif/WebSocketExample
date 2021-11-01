@@ -1,8 +1,6 @@
 //
-//  LanguageSettingsVC.swift
+//  LanguageSettingsTutorialVC.swift
 //  PockeTalk
-//
-//  Created by Sadikul Bari on 9/9/21.
 //
 
 import UIKit

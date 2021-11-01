@@ -2,8 +2,6 @@
 //  HighLight.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/15/21.
-//
 
 import Foundation
 import UIKit

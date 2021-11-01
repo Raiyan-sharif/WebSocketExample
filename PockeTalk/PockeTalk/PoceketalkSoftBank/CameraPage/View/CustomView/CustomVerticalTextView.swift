@@ -1,9 +1,6 @@
 //
 //  CustomVerticalTextView.swift
-//  gfgjjkkjn
-//
-//  Created by BJIT LTD on 27/9/21.
-//
+//  PockeTalk
 //
 
 import UIKit

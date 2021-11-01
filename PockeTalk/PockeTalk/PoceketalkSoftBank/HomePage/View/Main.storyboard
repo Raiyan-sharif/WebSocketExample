@@ -166,7 +166,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Gb6-Mf-5h4"/>
                                     <constraint firstAttribute="width" constant="30" id="dQR-yI-K8F"/>
                                 </constraints>
-                                <state key="normal" image="camera.fill" catalog="system"/>
+                                <state key="normal" image="icon_menu_camera"/>
                                 <connections>
                                     <action selector="didTapOnCameraButton:" destination="y8L-Ms-o17" eventType="touchUpInside" id="QiB-mh-nUT"/>
                                 </connections>
@@ -783,6 +783,7 @@
                     <view key="view" contentMode="scaleToFill" id="0k1-uq-G6d">
                         <rect key="frame" x="0.0" y="0.0" width="394" height="355"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Utk-zM-T5l"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
@@ -802,7 +803,6 @@
         <image name="back_texture_white" width="480" height="640"/>
         <image name="btn_back_tempo" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
-        <image name="camera.fill" catalog="system" width="128" height="94"/>
         <image name="demo_mode_reboot_cancel_button" width="90" height="90"/>
         <image name="down_arrow" width="36" height="36"/>
         <image name="gradient_blue_bottom_bg" width="440" height="283"/>
@@ -810,6 +810,7 @@
         <image name="hamburger_menu_icon" width="30" height="30"/>
         <image name="ic_anim_left_white" width="65" height="64"/>
         <image name="ic_anim_right_white" width="65" height="64"/>
+        <image name="icon_menu_camera" width="30" height="30"/>
         <image name="icon_menu_favorite" width="30" height="30"/>
         <image name="icon_stt_background" width="480" height="640"/>
         <image name="tap_home_bg" width="60" height="60"/>

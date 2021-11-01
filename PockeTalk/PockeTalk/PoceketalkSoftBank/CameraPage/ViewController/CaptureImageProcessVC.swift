@@ -2,7 +2,6 @@
 //  CaptureImageProcessVC.swift
 //  PockeTalk
 //
-//
 
 import UIKit
 

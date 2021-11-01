@@ -1,3 +1,8 @@
+//
+//  TempoControlSpeedType.swift
+//  PockeTalk
+//
+
 import UIKit
 
 enum TempoControlSpeedType: String{
