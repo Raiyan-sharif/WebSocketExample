@@ -28,7 +28,7 @@
 "retranslation" = "Translate into other languages";
 "reverse" = "Reverse translation";
 "pronunciation_practice" = "Practice pronunciation";
-"send_an_email" = "Share";
+"share" = "Share";
 "cancel" = "Cancel";
 "internet_connection_error" = "No Internet connection";
 "connect_via_wifi" = "Connect to Wi-Fi";
@@ -59,3 +59,10 @@
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "OK";
 "no_stt_msg" = "Language is not supported";
+"open" = "Open";
+"delete_from_Camera_History" = "Delete";
+"history_cleared" = "History has been cleared.";
+"camera_history_cleared" = "Camera translation history has been cleared.";
+"favorite_history_cleared" = "Favorite has been deleted.";
+"error_no_text_detected" = "No text detected from image";
+"error_network" = "Network error";

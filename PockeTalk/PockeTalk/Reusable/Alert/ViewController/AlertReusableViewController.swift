@@ -10,6 +10,7 @@ protocol AlertReusableDelegate {
     func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
     func pronunciationPracticeTap (chatItemModel: HistoryChatItemModel?)
     func onDeleteItem(chatItemModel: HistoryChatItemModel?)
+    func onSharePressed(chatItemModel: HistoryChatItemModel?)
 }
 
 class AlertReusableViewController: BaseViewController {
@@ -87,20 +88,12 @@ class AlertReusableViewController: BaseViewController {
         self.delegate?.pronunciationPracticeTap(chatItemModel: self.chatItemModel)
     }
 
+    func shareTranslation () {
+        PrintUtility.printLog(tag: "TAG", text: "shareJson shareTranslation delegate calling")
+        self.delegate?.onSharePressed(chatItemModel: self.chatItemModel)
+    }
+
     func reverseTranslation () {
-        if(chatItemModel?.chatItem != nil){
-            let isTop = chatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
-            let nativeText = chatItemModel!.chatItem!.textTranslated
-            let targetText = chatItemModel!.chatItem!.textNative
-            let nativeLangName = chatItemModel!.chatItem!.textTranslatedLanguage!
-            let targetLangName = chatItemModel!.chatItem!.textNativeLanguage
-            
-            let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
-            
-            let row = alertViewModel.saveChatItem(chatItem: chatEntity)
-            chatEntity.id = row
-            self.chatItemModel?.chatItem = chatEntity
-        }
         DispatchQueue.main.async {
             self.navigationController?.dismiss(animated: true, completion: nil)
             self.delegate?.transitionFromReverse(chatItemModel: self.chatItemModel)
@@ -190,21 +183,25 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             self.addFavorite(index: indexPath)
             break
         case .retranslation :
-            self.showToast(message: kTranslateIntoOtherLanguageUnderDevelopment, seconds: toastDisplayTime)
+            //self.showToast(message: kTranslateIntoOtherLanguageUnderDevelopment, seconds: toastDisplayTime)
             /// ToDo in next version
-            //self.retranslation()
+            self.dismiss(animated: true, completion: nil)
+            self.retranslation()
             break
         case .reverse:
-            self.showToast(message: kReverseTranslationUnderDevelopment, seconds: toastDisplayTime)
+            //self.showToast(message: kReverseTranslationUnderDevelopment, seconds: toastDisplayTime)
             /// ToDo in next version
-            //self.reverseTranslation()
+             self.dismiss(animated: true, completion: nil)
+            self.reverseTranslation()
             break
         case .practice :
             self.dismiss(animated: true, completion: nil)
             showPracticeView()
             break
         case .sendMail :
-            self.showToast(message: kShareTranslationUnderDevelopment, seconds: toastDisplayTime)
+            PrintUtility.printLog(tag: "TAG", text: "shareJson sendmail button pressed")
+            self.dismiss(animated: true, completion: nil)
+            shareTranslation()
             break
         case .cancel :
             self.dismiss(animated: true, completion: nil)

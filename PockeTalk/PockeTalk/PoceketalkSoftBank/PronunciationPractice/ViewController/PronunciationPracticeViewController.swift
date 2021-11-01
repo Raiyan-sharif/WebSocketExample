@@ -6,7 +6,7 @@
 import UIKit
 import WebKit
 
-protocol DismissPronunciationFromHistory {
+protocol DismissPronunciationFromHistory: AnyObject {
     func dismissPronunciationFromHistory()
 }
 
@@ -98,40 +98,44 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
-        RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-            if isGranted {
-                if self.isFromHistory {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.isFromPronunciationPractice = true
-                    controller.pronunciationText = self.orginalText
-                    controller.pronunciationLanguageCode = self.languageCode
-                    controller.screenOpeningPurpose = .PronunciationPractice
-                    controller.languageHasUpdated = true
-                    controller.pronunciationDelegate = self
-                    controller.isHistoryPronunciation = self.isFromHistory
-                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
-                    self.present(controller, animated: true, completion: nil)
-                } else if self.isFromSpeechProcessing {
-                    var dict = [String:String]()
-                    dict["vc"] = "PronunciationPracticeViewController"
-                    dict["text"] = self.orginalText
-                    dict["langCode"] = self.languageCode
-                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: dict)
-//                    self.dismiss(animated: false, completion: nil)
-                    self.navigationController?.popViewController(animated: false)
+        if Reachability.isConnectedToNetwork() {
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                    if self.isFromHistory {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+                        controller.isFromPronunciationPractice = true
+                        controller.pronunciationText = self.orginalText
+                        controller.pronunciationLanguageCode = self.languageCode
+                        controller.screenOpeningPurpose = .PronunciationPractice
+                        controller.languageHasUpdated = true
+                        controller.pronunciationDelegate = self
+                        controller.isHistoryPronunciation = self.isFromHistory
+                        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+                        self.present(controller, animated: true, completion: nil)
+                    } else if self.isFromSpeechProcessing {
+                        var dict = [String:String]()
+                        dict["vc"] = "PronunciationPracticeViewController"
+                        dict["text"] = self.orginalText
+                        dict["langCode"] = self.languageCode
+                        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: dict)
+    //                    self.dismiss(animated: false, completion: nil)
+                        self.navigationController?.popViewController(animated: false)
+                    } else {
+                        var dict = [String:String]()
+                        dict["vc"] = "PronunciationPracticeViewController"
+                        dict["text"] = self.orginalText
+                        dict["langCode"] = self.languageCode
+                        self.dismiss(animated: false, completion: {
+                            self.delegate?.dismissPro(dict: dict)
+                        })
+                    }
                 } else {
-                    var dict = [String:String]()
-                    dict["vc"] = "PronunciationPracticeViewController"
-                    dict["text"] = self.orginalText
-                    dict["langCode"] = self.languageCode
-                    self.dismiss(animated: false, completion: {
-                        self.delegate?.dismissPro(dict: dict)
-                    })
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                 }
-            } else {
-                GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
+        } else {
+            GlobalMethod.showNoInternetAlert(in: self)
         }
     }
 
@@ -154,7 +158,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         }
     }
     func playTTS(){
-        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.checkSpeakingStatus()
         ttsResponsiveView.setRate(rate: rate)
         PrintUtility.printLog(tag: "Translate ", text: orginalText)
         ttsResponsiveView.TTSPlay(voice: voice,text: orginalText)

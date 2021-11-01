@@ -42,8 +42,8 @@
 		4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */; };
 		4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */; };
 		4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEF500D26DF9E9A0052B6EB /* Main.storyboard */; };
-		4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */; };
-		4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */; };
+		4AEF501126DFA0080052B6EB /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501026DFA0080052B6EB /* Extension+UIColor.swift */; };
+		4AEF501326DFA0670052B6EB /* Extension+AttibutedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF501226DFA0670052B6EB /* Extension+AttibutedString.swift */; };
 		4AF2608526E072D1009C616E /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608426E072D1009C616E /* Camera.storyboard */; };
 		4AF2608726E073B3009C616E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2608626E073B3009C616E /* Settings.storyboard */; };
 		4AF2608926E073C4009C616E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2608826E073C4009C616E /* SettingsViewController.swift */; };
@@ -92,7 +92,7 @@
 		691FC66626E9D37C00259407 /* AlertTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 691FC66426E9D37C00259407 /* AlertTableViewCell.xib */; };
 		691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC66D26E9DCB800259407 /* AlertReusableModel.swift */; };
 		691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */; };
-		692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */; };
+		692CCEB526E1E9F9006E826B /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB426E1E9F9006E826B /* Extension+UIViewController.swift */; };
 		692CCEBA26E1EAC0006E826B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692CCEB926E1EAC0006E826B /* HomeViewModel.swift */; };
 		692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */; };
 		692E8DEE26EB1B47003F7636 /* NoInternetAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */; };
@@ -103,7 +103,7 @@
 		69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */; };
 		69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */; };
 		69349AB626E5EDD2008D9AF4 /* tutorial_mapping.xml in Resources */ = {isa = PBXBuildFile; fileRef = 69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */; };
-		69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */; };
+		69349ABC26E60710008D9AF4 /* Extension+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349ABB26E60710008D9AF4 /* Extension+UILabel.swift */; };
 		693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F526E890F600F57533 /* TtsAlertController.swift */; };
 		693D72FA26E8CFEC00F57533 /* TtsAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */; };
 		694BECA626E9D060004EFAB5 /* AlertReusableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */; };
@@ -180,8 +180,12 @@
 		89495B4926F0AAA500CEA19D /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4626F0AAA500CEA19D /* WebService.swift */; };
 		89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */; };
 		89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */; };
+		89519669271EC6F900151DC8 /* TempoEngineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89519668271EC6F900151DC8 /* TempoEngineModel.swift */; };
+		8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */; };
+		895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B2945272A86F60032C40C /* TutorialContainerViewController.swift */; };
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
 		897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */; };
+		8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */ = {isa = PBXBuildFile; fileRef = 8988B7972721763000FBBA40 /* engine-tempo-value.json */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		8994A7CE26F4A83600657608 /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8994A7CD26F4A83600657608 /* img1.jpg */; };
@@ -189,7 +193,8 @@
 		89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */; };
 		89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */; };
 		89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */; };
-		89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */; };
+		89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B744422721303500E1748D /* Extension+UIApplication.swift */; };
+		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
 		89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */; };
 		89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */; };
 		89C0F7C926F1CDDD000CD5FC /* URL+Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C826F1CDDD000CD5FC /* URL+Urls.swift */; };
@@ -271,8 +276,8 @@
 		4AE97AE726E8E303007344FC /* SQLiteDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDataStore.swift; sourceTree = "<group>"; };
 		4AE97AEB26E8E365007344FC /* DataBaseConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseConstant.swift; sourceTree = "<group>"; };
 		4AEF500D26DF9E9A0052B6EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIColor.swift; sourceTree = "<group>"; };
-		4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAttibutedString.swift; sourceTree = "<group>"; };
+		4AEF501026DFA0080052B6EB /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		4AEF501226DFA0670052B6EB /* Extension+AttibutedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+AttibutedString.swift"; sourceTree = "<group>"; };
 		4AF2608426E072D1009C616E /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		4AF2608626E073B3009C616E /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4AF2608826E073C4009C616E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -321,7 +326,7 @@
 		691FC66426E9D37C00259407 /* AlertTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertTableViewCell.xib; sourceTree = "<group>"; };
 		691FC66D26E9DCB800259407 /* AlertReusableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableModel.swift; sourceTree = "<group>"; };
 		691FC67326E9DCCE00259407 /* AlertReusableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableViewModel.swift; sourceTree = "<group>"; };
-		692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
+		692CCEB426E1E9F9006E826B /* Extension+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		692CCEB926E1EAC0006E826B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		692E8DEB26EB1B47003F7636 /* NoInternetAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetAlert.swift; sourceTree = "<group>"; };
 		692E8DEC26EB1B47003F7636 /* NoInternetAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoInternetAlert.xib; sourceTree = "<group>"; };
@@ -332,7 +337,7 @@
 		69349AAC26E5EC67008D9AF4 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		69349AB126E5EDA0008D9AF4 /* TutorialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
 		69349AB526E5EDD2008D9AF4 /* tutorial_mapping.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial_mapping.xml; sourceTree = "<group>"; };
-		69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUILabel.swift; sourceTree = "<group>"; };
+		69349ABB26E60710008D9AF4 /* Extension+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UILabel.swift"; sourceTree = "<group>"; };
 		693D72F526E890F600F57533 /* TtsAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertController.swift; sourceTree = "<group>"; };
 		693D72F926E8CFEC00F57533 /* TtsAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TtsAlertViewModel.swift; sourceTree = "<group>"; };
 		694BECA426E9D060004EFAB5 /* AlertReusableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableViewController.swift; sourceTree = "<group>"; };
@@ -409,8 +414,12 @@
 		89495B4626F0AAA500CEA19D /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		89495B4726F0AAA500CEA19D /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Reusable.swift"; sourceTree = "<group>"; };
+		89519668271EC6F900151DC8 /* TempoEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineModel.swift; sourceTree = "<group>"; };
+		8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineValueParser.swift; sourceTree = "<group>"; };
+		895B2945272A86F60032C40C /* TutorialContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContainerViewController.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
+		8988B7972721763000FBBA40 /* engine-tempo-value.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "engine-tempo-value.json"; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		8994A7CD26F4A83600657608 /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
@@ -418,7 +427,8 @@
 		89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TempoControlSelectionAlertController.swift; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/ViewController/TempoControlSelectionAlertController.swift; sourceTree = SOURCE_ROOT; };
 		89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TempoControlSelectionAlert.xib; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/View/TempoControlSelectionAlert.xib; sourceTree = SOURCE_ROOT; };
 		89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoControlSpeedType.swift; sourceTree = "<group>"; };
-		89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUINavigationController.swift; sourceTree = "<group>"; };
+		89B744422721303500E1748D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
+		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
 		89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAAudioService.swift; sourceTree = "<group>"; };
 		89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		89C0F7C826F1CDDD000CD5FC /* URL+Urls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Urls.swift"; sourceTree = "<group>"; };
@@ -632,6 +642,7 @@
 				4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */,
 				3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */,
 				897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */,
+				8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -671,6 +682,7 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8988B7972721763000FBBA40 /* engine-tempo-value.json */,
 				3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */,
 				3BA8E132270B18D20095D036 /* resv_1.8.1.html */,
 				69349AA826E5DB90008D9AF4 /* tutorial.mp4 */,
@@ -785,11 +797,12 @@
 		4AEF501426DFA0C40052B6EB /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				692CCEB426E1E9F9006E826B /* ExtensionUIViewController.swift */,
-				4AEF501026DFA0080052B6EB /* ExtensionUIColor.swift */,
-				4AEF501226DFA0670052B6EB /* ExtensionAttibutedString.swift */,
-				89BC6EC426E22E270072BB0A /* ExtensionUINavigationController.swift */,
-				69349ABB26E60710008D9AF4 /* ExtensionUILabel.swift */,
+				89B744422721303500E1748D /* Extension+UIApplication.swift */,
+				692CCEB426E1E9F9006E826B /* Extension+UIViewController.swift */,
+				4AEF501026DFA0080052B6EB /* Extension+UIColor.swift */,
+				4AEF501226DFA0670052B6EB /* Extension+AttibutedString.swift */,
+				89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */,
+				69349ABB26E60710008D9AF4 /* Extension+UILabel.swift */,
 				87B56E6326EB710100BF613B /* Extension+String.swift */,
 				89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */,
 				89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */,
@@ -1058,6 +1071,7 @@
 				4AD58E9526DF9B520004FC38 /* HomeViewController.swift */,
 				69349AA426E5C18F008D9AF4 /* TutorialViewController.swift */,
 				69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */,
+				895B2945272A86F60032C40C /* TutorialContainerViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1421,6 +1435,7 @@
 			isa = PBXGroup;
 			children = (
 				89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */,
+				89519668271EC6F900151DC8 /* TempoEngineModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1734,6 +1749,7 @@
 				692E8DF726EB1D0B003F7636 /* NoInternetAlertTableViewCell.xib in Resources */,
 				50675D6126EB377F00A775E5 /* language_detection_codes.json in Resources */,
 				4AF2608726E073B3009C616E /* Settings.storyboard in Resources */,
+				8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,
 				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
@@ -1826,13 +1842,13 @@
 				963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */,
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
-				692CCEB526E1E9F9006E826B /* ExtensionUIViewController.swift in Sources */,
+				692CCEB526E1E9F9006E826B /* Extension+UIViewController.swift in Sources */,
 				89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
 				89495B3126F0A97F00CEA19D /* ITTServerViewModel.swift in Sources */,
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */,
-				89BC6EC526E22E270072BB0A /* ExtensionUINavigationController.swift in Sources */,
+				89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
 				4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */,
@@ -1878,6 +1894,7 @@
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
 				89C0F7DB26F1E4FC000CD5FC /* CameraHistoryViewController.swift in Sources */,
+				8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */,
 				87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */,
 				4AF2609B26E0B516009C616E /* MenuViewModel.swift in Sources */,
 				89C0F7D926F1CE08000CD5FC /* PrintUtility.swift in Sources */,
@@ -1897,6 +1914,7 @@
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
+				89519669271EC6F900151DC8 /* TempoEngineModel.swift in Sources */,
 				4A40AC9626F89BC800019A5B /* BaseDelegate.swift in Sources */,
 				500AAFC026E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift in Sources */,
 				5098C14D26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift in Sources */,
@@ -1905,14 +1923,14 @@
 				89C0F7D226F1CE08000CD5FC /* AlertMenuType.swift in Sources */,
 				89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */,
 				898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */,
-				4AEF501126DFA0080052B6EB /* ExtensionUIColor.swift in Sources */,
+				4AEF501126DFA0080052B6EB /* Extension+UIColor.swift in Sources */,
 				8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */,
 				89495B2526F0A8C500CEA19D /* BlockDetection.swift in Sources */,
 				4AF2609526E0A39A009C616E /* MenuCollectionViewCell.swift in Sources */,
 				500AAFC326E9B35900A3E4D9 /* langListCollectionViewCell.swift in Sources */,
 				892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */,
 				89396B292704156400D77760 /* TTTJSONModel.swift in Sources */,
-				4AEF501326DFA0670052B6EB /* ExtensionAttibutedString.swift in Sources */,
+				4AEF501326DFA0670052B6EB /* Extension+AttibutedString.swift in Sources */,
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
@@ -1951,7 +1969,7 @@
 				8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */,
 				87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */,
 				89C0F7DF26F1EA28000CD5FC /* CameraHistoryCollectionViewCell.swift in Sources */,
-				69349ABC26E60710008D9AF4 /* ExtensionUILabel.swift in Sources */,
+				69349ABC26E60710008D9AF4 /* Extension+UILabel.swift in Sources */,
 				691FC67426E9DCCE00259407 /* AlertReusableViewModel.swift in Sources */,
 				8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */,
 				3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */,
@@ -1987,8 +2005,10 @@
 				89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */,
 				89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */,
 				89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */,
+				89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */,
 				8915C21226F9E0D50091BF8B /* FavouriteCell.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
+				895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */,
 				8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */,
 				87AE1C7926FB100B00C23798 /* SocketDataModel.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,

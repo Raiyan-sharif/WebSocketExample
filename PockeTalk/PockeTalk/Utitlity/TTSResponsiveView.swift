@@ -16,8 +16,9 @@ protocol TTSResponsiveViewDelegate : AnyObject {
 
 class TTSResponsiveView : UIView {
     var wkView:WKWebView!
-    var ttsResponsiveViewDelegate : TTSResponsiveViewDelegate?
+    weak var ttsResponsiveViewDelegate : TTSResponsiveViewDelegate?
     private let TAG:String = "TTSResponsiveView"
+    public let engineName = "Responsive"
 
     init(){
         super.init(frame: .zero)
@@ -91,7 +92,7 @@ class TTSResponsiveView : UIView {
         stopEngineProcess()
     }
     
-    func isSpeaking() {
+    func checkSpeakingStatus() {
         wkView.evaluateJavaScript("isSpeaking()")  { (result, error) in
             guard error == nil else {
                 return
@@ -109,6 +110,9 @@ extension TTSResponsiveView: WKScriptMessageHandler, WKNavigationDelegate {
             case iosListener:
                     
             PrintUtility.printLog(tag: TAG, text: "iosListener: \(message.body)")
+            if message.body as! String == "Start"{
+                self.ttsResponsiveViewDelegate?.speakingStatusChanged(isSpeaking: true)
+            }
             if message.body as! String == "end"{
                 stopEngineProcess()
                 self.ttsResponsiveViewDelegate?.onVoiceEnd()

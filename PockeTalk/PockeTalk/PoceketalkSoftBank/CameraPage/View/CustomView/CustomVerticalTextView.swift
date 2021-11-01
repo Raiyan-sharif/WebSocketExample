@@ -29,5 +29,30 @@ class VerticalTextView: UILabel {
         self.backgroundColor = .gray
         self.adjustsFontSizeToFitWidth = true
         self.minimumScaleFactor = 0.5
+        self.textColor = .red
+    }
+}
+
+
+class BottomToTopVerticalTextView: UILabel {
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        self.commonInit()
+        
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit()
+    }
+    
+    func commonInit(){
+        self.transform = CGAffineTransform(rotationAngle:  ((CGFloat(180) * CGFloat.pi/180) + (90 / 180.0 * CGFloat.pi)))
+        self.numberOfLines = 0
+        self.backgroundColor = .gray
+        self.adjustsFontSizeToFitWidth = true
+        self.minimumScaleFactor = 0.5
+
     }
 }

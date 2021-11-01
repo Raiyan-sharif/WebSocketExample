@@ -17,4 +17,12 @@ extension UIViewController{
             alert.dismiss(animated: true)
         }
     }
+    
+    func embed(_ viewController:UIViewController, inView view:UIView){
+        addChild(viewController)
+        self.view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
 }

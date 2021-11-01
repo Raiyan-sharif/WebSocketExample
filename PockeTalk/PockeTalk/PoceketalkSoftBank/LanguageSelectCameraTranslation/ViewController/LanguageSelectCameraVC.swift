@@ -13,6 +13,7 @@ class LanguageSelectCameraVC: BaseViewController {
     @IBOutlet weak var btnHistoryList: UIButton!
     @IBOutlet weak var btnLangList: UIButton!
     @IBOutlet weak var layoutBottomBtnContainer: UIView!
+    @IBOutlet weak var back_btn: UIButton!
     var currentIndex: Int = 0
     let tabsPageViewController = "TabsPageViewController"
 
@@ -45,13 +46,20 @@ class LanguageSelectCameraVC: BaseViewController {
         super.viewDidLoad()
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
-        toolbarTitleLabel.text = "Language".localiz()
+        navigationViewCustomization()
         updateButton(index:0)
         setupPageViewController()
         setUpMicroPhoneIcon()
         setUpSpeechButton()
     }
 
+    func navigationViewCustomization(){
+        toolbarTitleLabel.text = "Language".localiz()
+        toolbarTitleLabel.textColor = UIColor.white
+        let back_button_image = UIImage(named: "btn_back")
+        back_btn.setTitleColor(UIColor.white, for: .selected)
+        back_btn.setImage(UIImage(named: "icon_arrow_left.9"), for: .selected)
+    }
     func setButtonTopCornerRadius(_ button: UIButton){
         if #available(iOS 11.0, *) {
             button.layer.cornerRadius = 8
@@ -112,10 +120,8 @@ class LanguageSelectCameraVC: BaseViewController {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
-                    let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.homeMicTapTimeStamp = currentTS
                     controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionCamera
                     self.navigationController?.pushViewController(controller, animated: true);
                 } else {

@@ -14,31 +14,54 @@ class CameraHistoryViewController: BaseViewController {
     private let rightSpecing:CGFloat = 16
     private let totalSub:CGFloat = 48
     
+    let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
     private let viewModel = CameraHistoryViewModel()
-    
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
+    lazy var backButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "btn_back"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonEventListener(_:)), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel.viewDidLoad(self)
         getHistoryImages()
         setUpViews()
+        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTappedEvent))
+        collectionView.addGestureRecognizer(tapGesture)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        if let view = UIApplication.shared.keyWindow {
+            view.addSubview(backButton)
+            //setupBackButton()
+            backButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0),
+                backButton.heightAnchor.constraint(equalToConstant: 45),
+                backButton.widthAnchor.constraint(equalToConstant: 45)
+            ])
+            backButton.layer.cornerRadius = 17.5
+            backButton.layer.masksToBounds = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(true)
+        removeFloatingButton()
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
     
     func setUpViews() {
         
@@ -60,7 +83,7 @@ class CameraHistoryViewController: BaseViewController {
         
     }
     
-    @IBAction func backButtonEventListener(_ sender: Any) {
+    @objc func backButtonEventListener(_ button: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -68,6 +91,26 @@ class CameraHistoryViewController: BaseViewController {
         self.viewModel.fetchCameraHistoryImages()
     }
     
+    @objc func longTappedEvent(recognizer: UILongPressGestureRecognizer)  {
+        if let indexPath = self.collectionView?.indexPathForItem(at: recognizer.location(in: self.collectionView)) {
+            
+            //let cell = self.collectionView?.cellForItem(at: indexPath)
+
+            if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryPopUPViewController.self)) as? CameraHistoryPopUPViewController {
+                if let id = self.viewModel.cameraHistoryImages[indexPath.item].dbID {
+                    vc.id = id
+                }
+                vc.index = indexPath.item
+                vc.delegate = self
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }
+        } else {
+            PrintUtility.printLog(tag: "CameraHistoryViewController", text: "Tapped on history image")
+        }
+    }
+
     
 }
 
@@ -86,19 +129,29 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        
+                
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
             if let image = self.viewModel.cameraHistoryImages[indexPath.item].image {
                 vc.image = image
                 vc.fromHistoryVC = true
                 vc.cameraHistoryImageIndex = indexPath.row
+                if let id = self.viewModel.cameraHistoryImages[indexPath.item].dbID {
+                    vc.historyID = id
+                }
+                
             }
             self.navigationController?.pushViewController(vc, animated: true)
         }
 
     }
+    
+    func removeFloatingButton() {
+
+        if let backButtonView = UIApplication.shared.keyWindow, backButton.isDescendant(of: backButtonView) {
+            backButton.removeFromSuperview()
+        }
+    }
+
     
 }
 
@@ -108,6 +161,44 @@ extension CameraHistoryViewController: CameraHistoryViewModelDelegates {
             collectionView.reloadData()
         }
     }
+}
+
+extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
+    func deleteImageFromFistoryPopUp(index: Int, id: Int64) {
+        if (self.viewModel.cameraHistoryImages[index].dbID == id) {
+            self.viewModel.cameraHistoryImages.remove(at: index)
+            self.collectionView.reloadData()
+            if self.viewModel.cameraHistoryImages.count == 0 {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
     
     
+    func openImageFromHistoryPopUp(index: Int) {
+        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+            if let image = self.viewModel.cameraHistoryImages[index].image {
+                vc.image = image
+                vc.fromHistoryVC = true
+                vc.cameraHistoryImageIndex = index
+                if let id = self.viewModel.cameraHistoryImages[index].dbID {
+                    vc.historyID = id
+                }
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
+    }
+    
+    func shareImageFromHistoryPopUp(id: Int64) {
+        
+        let text = self.viewModel.getIDWiseTranslatedAndDetectedData(id: id)
+        let dataToSend = [text]
+
+        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+
 }

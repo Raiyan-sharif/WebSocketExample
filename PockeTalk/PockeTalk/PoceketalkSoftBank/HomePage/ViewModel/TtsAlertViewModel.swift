@@ -19,10 +19,13 @@ class TtsAlertViewModel: BaseModel {
         } catch _ { return nil}
     }
     
-    func saveChatItem(chatItem: ChatEntity){
+    func saveChatItem(chatItem: ChatEntity)-> Int64{
         do {
-            _ = try ChatDBModel.init().insert(item: chatItem)
+            let row = try ChatDBModel.init().insert(item: chatItem)
+            UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            return row
         } catch _ {}
+        return -1
     }
     
     func deleteChatItemFromHistory(chatItem: ChatEntity){

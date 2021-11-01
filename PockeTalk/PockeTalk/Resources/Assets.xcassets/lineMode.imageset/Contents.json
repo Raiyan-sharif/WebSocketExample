@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "line_mode.png",
+      "filename" : "block_mode.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "line_mode-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "line_mode-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

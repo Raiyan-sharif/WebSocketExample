@@ -19,8 +19,6 @@ class ImageCroppingViewController: BaseViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var cropButton: UIButton!
     @IBOutlet weak var centeredView: UIView!
-    @IBOutlet weak var menuButton: UIButton!
-    
     var imageFrameWidth = CGFloat()
     var imageFrameHeight = CGFloat()
     
@@ -305,16 +303,16 @@ class ImageCroppingViewController: BaseViewController {
                                                right: offx)
     }
 
-    @IBAction func menuTapAction(_ sender: UIButton) {
-        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
-        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
+    @IBAction func cancelButtonEventListener(_ sender: Any) {
+        
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        for viewController in viewControllers {
+            if viewController is CameraViewController {
+                self.navigationController?.popToViewController(viewController, animated: true)
+            }
         }
     }
-
-    @IBAction func cancelButtonEventListener(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     @IBAction func cropButtonEventListener(_ sender: Any) {
         guard let image = imageView.image else {
             return
@@ -336,13 +334,17 @@ class ImageCroppingViewController: BaseViewController {
             
         }
         
-        
-        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-        if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
-            vc.image = croppedImage
-            vc.imageHeight = imageFrameHeight
-            vc.imageWidth = imageFrameWidth
-            self.navigationController?.pushViewController(vc, animated: true)
+        if Reachability.isConnectedToNetwork() {
+            let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+            if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
+                vc.image = croppedImage
+                vc.imageHeight = imageFrameHeight
+                vc.imageWidth = imageFrameWidth
+                vc.originalImage = image
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            GlobalMethod.showNoInternetAlert()
         }
     }
     

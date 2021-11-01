@@ -206,10 +206,8 @@ class LangSelectVoiceVC: BaseViewController {
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
-                    let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.homeMicTapTimeStamp = currentTS
                     controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
                     self.navigationController?.pushViewController(controller, animated: true);
                 } else {

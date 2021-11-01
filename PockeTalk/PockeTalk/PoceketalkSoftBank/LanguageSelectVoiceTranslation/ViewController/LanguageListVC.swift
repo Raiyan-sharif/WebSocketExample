@@ -38,7 +38,7 @@ class LanguageListVC: BaseViewController {
         self.langListTableView.backgroundColor = UIColor.clear
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
         PrintUtility.printLog(tag: TAG, text:" position \(selectedItemPosition)")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
@@ -75,18 +75,36 @@ extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
         
         let languageItem = languageItems[indexPath.row]
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
+        cell.langNameUnSelecteLabel.text = "\(languageItem.sysLangName) (\(languageItem.name))"
+        cell.langNameUnSelecteLabel.adjustsFontSizeToFitWidth = false
+        cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
         PrintUtility.printLog(tag: TAG, text:" value \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
         if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
             let languageManager = LanguageSelectionManager.shared
             if(languageManager.hasTtsSupport(languageCode: languageItem.code)){
+                cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
                 cell.imageNoVoice.isHidden = true
             }else{
+                cell.unselectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
                 cell.imageNoVoice.isHidden = false
             }
+            cell.lableLangName.isHidden = false
+            cell.langNameUnSelecteLabel.isHidden = true
+            cell.lableLangName.holdScrolling = false
+            cell.lableLangName.type = .continuous
+            cell.lableLangName.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+            cell.lableLangName.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
+
             cell.imageLangItemSelector.isHidden = false
             cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
             PrintUtility.printLog(tag: TAG, text:" matched lang \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
         }else{
+            cell.unselectedLabelTrailingConstraint.constant = kUnselectedLanguageTrailingConstant
+            cell.lableLangName.isHidden = true
+            cell.langNameUnSelecteLabel.isHidden = false
+            cell.lableLangName.holdScrolling = true
             cell.imageLangItemSelector.isHidden = true
             cell.imageNoVoice.isHidden = true
             cell.langListCellContainer.backgroundColor = .black

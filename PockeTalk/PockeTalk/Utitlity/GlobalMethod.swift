@@ -213,7 +213,7 @@ class GlobalMethod {
     }
     
     // TTS alert
-    static func showTtsAlert (viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool) {
+    static func showTtsAlert (viewController: UIViewController?, chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, hideTalkButton: Bool = false) {
         let chatItem = chatItemModel.chatItem!
         if saveDataToDB == true{
             do {
@@ -232,8 +232,10 @@ class GlobalMethod {
         controller.isFromHistory = fromHistory
         controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
         controller.isRecreation = isRecreation
+        controller.hideTalkButton = hideTalkButton
         if(viewController?.navigationController != nil){
             let navController = UINavigationController.init(rootViewController: controller)
+            navController.modalPresentationStyle = .fullScreen
             controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
             viewController?.navigationController?.present(navController, animated: true, completion: nil)
@@ -298,7 +300,37 @@ class GlobalMethod {
         viewController?.present(alert, animated: true, completion: nil)
     }
 
-
+    static func removeQuotationMark (input : String) -> String {
+        var output = Array(input)
+        var index = 0
+        while index < output.count {
+            let element = output[index]
+            if element == "\"" {
+                if index == 0 || index == output.count - 1 {
+                    output.remove(at: index)
+                    index -= 1
+                } else if (index > 0) && output[index - 1] == " " {
+                    output.remove(at: index)
+                    index -= 1
+                } else if (index < output.count - 1) && output[index + 1] == " " {
+                    output.remove(at: index)
+                    index -= 1
+                } else {
+                    output[index] = " "
+                }
+            }
+            index += 1
+        }
+        return String(output)
+    }
+    
+    static func getRetranslationAndReverseTranslationData(sttdata: String, srcLang: String, destlang: String)-> String {
+           PrintUtility.printLog(tag: "TTT SRC TEXT", text: sttdata)
+           PrintUtility.printLog(tag: "TTT SRC LANG", text: srcLang)
+           PrintUtility.printLog(tag: "TTT DEST LANG", text: destlang)
+           let jsonData = try! JSONEncoder().encode(["stt": sttdata, "srclang": srcLang,"destlang": destlang])
+           return String(data: jsonData, encoding: .utf8)!
+    }
 
 }
 
@@ -324,11 +356,19 @@ class GlobalAlternative{
        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
        controller.isRecreation = isRecreation
        controller.isFromSpeechProcessing = fromSpeech
+       controller.currentTSDelegate = viewController as? CurrentTSDelegate
+       controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
        if(viewController?.navigationController != nil){
-           let navController = UINavigationController.init(rootViewController: controller)
-           controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-           controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-           viewController?.navigationController?.present(navController, animated: true, completion: nil)
+           if fromHistory {
+               controller.modalPresentationStyle = .fullScreen
+               viewController?.present(controller, animated: true, completion: nil)
+           } else {
+               let navController = UINavigationController.init(rootViewController: controller)
+               controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+               controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+               viewController?.navigationController?.present(navController, animated: true, completion: nil)
+           }
+           
        }else{
            controller.modalPresentationStyle = .fullScreen
            viewController?.present(controller, animated: true, completion: nil)

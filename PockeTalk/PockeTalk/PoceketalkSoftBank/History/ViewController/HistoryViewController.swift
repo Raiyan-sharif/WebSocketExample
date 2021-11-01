@@ -22,18 +22,21 @@ class HistoryViewController: BaseViewController {
 
     var  isCollectionViewVisible = false
     var loclItems = [HistoryModel]()
-    var historyViewModel:HistoryViewModeling!
+    var historyViewModel: HistoryViewModel!
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
     let buttonWidth : CGFloat = 100
     var deletedCellHeight = CGFloat()
-    
+    private var spinnerView : SpinnerView!
     var navController: UINavigationController?
 
     private(set) var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
-
+    weak var speechProDismissDelegateFromHistory : SpeechProcessingDismissDelegate?
+    var isReverse = false
+    private var socketManager = SocketManager.sharedInstance
+    private var speechProcessingVM : SpeechProcessingViewModeling!
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
         let collectionView = UICollectionView(frame:.zero ,collectionViewLayout:historylayout)
@@ -46,11 +49,6 @@ class HistoryViewController: BaseViewController {
     }()
 
     private lazy var bottmView:UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var topView:UIView = {
         let view = UIView()
         return view
     }()
@@ -67,11 +65,27 @@ class HistoryViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
             self.showCollectionView()
         }
-        bindData()
         
         let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToDismiss))
         swipeToDismiss.direction = .up
         self.view.addGestureRecognizer(swipeToDismiss)
+        
+        self.speechProcessingVM = SpeechProcessingViewModel()
+        bindData()
+        //SocketManager.sharedInstance.connect()
+        socketManager.socketManagerDelegate = self
+        
+    }
+    
+    private func addSpinner(){
+        spinnerView = SpinnerView();
+        self.view.addSubview(spinnerView)
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        spinnerView.isHidden = true
     }
     
     @objc func swipeToDismiss(gesture: UIGestureRecognizer) {
@@ -115,7 +129,7 @@ class HistoryViewController: BaseViewController {
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
         self.view.addSubview(bottmView)
-        self.view.addSubview(topView)
+        addSpinner()
         let window = UIApplication.shared.windows.first
         
         bottmView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,13 +139,6 @@ class HistoryViewController: BaseViewController {
         bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottmView.clipsToBounds =  true
         bottmView.backgroundColor = UIColor.black
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        topView.heightAnchor.constraint(equalToConstant: (window?.safeAreaInsets.top ?? 20) + 55).isActive = true
-        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topView.clipsToBounds =  true
-        topView.backgroundColor = UIColor.black
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -143,11 +150,9 @@ class HistoryViewController: BaseViewController {
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
         collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
-//        collectionView.bottomAnchor.constraint(equalTo: bottmView)
         collectionView.alpha = 0.0
         
-        self.view.addSubview(btnMenu)
-        self.view.addSubview(cameraButton)
+        self.view.addSubview(backBtn)
         
         let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
         talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
@@ -155,6 +160,17 @@ class HistoryViewController: BaseViewController {
     }
 
 
+    private var backBtn:UIButton!{
+            guard let window = UIApplication.shared.keyWindow else {return nil}
+            let topPadding = window.safeAreaInsets.top
+            let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+            okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+            okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+            return okBtn
+    }
+    @objc func actionBack () {
+            self.dismissHistory(animated: true, completion: nil )
+    }
     fileprivate func proceedToTakeVoiceInput() {
         if Reachability.isConnectedToNetwork() {
             let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
@@ -163,6 +179,8 @@ class HistoryViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
+            controller.speechProcessingDismissDelegate = self
+            controller.isFromTutorial = false
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
@@ -292,7 +310,45 @@ class HistoryViewController: BaseViewController {
                 }
             }
         }
+        speechProcessingVM.isFinal.bindAndFire{[weak self] isFinal  in
+            guard let `self` = self else { return }
+            if isFinal{
+                SocketManager.sharedInstance.disconnect()
+                PrintUtility.printLog(tag: "TTT text: ",text: self.speechProcessingVM.getTTT_Text)
+                PrintUtility.printLog(tag: "TTT src: ", text: self.speechProcessingVM.getSrcLang_Text)
+                PrintUtility.printLog(tag: "TTT dest: ", text: self.speechProcessingVM.getDestLang_Text)
+                var isTop = self.selectedChatItemModel?.chatItem?.chatIsTop
+                var nativeText = self.selectedChatItemModel?.chatItem!.textNative
+                var nativeLangName = self.selectedChatItemModel?.chatItem?.textNativeLanguage
+                let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: self.speechProcessingVM.getDestLang_Text)?.name
+                if(self.isReverse){
+                    isTop = self.selectedChatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
+                    nativeText = self.selectedChatItemModel?.chatItem!.textTranslated
+                    nativeLangName = self.selectedChatItemModel?.chatItem?.textTranslatedLanguage
+                }
+                
+                let targetText = self.speechProcessingVM.getTTT_Text
+
+                let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+                let row = self.historyViewModel.saveChatItem(chatItem: chatEntity)
+                chatEntity.id = row
+                self.selectedChatItemModel?.chatItem = chatEntity
+             
+                self.spinnerView.isHidden = true
+                GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false, hideTalkButton: true)
+                self.historyViewModel.addItem(chatEntity)
+                self.collectionView.reloadData()
+                self.scrollToBottom()
+            }
+        }
     }
+    
+    func scrollToBottom(){
+        let item = self.collectionView(self.collectionView, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = IndexPath(item: item, section: 0)
+        self.collectionView.scrollToItem(at: lastItemIndex, at: .top, animated: true)
+    }
+
 }
 
 extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -366,7 +422,7 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openTTTResult(_ idx: IndexPath){
         let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -448,42 +504,46 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
 extension HistoryViewController:HistoryLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
-        let font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        let font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
         
         let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
-        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 20, text: historyModel.textTranslated!, font: font)
-        if(count == 1){
-            return 20 + fromHeight + 40 + toHeight + 40
-        }else if(count == 2){
-            return 20 + fromHeight + 60 + toHeight + 40
-        }
+        let count = self.actualNumberOfLines(width: SIZE_WIDTH - 80, text: historyModel.textTranslated!, font: font)
+
         PrintUtility.printLog(tag: "HistoryViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
-        return 20 + fromHeight + 100 + toHeight + 40
+        PrintUtility.printLog(tag: "HistoryViewController", text: "Font \(FontUtility.getFontSizeIndex())")
+       
+        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40
+        
     }
 }
 
 
 extension HistoryViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
-        let chatItem = selectedChatItemModel?.chatItem!
-        let isTop = chatItem?.chatIsTop
-        let nativeText = chatItem!.textNative
-        let nativeLangName = chatItem!.textNativeLanguage!
-        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguage)?.name
-        
-        //TODO call websocket api for ttt
-        let targetText = chatItem!.textTranslated
-        
-        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
-        
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: true, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
-        self.historyViewModel.addItem(chatEntity)
-    
+        if Reachability.isConnectedToNetwork() {
+            spinnerView.isHidden = false
+            let chatItem = selectedChatItemModel?.chatItem!
+            self.isReverse = false
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                let nativeText = chatItem!.textNative
+                let nativeLangName = chatItem!.textNativeLanguage!
+                    
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else{
+            GlobalMethod.showNoInternetAlert()
+        }
     }
 }
 
 extension HistoryViewController : AlertReusableDelegate {
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
+
+    }
+
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
         self.collectionView.performBatchUpdates{
@@ -518,15 +578,38 @@ extension HistoryViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: chatItemModel!, hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
-        self.historyViewModel.addItem(chatItemModel!.chatItem!)
+        if Reachability.isConnectedToNetwork() {
+            self.spinnerView.isHidden = false
+            SocketManager.sharedInstance.connect()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self!.selectedChatItemModel = chatItemModel
+
+                self!.isReverse = true
+                let nativeText = self!.selectedChatItemModel?.chatItem?.textTranslated
+                let nativeLangName = self!.selectedChatItemModel?.chatItem!.textTranslatedLanguage
+                let targetLangName = self!.selectedChatItemModel?.chatItem!.textNativeLanguage!
+
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            }
+        }else{
+            GlobalMethod.showNoInternetAlert()
+        }
+        
     }
     
 }
 
 extension HistoryViewController: TtsAlertControllerDelegate{
+    func dismissed() {
+        //SocketManager.sharedInstance.connect()
+        socketManager.socketManagerDelegate = self
+    }
+    
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.addItem(chatItemModel.chatItem!)
+        self.collectionView.reloadData()
+        self.scrollToBottom()
     }
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {
@@ -541,4 +624,25 @@ extension HistoryViewController: TtsAlertControllerDelegate{
         self.historyViewModel.replaceItem(chatItemModel.chatItem!, chatItemModel.idxPath!.row)
         self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
     }
+}
+
+extension HistoryViewController : SpeechProcessingDismissDelegate {
+    func showTutorial() {
+        self.speechProDismissDelegateFromHistory?.showTutorial()
+
+    }
+}
+
+extension HistoryViewController : SocketManagerDelegate{
+    func faildSocketConnection(value: String) {
+        PrintUtility.printLog(tag: TAG, text: value)
+    }
+    
+    func getText(text: String) {
+        PrintUtility.printLog(tag: "Retranslation: ", text: text)
+        speechProcessingVM.setTextFromScoket(value: text)
+    }
+    
+    func getData(data: Data) {}
+    
 }

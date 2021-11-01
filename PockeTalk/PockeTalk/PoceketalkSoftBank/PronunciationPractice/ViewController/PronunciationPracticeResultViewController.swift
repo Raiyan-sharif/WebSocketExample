@@ -10,6 +10,7 @@ import SwiftRichString
 import WebKit
 
 class PronunciationPracticeResultViewController: BaseViewController {
+    let TAG = "\(PronunciationPracticeResultViewController.self)"
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet var viewRoot: UIView!
     @IBOutlet weak var viewFailureContainer: UIView!
@@ -60,6 +61,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         let vc = TempoControlSelectionAlertController.init()
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        vc.delegate = self
         present(vc, animated: true, completion: nil)
     }
     override func viewDidLoad() {
@@ -75,6 +77,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         }
+        UserDefaultsProperty<String>(kTempoControlSpeed).value = TempoControlSpeedType.standard.rawValue
     }
     
     @objc func willResignActive(_ notification: Notification) {
@@ -114,21 +117,25 @@ class PronunciationPracticeResultViewController: BaseViewController {
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
-        RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-            if isGranted {
-                var dict = [String:String]()
-                dict["vc"] = "PronunciationPracticeResultViewController"
-                dict["text"] = self.orginalText
-                dict["langCode"] = self.languageCode
-                NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
-                if(self.navigationController != nil){
-                    self.navigationController?.popViewController(animated: true)
-                }else{
-                    self.dismiss(animated: true, completion: nil)
+        if Reachability.isConnectedToNetwork() {
+            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+                if isGranted {
+                    var dict = [String:String]()
+                    dict["vc"] = "PronunciationPracticeResultViewController"
+                    dict["text"] = self.orginalText
+                    dict["langCode"] = self.languageCode
+                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
+                    if(self.navigationController != nil){
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                } else {
+                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
                 }
-            } else {
-                GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
+        } else {
+            GlobalMethod.showNoInternetAlert(in: self)
         }
     }
 
@@ -159,7 +166,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
     
     func playTTS(){
-        ttsResponsiveView.isSpeaking()
+        ttsResponsiveView.checkSpeakingStatus()
         ttsResponsiveView.setRate(rate: rate)
         PrintUtility.printLog(tag: "Translate ", text: orginalText )
         ttsResponsiveView.TTSPlay(voice: voice,text: orginalText )
@@ -176,4 +183,20 @@ extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate 
     func onVoiceEnd() { }
     
     func onReady() {}
+}
+extension PronunciationPracticeResultViewController: TempoControlSelectionDelegate{
+    func onStandardSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .standard)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
+    
+    func onSlowSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .slow)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
+    
+    func onVerySlowSelection() {
+        rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .verySlow)
+        PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+    }
 }

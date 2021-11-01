@@ -15,6 +15,8 @@ class CustomAlertDailogViewController: BaseViewController {
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
 
+    @IBOutlet var bottomDevider: UIView!
+    @IBOutlet var horizontalDevicer: UIView!
     @IBOutlet var baseView: UIView!
     var alertTitle = String()
     var alertMessage = String()
@@ -23,6 +25,7 @@ class CustomAlertDailogViewController: BaseViewController {
     var noTitleShown = Bool()
     var noActionButton = Bool()
     var buttonAction:(() -> Void)?
+    var hideCancelButton:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +60,11 @@ class CustomAlertDailogViewController: BaseViewController {
         actionButton.setTitleColor(UIColor.systemBlue, for: .normal)
         titleView.visiblity(gone: noTitleShown, dimension: 60)
         actionButton.visiblity(gone: noActionButton)
+        if hideCancelButton{
+            self.cancelButton.isHidden = true
+            self.horizontalDevicer.isHidden = true
+            self.bottomDevider.isHidden = true
+        }
     }
 
     @IBAction func onCancel(_ sender: Any) {

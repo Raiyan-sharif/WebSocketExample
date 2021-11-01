@@ -12,7 +12,7 @@ class CustomAlertViewModel:BaseModel {
     func alertDialogWithoutTitleWithActionButton(message:String, buttonTitle:String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
         let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
-        alertVC.alertTitle = "title"
+        //alertVC.alertTitle = "title"
         alertVC.alertMessage = message
         alertVC.alertButton = buttonTitle
         alertVC.noTitleShown = true
@@ -25,12 +25,23 @@ class CustomAlertViewModel:BaseModel {
     func alertDialogWithoutTitleWithoutActionButton(message:String) -> CustomAlertDailogViewController {
         let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
-        alertVC.alertTitle = "title"
+        //alertVC.alertTitle = "title"
         alertVC.alertMessage = message
         alertVC.alertButton = "buttonTitle"
         alertVC.noTitleShown = true
         alertVC.noActionButton = true
 
+        return alertVC
+    }
+
+
+    func alertDialogWithoutTitleWithOkButton(message:String) -> CustomAlertDailogViewController {
+        let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
+        let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
+        //alertVC.alertTitle = "title"
+        alertVC.alertMessage = message
+        alertVC.alertButton = "OK"
+        alertVC.hideCancelButton = true
         return alertVC
     }
 
@@ -56,6 +67,19 @@ class CustomAlertViewModel:BaseModel {
         alertVC.noTitleShown = false
         alertVC.noActionButton = true
 
+        return alertVC
+    }
+    
+    func alertDialogWithoutTitleWithOkButtonAction(message:String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
+        let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
+        let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
+        //alertVC.alertTitle = "title"
+        alertVC.alertMessage = message
+        alertVC.alertButton = "OK"
+        alertVC.hideCancelButton = true
+        alertVC.noActionButton = false
+        alertVC.buttonAction = completion
+        
         return alertVC
     }
 

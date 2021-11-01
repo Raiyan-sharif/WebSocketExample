@@ -28,7 +28,7 @@
 "retranslation" = "他の言語に翻訳";
 "reverse" = "逆翻訳";
 "pronunciation_practice" = "発音練習";
-"send_an_email" = "共有";
+"share" = "共有";
 "cancel" = "キャンセル";
 "internet_connection_error" = "インターネット接続がありません";
 "connect_via_wifi" = "Wi-Fiに接続する";
@@ -59,3 +59,10 @@
 "Socket_fail_message" = "Socket Connected Failed";
 "OK" = "わかっ";
 "no_stt_msg" = "言語はサポートされていません";
+"open" = "開ける";
+"delete_from_Camera_History" = "消去";
+"history_cleared" = "削除しました";
+"camera_history_cleared" = "カメラ翻訳の履歴を削除しました。";
+"favorite_history_cleared" = "削除しました。";
+"error_no_text_detected" = "画像からテキストが検出されませんでした";
+"error_network" = "ネットワークエラー。";

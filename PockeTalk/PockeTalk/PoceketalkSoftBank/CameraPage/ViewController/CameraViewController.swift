@@ -26,7 +26,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
     
-    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
     @IBOutlet weak var fromLangLabel: MarqueeLabel!
     var activeCamera: AVCaptureDevice?
@@ -54,8 +54,11 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let endAngle : CGFloat = CGFloat(Double.pi * 2)
     let radius : CGFloat = 25
     let lineWidth : CGFloat = 2
-    let removeTime : Double = 0.5
+    let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
+    
+    /// Camera History
+    private let cameraHistoryViewModel = CameraHistoryViewModel()
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
@@ -109,7 +112,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         setUPViews()
         previewLayer.videoGravity = .resize
         previewView = cameraPreviewView
-        previewView.frame = cameraPreviewView.bounds
+        previewView.frame = cameraPreviewView.frame
         cropImageRect = cameraPreviewView.frame
         previewView.layer.addSublayer(previewLayer)
         view.insertSubview(previewView, at: 0)
@@ -144,17 +147,17 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         PrintUtility.printLog(tag: "Session", text: "\(session.isInterrupted)")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
     
-    @IBAction func menuTapAction(_ sender: UIButton) {
-        let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
-        if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            self.navigationController?.pushViewController(settinsViewController, animated: true)
-        }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
+
     func setUPViews() {
+        captureButton.isExclusiveTouch = true
+        changeStatusBarColor()
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
         
@@ -165,6 +168,22 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         self.zoomLevel.layer.borderColor = UIColor.white.cgColor
     }
     
+    func changeStatusBarColor() {
+        if #available(iOS 13.0, *) {
+                let app = UIApplication.shared
+                let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+
+                let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
+                statusbarView.backgroundColor = UIColor.black
+                view.addSubview(statusbarView)
+            } else {
+                let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+                statusBar?.backgroundColor = UIColor.red
+            }
+
+    }
+    
+    
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
@@ -173,11 +192,25 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.cameraHistoryViewModel.fetchCameraHistoryImages()
+        if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
+            cameraHistoryImageView.isHidden = true
+        } else {
+            cameraHistoryImageView.isHidden = false
+            cameraHistoryImageView.image = self.cameraHistoryViewModel.cameraHistoryImages[0].image
+        }
+        
         sessionQueue.async { [unowned self] in
             if self.sessionSetupSucceeds {
+                do {
+                    try activeCamera?.lockForConfiguration()
+                    activeCamera?.videoZoomFactor = 1.0
+                    activeCamera?.unlockForConfiguration()
+                }catch {
+                    return
+                }
                 self.session.startRunning()
             }
         }
@@ -199,7 +232,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         super.viewWillLayoutSubviews()
         previewLayer.frame = previewView.layer.bounds
     }
-    
     
     func takePhoto(_ completion: ((Photo) -> Void)? = nil) {
         guard sessionSetupSucceeds else { return }
@@ -338,7 +370,7 @@ extension CameraViewController {
                 self.capturedImage = image
             }
             //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
-            layoutCameraResult(uiImage: capturedImage)
+            layoutCameraResult(uiImage: image!)
         }
     }
     
@@ -354,7 +386,8 @@ extension CameraViewController {
             let x = touchPoint.location(in: previewView).y / screenSize.height
             let y = 1.0 - touchPoint.location(in: previewView).x / screenSize.width
             let focusPoint = CGPoint(x: x, y: y)
-            
+            let location = touchPoint.location(in: previewView)
+            let focusCircleLocation = CGPoint(x: location.x, y: location.y+radius)
             let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
             
             if let device = backCamera {
@@ -363,7 +396,7 @@ extension CameraViewController {
                     device.focusPointOfInterest = focusPoint
                     
                     /// Pass the touch point of camera preview view as center point
-                    pointInCamera(centerPoint: touchPoint.location(in: previewView))
+                    pointInCamera(centerPoint: focusCircleLocation)
                     device.focusMode = .autoFocus
                     device.exposurePointOfInterest = focusPoint
                     device.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
