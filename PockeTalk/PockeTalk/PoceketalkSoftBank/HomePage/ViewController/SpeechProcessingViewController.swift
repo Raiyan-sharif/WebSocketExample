@@ -440,6 +440,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func didPressMicroBtn(_ notification: Notification) {
+        //socketManager.socketManagerDelegate = self
         SocketManager.sharedInstance.connect()
         if let string = notification.userInfo?["vc"] as? String {
             if string == "PronunciationPracticeViewController" {
@@ -561,7 +562,7 @@ class SpeechProcessingViewController: BaseViewController{
 //MARK: - PronunciationResult
 extension SpeechProcessingViewController: PronunciationResult {
     func dismissResultHome() {
-        SocketManager.sharedInstance.connect()
+        //SocketManager.sharedInstance.connect()
         pronunciationView.isHidden = true
         titleLabel.isHidden = false
         exampleLabel.isHidden = false

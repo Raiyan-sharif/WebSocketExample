@@ -68,7 +68,7 @@ class FavouriteViewController: BaseViewController {
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
         //SocketManager.sharedInstance.connect()
-        socketManager.socketManagerDelegate = self
+//        socketManager.socketManagerDelegate = self
     }
     
     func initDelegate<T>(_ vc: T) {
@@ -351,6 +351,7 @@ extension FavouriteViewController : RetranslationDelegate{
             self.isReverse = false
             let nativeText = chatItem!.textNative
             let nativeLangName = chatItem!.textNativeLanguage!
+            socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
@@ -398,7 +399,7 @@ extension FavouriteViewController : AlertReusableDelegate {
             let nativeText = selectedChatItemModel?.chatItem?.textTranslated
             let nativeLangName = selectedChatItemModel?.chatItem!.textTranslatedLanguage
             let targetLangName = selectedChatItemModel?.chatItem!.textNativeLanguage!
-            
+            socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
