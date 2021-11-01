@@ -573,7 +573,14 @@ extension HistoryViewController : AlertReusableDelegate {
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
-        self.present(controller, animated: true, completion: nil)
+        let transition = CATransition()
+                    transition.duration = 0.5
+                    transition.type = CATransitionType.push
+                    transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.navController?.pushViewController(controller, animated: false)
+        //self.present(controller, animated: true, completion: nil)
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
