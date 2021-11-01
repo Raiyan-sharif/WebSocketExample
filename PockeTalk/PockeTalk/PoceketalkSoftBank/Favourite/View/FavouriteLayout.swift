@@ -1,3 +1,7 @@
+//
+//  FavouriteLayout.swift
+//  PockeTalk
+//
 
 import UIKit
 protocol FavouriteLayoutDelegate {

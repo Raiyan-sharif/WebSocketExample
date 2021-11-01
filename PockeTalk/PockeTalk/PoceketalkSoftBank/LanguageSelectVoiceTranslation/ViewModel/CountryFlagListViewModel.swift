@@ -2,8 +2,6 @@
 //  CountryWiseLanguageSelectionViewModel.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 8/9/21.
-//
 
 import Foundation
 class CountryFlagListViewModel: BaseModel{

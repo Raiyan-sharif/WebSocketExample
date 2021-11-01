@@ -2,8 +2,6 @@
 //  CustomAlertViewModel.swift
 //  PockeTalk
 //
-//  Created by Kenedy Joy on 22/9/21.
-//
 
 import UIKit
 

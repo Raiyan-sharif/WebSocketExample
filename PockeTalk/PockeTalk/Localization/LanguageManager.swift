@@ -2,17 +2,6 @@
 //  LanguageManager.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/2/21.
-//  Copyright © 2021 Piklu Majumder-401. All rights reserved.
-//
-
-//
-//  Languagemanager.swift
-//  EncountShinden
-//
-//  Created by Morshed Alam on 28/5/20.
-//  Copyright © 2020 Morshed Alam. All rights reserved.
-//
 
 import UIKit
 

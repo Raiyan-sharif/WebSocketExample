@@ -1,6 +1,6 @@
 //
 //  ColorProgressStrokeAnimation.swift
-//  Custom Loader
+//  PockeTalk
 //
 //
 

@@ -2,8 +2,6 @@
 //  TTSResponsiveView.swift
 //  PockeTalk
 //
-//  Created by Jishnu on 5/10/21.
-//
 
 import WebKit
 import UIKit

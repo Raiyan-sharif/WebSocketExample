@@ -2,8 +2,6 @@
 //  SettingsViewController.swift
 //  PockeTalk
 //
-//  Created by Khairuzzaman Shipon on 9/2/21.
-//
 
 import UIKit
 

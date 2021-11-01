@@ -2,8 +2,6 @@
 //  CountryListItem.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 8/9/21.
-//
 
 import Foundation
 // MARK: - CountryList

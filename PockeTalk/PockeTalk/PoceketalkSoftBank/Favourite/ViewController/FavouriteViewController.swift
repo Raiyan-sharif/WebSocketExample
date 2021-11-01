@@ -1,3 +1,8 @@
+//
+//  FavouriteViewController
+//  PockeTalk
+//
+
 import UIKit
 
 protocol FavouriteViewControllerDelegates {

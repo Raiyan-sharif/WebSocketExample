@@ -1,6 +1,6 @@
 //
 //  AnimatedSLayer.swift
-//  Custom Loader
+//  PockeTalk
 //
 
 

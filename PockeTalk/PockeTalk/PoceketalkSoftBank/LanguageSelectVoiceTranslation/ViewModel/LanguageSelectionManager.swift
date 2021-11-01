@@ -2,8 +2,6 @@
 //  LanguageSelectionManager.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 6/9/21.
-//
 
 import UIKit
 import SwiftyXMLParser

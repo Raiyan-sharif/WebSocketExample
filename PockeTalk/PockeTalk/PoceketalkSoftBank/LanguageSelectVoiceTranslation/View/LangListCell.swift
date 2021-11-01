@@ -2,8 +2,6 @@
 //  LangListCell.swift
 //  PockeTalk
 //
-//  Created by Sadikul Bari on 4/9/21.
-//
 
 import UIKit
 import MarqueeLabel

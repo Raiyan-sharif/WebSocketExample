@@ -2,8 +2,6 @@
 //  SystemLanguageCell.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/2/21.
-//
 
 import UIKit
 

@@ -1,6 +1,6 @@
 //
 //  RotationProgress.swift
-//  Custom Loader
+//  PockeTalk
 //
 
 

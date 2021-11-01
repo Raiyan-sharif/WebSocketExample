@@ -2,8 +2,6 @@
 //  TutorialContainerViewController.swift
 //  PockeTalk
 //
-//  Created by BJIT on 28/10/21.
-//
 
 import UIKit
 import AVKit

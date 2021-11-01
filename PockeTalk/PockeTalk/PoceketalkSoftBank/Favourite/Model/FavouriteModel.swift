@@ -1,3 +1,8 @@
+//
+//  FavouriteModel.swift
+//  PockeTalk
+//
+
 import Foundation
 
 struct FavouriteModel {

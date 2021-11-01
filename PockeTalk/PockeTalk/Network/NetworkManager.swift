@@ -3,8 +3,6 @@
 //  PockeTalk
 //
 
-
-
 import Foundation
 import Moya
 

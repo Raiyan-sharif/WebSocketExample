@@ -1,8 +1,6 @@
 //
-//  Demo1ViewController.swift
+//  LanguageListVC.swift
 //  PockeTalk
-//
-//  Created by Sadikul Bari on 3/9/21.
 //
 
 import UIKit

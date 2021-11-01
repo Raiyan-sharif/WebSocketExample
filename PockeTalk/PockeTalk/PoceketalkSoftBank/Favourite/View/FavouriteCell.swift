@@ -1,3 +1,8 @@
+//
+//  FavouriteCell.swift
+//  PockeTalk
+//
+
 import UIKit
 
 class FavouriteCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusable {

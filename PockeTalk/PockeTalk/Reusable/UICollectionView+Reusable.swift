@@ -1,3 +1,7 @@
+//
+// UICollectionView+Reusable.swift
+// PockeTalk
+//
 
 import UIKit
 

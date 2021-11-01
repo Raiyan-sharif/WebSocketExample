@@ -2,8 +2,6 @@
 //  HistoryViewModel.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 9/10/21.
-//
 
 import Foundation
 

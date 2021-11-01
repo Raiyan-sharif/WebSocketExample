@@ -2,8 +2,6 @@
 //  FontUtility.swift
 //  PockeTalk
 //
-//  Created by Kenedy Joy on 17/9/21.
-//
 
 import Foundation
 import UIKit

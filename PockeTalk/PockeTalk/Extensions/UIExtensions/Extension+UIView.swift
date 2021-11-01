@@ -2,8 +2,6 @@
 //  Extension+UIView.swift
 //  PockeTalk
 //
-//  Created by BJIT LTD on 16/9/21.
-//
 
 import Foundation
 import UIKit

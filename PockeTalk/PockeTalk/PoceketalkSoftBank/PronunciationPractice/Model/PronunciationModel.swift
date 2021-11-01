@@ -1,3 +1,8 @@
+//
+//  PronunciationModel.swift
+//  PockeTalk
+//
+
 
 import Foundation
 import Differ

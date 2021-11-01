@@ -2,8 +2,6 @@
 //  CameraHistoryPopUPViewController.swift
 //  PockeTalk
 //
-//  Created by BJIT LTD on 16/9/21.
-//
 
 import UIKit
 

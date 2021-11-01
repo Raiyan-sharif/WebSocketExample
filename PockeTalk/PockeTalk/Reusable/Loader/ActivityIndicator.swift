@@ -1,7 +1,6 @@
 //
 //  ActivityIndicator.swift
-//
-//
+//  PockeTalk
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  ITTServerViewModel.swift
 //  PockeTalk
 //
-//  Created by BJIT LTD on 13/9/21.
-//
 
 import Foundation
 import UIKit

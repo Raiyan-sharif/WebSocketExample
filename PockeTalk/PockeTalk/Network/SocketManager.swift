@@ -1,3 +1,7 @@
+//
+//  SocketManager.swift
+//  PockeTalk
+//
 
 import Foundation
 import UIKit

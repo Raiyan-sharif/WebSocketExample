@@ -2,10 +2,6 @@
 //  BaseDbModel.swift
 //  PockeTalk
 //
-//  Created by Piklu Majumder-401 on 9/20/21.
-//
-
-
 
 import SQLite
 

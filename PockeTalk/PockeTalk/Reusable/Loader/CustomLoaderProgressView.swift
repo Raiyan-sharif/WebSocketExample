@@ -1,6 +1,6 @@
 //
 //  CustomLoaderProgressView.swift
-//  Custom Loader
+//  PockeTalk
 
 
 import UIKit
