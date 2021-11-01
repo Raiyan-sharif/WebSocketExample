@@ -71,7 +71,7 @@ class HistoryViewController: BaseViewController {
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
         //SocketManager.sharedInstance.connect()
-        socketManager.socketManagerDelegate = self
+//        socketManager.socketManagerDelegate = self
         
     }
     
@@ -523,6 +523,7 @@ extension HistoryViewController : RetranslationDelegate{
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!
             self.isReverse = false
+            socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let nativeText = chatItem!.textNative
@@ -578,6 +579,7 @@ extension HistoryViewController : AlertReusableDelegate {
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
         if Reachability.isConnectedToNetwork() {
             self.spinnerView.isHidden = false
+            socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self!.selectedChatItemModel = chatItemModel

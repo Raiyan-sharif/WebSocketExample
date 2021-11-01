@@ -93,7 +93,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
         //SocketManager.sharedInstance.connect()
-        socketManager.socketManagerDelegate = self
+//        socketManager.socketManagerDelegate = self
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
         } else {
@@ -482,6 +482,7 @@ extension TtsAlertController : RetranslationDelegate {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             self.isReverse = false
+        socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let nativeText = self!.chatItemModel?.chatItem!.textNative
@@ -540,7 +541,7 @@ extension TtsAlertController : AlertReusableDelegate {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             self.isReverse = true
-
+        socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let nativeText = chatItemModel?.chatItem!.textTranslated
