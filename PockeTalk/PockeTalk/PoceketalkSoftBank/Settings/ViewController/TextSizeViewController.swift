@@ -107,6 +107,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         let btn = UIButton(frame: CGRect(x: 0 , y: 0, width: view.bounds.width-20, height: 40))
         btn.setTitle("cancel".localiz(), for:.normal)
+        btn.changeFontSize()
         btn.setTitleColor(UIColor.init(red: 30, green: 168, blue: 148), for: .normal)
         btn.contentHorizontalAlignment = .right
         btn.addTarget(self, action: #selector(cancelEvent(sender:)), for: .touchUpInside)
