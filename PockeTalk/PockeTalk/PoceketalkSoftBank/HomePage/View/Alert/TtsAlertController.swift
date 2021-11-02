@@ -5,6 +5,8 @@
 
 import UIKit
 import WebKit
+import CallKit
+
 protocol TtsAlertControllerDelegate : class{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
@@ -19,12 +21,15 @@ protocol CurrentTSDelegate : class {
     func passCurrentTSValue (currentTS : Int)
 }
 
-class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation {
+class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation{
+  
+    
     func dismissPro(dict:[String : String]) {
         NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
         self.dismiss(animated: true, completion: nil)
     }
     private let TAG:String = "TtsAlertController"
+    var callObserver = CXCallObserver()
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
     @IBOutlet weak var fromTranslateLabel: UILabel!
@@ -84,6 +89,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        callObserver.setDelegate(self, queue: nil)
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
         self.getTtsValue()
@@ -114,6 +120,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             self.startAnimation()
             
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        callObserver.setDelegate(nil, queue: nil)
     }
     
     @objc func willResignActive(_ notification: Notification) {
@@ -597,4 +607,28 @@ extension TtsAlertController : SocketManagerDelegate{
     
     func getData(data: Data) {}
     
+}
+
+extension TtsAlertController: CXCallObserverDelegate{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        PrintUtility.printLog(tag: TAG, text: "callObserver")
+        stopTTS()
+        if call.hasConnected {
+            stopTTS()
+        }
+
+           if call.isOutgoing {
+               stopTTS()
+           }
+
+           if call.hasEnded {
+               self.dismiss(animated: false, completion: nil)
+           }
+
+           if call.isOnHold {
+               stopTTS()
+             }
+        
+//        TtsAlertController.ttsResponsiveView.stopTTS()
+    }
 }

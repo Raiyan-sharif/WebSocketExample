@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import CallKit
 
 class CaptureImageProcessVC: BaseViewController {
     
@@ -83,11 +84,13 @@ class CaptureImageProcessVC: BaseViewController {
     var image = UIImage()
     var imageWidth = CGFloat()
     var imageHeight = CGFloat()
+    var callObserver = CXCallObserver()
     //var image = UIImage(named: "vv")
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        callObserver.setDelegate(self, queue: nil)
         cameraImageView.center = self.view.center
         self.iTTServerViewModel.viewDidLoad(self)
         fromHistoryVC ? setUpViewForHistoryVC() : setUpViewForCapturedImage()
@@ -549,7 +552,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        callObserver.setDelegate(self, queue: nil)
         removeFloatingButton()
     }
     
@@ -779,4 +782,28 @@ extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
     func onVoiceEnd() { }
     
     func onReady() {}
+}
+
+extension CaptureImageProcessVC: CXCallObserverDelegate{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        PrintUtility.printLog(tag: TAG, text: "callObserver")
+        stopTTS()
+        if call.hasConnected {
+            stopTTS()
+        }
+
+           if call.isOutgoing {
+               stopTTS()
+           }
+
+           if call.hasEnded {
+               self.dismiss(animated: false, completion: nil)
+           }
+
+           if call.isOnHold {
+               stopTTS()
+             }
+        
+//        TtsAlertController.ttsResponsiveView.stopTTS()
+    }
 }
