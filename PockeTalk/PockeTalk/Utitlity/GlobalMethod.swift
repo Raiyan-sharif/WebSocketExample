@@ -358,7 +358,7 @@ class GlobalAlternative{
        if(viewController?.navigationController != nil){
            if fromHistory {
                controller.modalPresentationStyle = .fullScreen
-               viewController?.present(controller, animated: true, completion: nil)
+            viewController?.navigationController?.pushViewController(controller, animated: true)
            } else {
                let navController = UINavigationController.init(rootViewController: controller)
                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
