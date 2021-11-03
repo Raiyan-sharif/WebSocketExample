@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,15 +28,19 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uyr-Gc-Wrt">
                         <rect key="frame" x="20" y="20" width="293" height="191"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lwX-8L-GJU">
-                                <rect key="frame" x="223.5" y="68" width="49.5" height="55.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lwX-8L-GJU">
+                                <rect key="frame" x="223.5" y="70.5" width="49.5" height="50.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Delete_icon" translatesAutoresizingMaskIntoConstraints="NO" id="YBN-UG-st2">
-                                        <rect key="frame" x="17.5" y="0.0" width="15" height="15"/>
+                                        <rect key="frame" x="10" y="0.0" width="30" height="30"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="3rv-45-Xtx"/>
+                                            <constraint firstAttribute="width" secondItem="YBN-UG-st2" secondAttribute="height" multiplier="1:1" id="fZd-Xu-Uwa"/>
+                                        </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Js-mi-XDs">
-                                        <rect key="frame" x="0.0" y="35" width="49.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="30" width="49.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -83,10 +87,8 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8gy-eb-rSu" secondAttribute="bottom" constant="20" id="2TQ-jE-W1c"/>
                                     <constraint firstItem="8gy-eb-rSu" firstAttribute="top" secondItem="LsQ-eZ-RYL" secondAttribute="top" constant="20" id="7FX-3x-ELI"/>
-                                    <constraint firstItem="8gy-eb-rSu" firstAttribute="leading" secondItem="LsQ-eZ-RYL" secondAttribute="leading" id="K7y-gF-mNi"/>
                                     <constraint firstAttribute="trailing" secondItem="8gy-eb-rSu" secondAttribute="trailing" constant="5" id="Kkp-7H-YId"/>
                                     <constraint firstItem="8gy-eb-rSu" firstAttribute="leading" secondItem="LsQ-eZ-RYL" secondAttribute="leading" constant="5" id="q4M-Cb-KLX"/>
-                                    <constraint firstAttribute="trailing" secondItem="8gy-eb-rSu" secondAttribute="trailing" id="tpv-hR-bka"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -127,6 +129,7 @@
             </constraints>
             <size key="customSize" width="333" height="231"/>
             <connections>
+                <outlet property="bottomStackViewOfLabel" destination="2TQ-jE-W1c" id="h77-Kc-hiZ"/>
                 <outlet property="childView" destination="LsQ-eZ-RYL" id="pDh-1A-jHM"/>
                 <outlet property="containerView" destination="Uyr-Gc-Wrt" id="DJb-Zo-Ua3"/>
                 <outlet property="deleteImgView" destination="YBN-UG-st2" id="wpc-LJ-mrb"/>
@@ -134,10 +137,12 @@
                 <outlet property="deleteStackView" destination="lwX-8L-GJU" id="VPb-hv-jS6"/>
                 <outlet property="favImagView" destination="PNX-AL-Eey" id="QLg-Pp-rmE"/>
                 <outlet property="favView" destination="731-Fm-Ibg" id="CnM-pe-ebc"/>
+                <outlet property="favoriteRightBarBottom" destination="QKp-1u-gsc" id="CJN-Ie-ULT"/>
                 <outlet property="favouriteLabel" destination="uiq-8o-RpT" id="xY6-Fj-q4L"/>
                 <outlet property="favouriteStackView" destination="Bog-ik-aOR" id="3dI-4P-irn"/>
                 <outlet property="fromLabel" destination="U60-ox-9aR" id="Jjn-3u-sUg"/>
                 <outlet property="toLabel" destination="eP8-Hy-fyJ" id="bMn-BX-Z7D"/>
+                <outlet property="topStackViewOfLabel" destination="7FX-3x-ELI" id="9lh-dn-nGo"/>
             </connections>
             <point key="canvasLocation" x="353" y="66"/>
         </collectionViewCell>

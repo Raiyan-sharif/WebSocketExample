@@ -270,6 +270,17 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
         let item = favouriteViewModel.items.value[indexPath.item] as! ChatEntity
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
+        if(indexPath.row == favouriteViewModel.items.value.count - 1){
+            cell.bottomStackViewOfLabel.constant = 25
+            cell.favoriteRightBarBottom.constant = -20
+            cell.topStackViewOfLabel.constant = 25
+          }
+          else{
+              cell.topStackViewOfLabel.constant = 25
+              cell.bottomStackViewOfLabel.constant = 85
+              cell.favoriteRightBarBottom.constant = -70
+          }
+        
         if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()
         }else{
@@ -340,7 +351,13 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
         PrintUtility.printLog(tag: "FavouriteViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
         PrintUtility.printLog(tag: "FavouriteViewController", text: "Font \(FontUtility.getFontSizeIndex())")
         
-        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40
+        if(indexPath.row == favouriteViewModel.items.value.count-1){
+            return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 10
+        }
+        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 65
+        
+        
+    
         
     }
 }
