@@ -14,6 +14,8 @@ class ITTServerViewModel: BaseModel {
     
     private let TAG = "\(ITTServerViewModel.self)"
     var capturedImage: UIImage?
+    var imageWidth = CGFloat()
+    var imageHeight = CGFloat()
     
     var mXFactor:Float = 1
     var mYFactor:Float = 1
@@ -72,6 +74,7 @@ class ITTServerViewModel: BaseModel {
     }
     
     func getITTData(from image: UIImage, completion: @escaping(_ blockData: DetectedJSON?, _ error: Error?)-> Void) {
+        PrintUtility.printLog(tag: "ITTServerViewModel", text: "screen image\(image.size)")
         if Reachability.isConnectedToNetwork() {
             self.loaderdelegate?.showLoader()
             
@@ -356,6 +359,36 @@ class ITTServerViewModel: BaseModel {
         }
         return self.detectedLineList
     }
+    
+    func getScreenProperties(from image: UIImage) {
+        let screenRect = UIScreen.main.bounds
+        let screenWidth = screenRect.size.width
+        let screenHeight = screenRect.size.height
+
+        PrintUtility.printLog(tag: "screenWidth: \(screenWidth)", text: "screenHeight: \(screenHeight)")
+        
+        let heightInPoints = image.size.height
+        let heightInPixels = heightInPoints * image.scale
+        
+        let widthInPoints = image.size.width
+        let widthInPixels = widthInPoints * image.scale
+        PrintUtility.printLog(tag: "Image heightInPoints: \(heightInPoints)", text: ", heightInPixels: \(heightInPixels)")
+        PrintUtility.printLog(tag: "Image widthInPoints: \(widthInPoints)", text: ", widthInPixels: \(widthInPixels)")
+        
+        // TODO change constant value to images height/width, following constents are images height and width. Here we have hardcoded those as we are using a test image
+        if Int(widthInPixels) >= Int(screenWidth) {
+            mXFactor = Float(screenWidth) / Float(widthInPixels)
+        } else {
+            mXFactor = 1
+        }
+        if Int(heightInPixels) >= Int(screenHeight) {
+            mYFactor = Float(screenHeight) / Float(heightInPixels)
+        } else {
+            mYFactor = 1
+        }
+        PrintUtility.printLog(tag: "mXFactor:", text: "\(mXFactor)")
+        PrintUtility.printLog(tag: "mYFactor:", text: "\(mYFactor)")
+    }
 }
 
 // Get text view list for Camera Histoy Image
@@ -418,41 +451,6 @@ extension ITTServerViewModel {
                 self.loaderdelegate?.hideLoader()
             })
         }
-    }
-    
-}
-
-extension ITTServerViewModel {
-    
-    func getScreenProperties(from image: UIImage) {
-        let screenRect = UIScreen.main.bounds
-        let screenWidth = screenRect.size.width
-        let screenHeight = screenRect.size.height
-        let w:Int = Int(screenWidth)
-        let h:Int = Int(screenHeight)
-        PrintUtility.printLog(tag: "screenWidth: \(screenWidth)", text: "screenHeight: \(screenHeight)")
-        
-        let heightInPoints = image.size.height
-        let heightInPixels = heightInPoints * image.scale
-        
-        let widthInPoints = image.size.width
-        let widthInPixels = widthInPoints * image.scale
-        PrintUtility.printLog(tag: "Image heightInPoints: \(heightInPoints)", text: ", heightInPixels: \(heightInPixels)")
-        PrintUtility.printLog(tag: "Image widthInPoints: \(widthInPoints)", text: ", widthInPixels: \(widthInPixels)")
-        
-        // TODO change constant value to images height/width, following constents are images height and width. Here we have hardcoded those as we are using a test image
-        if Int(widthInPixels) >= IMAGE_WIDTH {
-            mXFactor = Float(screenWidth) / Float(widthInPixels)
-        } else {
-            mXFactor = 1
-        }
-        if Int(heightInPixels) >= IMAGE_HEIGHT {
-            mYFactor = Float(screenHeight) / Float(heightInPixels)
-        } else {
-            mYFactor = 1
-        }
-        PrintUtility.printLog(tag: "mXFactor:", text: "\(mXFactor)")
-        PrintUtility.printLog(tag: "mYFactor:", text: "\(mYFactor)")
     }
     
 }
