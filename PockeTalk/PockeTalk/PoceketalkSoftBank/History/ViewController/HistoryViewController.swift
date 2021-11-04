@@ -360,6 +360,20 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
         let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
+        let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
+        
+        if(indexPath.row == historyViewModel.items.value.count - 1){
+            cell.bottomStackViewOfLabel.constant = 25
+            cell.favouriteRightBarBottom.constant = -20
+            cell.topStackViewOfLabel.constant = 25
+            cell.favouriteRightBarTop.constant = 20
+        }
+        else{
+            cell.topStackViewOfLabel.constant = 25
+            cell.bottomStackViewOfLabel.constant = 85
+            cell.favouriteRightBarBottom.constant = -70
+//            cell.favouriteRightBarTop.constant = -60
+        }
         if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()
             cell.initialColor = UIColor._lightGrayColor()
@@ -511,7 +525,11 @@ extension HistoryViewController:HistoryLayoutDelegate{
         PrintUtility.printLog(tag: "HistoryViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
         PrintUtility.printLog(tag: "HistoryViewController", text: "Font \(FontUtility.getFontSizeIndex())")
        
-        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40
+        if(indexPath.row == historyViewModel.items.value.count-1){
+            return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 10
+        }
+        return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 65
+        
         
     }
 }

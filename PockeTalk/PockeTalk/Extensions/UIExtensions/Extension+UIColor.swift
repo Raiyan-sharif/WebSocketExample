@@ -97,12 +97,12 @@ extension UIColor {
 
     //Mango Color
     class func _mangoColor() -> UIColor {
-        return UIColor.init(red: 255, green: 170, blue: 34)
+        return UIColor.init(red: 255, green: 140, blue: 25)
     }
 
     //Pastel red Color
     class func _pastelRedColor() -> UIColor {
-        return UIColor.init(red: 238, green: 71, blue: 71)
+        return UIColor.init(red: 204, green: 20, blue: 26)
     }
 
     //Blue Color
