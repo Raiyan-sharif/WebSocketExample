@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "btn_talk.png",
+      "filename" : "btn_1 copy.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "btn_talk@2x.png",
+      "filename" : "btn_1@2x copy.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "btn_talk@3x.png",
+      "filename" : "btn_1@3x copy.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

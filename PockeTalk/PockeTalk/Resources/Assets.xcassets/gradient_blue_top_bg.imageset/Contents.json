@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "gradient_blue_top_bg.png",
+      "filename" : "parts_language_back_3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "parts_language_back_3@2x copy.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "parts_language_back_3@3x copy.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
