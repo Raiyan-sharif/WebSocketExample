@@ -26,7 +26,7 @@ class ImageCroppingViewController: BaseViewController {
         button.addTarget(self, action: #selector(cropButtonEventListener(_:)), for: .touchUpInside)
         return button
     }()
-
+    
     var cancelBtn: UIButton = {
         let button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "demo_mode_reboot_cancel_button"), for: .normal)
@@ -39,7 +39,7 @@ class ImageCroppingViewController: BaseViewController {
     private var cropViewWidth = NSLayoutConstraint()
     private var cropViewHeight = NSLayoutConstraint()
     private var layoutForFirstTime = true
-
+    
     ///Floating button properties
     let offset : CGFloat = 30
     let width : CGFloat = 60
@@ -121,7 +121,7 @@ class ImageCroppingViewController: BaseViewController {
         
         loadScrollView()
         loadCropOverlay()
-
+        
         if let image = image {
             configureWithImage(image)
             centerScrollViewContent()
@@ -132,7 +132,7 @@ class ImageCroppingViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-                
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,13 +143,12 @@ class ImageCroppingViewController: BaseViewController {
             DispatchQueue.main.async {
                 self.loadOverlappingViewConstraint()
                 DispatchQueue.main.async {
-                    self.overlappingView.frame.origin.x = 12.5
+                    self.overlappingView.frame.origin.x = 0
                     self.overlappingView.frame.origin.y = (self.view.frame.height/2) - (self.overlappingView.frame.height/2)
                 }
             }
             
         }
-
     }
     
     public override func viewDidLayoutSubviews() {
@@ -157,13 +156,13 @@ class ImageCroppingViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
     }
-
+    
     /// Inital set up of crop and cancel button
     func setUpButtons () {
         /// get full view height
         let screenBounds = UIScreen.main.bounds
         let viewHeight = screenBounds.height
-
+        
         view.addSubview(cropBtn)
         cropBtn.translatesAutoresizingMaskIntoConstraints = false
         cropBtn.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor,constant: leadingForRightBtn)
@@ -173,7 +172,7 @@ class ImageCroppingViewController: BaseViewController {
         cropBtn.widthAnchor.constraint(equalToConstant: width).isActive = true
         cropBtn.layer.cornerRadius = width/2
         cropBtn.layer.masksToBounds = true
-
+        
         view.addSubview(cancelBtn)
         cancelBtn.translatesAutoresizingMaskIntoConstraints = false
         cancelBtn.trailingAnchor.constraint(equalTo: scrollView.centerXAnchor,constant: trailingForLeftBtn)
@@ -188,8 +187,8 @@ class ImageCroppingViewController: BaseViewController {
     private func loadOverlappingViewConstraint() {
         cropViewLeadingConstraint.constant = overlappingViewSize.origin.x
         cropViewtopConstraint.constant = overlappingViewSize.origin.y
-        cropViewWidth.constant = self.view.frame.size.width - 25
-        cropViewHeight.constant = imageView.frame.height
+        cropViewWidth.constant = self.view.frame.size.width
+        cropViewHeight.constant = imageView.frame.height + (CameraCropControllerMargin * 2)
         
         
         cropViewLeadingConstraint.isActive = true
@@ -201,6 +200,7 @@ class ImageCroppingViewController: BaseViewController {
     
     private func loadScrollView() {
         scrollView.addSubview(imageView)
+        imageView.backgroundColor = .clear
         scrollView.delegate = self
         scrollView.maximumZoomScale = 1
         centerScrollViewContent()
@@ -214,7 +214,7 @@ class ImageCroppingViewController: BaseViewController {
         
         
         DispatchQueue.main.async {
-            let width = self.view.frame.size.width - 25
+            let width = self.view.frame.size.width - (CameraCropControllerMargin * 2)
             let height = self.view.frame.size.height*0.82
             
             self.imageView.frame.size.width = width
@@ -241,9 +241,11 @@ class ImageCroppingViewController: BaseViewController {
         overlappingView.isResizable = cropFunctionality.resizeable
         overlappingView.isdragable = cropFunctionality.dragable
         overlappingView.minCropArea = cropFunctionality.minimumSize
+        
+        //overlappingView.backgroundColor = UIColor(red: 255/255, green: 204/255, blue:0/255, alpha: 0.5)
     }
     
-    private func configureWithImage(_ image: UIImage) {        
+    private func configureWithImage(_ image: UIImage) {
         imageView.image = image
         imageView.sizeToFit()
         prepareScrollView()
@@ -288,19 +290,19 @@ class ImageCroppingViewController: BaseViewController {
         let screenSize  = scrollView.frame.size
         let offx = screenSize.width > realImgSize.width ? (screenSize.width - realImgSize.width) / 2 : 0
         let offy = screenSize.height > realImgSize.height ? (screenSize.height - realImgSize.height) / 2 : 0
-
+        
         /// Check safe area inset available or not
         let window = UIApplication.shared.windows.first
         let topPadding = window?.safeAreaInsets.top ?? 0
         let bottomPadding = window?.safeAreaInsets.bottom ?? 0
-
+        
         /// Set scrollview content inset based on safe area
         scrollView.contentInset = UIEdgeInsets(top: offy-(topPadding ),
                                                left: offx,
                                                bottom: offy-(bottomPadding ),
                                                right: offx)
     }
-
+    
     @IBAction func cancelButtonEventListener(_ sender: Any) {
         
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
@@ -318,6 +320,7 @@ class ImageCroppingViewController: BaseViewController {
         imageView.isHidden = true
         croppedImage = image
         
+        // calculate resized crop rect
         if cropFunctionality.isEnabled {
             let cropRect = makeProportionalCropRect()
             let resizedCropRect = CGRect(x: (image.size.width) * cropRect.origin.x,
@@ -328,10 +331,8 @@ class ImageCroppingViewController: BaseViewController {
             
             imageFrameHeight = imageView.frame.size.height*cropRect.height
             imageFrameWidth = imageView.frame.size.height*cropRect.width
-
-            
         }
-        
+
         if Reachability.isConnectedToNetwork() {
             let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
             if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
@@ -367,11 +368,53 @@ class ImageCroppingViewController: BaseViewController {
 
 extension ImageCroppingViewController: UIScrollViewDelegate, CropOverlappingViewDelegates {
     
+    // Device wise screen size calculation
+    public var screenWidth: CGFloat {
+        return self.view.frame.size.width
+    }
+    public var screenHeight: CGFloat {
+        return self.view.frame.size.height
+    }
     func didMoveOverlappingView(newFrame: CGRect) {
-        cropViewLeadingConstraint.constant = newFrame.origin.x
-        cropViewtopConstraint.constant = newFrame.origin.y
-        cropViewWidth.constant = newFrame.size.width
-        cropViewHeight.constant = newFrame.size.height
+        
+        var minXValue = CGFloat()
+        var minYValue = CGFloat()
+        var maxYValue = CGFloat()
+        let topPadding = (screenHeight - imageView.frame.height)/2
+        
+        if newFrame.origin.x < 0{
+            minXValue = 0
+        } else if (newFrame.origin.x + newFrame.size.width) > self.view.frame.width {
+            minXValue = self.view.frame.width - (overlappingView.frame.size.width)
+        } else {
+            minXValue = newFrame.origin.x
+        }
+        
+        //PrintUtility.printLog(tag: "ImageCroppingViewController", text: "imageView.frame.maxY : \(imageView.frame.origin.y+imageView.frame.size.height+topPadding), \(self.view.frame.height)")
+        if ((newFrame.origin.y) < (topPadding - CameraCropControllerMargin)){
+            
+            //PrintUtility.printLog(tag: "ImageCroppingViewController", text: "view appeared: \(newFrame.origin.y), padding : \(topPadding), \(imageView.frame.minY)")
+            minYValue = (topPadding - CameraCropControllerMargin)
+            
+        } else {
+            minYValue = newFrame.origin.y
+            maxYValue = minYValue + newFrame.size.height
+            if maxYValue > (imageView.frame.origin.y + imageView.frame.size.height + topPadding + CameraCropControllerMargin) {
+                minYValue = (imageView.frame.origin.y + imageView.frame.size.height + topPadding + CameraCropControllerMargin) - (overlappingView.frame.size.height)
+            } else {
+                if (overlappingView.frame.size.height == imageView.frame.size.height + (CameraCropControllerMargin * 2)) {
+                    overlappingView.frame.size.height = imageView.frame.size.height + (CameraCropControllerMargin * 2)
+                } else {
+                    minYValue = newFrame.origin.y
+                }
+            }
+        }
+        
+        cropViewLeadingConstraint.constant = minXValue
+        cropViewtopConstraint.constant =  minYValue
+        cropViewWidth.constant = newFrame.size.width > imageView.frame.size.width + (CameraCropControllerMargin * 2) ? imageView.frame.size.width + (CameraCropControllerMargin * 2) : newFrame.size.width
+        cropViewHeight.constant = newFrame.size.height > imageView.frame.size.height + (CameraCropControllerMargin * 2) ? imageView.frame.size.height + (CameraCropControllerMargin * 2) : newFrame.size.height
+        
     }
     
     
