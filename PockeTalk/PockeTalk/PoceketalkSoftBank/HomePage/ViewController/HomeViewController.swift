@@ -13,7 +13,6 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak private var bottomFlipImageView: UIImageView!
     @IBOutlet weak private var topFlipImageView: UIImageView!
     @IBOutlet weak private var menuButton: UIButton!
-    @IBOutlet weak private var directionImageView: UIImageView!
     @IBOutlet weak private var topSysLangName: UILabel!
     @IBOutlet weak private var bottomLangNativeName: UILabel!
     @IBOutlet weak private var topCircleImgView: UIImageView!
@@ -110,9 +109,10 @@ class HomeViewController: BaseViewController {
         view.addSubview(topButton)
         topButton.translatesAutoresizingMaskIntoConstraints = false
         topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        topButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
         topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        topButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+        topButton.centerYAnchor.constraint(equalTo: menuButton.centerYAnchor, constant: 0).isActive = true
+
         ///Hide Circle Imageview at first
         self.topCircleImgView.isHidden = true
         self.bottomCircleleImgView.isHidden = true
@@ -134,11 +134,9 @@ class HomeViewController: BaseViewController {
             view.addSubview(topButton)
             topButton.translatesAutoresizingMaskIntoConstraints = false
             topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            let window = UIApplication.shared.keyWindow
-            let topPadding = window?.safeAreaInsets.top
+            topButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
             topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            topButton.heightAnchor.constraint(equalToConstant: 150).isActive = true
-            topButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -((topPadding ?? 0) - 10)).isActive = true
+            topButton.centerYAnchor.constraint(equalTo: menuButton.centerYAnchor, constant: 0).isActive = true
             self.view.addGestureRecognizer(swipeDown)
         }else{
             topButton.removeFromSuperview()
@@ -299,10 +297,10 @@ class HomeViewController: BaseViewController {
         let isArrowUp = LanguageSelectionManager.shared.isArrowUp
         PrintUtility.printLog(tag: TAG, text: "setLanguageDirection isArrowUp \(isArrowUp)")
         if (isArrowUp){
-            self.directionImageView.image = UIImage(named: "up_arrow")
+            self.languageChangedDirectionButton.setImage(UIImage(named: "arrow_circular_up"), for: .normal)
             self.animationChange(transitionToImageView: self.bottomFlipImageView, transitionFromImageView: self.topFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromTop, imageName: "gradient_blue_bottom_bg")
         }else{
-            self.directionImageView.image = UIImage(named: "down_arrow")
+            self.languageChangedDirectionButton.setImage(UIImage(named: "arrow_circular_down"), for: .normal)
             self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
         }
         languageHasUpdated = true
