@@ -5,7 +5,7 @@
 
 import UIKit
 
-protocol CropOverlappingViewDelegates {
+protocol CropOverlappingViewDelegates: class {
     func didMoveOverlappingView(newFrame: CGRect)
 }
 
@@ -15,7 +15,7 @@ class CustomOverlappingView: UIView {
                            UIButton(),
                            UIButton(),
                            UIButton()]
-    private let horizontalVerticalcrossOverView = UIView()
+    let horizontalVerticalcrossOverView = UIView()
 
     private var cornerButtonWidth: CGFloat = 70
 
@@ -34,7 +34,7 @@ class CustomOverlappingView: UIView {
     var isResizable = false
     var isdragable = false
     var minCropArea = CGSize.zero
-    var delegate: CropOverlappingViewDelegates?
+    weak var delegate: CropOverlappingViewDelegates?
 
     var croppedRect: CGRect {
         // Visible area with border use as crop rectangle
@@ -111,7 +111,7 @@ class CustomOverlappingView: UIView {
         horizontalVerticalcrossOverView.rightAnchor.constraint(equalTo: rightAnchor, constant: -CameraCropControllerMargin).isActive = true
 
         drawCornerLines()
-        loadPrecisionLines()
+        //loadPrecisionLines()
     }
 
     private func drawCornerLines() {
@@ -254,6 +254,16 @@ class CustomOverlappingView: UIView {
                 delegate?.didMoveOverlappingView(newFrame: resizedFrame)
             }
         }
+        
+        if dragableGesture.state == .ended {
+            for subview in horizontalVerticalcrossOverView.subviews {
+                subview.removeFromSuperview()
+            }
+            drawCornerLines()
+        } else {
+            loadPrecisionLines()
+        }
+
     }
     
     private func loadPrecisionLines() {

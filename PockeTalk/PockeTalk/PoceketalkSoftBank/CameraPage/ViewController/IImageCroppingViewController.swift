@@ -337,8 +337,10 @@ class ImageCroppingViewController: BaseViewController {
             let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
             if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
                 vc.image = croppedImage
-                vc.imageHeight = imageFrameHeight
-                vc.imageWidth = imageFrameWidth
+                vc.cropFrameHeight = imageFrameHeight
+                vc.cropFrameWidth = imageFrameWidth
+                vc.maxCropFrameWidth = imageView.frame.size.width
+                vc.maxCropFrameHeight = imageView.frame.size.height
                 vc.originalImage = image
                 self.navigationController?.pushViewController(vc, animated: true)
             }
