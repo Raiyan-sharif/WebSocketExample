@@ -59,6 +59,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
+    var updateHomeContainer:((_ isfullScreen:Bool)->())?
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
@@ -73,7 +74,12 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     func openCameraLanguageListScreen(){
         let storyboard = UIStoryboard(name: KStoryBoardCamera, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KiDLangSelectCamera)as! LanguageSelectCameraVC
-        self.navigationController?.pushViewController(controller, animated: true);
+        controller.updateHomeContainer = { [weak self] in
+            self?.updateHomeContainer?(true)
+        }
+       // self.navigationController?.pushViewController(controller, animated: true);
+        self.updateHomeContainer?(false)
+        add(asChildViewController: controller, containerView: view)
     }
     
     fileprivate func updateLanguageNames() {
@@ -194,6 +200,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
@@ -337,11 +344,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
-        if(self.navigationController == nil){
-            self.dismiss(animated: true, completion: nil)
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.updateHomeContainer?(false)
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
+//        if(self.navigationController == nil){
+//            self.dismiss(animated: true, completion: nil)
+//        }else{
+//            self.navigationController?.popViewController(animated: true)
+//        }
     }
     
     var croppingParameters: CropUtils {

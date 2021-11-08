@@ -6,7 +6,7 @@
 import WebKit
 import UIKit
 
-protocol TTSResponsiveViewDelegate : AnyObject {
+protocol TTSResponsiveViewDelegate : class {
     func speakingStatusChanged(isSpeaking: Bool)
     func onVoiceEnd()
     func onReady()

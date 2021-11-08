@@ -5,7 +5,7 @@
 
 import UIKit
 
-protocol HistoryViewControllerDelegates {
+protocol HistoryViewControllerDelegates:class {
     func historyDissmissed()
 }
 
@@ -26,15 +26,18 @@ class HistoryViewController: BaseViewController {
     let buttonWidth : CGFloat = 100
     var deletedCellHeight = CGFloat()
     private var spinnerView : SpinnerView!
-    var navController: UINavigationController?
 
-    private(set) var delegate: HistoryViewControllerDelegates?
+   // var navController: UINavigationController?
+
+    weak var delegate: HistoryViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
     weak var speechProDismissDelegateFromHistory : SpeechProcessingDismissDelegate?
     var isReverse = false
     private var socketManager = SocketManager.sharedInstance
     private var speechProcessingVM : SpeechProcessingViewModeling!
+    var enableOrDisableMicrophoneBtn:((_ value:Bool)->())?
+
     ///CollectionView to show history item
     private lazy var collectionView:UICollectionView = {
         let collectionView = UICollectionView(frame:.zero ,collectionViewLayout:historylayout)
@@ -46,7 +49,8 @@ class HistoryViewController: BaseViewController {
         return collectionView
     }()
 
-    private lazy var bottmView:UIView = {
+    
+    private lazy var topView:UIView = {
         let view = UIView()
         return view
     }()
@@ -64,14 +68,15 @@ class HistoryViewController: BaseViewController {
             self.showCollectionView()
         }
         
-        let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToDismiss))
+        let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToClose))
         swipeToDismiss.direction = .up
         self.view.addGestureRecognizer(swipeToDismiss)
-        
+
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
         //SocketManager.sharedInstance.connect()
 //        socketManager.socketManagerDelegate = self
+        registerNotification()
         
     }
     
@@ -84,9 +89,10 @@ class HistoryViewController: BaseViewController {
         spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         spinnerView.isHidden = true
+
     }
     
-    @objc func swipeToDismiss(gesture: UIGestureRecognizer) {
+    @objc func swipeToClose(gesture: UIGestureRecognizer) {
 
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
@@ -105,11 +111,23 @@ class HistoryViewController: BaseViewController {
             }
         }
     }
-    
-    func initDelegate<T>(_ vc: T) {
-            self.delegate = vc.self as? HistoryViewControllerDelegates
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.historyNotofication, object: nil)
     }
-    
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.historyNotofication, object: nil)
+    }
+
+
+    @objc func removeChild(notification: Notification) {
+        if let vc = view.subviews.last?.parentViewController{
+                remove(asChildViewController: vc)
+            }
+        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+    }
+
     // Populate item to show on context menu
     func populateData (withPronounciation: Bool) {
         self.itemsToShowOnContextMenu.removeAll()
@@ -126,37 +144,45 @@ class HistoryViewController: BaseViewController {
     
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
-        self.view.addSubview(bottmView)
+
         addSpinner()
+
+        //self.view.addSubview(bottmView)
+        self.view.addSubview(topView)
         let window = UIApplication.shared.windows.first
         
-        bottmView.translatesAutoresizingMaskIntoConstraints = false
-        bottmView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottmView.heightAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-        bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottmView.clipsToBounds =  true
-        bottmView.backgroundColor = UIColor.black
+
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        topView.heightAnchor.constraint(equalToConstant: (window?.safeAreaInsets.top ?? 20) + 55).isActive = true
+        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topView.clipsToBounds =  true
+        topView.backgroundColor = UIColor.black
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
-        let margin = view.safeAreaLayoutGuide
-        let topPadding = window?.safeAreaInsets.top
-        topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
+//        let margin = view.safeAreaLayoutGuide
+//        let topPadding = window?.safeAreaInsets.top
+        topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
+       // collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.alpha = 0.0
         
         self.view.addSubview(backBtn)
         
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
-        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
+//        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
 
     }
 
+    deinit {
+        unregisterNotification()
+    }
 
     private var backBtn:UIButton!{
             guard let window = UIApplication.shared.keyWindow else {return nil}
@@ -177,8 +203,8 @@ class HistoryViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
-            controller.speechProcessingDismissDelegate = self
-            controller.isFromTutorial = false
+//            controller.speechProcessingDismissDelegate = self
+//            controller.isFromTutorial = false
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
@@ -230,7 +256,7 @@ class HistoryViewController: BaseViewController {
             if isGranted {
                 let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
                 if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
-                    self?.navController?.pushViewController(cameraViewController, animated: true)
+                    self?.navigationController?.pushViewController(cameraViewController, animated: true)
                 }
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
@@ -248,17 +274,21 @@ class HistoryViewController: BaseViewController {
                         transition.subtype = CATransitionSubtype.fromLeft
             transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             self.view.window!.layer.add(transition, forKey: kCATransition)
-            self.navController?.pushViewController(settinsViewController, animated: false)
+            self.navigationController?.pushViewController(settinsViewController, animated: false)
         }
     }
     
     func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
-        if self.presentingViewController == nil{
-            self.dismiss(animated: animated, completion: completion)
-        }else{
-            self.presentingViewController?.dismiss(animated: animated, completion: completion)
-        }
-        self.delegate?.historyDissmissed()
+
+//        if self.presentingViewController == nil{
+//            self.dismiss(animated: animated, completion: completion)
+//        }else{
+//            self.presentingViewController?.dismiss(animated: animated, completion: completion)
+//        }
+
+        //self.delegate?.historyDissmissed()
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
+        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
     }
     
     func showCollectionView(){
@@ -333,7 +363,7 @@ class HistoryViewController: BaseViewController {
                 self.selectedChatItemModel?.chatItem = chatEntity
              
                 self.spinnerView.isHidden = true
-                GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false, hideTalkButton: true)
+                self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
                 self.historyViewModel.addItem(chatEntity)
                 self.collectionView.reloadData()
                 self.scrollToBottom()
@@ -434,7 +464,9 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openTTTResult(_ idx: IndexPath){
         let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
-        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+
+//        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+        self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -549,6 +581,7 @@ extension HistoryViewController : RetranslationDelegate{
                     
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
             }
         }else{
             GlobalMethod.showNoInternetAlert()
@@ -579,7 +612,9 @@ extension HistoryViewController : AlertReusableDelegate {
         controller.modalPresentationStyle = .fullScreen
         controller.chatItem = chatItemModel?.chatItem
         controller.isFromHistory = true
-        self.present(controller, animated: true, completion: nil)
+        add(asChildViewController: controller, containerView: view)
+        ScreenTracker.sharedInstance.screenPurpose = .HistroyPronunctiation
+        //self.present(controller, animated: true, completion: nil)
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
@@ -597,8 +632,10 @@ extension HistoryViewController : AlertReusableDelegate {
                     transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        self.navController?.pushViewController(controller, animated: false)
+        //self.navigationController?.pushViewController(controller, animated: false)
         //self.present(controller, animated: true, completion: nil)
+        add(asChildViewController: controller, containerView: view)
+        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
@@ -648,6 +685,27 @@ extension HistoryViewController: TtsAlertControllerDelegate{
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.replaceItem(chatItemModel.chatItem!, chatItemModel.idxPath!.row)
         self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
+    }
+
+
+    func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
+        self.enableOrDisableMicrophoneBtn?(true)
+        let chatItem = chatItemModel.chatItem!
+        if saveDataToDB == true{
+            do {
+                let row = try ChatDBModel.init().insert(item: chatItem)
+                chatItem.id = row
+                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            } catch _ {}
+        }
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
+        ttsVC.chatItemModel = chatItemModel
+        ttsVC.hideMenuButton = hideMenuButton
+        ttsVC.hideBottomView = hideBottmSection
+        add(asChildViewController: ttsVC, containerView: self.view)
+
     }
 }
 

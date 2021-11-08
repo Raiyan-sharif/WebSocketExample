@@ -20,8 +20,12 @@ class CountryListViewController: BaseViewController {
     let speechBtnWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
+    var isFromTranslation = false
+
     @IBAction func onBackButtonPressed(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        //self.navigationController?.popViewController(animated: true)
+        remove(asChildViewController: self)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
 
     fileprivate func setViewBorder() {
@@ -82,6 +86,7 @@ class CountryListViewController: BaseViewController {
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
         self.viewEnglishName.addGestureRecognizer(gesture)
+        registerNotification()
     }
 
 
@@ -108,6 +113,25 @@ class CountryListViewController: BaseViewController {
         } else {
             GlobalMethod.showNoInternetAlert()
         }
+    }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
+    }
+
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.countySlectionByVoiceNotofication, object: nil)
+    }
+
+    @objc func updateCountrySelection(notification: Notification) {
+        if let country = notification.userInfo!["country"] as? String{
+            searchCountry(text: country)
+        }
+    }
+
+    deinit {
+        unregisterNotification()
     }
 
     // floating microphone button
@@ -148,6 +172,7 @@ extension CountryListViewController : UICollectionViewDelegate{
         controller.countryListItem = item
         controller.dataShowingLanguageCode = dataShowingLanguageCode
         controller.isNative = isNative
+        controller.isFromTranslation = isFromTranslation
         self.navigationController?.pushViewController(controller, animated: true);
     }
 }
@@ -199,6 +224,7 @@ extension CountryListViewController: SpeechProcessingVCDelegates{
                 let controller = storyboard.instantiateViewController(withIdentifier: "CountryWiseLanguageListViewController")as! CountryWiseLanguageListViewController
                 controller.countryListItem = countryItem
                 controller.dataShowingLanguageCode = self.dataShowingLanguageCode
+                controller.isFromTranslation = self.isFromTranslation
                 controller.isNative = self.isNative
                 self.navigationController?.pushViewController(controller, animated: true);
             }

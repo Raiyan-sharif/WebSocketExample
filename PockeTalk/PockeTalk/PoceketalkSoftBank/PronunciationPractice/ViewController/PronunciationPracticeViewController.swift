@@ -29,7 +29,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var chatItem: ChatEntity?
     var orginalText: String = ""
     var languageCode: String = ""
-    var delegate: Pronunciation?
+    weak var delegate: Pronunciation?
     var isFromHistory: Bool = false
     var ttsResponsiveView = TTSResponsiveView()
     var isFromSpeechProcessing: Bool = false
@@ -37,6 +37,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var voice : String = ""
     var rate : String = "1.0"
     var isSpeaking : Bool = false
+    var isFromHistoryTTS = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,18 +46,43 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
-        
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        registerNotification()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let `self` = self else { return }
+            let pronumtiationValue = PronuntiationValue(practiceText:"" , orginalText: self.orginalText, languageCcode:self.languageCode)
+            NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":pronumtiationValue])
         }
+    }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(gotoPronuntiationPacticeVC(notification:)), name:.pronuntiationNotification, object: nil)
+    }
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.pronuntiationNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
     }
     
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
     }
 
+    @objc func gotoPronuntiationPacticeVC(notification: Notification) {
+
+        if let value = notification.userInfo!["value"] as? PronuntiationValue{
+
+            let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeResultViewController")as! PronunciationPracticeResultViewController
+            controller.orginalText = value.orginalText
+            controller.practiceText = value.practiceText
+            controller.languageCode = value.languageCcode
+            controller.isFromHistoryTTS = isFromHistoryTTS
+            add(asChildViewController: controller, containerView: view)
+//            ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation ? .HistroyPronuntiationResult : .PronunciationPracticeResult
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
@@ -91,8 +117,8 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     
     // floating microphone button
     func setUpMicroPhoneIcon () {
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+//        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
     // TODO microphone tap event
@@ -109,16 +135,16 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
                         controller.pronunciationLanguageCode = self.languageCode
                         controller.screenOpeningPurpose = .PronunciationPractice
                         controller.languageHasUpdated = true
-                        controller.pronunciationDelegate = self
+                        //controller.pronunciationDelegate = self
                         controller.isHistoryPronunciation = self.isFromHistory
-                        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+                        //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
                         self.present(controller, animated: true, completion: nil)
                     } else if self.isFromSpeechProcessing {
                         var dict = [String:String]()
                         dict["vc"] = "PronunciationPracticeViewController"
                         dict["text"] = self.orginalText
                         dict["langCode"] = self.languageCode
-                        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: dict)
+                        //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: dict)
     //                    self.dismiss(animated: false, completion: nil)
                         self.navigationController?.popViewController(animated: false)
                     } else {
@@ -145,11 +171,24 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         if isFromSpeechProcessing {
             speechDelegate?.dismissResultHome()
         }
-        if(self.navigationController != nil){
-            self.navigationController?.popViewController(animated: true)
-        }else{
-            self.dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":"pronuntiationText"])
+        if ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice{
+            NotificationCenter.default.post(name: .ttsNotofication, object: nil)
+            ScreenTracker.sharedInstance.screenPurpose  = .HomeSpeechProcessing
+        }else if ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation{
+            if isFromHistoryTTS{
+                NotificationCenter.default.post(name: .ttsNotofication, object: nil)
+                ScreenTracker.sharedInstance.screenPurpose  = .HistoryScrren
+            }else{
+                NotificationCenter.default.post(name: .historyNotofication, object: nil)
+            }
         }
+
+//        if(self.navigationController != nil){
+//            self.navigationController?.popViewController(animated: true)
+//        }else{
+//            self.dismiss(animated: true, completion: nil)
+//        }
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
@@ -166,6 +205,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     func stopTTS(){
         ttsResponsiveView.stopTTS()
     }
+
+    deinit {
+        unregisterNotification()
+    }
 }
 
 extension PronunciationPracticeViewController : TTSResponsiveViewDelegate {
@@ -176,4 +219,10 @@ extension PronunciationPracticeViewController : TTSResponsiveViewDelegate {
     func onVoiceEnd() {}
     
     func onReady() {}
+}
+
+struct PronuntiationValue {
+    let practiceText:String
+    let orginalText:String
+    let languageCcode:String
 }

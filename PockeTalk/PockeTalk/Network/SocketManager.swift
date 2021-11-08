@@ -8,9 +8,10 @@ import UIKit
 import Starscream
 import AVFoundation
 
-protocol SocketManagerDelegate:class{
+@objc protocol SocketManagerDelegate:class{
     func getText(text : String)
     func getData(data : Data)
+    @objc optional func socket(isConnected : Bool)
     func faildSocketConnection(value:String)
 }
 
@@ -19,16 +20,21 @@ class SocketManager: NSObject {
     private var connectionCount = 0
     static let sharedInstance = SocketManager()
     var socket: WebSocket!
-    var isConnected = false
+    var isConnected:Bool = false{
+        didSet{
+            socketManagerDelegate?.socket?(isConnected: isConnected)
+        }
+    }
     weak var socketManagerDelegate : SocketManagerDelegate?
     //public override init()
     public override init() {
         super.init()
         //var request = URLRequest(url:URL(string: SOCKET_CONNECTION_URL)!)
-        PrintUtility.printLog(tag: TAG, text: UserDefaultsUtility.getStringValue(forKey: authentication_key))
+        let keyValue = UserDefaultsProperty<String>(authentication_key).value!
+        PrintUtility.printLog(tag: "SocketKEY", text: keyValue)
         var request = URLRequest(url: URL(string: AUDIO_STREAM_URL)!)
         request.timeoutInterval = 5 // Sets the timeout for the connection
-        request.setValue(UserDefaultsUtility.getStringValue(forKey: authentication_key), forHTTPHeaderField: access_token_key)
+        request.setValue(keyValue, forHTTPHeaderField: access_token_key)
         request.setValue("true", forHTTPHeaderField: "X-Push-Mode")
         //request.setValue("false", forHTTPHeaderField: "X-Auto-Detect")
         //request.setValue("permessage-deflate", forHTTPHeaderField: "Sec-WebSocket-Extensions")

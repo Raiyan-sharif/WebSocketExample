@@ -151,15 +151,15 @@ class TutorialViewController: BaseViewController {
     }
 
     private func moveToSpeechProcessing() {
-        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-        controller.homeMicTapTimeStamp = currentTS
-        controller.languageHasUpdated = true
-        controller.screenOpeningPurpose = .HomeSpeechProcessing
-        controller.isFromTutorial = true
-        controller.speechProcessingDismissDelegate = self
-        self.navigationController?.pushViewController(controller, animated: true);
+//        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+//        controller.homeMicTapTimeStamp = currentTS
+//        controller.languageHasUpdated = true
+//        controller.screenOpeningPurpose = .HomeSpeechProcessing
+//        controller.isFromTutorial = true
+//        controller.speechProcessingDismissDelegate = self
+//        self.navigationController?.pushViewController(controller, animated: true);
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

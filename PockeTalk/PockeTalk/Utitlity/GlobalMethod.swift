@@ -353,8 +353,8 @@ class GlobalAlternative{
        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
        controller.isRecreation = isRecreation
        controller.isFromSpeechProcessing = fromSpeech
-       controller.currentTSDelegate = viewController as? CurrentTSDelegate
-       controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
+       //controller.currentTSDelegate = viewController as? CurrentTSDelegate
+       //controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
        if(viewController?.navigationController != nil){
            if fromHistory {
                controller.modalPresentationStyle = .fullScreen

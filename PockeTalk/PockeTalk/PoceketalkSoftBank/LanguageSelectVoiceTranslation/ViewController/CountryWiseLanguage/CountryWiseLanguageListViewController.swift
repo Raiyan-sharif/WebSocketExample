@@ -15,6 +15,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     var countryName = ""
     var selectedIndexPath: IndexPath?
     var isNative: Int = 0
+    var isFromTranslation = false
 
     var countryListItem: CountryListItemElement?
     var languageList = [LanguageItem]()
@@ -31,12 +32,19 @@ class CountryWiseLanguageListViewController: BaseViewController {
         LanguageSelectionManager.shared.insertIntoDb(entity: entity)
         PrintUtility.printLog(tag: TAG, text: "\(CountryWiseLanguageListViewController.self) changed language to \(selectedLanguageCode)")
         NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
-        for controller in self.navigationController!.viewControllers as Array {
-            if controller.isKind(of: HomeViewController.self) {
-                self.navigationController!.popToViewController(controller, animated: true)
-                       break
-            }
+        if isFromTranslation{
+            //To do
+        }else{
+
+            NotificationCenter.default.post(name:.containerViewSelection, object: nil)
+            self.navigationController?.popViewController(animated: false)
         }
+//        for controller in self.navigationController!.viewControllers as Array {
+//            if controller.isKind(of: HomeViewController.self) {
+//                self.navigationController!.popToViewController(controller, animated: true)
+//                       break
+//            }
+//        }
     }
 
     @IBAction func onBackButtonPressed(_ sender: Any) {

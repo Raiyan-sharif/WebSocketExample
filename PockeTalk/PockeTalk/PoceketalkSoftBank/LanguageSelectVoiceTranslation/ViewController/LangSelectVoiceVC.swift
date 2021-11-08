@@ -58,8 +58,11 @@ class LangSelectVoiceVC: BaseViewController {
         //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
+        controller.isFromTranslation = fromRetranslation
         controller.isNative = isNative
-        self.navigationController?.pushViewController(controller, animated: true);
+        //self.navigationController?.pushViewController(controller, animated: true);
+        add(asChildViewController: controller, containerView: view)
+        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
     }
 
     override func viewDidLoad() {
@@ -126,8 +129,8 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     func setUpSpeechButton(){
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomBtnContainer, width: width, height: width)
-        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomBtnContainer, width: width, height: width)
+//        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
     }
 
     override func viewDidLayoutSubviews() {
@@ -240,15 +243,14 @@ class LangSelectVoiceVC: BaseViewController {
             //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
             NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         }
-        if self.navigationController != nil{
-            self.navigationController?.popViewController(animated: true)
-        }else{
-            self.dismiss(animated: true, completion: nil)
-        }
-        self.navigationController
+
         if fromRetranslation == true {
             self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+            self.remove(asChildViewController: self)
+        }else{
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         }
+
     }
 
 }

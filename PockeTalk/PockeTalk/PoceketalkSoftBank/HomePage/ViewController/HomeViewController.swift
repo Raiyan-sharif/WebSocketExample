@@ -19,24 +19,25 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak private var bottomCircleleImgView: UIImageView!
     @IBOutlet weak private var topClickView: UIView!
     @IBOutlet weak private var bottomClickView: UIView!
-    @IBOutlet weak private var bottomView: UIView!
+    @IBOutlet weak  var bottomView: UIView!
     @IBOutlet weak private var buttonFav: UIButton!
     
     let TAG = "\(HomeViewController.self)"
-    var languageHasUpdated = false
     private var homeVM : HomeViewModeling!
     private var animationCounter : Int = 0
     private var deviceLanguage : String = ""
     private let toastVisibleTime : Double = 2.0
     private let animationDuration : TimeInterval = 0.1
-    private let width : CGFloat = 100
+     let width : CGFloat = 100
     private var selectedTab = 0
     private var historyItemCount = 0
     private var favouriteItemCount = 0;
-    private var swipeDown = UISwipeGestureRecognizer()
+    var swipeDown : UISwipeGestureRecognizer!
     private var selectedTouchView:UIView!
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
-    
+
+    weak var homeVCDelegate: HomeVCDelegate?
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
@@ -45,24 +46,50 @@ class HomeViewController: BaseViewController {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "TopHistoryBtn"), for: .normal)
         button.addTarget(self, action: #selector(goToHistoryScreen), for: .touchUpInside)
+        button.layer.zPosition = 99
         return button
     }()
-    
-    //MARK: - Lifecycle Methods
+
+    lazy var homeContainerView:UIView = {
+       let view  = UIView()
+       view.backgroundColor = .white
+       view.translatesAutoresizingMaskIntoConstraints = false
+       view.layer.zPosition = 100
+       return view
+   }()
+
+     lazy var speechContainerView:UIView = {
+        let view  = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.zPosition = 101
+        return view
+    }()
+
+    lazy var speechVC:SpeechProcessingViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let speechVC = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
+        homeVCDelegate = speechVC
+        return speechVC
+    }()
+
+    var homeContainerViewBottomConstraint:NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNotification()
         self.homeVM = HomeViewModel()
         self.setUpUI()
+        setLanguageDirection()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         view.changeFontSize()
-        setUpUI()
+       // setUpUI()
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
-        setLanguageDirection()
+        //setLanguageDirection()
         setHistoryAndFavouriteView()
     }
     
@@ -102,12 +129,10 @@ class HomeViewController: BaseViewController {
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomView, width: width, height: width)
-        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-        
-        ///Add TopButton Subview
+
         view.addSubview(topButton)
         topButton.translatesAutoresizingMaskIntoConstraints = false
+        topButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         topButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
         topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
@@ -120,6 +145,27 @@ class HomeViewController: BaseViewController {
         /// Added down geture
         swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+
+        view.addSubview(homeContainerView)
+        view.addSubview(speechContainerView)
+
+        homeContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        homeContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        homeContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        //homeContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor).isActive = true
+        homeContainerViewBottomConstraint = homeContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor, constant: 0)
+        homeContainerViewBottomConstraint.isActive = true
+
+        speechContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        speechContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        speechContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        speechContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor).isActive = true
+
+
+
+        setUPLongPressGesture()
+        addSpeechProcessingVC()
     }
     
     private func setHistoryAndFavouriteView(){
@@ -129,18 +175,22 @@ class HomeViewController: BaseViewController {
         updateFavouriteViews()
     }
     
-    private func updateHistoryViews(){
-        if(historyItemCount > 0){
-            view.addSubview(topButton)
-            topButton.translatesAutoresizingMaskIntoConstraints = false
-            topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            topButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-            topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            topButton.centerYAnchor.constraint(equalTo: menuButton.centerYAnchor, constant: 0).isActive = true
-            self.view.addGestureRecognizer(swipeDown)
+
+    
+    func addSpeechProcessingVC(){
+        add(asChildViewController: speechVC, containerView:speechContainerView)
+        hideSpeechView()
+        homeGestureEnableOrDiable()
+    }
+    
+    func updateHistoryViews(){
+        // Add top button
+        if(historyItemCount>0){
+            topButton.isHidden = false
+            swipeDown.isEnabled = true
         }else{
-            topButton.removeFromSuperview()
-            self.view.removeGestureRecognizer(swipeDown)
+            topButton.isHidden = true
+            swipeDown.isEnabled = false
         }
     }
     
@@ -153,6 +203,9 @@ class HomeViewController: BaseViewController {
     }
     
     private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateContainer(notification:)), name:.containerViewSelection, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
     }
     
@@ -188,39 +241,13 @@ class HomeViewController: BaseViewController {
         openLanguageSelectionScreen(isNative: LanguageName.bottomLang.rawValue)
     }
     
-    @IBAction private func didTapOnCameraButton(_ sender: UIButton) {
-        RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
-            if isGranted {
-                let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-                if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
-                    self?.navigationController?.pushViewController(cameraViewController, animated: true)
-                }
-            } else {
-                GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
-            }
-        }
-    }
+
     
     @IBAction private func didTapOnFavoriteButton(_ sender: UIButton) {
         self.goToFavouriteScreen()
     }
     
-    @objc private func microphoneTapAction (sender:UIButton) {
-        let languageManager = LanguageSelectionManager.shared
-        var speechLangCode = ""
-        if languageManager.isArrowUp{
-            speechLangCode = languageManager.bottomLanguage
-        }else{
-            speechLangCode = languageManager.topLanguage
-        }
-        if languageManager.hasSttSupport(languageCode: speechLangCode){
-            proceedToTakeVoiceInput()
-        }else {
-            showToast(message: "no_stt_msg".localiz(), seconds: 2)
-            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
-        }
-    }
-    
+
     //MARK: - View Transactions
     private func dislayTutorialScreen () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -233,66 +260,57 @@ class HomeViewController: BaseViewController {
         controller.speechProDismissDelegateFromTutorial = self
         self.present(navController, animated: true, completion: nil)
     }
-    
-    private func proceedToTakeVoiceInput() {
-        if Reachability.isConnectedToNetwork() {
-            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-                if isGranted {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessingFromHome) {
-                        self.displaySpeechProcessing()
-                    }
-                } else {
-                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
-                    
-                }
-            }
-        } else {
-            GlobalMethod.showNoInternetAlert()
-        }
-    }
+
 
     @objc private func goToHistoryScreen () {
+    /// Top button trigger to history screen
+
         let historyVC = HistoryViewController()
-        historyVC.initDelegate(self)
-        self.topCircleImgView.isHidden = true
-        self.bottomCircleleImgView.isHidden = true
-        let navController = UINavigationController(rootViewController: historyVC)
-        navController.modalPresentationStyle = .overFullScreen
-        navController.modalTransitionStyle = .crossDissolve
-        navController.navigationBar.isHidden = true
-        historyVC.navController = navController
-        historyVC.speechProDismissDelegateFromHistory = self
-        self.present(navController, animated: true, completion: nil)
+        add(asChildViewController: historyVC, containerView:homeContainerView)
+        hideSpeechView()
+        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        enableORDisableMicrophoneButton(isEnable: true)
     }
-
-
-    func displaySpeechProcessing () {
-        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-        controller.homeMicTapTimeStamp = currentTS
-        controller.languageHasUpdated = self.languageHasUpdated
-        controller.screenOpeningPurpose = .HomeSpeechProcessing
-        controller.speechProcessingDismissDelegate = self
-        controller.isFromTutorial = true
-        self.navigationController?.pushViewController(controller, animated: true);
-    }
-
     
-    @objc private func goToFavouriteScreen () {
+    /// Top button trigger to history screen
+    @objc func goToFavouriteScreen () {
         let fv = FavouriteViewController()
-        fv.speechProDismissDelegateFromFav = self
-        fv.initDelegate(self)
-        let navController = UINavigationController(rootViewController: fv)
-        navController.modalPresentationStyle = .overFullScreen
-        navController.modalTransitionStyle = .crossDissolve
-        navController.navigationBar.isHidden = true
-        fv.navController = navController
-        self.present(navController, animated: true, completion: nil)
+
+        add(asChildViewController: fv, containerView:homeContainerView)
+        hideSpeechView()
+        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        enableORDisableMicrophoneButton(isEnable: true)
+
     }
+
+    /// Navigate to Camera page
+    @IBAction func didTapOnCameraButton(_ sender: UIButton) {
+
+        RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
+            guard let `self` = self else { return }
+            if isGranted {
+                let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+                if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+                    cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
+                        guard let `self` = self else { return }
+                        self.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
+                        self.homeContainerView.layoutIfNeeded()
+                    }
+                     self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView)
+                     ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+                     self.hideSpeechView()
+                     self.enableORDisableMicrophoneButton(isEnable: true)
+                }
+            } else {
+                GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
+            }
+        }
+
+    }
+
     
     //MARK: - Utils
-    private func setLanguageDirection(){
+     func setLanguageDirection(){
         self.languageChangedDirectionButton.isUserInteractionEnabled = false
         let isArrowUp = LanguageSelectionManager.shared.isArrowUp
         PrintUtility.printLog(tag: TAG, text: "setLanguageDirection isArrowUp \(isArrowUp)")
@@ -303,7 +321,7 @@ class HomeViewController: BaseViewController {
             self.languageChangedDirectionButton.setImage(UIImage(named: "arrow_circular_down"), for: .normal)
             self.animationChange(transitionToImageView: self.topFlipImageView, transitionFromImageView: self.bottomFlipImageView, animationOption: UIView.AnimationOptions.transitionFlipFromBottom, imageName: "gradient_blue_top_bg")
         }
-        languageHasUpdated = true
+        speechVC.languageHasUpdated = true
     }
     
     private func animationChange (transitionToImageView : UIImageView, transitionFromImageView : UIImageView, animationOption : UIView.AnimationOptions, imageName : String ){
@@ -319,13 +337,12 @@ class HomeViewController: BaseViewController {
                           })
     }
     
-    
+
     private func updateLanguageNames() {
         print("\(HomeViewController.self) updateLanguageNames method called")
         let languageManager = LanguageSelectionManager.shared
         let nativeLangCode = languageManager.bottomLanguage
         let targetLangCode = languageManager.topLanguage
-        
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         print("\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
@@ -336,27 +353,46 @@ class HomeViewController: BaseViewController {
     }
     
     private func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.containerViewSelection, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
     }
-    
+
     private func openLanguageSelectionScreen(isNative: Int){
         print("\(HomeViewController.self) isNative \(isNative)")
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.languageHasUpdated = { [weak self] in
             //self?.homeVM.updateLanguage()
-            self?.languageHasUpdated = true
+            self?.speechVC.languageHasUpdated = true
         }
         controller.isNative = isNative
-        self.navigationController?.pushViewController(controller, animated: true);
+        //self.navigationController?.pushViewController(controller, animated: true);
+        add(asChildViewController: controller, containerView:homeContainerView)
+        hideSpeechView()
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+        enableORDisableMicrophoneButton(isEnable: true)
     }
     
-    @objc private func onArrowChanged(notification: Notification) {
+
+    @objc func onVoiceLanguageChanged(notification: Notification) {
+        updateLanguageNames()
+    }
+    
+    @objc func onArrowChanged(notification: Notification) {
         setLanguageDirection()
         setHistoryAndFavouriteView()
     }
-    
-    @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+
+    @objc func updateContainer(notification: Notification) {
+        self.removeAllChildControllers()
+        historyDissmissed()
+        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+    }
+
+    // Down ward gesture
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .ended{
             if(historyItemCount > 0){
                 self.goToHistoryScreen()
@@ -403,25 +439,13 @@ extension HomeViewController {
             self?.openLanguageSelectionScreen(isNative:self!.selectedTab)
         }
     }
-}
 
-//MARK: - HistoryViewControllerDelegates
-extension HomeViewController: HistoryViewControllerDelegates{
     func historyDissmissed() {
         favouriteItemCount = self.homeVM.getFavouriteItemCount()
         updateFavouriteViews()
         historyItemCount = self.homeVM.getHistoryItemCount()
         updateHistoryViews()
-    }
-}
-
-//MARK: - FavouriteViewControllerDelegates
-extension HomeViewController : FavouriteViewControllerDelegates {
-    func dismissFavouriteView() {
-        favouriteItemCount = self.homeVM.getFavouriteItemCount()
-        updateFavouriteViews()
-        historyItemCount = self.homeVM.getHistoryItemCount()
-        updateHistoryViews()
+       // self.hideContainerView()
     }
 }
 

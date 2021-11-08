@@ -27,6 +27,7 @@ class LanguageSelectCameraVC: BaseViewController {
     let speechButtonWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
+    var updateHomeContainer:(()->())?
 
     @IBOutlet weak var toolbarTitleLabel: UILabel!
 
@@ -215,7 +216,9 @@ class LanguageSelectCameraVC: BaseViewController {
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
         CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
-        self.navigationController?.popViewController(animated: true)
+        //self.navigationController?.popViewController(animated: true)
+        self.updateHomeContainer?()
+        remove(asChildViewController: self)
     }
 
     func isLanguageSupportRecognition(code: String?) -> Bool{

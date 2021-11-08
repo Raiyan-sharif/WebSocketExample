@@ -5,9 +5,6 @@
 
 import UIKit
 
-protocol FavouriteViewControllerDelegates {
-    func dismissFavouriteView()
-}
 
 class FavouriteViewController: BaseViewController {
     let TAG = "\(FavouriteViewController.self)"
@@ -26,7 +23,6 @@ class FavouriteViewController: BaseViewController {
     let buttonWidth : CGFloat = 100
     private var spinnerView : SpinnerView!
 
-    private(set) var delegate: FavouriteViewControllerDelegates?
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
     var deletedCellHeight = CGFloat()
@@ -47,10 +43,6 @@ class FavouriteViewController: BaseViewController {
         return collectionView
     }()
 
-    private lazy var bottmView:UIView = {
-        let view = UIView()
-        return view
-    }()
 
     override func loadView() {
         view = UIView()
@@ -68,13 +60,8 @@ class FavouriteViewController: BaseViewController {
         populateData()
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
-        //SocketManager.sharedInstance.connect()
-//        socketManager.socketManagerDelegate = self
     }
-    
-    func initDelegate<T>(_ vc: T) {
-            self.delegate = vc.self as? FavouriteViewControllerDelegates
-    }
+
     
     // Populate item to show on context menu
     func populateData () {
@@ -86,13 +73,7 @@ class FavouriteViewController: BaseViewController {
     
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
-        self.view.addSubview(bottmView)
         addSpinner()
-        bottmView.translatesAutoresizingMaskIntoConstraints = false
-        bottmView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bottmView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottmView.heightAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-        bottmView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,13 +86,13 @@ class FavouriteViewController: BaseViewController {
         let topPadding = window?.safeAreaInsets.top
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
+//        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.alpha = 0.0
 
         self.view.addSubview(backBtn)
 
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: bottmView, width: buttonWidth, height: buttonWidth)
-        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+
 
     }
 
@@ -124,8 +105,8 @@ class FavouriteViewController: BaseViewController {
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
-            controller.speechProcessingDismissDelegate = self
-            controller.isFromTutorial = false
+            //controller.speechProcessingDismissDelegate = self
+            //controller.isFromTutorial = false
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
@@ -197,14 +178,15 @@ class FavouriteViewController: BaseViewController {
     
     ///Move to next screeen
     @objc func actionBack () {
-        self.dismissFavourite(animated: true, completion: nil )
+        //self.dismissFavourite(animated: true, completion: nil )
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
 
     func bindData(){
         favouriteViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
                 DispatchQueue.main.async {
-                    self?.dismissFavourite(animated: true, completion: nil)
+                    self?.dismissFavourite()
                 }
             }
             if items.count > 0{
@@ -242,14 +224,15 @@ class FavouriteViewController: BaseViewController {
                         chatEntity.id = row
                         self.selectedChatItemModel?.chatItem = chatEntity
                         self.spinnerView.isHidden = true
-                        GlobalMethod.showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false, hideTalkButton: true)
+                        self.showTTSScreen( chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
                     }
                 }
     }
     
-    func dismissFavourite(animated: Bool, completion: (() -> Void)? = nil) {
-        self.delegate?.dismissFavouriteView()
-        self.dismiss(animated: animated, completion: completion )
+    func dismissFavourite() {
+//        self.delegate?.dismissFavouriteView()
+//        self.dismiss(animated: animated, completion: completion )
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
     
     func actualNumberOfLines(width:CGFloat, text:String, font:UIFont) -> Int {
@@ -323,7 +306,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func openTTTResult(_ item: Int){
         let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        GlobalAlternative().showTtsAlert(viewController: self, chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+        self.showTTSScreen (chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
     
     func openTTTResultAlert(_ idx: IndexPath){
@@ -374,6 +357,7 @@ extension FavouriteViewController : RetranslationDelegate{
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
             }
         }else {
             GlobalMethod.showNoInternetAlert()
@@ -412,7 +396,9 @@ extension FavouriteViewController : AlertReusableDelegate {
         transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        self.navController?.pushViewController(controller, animated: false)
+        add(asChildViewController: controller, containerView: view)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+        //self.navController?.pushViewController(controller, animated: false)
         //self.present(controller, animated: true, completion: nil)
     }
     
@@ -470,4 +456,25 @@ extension FavouriteViewController : TtsAlertControllerDelegate{
     }
     
     
+}
+extension FavouriteViewController{
+
+    func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
+        let chatItem = chatItemModel.chatItem!
+        if saveDataToDB == true{
+            do {
+                let row = try ChatDBModel.init().insert(item: chatItem)
+                chatItem.id = row
+                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            } catch _ {}
+        }
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
+        ttsVC.chatItemModel = chatItemModel
+        ttsVC.hideMenuButton = hideMenuButton
+        ttsVC.hideBottomView = hideBottmSection
+        add(asChildViewController: ttsVC, containerView: self.view)
+
+    }
 }
