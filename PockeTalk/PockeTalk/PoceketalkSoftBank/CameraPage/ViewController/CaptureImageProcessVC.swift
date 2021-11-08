@@ -380,6 +380,7 @@ class CaptureImageProcessVC: BaseViewController {
     private func startConfirmController() {
         PrintUtility.printLog(tag: "original Image", text: "\(originalImage)")
         let vc = ImageCroppingViewController(image: originalImage, croppingParameters: CropUtils(enabled: true, resizeable: true, dragable: true, minimumSize: CGSize(width: 80, height: 80)))
+        vc.fromImageProcessVC = true
         vc.onCompletion = { [weak self] image, asset in
             defer {
                 self?.dismiss(animated: true, completion: nil)

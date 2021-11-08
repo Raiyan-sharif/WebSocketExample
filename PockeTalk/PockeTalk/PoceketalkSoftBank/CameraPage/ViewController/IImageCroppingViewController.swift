@@ -20,6 +20,8 @@ class ImageCroppingViewController: BaseViewController {
     var imageFrameWidth = CGFloat()
     var imageFrameHeight = CGFloat()
     
+    var fromImageProcessVC: Bool = false
+    
     var cropBtn: UIButton = {
         let button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "cropButton"), for: .normal)
@@ -143,6 +145,7 @@ class ImageCroppingViewController: BaseViewController {
             DispatchQueue.main.async {
                 self.loadOverlappingViewConstraint()
                 DispatchQueue.main.async {
+                    //self.imageView.center = self.scrollView.center
                     self.overlappingView.frame.origin.x = 0
                     self.overlappingView.frame.origin.y = (self.view.frame.height/2) - (self.overlappingView.frame.height/2)
                 }
@@ -185,17 +188,15 @@ class ImageCroppingViewController: BaseViewController {
     }
     
     private func loadOverlappingViewConstraint() {
-        cropViewLeadingConstraint.constant = overlappingViewSize.origin.x
-        cropViewtopConstraint.constant = overlappingViewSize.origin.y
+        cropViewLeadingConstraint.constant = fromImageProcessVC ? 0 : overlappingViewSize.origin.x
+        cropViewtopConstraint.constant = fromImageProcessVC ? ((screenHeight - imageView.frame.height)/2) - CameraCropControllerMargin : overlappingViewSize.origin.y
         cropViewWidth.constant = self.view.frame.size.width
         cropViewHeight.constant = imageView.frame.height + (CameraCropControllerMargin * 2)
-        
         
         cropViewLeadingConstraint.isActive = true
         cropViewtopConstraint.isActive = true
         cropViewWidth.isActive = true
         cropViewHeight.isActive = true
-        
     }
     
     private func loadScrollView() {
@@ -297,10 +298,19 @@ class ImageCroppingViewController: BaseViewController {
         let bottomPadding = window?.safeAreaInsets.bottom ?? 0
         
         /// Set scrollview content inset based on safe area
-        scrollView.contentInset = UIEdgeInsets(top: offy-(topPadding ),
-                                               left: offx,
-                                               bottom: offy-(bottomPadding ),
-                                               right: offx)
+        
+        let content_Inset = fromImageProcessVC ? UIEdgeInsets(top: ((self.view.frame.size.height - imageView.frame.size.height)/2)-topPadding,
+                                                              left: CameraCropControllerMargin,
+                                                              bottom: (self.view.frame.size.height - self.imageView.frame.size.height)/2,
+                                                              right: CameraCropControllerMargin) :
+        UIEdgeInsets(top: offy-(topPadding ),
+                     left: offx,
+                     bottom: offy-(bottomPadding ),
+                     right: offx)
+        
+        scrollView.contentInset = content_Inset
+        
+        PrintUtility.printLog(tag: "scrollView.contentInset", text: "\(offy-(topPadding)), \(offx), \(offy-(bottomPadding)), \(offx)")
     }
     
     @IBAction func cancelButtonEventListener(_ sender: Any) {
@@ -332,7 +342,7 @@ class ImageCroppingViewController: BaseViewController {
             imageFrameHeight = imageView.frame.size.height*cropRect.height
             imageFrameWidth = imageView.frame.size.height*cropRect.width
         }
-
+        
         if Reachability.isConnectedToNetwork() {
             let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
             if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CaptureImageProcessVC.self)) as? CaptureImageProcessVC {
@@ -366,6 +376,9 @@ class ImageCroppingViewController: BaseViewController {
         return CGRect(x: normalizedX, y: normalizedY, width: normalizedWidth, height: normalizedHeight)
     }
     
+    deinit {
+        PrintUtility.printLog(tag: "ImageCroppingViewController", text: "dismiss view controller")
+    }
 }
 
 extension ImageCroppingViewController: UIScrollViewDelegate, CropOverlappingViewDelegates {
