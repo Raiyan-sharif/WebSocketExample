@@ -125,7 +125,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func setupUI () {
-        addSpinner()
+        //addSpinner()
 
         PrintUtility.printLog(tag: TAG, text: "Speech language code \(speechLangCode)")
         self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
@@ -167,7 +167,7 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             PrintUtility.printLog(tag: "Foreground", text: "last Background")
             self.service?.timerInvalidate()
-            self.service?.stopRecord()
+           // self.service?.stopRecord()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
     }
@@ -445,11 +445,12 @@ class SpeechProcessingViewController: BaseViewController{
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
         
-        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
-            service?.startRecord()
-        }
-        addSpinner()
-        updateAnimation ()
+//        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
+//            service?.startRecord()
+//        }
+//        addSpinner()
+//        updateAnimation ()
+        self.loaderInvisible()
     }
     
 
@@ -513,10 +514,11 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         speechProcessingVM.isGettingActualData = false
         service?.startRecord()
         updateAnimation()
+        addSpinner()
     }
 
     func stopRecord() {
-        spinnerView.isHidden = false
+        self.spinnerView.isHidden = false
         service?.stopRecord()
         service?.timerInvalidate()
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
