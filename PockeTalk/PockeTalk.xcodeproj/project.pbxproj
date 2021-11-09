@@ -161,6 +161,7 @@
 		89396B272704155B00D77760 /* TTTGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B262704155B00D77760 /* TTTGoogle.swift */; };
 		89396B292704156400D77760 /* TTTJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B282704156300D77760 /* TTTJSONModel.swift */; };
 		89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B2A2704176200D77760 /* CustomVerticalTextView.swift */; };
+		8939F821273BBDC0007EB5CD /* TalkButtonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */; };
 		8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */; };
 		8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */; };
 		8940E31A26FC28EC0083E4FA /* IImageCroppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */; };
@@ -398,6 +399,7 @@
 		89396B262704155B00D77760 /* TTTGoogle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTGoogle.swift; sourceTree = "<group>"; };
 		89396B282704156300D77760 /* TTTJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTJSONModel.swift; sourceTree = "<group>"; };
 		89396B2A2704176200D77760 /* CustomVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVerticalTextView.swift; sourceTree = "<group>"; };
+		8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkButtonAnimation.swift; sourceTree = "<group>"; };
 		8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
 		8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOverlappingView.swift; sourceTree = "<group>"; };
 		8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IImageCroppingViewController.swift; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 				3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */,
 				897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */,
 				8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */,
+				8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -1863,6 +1866,7 @@
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
 				4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */,
+				8939F821273BBDC0007EB5CD /* TalkButtonAnimation.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,

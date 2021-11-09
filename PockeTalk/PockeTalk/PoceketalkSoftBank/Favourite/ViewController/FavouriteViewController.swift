@@ -280,6 +280,10 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             self.deletedCellHeight = cell.frame.height
             self.collectionView.performBatchUpdates{
                 self.collectionView.deleteItems(at: [indexpath])
+                if(self.favouriteViewModel.items.value.count == indexpath.row){
+                    self.collectionView.reloadItems(at: [IndexPath(item: self.favouriteViewModel.items.value.count - 1, section: 0)])
+                }
+                
             }
         }
         

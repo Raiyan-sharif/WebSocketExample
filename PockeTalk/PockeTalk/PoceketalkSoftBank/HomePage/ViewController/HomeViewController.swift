@@ -24,6 +24,10 @@ class HomeViewController: BaseViewController {
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
+    let pulseLayer = CAShapeLayer()
+    let pulseGrayWave: UIView = UIView(frame: CGRect(x: 50, y:  50, width: 100, height: 100))
+    let midCircleViewOfPulse: UIView = UIView(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+    let bottomImageView: UIImageView = UIImageView()
     private var animationCounter : Int = 0
     private var deviceLanguage : String = ""
     private let toastVisibleTime : Double = 2.0
@@ -165,6 +169,7 @@ class HomeViewController: BaseViewController {
 
         setUPLongPressGesture()
         addSpeechProcessingVC()
+        addTalkButtonAnimationViews()
     }
     
     private func setHistoryAndFavouriteView(){
@@ -173,8 +178,11 @@ class HomeViewController: BaseViewController {
         updateHistoryViews()
         updateFavouriteViews()
     }
-    
-
+    func addTalkButtonAnimationViews(){
+        self.bottomView.addSubview(pulseGrayWave)
+        self.bottomView.layer.addSublayer(pulseLayer)
+        self.bottomView.addSubview(midCircleViewOfPulse)
+    }
     
     func addSpeechProcessingVC(){
         add(asChildViewController: speechVC, containerView:speechContainerView)

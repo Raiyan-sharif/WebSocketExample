@@ -429,6 +429,10 @@ extension HistoryViewController: UICollectionViewDelegate, UICollectionViewDataS
             PrintUtility.printLog(tag: "cell Height", text: "\(self.deletedCellHeight)")
             self.collectionView.performBatchUpdates{
                 self.collectionView.deleteItems(at: [indexpath])
+                if(self.historyViewModel.items.value.count == indexpath.row){
+                    self.collectionView.reloadItems(at: [IndexPath(item: self.historyViewModel.items.value.count - 1, section: 0)])
+                }
+                
             }
         }
 
