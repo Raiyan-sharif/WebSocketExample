@@ -17,4 +17,14 @@ extension Notification.Name {
     static let countySlectionByVoiceNotofication = Notification.Name("countySlectionByVoiceNotofication")
     static let cameraSelectionLanguage = Notification.Name("CameraSelectionLanguage")
     static let pronumTiationTextUpdate = Notification.Name("PronumTiationTextUpdate")
+    static let tapOnMicrophoneLanguageSelectionVoice = Notification.Name("tapOnMicrophoneLanguageSelectionVoice")
+    static let tapOffMicrophoneLanguageSelectionVoice = Notification.Name("tapOffMicrophoneLanguageSelectionVoice")
+    
+    static let tapOnMicrophoneCountrySelectionVoice = Notification.Name("tapOnCountrySelectionVoice")
+    static let tapOffMicrophoneCountrySelectionVoice = Notification.Name("tapOffCountrySelectionVoice")
+    static let popFromCountrySelectionVoice = Notification.Name("popFromCountrySelectionVoice")
+    static let popFromCameralanguageSelectionVoice = Notification.Name("popFromCameralanguageSelectionVoice")
+    
+    static let tapOnMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOnMicrophoneCountrySelectionVoiceCamera")
+    static let tapOffMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOffMicrophoneCountrySelectionVoiceCamera")
 }

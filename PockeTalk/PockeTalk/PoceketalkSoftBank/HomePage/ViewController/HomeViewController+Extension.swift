@@ -66,9 +66,6 @@ extension HomeViewController{
     }
 
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
-
-
-
         let imageView = gesture.view! as! UIImageView
         if gesture.state == .began {
 
@@ -91,13 +88,38 @@ extension HomeViewController{
             if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
                 removeAllChildControllers()
             }
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+                NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+            }
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+                NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+            }
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+                NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
+            }
+            
             homeVCDelegate?.startRecord()
         }
 
         if gesture.state == .ended {
             imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-
             enableORDisableMicrophoneButton(isEnable: false)
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
+                    NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+            }
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
+                    NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+            }
+            
+            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
+                    NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+            }
+            
             homeVCDelegate?.stopRecord()
         }
     }

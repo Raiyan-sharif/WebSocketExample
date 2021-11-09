@@ -56,6 +56,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let lineWidth : CGFloat = 2
     let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
+    var shouldUpdateContainer = true
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
@@ -101,12 +102,18 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         updateLanguageNames()
     }
     
+    @objc func showBottomView(notification: Notification) {
+        shouldUpdateContainer = false
+    }
+    
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showBottomView(notification:)), name: .popFromCameralanguageSelectionVoice, object: nil)
     }
     
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name: .languageSelectionCameraNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .popFromCameralanguageSelectionVoice, object: nil)
     }
     
     deinit {
@@ -200,7 +207,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateHomeContainer?(true)
+        self.updateHomeContainer?(shouldUpdateContainer)
         self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true

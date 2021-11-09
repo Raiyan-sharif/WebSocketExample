@@ -125,7 +125,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func setupUI () {
-        //addSpinner()
+        addSpinner()
 
         PrintUtility.printLog(tag: TAG, text: "Speech language code \(speechLangCode)")
         self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
@@ -170,21 +170,6 @@ class SpeechProcessingViewController: BaseViewController{
            // self.service?.stopRecord()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
-    }
-    
-
-    /// Initial UI set up
-    func setUpUI () {
-        addSpinner()
-        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
-        PrintUtility.printLog(tag: TAG, text: "Speech language code \(speechLangCode)")
-        self.titleLabel.text = speechLanguage?.initText
-        self.titleLabel.textAlignment = .center
-        self.titleLabel.numberOfLines = 0
-        self.titleLabel.lineBreakMode = .byWordWrapping
-        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .semibold)
-        self.titleLabel.textColor = UIColor._whiteColor()
-
     }
     
     private func addSpinner(){
@@ -270,11 +255,6 @@ class SpeechProcessingViewController: BaseViewController{
         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
         self.homeVC?.hideSpeechView()
         isSSTavailable = false
-//        if(self.navigationController != nil){
-//            self.navigationController?.popViewController(animated: true)
-//        }else{
-//            self.dismiss(animated: true, completion: nil)
-//        }
     }
 
     func hideOrOpenExampleText(isHidden:Bool){
@@ -297,6 +277,15 @@ class SpeechProcessingViewController: BaseViewController{
         }
         exampleLabel.text = speechLanguage?.exampleText
         descriptionLabel.text = speechLanguage?.secText
+    }
+    
+    func isSTTDataAvailable() -> Bool {
+        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
+        if titleLabel.text == speechLanguage?.initText {
+            return true
+        } else {
+            return false
+        }
     }
     
     private func showTutorial () {
@@ -332,21 +321,26 @@ class SpeechProcessingViewController: BaseViewController{
                     case .CountrySelectionByVoice:
                        // self.speechProcessingDelegate?.searchCountry(text: self.speechProcessingVM.getSST_Text.value)
                         NotificationCenter.default.post(name: .countySlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
-
+                        
+                        /// notification for showing microphone btn
+                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
                         //self.navigationController?.popViewController(animated: true)
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .LanguageSelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        //self.navigationController?.popViewController(animated: true)
+                        
+                        /// notification for showing microphone btn
                         NotificationCenter.default.post(name: .languageListNotofication, object: nil)
+                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .LanguageSelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                       NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
+                        NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
+                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break

@@ -1,13 +1,16 @@
 //
-//  LanguageSettingsTutorialVC.swift
+//  LnaguageSettingsTutorialCameraVC.swift
 //  PockeTalk
+//
+//  Created by BJIT on 10/11/21.
 //
 
 import UIKit
 
-class LanguageSettingsTutorialVC: BaseViewController {
+class LnaguageSettingsTutorialCameraVC: BaseViewController {
 
     @IBAction func onBackPressed(_ sender: Any) {
+        NotificationCenter.default.post(name: .popFromCameralanguageSelectionVoice, object: nil)
         self.navigationController?.popViewController(animated: true)
     }
     @IBOutlet weak var toolbarTitleLabel: UILabel!
@@ -19,11 +22,12 @@ class LanguageSettingsTutorialVC: BaseViewController {
         guidelineTextLabel.text = "Speech Guideline".localiz()
         // Do any additional setup after loading the view.
     }
-
+    
     static func openShowViewController(navigationController: UINavigationController?){
         //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "LanguageSettingsTutorialVC")as! LanguageSettingsTutorialVC
+        let storyboard = UIStoryboard(name: "LanguageSelectCamera", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "LnaguageSettingsTutorialCameraVC")as! LnaguageSettingsTutorialCameraVC
         navigationController?.pushViewController(controller, animated: true);
     }
+
 }

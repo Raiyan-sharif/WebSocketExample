@@ -145,6 +145,7 @@
 		87B56E6426EB710100BF613B /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E6326EB710100BF613B /* Extension+String.swift */; };
 		87C78F0B27212DA3004BC276 /* HomeViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C78F0A27212DA3004BC276 /* HomeViewController+Extension.swift */; };
 		87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9F4E26F22DA1008B28E7 /* HighLight.swift */; };
+		890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */; };
 		8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */; };
 		8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */; };
 		8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */; };
@@ -381,6 +382,7 @@
 		87B56E6326EB710100BF613B /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		87C78F0A27212DA3004BC276 /* HomeViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Extension.swift"; sourceTree = "<group>"; };
 		87EC9F4E26F22DA1008B28E7 /* HighLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighLight.swift; sourceTree = "<group>"; };
+		890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LnaguageSettingsTutorialCameraVC.swift; sourceTree = "<group>"; };
 		8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
@@ -954,6 +956,7 @@
 				503AEEBA26EB139F00B03978 /* LanguageSelectCameraVC.swift */,
 				50675D5A26EB26C100A775E5 /* LanguageListCameraVC.swift */,
 				50675D5E26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift */,
+				890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1853,6 +1856,7 @@
 				89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
 				89495B3126F0A97F00CEA19D /* ITTServerViewModel.swift in Sources */,
+				890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */,
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */,

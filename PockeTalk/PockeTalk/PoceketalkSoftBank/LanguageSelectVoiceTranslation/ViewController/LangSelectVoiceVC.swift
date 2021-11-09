@@ -17,7 +17,6 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak var btnBack: UIButton!
     var languageHasUpdated:(()->())?
 
-    @IBOutlet weak var layoutBottomBtnContainer: UIView!
     var currentIndex: Int = 0
     let tagLanguageListVC = "LanguageListVC"
     let tagHistoryListVC = "HistoryListVC"
@@ -39,6 +38,7 @@ class LangSelectVoiceVC: BaseViewController {
     let toastVisibleTime : Double = 2.0
     /// retranslation delegate
     var retranslationDelegate : RetranslationDelegate?
+    let window :UIWindow = UIApplication.shared.keyWindow!
 
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
@@ -62,7 +62,9 @@ class LangSelectVoiceVC: BaseViewController {
         controller.isNative = isNative
         //self.navigationController?.pushViewController(controller, animated: true);
         add(asChildViewController: controller, containerView: view)
+        
         ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
+        removeFloatingBtn()
     }
 
     override func viewDidLoad() {
@@ -74,9 +76,42 @@ class LangSelectVoiceVC: BaseViewController {
         toolbarTitleLabel.textColor = UIColor.white
         updateButton(index:0)
         setupPageViewController()
+        registerNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         setUpMicroPhoneIcon()
-        setUpSpeechButton()
-        //let item = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: LanguageManager.shared.currentLanguage.rawValue,text: "イディッシュ語")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        removeFloatingBtn()
+    }
+    
+    deinit {
+        unregisterNotification()
+    }
+    
+    private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .popFromCountrySelectionVoice, object: nil)
+    }
+    
+    @objc func hideMicrophoneButton(notification: Notification) {
+        removeFloatingBtn()
+    }
+    
+    @objc func showMicrophoneButton(notification: Notification) {
+       setUpMicroPhoneIcon()
+    }
+    
+    private func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){
@@ -108,36 +143,31 @@ class LangSelectVoiceVC: BaseViewController {
         self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
         self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        self.pageController.view.bottomAnchor.constraint(equalTo: layoutBottomBtnContainer.topAnchor)
+        self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         self.pageController.didMove(toParent: self)
     }
-    // floating microphone button
-    func setUpMicroPhoneIcon () {
-        let floatingButton = UIButton()
+
+    private func setUpMicroPhoneIcon() {
+        let bottomMergin = (self.window.frame.maxY / 4) / 2 + widthMicrophone / 2
+        
+        let floatingButton = UIButton(frame: CGRect(
+            x: self.window.frame.maxX - 60,
+            y: self.window.frame.maxY - bottomMergin,
+            width: widthMicrophone,
+            height: widthMicrophone)
+        )
+        
         floatingButton.setImage(UIImage(named: "mic"), for: .normal)
         floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
         floatingButton.layer.cornerRadius = widthMicrophone/2
         floatingButton.clipsToBounds = true
-        view.addSubview(floatingButton)
-        floatingButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButton.widthAnchor.constraint(equalToConstant: widthMicrophone).isActive = true
-        floatingButton.heightAnchor.constraint(equalToConstant: widthMicrophone).isActive = true
-        floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
-        floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        floatingButton.tag = languageSelectVoiceFloatingbtnTag
+        self.window.addSubview(floatingButton)
+        
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
-    func setUpSpeechButton(){
-//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomBtnContainer, width: width, height: width)
-//        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Refresh CollectionView Layout when you rotate the device
-//            tabsView.collectionView.collectionViewLayout.invalidateLayout()
-    }
 
     func updateButton(index:Int){
         PrintUtility.printLog(tag: TAG, text: "Index position \(index)")
@@ -193,12 +223,16 @@ class LangSelectVoiceVC: BaseViewController {
         }
         return String(data: data, encoding: String.Encoding.utf8)
     }
+    
+    private func removeFloatingBtn(){
+        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
+    }
 
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
+        removeFloatingBtn()
         LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
-        //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
     }
 
 

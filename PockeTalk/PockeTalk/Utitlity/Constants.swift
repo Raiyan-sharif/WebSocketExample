@@ -177,3 +177,8 @@ let speakingListener = "speakingListener"
 // TO DO : This will update/change in future
 let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
+
+//View Tag
+let languageSelectVoiceFloatingbtnTag = 1101
+let countrySelectVoiceFloatingbtnTag = 1102
+let languageSelectVoiceCameraFloatingBtnTag = 1103
