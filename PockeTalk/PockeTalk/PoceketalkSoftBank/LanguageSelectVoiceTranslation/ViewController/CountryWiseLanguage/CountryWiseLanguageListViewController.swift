@@ -16,11 +16,16 @@ class CountryWiseLanguageListViewController: BaseViewController {
     var selectedIndexPath: IndexPath?
     var isNative: Int = 0
     var isFromTranslation = false
+    let INVALID_SELECTION = -1
 
     var countryListItem: CountryListItemElement?
     var languageList = [LanguageItem]()
 
     @IBAction func onOkButtonPressed(_ sender: Any) {
+        if getSelectedItemPosition() == INVALID_SELECTION {
+            PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
+            return
+        }
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
 
         if isFromTranslation{
@@ -43,6 +48,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     @IBAction func onBackButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +96,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
                 return i
             }
         }
-        return 0
+        return INVALID_SELECTION
     }
 
     func getLanugageList(){

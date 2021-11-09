@@ -79,6 +79,7 @@ class LanguageListCameraVC: BaseViewController {
         PrintUtility.printLog(tag: TAG , text: " position \(String(describing: selectedItemPosition))")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        self.langListTableView.reloadData()
     }
 }
 

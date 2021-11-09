@@ -75,7 +75,8 @@ class LanguageListVC: BaseViewController {
         let selectedItemPosition = getSelectedItemPosition()
         selectedIndexPath = IndexPath(row: selectedItemPosition, section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        }
+        self.langListTableView.reloadData()
+    }
 
     deinit {
         unregisterNotification()
