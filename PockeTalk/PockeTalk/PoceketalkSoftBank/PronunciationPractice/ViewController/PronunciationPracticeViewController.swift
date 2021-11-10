@@ -57,11 +57,13 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(gotoPronuntiationPacticeVC(notification:)), name:.pronuntiationNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(pronunciationStopTTS(notification:)), name:.pronuntiationTTSStopNotification, object: nil)
     }
 
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.pronuntiationNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.pronuntiationTTSStopNotification, object: nil)
     }
     
     @objc func willResignActive(_ notification: Notification) {
@@ -81,6 +83,11 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
             add(asChildViewController: controller, containerView: view)
 //            ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation ? .HistroyPronuntiationResult : .PronunciationPracticeResult
         }
+    }
+    
+    
+    @objc func pronunciationStopTTS(notification: Notification) {
+        stopTTS()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -134,6 +134,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     
     override func viewWillDisappear(_ animated: Bool) {
         callObserver.setDelegate(nil, queue: nil)
+        stopTTS()
     }
     
     @objc func willResignActive(_ notification: Notification) {
@@ -462,6 +463,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
     }
     deinit {
+        stopTTS()
         unregisterNotification()
     }
 

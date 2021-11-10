@@ -114,6 +114,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 //            self.languageCode = value.languageCcode
 //            showResultView()
 //        }
+        stopTTS()
         remove(asChildViewController: self)
     }
 

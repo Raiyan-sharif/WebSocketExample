@@ -499,6 +499,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         }
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
+            NotificationCenter.default.post(name: .pronuntiationTTSStopNotification, object: nil, userInfo:nil)
             //FromPronunciation()
             pronunciationView.isHidden = false
         }else{
