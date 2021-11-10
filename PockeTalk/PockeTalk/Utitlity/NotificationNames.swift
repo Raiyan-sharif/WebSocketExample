@@ -28,4 +28,5 @@ extension Notification.Name {
     
     static let tapOnMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOnMicrophoneCountrySelectionVoiceCamera")
     static let tapOffMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOffMicrophoneCountrySelectionVoiceCamera")
+    static let updateTranlationNotification = Notification.Name("UpdateTranlationNotification")
 }

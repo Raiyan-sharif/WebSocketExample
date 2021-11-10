@@ -86,7 +86,6 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         view.changeFontSize()
-       // setUpUI()
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         //setLanguageDirection()
@@ -377,6 +376,7 @@ class HomeViewController: BaseViewController {
 
     @objc func onVoiceLanguageChanged(notification: Notification) {
         updateLanguageNames()
+        speechVC.languageHasUpdated = true
     }
     
     @objc func onArrowChanged(notification: Notification) {
@@ -445,7 +445,6 @@ extension HomeViewController {
         updateFavouriteViews()
         historyItemCount = self.homeVM.getHistoryItemCount()
         updateHistoryViews()
-       // self.hideContainerView()
     }
 }
 

@@ -22,29 +22,22 @@ class CountryWiseLanguageListViewController: BaseViewController {
 
     @IBAction func onOkButtonPressed(_ sender: Any) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
-        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
-        if isNative == LanguageName.bottomLang.rawValue{
-            LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
-        }else{
-            LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
-        }
-        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
-        LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-        PrintUtility.printLog(tag: TAG, text: "\(CountryWiseLanguageListViewController.self) changed language to \(selectedLanguageCode)")
-        NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
-        if isFromTranslation{
-            //To do
-        }else{
 
+        if isFromTranslation{
+            NotificationCenter.default.post(name: .updateTranlationNotification, object: nil)
+        }else{
+            if isNative == LanguageName.bottomLang.rawValue{
+                LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
+            }else{
+                LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
+            }
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
             NotificationCenter.default.post(name:.containerViewSelection, object: nil)
-            self.navigationController?.popViewController(animated: false)
         }
-//        for controller in self.navigationController!.viewControllers as Array {
-//            if controller.isKind(of: HomeViewController.self) {
-//                self.navigationController!.popToViewController(controller, animated: true)
-//                       break
-//            }
-//        }
+        self.navigationController?.popViewController(animated: false)
     }
 
     @IBAction func onBackButtonPressed(_ sender: Any) {

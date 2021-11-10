@@ -78,11 +78,9 @@ struct NetworkManager:Network {
                 completion(successResponse.data)
             } catch let err {
                 completion(nil)
-                PrintUtility.debugPrintLog(err.localizedDescription)
             }
         case let .failure(error):
             completion(nil)
-            PrintUtility.debugPrintLog(error.localizedDescription)
         }
     }
 

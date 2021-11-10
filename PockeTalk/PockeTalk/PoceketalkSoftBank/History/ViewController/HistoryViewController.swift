@@ -64,8 +64,8 @@ class HistoryViewController: BaseViewController {
         super.viewDidLoad()
         setUpCollectionView()
         historyViewModel = HistoryViewModel()
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
-            self.showCollectionView()
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.05) { [weak self] in
+            self?.showCollectionView()
         }
         
         let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToClose))

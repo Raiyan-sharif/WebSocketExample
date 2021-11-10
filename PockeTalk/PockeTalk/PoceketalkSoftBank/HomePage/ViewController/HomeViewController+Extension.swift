@@ -106,8 +106,7 @@ extension HomeViewController{
 
         if gesture.state == .ended {
             imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-            enableORDisableMicrophoneButton(isEnable: false)
-            
+
             if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
                     NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
             }
@@ -120,6 +119,11 @@ extension HomeViewController{
                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
             }
             
+            if !speechVC.isMinimumLimitExceed {
+                enableORDisableMicrophoneButton(isEnable: false)
+            }else{
+                speechVC.isMinimumLimitExceed = false
+            }
             homeVCDelegate?.stopRecord()
         }
     }

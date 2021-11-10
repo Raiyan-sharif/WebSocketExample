@@ -91,6 +91,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let waitingTimeToShowExampleText : Double = 2.0
     private let waitngISFinalSecond:Int = 6
     var isNetworkConnected = true
+    var isMinimumLimitExceed = false
 
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -215,6 +216,7 @@ class SpeechProcessingViewController: BaseViewController{
         service?.getTimer = { [weak self] count in
             guard let `self` = self else { return }
             if count == 30 {
+                self.isMinimumLimitExceed = true
                 self.service?.stopRecord()
             }
         }

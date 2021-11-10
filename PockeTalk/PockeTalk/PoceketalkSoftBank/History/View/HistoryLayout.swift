@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol HistoryLayoutDelegate {
+protocol HistoryLayoutDelegate:class{
 
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat
 }
@@ -14,7 +14,7 @@ class HistoryLayout: UICollectionViewLayout {
     var attributes  = Array<UICollectionViewLayoutAttributes>()
     var initialAttributes = Array<UICollectionViewLayoutAttributes>()
     var contentSize: CGSize = .zero
-    var delegate: HistoryLayoutDelegate!
+    weak var delegate: HistoryLayoutDelegate!
 
     override func prepare() {
         super.prepare()

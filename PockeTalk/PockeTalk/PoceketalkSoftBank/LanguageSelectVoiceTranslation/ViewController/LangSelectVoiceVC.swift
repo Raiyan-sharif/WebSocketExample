@@ -98,6 +98,8 @@ class LangSelectVoiceVC: BaseViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .popFromCountrySelectionVoice, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.updateTranlationNotification, object: nil)
     }
     
     @objc func hideMicrophoneButton(notification: Notification) {
@@ -107,11 +109,12 @@ class LangSelectVoiceVC: BaseViewController {
     @objc func showMicrophoneButton(notification: Notification) {
        setUpMicroPhoneIcon()
     }
-    
+
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.updateTranlationNotification, object: nil)
     }
 
     func setButtonTopCornerRadius(_ button: UIButton){
@@ -252,6 +255,13 @@ class LangSelectVoiceVC: BaseViewController {
         } else {
             GlobalMethod.showNoInternetAlert()
         }
+    }
+
+    @objc private func removeChild(notification: Notification) {
+       // onBackButtonPressed(UIButton())
+        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
+        self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+        self.remove(asChildViewController: self)
     }
 
 
