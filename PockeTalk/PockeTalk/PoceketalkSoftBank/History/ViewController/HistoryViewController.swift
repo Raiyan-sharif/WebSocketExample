@@ -68,7 +68,7 @@ class HistoryViewController: BaseViewController {
             self?.showCollectionView()
         }
         
-        let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToClose))
+        let swipeToDismiss = UISwipeGestureRecognizer(target: self, action: #selector(swipeToFinish))
         swipeToDismiss.direction = .up
         self.view.addGestureRecognizer(swipeToDismiss)
 
@@ -92,7 +92,7 @@ class HistoryViewController: BaseViewController {
 
     }
     
-    @objc func swipeToClose(gesture: UIGestureRecognizer) {
+    @objc func swipeToFinish(gesture: UIGestureRecognizer) {
 
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
