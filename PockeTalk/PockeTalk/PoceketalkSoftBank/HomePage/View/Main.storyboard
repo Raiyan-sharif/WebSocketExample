@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -94,6 +94,10 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap_home_bg" translatesAutoresizingMaskIntoConstraints="NO" id="r9m-bG-pm2">
                                         <rect key="frame" x="86" y="229" width="172" height="139"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Iv-aD-vH5" userLabel="ButtonBackgroundView">
+                                        <rect key="frame" x="97" y="109" width="150" height="150"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-Ie-wc2" customClass="HighlightedButton" customModule="PockeTalk" customModuleProvider="target">
                                         <rect key="frame" x="97" y="109" width="150" height="150"/>
                                         <constraints>
@@ -122,9 +126,11 @@
                                     <constraint firstAttribute="trailing" secondItem="tvf-tD-tHq" secondAttribute="trailing" constant="20" id="9Ag-Ih-UeZ"/>
                                     <constraint firstAttribute="trailing" secondItem="Kdr-me-0xI" secondAttribute="trailing" constant="20" id="B6x-gi-QkS"/>
                                     <constraint firstItem="Kdr-me-0xI" firstAttribute="leading" secondItem="c0d-DF-QGv" secondAttribute="leading" constant="20" id="B7f-Og-hhL"/>
+                                    <constraint firstItem="8Iv-aD-vH5" firstAttribute="leading" secondItem="4iA-Ie-wc2" secondAttribute="leading" id="C1m-X5-7GH"/>
                                     <constraint firstItem="sZt-1h-ZlQ" firstAttribute="top" secondItem="c0d-DF-QGv" secondAttribute="top" id="EMs-Ku-0g3"/>
                                     <constraint firstItem="Luz-Mg-Waf" firstAttribute="top" secondItem="sZt-1h-ZlQ" secondAttribute="top" id="FOw-W0-4Aj"/>
                                     <constraint firstItem="tvf-tD-tHq" firstAttribute="centerY" secondItem="Luz-Mg-Waf" secondAttribute="centerY" constant="-17.5" id="H5c-94-CWG"/>
+                                    <constraint firstItem="8Iv-aD-vH5" firstAttribute="top" secondItem="4iA-Ie-wc2" secondAttribute="top" id="Hj0-4u-cJP"/>
                                     <constraint firstItem="tFF-5Y-gz5" firstAttribute="height" secondItem="c0d-DF-QGv" secondAttribute="height" multiplier="1:2" id="IqI-ir-tKu"/>
                                     <constraint firstItem="oPf-o2-SXI" firstAttribute="leading" secondItem="tFF-5Y-gz5" secondAttribute="leading" id="J5o-Pf-GhH"/>
                                     <constraint firstItem="hlG-sI-Lir" firstAttribute="top" secondItem="sZt-1h-ZlQ" secondAttribute="top" id="Lrg-bL-M9H"/>
@@ -142,6 +148,8 @@
                                     <constraint firstItem="tvf-tD-tHq" firstAttribute="leading" secondItem="c0d-DF-QGv" secondAttribute="leading" constant="20" id="dGl-vU-aax"/>
                                     <constraint firstAttribute="trailing" secondItem="sZt-1h-ZlQ" secondAttribute="trailing" id="ecv-Bt-bI9"/>
                                     <constraint firstItem="SE4-5x-hIU" firstAttribute="centerY" secondItem="Luz-Mg-Waf" secondAttribute="centerY" constant="20" id="esh-dd-hcr"/>
+                                    <constraint firstItem="8Iv-aD-vH5" firstAttribute="trailing" secondItem="4iA-Ie-wc2" secondAttribute="trailing" id="fNe-fL-tE4"/>
+                                    <constraint firstItem="8Iv-aD-vH5" firstAttribute="bottom" secondItem="4iA-Ie-wc2" secondAttribute="bottom" id="lFv-r6-MBH"/>
                                     <constraint firstItem="4iA-Ie-wc2" firstAttribute="centerY" secondItem="hlG-sI-Lir" secondAttribute="bottom" id="r5X-0Y-s0k"/>
                                     <constraint firstAttribute="trailing" secondItem="0To-dN-20N" secondAttribute="trailing" constant="20" id="tvj-Kh-KgF"/>
                                     <constraint firstItem="4iA-Ie-wc2" firstAttribute="top" secondItem="Luz-Mg-Waf" secondAttribute="bottom" constant="-30" id="z6d-Vj-5ID"/>
