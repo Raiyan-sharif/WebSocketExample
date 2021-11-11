@@ -522,7 +522,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         service?.stopRecord()
         service?.timerInvalidate()
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-            if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !speechProcessingVM.isGettingActualData {
+            if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !isSSTavailable {
                 self.showTutorial()
             }
         }
