@@ -494,11 +494,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
 
     func startRecord() {
        // updateLanguageType()
-        if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-            showExampleText()
-            speechProcessingVM.startTime = Date()
-            showExampleIfNotgetResponse()
-        }
+
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
             NotificationCenter.default.post(name: .pronuntiationTTSStopNotification, object: nil, userInfo:nil)
@@ -509,6 +505,9 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         }else{
             pronunciationView.isHidden = true
             titleLabel.isHidden = false
+            showExampleText()
+            speechProcessingVM.startTime = Date()
+            showExampleIfNotgetResponse()
         }
 
         speechProcessingVM.isGettingActualData = false
