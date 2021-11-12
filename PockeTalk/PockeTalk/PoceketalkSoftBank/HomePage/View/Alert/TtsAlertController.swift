@@ -576,7 +576,7 @@ extension TtsAlertController : AlertReusableDelegate {
             vc.isFromHistoryTTS = true
         }
 
-        add(asChildViewController: vc, containerView:self.view)
+        add(asChildViewController: vc, containerView:self.view, animation: nil)
         ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren ? .HistroyPronunctiation :.PronunciationPractice
         //self.present(vc, animated: true, completion: nil)
 
@@ -588,7 +588,8 @@ extension TtsAlertController : AlertReusableDelegate {
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
-        add(asChildViewController: controller, containerView: view)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
 //        if(self.navigationController != nil){
 //            self.navigationController?.pushViewController(controller, animated: true)

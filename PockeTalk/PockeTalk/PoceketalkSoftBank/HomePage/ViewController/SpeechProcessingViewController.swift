@@ -573,7 +573,7 @@ extension SpeechProcessingViewController{
         ttsVC.isFromSpeechProcessing = fromSpeech
         //isViewOpened = .tts
 
-        self.homeVC?.add(asChildViewController: ttsVC, containerView:homeVC!.homeContainerView)
+        self.homeVC?.add(asChildViewController: ttsVC, containerView:homeVC!.homeContainerView, animation: nil)
         homeVC?.hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
 

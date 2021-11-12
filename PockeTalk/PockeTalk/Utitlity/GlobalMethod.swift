@@ -328,6 +328,16 @@ class GlobalMethod {
            let jsonData = try! JSONEncoder().encode(["stt": sttdata, "srclang": srcLang,"destlang": destlang])
            return String(data: jsonData, encoding: .utf8)!
     }
+    
+    static func getTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+        let transition = CATransition()
+        transition.duration = duration
+        transition.type = CATransitionType.push
+        transition.subtype = animationStyle
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        
+        return transition
+    }
 
 }
 

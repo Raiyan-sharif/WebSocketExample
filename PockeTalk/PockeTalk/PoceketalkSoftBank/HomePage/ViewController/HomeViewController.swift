@@ -185,7 +185,7 @@ class HomeViewController: BaseViewController {
     }
     
     func addSpeechProcessingVC(){
-        add(asChildViewController: speechVC, containerView:speechContainerView)
+        add(asChildViewController: speechVC, containerView:speechContainerView, animation: nil)
         hideSpeechView()
         homeGestureEnableOrDiable()
     }
@@ -273,7 +273,7 @@ class HomeViewController: BaseViewController {
     /// Top button trigger to history screen
 
         let historyVC = HistoryViewController()
-        add(asChildViewController: historyVC, containerView:homeContainerView)
+        add(asChildViewController: historyVC, containerView:homeContainerView, animation: nil)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
         enableORDisableMicrophoneButton(isEnable: true)
@@ -282,8 +282,8 @@ class HomeViewController: BaseViewController {
     /// Top button trigger to history screen
     @objc func goToFavouriteScreen () {
         let fv = FavouriteViewController()
-
-        add(asChildViewController: fv, containerView:homeContainerView)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
         enableORDisableMicrophoneButton(isEnable: true)
@@ -303,7 +303,8 @@ class HomeViewController: BaseViewController {
                         self.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
                         self.homeContainerView.layoutIfNeeded()
                     }
-                     self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView)
+                    let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                     self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
                      ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
                      self.hideSpeechView()
                      self.enableORDisableMicrophoneButton(isEnable: true)
@@ -374,8 +375,13 @@ class HomeViewController: BaseViewController {
             self?.speechVC.languageHasUpdated = true
         }
         controller.isNative = isNative
+        var transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        if isNative != LanguageName.bottomLang.rawValue{
+            transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        }
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         //self.navigationController?.pushViewController(controller, animated: true);
-        add(asChildViewController: controller, containerView:homeContainerView)
+        add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         enableORDisableMicrophoneButton(isEnable: true)

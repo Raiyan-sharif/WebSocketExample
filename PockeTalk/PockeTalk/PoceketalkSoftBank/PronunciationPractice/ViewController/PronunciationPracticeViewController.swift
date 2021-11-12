@@ -80,7 +80,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
             controller.practiceText = value.practiceText
             controller.languageCode = value.languageCcode
             controller.isFromHistoryTTS = isFromHistoryTTS
-            add(asChildViewController: controller, containerView: view)
+            add(asChildViewController: controller, containerView: view, animation: nil)
 //            ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation ? .HistroyPronuntiationResult : .PronunciationPracticeResult
         }
     }

@@ -60,8 +60,9 @@ class LangSelectVoiceVC: BaseViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
         controller.isFromTranslation = fromRetranslation
         controller.isNative = isNative
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         //self.navigationController?.pushViewController(controller, animated: true);
-        add(asChildViewController: controller, containerView: view)
+        add(asChildViewController: controller, containerView: view, animation: transition)
         
         ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
         //removeFloatingBtn()

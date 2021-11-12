@@ -394,13 +394,9 @@ extension FavouriteViewController : AlertReusableDelegate {
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        add(asChildViewController: controller, containerView: view)
+        add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         //self.navController?.pushViewController(controller, animated: false)
         //self.present(controller, animated: true, completion: nil)
@@ -478,7 +474,7 @@ extension FavouriteViewController{
         ttsVC.chatItemModel = chatItemModel
         ttsVC.hideMenuButton = hideMenuButton
         ttsVC.hideBottomView = hideBottmSection
-        add(asChildViewController: ttsVC, containerView: self.view)
+        add(asChildViewController: ttsVC, containerView: self.view, animation: nil)
 
     }
 }

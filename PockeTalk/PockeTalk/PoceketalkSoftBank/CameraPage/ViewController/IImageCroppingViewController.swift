@@ -352,7 +352,9 @@ class ImageCroppingViewController: BaseViewController {
                 vc.maxCropFrameWidth = imageView.frame.size.width
                 vc.maxCropFrameHeight = imageView.frame.size.height
                 vc.originalImage = image
-                self.navigationController?.pushViewController(vc, animated: true)
+                let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.pushViewController(vc, animated: false)
             }
         } else {
             GlobalMethod.showNoInternetAlert()

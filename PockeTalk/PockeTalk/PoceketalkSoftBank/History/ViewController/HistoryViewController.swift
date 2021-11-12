@@ -616,7 +616,7 @@ extension HistoryViewController : AlertReusableDelegate {
         controller.modalPresentationStyle = .fullScreen
         controller.chatItem = chatItemModel?.chatItem
         controller.isFromHistory = true
-        add(asChildViewController: controller, containerView: view)
+        add(asChildViewController: controller, containerView: view, animation: nil)
         ScreenTracker.sharedInstance.screenPurpose = .HistroyPronunctiation
         //self.present(controller, animated: true, completion: nil)
     }
@@ -630,15 +630,11 @@ extension HistoryViewController : AlertReusableDelegate {
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
-        let transition = CATransition()
-                    transition.duration = 0.5
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromLeft
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         //self.navigationController?.pushViewController(controller, animated: false)
         //self.present(controller, animated: true, completion: nil)
-        add(asChildViewController: controller, containerView: view)
+        add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
     }
     
@@ -708,7 +704,7 @@ extension HistoryViewController: TtsAlertControllerDelegate{
         ttsVC.chatItemModel = chatItemModel
         ttsVC.hideMenuButton = hideMenuButton
         ttsVC.hideBottomView = hideBottmSection
-        add(asChildViewController: ttsVC, containerView: self.view)
+        add(asChildViewController: ttsVC, containerView: self.view, animation: nil)
 
     }
 }

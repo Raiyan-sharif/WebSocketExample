@@ -79,7 +79,8 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
        // self.navigationController?.pushViewController(controller, animated: true);
         self.updateHomeContainer?(false)
-        add(asChildViewController: controller, containerView: view)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        add(asChildViewController: controller, containerView: view, animation: transition)
     }
     
     fileprivate func updateLanguageNames() {
@@ -456,7 +457,9 @@ extension CameraViewController {
             self?.onCompletion?(image, asset)
             self?.onCompletion = nil
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     @IBAction func didTouchFlashButton(sender: UIButton) {
