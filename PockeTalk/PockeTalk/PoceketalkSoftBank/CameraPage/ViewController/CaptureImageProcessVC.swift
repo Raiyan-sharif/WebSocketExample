@@ -660,8 +660,9 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 self.navigationController?.popViewController(animated: true)
             } else {
                 let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "\(viewControllers)")
                 for viewController in viewControllers {
-                    if viewController is CameraViewController {
+                    if viewController is HomeViewController {
                         self.navigationController?.popToViewController(viewController, animated: true)
                     }
                 }
