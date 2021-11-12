@@ -63,3 +63,5 @@
 "favorite_history_cleared" = "削除しました。";
 "error_no_text_detected" = "画像からテキストが検出されませんでした";
 "error_network" = "ネットワークエラー。";
+"language_selection_voice_message" = "言語名を話してください.\n例: \"ドイツ語\"";
+"country_selection_voice_msg" = "地域名を言ってください。\n例：\ 「ドイツ\」";

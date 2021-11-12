@@ -273,14 +273,27 @@ class SpeechProcessingViewController: BaseViewController{
     }
 
     private func showExampleText() {
-        let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
-        self.titleLabel.text = speechLanguage?.initText
-        DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
-            guard let `self` = self else { return }
-            self.hideOrOpenExampleText(isHidden: self.isSSTavailable)
+        switch ScreenTracker.sharedInstance.screenPurpose {
+            case .LanguageSelectionVoice,.LanguageSelectionCamera:
+                self.titleLabel.text = "language_selection_voice_message".localiz()
+                break
+            case .HomeSpeechProcessing:
+                let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
+                self.titleLabel.text = speechLanguage?.initText
+                DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
+                    guard let `self` = self else { return }
+                    self.hideOrOpenExampleText(isHidden: self.isSSTavailable)
+                }
+                exampleLabel.text = speechLanguage?.exampleText
+                descriptionLabel.text = speechLanguage?.secText
+                break
+            case .CountrySelectionByVoice:
+                self.titleLabel.text = "country_selection_voice_msg".localiz()
+                break
+            case .PronunciationPractice: break
+            case .HistoryScrren: break
+            case .HistroyPronunctiation:break
         }
-        exampleLabel.text = speechLanguage?.exampleText
-        descriptionLabel.text = speechLanguage?.secText
     }
     
     func isSTTDataAvailable() -> Bool {

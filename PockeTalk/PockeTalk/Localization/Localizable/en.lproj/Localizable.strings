@@ -63,3 +63,5 @@
 "favorite_history_cleared" = "Favorite has been deleted.";
 "error_no_text_detected" = "No text detected from image";
 "error_network" = "Network error";
+"language_selection_voice_message" = "Please say the language name.\nEx: \"German\"";
+"country_selection_voice_msg" = "Please say the country name.\nEx: \"Germany\"";
