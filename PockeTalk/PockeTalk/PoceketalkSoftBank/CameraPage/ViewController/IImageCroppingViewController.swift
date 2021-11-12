@@ -317,7 +317,7 @@ class ImageCroppingViewController: BaseViewController {
         
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         for viewController in viewControllers {
-            if viewController is CameraViewController {
+            if viewController is HomeViewController {
                 self.navigationController?.popToViewController(viewController, animated: true)
             }
         }

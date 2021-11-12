@@ -56,7 +56,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let lineWidth : CGFloat = 2
     let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
-    var shouldUpdateContainer = true
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
@@ -101,23 +100,17 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func onCameraLanguageChanged(notification: Notification) {
         updateLanguageNames()
     }
-    
-    @objc func showBottomView(notification: Notification) {
-        shouldUpdateContainer = false
-    }
-    
+        
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showBottomView(notification:)), name: .popFromCameralanguageSelectionVoice, object: nil)
     }
     
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name: .languageSelectionCameraNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .popFromCameralanguageSelectionVoice, object: nil)
     }
     
     deinit {
-        unregisterNotification()
+        //unregisterNotification()
     }
     
     override func viewDidLoad() {
@@ -207,7 +200,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateHomeContainer?(shouldUpdateContainer)
+        self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
@@ -235,9 +228,12 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        sessionQueue.async { [unowned self] in
-            if self.sessionSetupSucceeds {
-                self.session.stopRunning()
+        sessionQueue.async { [weak self] in
+            
+            if let _ = self?.sessionSetupSucceeds {
+                if let _session = self?.session {
+                    _session.stopRunning()
+                }
             }
         }
     }
