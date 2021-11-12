@@ -90,12 +90,12 @@ class CountryListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setUpMicroPhoneIcon()
+        //setUpMicroPhoneIcon()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        removeFloatingBtn()
+        //removeFloatingBtn()
     }
 
     // TODO microphone tap event
@@ -125,11 +125,11 @@ class CountryListViewController: BaseViewController {
     }
     
     @objc func hideMicrophoneButton(notification: Notification) {
-        removeFloatingBtn()
+        //removeFloatingBtn()
     }
     
     @objc func showMicrophoneButton(notification: Notification) {
-       setUpMicroPhoneIcon()
+       //setUpMicroPhoneIcon()
     }
 
     func unregisterNotification(){
@@ -148,6 +148,8 @@ class CountryListViewController: BaseViewController {
         unregisterNotification()
     }
 
+    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+    /*
     private func setUpMicroPhoneIcon() {
         let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
         
@@ -168,7 +170,6 @@ class CountryListViewController: BaseViewController {
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
-    // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
         //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
@@ -178,6 +179,7 @@ class CountryListViewController: BaseViewController {
         window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
         window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
     }
+    */
 }
 
 extension CountryListViewController : UICollectionViewDelegate{
@@ -187,7 +189,7 @@ extension CountryListViewController : UICollectionViewDelegate{
         PrintUtility.printLog(tag: TAG, text: " didSelectItemAt clicked")
         let countryItem = countryList[indexPath.row] as CountryListItemElement
         
-        removeFloatingBtn()
+        //removeFloatingBtn()
         showLanguageListScreen(item: countryItem)
     }
 

@@ -324,9 +324,10 @@ class SpeechProcessingViewController: BaseViewController{
                        // self.speechProcessingDelegate?.searchCountry(text: self.speechProcessingVM.getSST_Text.value)
                         NotificationCenter.default.post(name: .countySlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
                         
-                        /// notification for showing microphone btn
-                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+                        //NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
                         //self.navigationController?.popViewController(animated: true)
+                    
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
@@ -335,14 +336,20 @@ class SpeechProcessingViewController: BaseViewController{
                         
                         /// notification for showing microphone btn
                         NotificationCenter.default.post(name: .languageListNotofication, object: nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                    
+                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+                        //NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                    
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .LanguageSelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
                         NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+                    
+                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+                        //NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+                    
                         self.homeVC?.hideSpeechView()
                         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break

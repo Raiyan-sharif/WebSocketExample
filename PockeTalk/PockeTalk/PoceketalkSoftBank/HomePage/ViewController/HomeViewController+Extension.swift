@@ -101,6 +101,8 @@ extension HomeViewController{
                 removeAllChildControllers()
             }
             
+            // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+            /*
             if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
                 NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
             }
@@ -112,6 +114,7 @@ extension HomeViewController{
             if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
                 NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
             }
+             */
             
             homeVCDelegate?.startRecord()
             TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
@@ -120,6 +123,8 @@ extension HomeViewController{
         if gesture.state == .ended {
             imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
 
+            // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+            /*
             if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
                     NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
             }
@@ -131,6 +136,7 @@ extension HomeViewController{
             if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
             }
+             */
             
             if !speechVC.isMinimumLimitExceed {
                 enableORDisableMicrophoneButton(isEnable: false)

@@ -10,7 +10,9 @@ import UIKit
 class LnaguageSettingsTutorialCameraVC: BaseViewController {
 
     @IBAction func onBackPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: .popFromCameralanguageSelectionVoice, object: nil)
+        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+        //NotificationCenter.default.post(name: .popFromCameralanguageSelectionVoice, object: nil)
+        
         self.navigationController?.popViewController(animated: true)
     }
     @IBOutlet weak var toolbarTitleLabel: UILabel!
