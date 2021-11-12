@@ -185,6 +185,8 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func updateAnimation () {
+        self.speechProcessingRightImgView.isHidden = false
+        self.speechProcessingLeftImgView.isHidden = false
         self.leftImgHeightConstraint.isActive = true
         self.leftImgWidthConstraint.isActive = true
         self.leftImgHeightConstraint.constant = leftImgHeight
@@ -543,6 +545,9 @@ extension SpeechProcessingViewController{
     func removeAnimation(){
         self.speechProcessingLeftImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.layer.removeAllAnimations()
+        self.speechProcessingRightImgView.isHidden = true
+        self.speechProcessingLeftImgView.isHidden = true
+        
     }
 
     func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
