@@ -5,53 +5,51 @@
 //  Created by Sadikul on 26/10/21.
 //
 
-import Foundation
 import Network
 
-enum ConnectionState: String {
-    case notConnected = "Internet connection not avalable"
-    case connected = "Internet connection avalable"
-    case slowConnection = "Internet connection poor"
+enum Reachable {
+    case yes, no
 }
 
-protocol ConnectivityDelegate: class {
-    func checkInternetConnection(_ state: ConnectionState, isLowDataMode: Bool)
+enum ConnectionType {
+    case cellular, loopback, wifi, wiredEthernet, other
 }
 
-class Connectivity: NSObject {
+class Connectivity {
 
-    private let monitor = NWPathMonitor()
-    weak var delegate: ConnectivityDelegate? = nil
-    private let queue = DispatchQueue.global(qos: .background)
-    private var isLowDataMode = false
-    static let shareInstance = Connectivity()
+    private let monitor: NWPathMonitor =  NWPathMonitor()
 
-    private override init() {
-        super.init()
+    init() {
+        let queue = DispatchQueue.global(qos: .background)
         monitor.start(queue: queue)
     }
+}
 
-     func startMonitorNetwork() {
+extension Connectivity {
+    func startMonitoring( callBack: @escaping (_ connection: ConnectionType, _ rechable: Reachable) -> Void ) -> Void {
         monitor.pathUpdateHandler = { path in
-            if #available(iOS 13.0, *) {
-                self.isLowDataMode = path.isConstrained
-            } else {
-                // Fallback on earlier versions
-                self.isLowDataMode = false
-            }
 
-            if path.status == .requiresConnection {
-                self.delegate?.checkInternetConnection(.slowConnection, isLowDataMode: self.isLowDataMode)
-            } else if path.status == .satisfied {
-                self.delegate?.checkInternetConnection(.connected, isLowDataMode: self.isLowDataMode)
-            } else if path.status == .unsatisfied {
-                self.delegate?.checkInternetConnection(.notConnected, isLowDataMode: self.isLowDataMode)
+            let reachable = (path.status == .unsatisfied || path.status == .requiresConnection)  ? Reachable.no  : Reachable.yes
+
+            if path.availableInterfaces.count == 0 {
+                return callBack(.other, .no)
+            } else if path.usesInterfaceType(.wifi) {
+                return callBack(.wifi, reachable)
+            } else if path.usesInterfaceType(.cellular) {
+                return callBack(.cellular, reachable)
+            } else if path.usesInterfaceType(.loopback) {
+                return callBack(.loopback, reachable)
+            } else if path.usesInterfaceType(.wiredEthernet) {
+                return callBack(.wiredEthernet, reachable)
+            } else if path.usesInterfaceType(.other) {
+                return callBack(.other, reachable)
             }
         }
-
     }
+}
 
-    func stopMonitorNetwork() {
+extension Connectivity {
+    func cancel() {
         monitor.cancel()
     }
 }

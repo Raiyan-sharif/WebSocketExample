@@ -53,7 +53,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let width : CGFloat = 100
     var homeMicTapTimeStamp : Int = 0
 
-    private var isSpeechProvided : Bool = false
+    private var isFinalProvided : Bool = false
     private var timer: Timer?
     private var totalTime = 0
 
@@ -90,23 +90,20 @@ class SpeechProcessingViewController: BaseViewController{
     private let timeDifferenceToShowTutorial : Int = 1
     private let waitingTimeToShowExampleText : Double = 2.0
     private let waitngISFinalSecond:Int = 6
-    var isNetworkConnected = true
     var isMinimumLimitExceed = false
+    private var connectivity = Connectivity()
 
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.speechProcessingVM = SpeechProcessingViewModel()
-        //socketManager.connect()
-        //socketManager.socketManagerDelegate = self
-        
         setupUI()
         registerForNotification()
         bindData()
         setupAudio()
-
-        PrintUtility.printLog(tag: TAG, text: "languageHasUpdated \(languageHasUpdated)")
-        Connectivity.shareInstance.delegate = self
+        connectivity.startMonitoring { connection, reachable in
+            PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -226,29 +223,22 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
-                if !self.isNetworkConnected{
-                    self.loaderInvisible()
-                    return
-                }
-                SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion: {
-                    DispatchQueue.main.async  { [weak self] in
+                SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
+                DispatchQueue.main.async  { [weak self] in
+                    guard let `self` = self else { return }
+                    var runCount = 0
+                    self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] innerTimer in
                         guard let `self` = self else { return }
-                        var runCount = 0
-                        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] innerTimer in
-                            guard let `self` = self else { return }
-                            runCount += 1
-                            if runCount == self.waitngISFinalSecond {
-                                innerTimer.invalidate()
-                                if !self.speechProcessingVM.isFinal.value {
-                                    //self.navigationController?.popViewController(animated: true)
-                                    self.loaderInvisible()
-                                    SocketManager.sharedInstance.disconnect()
-                                }
+                        runCount += 1
+                        if runCount == self.waitngISFinalSecond {
+                            innerTimer.invalidate()
+                            if !self.isFinalProvided {
+                                self.loaderInvisible()
+                                SocketManager.sharedInstance.disconnect()
                             }
                         }
                     }
-                    
-                })
+                }
             }else{
                 self.loaderInvisible()
 
@@ -319,10 +309,7 @@ class SpeechProcessingViewController: BaseViewController{
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
             if isFinal{
-                if !self.isNetworkConnected{
-                    self.loaderInvisible()
-                    return
-                }
+                self.isFinalProvided = true
                 self.timer?.invalidate()
                 self.spinnerView.isHidden = true
                 self.service?.stopRecord()
@@ -438,6 +425,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
 
     deinit {
+        connectivity.cancel()
         NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
     }
 
@@ -516,7 +504,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
 
     func startRecord() {
        // updateLanguageType()
-
+        isFinalProvided = false
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
             NotificationCenter.default.post(name: .pronuntiationTTSStopNotification, object: nil, userInfo:nil)
@@ -631,12 +619,5 @@ extension SpeechProcessingViewController{
             default:
                 break
             }
-    }
-
-}
-
-extension SpeechProcessingViewController : ConnectivityDelegate{
-    func checkInternetConnection(_ state: ConnectionState, isLowDataMode: Bool) {
-        isNetworkConnected = state == .connected
     }
 }
