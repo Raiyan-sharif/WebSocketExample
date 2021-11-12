@@ -25,4 +25,32 @@ extension UIViewController{
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParent: self)
     }
+    
+    func add(asChildViewController viewController: UIViewController, containerView: UIView) {
+        addChild(viewController)
+        containerView.addSubview(viewController.view)
+        viewController.view.frame = containerView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
+    
+    func add(asChildViewController viewController: UIViewController, containerView: UIView, animation: CATransition?) {
+        addChild(viewController)
+        
+        if(animation != nil){
+            viewController.navigationController?.view.layer.add(animation!, forKey: nil)
+        }
+        
+        containerView.addSubview(viewController.view)
+        viewController.view.frame = containerView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
+    
+
+     func remove(asChildViewController viewController: UIViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+    }
 }

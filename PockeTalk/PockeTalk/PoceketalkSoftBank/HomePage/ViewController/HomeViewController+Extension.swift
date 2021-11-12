@@ -53,7 +53,6 @@ extension HomeViewController{
     }
 
     func homeGestureEnableOrDiable(){
-        self.swipeDown.isEnabled = self.homeContainerView.subviews.count == 0
         homeContainerView.isHidden = self.homeContainerView.subviews.count == 0
     }
 
@@ -75,6 +74,13 @@ extension HomeViewController{
                 remove(asChildViewController: controller)
             }
         }
+        
+        for view in historyCardVC.view.subviews {
+            if view.tag == ttsAlertViewTag {
+                view.removeFromSuperview()
+            }
+        }
+        
         homeGestureEnableOrDiable()
     }
 
@@ -101,6 +107,7 @@ extension HomeViewController{
             if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
                 removeAllChildControllers()
             }
+            
             
             // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
             /*
@@ -158,43 +165,146 @@ extension HomeViewController{
        return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
             ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
      }
-
-
 }
 
-extension UIViewController{
 
-    func add(asChildViewController viewController: UIViewController, containerView: UIView, animation: CATransition?) {
-        addChild(viewController)
+//MARK: - HistoryCardVC Functionalities
+extension HomeViewController {
+    //MARK: - HistoryCardview setup
+    func setupCardView() {
+        historyCardVC = HistoryCardViewController(nibName: "HistoryCardViewController", bundle: nil)
+        self.addChild(historyCardVC)
+        self.view.addSubview(historyCardVC.view)
+        historyCardVC.delegate = self
         
-        if(animation != nil){
-            viewController.navigationController?.view.layer.add(animation!, forKey: nil)
+        /*
+        historyCardVC.view.frame = CGRect(
+            x: 0,
+            y: -cardHeight + UIApplication.shared.statusBarFrame.height,
+            width: self.view.bounds.width,
+            height: cardHeight)
+        */
+        
+        historyCardVC.view.frame = CGRect(
+                x: self.view.bounds.width / 3,
+                y: -cardHeight + UIApplication.shared.statusBarFrame.height,
+                width: self.view.bounds.width / 3,
+                height: cardHeight)
+        historyCardVC.view.clipsToBounds = true
+    }
+    
+    func setupGestureForCardView() {
+        historyImageView.isUserInteractionEnabled = true
+        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleCardTap(recognzier:)))
+        //historyImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        imageViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCardPanForImageGesture(recognizer:)))
+        self.historyImageView.addGestureRecognizer(imageViewPanGesture)
+        
+        viewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCardPanForViewGesture(recognizer:)))
+        self.view.addGestureRecognizer(viewPanGesture)
+        
+    }
+    
+    @objc private func handleCardTap(recognzier:UITapGestureRecognizer) {
+        switch recognzier.state {
+        case .ended:
+            animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+            self.historyCardVC.updateData()
+            
+        default:
+            break
         }
-        
-        containerView.addSubview(viewController.view)
-        viewController.view.frame = containerView.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        viewController.didMove(toParent: self)
     }
-
-     func remove(asChildViewController viewController: UIViewController) {
-        viewController.willMove(toParent: nil)
-        viewController.view.removeFromSuperview()
-        viewController.removeFromParent()
+    
+    @objc private func handleCardPanForImageGesture (recognizer:UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            self.historyImageView.isHidden = true
+            startInteractiveTransition(state: nextState, duration: historyCardAnimationDuration)
+            self.historyCardVC.updateData()
+        case .changed:
+            let translation = recognizer.translation(in: self.view)
+            var fractionComplete = translation.y / cardHeight
+            fractionComplete = cardVisible ? -fractionComplete : fractionComplete
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
+        case .ended:
+            continueInteractiveTransition()
+        default:
+            break
+        }
     }
-}
-
-
-extension UIView {
-    var parentViewController: UIViewController? {
-        // Starts from next (As we know self is not a UIViewController).
-        var parentResponder: UIResponder? = self.next
-        while parentResponder != nil {
-            if let viewController = parentResponder as? UIViewController {
-                return viewController
+    
+    @objc private func handleCardPanForViewGesture (recognizer:UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+            self.historyCardVC.updateData()
+            if nextState == .collapsed {
+                self.historyImageView.isHidden = false
             }
-            parentResponder = parentResponder?.next
+        default:
+            break
         }
-        return nil
+    }
+    
+    
+    //MARK: - CardView animation functionalities
+    private func startInteractiveTransition(state:CardState, duration:TimeInterval) {
+        if runningAnimations.isEmpty {
+            animateTransitionIfNeeded(state: state, duration: duration)
+        }
+        for animator in runningAnimations {
+            animator.pauseAnimation()
+            animationProgressWhenInterrupted = animator.fractionComplete
+        }
+    }
+    
+    private func updateInteractiveTransition(fractionCompleted:CGFloat) {
+        for animator in runningAnimations {
+            animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+        }
+    }
+    
+    private func continueInteractiveTransition (){
+        for animator in runningAnimations {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
+    }
+    
+    private func animateTransitionIfNeeded (state:CardState, duration:TimeInterval) {
+        if runningAnimations.isEmpty {
+            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                switch state {
+                case .expanded:
+                    self.historyCardVC.view.frame.origin.y = 0
+                    self.historyCardVC.view.frame.origin.x = 0
+                    self.historyCardVC.view.frame.size.width = self.view.bounds.width
+                case .collapsed:
+                    self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
+                    self.historyCardVC.view.frame.origin.x = self.view.bounds.width / 3
+                    self.historyCardVC.view.frame.size.width = self.view.bounds.width / 3
+                }
+            }
+            
+            frameAnimator.addCompletion { _ in
+                self.cardVisible = !self.cardVisible
+                self.runningAnimations.removeAll()
+            }
+            
+            frameAnimator.startAnimation()
+            runningAnimations.append(frameAnimator)
+        }
     }
 }
+
+//MARK: - HistoryCardViewControllerDelegate
+extension HomeViewController: HistoryCardViewControllerDelegate {
+    func dissmissHistory() {
+        historyDissmissed()
+        animateTransitionIfNeeded(state: .collapsed, duration: historyCardAnimationDuration)
+    }
+}
+
+
+

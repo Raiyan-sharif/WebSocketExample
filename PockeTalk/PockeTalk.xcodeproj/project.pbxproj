@@ -197,6 +197,8 @@
 		89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */; };
 		89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */; };
 		89B2946C26EB38EF00747B61 /* TempoControlSpeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */; };
+		89B4066B274386D50031CB65 /* HistoryCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B4066A274386D50031CB65 /* HistoryCardViewController.xib */; };
+		89B4066D274386F00031CB65 /* HistoryCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B4066C274386F00031CB65 /* HistoryCardViewController.swift */; };
 		89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B744422721303500E1748D /* Extension+UIApplication.swift */; };
 		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
 		89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */; };
@@ -435,6 +437,8 @@
 		89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TempoControlSelectionAlertController.swift; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/ViewController/TempoControlSelectionAlertController.swift; sourceTree = SOURCE_ROOT; };
 		89B2946426EB1D4F00747B61 /* TempoControlSelectionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TempoControlSelectionAlert.xib; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/View/TempoControlSelectionAlert.xib; sourceTree = SOURCE_ROOT; };
 		89B2946B26EB38EF00747B61 /* TempoControlSpeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoControlSpeedType.swift; sourceTree = "<group>"; };
+		89B4066A274386D50031CB65 /* HistoryCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryCardViewController.xib; sourceTree = "<group>"; };
+		89B4066C274386F00031CB65 /* HistoryCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCardViewController.swift; sourceTree = "<group>"; };
 		89B744422721303500E1748D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
 		89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAAudioService.swift; sourceTree = "<group>"; };
@@ -1083,6 +1087,7 @@
 				69C99F0A26E73C7D00D853AB /* SpeechProcessingViewController.swift */,
 				895B2945272A86F60032C40C /* TutorialContainerViewController.swift */,
 				87C78F0A27212DA3004BC276 /* HomeViewController+Extension.swift */,
+				89B4066C274386F00031CB65 /* HistoryCardViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1101,6 +1106,7 @@
 			isa = PBXGroup;
 			children = (
 				693D72F226E8878900F57533 /* Alert */,
+				89B4066A274386D50031CB65 /* HistoryCardViewController.xib */,
 				4AEF500D26DF9E9A0052B6EB /* Main.storyboard */,
 				87EC9F4E26F22DA1008B28E7 /* HighLight.swift */,
 			);
@@ -1733,6 +1739,7 @@
 				50193E0626E864570052F170 /* CountryListCollectionViewCell.xib in Resources */,
 				8915C21326F9E0D50091BF8B /* FavouriteCell.xib in Resources */,
 				503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */,
+				89B4066B274386D50031CB65 /* HistoryCardViewController.xib in Resources */,
 				3B86A5C626F0631600175073 /* Reset.storyboard in Resources */,
 				8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */,
 				50C99947271569EB000CFE56 /* language_engine.xml in Resources */,
@@ -1975,6 +1982,7 @@
 				87B56E1A26EB2FF600BF613B /* HistoryViewController.swift in Sources */,
 				69349AB226E5EDA0008D9AF4 /* TutorialModel.swift in Sources */,
 				501A590226FC4AF300369836 /* LanguageMapViewModel.swift in Sources */,
+				89B4066D274386F00031CB65 /* HistoryCardViewController.swift in Sources */,
 				89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,

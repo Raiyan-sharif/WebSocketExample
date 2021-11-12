@@ -106,7 +106,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             playTTS()
         }
         registerNotification()
-
     }
 
     func registerNotification(){
@@ -146,8 +145,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
                 remove(asChildViewController: vc)
             }
         }
-
-
     
     /// Initial UI set up
     func setUpUI () {
@@ -343,10 +340,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         let languageManager = LanguageSelectionManager.shared
         let language = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem?.textTranslatedLanguage)!)
         if languageManager.hasSttSupport(languageCode: language!.code){
-            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code)")
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code ?? "")")
             populateData(withPronounciation: true)
         }else{
-            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code)")
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code ?? "")")
             populateData(withPronounciation: false)
         }
         vc.items = self.itemsToShowOnContextMenu
@@ -380,37 +377,35 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
-        self.dismissPopUp()
+        self.zoomOutDismissAnimation()
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
-        self.dismissPopUp()
+        self.zoomOutDismissAnimation()
     }
+    
+    private func zoomOutDismissAnimation() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
+        }) { _ in
+            self.dismissPopUp()
+        }
+    }
+    
     func dismissPopUp(){
         stopTTS()
         self.stopAnimation()
-//        if(isFromSpeechProcessing){
-//            NotificationCenter.default.post(name: .languageSelectionArrowNotification, object: nil)
-//            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//               appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
-//               (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
-//            }
-//            self.gobackToHome?()
-//            remove(asChildViewController: self)
-//        }else{
-//            self.dismiss(animated: true, completion: nil)
-//        }
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
             if languageHasUpdated{
                  NotificationCenter.default.post(name: .languageSelectionArrowNotification, object: nil)
                 languageHasUpdated = false
             }
+            remove(asChildViewController: self)
             NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }else if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
-           remove(asChildViewController: self)
+            remove(asChildViewController: self)
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }else{
-//            self.ttsAlertControllerDelegate?.dismissed()
-//            self.dismiss(animated: true, completion: nil)
             NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }
         

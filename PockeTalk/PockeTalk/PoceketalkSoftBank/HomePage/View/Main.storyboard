@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,6 +32,13 @@
                                     <action selector="menuAction:" destination="y8L-Ms-o17" eventType="touchUpInside" id="WSd-GT-g9Y"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TopHistoryBtn" translatesAutoresizingMaskIntoConstraints="NO" id="ezf-zO-Z1Y">
+                                <rect key="frame" x="132" y="59" width="150" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4le-qB-Hsf"/>
+                                    <constraint firstAttribute="width" constant="150" id="dzh-Lu-Fzi"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0d-DF-QGv" userLabel="back View">
                                 <rect key="frame" x="35" y="184" width="344" height="368"/>
                                 <subviews>
@@ -201,8 +208,10 @@
                             <constraint firstItem="4we-IE-5Qe" firstAttribute="trailing" secondItem="eoC-NK-acp" secondAttribute="trailing" id="c0m-7Q-w8t"/>
                             <constraint firstAttribute="bottom" secondItem="4we-IE-5Qe" secondAttribute="bottom" id="hl5-kp-MwT"/>
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="centerX" secondItem="oYg-He-7j5" secondAttribute="centerX" id="hpb-Ll-gmi"/>
+                            <constraint firstItem="ezf-zO-Z1Y" firstAttribute="top" secondItem="mjI-JA-TBG" secondAttribute="top" id="i9e-bf-HSG"/>
                             <constraint firstItem="eoC-NK-acp" firstAttribute="trailing" secondItem="TQW-nv-IlO" secondAttribute="trailing" id="lKE-rL-eYf"/>
                             <constraint firstItem="oYg-He-7j5" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="15" id="tIh-z8-UHD"/>
+                            <constraint firstItem="ezf-zO-Z1Y" firstAttribute="centerX" secondItem="eoC-NK-acp" secondAttribute="centerX" id="y9J-CH-708"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2fX-8O-dpP"/>
@@ -214,6 +223,7 @@
                         <outlet property="bottomLangSysLangName" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
                         <outlet property="bottomView" destination="4we-IE-5Qe" id="3Nc-LV-0jS"/>
                         <outlet property="buttonFav" destination="YGf-dW-PHE" id="ytW-cJ-bhW"/>
+                        <outlet property="historyImageView" destination="ezf-zO-Z1Y" id="hPL-zI-vDl"/>
                         <outlet property="languageChangedDirectionButton" destination="4iA-Ie-wc2" id="KUP-Jo-TPA"/>
                         <outlet property="menuButton" destination="mjI-JA-TBG" id="nfV-ji-sky"/>
                         <outlet property="topCircleImgView" destination="Luz-Mg-Waf" id="Kaq-rX-JYn"/>
@@ -773,6 +783,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="TopHistoryBtn" width="264" height="30"/>
         <image name="arrow_back_icon" width="50" height="50"/>
         <image name="arrow_circular_up" width="168" height="168"/>
         <image name="back_texture_white" width="480" height="640"/>

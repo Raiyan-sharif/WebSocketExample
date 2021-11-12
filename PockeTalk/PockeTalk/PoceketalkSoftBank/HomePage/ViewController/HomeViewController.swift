@@ -21,6 +21,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak private var bottomClickView: UIView!
     @IBOutlet weak  var bottomView: UIView!
     @IBOutlet weak private var buttonFav: UIButton!
+    @IBOutlet weak var historyImageView: UIImageView!
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
@@ -36,23 +37,33 @@ class HomeViewController: BaseViewController {
     private var selectedTab = 0
     private var historyItemCount = 0
     private var favouriteItemCount = 0;
-    var swipeDown : UISwipeGestureRecognizer!
+    var imageViewPanGesture: UIPanGestureRecognizer!
+    var viewPanGesture: UIPanGestureRecognizer!
     private var selectedTouchView:UIView!
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
 
     weak var homeVCDelegate: HomeVCDelegate?
+    
+    ///HistoryCardVC properties
+    enum CardState {
+        case expanded
+        case collapsed
+    }
+    
+    var historyCardVC: HistoryCardViewController!
+    var cardHeight:CGFloat = 0
+    var cardVisible = false
+    let historyCardAnimationDuration = 0.5
+    
+    var nextState:CardState {
+        return cardVisible ? .collapsed : .expanded
+    }
+    var runningAnimations = [UIViewPropertyAnimator]()
+    var animationProgressWhenInterrupted:CGFloat = 0
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-
-    private lazy var topButton:UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "TopHistoryBtn"), for: .normal)
-        button.addTarget(self, action: #selector(goToHistoryScreen), for: .touchUpInside)
-        button.layer.zPosition = 99
-        return button
-    }()
 
     lazy var homeContainerView:UIView = {
        let view  = UIView()
@@ -76,6 +87,13 @@ class HomeViewController: BaseViewController {
         homeVCDelegate = speechVC
         return speechVC
     }()
+    
+    private lazy var statusBarView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        return view
+    }()
 
     var homeContainerViewBottomConstraint:NSLayoutConstraint!
 
@@ -85,6 +103,11 @@ class HomeViewController: BaseViewController {
         self.homeVM = HomeViewModel()
         self.setUpUI()
         setLanguageDirection()
+        
+        cardHeight = (self.view.bounds.height / 4) * 3
+        setupGestureForCardView()
+        setupCardView()
+        setupStatusBarView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,7 +115,6 @@ class HomeViewController: BaseViewController {
         view.changeFontSize()
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
-        //setLanguageDirection()
         setHistoryAndFavouriteView()
     }
     
@@ -132,23 +154,10 @@ class HomeViewController: BaseViewController {
         self.bottomLangSysLangName.titleLabel?.textAlignment = .center
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
-
-        view.addSubview(topButton)
-        topButton.translatesAutoresizingMaskIntoConstraints = false
-        topButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        topButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        topButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        topButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        topButton.centerYAnchor.constraint(equalTo: menuButton.centerYAnchor, constant: 0).isActive = true
-
+         
         ///Hide Circle Imageview at first
         self.topCircleImgView.isHidden = true
         self.bottomCircleleImgView.isHidden = true
-        
-        /// Added down geture
-        swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
-        swipeDown.direction = .down
-        view.addGestureRecognizer(swipeDown)
 
         view.addSubview(homeContainerView)
         view.addSubview(speechContainerView)
@@ -178,6 +187,15 @@ class HomeViewController: BaseViewController {
         updateHistoryViews()
         updateFavouriteViews()
     }
+    
+    private func setupStatusBarView() {
+        self.view.addSubview(statusBarView)
+        statusBarView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        statusBarView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        statusBarView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        statusBarView.heightAnchor.constraint(equalToConstant: UIApplication.shared.statusBarFrame.height).isActive = true
+    }
+    
     func addTalkButtonAnimationViews(){
         self.bottomView.addSubview(pulseGrayWave)
         self.bottomView.layer.addSublayer(pulseLayer)
@@ -191,13 +209,14 @@ class HomeViewController: BaseViewController {
     }
     
     func updateHistoryViews(){
-        // Add top button
         if(historyItemCount>0){
-            topButton.isHidden = false
-            swipeDown.isEnabled = true
+            historyImageView.isHidden = false
+            imageViewPanGesture.isEnabled = true
+            viewPanGesture.isEnabled = true
         }else{
-            topButton.isHidden = true
-            swipeDown.isEnabled = false
+            historyImageView.isHidden = true
+            imageViewPanGesture.isEnabled = false
+            viewPanGesture.isEnabled = false
         }
     }
     
@@ -253,7 +272,6 @@ class HomeViewController: BaseViewController {
     @IBAction private func didTapOnFavoriteButton(_ sender: UIButton) {
         self.goToFavouriteScreen()
     }
-    
 
     //MARK: - View Transactions
     private func dislayTutorialScreen () {
@@ -268,15 +286,16 @@ class HomeViewController: BaseViewController {
         self.present(navController, animated: true, completion: nil)
     }
 
-
-    @objc private func goToHistoryScreen () {
-    /// Top button trigger to history screen
-
+    //TODO: Show history scene as swipe action. Will remove after new implementation merge.
+    /*
+    @objc func goToHistoryScreen () {
         let historyVC = HistoryViewController()
         add(asChildViewController: historyVC, containerView:homeContainerView, animation: nil)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        enableORDisableMicrophoneButton(isEnable: true)
     }
+    */
     
     /// Top button trigger to history screen
     @objc func goToFavouriteScreen () {
@@ -285,7 +304,6 @@ class HomeViewController: BaseViewController {
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
-
     }
 
     /// Navigate to Camera page
@@ -368,7 +386,6 @@ class HomeViewController: BaseViewController {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.languageHasUpdated = { [weak self] in
-            //self?.homeVM.updateLanguage()
             self?.speechVC.languageHasUpdated = true
         }
         controller.isNative = isNative
@@ -377,8 +394,8 @@ class HomeViewController: BaseViewController {
             transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         }
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        //self.navigationController?.pushViewController(controller, animated: true);
         add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
+
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
@@ -397,17 +414,11 @@ class HomeViewController: BaseViewController {
 
     @objc func updateContainer(notification: Notification) {
         self.removeAllChildControllers()
-        historyDissmissed()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
-    }
-
-    // Down ward gesture
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if gesture.state == .ended{
-            if(historyItemCount > 0){
-                self.goToHistoryScreen()
-            }
-        }
+        historyDissmissed()
+        self.historyImageView.becomeFirstResponder()
+        self.view.becomeFirstResponder()
+        self.historyCardVC.updateData()
     }
 }
 
@@ -458,6 +469,7 @@ extension HomeViewController {
     }
 }
 
+//MARK:- SpeechProcessingDismissDelegate
 extension HomeViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         DispatchQueue.main.async {
