@@ -276,7 +276,6 @@ class HomeViewController: BaseViewController {
         add(asChildViewController: historyVC, containerView:homeContainerView, animation: nil)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
-        enableORDisableMicrophoneButton(isEnable: true)
     }
     
     /// Top button trigger to history screen
@@ -286,7 +285,6 @@ class HomeViewController: BaseViewController {
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
-        enableORDisableMicrophoneButton(isEnable: true)
 
     }
 
@@ -307,7 +305,6 @@ class HomeViewController: BaseViewController {
                      self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
                      ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
                      self.hideSpeechView()
-                     self.enableORDisableMicrophoneButton(isEnable: true)
                 }
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
@@ -384,7 +381,6 @@ class HomeViewController: BaseViewController {
         add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
-        enableORDisableMicrophoneButton(isEnable: true)
     }
     
 
