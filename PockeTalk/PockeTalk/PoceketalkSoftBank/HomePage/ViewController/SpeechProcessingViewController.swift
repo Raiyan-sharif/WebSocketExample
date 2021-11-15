@@ -316,7 +316,6 @@ class SpeechProcessingViewController: BaseViewController{
                 self.service?.timerInvalidate()
                 self.isSSTavailable = false
                 SocketManager.sharedInstance.disconnect()
-                self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                 LanguageSelectionManager.shared.tempSourceLanguage = nil
                 DispatchQueue.main.async { [weak self] in
                     guard let `self` = self else { return }
@@ -331,7 +330,6 @@ class SpeechProcessingViewController: BaseViewController{
                         //self.navigationController?.popViewController(animated: true)
                     
                         self.homeVC?.hideSpeechView()
-                        self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .LanguageSelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
@@ -343,7 +341,6 @@ class SpeechProcessingViewController: BaseViewController{
                         //NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
                     
                         self.homeVC?.hideSpeechView()
-                        self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .LanguageSelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
@@ -353,7 +350,6 @@ class SpeechProcessingViewController: BaseViewController{
                         //NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
                     
                         self.homeVC?.hideSpeechView()
-                        self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                         break
                     case .HomeSpeechProcessing :
                         self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
@@ -365,6 +361,7 @@ class SpeechProcessingViewController: BaseViewController{
                 default:
                     break
                     }
+                self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                 }
             }
         }

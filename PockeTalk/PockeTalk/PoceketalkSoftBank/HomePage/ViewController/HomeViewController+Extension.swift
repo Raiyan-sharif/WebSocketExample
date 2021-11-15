@@ -17,6 +17,7 @@ extension HomeViewController{
 
      func setUPLongPressGesture(){
         let talkBtnImgView = UIImageView()
+        talkBtnImgView.tag = 109
         talkBtnImgView.image = UIImage(named: "talk_button")
         talkBtnImgView.isUserInteractionEnabled = true
         talkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +47,7 @@ extension HomeViewController{
     }
 
     func enableORDisableMicrophoneButton(isEnable:Bool){
-        if let imgView = self.bottomView.subviews.first as? UIImageView{
+        if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
             imgView.isUserInteractionEnabled = isEnable
         }
     }
