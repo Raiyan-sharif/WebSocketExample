@@ -56,6 +56,7 @@ class SystemLanguageViewController: BaseViewController {
 
     private var leftBtn:UIButton!{
         let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        okBtn.changeFontSize()
         okBtn.setTitle("OK", for: .normal)
         okBtn.setImage(UIImage(named: "icon_arrow_left.9"), for: .normal)
         okBtn.titleLabel?.textColor = .white

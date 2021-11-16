@@ -54,7 +54,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var chatEntity : ChatEntity?
     let cornerRadius : CGFloat = 15
     let fontSize : CGFloat = FontUtility.getFontSize()
-    let reverseFontSize : CGFloat = FontUtility.getBiggerFontSize()
+    let biggerFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
    weak var delegate : SpeechControllerDismissDelegate?
@@ -159,7 +159,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         
         //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
-        self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.toLanguageLabel.font = UIFont.systemFont(ofSize: biggerFontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
         self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.sizeToFit()
@@ -473,22 +473,25 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 
     func shareData(chatItemModel: HistoryChatItemModel?){
-        let languageManager = LanguageSelectionManager.shared
-        let tranlatedLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textTranslatedLanguage)!)?.englishName ?? ""
-        let tranlatedText = chatItemModel?.chatItem?.textTranslated ?? ""
+        if Reachability.isConnectedToNetwork() {
+            let languageManager = LanguageSelectionManager.shared
+            let tranlatedLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textTranslatedLanguage)!)?.englishName ?? ""
+            let tranlatedText = chatItemModel?.chatItem?.textTranslated ?? ""
 
-        let nativeLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textNativeLanguage)!)?.englishName ?? ""
-        let nativeText = chatItemModel?.chatItem?.textNative ?? ""
+            let nativeLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textNativeLanguage)!)?.englishName ?? ""
+            let nativeText = chatItemModel?.chatItem?.textNative ?? ""
 
-        let sharedData = "Translated language: \(tranlatedLang)\n" + "\(tranlatedText) \n\n" +
-        "Original language: \(nativeLang)\n" + "\(nativeText)"
+            let sharedData = "Translated language: \(tranlatedLang)\n" + "\(tranlatedText) \n\n" +
+            "Original language: \(nativeLang)\n" + "\(nativeText)"
 
-        let dataToSend = [sharedData]
-
-        PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
-        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        self.present(activityViewController, animated: true, completion: nil)
+            let dataToSend = [sharedData]
+            PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
+            let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        } else {
+            GlobalMethod.showNoInternetAlert(in: self)
+        }
     }
     
     func bindData(){
