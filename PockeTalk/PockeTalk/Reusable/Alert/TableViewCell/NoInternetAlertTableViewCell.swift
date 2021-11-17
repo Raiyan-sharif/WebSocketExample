@@ -23,7 +23,7 @@ class NoInternetAlertTableViewCell: UITableViewCell {
         self.titleLabel.textAlignment = .center
         self.titleLabel.numberOfLines = 0
         self.titleLabel.lineBreakMode = .byWordWrapping
-        self.titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
         self.titleLabel.textColor = UIColor._blackColor()
     }
 
