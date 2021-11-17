@@ -31,8 +31,9 @@ extension HomeViewController{
         talkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
         talkBtnImgView.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
         talkBtnImgView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor).isActive = true
+         
          bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
-         bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
+         bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
          bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
          bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
          self.bottomImageView.isHidden = true
@@ -59,6 +60,7 @@ extension HomeViewController{
     func hideSpeechView(){
         self.speechContainerView.isHidden = true
         homeGestureEnableOrDiable()
+        HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     private func openSpeechView(){
         self.speechContainerView.isHidden = false
@@ -125,6 +127,7 @@ extension HomeViewController{
              */
             
             homeVCDelegate?.startRecord()
+            self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
             TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
         }
 
@@ -145,7 +148,6 @@ extension HomeViewController{
                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
             }
              */
-            
             if !speechVC.isMinimumLimitExceed {
                 enableORDisableMicrophoneButton(isEnable: false)
             }else{

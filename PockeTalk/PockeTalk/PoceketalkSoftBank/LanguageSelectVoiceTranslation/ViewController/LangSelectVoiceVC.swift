@@ -16,6 +16,7 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak var btnLangList: UIButton!
     @IBOutlet weak var btnBack: UIButton!
     var languageHasUpdated:(()->())?
+    var updateHomeContainer:((_ isfullScreen:Bool)->())?
 
     var currentIndex: Int = 0
     let tagLanguageListVC = "LanguageListVC"
@@ -81,6 +82,7 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateHomeContainer?(true)
         super.viewWillAppear(true)
         // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
         //setUpMicroPhoneIcon()
@@ -92,6 +94,7 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     deinit {
+        self.updateHomeContainer?(false)
         unregisterNotification()
     }
     

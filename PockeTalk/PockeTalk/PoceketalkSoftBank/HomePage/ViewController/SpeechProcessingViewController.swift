@@ -95,6 +95,7 @@ class SpeechProcessingViewController: BaseViewController{
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.speechProcessingAnimationView.layer.zPosition = 104
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
         registerForNotification()

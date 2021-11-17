@@ -22,6 +22,10 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak  var bottomView: UIView!
     @IBOutlet weak private var buttonFav: UIButton!
     @IBOutlet weak var historyImageView: UIImageView!
+    @IBOutlet weak var bottomImageViewOfAnimation: UIImageView!
+    static var bottomViewRef: UIView!
+    static var bottomImageViewOfAnimationRef: UIImageView!
+    static var cameraTapFlag = 0
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
@@ -95,10 +99,13 @@ class HomeViewController: BaseViewController {
         return view
     }()
 
-    var homeContainerViewBottomConstraint:NSLayoutConstraint!
+    static var homeContainerViewBottomConstraint:NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bottomView.layer.zPosition = 103
+        bottomView.backgroundColor = .clear
+        view.backgroundColor = .clear
         registerNotification()
         self.homeVM = HomeViewModel()
         self.setUpUI()
@@ -166,8 +173,8 @@ class HomeViewController: BaseViewController {
         homeContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         homeContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         //homeContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor).isActive = true
-        homeContainerViewBottomConstraint = homeContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor, constant: 0)
-        homeContainerViewBottomConstraint.isActive = true
+        HomeViewController.homeContainerViewBottomConstraint = homeContainerView.bottomAnchor.constraint(equalTo:self.bottomView.topAnchor, constant: 0)
+        HomeViewController.homeContainerViewBottomConstraint.isActive = true
 
         speechContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         speechContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -229,6 +236,8 @@ class HomeViewController: BaseViewController {
     }
     
     private func registerNotification(){
+        HomeViewController.bottomViewRef = self.bottomView
+        HomeViewController.bottomImageViewOfAnimationRef = self.bottomImageViewOfAnimation
         NotificationCenter.default.addObserver(self, selector: #selector(updateContainer(notification:)), name:.containerViewSelection, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
@@ -299,6 +308,7 @@ class HomeViewController: BaseViewController {
     
     /// Top button trigger to history screen
     @objc func goToFavouriteScreen () {
+        HomeViewController.bottomViewRef.backgroundColor = .black
         let fv = FavouriteViewController()
         let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
@@ -308,7 +318,6 @@ class HomeViewController: BaseViewController {
 
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
-
         RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
             guard let `self` = self else { return }
             if isGranted {
@@ -316,8 +325,13 @@ class HomeViewController: BaseViewController {
                 if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
                     cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
                         guard let `self` = self else { return }
-                        self.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
+                        HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
+                        self.bottomView.layer.zPosition = isFullScreen ? 0: 103
+                        isFullScreen ? self.view.sendSubviewToBack(HomeViewController.bottomViewRef) : self.view.bringSubviewToFront(HomeViewController.bottomViewRef)
                         self.homeContainerView.layoutIfNeeded()
+                        if(HomeViewController.cameraTapFlag != 0){
+                            HomeViewController.homeContainerViewBottomConstraint.constant = self.bottomView.bounds.height
+                        }
                     }
                     let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                      self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
@@ -385,6 +399,15 @@ class HomeViewController: BaseViewController {
         print("\(HomeViewController.self) isNative \(isNative)")
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        controller.updateHomeContainer = { [weak self]  isFullScreen in
+            guard let `self` = self else { return }
+            HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
+            self.bottomView.layer.zPosition =  103
+            self.bottomView.backgroundColor = isFullScreen ? UIColor.clear : UIColor.black
+            self.enableORDisableMicrophoneButton(isEnable: true)
+            isFullScreen ? self.view.bringSubviewToFront(self.bottomView) : self.view.sendSubviewToBack(self.bottomView)
+            self.homeContainerView.layoutIfNeeded()
+        }
         controller.languageHasUpdated = { [weak self] in
             self?.speechVC.languageHasUpdated = true
         }

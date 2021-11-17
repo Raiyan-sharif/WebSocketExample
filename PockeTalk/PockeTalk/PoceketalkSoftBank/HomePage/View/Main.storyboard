@@ -183,7 +183,18 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4we-IE-5Qe">
                                 <rect key="frame" x="0.0" y="552" width="414" height="184"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomBackgroudImage" translatesAutoresizingMaskIntoConstraints="NO" id="k7E-wK-34G">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="k7E-wK-34G" firstAttribute="top" secondItem="4we-IE-5Qe" secondAttribute="top" id="0x6-ET-VeE"/>
+                                    <constraint firstAttribute="bottom" secondItem="k7E-wK-34G" secondAttribute="bottom" id="RT4-Ty-uY2"/>
+                                    <constraint firstItem="k7E-wK-34G" firstAttribute="leading" secondItem="4we-IE-5Qe" secondAttribute="leading" id="cNJ-We-byR"/>
+                                    <constraint firstAttribute="trailing" secondItem="k7E-wK-34G" secondAttribute="trailing" id="fnN-ra-BIV"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eoC-NK-acp"/>
@@ -219,6 +230,7 @@
                         <outlet property="bottomCircleleImgView" destination="r9m-bG-pm2" id="cGD-cF-e6F"/>
                         <outlet property="bottomClickView" destination="oPf-o2-SXI" id="cmY-As-hmE"/>
                         <outlet property="bottomFlipImageView" destination="tFF-5Y-gz5" id="n0C-3O-fz8"/>
+                        <outlet property="bottomImageViewOfAnimation" destination="k7E-wK-34G" id="GQ8-Op-7G5"/>
                         <outlet property="bottomLangNativeName" destination="Kdr-me-0xI" id="JvV-um-PTK"/>
                         <outlet property="bottomLangSysLangName" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
                         <outlet property="bottomView" destination="4we-IE-5Qe" id="3Nc-LV-0jS"/>
@@ -380,6 +392,7 @@
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_anim_left_white" translatesAutoresizingMaskIntoConstraints="NO" id="mKS-wv-k3s">
                                                 <rect key="frame" x="92" y="40" width="30" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="BwD-M2-qS7"/>
                                                     <constraint firstAttribute="width" constant="30" id="Cvp-jW-uQi"/>
@@ -398,6 +411,7 @@
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_anim_right_white" translatesAutoresizingMaskIntoConstraints="NO" id="KZB-Rz-ncD">
                                                 <rect key="frame" x="5" y="20" width="40" height="55"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="BSG-gC-9cL"/>
                                                     <constraint firstAttribute="height" constant="55" id="aad-bU-N91"/>
@@ -787,6 +801,7 @@
         <image name="arrow_back_icon" width="50" height="50"/>
         <image name="arrow_circular_up" width="168" height="168"/>
         <image name="back_texture_white" width="480" height="640"/>
+        <image name="bottomBackgroudImage" width="724" height="340"/>
         <image name="btn_back_tempo" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
         <image name="demo_mode_reboot_cancel_button" width="90" height="90"/>

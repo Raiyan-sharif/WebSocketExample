@@ -62,11 +62,15 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var updateHomeContainer:((_ isfullScreen:Bool)->())?
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
+        HomeViewController.bottomViewRef.backgroundColor = .clear
+        HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
+        HomeViewController.bottomViewRef.backgroundColor = .clear
+        HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
     }
@@ -228,7 +232,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        HomeViewController.cameraTapFlag = 0
         sessionQueue.async { [weak self] in
             
             if let _ = self?.sessionSetupSucceeds {
@@ -349,6 +353,7 @@ extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.updateHomeContainer?(false)
+        HomeViewController.homeContainerViewBottomConstraint.constant = 0
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
 //        if(self.navigationController == nil){
 //            self.dismiss(animated: true, completion: nil)
