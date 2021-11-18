@@ -9,6 +9,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
+    var isAppRelaunch = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //Database create tables
@@ -53,12 +54,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func generateAccessKey(){
        // if UserDefaultsProperty<String>(authentication_key).value == nil{
-            NetworkManager.shareInstance.getAuthkey {  data  in
-                guard let data = data else { return }
+            NetworkManager.shareInstance.getAuthkey { [weak self] data  in
+                guard let data = data, let self = self else { return }
                 do {
                     let result = try JSONDecoder().decode(ResultModel.self, from: data)
                     if result.resultCode == response_ok{
                         UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                        if self.isAppRelaunch {
+                            SocketManager.sharedInstance.updateRequestKey()
+                            self.isAppRelaunch = false
+                        }
                     }
                 }catch{
                 }
@@ -77,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
+        isAppRelaunch = true
         setUpinitialLaucnh()
     }
 

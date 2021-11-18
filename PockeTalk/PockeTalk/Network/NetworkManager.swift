@@ -34,6 +34,7 @@ struct NetworkManager:Network {
             codec_param : codec,
             srclang : LanguageSelectionManager.shared.bottomLanguage,
             destlang : LanguageSelectionManager.shared.topLanguage]
+        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(LanguageSelectionManager.shared.bottomLanguage) desLang \(LanguageSelectionManager.shared.topLanguage)")
         provider.request(.authkey(params: params)){ result in
             self.requestCompletion(target: .authkey(params: params), result: result) { data in
                 completion(data)

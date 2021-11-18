@@ -50,9 +50,9 @@ class SocketManager: NSObject {
     func sendTextData(text:String,completion: (() -> ())?){
         socket.write(string: text, completion: completion)
     }
-    func updateRequestKey(auth_key : String){
-        PrintUtility.printLog(tag: TAG, text: auth_key)
-        //socket.request.setValue(auth_key, forHTTPHeaderField: "X-Access-Key")
+    func updateRequestKey(){
+        let keyValue = UserDefaultsProperty<String>(authentication_key).value!
+        socket.request.setValue(keyValue, forHTTPHeaderField: "X-Access-Key")
     }
 }
 
