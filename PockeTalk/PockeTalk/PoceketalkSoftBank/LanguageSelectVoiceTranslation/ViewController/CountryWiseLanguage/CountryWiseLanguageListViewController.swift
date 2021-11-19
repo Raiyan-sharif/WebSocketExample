@@ -130,24 +130,41 @@ extension CountryWiseLanguageListViewController : UICollectionViewDataSource{
         let item = languageList[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: langListCollectionViewCell.identifier, for: indexPath) as! langListCollectionViewCell
         PrintUtility.printLog(tag: TAG, text: "showing as \(dataShowingLanguageCode)")
+//        cell.languageNameLableSelected.isHidden = true
         if dataShowingLanguageCode == systemLanguageCodeEN{
             cell.languageNameLabel.text = "\(item.englishName) (\(item.name))"
+            cell.languageNameLableSelected.text = "\(item.englishName) (\(item.name))"
         }else if dataShowingLanguageCode == systemLanguageCodeJP{
             cell.languageNameLabel.text = "\(item.sysLangName) (\(item.name))"
+            cell.languageNameLableSelected.text = "\(item.sysLangName) (\(item.name))"
         }
 
         if UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value == item.code{
             let languageManager = LanguageSelectionManager.shared
             if(languageManager.hasTtsSupport(languageCode: item.code)){
                 cell.imageviewNoVoice.isHidden = true
+                cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
             }else{
                 cell.imageviewNoVoice.isHidden = false
+                cell.unselectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
             }
             cell.imageLanguageSelection.isHidden = false
+            cell.languageNameLableSelected.isHidden = false
+            cell.languageNameLabel.isHidden = true
+            cell.languageNameLableSelected.holdScrolling = false
+            cell.languageNameLableSelected.type = .continuous
+            cell.languageNameLableSelected.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+            cell.languageNameLableSelected.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
             cell.langListItemContainer.backgroundColor = UIColor(hex: "#008FE8")
             PrintUtility.printLog(tag: TAG, text: "matched lang \(String(describing: UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value)) languageItem.code \(item.code)")
         }else{
+            cell.unselectedLabelTrailingConstraint.constant = kUnselectedLanguageTrailingConstant
+            cell.languageNameLableSelected.isHidden = true
+            cell.languageNameLabel.isHidden = false
             cell.imageLanguageSelection.isHidden = true
+            cell.languageNameLableSelected.holdScrolling = true
             cell.imageviewNoVoice.isHidden = true
             cell.langListItemContainer.backgroundColor = .black
         }
