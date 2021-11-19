@@ -115,7 +115,7 @@
 		69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */ = {isa = PBXBuildFile; fileRef = 69C99F1626E744EA00D853AB /* hello_mapping_new.xml */; };
 		7832B404A5701D747571F709 /* Pods_PockeTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC87E03203C1CB514A3CB45 /* Pods_PockeTalk.framework */; };
 		798A9D3326F1CD8200353D6B /* ParseTextDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */; };
-		79CA3BBB2706FC7D00884682 /* GoogleCloudOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */; };
+		79CA3BBB2706FC7D00884682 /* ITTSN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBA2706FC7D00884682 /* ITTSN.swift */; };
 		79CA3BBD270D539D00884682 /* TranslatedTextJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */; };
 		8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8705289026F0ACF100555AF6 /* TextSizeViewController.swift */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
@@ -158,7 +158,7 @@
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
-		89396B272704155B00D77760 /* TTTGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B262704155B00D77760 /* TTTGoogle.swift */; };
+		89396B272704155B00D77760 /* TTTSN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B262704155B00D77760 /* TTTSN.swift */; };
 		89396B292704156400D77760 /* TTTJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B282704156300D77760 /* TTTJSONModel.swift */; };
 		89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B2A2704176200D77760 /* CustomVerticalTextView.swift */; };
 		8939F821273BBDC0007EB5CD /* TalkButtonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */; };
@@ -354,7 +354,7 @@
 		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
 		69C99F1626E744EA00D853AB /* hello_mapping_new.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = hello_mapping_new.xml; sourceTree = "<group>"; };
 		798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTextDetection.swift; sourceTree = "<group>"; };
-		79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudOCR.swift; sourceTree = "<group>"; };
+		79CA3BBA2706FC7D00884682 /* ITTSN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITTSN.swift; sourceTree = "<group>"; };
 		79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedTextJSONModel.swift; sourceTree = "<group>"; };
 		8705289026F0ACF100555AF6 /* TextSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeViewController.swift; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -398,7 +398,7 @@
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
-		89396B262704155B00D77760 /* TTTGoogle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTGoogle.swift; sourceTree = "<group>"; };
+		89396B262704155B00D77760 /* TTTSN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTSN.swift; sourceTree = "<group>"; };
 		89396B282704156300D77760 /* TTTJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTJSONModel.swift; sourceTree = "<group>"; };
 		89396B2A2704176200D77760 /* CustomVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVerticalTextView.swift; sourceTree = "<group>"; };
 		8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkButtonAnimation.swift; sourceTree = "<group>"; };
@@ -1577,9 +1577,9 @@
 				89C0F7E526F1EC0E000CD5FC /* CameraHistoryDataModel.swift */,
 				89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */,
 				89CE6AC726FDC2D9000ECF17 /* Photo.swift */,
-				89396B262704155B00D77760 /* TTTGoogle.swift */,
+				89396B262704155B00D77760 /* TTTSN.swift */,
 				89396B282704156300D77760 /* TTTJSONModel.swift */,
-				79CA3BBA2706FC7D00884682 /* GoogleCloudOCR.swift */,
+				79CA3BBA2706FC7D00884682 /* ITTSN.swift */,
 				79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */,
 			);
 			path = Model;
@@ -1887,7 +1887,7 @@
 				8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */,
 				89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
-				79CA3BBB2706FC7D00884682 /* GoogleCloudOCR.swift in Sources */,
+				79CA3BBB2706FC7D00884682 /* ITTSN.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
 				89495B3426F0A9FC00CEA19D /* LoaderDelegate.swift in Sources */,
 				3BF2A22A27031C3A0025353F /* SpinnerView.swift in Sources */,
@@ -1972,7 +1972,7 @@
 				8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */,
 				89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */,
 				89495B2C26F0A92300CEA19D /* VisionResponseJSONModel.swift in Sources */,
-				89396B272704155B00D77760 /* TTTGoogle.swift in Sources */,
+				89396B272704155B00D77760 /* TTTSN.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
 				8782DF0326E099BF003A1681 /* NibOwnerLoadable.swift in Sources */,
 				4AE97AD326E8E10F007344FC /* LanguageSelectionEntity.swift in Sources */,

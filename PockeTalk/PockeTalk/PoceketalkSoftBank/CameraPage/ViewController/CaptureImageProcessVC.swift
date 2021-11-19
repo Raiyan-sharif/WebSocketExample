@@ -20,7 +20,8 @@ class CaptureImageProcessVC: BaseViewController {
     private let iTTServerViewModel = ITTServerViewModel()
     private let cameraHistoryViewModel = CameraHistoryViewModel()
     private let activity = ActivityIndicator()
-    
+    var socketManager = SocketManager.sharedInstance
+
     var imageView = UIImageView()
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
@@ -93,10 +94,12 @@ class CaptureImageProcessVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        socketManager.connect()
         PrintUtility.printLog(tag: TAG, text: "screen maxCropFrameHeight: \(Int(maxCropFrameHeight)), \(Int(maxCropFrameWidth))")
         callObserver.setDelegate(self, queue: nil)
         cameraImageView.center = self.view.center
         self.iTTServerViewModel.viewDidLoad(self)
+        self.iTTServerViewModel.socketManager = socketManager
         fromHistoryVC ? setUpViewForHistoryVC() : setUpViewForCapturedImage()
         
         scrollView.delegate = self
@@ -593,7 +596,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     @objc func modeSwitchButtonEventListener(_ button: UIButton) {
-        
+        socketManager.connect()
         let id = try? CameraHistoryDBModel().getMaxId()
         if !fromHistoryVC {
             self.iTTServerViewModel.historyID = Int64(id!)
@@ -619,9 +622,14 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 } else {
                     if Reachability.isConnectedToNetwork() {
                         showLoader()
-                        if let detectedData = self.iTTServerViewModel.detectedJSON {
-                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
-                            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                        PrintUtility.printLog(tag: "Mode switch button action", text: "1111")
+                        showLoader()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            if let detectedData = self.iTTServerViewModel.detectedJSON {
+                                self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: self.fromHistoryVC)
+                                UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                            }
+
                         }
                     } else {
                         GlobalMethod.showNoInternetAlert()
@@ -641,10 +649,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 } else {
                     if Reachability.isConnectedToNetwork() {
                         showLoader()
-                        if let detectedData = self.iTTServerViewModel.detectedJSON {
-                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
-                            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            if let detectedData = self.iTTServerViewModel.detectedJSON {
+                                self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: self.fromHistoryVC)
+                                UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                            }
                         }
+                        
                     } else {
                         GlobalMethod.showNoInternetAlert()
                     }
@@ -719,6 +730,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
     }
     
     func hideLoader() {
+        socketManager.disconnect()
         activity.hideLoading()
         isClickable = true
     }
@@ -834,4 +846,18 @@ extension CaptureImageProcessVC: CXCallObserverDelegate{
         
         //        TtsAlertController.ttsResponsiveView.stopTTS()
     }
+}
+
+extension CaptureImageProcessVC : SocketManagerDelegate{
+    func faildSocketConnection(value: String) {
+        PrintUtility.printLog(tag: TAG, text: value)
+    }
+    
+    func getText(text: String) {
+        //speechProcessingVM.setTextFromScoket(value: text)
+        PrintUtility.printLog(tag: "TtsAlertController Retranslation: ", text: text)
+    }
+    
+    func getData(data: Data) {}
+    
 }

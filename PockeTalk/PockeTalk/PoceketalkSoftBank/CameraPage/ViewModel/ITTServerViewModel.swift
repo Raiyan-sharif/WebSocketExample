@@ -52,6 +52,8 @@ class ITTServerViewModel: BaseModel {
         }
     }
     
+    var totalBlockCount = 0
+    var tttCount = 0
     var detectedJSON: DetectedJSON?
     var blockTranslatedText = [String]()
     var lineTranslatedText = [String]()
@@ -61,6 +63,9 @@ class ITTServerViewModel: BaseModel {
     var mLineData: BlockData = BlockData(translatedText: [], languageCodeTo: "")
     
     var mTranslatedJSON = TranslatedTextJSONModel(block: BlockData(translatedText: [], languageCodeTo: ""), line: BlockData(translatedText: [], languageCodeTo: ""))
+    
+    var socketManager: SocketManager?
+    var speechProcessingVM: SpeechProcessingViewModeling!
     
     func createRequest()-> Resource{
         
@@ -78,7 +83,8 @@ class ITTServerViewModel: BaseModel {
         if Reachability.isConnectedToNetwork() {
             self.loaderdelegate?.showLoader()
             
-            GoogleCloudOCR().detect(from: image) { ocrResult in
+            let langCode = UserDefaults.standard.value(forKey: KCameraNativeLanguageCode)
+            ITTSN().detect(from: image, langCode: langCode as! String) { ocrResult in
                 guard let ocrResponse = ocrResult else {
                     self.loaderdelegate?.hideLoader()
                     PrintUtility.printLog(tag: self.TAG, text: "Network error")
@@ -90,13 +96,13 @@ class ITTServerViewModel: BaseModel {
                 //PrintUtility.printLog(tag: "OCR Response: ", text: "\(ocrResponse)")
                 self.getScreenProperties(from: image)
                 
-                let response = ocrResponse.responses![0]
+                let response = ocrResponse.ocr_response.responses[0]
                 
-                if let fullTextAnnotation = response.fullTextAnnotation {
-                    let lanCode = response.textAnnotations![0].locale
+                if let fullTextAnnotation = response.full_text_annotation {
+                    let lanCode = response.text_annotations![0].locale
                     //PrintUtility.printLog(tag: "mDetectedLanguageCode: ", text: "\(lanCode!)")
-                    let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor)
-                    var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor:self.mXFactor, yFactor:self.mYFactor)
+                    let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor)
+                    var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor:self.mXFactor, yFactor:self.mYFactor)
                     self.detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
                     
                     let encoder = JSONEncoder()
@@ -140,11 +146,11 @@ class ITTServerViewModel: BaseModel {
                             case .success(let ocrResponse):
                                 //PrintUtility.printLog(tag: "OCR Response", text: "\(ocrResponse)")
                                 //self?.getScreenProperties()
-                                let response = ocrResponse.responses![0]
-                                let lanCode = response.textAnnotations![0].locale
+                                let response = ocrResponse.ocr_response.responses[0]
+                                let lanCode = response.text_annotations![0].locale
                                 //PrintUtility.printLog(tag: "mDetectedLanguageCode: ", text: "\(lanCode!)")
-                                let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor: self!.mXFactor, yFactor: self!.mYFactor)
-                                var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.fullTextAnnotation, mDetectedLanguageCode: lanCode!, xFactor:self!.mXFactor, yFactor:self!.mYFactor)
+                                let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self!.mXFactor, yFactor: self!.mYFactor)
+                                var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor:self!.mXFactor, yFactor:self!.mYFactor)
                                 self?.detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
                                 
                                 let encoder = JSONEncoder()
@@ -190,6 +196,12 @@ class ITTServerViewModel: BaseModel {
     
     func getblockAndLineModeData(_ detectedJSON: DetectedJSON?, _for mode: String, isFromHistoryVC: Bool) {
         
+        self.speechProcessingVM = SpeechProcessingViewModel()
+        if let socketManager = socketManager {
+            socketManager.socketManagerDelegate = self
+        }
+        bindData()
+
         if let detectionData = detectedJSON {
             
             if mode == blockMode {
@@ -207,7 +219,7 @@ class ITTServerViewModel: BaseModel {
             PrintUtility.printLog(tag: "Error : ", text: "Unable to get block or line mode data")
         }
     }
-    
+    /*
     func translateText(arrayBlocks: [BlockDetection], type: String, isFromHistoryVC: Bool) {
         //var mTranslatedText = [String]()
         
@@ -279,6 +291,71 @@ class ITTServerViewModel: BaseModel {
         }
     }
     
+     */
+    
+    func translateText(arrayBlocks: [BlockDetection], type: String, isFromHistoryVC: Bool) {
+        totalBlockCount = arrayBlocks.count
+        tttCount = 0
+        for (index,block) in arrayBlocks.enumerated() {
+            let detectedText = block.text
+            let sourceLan = block.detectedLanguage
+            let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
+            if Reachability.isConnectedToNetwork() {
+                self.translate(source: sourceLan!, target: targetLan!, text: detectedText!)
+                
+                if index == arrayBlocks.count-1 {
+                    PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
+                    
+                } else {
+                    PrintUtility.printLog(tag: "completion ", text: " \(index) false")
+                }
+            } else {
+                GlobalMethod.showNoInternetAlert()
+            }
+        }
+    }
+    
+    func commandToGenerateTextView() {
+        let type = UserDefaults.standard.string(forKey: modeSwitchType)
+        let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
+        
+        //PrintUtility.printLog(tag: "commandToGenerateTextView", text: "\(type)")
+        if type == "blockMode" {
+            // blockTranslatedText = Array(Set(blockTranslatedText))
+            mBlockData = BlockData(translatedText: blockTranslatedText, languageCodeTo: targetLan!)
+            self.getTextViewWithCoordinator(detectedBlockOrLineList: blockListFromJson, arrTranslatedText: self.blockTranslatedText, completion: {[weak self] textView in
+                self?.blockModeTextViewList = textView
+            })
+        } else {
+            mLineData = BlockData(translatedText: lineTranslatedText, languageCodeTo: targetLan!)
+            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
+                self.lineModetTextViewList = textView
+                self.loaderdelegate?.hideLoader()
+            })
+        }
+        
+        if fromHistoryVC {
+            PrintUtility.printLog(tag: "index", text: "\(historyID)")
+            updateDataOnDatabase(id: historyID)
+        } else {
+            self.mTranslatedJSON = TranslatedTextJSONModel(block: self.mBlockData, line: self.mLineData)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try? encoder.encode(self.mTranslatedJSON)
+           // PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
+            //PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
+            
+            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+                if entities.contains(where: { $0.id == historyID }) {
+                    updateDataOnDatabase(id: historyID)
+                } else {
+                    self.saveDataOnDatabase()
+                }
+                
+            }
+        }
+    }
+
     
     func getTextViewWithCoordinator(detectedBlockOrLineList: [BlockDetection],  arrTranslatedText: [String], completion: @escaping(_ textView: [TextViewWithCoordinator])-> Void) {
         
