@@ -344,7 +344,7 @@ class CaptureImageProcessVC: BaseViewController {
             getTtsValue(langCode: lang)
             ttsResponsiveView.checkSpeakingStatus()
             ttsResponsiveView.setRate(rate: rate)
-            ttsResponsiveView.TTSPlay(voice: voice,text: text )
+            ttsResponsiveView.TTSPlay(voice: voice,text: text.components(separatedBy: .newlines).joined())
         }else{
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(lang)")
             let seconds = 1.0
