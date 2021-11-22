@@ -20,6 +20,7 @@ class Photo {
     
     func image() -> UIImage? {
         guard let cgImage = photo.cgImageRepresentation()?.takeUnretainedValue() else { return nil }
+        //guard let cgImage = photo.cgImageRepresentation() else { return nil }
         
         let imageOrientation: UIImage.Orientation
         switch orientation {
