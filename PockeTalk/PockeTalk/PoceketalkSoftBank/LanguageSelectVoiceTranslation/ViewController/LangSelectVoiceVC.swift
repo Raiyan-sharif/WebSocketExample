@@ -295,6 +295,8 @@ class LangSelectVoiceVC: BaseViewController {
         }
 
         if fromRetranslation == true {
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
             self.remove(asChildViewController: self)
         }else{
