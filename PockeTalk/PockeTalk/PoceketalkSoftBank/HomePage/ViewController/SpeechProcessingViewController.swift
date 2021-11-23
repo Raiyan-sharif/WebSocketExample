@@ -70,7 +70,6 @@ class SpeechProcessingViewController: BaseViewController{
 
     private var service : MAAudioService?
     var screenOpeningPurpose: SpeechProcessingScreenOpeningPurpose?
-   // var socketManager = SocketManager.sharedInstance
     private var isSSTavailable = false
     private var spinnerView : SpinnerView!
     

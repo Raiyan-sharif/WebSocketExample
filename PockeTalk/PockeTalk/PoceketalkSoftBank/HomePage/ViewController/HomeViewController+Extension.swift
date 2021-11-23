@@ -274,7 +274,8 @@ extension HomeViewController {
     
     private func animateTransitionIfNeeded (state:CardState, duration:TimeInterval) {
         if runningAnimations.isEmpty {
-            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) { [weak self] in
+                guard let `self` = self else { return }
                 switch state {
                 case .expanded:
                     self.historyCardVC.view.frame.origin.y = 0
@@ -284,6 +285,7 @@ extension HomeViewController {
                     self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
                     self.historyCardVC.view.frame.origin.x = self.view.bounds.width / 3
                     self.historyCardVC.view.frame.size.width = self.view.bounds.width / 3
+                    self.historyDissmissed()
                 }
             }
             

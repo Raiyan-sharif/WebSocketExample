@@ -31,7 +31,6 @@ class HistoryCardViewController: BaseViewController {
     var itemsToShowOnContextMenu : [AlertItems] = []
     
     weak var speechProDismissDelegateFromHistory : SpeechProcessingDismissDelegate?
-    private var socketManager = SocketManager.sharedInstance
     var enableOrDisableMicrophoneBtn:((_ value:Bool)->())?
 
     lazy var collectionView:UICollectionView = {
@@ -365,14 +364,14 @@ extension HistoryCardViewController : RetranslationDelegate{
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!
             self.isReverse = false
-            socketManager.socketManagerDelegate = self
+            SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let nativeText = chatItem!.textNative
                 let nativeLangName = chatItem!.textNativeLanguage!
                     
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
-                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
                 ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
             }
         }else{
@@ -431,7 +430,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){
         if Reachability.isConnectedToNetwork() {
             self.spinnerView.isHidden = false
-            socketManager.socketManagerDelegate = self
+            SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self!.selectedChatItemModel = chatItemModel
@@ -442,7 +441,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
                 let targetLangName = self!.selectedChatItemModel?.chatItem!.textNativeLanguage!
 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
-                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
             }
         }else{
             GlobalMethod.showNoInternetAlert()
@@ -453,7 +452,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
 //MARK: - TtsAlertControllerDelegate
 extension HistoryCardViewController: TtsAlertControllerDelegate{
     func dismissed() {
-        socketManager.socketManagerDelegate = self
+        SocketManager.sharedInstance.socketManagerDelegate = self
     }
     
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {
