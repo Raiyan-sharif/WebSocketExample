@@ -29,6 +29,8 @@ class CountryWiseLanguageListViewController: BaseViewController {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
 
         if isFromTranslation{
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             NotificationCenter.default.post(name: .updateTranlationNotification, object: nil)
         }else{
             if isNative == LanguageName.bottomLang.rawValue{
