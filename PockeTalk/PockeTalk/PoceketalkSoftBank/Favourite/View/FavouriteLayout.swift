@@ -15,6 +15,7 @@ class FavouriteLayout: UICollectionViewLayout {
     var initialAttributes = Array<UICollectionViewLayoutAttributes>()
     var contentSize: CGSize = .zero
     var delegate: FavouriteLayoutDelegate!
+    var deletedCellHeight:CGFloat = 0
 
     override func prepare() {
         super.prepare()
@@ -35,7 +36,7 @@ class FavouriteLayout: UICollectionViewLayout {
             let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT)
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             let frame = CGRect(x: left, y: top, width: width!, height: height)
-            
+
             attribute.frame = frame
             attribute.zIndex = item
             // let gap = self.itemGap
@@ -47,8 +48,18 @@ class FavouriteLayout: UICollectionViewLayout {
             let newHeight = (lastItemAttributes?.frame.origin.y)! + (lastItemAttributes?.frame.size.height)!
             let newWidth = (self.collectionView?.frame.size.width)!
             self.contentSize = CGSize(width: newWidth, height: newHeight)
+            updateContentInset()
         }
 
+    }
+
+    func updateContentInset() {
+        var contentInsetTop = collectionView!.bounds.size.height
+            contentInsetTop -= contentSize.height - deletedCellHeight
+            if contentInsetTop <= 0 {
+                contentInsetTop = 0
+        }
+        collectionView!.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
     }
 
     override var collectionViewContentSize: CGSize {
