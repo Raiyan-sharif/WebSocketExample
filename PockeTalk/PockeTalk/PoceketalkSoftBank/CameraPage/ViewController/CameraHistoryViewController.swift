@@ -88,7 +88,7 @@ class CameraHistoryViewController: BaseViewController {
     }
     
     func getHistoryImages() {
-        self.viewModel.fetchCameraHistoryImages()
+        self.viewModel.fetchCameraHistoryImages(size: 0)
     }
     
     @objc func longTappedEvent(recognizer: UILongPressGestureRecognizer)  {
@@ -126,6 +126,13 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
         cell.historyImage.image = self.viewModel.cameraHistoryImages[indexPath.item].image
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.row == self.viewModel.cameraHistoryImages.count - 1 ) { //it's your last cell
+            //Load more data & reload your collection view
+            self.viewModel.fetchCameraHistoryImages(size: self.viewModel.cameraHistoryImages.count)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
