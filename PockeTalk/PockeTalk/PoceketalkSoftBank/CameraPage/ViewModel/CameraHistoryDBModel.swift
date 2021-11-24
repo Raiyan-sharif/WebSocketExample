@@ -13,7 +13,7 @@ class CameraHistoryDBModel: BaseDBModel {
     let image: Expression<String>
     
     var getAllCameraHistoryTables: [CameraEntity]? {
-        if let cameraHistoryTables = try? findAllEntities() as? [CameraEntity] {
+        if let cameraHistoryTables = try? findAllEntities(size: CAMERA_HISTORY_DATA_LOAD_LIMIT) as? [CameraEntity] {
             return cameraHistoryTables
         } else {
             
@@ -83,6 +83,22 @@ class CameraHistoryDBModel: BaseDBModel {
         } catch _ {
             throw DataAccessError.Update_Error
         }
+    }
+    
+    func findAllEntities(size: Int) throws -> [BaseEntity]? {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        
+        var query = table.limit(CAMERA_HISTORY_DATA_LOAD_LIMIT, offset: size).order(id.desc)
+        
+        var retArray = [BaseEntity]()
+        let items = try DB.prepare(query)
+        for item in items {
+            retArray.append(CameraEntity(id: item[id], detectedData: item[detectedData], translatedData: item[translatedData], image: item[image]))
+        }
+        
+        return retArray
     }
     
     func findAllEntities() throws -> [BaseEntity]? {

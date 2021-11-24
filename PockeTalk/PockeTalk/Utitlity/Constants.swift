@@ -132,6 +132,7 @@ let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 let BLOCK_DIRECTION:Int = -1
+let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
 
 
 //MARK: - Database Constants
