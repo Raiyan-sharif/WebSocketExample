@@ -247,6 +247,10 @@ let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
 let ERR_API_FAILED = "ERR_API_FAILED"
 let BURMESE_LANG_CODE = "my"
+let LanguageEngineFileName = "language_engine.xml"
+let KLanguageEngineFileCreationTime = "kLanguageEngineFileCreationTime"
+let LanguageEngineUrlForProductionBuild = "https://www.sourcenext.com/produce/app/pocketalkios/language_engine.xml"
+let LanguageEngineUrlForStageBuild = "https://www.sourcenext.com/produce/app/pocketalkios-test/language_engine.xml"
 
 // Activity Indicator
 let loaderWidth: CGFloat = 50.0

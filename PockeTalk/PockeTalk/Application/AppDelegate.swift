@@ -10,6 +10,7 @@ import Kronos
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
+    private var connectivity = Connectivity()
     //var isAppRelaunch = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// Initial launch setup
     func setUpInitialLaunch() {
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
@@ -42,6 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkManager.shareInstance.handleLicenseToken { result in
             if result {
                 AppDelegate.generateAccessKey()
+            }
+        }
+        self.connectivity.startMonitoring { [weak self] connection, reachable in
+            guard let self = self else { return }
+            PrintUtility.printLog(tag: self.TAG, text:" \(connection) Is reachable: \(reachable)")
+            if UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes {
+                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
             }
         }
     }
@@ -130,6 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         SocketManager.sharedInstance.connect()
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

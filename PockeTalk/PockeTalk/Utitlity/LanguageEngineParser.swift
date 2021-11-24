@@ -8,7 +8,7 @@ import SwiftyXMLParser
 
 public class LanguageEngineParser{
     public static let shared: LanguageEngineParser = LanguageEngineParser()
-    let TAG = "\(LanguageSelectionManager.self)"
+    let TAG = "\(LanguageEngineParser.self)"
     var languageEngineList = [LangueEngineModel]()
     let fileName = "language_engine"
     let fileType = "xml"
@@ -26,10 +26,18 @@ public class LanguageEngineParser{
     }
 
     ///Get data from XML
-func getData () {
-    if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
+    func getData () {
         do {
-            let contents = try String(contentsOfFile: path)
+            var filePath = ""
+            if let path = FileDownloader.getFilePath(fileName: LanguageEngineFileName) {
+                PrintUtility.printLog(tag: TAG, text: "File found in document directory")
+                filePath = path
+            }
+            else if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
+                PrintUtility.printLog(tag: TAG, text: "File found in app resource directory")
+                filePath = path
+            }
+            let contents = try String(contentsOfFile: filePath)
             let xml =  try XML.parse(contents)
 
             // enumerate child Elements in the parent Element
@@ -41,7 +49,7 @@ func getData () {
             PrintUtility.printLog(tag: errorTitle, text: errorDescription)
         }
     }
-}
+
     public func getTtsValue(langCode: String) -> (voice: String, rate: String) {
         var voice : String = ""
         var rate : String = "1.0"

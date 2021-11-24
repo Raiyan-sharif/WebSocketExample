@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B4C1F19274DF84200FA2E3B /* FileDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */; };
 		3B86A5C626F0631600175073 /* Reset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B86A5C526F0631600175073 /* Reset.storyboard */; };
 		3B86A5D026F0650900175073 /* ResetItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5CF26F0650900175073 /* ResetItems.swift */; };
 		3B86A5D226F0675200175073 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B86A5D126F0675200175073 /* ResetViewController.swift */; };
@@ -233,6 +234,7 @@
 		89B4D1F227BE59C700D1C7D2 /* PermissionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B4D1F027BE59C700D1C7D2 /* PermissionTableViewCell.xib */; };
 		89B4D1F527BE6C9A00D1C7D2 /* PlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B4D1F327BE6C9A00D1C7D2 /* PlanTableViewCell.swift */; };
 		89B4D1F627BE6C9A00D1C7D2 /* PlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B4D1F427BE6C9A00D1C7D2 /* PlanTableViewCell.xib */; };
+		89B65D8527C4F592009FD2E1 /* LanguageEngineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */; };
 		89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B744422721303500E1748D /* Extension+UIApplication.swift */; };
 		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
 		89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */; };
@@ -307,6 +309,7 @@
 /* Begin PBXFileReference section */
 		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		34EF9A0C4767791C7D21FD0E /* Pods-PockeTalk.tokoyoserver_production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.tokoyoserver_production.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.tokoyoserver_production.xcconfig"; sourceTree = "<group>"; };
+		3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDownloader.swift; sourceTree = "<group>"; };
 		3B86A5C526F0631600175073 /* Reset.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reset.storyboard; sourceTree = "<group>"; };
 		3B86A5CF26F0650900175073 /* ResetItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetItems.swift; sourceTree = "<group>"; };
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
@@ -565,6 +568,7 @@
 		89B4D1F027BE59C700D1C7D2 /* PermissionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PermissionTableViewCell.xib; sourceTree = "<group>"; };
 		89B4D1F327BE6C9A00D1C7D2 /* PlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTableViewCell.swift; sourceTree = "<group>"; };
 		89B4D1F427BE6C9A00D1C7D2 /* PlanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanTableViewCell.xib; sourceTree = "<group>"; };
+		89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageEngineDownloader.swift; sourceTree = "<group>"; };
 		89B744422721303500E1748D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
 		89BFC32C279A826000CE73F2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -821,11 +825,13 @@
 				4AB51D15270AF56B007D254A /* RuntimePermissionUtil.swift */,
 				3BC7D753270C098400F4B184 /* TTSResponsiveView.swift */,
 				897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */,
+				89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */,
 				8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */,
 				8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */,
 				898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */,
 				89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */,
 				89C70BCC27A925A7005DA505 /* AppRater.swift */,
+				3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -2408,6 +2414,7 @@
 				89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */,
 				4AF2609926E0AC74009C616E /* MenuModel.swift in Sources */,
 				898E6AA727841ABE00138035 /* AppsPermissionCheckingManager.swift in Sources */,
+				3B4C1F19274DF84200FA2E3B /* FileDownloader.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
 				89A4F02827C5FF5500A718FA /* InfoLabelTableViewCell.swift in Sources */,
 				50193E0826E8876A0052F170 /* CountryFlagListViewModel.swift in Sources */,
@@ -2460,6 +2467,7 @@
 				8940A3B327ABD9B8005CB401 /* LicenseInfoViewController.swift in Sources */,
 				89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */,
 				89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */,
+				89B65D8527C4F592009FD2E1 /* LanguageEngineDownloader.swift in Sources */,
 				8915C21226F9E0D50091BF8B /* FavouriteCell.swift in Sources */,
 				89B1593B2784133A00636574 /* TermsAndConditionsViewController.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
