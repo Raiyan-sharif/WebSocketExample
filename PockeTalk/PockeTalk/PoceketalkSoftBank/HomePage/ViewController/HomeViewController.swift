@@ -47,6 +47,7 @@ class HomeViewController: BaseViewController {
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
 
     weak var homeVCDelegate: HomeVCDelegate?
+    var isFromCameraPreview: Bool = false
     
     ///HistoryCardVC properties
     enum CardState {
@@ -337,6 +338,7 @@ class HomeViewController: BaseViewController {
                      self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
                      ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
                      self.hideSpeechView()
+                    self.isFromCameraPreview = true
                 }
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)

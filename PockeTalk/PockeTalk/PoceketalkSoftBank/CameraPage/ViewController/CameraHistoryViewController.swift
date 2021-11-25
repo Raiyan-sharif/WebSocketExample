@@ -82,7 +82,9 @@ class CameraHistoryViewController: BaseViewController {
     }
     
     @objc func backButtonEventListener(_ button: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.popViewController(animated: false)
     }
     
     func getHistoryImages() {
@@ -143,11 +145,11 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
                 if let id = self.viewModel.cameraHistoryImages[indexPath.item].dbID {
                     vc.historyID = id
                 }
-                
             }
-            self.navigationController?.pushViewController(vc, animated: true)
+            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.navigationController?.pushViewController(vc, animated: false)
         }
-
     }
     
     func removeFloatingButton() {
@@ -174,7 +176,9 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
             self.viewModel.cameraHistoryImages.remove(at: index)
             self.collectionView.reloadData()
             if self.viewModel.cameraHistoryImages.count == 0 {
-                self.navigationController?.popViewController(animated: true)
+                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.popViewController(animated: false)
             }
         }
     }
@@ -190,7 +194,9 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
                     vc.historyID = id
                 }
             }
-            self.navigationController?.pushViewController(vc, animated: true)
+            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.navigationController?.pushViewController(vc, animated: false)
         }
 
     }

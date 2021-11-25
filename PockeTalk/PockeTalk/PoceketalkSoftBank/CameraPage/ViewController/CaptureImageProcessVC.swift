@@ -668,13 +668,17 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func backButtonEventListener(_ button: UIButton) {
         if isClickable {
             if fromHistoryVC {
-                self.navigationController?.popViewController(animated: true)
+                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.popViewController(animated: false)
             } else {
                 let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
                 PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "\(viewControllers)")
                 for viewController in viewControllers {
                     if viewController is HomeViewController {
-                        self.navigationController?.popToViewController(viewController, animated: true)
+                        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                        self.view.window!.layer.add(transition, forKey: kCATransition)
+                        self.navigationController?.popToViewController(viewController, animated: false)
                     }
                 }
             }

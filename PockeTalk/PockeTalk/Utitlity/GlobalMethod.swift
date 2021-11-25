@@ -332,12 +332,23 @@ class GlobalMethod {
     static func getTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
         let transition = CATransition()
         transition.duration = duration
-        transition.type = CATransitionType.push
+        transition.type = CATransitionType.moveIn
         transition.subtype = animationStyle
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         
         return transition
     }
+    
+    static func getBackTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+        let transition = CATransition()
+        transition.duration = duration
+        transition.type = CATransitionType.reveal
+        transition.subtype = animationStyle
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        
+        return transition
+    }
+
 
 }
 

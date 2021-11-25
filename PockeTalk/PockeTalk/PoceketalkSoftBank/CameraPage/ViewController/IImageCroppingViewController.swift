@@ -318,7 +318,9 @@ class ImageCroppingViewController: BaseViewController {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         for viewController in viewControllers {
             if viewController is HomeViewController {
-                self.navigationController?.popToViewController(viewController, animated: true)
+                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.popToViewController(viewController, animated: false)
             }
         }
     }

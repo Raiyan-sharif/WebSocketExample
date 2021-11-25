@@ -71,6 +71,12 @@ extension HomeViewController{
     }
     
     func removeAllChildControllers(){
+        
+        if isFromCameraPreview {
+            let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+
+        }
         for view in homeContainerView.subviews{
             if let controller = view.parentViewController{
                 remove(asChildViewController: controller)
@@ -84,6 +90,7 @@ extension HomeViewController{
         }
         
         homeGestureEnableOrDiable()
+        isFromCameraPreview = false
     }
 
     @objc func longPress(gesture: UILongPressGestureRecognizer) {

@@ -198,8 +198,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.navigationController?.pushViewController(vc, animated: false)
         }
     }
     
