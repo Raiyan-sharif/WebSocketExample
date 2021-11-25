@@ -63,6 +63,13 @@ extension HomeViewController{
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     private func openSpeechView(){
+        if self.isFromPronuntiationPractice() != true{
+            self.dissmissHistory()
+        }
+        if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
+            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
+            self.speechContainerView.layer.add(transition, forKey: nil)
+        }
         self.speechContainerView.isHidden = false
         //self.homeContainerView.isHidden = true
     }
@@ -70,8 +77,7 @@ extension HomeViewController{
         return homeContainerView.subviews.last?.parentViewController
     }
     
-    func removeAllChildControllers(){
-        
+    func removeAllChildControllers(_ isNative: Int){
         if isFromCameraPreview {
             let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
             self.view.window!.layer.add(transition, forKey: kCATransition)
@@ -79,7 +85,16 @@ extension HomeViewController{
         }
         for view in homeContainerView.subviews{
             if let controller = view.parentViewController{
-                remove(asChildViewController: controller)
+                if(controller is LangSelectVoiceVC){
+                    var tr = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromLeft)
+                    if isNative == IsTop.top.rawValue{
+                        tr = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromRight)
+                    }
+                    remove(asChildViewController: controller, animation: tr)
+                }else{
+                    remove(asChildViewController: controller)
+
+                }
             }
         }
         
@@ -114,7 +129,7 @@ extension HomeViewController{
 
             openSpeechView()
             if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-                removeAllChildControllers()
+                removeAllChildControllers(Int(IsTop.top.rawValue))
             }
             
             

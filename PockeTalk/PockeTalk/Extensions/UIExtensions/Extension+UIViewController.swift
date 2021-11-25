@@ -53,4 +53,15 @@ extension UIViewController{
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
     }
+    
+    func remove(asChildViewController viewController: UIViewController, animation: CATransition?) {
+        
+        if(animation != nil){
+            viewController.navigationController?.view.layer.add(animation!, forKey: nil)
+        }
+        
+       viewController.willMove(toParent: nil)
+       viewController.view.removeFromSuperview()
+       viewController.removeFromParent()
+   }
 }
