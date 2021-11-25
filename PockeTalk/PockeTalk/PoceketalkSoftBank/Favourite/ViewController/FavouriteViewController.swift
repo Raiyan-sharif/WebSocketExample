@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 class FavouriteViewController: BaseViewController {
     let TAG = "\(FavouriteViewController.self)"
     ///Favourite Layout to postion the cell
@@ -42,8 +41,17 @@ class FavouriteViewController: BaseViewController {
         collectionView.register(cellType: FavouriteCell.self)
         return collectionView
     }()
+    
+    private lazy var backBtn:UIButton = {
+        guard let window = UIApplication.shared.keyWindow else {return UIButton()}
+        let topPadding = window.safeAreaInsets.top
+        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+        return okBtn
+    }()
 
-
+    //MARK: - Lifecycle methods
     override func loadView() {
         view = UIView()
         view.backgroundColor = .clear
@@ -53,18 +61,16 @@ class FavouriteViewController: BaseViewController {
         super.viewDidLoad()
         setUpCollectionView()
         favouriteViewModel = FavouriteViewModel()
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             self.showCollectionView()
         }
-        //bindData()
         populateData()
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
     }
 
-    
-    // Populate item to show on context menu
-    func populateData () {
+    //MARK: - Initial setup
+    private func populateData () {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "delete_from_fv".localiz(), imageName: "Delete_icon.png", menuType: .delete))
@@ -75,65 +81,28 @@ class FavouriteViewController: BaseViewController {
         self.view.addSubview(collectionView)
         addSpinner()
 
-
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
         let margin = view.safeAreaLayoutGuide
-        let window = UIApplication.shared.windows.first
-        let topPadding = window?.safeAreaInsets.top
+        
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-//        collectionView.heightAnchor.constraint(equalToConstant: SIZE_HEIGHT-buttonWidth-(topPadding ?? 0.0)).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.alpha = 0.0
-
         self.view.addSubview(backBtn)
-
-
-
     }
 
-
-    fileprivate func proceedToTakeVoiceInput() {
-        if Reachability.isConnectedToNetwork() {
-            let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-            controller.homeMicTapTimeStamp = currentTS
-            controller.languageHasUpdated = true
-            controller.screenOpeningPurpose = .HomeSpeechProcessing
-            //controller.speechProcessingDismissDelegate = self
-            //controller.isFromTutorial = false
-            controller.modalPresentationStyle = .fullScreen
-            self.present(controller, animated: true, completion: nil)
-        } else {
-            GlobalMethod.showNoInternetAlert()
-        }
-    }
-
-    @objc func microphoneTapAction (sender:UIButton) {
-        let languageManager = LanguageSelectionManager.shared
-        var speechLangCode = ""
-        if languageManager.isArrowUp{
-            speechLangCode = languageManager.bottomLanguage
-        }else{
-            speechLangCode = languageManager.topLanguage
-        }
-        if languageManager.hasSttSupport(languageCode: speechLangCode){
-            proceedToTakeVoiceInput()
-        }else {
-            showToast(message: "no_stt_msg".localiz(), seconds: 2)
-            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
-        }
-    }
-
-    func showCollectionView(){
+    private func showCollectionView(){
         isCollectionViewVisible = true
         collectionView.scrollToItem(at: IndexPath(item: favouriteViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
         collectionView.alpha = 1.0
+        
+        //TODO: Remove animation from collectionview. Will remove permanently after final confirmation.
+        
+        /*
         let transitionAnimation = CABasicAnimation(keyPath: "position.y")
         transitionAnimation.fromValue = view.layer.position.y -
             view.frame.size.height
@@ -149,11 +118,7 @@ class FavouriteViewController: BaseViewController {
         transitionAndScale.animations = [ transitionAnimation, scalAnimation]
         transitionAndScale.duration = 1.0
         collectionView.layer.add(transitionAndScale, forKey: nil)
-//        let diff = collectionView.frame.height - collectionView.contentSize.height
-//        if diff > 0 {
-//            collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
-//        }
-
+        */
     }
     
     private func addSpinner(){
@@ -167,82 +132,113 @@ class FavouriteViewController: BaseViewController {
         spinnerView.isHidden = true
     }
     
-    private var backBtn:UIButton!{
-        guard let window = UIApplication.shared.keyWindow else {return nil}
-        let topPadding = window.safeAreaInsets.top
-        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
-        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
-        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
-        return okBtn
-    }
-    
-    ///Move to next screeen
-    @objc func actionBack () {
-        //self.dismissFavourite(animated: true, completion: nil )
-        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
-    }
-
-    func bindData(){
+    //MARK: - Bind Data
+    private func bindData(){
         favouriteViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
-
+                
             }
             if items.count > 0{
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     self?.collectionView.reloadData()
-//                    guard let `self` = self else { return }
-//                    let collectionViewHeight = self.collectionView.frame.height
-//                    let diff = CGFloat(collectionViewHeight) - CGFloat(self.collectionView.contentSize.height - self.deletedCellHeight)
-//                    if diff > 0 {
-//                        self.collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
-//                    }
                 }
             }
         }
         
         speechProcessingVM.isFinal.bindAndFire{[weak self] isFinal  in
-                    guard let `self` = self else { return }
-                    if isFinal{
-                        SocketManager.sharedInstance.disconnect()
-                        PrintUtility.printLog(tag: "TTT text: ",text: self.speechProcessingVM.getTTT_Text)
-                        PrintUtility.printLog(tag: "TTT src: ", text: self.speechProcessingVM.getSrcLang_Text)
-                        PrintUtility.printLog(tag: "TTT dest: ", text: self.speechProcessingVM.getDestLang_Text)
-                        var isTop = self.selectedChatItemModel?.chatItem?.chatIsTop
-                        var nativeText = self.selectedChatItemModel?.chatItem!.textNative
-                        var nativeLangName = self.selectedChatItemModel?.chatItem?.textNativeLanguage
-                        let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: self.speechProcessingVM.getDestLang_Text)?.name
-                        if(self.isReverse){
-                            isTop = self.selectedChatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
-                            nativeText = self.selectedChatItemModel?.chatItem!.textTranslated
-                            nativeLangName = self.selectedChatItemModel?.chatItem?.textTranslatedLanguage
-                        }
-                        
-                        let targetText = self.speechProcessingVM.getTTT_Text
-                        let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
-                        let row = self.favouriteViewModel.saveChatItem(chatItem: chatEntity)
-                        chatEntity.id = row
-                        self.selectedChatItemModel?.chatItem = chatEntity
-                        self.spinnerView.isHidden = true
-                        self.showTTSScreen( chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
-                    }
+            guard let `self` = self else { return }
+            if isFinal{
+                SocketManager.sharedInstance.disconnect()
+                PrintUtility.printLog(tag: "TTT text: ",text: self.speechProcessingVM.getTTT_Text)
+                PrintUtility.printLog(tag: "TTT src: ", text: self.speechProcessingVM.getSrcLang_Text)
+                PrintUtility.printLog(tag: "TTT dest: ", text: self.speechProcessingVM.getDestLang_Text)
+                var isTop = self.selectedChatItemModel?.chatItem?.chatIsTop
+                var nativeText = self.selectedChatItemModel?.chatItem!.textNative
+                var nativeLangName = self.selectedChatItemModel?.chatItem?.textNativeLanguage
+                let targetLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: self.speechProcessingVM.getDestLang_Text)?.name
+                if(self.isReverse){
+                    isTop = self.selectedChatItemModel?.chatItem?.chatIsTop == IsTop.top.rawValue ? IsTop.noTop.rawValue : IsTop.top.rawValue
+                    nativeText = self.selectedChatItemModel?.chatItem!.textTranslated
+                    nativeLangName = self.selectedChatItemModel?.chatItem?.textTranslatedLanguage
                 }
+                
+                let targetText = self.speechProcessingVM.getTTT_Text
+                let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
+                let row = self.favouriteViewModel.saveChatItem(chatItem: chatEntity)
+                chatEntity.id = row
+                self.selectedChatItemModel?.chatItem = chatEntity
+                self.spinnerView.isHidden = true
+                self.showTTSScreen( chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+            }
+        }
     }
     
-    func dismissFavourite() {
-//        self.delegate?.dismissFavouriteView()
-//        self.dismiss(animated: animated, completion: completion )
+    //MARK: - IBActions
+    @objc private func actionBack() {
+        dismissFavourite(byBackBtnPress: true)
+    }
+
+    //MARK: - View Transactions
+    private func dismissFavourite(byBackBtnPress isPresssed: Bool) {
+        if isPresssed {
+            addBackNavigationTransationalAnimation()
+        } else {
+            if favouriteViewModel.items.value.count > 1 {
+                addBackNavigationTransationalAnimation()
+            }
+        }
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
     
-    func actualNumberOfLines(width:CGFloat, text:String, font:UIFont) -> Int {
+    private func openTTTResult(_ item: Int){
+        let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
+        self.showTTSScreen (chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
+    }
+    
+    private func openTTTResultAlert(_ idx: IndexPath){
+        let chatItem = favouriteViewModel.items.value[idx.item] as! ChatEntity
+        let vc = AlertReusableViewController.init()
+        vc.items = self.itemsToShowOnContextMenu
+        vc.delegate = self
+        vc.chatItemModel = HistoryChatItemModel(chatItem: chatItem, idxPath: idx)
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
+        let chatItem = chatItemModel.chatItem!
+        if saveDataToDB == true{
+            do {
+                let row = try ChatDBModel.init().insert(item: chatItem)
+                chatItem.id = row
+                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
+            } catch _ {}
+        }
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
+        ttsVC.chatItemModel = chatItemModel
+        ttsVC.hideMenuButton = hideMenuButton
+        ttsVC.hideBottomView = hideBottmSection
+        add(asChildViewController: ttsVC, containerView: self.view, animation: nil)
+    }
+    
+    //MARK: - Utils
+    private func actualNumberOfLines(width:CGFloat, text:String, font:UIFont) -> Int {
            let rect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
            let labelSize = text.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font as Any], context: nil)
            return Int(ceil(CGFloat(labelSize.height) / font.lineHeight))
     }
+    
+    private func addBackNavigationTransationalAnimation() {
+        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+    }
 }
 
+//MARK: - UICollectionViewDelegate and UICollectionViewDataSource
 extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return favouriteViewModel.items.value.count
     }
@@ -276,7 +272,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.favouriteViewModel.deleteFavourite(indexpath.item)
-            //self.deletedCellHeight = cell.frame.height
+           
             self.favouritelayout.deletedCellHeight = cell.frame.height
             self.collectionView.performBatchUpdates { [weak self]  in
                 guard let `self`  = self else {
@@ -289,7 +285,7 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
                         self.collectionView.reloadItems(at: [IndexPath(item: itemCount - 1, section: 0)])
                     }
                 }else{
-                    self.dismissFavourite()
+                    self.dismissFavourite(byBackBtnPress: false)
                 }
             } completion: { [weak self] _ in
                 self?.favouritelayout.deletedCellHeight = 0
@@ -313,28 +309,11 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.openTTTResultAlert(indexpath)
         }
-        
         return cell
-    }
-    
-    func openTTTResult(_ item: Int){
-        let chatItem = favouriteViewModel.items.value[item] as! ChatEntity
-        self.showTTSScreen (chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
-    }
-    
-    func openTTTResultAlert(_ idx: IndexPath){
-        let chatItem = favouriteViewModel.items.value[idx.item] as! ChatEntity
-        let vc = AlertReusableViewController.init()
-        vc.items = self.itemsToShowOnContextMenu
-        vc.delegate = self
-        vc.chatItemModel = HistoryChatItemModel(chatItem: chatItem, idxPath: idx)
-        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(vc, animated: true, completion: nil)
     }
 }
 
-
+//MARK: - FavouriteLayoutDelegate
 extension FavouriteViewController:FavouriteLayoutDelegate{
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let favouriteModel = favouriteViewModel.items.value[indexPath.item] as! ChatEntity
@@ -351,12 +330,10 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
             return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 10
         }
         return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 65
-        
-        
-    
-        
     }
 }
+
+//MARK: - RetranslationDelegate
 extension FavouriteViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String) {
         if Reachability.isConnectedToNetwork() {
@@ -378,6 +355,7 @@ extension FavouriteViewController : RetranslationDelegate{
     }
 }
 
+//MARK: - AlertReusableDelegate
 extension FavouriteViewController : AlertReusableDelegate {
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {
 
@@ -407,8 +385,6 @@ extension FavouriteViewController : AlertReusableDelegate {
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
-        //self.navController?.pushViewController(controller, animated: false)
-        //self.present(controller, animated: true, completion: nil)
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
@@ -426,12 +402,13 @@ extension FavouriteViewController : AlertReusableDelegate {
                 self!.socketManager.sendTextData(text: textFrameData, completion: nil)
             }
         }else {
-            print("No internet!")
+            PrintUtility.printLog(tag: TAG, text: "No internet!")
             GlobalMethod.showNoInternetAlert()
         }
     }
 }
 
+//MARK: - SocketManagerDelegate
 extension FavouriteViewController : SocketManagerDelegate{
     func faildSocketConnection(value: String) {
         PrintUtility.printLog(tag: TAG, text: value)
@@ -446,12 +423,14 @@ extension FavouriteViewController : SocketManagerDelegate{
     
 }
 
+//MARK: - SpeechProcessingDismissDelegate
 extension FavouriteViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         self.speechProDismissDelegateFromFav?.showTutorial()
     }
 }
 
+//MARK: - TtsAlertControllerDelegate
 extension FavouriteViewController : TtsAlertControllerDelegate{
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {}
     
@@ -460,30 +439,6 @@ extension FavouriteViewController : TtsAlertControllerDelegate{
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {}
     
     func dismissed() {
-        //SocketManager.sharedInstance.connect()
         socketManager.socketManagerDelegate = self
-    }
-    
-    
-}
-extension FavouriteViewController{
-
-    func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
-        let chatItem = chatItemModel.chatItem!
-        if saveDataToDB == true{
-            do {
-                let row = try ChatDBModel.init().insert(item: chatItem)
-                chatItem.id = row
-                UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
-            } catch _ {}
-        }
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
-        ttsVC.chatItemModel = chatItemModel
-        ttsVC.hideMenuButton = hideMenuButton
-        ttsVC.hideBottomView = hideBottmSection
-        add(asChildViewController: ttsVC, containerView: self.view, animation: nil)
-
     }
 }
