@@ -78,7 +78,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             let textSizeVC = TextSizeViewController()
             textSizeVC.modalPresentationStyle = .overCurrentContext
             textSizeVC.delegate = self
-            self.navigationController?.present(textSizeVC, animated: true, completion: nil)
+            self.navigationController?.present(textSizeVC, animated: false, completion: nil)
         case SettingsItemType.languageChange.rawValue:
             PrintUtility.printLog(tag: "LanguageChange: ", text: "LanguageChange")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
