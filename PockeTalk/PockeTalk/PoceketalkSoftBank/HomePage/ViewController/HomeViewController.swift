@@ -75,6 +75,7 @@ class HomeViewController: BaseViewController {
        view.backgroundColor = .white
        view.translatesAutoresizingMaskIntoConstraints = false
        view.layer.zPosition = 100
+       view.backgroundColor = .black
        return view
    }()
 

@@ -298,10 +298,10 @@ class SpeechProcessingViewController: BaseViewController{
     private func showTutorial () {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         controller.delegate = self
-        self.present(controller, animated: true, completion: nil)
+        self.homeVC!.add(asChildViewController: controller, containerView: self.homeVC!.homeContainerView)
+        self.loaderInvisible()
+
     }
     
     //MARK: - Load Data
@@ -475,10 +475,7 @@ extension SpeechProcessingViewController: PronunciationResult {
 //MARK: - SpeechControllerDismissDelegate
 extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
     func dismiss() {
-        self.navigationController?.popViewController(animated: false)
-        if let transitionView = self.view{
-            UIView.transition(with:transitionView, duration: TimeInterval(self.transionDuration), options: .showHideTransitionViews, animations: nil, completion: nil)
-        }
+        self.homeVC?.homeContainerView.isHidden = true
     }
 }
 

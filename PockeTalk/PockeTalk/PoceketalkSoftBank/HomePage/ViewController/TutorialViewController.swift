@@ -43,7 +43,6 @@ class TutorialViewController: BaseViewController {
     weak var speechProDismissDelegateFromTutorial : SpeechProcessingDismissDelegate?
     weak var delegate : SpeechControllerDismissDelegate?
     weak var navController: UINavigationController?
-    weak private var talkBtn : UIButton?
 
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -76,8 +75,8 @@ class TutorialViewController: BaseViewController {
         self.infoLabel.textAlignment = .center
         self.infoLabel.textColor = UIColor._blackColor()
 
-        talkBtn = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-        talkBtn?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+//        talkBtn = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+//        talkBtn?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
     
     private func setTutorialLanguageCode() {
@@ -120,13 +119,11 @@ class TutorialViewController: BaseViewController {
     @IBAction private func crossActiion(_ sender: UIButton) {
         UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
             self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
-        }, completion: { _ in
+        }, completion: { [weak self] _ in
+            guard let `self` = self else { return }
             self.delegate?.dismiss()
             self.stopTTS()
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
-                (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
-            }
+            self.remove(asChildViewController: self)
         })
     }
 
@@ -137,7 +134,7 @@ class TutorialViewController: BaseViewController {
                 if isGranted {
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessing) {
                         self.moveToSpeechProcessing()
-                        self.talkBtn?.isUserInteractionEnabled = true
+                        //self.talkBtn?.isUserInteractionEnabled = true
                         self.stopTTS()
                     }
                 } else {
