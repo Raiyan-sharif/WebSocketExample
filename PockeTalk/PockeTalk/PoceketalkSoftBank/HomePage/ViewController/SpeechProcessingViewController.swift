@@ -311,7 +311,8 @@ class SpeechProcessingViewController: BaseViewController{
             if isFinal{
                 self.isFinalProvided = true
                 self.timer?.invalidate()
-                self.spinnerView.isHidden = true
+//                self.spinnerView.isHidden = true
+                self.spinnerView.removeFromSuperview()
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
                 self.isSSTavailable = false
