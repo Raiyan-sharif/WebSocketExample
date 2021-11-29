@@ -10,6 +10,10 @@ protocol SpeechControllerDismissDelegate : AnyObject {
     func dismiss()
 }
 
+protocol DismissTutorialDelegate: AnyObject {
+    func dismissTutorialWhileFirstTimeLoad()
+}
+
 class TutorialViewController: BaseViewController {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var infoLabel: UILabel!
@@ -42,6 +46,8 @@ class TutorialViewController: BaseViewController {
     
     weak var speechProDismissDelegateFromTutorial : SpeechProcessingDismissDelegate?
     weak var delegate : SpeechControllerDismissDelegate?
+    weak var dismissTutorialDelegate: DismissTutorialDelegate?
+    var isShwoingTutorialForTheFirstTime = false
     weak var navController: UINavigationController?
 
     //MARK: - Lifecycle Methods
@@ -74,9 +80,6 @@ class TutorialViewController: BaseViewController {
         self.infoLabel.setLineHeight(lineHeight: lineSpacing)
         self.infoLabel.textAlignment = .center
         self.infoLabel.textColor = UIColor._blackColor()
-
-//        talkBtn = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-//        talkBtn?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
     
     private func setTutorialLanguageCode() {
@@ -104,18 +107,6 @@ class TutorialViewController: BaseViewController {
     }
 
     //MARK: - IBActions
-    @objc private func microphoneTapAction (sender : UIButton) {
-        sender.isUserInteractionEnabled = false
-        let languageManager = LanguageSelectionManager.shared
-        if languageManager.hasSttSupport(languageCode: selectedLanguageCode){
-            proceedToTakeVoiceInput()
-
-        }else {
-            showToast(message: "no_stt_msg".localiz(), seconds: toastVisibleTime)
-            PrintUtility.printLog(tag: TAG, text: "checkSttSupport don't have stt support")
-        }
-    }
-    
     @IBAction private func crossActiion(_ sender: UIButton) {
         UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
             self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
@@ -124,6 +115,9 @@ class TutorialViewController: BaseViewController {
             self.delegate?.dismiss()
             self.stopTTS()
             self.remove(asChildViewController: self)
+            if self.isShwoingTutorialForTheFirstTime {
+                self.dismissTutorialDelegate?.dismissTutorialWhileFirstTimeLoad()
+            }
         })
     }
 
@@ -133,8 +127,6 @@ class TutorialViewController: BaseViewController {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.waitingTimeToShowSpeechProcessing) {
-                        self.moveToSpeechProcessing()
-                        //self.talkBtn?.isUserInteractionEnabled = true
                         self.stopTTS()
                     }
                 } else {
@@ -147,17 +139,6 @@ class TutorialViewController: BaseViewController {
         }
     }
 
-    private func moveToSpeechProcessing() {
-//        let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-//        controller.homeMicTapTimeStamp = currentTS
-//        controller.languageHasUpdated = true
-//        controller.screenOpeningPurpose = .HomeSpeechProcessing
-//        controller.isFromTutorial = true
-//        controller.speechProcessingDismissDelegate = self
-//        self.navigationController?.pushViewController(controller, animated: true);
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == TutorialViewController.toChildContainer {

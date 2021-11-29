@@ -146,7 +146,7 @@ class HomeViewController: BaseViewController {
         
         if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
             UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
-            self.dislayTutorialScreen()
+            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
         }
         
         if let lanCode = self.homeVM.getLanguageName() {
@@ -285,7 +285,7 @@ class HomeViewController: BaseViewController {
     }
 
     //MARK: - View Transactions
-    private func dislayTutorialScreen () {
+    private func dislayTutorialScreen(shwoingTutorialForTheFirstTime: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
         let navController = UINavigationController(rootViewController: controller)
@@ -294,7 +294,15 @@ class HomeViewController: BaseViewController {
         navController.navigationBar.isHidden = true
         controller.navController = navController
         controller.speechProDismissDelegateFromTutorial = self
-        self.present(navController, animated: true, completion: nil)
+        
+        controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
+        if shwoingTutorialForTheFirstTime {
+            controller.dismissTutorialDelegate = self
+        } else {
+            controller.dismissTutorialDelegate = nil
+        }
+        
+        add(asChildViewController: controller, containerView:homeContainerView)
     }
 
     //TODO: Show history scene as swipe action. Will remove after new implementation merge.
@@ -379,13 +387,13 @@ class HomeViewController: BaseViewController {
     
 
     private func updateLanguageNames() {
-        print("\(HomeViewController.self) updateLanguageNames method called")
+        PrintUtility.printLog(tag: TAG, text: "UpdateLanguageNames method called")
         let languageManager = LanguageSelectionManager.shared
         let nativeLangCode = languageManager.bottomLanguage
         let targetLangCode = languageManager.topLanguage
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
-        print("\(HomeViewController.self) updateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
+        PrintUtility.printLog(tag: TAG, text: "UpdateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
         topSysLangName.text = targetLanguage?.sysLangName
         topNativeLangNameLable.setTitle(targetLanguage?.name, for: .normal)
         bottomLangSysLangName.setTitle(nativeLanguage?.sysLangName, for: .normal)
@@ -499,7 +507,14 @@ extension HomeViewController {
 extension HomeViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         DispatchQueue.main.async {
-            self.dislayTutorialScreen()
+            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: false)
         }
+    }
+}
+
+//MARK:- DismissTutorialDelegate
+extension HomeViewController : DismissTutorialDelegate {
+    func dismissTutorialWhileFirstTimeLoad() {
+        removeAllChildControllers(Int(IsTop.top.rawValue))
     }
 }
