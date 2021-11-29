@@ -207,7 +207,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateHomeContainer?(true)
-        self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
+        self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
         } else {
