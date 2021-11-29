@@ -439,7 +439,7 @@ class HomeViewController: BaseViewController {
 
 
     @objc func updateContainer(notification: Notification) {
-        self.removeAllChildControllers()
+        self.removeAllChildControllers(self.selectedTab)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         historyDissmissed()
         self.historyImageView.becomeFirstResponder()
