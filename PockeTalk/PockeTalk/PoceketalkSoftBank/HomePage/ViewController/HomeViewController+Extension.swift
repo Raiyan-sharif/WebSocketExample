@@ -109,74 +109,80 @@ extension HomeViewController{
     }
 
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
-        let imageView = gesture.view! as! UIImageView
-        if gesture.state == .began {
+        RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
+            if isGranted {
+                let imageView = gesture.view! as! UIImageView
+                if gesture.state == .began {
 
-            SocketManager.sharedInstance.connect()
-            SocketManager.sharedInstance.socketManagerDelegate = speechVC
+                    SocketManager.sharedInstance.connect()
+                    SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
 
-            if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
-                ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
-            }
-            speechVC.updateLanguageType()
+                    if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
+                        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                    }
+                    self.speechVC.updateLanguageType()
 
-            if speechVC.languageHasUpdated{
-                speechVC.updateLanguageInRemote()
-            }
+                    if self.speechVC.languageHasUpdated{
+                        self.speechVC.updateLanguageInRemote()
+                    }
 
-            self.speechVC.hideOrOpenExampleText(isHidden: true)
-            imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
+                    self.speechVC.hideOrOpenExampleText(isHidden: true)
+                    imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
 
-            openSpeechView()
-            if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-                removeAllChildControllers(Int(IsTop.top.rawValue))
-            }
-            
-            
-            // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-            /*
-            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-                NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
-            }
-            
-            if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-                NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
-            }
-            
-            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-                NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-            }
-             */
-            
-            homeVCDelegate?.startRecord()
-            self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
-            TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
-        }
+                    self.openSpeechView()
+                    if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+                        self.removeAllChildControllers(Int(IsTop.top.rawValue))
+                    }
+                    
+                    
+                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+                    /*
+                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+                        NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+                    }
+                    
+                    if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+                        NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+                    }
+                    
+                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+                        NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
+                    }
+                     */
+                    
+                    self.homeVCDelegate?.startRecord()
+                    self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
+                    TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
+                }
 
-        if gesture.state == .ended {
-            imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+                if gesture.state == .ended {
+                    imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
 
-            // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-            /*
-            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
-                    NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+                    /*
+                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
+                            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                    }
+                    
+                    if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
+                            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+                    }
+                    
+                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
+                            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+                    }
+                     */
+                    if !self.speechVC.isMinimumLimitExceed {
+                        self.enableORDisableMicrophoneButton(isEnable: false)
+                    }else{
+                        self.speechVC.isMinimumLimitExceed = false
+                    }
+                    self.homeVCDelegate?.stopRecord()
+                    TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
+                }
+            } else {
+                GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
-            
-            if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
-                    NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-            }
-            
-            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
-                    NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
-            }
-             */
-            if !speechVC.isMinimumLimitExceed {
-                enableORDisableMicrophoneButton(isEnable: false)
-            }else{
-                speechVC.isMinimumLimitExceed = false
-            }
-            homeVCDelegate?.stopRecord()
-            TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
         }
     }
 
