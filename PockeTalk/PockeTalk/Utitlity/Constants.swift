@@ -25,6 +25,8 @@ let kMarqueeLabelTrailingBufferForLanguageScreen : CGFloat = 50.0
 let kMarqueeLabelScrollingSpeenForLanguageScreen : CGFloat = 30.0
 let CameraCropControllerMargin: CGFloat = 12.5
 let kScreenTransitionTime: Double = 0.5
+let kFadeAnimationTransitionTime: TimeInterval = 0.35
+let viewsAlphaValue: CGFloat = 0.0
 
 
 //MARK: - Link

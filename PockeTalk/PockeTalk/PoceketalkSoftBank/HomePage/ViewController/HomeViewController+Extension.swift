@@ -63,15 +63,26 @@ extension HomeViewController{
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     private func openSpeechView(){
-        if self.isFromPronuntiationPractice() != true && self.isFromlanguageSelection() != true{
-            self.dissmissHistory()
+
+        if self.isFromPronuntiationPractice() != true{
+            UIView.animate(withDuration: fadeAnimationDuration, delay: fadeAnimationDelay, options: .curveEaseOut) {
+                self.historyCardVC.view.alpha = 0.0
+            } completion: { _ in
+                self.dissmissHistory()
+                if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
+                    let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
+                    self.speechContainerView.layer.add(transition, forKey: nil)
+                }
+                self.speechContainerView.isHidden = false
+            }
+
+        } else {
+            if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
+                let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
+                self.speechContainerView.layer.add(transition, forKey: nil)
+            }
+            self.speechContainerView.isHidden = false
         }
-        if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
-            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
-            self.speechContainerView.layer.add(transition, forKey: nil)
-        }
-        self.speechContainerView.isHidden = false
-        //self.homeContainerView.isHidden = true
     }
     func getLastVCFromContainer()->UIViewController?{
         return homeContainerView.subviews.last?.parentViewController
@@ -311,6 +322,7 @@ extension HomeViewController {
                     self.historyCardVC.view.frame.origin.y = 0
                     self.historyCardVC.view.frame.origin.x = 0
                     self.historyCardVC.view.frame.size.width = self.view.bounds.width
+                    self.historyCardVC.view.alpha = 1
                 case .collapsed:
                     self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
                     self.historyCardVC.view.frame.origin.x = self.view.bounds.width / 3

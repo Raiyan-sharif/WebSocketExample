@@ -15,13 +15,14 @@ class HistoryCardViewController: BaseViewController {
     let historylayout = HistoryLayout()
     var topConstraintOfCV:NSLayoutConstraint!
     var widthConstraintOfCV:NSLayoutConstraint!
-
+    
     var isCollectionViewVisible = false
     var isReverse = false
     
     var historyViewModel: HistoryViewModel!
     var selectedChatItemModel : HistoryChatItemModel?
     private var speechProcessingVM : SpeechProcessingViewModeling!
+    var animationDelay = 0.2
     
     let buttonWidth : CGFloat = 100
     var deletedCellHeight = CGFloat()
@@ -32,7 +33,7 @@ class HistoryCardViewController: BaseViewController {
     
     weak var speechProDismissDelegateFromHistory : SpeechProcessingDismissDelegate?
     var enableOrDisableMicrophoneBtn:((_ value:Bool)->())?
-
+    
     lazy var collectionView:UICollectionView = {
         let collectionView = UICollectionView(frame:.zero ,collectionViewLayout:historylayout)
         historylayout.delegate = self
@@ -42,13 +43,22 @@ class HistoryCardViewController: BaseViewController {
         collectionView.register(cellType: HistoryCell.self)
         return collectionView
     }()
-
+    
+    private lazy var backBtn:UIButton = {
+        guard let window = UIApplication.shared.keyWindow else {return UIButton()}
+        let topPadding = window.safeAreaInsets.top
+        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+        return okBtn
+    }()
+    
     //MARK: - Lifecycle methods
     override func loadView() {
         view = UIView()
         view.backgroundColor = .clear
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
@@ -56,7 +66,7 @@ class HistoryCardViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
             self?.showCollectionView()
         }
-
+        
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
         registerNotification()
@@ -70,7 +80,7 @@ class HistoryCardViewController: BaseViewController {
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
         addSpinner()
-
+        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
@@ -80,7 +90,7 @@ class HistoryCardViewController: BaseViewController {
         
         topConstraintOfCV.isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+        self.view.addSubview(backBtn)
     }
     
     private func addSpinner(){
@@ -92,7 +102,7 @@ class HistoryCardViewController: BaseViewController {
         spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         spinnerView.isHidden = true
-
+        
     }
     
     private func showCollectionView(){
@@ -105,7 +115,7 @@ class HistoryCardViewController: BaseViewController {
         }
         PrintUtility.printLog(tag: "contentSize.height", text: "\(collectionView.contentSize.height)")
     }
-
+    
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.historyNotofication, object: nil)
     }
@@ -149,12 +159,12 @@ class HistoryCardViewController: BaseViewController {
                 }
                 
                 let targetText = self.speechProcessingVM.getTTT_Text
-
+                
                 let chatEntity =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName!, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
                 let row = self.historyViewModel.saveChatItem(chatItem: chatEntity)
                 chatEntity.id = row
                 self.selectedChatItemModel?.chatItem = chatEntity
-             
+                
                 self.spinnerView.isHidden = true
                 self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
                 self.historyViewModel.addItem(chatEntity)
@@ -177,7 +187,7 @@ class HistoryCardViewController: BaseViewController {
         let languageManager = LanguageSelectionManager.shared
         let chatItem = historyViewModel.items.value[idx.item] as! ChatEntity
         let language = languageManager.getLanguageCodeByName(langName: chatItem.textTranslatedLanguage!)
-
+        
         if languageManager.hasSttSupport(languageCode: language!.code){
             PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code ?? "")")
             populateData(withPronounciation: true)
@@ -198,19 +208,19 @@ class HistoryCardViewController: BaseViewController {
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
         self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: idx), hideMenuButton: false, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
     }
-
+    
     //MARK: - Utils
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.historyNotofication, object: nil)
     }
-
+    
     @objc private func removeChild(notification: Notification) {
         if let vc = view.subviews.last?.parentViewController{
-                remove(asChildViewController: vc)
-            }
+            remove(asChildViewController: vc)
+        }
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
     }
-
+    
     private func populateData (withPronounciation: Bool) {
         self.itemsToShowOnContextMenu.removeAll()
         self.itemsToShowOnContextMenu.append(AlertItems(title: "history_add_fav".localiz(), imageName: "icon_favorite_popup.png", menuType: .favorite))
@@ -226,6 +236,15 @@ class HistoryCardViewController: BaseViewController {
     private func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
         delegate?.dissmissHistory()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+    }
+    
+    //MARK: - IBActions
+    @objc private func actionBack() {
+        UIView.animate(withDuration: kFadeAnimationTransitionTime, delay: animationDelay, options: .curveEaseOut) {
+            self.view.alpha = viewsAlphaValue
+        } completion: { _ in
+            self.dismissHistory(animated: true, completion: nil )
+        }
     }
     
     private func scrollToBottom(){
@@ -246,7 +265,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return historyViewModel.items.value.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: HistoryCell.self)
         let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
@@ -278,7 +297,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
         }else{
             cell.showAsFavourite()
         }
-
+        
         cell.deleteItem = { [weak self] point in
             guard let `self`  = self else {
                 return
@@ -296,7 +315,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
                 
             }
         }
-
+        
         cell.favouriteItem = { [weak self] point in
             guard let `self`  = self else {
                 return
@@ -346,10 +365,10 @@ extension HistoryCardViewController: HistoryLayoutDelegate {
         let fromHeight = historyModel.textTranslated!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         let toHeight = historyModel.textNative!.heightWithConstrainedWidth(width: width-buttonWidth, font: font)
         let count = self.actualNumberOfLines(width: SIZE_WIDTH - 80, text: historyModel.textTranslated!, font: font)
-
+        
         PrintUtility.printLog(tag: "HistoryViewController", text: "fromHeight: \(fromHeight) toHeight: \(toHeight) count: \(count) width: \(width) font: \(font.pointSize)")
         PrintUtility.printLog(tag: "HistoryViewController", text: "Font \(FontUtility.getFontSizeIndex())")
-       
+        
         if(indexPath.row == historyViewModel.items.value.count-1){
             return 20 + fromHeight + ((CGFloat(count) * FontUtility.getFontSize() ) ) + 40 + toHeight + 40 + 10
         }
@@ -369,7 +388,7 @@ extension HistoryCardViewController : RetranslationDelegate{
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let nativeText = chatItem!.textNative
                 let nativeLangName = chatItem!.textNativeLanguage!
-                    
+                
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
                 ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
@@ -383,9 +402,9 @@ extension HistoryCardViewController : RetranslationDelegate{
 //MARK:- AlertReusableDelegate
 extension HistoryCardViewController : AlertReusableDelegate{
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {
-
+        
     }
-
+    
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
         self.collectionView.performBatchUpdates{
@@ -418,9 +437,9 @@ extension HistoryCardViewController : AlertReusableDelegate{
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
         let transition = CATransition()
-                    transition.duration = 0.5
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromLeft
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view)
@@ -434,12 +453,12 @@ extension HistoryCardViewController : AlertReusableDelegate{
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self!.selectedChatItemModel = chatItemModel
-
+                
                 self!.isReverse = true
                 let nativeText = self!.selectedChatItemModel?.chatItem?.textTranslated
                 let nativeLangName = self!.selectedChatItemModel?.chatItem!.textTranslatedLanguage
                 let targetLangName = self!.selectedChatItemModel?.chatItem!.textNativeLanguage!
-
+                
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
             }
@@ -466,15 +485,15 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
         self.collectionView.performBatchUpdates{
             self.collectionView.deleteItems(at: [chatItemModel.idxPath!])
         }
-
+        
     }
     
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.replaceItem(chatItemModel.chatItem!, chatItemModel.idxPath!.row)
         self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
     }
-
-
+    
+    
     func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
         self.enableOrDisableMicrophoneBtn?(true)
         let chatItem = chatItemModel.chatItem!
@@ -485,7 +504,7 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
                 UserDefaultsProperty<Int64>(kLastSavedChatID).value = row
             } catch _ {}
         }
-
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
         ttsVC.chatItemModel = chatItemModel
@@ -493,7 +512,7 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
         ttsVC.hideBottomView = hideBottmSection
         ttsVC.view.tag = ttsAlertViewTag
         add(asChildViewController: ttsVC, containerView: self.view)
-
+        
     }
 }
 
@@ -501,7 +520,7 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
 extension HistoryCardViewController : SpeechProcessingDismissDelegate {
     func showTutorial() {
         self.speechProDismissDelegateFromHistory?.showTutorial()
-
+        
     }
 }
 

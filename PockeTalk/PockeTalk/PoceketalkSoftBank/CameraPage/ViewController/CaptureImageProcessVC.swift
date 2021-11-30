@@ -400,14 +400,11 @@ class CaptureImageProcessVC: BaseViewController {
         
         let transition = CATransition()
         transition.duration = 0.4
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromRight
         self.navigationController?.view.layer.add(transition, forKey: kCATransition)
         self.navigationController?.pushViewController(vc, animated: false)
     }
-    
-    
-    
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {

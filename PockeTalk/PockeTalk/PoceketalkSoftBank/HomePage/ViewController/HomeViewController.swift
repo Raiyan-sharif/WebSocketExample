@@ -45,6 +45,8 @@ class HomeViewController: BaseViewController {
     var viewPanGesture: UIPanGestureRecognizer!
     private var selectedTouchView:UIView!
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
+    let fadeAnimationDuration: TimeInterval = 0.1
+    let fadeAnimationDelay: TimeInterval = 0.2
 
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
