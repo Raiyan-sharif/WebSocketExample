@@ -63,7 +63,7 @@ extension HomeViewController{
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     private func openSpeechView(){
-        if self.isFromPronuntiationPractice() != true{
+        if self.isFromPronuntiationPractice() != true && self.isFromlanguageSelection() != true{
             self.dissmissHistory()
         }
         if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
