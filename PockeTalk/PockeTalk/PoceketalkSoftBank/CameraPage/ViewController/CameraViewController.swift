@@ -59,13 +59,18 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
+    var updateHomeContainer:((_ isfullScreen:Bool)->())?
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
+        HomeViewController.bottomViewRef.backgroundColor = .clear
+        HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
+        HomeViewController.bottomViewRef.backgroundColor = .clear
+        HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
     }
@@ -73,7 +78,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     func openCameraLanguageListScreen(){
         let storyboard = UIStoryboard(name: KStoryBoardCamera, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KiDLangSelectCamera)as! LanguageSelectCameraVC
-        self.navigationController?.pushViewController(controller, animated: true);
+        controller.updateHomeContainer = { [weak self] in
+            self?.updateHomeContainer?(true)
+        }
+       // self.navigationController?.pushViewController(controller, animated: true);
+        self.updateHomeContainer?(false)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        add(asChildViewController: controller, containerView: view, animation: transition)
     }
     
     fileprivate func updateLanguageNames() {
@@ -94,7 +105,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func onCameraLanguageChanged(notification: Notification) {
         updateLanguageNames()
     }
-    
+        
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
     }
@@ -104,7 +115,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     deinit {
-        unregisterNotification()
+        //unregisterNotification()
     }
     
     override func viewDidLoad() {
@@ -187,13 +198,15 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.navigationController?.pushViewController(vc, animated: false)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.fetchCameraHistoryImages()
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
@@ -220,10 +233,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        sessionQueue.async { [unowned self] in
-            if self.sessionSetupSucceeds {
-                self.session.stopRunning()
+        HomeViewController.cameraTapFlag = 0
+        sessionQueue.async { [weak self] in
+            
+            if let _ = self?.sessionSetupSucceeds {
+                if let _session = self?.session {
+                    _session.stopRunning()
+                }
             }
         }
     }
@@ -337,11 +353,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
-        if(self.navigationController == nil){
-            self.dismiss(animated: true, completion: nil)
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.updateHomeContainer?(false)
+        HomeViewController.homeContainerViewBottomConstraint.constant = 0
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
+//        if(self.navigationController == nil){
+//            self.dismiss(animated: true, completion: nil)
+//        }else{
+//            self.navigationController?.popViewController(animated: true)
+//        }
     }
     
     var croppingParameters: CropUtils {
@@ -444,7 +463,9 @@ extension CameraViewController {
             self?.onCompletion?(image, asset)
             self?.onCompletion = nil
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     @IBAction func didTouchFlashButton(sender: UIButton) {

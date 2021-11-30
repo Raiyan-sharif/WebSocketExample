@@ -10,7 +10,7 @@ class CountryListViewController: BaseViewController {
     @IBOutlet weak var viewEnglishName: UIView!
     @IBOutlet weak var countryNameLabel: UILabel!
     @IBOutlet weak var countryListCollectionView: UICollectionView!
-    @IBOutlet weak var layoutBottomButtonContainer: UIView!
+   
     var countryList = [CountryListItemElement]()
     var dataShowingAsEnlish = false
     var dataShowingLanguageCode = LanguageManager.shared.currentLanguage.rawValue
@@ -20,8 +20,13 @@ class CountryListViewController: BaseViewController {
     let speechBtnWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
+    var isFromTranslation = false
+    let window :UIWindow = UIApplication.shared.keyWindow!
+
     @IBAction func onBackButtonPressed(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        remove(asChildViewController: self)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+        NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
     }
 
     fileprivate func setViewBorder() {
@@ -65,8 +70,6 @@ class CountryListViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpMicroPhoneIcon()
-        setUpSpeechButton()
         countryNameLabel.text = "Region".localiz()
         viewEnglishName.layer.cornerRadius = 15
         viewEnglishName.backgroundColor = .clear
@@ -82,12 +85,17 @@ class CountryListViewController: BaseViewController {
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
         self.viewEnglishName.addGestureRecognizer(gesture)
+        registerNotification()
     }
-
-
-    func setUpSpeechButton(){
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.layoutBottomButtonContainer, width: speechBtnWidth, height: speechBtnWidth)
-        talkButton.addTarget(self, action: #selector(speechButtonTapAction(sender:)), for: .touchUpInside)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        //setUpMicroPhoneIcon()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        //removeFloatingBtn()
     }
 
     // TODO microphone tap event
@@ -110,27 +118,68 @@ class CountryListViewController: BaseViewController {
         }
     }
 
-    // floating microphone button
-    func setUpMicroPhoneIcon () {
-        let floatingButton = UIButton()
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+    }
+    
+    @objc func hideMicrophoneButton(notification: Notification) {
+        //removeFloatingBtn()
+    }
+    
+    @objc func showMicrophoneButton(notification: Notification) {
+       //setUpMicroPhoneIcon()
+    }
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.countySlectionByVoiceNotofication, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.tapOffMicrophoneCountrySelectionVoice, object: nil)
+    }
+
+    @objc func updateCountrySelection(notification: Notification) {
+        if let country = notification.userInfo!["country"] as? String{
+            searchCountry(text: country)
+        }
+    }
+
+    deinit {
+        unregisterNotification()
+    }
+
+    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
+    /*
+    private func setUpMicroPhoneIcon() {
+        let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
+        
+        let floatingButton = UIButton(frame: CGRect(
+            x: self.window.frame.maxX - 60,
+            y: self.window.frame.maxY - bottomMergin,
+            width: width,
+            height: width)
+        )
+        
         floatingButton.setImage(UIImage(named: "mic"), for: .normal)
         floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
         floatingButton.layer.cornerRadius = width/2
         floatingButton.clipsToBounds = true
-        view.addSubview(floatingButton)
-        floatingButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButton.widthAnchor.constraint(equalToConstant: width).isActive = true
-        floatingButton.heightAnchor.constraint(equalToConstant: width).isActive = true
-        floatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailing).isActive = true
-        floatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: trailing).isActive = true
+        floatingButton.tag = countrySelectVoiceFloatingbtnTag
+        self.window.addSubview(floatingButton)
+        
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
-    // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
         //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
     }
+    
+    private func removeFloatingBtn() {
+        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
+        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
+    }
+    */
 }
 
 extension CountryListViewController : UICollectionViewDelegate{
@@ -139,6 +188,8 @@ extension CountryListViewController : UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         PrintUtility.printLog(tag: TAG, text: " didSelectItemAt clicked")
         let countryItem = countryList[indexPath.row] as CountryListItemElement
+        
+        //removeFloatingBtn()
         showLanguageListScreen(item: countryItem)
     }
 
@@ -148,6 +199,7 @@ extension CountryListViewController : UICollectionViewDelegate{
         controller.countryListItem = item
         controller.dataShowingLanguageCode = dataShowingLanguageCode
         controller.isNative = isNative
+        controller.isFromTranslation = isFromTranslation
         self.navigationController?.pushViewController(controller, animated: true);
     }
 }
@@ -199,6 +251,7 @@ extension CountryListViewController: SpeechProcessingVCDelegates{
                 let controller = storyboard.instantiateViewController(withIdentifier: "CountryWiseLanguageListViewController")as! CountryWiseLanguageListViewController
                 controller.countryListItem = countryItem
                 controller.dataShowingLanguageCode = self.dataShowingLanguageCode
+                controller.isFromTranslation = self.isFromTranslation
                 controller.isNative = self.isNative
                 self.navigationController?.pushViewController(controller, animated: true);
             }

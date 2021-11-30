@@ -13,7 +13,7 @@ protocol HomeViewModeling {
 
 class HomeViewModel: HomeViewModeling {
 
-    var isUpdatedAPI:Bindable<Bool> = Bindable(false)
+   // var isUpdatedAPI:Bindable<Bool> = Bindable(false)
     //Get Language Name from language code
     func getLanguageName() -> String? {
         let deviceLan = NSLocale.preferredLanguages[0] as String

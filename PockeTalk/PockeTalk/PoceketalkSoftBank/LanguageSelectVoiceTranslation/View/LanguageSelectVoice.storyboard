@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -102,33 +102,22 @@
                                     <constraint firstItem="5wJ-Ut-yc0" firstAttribute="top" secondItem="cHQ-jV-wOB" secondAttribute="top" id="yfX-eV-7Ai"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWb-nG-lne">
-                                <rect key="frame" x="0.0" y="806" width="414" height="90"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="pF1-gc-fnt"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XYU-4f-O0i"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="gWb-nG-lne" secondAttribute="bottom" id="5ss-ld-Ms2"/>
                             <constraint firstAttribute="trailing" secondItem="cHQ-jV-wOB" secondAttribute="trailing" id="KQx-WN-bRs"/>
                             <constraint firstItem="xh3-3a-Ruh" firstAttribute="leading" secondItem="XYU-4f-O0i" secondAttribute="leading" id="YMs-Cn-CYv"/>
                             <constraint firstItem="xh3-3a-Ruh" firstAttribute="top" secondItem="XYU-4f-O0i" secondAttribute="top" id="bmg-Wa-tUs"/>
                             <constraint firstItem="cHQ-jV-wOB" firstAttribute="top" secondItem="xh3-3a-Ruh" secondAttribute="bottom" id="eVO-iI-RTt"/>
                             <constraint firstItem="XYU-4f-O0i" firstAttribute="trailing" secondItem="xh3-3a-Ruh" secondAttribute="trailing" id="pC7-GJ-x6d"/>
                             <constraint firstItem="cHQ-jV-wOB" firstAttribute="leading" secondItem="XYU-4f-O0i" secondAttribute="leading" id="r4Q-RC-a7K"/>
-                            <constraint firstItem="XYU-4f-O0i" firstAttribute="trailing" secondItem="gWb-nG-lne" secondAttribute="trailing" id="raf-y8-MZW"/>
-                            <constraint firstItem="gWb-nG-lne" firstAttribute="leading" secondItem="XYU-4f-O0i" secondAttribute="leading" id="vGb-Ej-Sg6"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnBack" destination="2aN-TX-jdk" id="z0D-dd-cVW"/>
                         <outlet property="btnHistoryList" destination="j5a-GV-dFW" id="BQj-vG-LBw"/>
                         <outlet property="btnLangList" destination="pdz-fq-CgF" id="yz8-EU-nOo"/>
-                        <outlet property="layoutBottomBtnContainer" destination="gWb-nG-lne" id="t6V-km-W5R"/>
                         <outlet property="tabsView" destination="cHQ-jV-wOB" id="rcL-Td-2SP"/>
                         <outlet property="toolbarTitleLabel" destination="kr3-Oa-3tp" id="bhP-o6-0A0"/>
                     </connections>
@@ -197,7 +186,7 @@
                                 <rect key="frame" x="0.0" y="114" width="414" height="782"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="c4J-ah-spA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="782"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Scb-av-jiy">
                                             <size key="itemSize" width="128" height="128"/>
@@ -216,23 +205,13 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSd-0S-WRB">
-                                        <rect key="frame" x="0.0" y="632" width="414" height="150"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="Ep0-4X-VsI"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="jSd-0S-WRB" secondAttribute="bottom" id="50S-Cm-kg2"/>
+                                    <constraint firstAttribute="bottom" secondItem="c4J-ah-spA" secondAttribute="bottom" id="2eX-IJ-h7s"/>
                                     <constraint firstAttribute="trailing" secondItem="c4J-ah-spA" secondAttribute="trailing" id="5tp-EU-5eb"/>
                                     <constraint firstItem="c4J-ah-spA" firstAttribute="leading" secondItem="ylK-3Q-Ibt" secondAttribute="leading" id="5vQ-Nq-0FG"/>
                                     <constraint firstItem="c4J-ah-spA" firstAttribute="top" secondItem="ylK-3Q-Ibt" secondAttribute="top" id="AYN-5s-shi"/>
-                                    <constraint firstAttribute="trailing" secondItem="jSd-0S-WRB" secondAttribute="trailing" id="Hoh-8T-L4K"/>
-                                    <constraint firstItem="jSd-0S-WRB" firstAttribute="top" secondItem="c4J-ah-spA" secondAttribute="bottom" id="ihn-V1-l4r"/>
-                                    <constraint firstItem="jSd-0S-WRB" firstAttribute="leading" secondItem="ylK-3Q-Ibt" secondAttribute="leading" id="tx0-RW-DbO"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -251,7 +230,6 @@
                     <connections>
                         <outlet property="countryListCollectionView" destination="c4J-ah-spA" id="EE9-G9-4GX"/>
                         <outlet property="countryNameLabel" destination="gcY-Lx-zEG" id="cFg-Sm-GNq"/>
-                        <outlet property="layoutBottomButtonContainer" destination="jSd-0S-WRB" id="md8-iW-cSA"/>
                         <outlet property="viewEnglishName" destination="puh-Hg-bf9" id="8CI-aU-eiE"/>
                     </connections>
                 </viewController>
@@ -271,7 +249,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Adk-NL-W07">
-                                        <rect key="frame" x="10" y="24" width="22" height="22"/>
+                                        <rect key="frame" x="10" y="24" width="40" height="22"/>
                                         <state key="normal" image="icon_arrow_left_press.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
@@ -279,8 +257,8 @@
                                             <action selector="onBackButtonPressed:" destination="lja-Kd-kPL" eventType="touchUpInside" id="j2B-uT-rJ2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy">
-                                        <rect key="frame" x="151.5" y="24.5" width="111" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy">
+                                        <rect key="frame" x="55" y="24.5" width="304" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -307,6 +285,8 @@
                                     <constraint firstItem="szt-G5-3Iy" firstAttribute="centerX" secondItem="PHR-7n-hpU" secondAttribute="centerX" id="IaA-fy-Rm5"/>
                                     <constraint firstAttribute="height" constant="70" id="PTF-Ak-ZF6"/>
                                     <constraint firstAttribute="trailing" secondItem="pWF-3E-L8I" secondAttribute="trailing" constant="10" id="XoW-RA-hjW"/>
+                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="leading" secondItem="Adk-NL-W07" secondAttribute="trailing" constant="5" id="pE3-Nu-lEi"/>
+                                    <constraint firstItem="pWF-3E-L8I" firstAttribute="leading" secondItem="szt-G5-3Iy" secondAttribute="trailing" constant="5" id="pt9-nk-dyD"/>
                                     <constraint firstItem="Adk-NL-W07" firstAttribute="leading" secondItem="PHR-7n-hpU" secondAttribute="leading" constant="10" id="uIG-LE-Lgf"/>
                                     <constraint firstItem="pWF-3E-L8I" firstAttribute="centerY" secondItem="PHR-7n-hpU" secondAttribute="centerY" id="zTm-dd-2Ey"/>
                                 </constraints>
@@ -541,7 +521,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

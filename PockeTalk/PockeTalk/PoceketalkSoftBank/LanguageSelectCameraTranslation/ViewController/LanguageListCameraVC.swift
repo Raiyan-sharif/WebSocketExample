@@ -34,6 +34,7 @@ class LanguageListCameraVC: BaseViewController {
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
+        registerNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +60,26 @@ class LanguageListCameraVC: BaseViewController {
             }
         }
         return 0
+    }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCameralanguageSelection(notification:)), name: .cameraSelectionLanguage, object: nil)
+    }
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name: .cameraSelectionLanguage, object: nil)
+    }
+
+    deinit {
+        unregisterNotification()
+    }
+
+    @objc func updateCameralanguageSelection (notification:Notification) {
+        let selectedItemPosition = getSelectedItemPosition
+        PrintUtility.printLog(tag: TAG , text: " position \(String(describing: selectedItemPosition))")
+        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
+        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        self.langListTableView.reloadData()
     }
 }
 

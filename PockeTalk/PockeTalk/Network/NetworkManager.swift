@@ -34,6 +34,7 @@ struct NetworkManager:Network {
             codec_param : codec,
             srclang : LanguageSelectionManager.shared.bottomLanguage,
             destlang : LanguageSelectionManager.shared.topLanguage]
+        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(LanguageSelectionManager.shared.bottomLanguage) desLang \(LanguageSelectionManager.shared.topLanguage)")
         provider.request(.authkey(params: params)){ result in
             self.requestCompletion(target: .authkey(params: params), result: result) { data in
                 completion(data)
@@ -57,11 +58,12 @@ struct NetworkManager:Network {
         }
 
         let params:[String:String]  = [
-            access_key:UserDefaultsProperty<String>(authentication_key).value ?? "" ,
+            access_key:UserDefaultsProperty<String>(authentication_key).value! ,
             srclang : srcLang,
             destlang : desLang
         ]
-        PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang)")
+
+        PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang) key \(access_key)")
         provider.request(.changeLanguage(params: params)){ result in
             self.requestCompletion(target: .changeLanguage(params: params), result: result) { data in
                 completion(data)
@@ -76,21 +78,7 @@ struct NetworkManager:Network {
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 completion(successResponse.data)
             } catch let err {
-                self.makeRequestForToken { isSuccessed in
-                    if isSuccessed{
-                        self.provider.request(target) { result in
-                            do{
-                                let data = try result.get().data
-                                completion(data)
-                            }catch{
-                                print(err.localizedDescription)
-                                completion(nil)
-                            }
-                        }
-                    }else{
-                        completion(nil)
-                    }
-                }
+                completion(nil)
             }
         case let .failure(error):
             completion(nil)

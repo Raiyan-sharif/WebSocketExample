@@ -4,6 +4,17 @@
 //
 
 import UIKit
+enum SpeechProcessingScreenOpeningPurpose{
+    case HomeSpeechProcessing
+    case LanguageSelectionVoice
+    case CountrySelectionByVoice
+    case LanguageSelectionCamera
+    case PronunciationPractice
+   // case PronunciationPracticeResult
+    case HistoryScrren
+    case HistroyPronunctiation
+   // case HistroyPronuntiationResult
+}
 
 class BaseViewController: UIViewController {
     override func viewDidLoad() {
@@ -19,4 +30,10 @@ class BaseViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+}
+
+class ScreenTracker {
+    static let sharedInstance = ScreenTracker()
+    private init() { }
+    var screenPurpose: SpeechProcessingScreenOpeningPurpose = .HomeSpeechProcessing
 }

@@ -34,6 +34,7 @@ class LanguageListVC: BaseViewController {
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
+        registerNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +61,27 @@ class LanguageListVC: BaseViewController {
         }
         return 0
     }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageListNotofication, object: nil)
+    }
+
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.languageListNotofication, object: nil)
+    }
+
+    @objc func updateLanguageSelection(notification: Notification) {
+        let selectedItemPosition = getSelectedItemPosition()
+        selectedIndexPath = IndexPath(row: selectedItemPosition, section: 0)
+        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        self.langListTableView.reloadData()
+    }
+
+    deinit {
+        unregisterNotification()
+    }
+
 }
 
 

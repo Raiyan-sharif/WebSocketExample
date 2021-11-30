@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,8 +23,8 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUR-U3-uEM">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-mb-AK0">
-                            <rect key="frame" x="81" y="474" width="158" height="64"/>
+                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-mb-AK0">
+                            <rect key="frame" x="76" y="459" width="168" height="64"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASf-ZD-cIs">
                                     <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -35,7 +35,7 @@
                                     <state key="normal" image="cropCancelButton"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRi-ES-LfN">
-                                    <rect key="frame" x="94" y="0.0" width="64" height="64"/>
+                                    <rect key="frame" x="104" y="0.0" width="64" height="64"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="64" id="FdJ-mW-Tx6"/>
                                         <constraint firstAttribute="width" constant="64" id="urS-JS-i1S"/>
@@ -58,7 +58,7 @@
                 <constraint firstAttribute="bottom" secondItem="oUR-U3-uEM" secondAttribute="bottom" id="iw9-Cg-Kkk"/>
                 <constraint firstItem="oUR-U3-uEM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kDN-mM-6KE"/>
                 <constraint firstAttribute="trailing" secondItem="oUR-U3-uEM" secondAttribute="trailing" id="mL3-PM-TEd"/>
-                <constraint firstAttribute="bottom" secondItem="2fv-mb-AK0" secondAttribute="bottom" constant="30" id="pnE-5j-9E5"/>
+                <constraint firstAttribute="bottom" secondItem="2fv-mb-AK0" secondAttribute="bottom" constant="45" id="pnE-5j-9E5"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">

@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol AlertReusableDelegate {
+protocol AlertReusableDelegate:class {
     func updateFavourite(chatItemModel: HistoryChatItemModel)
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?)
     func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
@@ -26,7 +26,7 @@ class AlertReusableViewController: BaseViewController {
     let viewAlpha : CGFloat = 0.8
     var chatItemModel: HistoryChatItemModel?
     var alertViewModel: AlertReusableViewModel!
-    var delegate : AlertReusableDelegate?
+    weak var delegate : AlertReusableDelegate?
     let toastDisplayTime : Double = 2.0
     
     override func viewDidLoad() {
@@ -82,6 +82,7 @@ class AlertReusableViewController: BaseViewController {
     
     func deleteItemPressed () {
         self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
+        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
 
     func showPracticeView () {
@@ -94,10 +95,10 @@ class AlertReusableViewController: BaseViewController {
     }
 
     func reverseTranslation () {
-        DispatchQueue.main.async {
-            self.navigationController?.dismiss(animated: true, completion: nil)
+        //DispatchQueue.main.async {
+            //self.navigationController?.dismiss(animated: true, completion: nil)
             self.delegate?.transitionFromReverse(chatItemModel: self.chatItemModel)
-        }
+       // }
     }
 
     /// Dynamically update table view height
@@ -115,15 +116,7 @@ class AlertReusableViewController: BaseViewController {
             self.tableViewHeightConstraint.constant = heightOfTableView
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

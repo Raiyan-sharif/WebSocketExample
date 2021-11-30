@@ -8,6 +8,7 @@ import UIKit
 class NoInternetAlert: BaseViewController {
     /// Views
     @IBOutlet weak var noInternetAlertTableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
 
     ///Properties
     let cellHeight : CGFloat = 60.0
@@ -18,6 +19,11 @@ class NoInternetAlert: BaseViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setUpUI()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableViewHeightConstraint.constant = cellHeight * CGFloat(3)
     }
 
     func setUpUI () {
@@ -45,6 +51,21 @@ class NoInternetAlert: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    /// Dynamically update table view height
+    func updateTableViewHeight () {
+        UIView.animate(withDuration: 0, animations: {
+            self.noInternetAlertTableView.layoutIfNeeded()
+        }) { (complete) in
+            var heightOfTableView: CGFloat = 0.0
+            // Get visible cells and sum up their heights
+            let cells = self.noInternetAlertTableView.visibleCells
+            for cell in cells {
+                heightOfTableView += cell.frame.height
+            }
+            // Edit heightOfTableViewConstraint's constant to update height of table view
+            self.tableViewHeightConstraint.constant = heightOfTableView
+        }
+    }
 
 }
 
@@ -72,6 +93,7 @@ extension NoInternetAlert: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+        updateTableViewHeight()
         return defaultCell
     }
 

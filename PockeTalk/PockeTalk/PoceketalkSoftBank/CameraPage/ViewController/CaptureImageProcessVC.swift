@@ -4,6 +4,8 @@
 //
 
 import UIKit
+import CallKit
+import WXImageCompress
 
 class CaptureImageProcessVC: BaseViewController {
     
@@ -18,7 +20,8 @@ class CaptureImageProcessVC: BaseViewController {
     private let iTTServerViewModel = ITTServerViewModel()
     private let cameraHistoryViewModel = CameraHistoryViewModel()
     private let activity = ActivityIndicator()
-    
+    var socketManager = SocketManager.sharedInstance
+
     var imageView = UIImageView()
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
@@ -41,7 +44,7 @@ class CaptureImageProcessVC: BaseViewController {
     var playNative = true
     
     var isClickable = true
-
+    
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -81,15 +84,22 @@ class CaptureImageProcessVC: BaseViewController {
     
     var originalImage = UIImage()
     var image = UIImage()
-    var imageWidth = CGFloat()
-    var imageHeight = CGFloat()
+    var cropFrameWidth = CGFloat()
+    var cropFrameHeight = CGFloat()
+    var maxCropFrameHeight = CGFloat()
+    var maxCropFrameWidth = CGFloat()
+    var callObserver = CXCallObserver()
     //var image = UIImage(named: "vv")
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        socketManager.connect()
+        PrintUtility.printLog(tag: TAG, text: "screen maxCropFrameHeight: \(Int(maxCropFrameHeight)), \(Int(maxCropFrameWidth))")
+        callObserver.setDelegate(self, queue: nil)
         cameraImageView.center = self.view.center
         self.iTTServerViewModel.viewDidLoad(self)
+        self.iTTServerViewModel.socketManager = socketManager
         fromHistoryVC ? setUpViewForHistoryVC() : setUpViewForCapturedImage()
         
         scrollView.delegate = self
@@ -119,47 +129,69 @@ class CaptureImageProcessVC: BaseViewController {
         let widthInPoints = image.size.width
         PrintUtility.printLog(tag: "Captured Image heightInPoints: \(heightInPoints)", text: ", widthInPoints: \(widthInPoints)")
         
-        image = UIImage(data: image.jpeg(.medium)!)!
+        let imgData: NSData = image.jpegData(compressionQuality: 1)! as NSData
+        PrintUtility.printLog(tag: TAG, text: "Size of Original Image: \(imgData.count) bytes")
+        
+        //image = UIImage(data: image.jpeg(.highest)!)!
+        image = image.wxCompress()
+        
+        let imgData1: NSData = image.jpegData(compressionQuality: 1)! as NSData
+        PrintUtility.printLog(tag: TAG, text: "Size of Compressed Image: \(imgData1.count) bytes")
         
         let heightInPoints1 = image.size.height
         let widthInPoints1 = image.size.width
         PrintUtility.printLog(tag: "Compressed Image heightInPoints: \(heightInPoints1)", text: ", widthInPoints: \(widthInPoints1)")
         
+        let screenRect = UIScreen.main.bounds
+        let screenWidth = screenRect.size.width
+        let screenHeight = screenRect.size.height
+        
+        PrintUtility.printLog(tag: TAG, text: "screen Width: \(screenWidth), \(screenHeight)")
+        
         //image = resizeImage(image: image)
         var resizeWidth: Int = Int(image.size.width)
         var resizeHeight: Int = Int(image.size.height)
-        if(image.size.width > CGFloat(IMAGE_WIDTH)) {
-            resizeWidth = Int(IMAGE_WIDTH)
+        
+        if(image.size.width > CGFloat(screenWidth)) {
+            resizeWidth = Int(screenWidth)
         }
         
-        if(image.size.height > CGFloat(IMAGE_HEIGHT)){
-            resizeHeight = Int(IMAGE_HEIGHT)
+        if(image.size.height > CGFloat(screenHeight)){
+            resizeHeight = Int(screenHeight)
         }
-        //image = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
         
+        PrintUtility.printLog(tag: TAG, text: "screen >>>: \(resizeWidth), \(resizeHeight)")
+        if Int(cropFrameWidth) < Int(maxCropFrameWidth) {
+            resizeWidth = Int(cropFrameWidth)
+        }
+        if Int(cropFrameHeight) < Int(maxCropFrameHeight){
+            resizeHeight = Int(cropFrameHeight)
+        }
+        
+        PrintUtility.printLog(tag: TAG, text: "screen: \(resizeWidth), \(resizeHeight)")
+        let image1 = resizeImage(image: image, targetSize: CGSize.init(width: resizeWidth, height: resizeHeight))   // resized bitmap
+        //UIImageWriteToSavedPhotosAlbum(image1, nil, nil, nil)
         let heightInPoints2 = image.size.height
         let widthInPoints2 = image.size.width
-        PrintUtility.printLog(tag: "Resized Image heightInPoints: \(heightInPoints2)", text: ", widthInPoints: \(widthInPoints2)")
         
-        if imageWidth>self.view.frame.width {
-            imageWidth = self.view.frame.width
-        }
-        let image1 = resizeImage(image: image, targetSize: CGSize(width: imageWidth, height: imageHeight))
         PrintUtility.printLog(tag: "Resized Image1 heightInPoints: \(image1.size.height)", text: ", widthInPoints: \(image1.size.width)")
-        imageView.image = image1
-        self.iTTServerViewModel.capturedImage = image1
         
-        imageView.frame = CGRect(x: 0, y: 0, width: imageWidth  , height:  imageHeight)
+        let imgData2: NSData = image.jpegData(compressionQuality: 1)! as NSData
+        PrintUtility.printLog(tag: TAG, text: "Size of Resized Image: \(imgData2.count) bytes")
+        
+        //        imageWidth = imageWidth
+        //        imageHeight = imageHeight * 3
+        let image2 = resizeImage(image: image, targetSize: CGSize(width: cropFrameWidth, height: cropFrameHeight))
+        PrintUtility.printLog(tag: TAG, text: "screen Frame imageWidth: \(Int(cropFrameWidth)), imageHeight: \(Int(cropFrameHeight))")        //UIImageWriteToSavedPhotosAlbum(image2, nil, nil, nil)
+        imageView.image = image1
+        
+        self.iTTServerViewModel.capturedImage = image1
+        self.iTTServerViewModel.imageWidth = cropFrameWidth
+        self.iTTServerViewModel.imageHeight = cropFrameHeight
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: cropFrameWidth  , height:  cropFrameHeight)
         cameraImageView.addSubview(imageView)
         setUpImageViewConstraint()
-        
-        //self.cameraImageView.contentMode = .scaleAspectFit
-        
-        //        GoogleCloudOCR().detect(from: image) { ocrResult in
-        //            guard let ocrResult = ocrResult else {
-        //                fatalError("Did not recognize any text in this image")
-        //            }
-        //        }
         
         self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
             
@@ -266,7 +298,7 @@ class CaptureImageProcessVC: BaseViewController {
             if (x.contains(touchpoint)) {
                 
                 if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
-                                        
+                    
                     let id = try? CameraHistoryDBModel().getMaxId()
                     
                     let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) :  CameraHistoryDBModel().getTranslatedData(id: Int64(id!))
@@ -309,20 +341,20 @@ class CaptureImageProcessVC: BaseViewController {
         
         let languageManager = LanguageSelectionManager.shared
         if(languageManager.hasTtsSupport(languageCode: lang)){
-                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(lang)")
+            PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(lang)")
             PrintUtility.printLog(tag: "Translate ", text: "lang: \(lang) text: \(text)" )
-
+            
             getTtsValue(langCode: lang)
             ttsResponsiveView.checkSpeakingStatus()
             ttsResponsiveView.setRate(rate: rate)
-            ttsResponsiveView.TTSPlay(voice: voice,text: text )
-            }else{
-                PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(lang)")
-                let seconds = 1.0
-                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                    self.stopTTS()
-                }
+            ttsResponsiveView.TTSPlay(voice: voice,text: text.components(separatedBy: .newlines).joined())
+        }else{
+            PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(lang)")
+            let seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.stopTTS()
             }
+        }
     }
     func stopTTS(){
         ttsResponsiveView.stopTTS()
@@ -334,7 +366,7 @@ class CaptureImageProcessVC: BaseViewController {
         self.voice = item.voice
         self.rate = item.rate
         PrintUtility.printLog(tag: "getTtsValue ", text: "voice: \(voice) rate: \(rate)" )
-
+        
     }
     
     func showErrorAlert(message: String){
@@ -347,10 +379,11 @@ class CaptureImageProcessVC: BaseViewController {
     }
     
     open var onCompletion: CameraViewCompletion?
-
+    
     private func startConfirmController() {
         PrintUtility.printLog(tag: "original Image", text: "\(originalImage)")
         let vc = ImageCroppingViewController(image: originalImage, croppingParameters: CropUtils(enabled: true, resizeable: true, dragable: true, minimumSize: CGSize(width: 80, height: 80)))
+        vc.fromImageProcessVC = true
         vc.onCompletion = { [weak self] image, asset in
             defer {
                 self?.dismiss(animated: true, completion: nil)
@@ -367,14 +400,11 @@ class CaptureImageProcessVC: BaseViewController {
         
         let transition = CATransition()
         transition.duration = 0.4
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromLeft
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromRight
         self.navigationController?.view.layer.add(transition, forKey: kCATransition)
         self.navigationController?.pushViewController(vc, animated: false)
     }
-
-
-    
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
@@ -540,7 +570,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             //backButton.isUserInteractionEnabled = false
             setupBackButton(view)
         }
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -549,7 +579,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        callObserver.setDelegate(self, queue: nil)
         removeFloatingButton()
     }
     
@@ -563,7 +593,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     @objc func modeSwitchButtonEventListener(_ button: UIButton) {
-        
+        socketManager.connect()
         let id = try? CameraHistoryDBModel().getMaxId()
         if !fromHistoryVC {
             self.iTTServerViewModel.historyID = Int64(id!)
@@ -589,9 +619,14 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 } else {
                     if Reachability.isConnectedToNetwork() {
                         showLoader()
-                        if let detectedData = self.iTTServerViewModel.detectedJSON {
-                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: fromHistoryVC)
-                            UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                        PrintUtility.printLog(tag: "Mode switch button action", text: "1111")
+                        showLoader()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            if let detectedData = self.iTTServerViewModel.detectedJSON {
+                                self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: self.fromHistoryVC)
+                                UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
+                            }
+
                         }
                     } else {
                         GlobalMethod.showNoInternetAlert()
@@ -611,10 +646,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 } else {
                     if Reachability.isConnectedToNetwork() {
                         showLoader()
-                        if let detectedData = self.iTTServerViewModel.detectedJSON {
-                            self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: fromHistoryVC)
-                            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            if let detectedData = self.iTTServerViewModel.detectedJSON {
+                                self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: self.fromHistoryVC)
+                                UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                            }
                         }
+                        
                     } else {
                         GlobalMethod.showNoInternetAlert()
                     }
@@ -627,12 +665,17 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func backButtonEventListener(_ button: UIButton) {
         if isClickable {
             if fromHistoryVC {
-                self.navigationController?.popViewController(animated: true)
+                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.popViewController(animated: false)
             } else {
                 let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "\(viewControllers)")
                 for viewController in viewControllers {
-                    if viewController is CameraViewController {
-                        self.navigationController?.popToViewController(viewController, animated: true)
+                    if viewController is HomeViewController {
+                        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                        self.view.window!.layer.add(transition, forKey: kCATransition)
+                        self.navigationController?.popToViewController(viewController, animated: false)
                     }
                 }
             }
@@ -688,6 +731,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
     }
     
     func hideLoader() {
+        socketManager.disconnect()
         activity.hideLoading()
         isClickable = true
     }
@@ -732,9 +776,9 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func shareTranslation(){
         let sharedData = "Translated language: \(gNativeLanguage)\n" + "\(toLanguage) \n\n" +
         "Original language: \(fromLanguage)\n" + "\(gTranslateLanguage)"
-
+        
         let dataToSend = [sharedData]
-
+        
         PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
         let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
@@ -779,4 +823,42 @@ extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
     func onVoiceEnd() { }
     
     func onReady() {}
+}
+
+extension CaptureImageProcessVC: CXCallObserverDelegate{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        PrintUtility.printLog(tag: TAG, text: "callObserver")
+        stopTTS()
+        if call.hasConnected {
+            stopTTS()
+        }
+        
+        if call.isOutgoing {
+            stopTTS()
+        }
+        
+        if call.hasEnded {
+            self.dismiss(animated: false, completion: nil)
+        }
+        
+        if call.isOnHold {
+            stopTTS()
+        }
+        
+        //        TtsAlertController.ttsResponsiveView.stopTTS()
+    }
+}
+
+extension CaptureImageProcessVC : SocketManagerDelegate{
+    func faildSocketConnection(value: String) {
+        PrintUtility.printLog(tag: TAG, text: value)
+    }
+    
+    func getText(text: String) {
+        //speechProcessingVM.setTextFromScoket(value: text)
+        PrintUtility.printLog(tag: "TtsAlertController Retranslation: ", text: text)
+    }
+    
+    func getData(data: Data) {}
+    
 }

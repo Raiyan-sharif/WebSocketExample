@@ -27,10 +27,24 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var voice : String = ""
     var rate : String = "1.0"
     var isSpeaking : Bool = false
+    var isFromHistoryTTS = false
     
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
         LanguageSelectionManager.shared.tempSourceLanguage = nil
+        NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":"pronuntiationText"])
+        if ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice{
+            NotificationCenter.default.post(name: .ttsNotofication, object: nil)
+            ScreenTracker.sharedInstance.screenPurpose  = .HomeSpeechProcessing
+        }else if ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation{
+            if isFromHistoryTTS{
+                NotificationCenter.default.post(name: .ttsNotofication, object: nil)
+                ScreenTracker.sharedInstance.screenPurpose  = .HistoryScrren
+            }else{
+                NotificationCenter.default.post(name: .historyNotofication, object: nil)
+            }
+        }
+
         if isFromHistory {
             if let historyVC = self.presentingViewController?.presentingViewController  as? PronunciationPracticeViewController{
                 if(historyVC.presentingViewController != nil){
@@ -45,12 +59,13 @@ class PronunciationPracticeResultViewController: BaseViewController {
                 }
             }
         } else {
+            //self.remove(asChildViewController: self)
             self.delegate?.dismissResultHome()
-            if(self.navigationController != nil){
-                self.navigationController?.popViewController(animated: true)
-            }else{
-                self.dismiss(animated: true, completion: nil)
-            }
+//            if(self.navigationController != nil){
+//                self.navigationController?.popViewController(animated: true)
+//            }else{
+//                self.dismiss(animated: true, completion: nil)
+//            }
         }
     }
 
@@ -69,17 +84,38 @@ class PronunciationPracticeResultViewController: BaseViewController {
         ttsResponsiveView.ttsResponsiveViewDelegate = self
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
-        
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        }
         UserDefaultsProperty<String>(kTempoControlSpeed).value = TempoControlSpeedType.standard.rawValue
+        registerNotification()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let `self` = self else { return }
+            let pronumtiationValue = PronuntiationValue(practiceText:"" , orginalText: self.orginalText, languageCcode:self.languageCode)
+            NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":pronumtiationValue])
+        }
     }
-    
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePronuntiationPacticeResult(notification:)), name:.pronuntiationResultNotification, object: nil)
+    }
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.pronuntiationResultNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
+    }
+
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
+    }
+
+    @objc func updatePronuntiationPacticeResult(notification: Notification) {
+//        if let value = notification.userInfo!["value"] as? PronuntiationValue{
+//            self.orginalText = value.orginalText
+//            self.practiceText = value.practiceText
+//            self.languageCode = value.languageCcode
+//            showResultView()
+//        }
+        stopTTS()
+        remove(asChildViewController: self)
     }
 
     // Initial UI set up
@@ -108,8 +144,8 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     // floating microphone button
     func setUpMicroPhoneIcon () {
-        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+//        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
 
     // TODO microphone tap event
@@ -122,7 +158,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
                     dict["vc"] = "PronunciationPracticeResultViewController"
                     dict["text"] = self.orginalText
                     dict["langCode"] = self.languageCode
-                    NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
+                   // NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
                     if(self.navigationController != nil){
                         self.navigationController?.popViewController(animated: true)
                     }else{
@@ -162,7 +198,11 @@ class PronunciationPracticeResultViewController: BaseViewController {
             playTTS()
         }
     }
-    
+
+    deinit {
+        unregisterNotification()
+    }
+
     func playTTS(){
         ttsResponsiveView.checkSpeakingStatus()
         ttsResponsiveView.setRate(rate: rate)

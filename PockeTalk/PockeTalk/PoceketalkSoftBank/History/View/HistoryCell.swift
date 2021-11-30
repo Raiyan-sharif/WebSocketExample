@@ -18,7 +18,11 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var childView: UIView!
     @IBOutlet weak var containerView: UIView!
-
+    @IBOutlet weak var bottomStackViewOfLabel: NSLayoutConstraint!
+    @IBOutlet weak var favouriteRightBarBottom: NSLayoutConstraint!
+    @IBOutlet weak var topStackViewOfLabel: NSLayoutConstraint!
+    @IBOutlet weak var favouriteRightBarTop: NSLayoutConstraint!
+    
     //forces the system to do one layout pass
     var isHeightCalculated: Bool = false
     var initialColor:UIColor!
@@ -36,10 +40,10 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         favView.backgroundColor = .clear
         containerView.layer.shadowRadius = 10.0
         containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.2
+        containerView.layer.shadowOpacity = 0.3
         containerView.layer.shadowOffset = CGSize(width: 0, height: -1)
-//        containerView.dropShadow(color: .black, opacity: 0.5, offSet: CGSize(width: 0, height: 5), radius: 10, scale: true)
-        childView.layer.cornerRadius = 20
+        containerView.layer.cornerRadius = 30
+        childView.layer.cornerRadius = 30
         childView.center = self.center
         favView.layer.cornerRadius = 2
         containerView.backgroundColor = initialColor
@@ -128,11 +132,13 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
     
     func showAsFavourite(){
         favView.isHidden = false
+        favImagView.layer.cornerRadius = 30
         favImagView.tintColor = .yellow
-        favView.backgroundColor = .orange
+        favView.backgroundColor = UIColor._mangoColor()
     }
     func hideFavourite(){
         favView.isHidden = true
+        favImagView.layer.cornerRadius = 30
         favImagView.tintColor = .white
         favView.backgroundColor = .white
     }
@@ -168,4 +174,3 @@ class PanDirectionGestureRecognizer: UIPanGestureRecognizer {
         }
     }
 }
-

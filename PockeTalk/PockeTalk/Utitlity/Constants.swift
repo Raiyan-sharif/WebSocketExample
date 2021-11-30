@@ -23,6 +23,10 @@ let kTtsNotAvailableTrailingConstant : CGFloat = 50.0
 let kUnselectedLanguageTrailingConstant : CGFloat = 10.0
 let kMarqueeLabelTrailingBufferForLanguageScreen : CGFloat = 50.0
 let kMarqueeLabelScrollingSpeenForLanguageScreen : CGFloat = 30.0
+let CameraCropControllerMargin: CGFloat = 12.5
+let kScreenTransitionTime: Double = 0.5
+let kFadeAnimationTransitionTime: TimeInterval = 0.35
+let viewsAlphaValue: CGFloat = 0.0
 
 
 //MARK: - Link
@@ -176,3 +180,10 @@ let speakingListener = "speakingListener"
 // TO DO : This will update/change in future
 let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
+let imeiCode = "862793051345020"
+
+//View Tag
+let languageSelectVoiceFloatingbtnTag = 1101
+let countrySelectVoiceFloatingbtnTag = 1102
+let languageSelectVoiceCameraFloatingBtnTag = 1103
+let ttsAlertViewTag = 11223

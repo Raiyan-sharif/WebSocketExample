@@ -82,7 +82,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
         FontUtility.setFontSize(selectedFont: selecteText)
         tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: false, completion: nil)
         }
     }
 
@@ -123,7 +123,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
 
     // Cancel event
     @objc func cancelEvent (sender:UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
 
 }

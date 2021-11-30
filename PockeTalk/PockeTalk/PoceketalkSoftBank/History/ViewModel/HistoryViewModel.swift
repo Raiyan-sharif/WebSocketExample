@@ -12,12 +12,20 @@ protocol HistoryViewModeling{
     func addItem(_ chatItem: ChatEntity)
     func removeItem(_ idx: Int)
     func replaceItem(_ chatItem: ChatEntity, _ idx: Int)
+    func getData()
 }
 
 class HistoryViewModel:BaseModel, HistoryViewModeling {
     var items: Bindable<[BaseEntity]> = Bindable([])
     var chatDataHelper = ChatDBModel()
     override init() {
+        do{
+            let values =  try chatDataHelper.pickListedItems(isFavorite: false)
+            items.value = values ?? []
+        } catch {}
+    }
+    
+    func getData() {
         do{
             let values =  try chatDataHelper.pickListedItems(isFavorite: false)
             items.value = values ?? []

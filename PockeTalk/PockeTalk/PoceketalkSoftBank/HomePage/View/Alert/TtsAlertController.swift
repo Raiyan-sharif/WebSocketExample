@@ -5,13 +5,15 @@
 
 import UIKit
 import WebKit
+import CallKit
+
 protocol TtsAlertControllerDelegate : class{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
     func dismissed()
 }
-protocol Pronunciation {
+protocol Pronunciation:class {
     func dismissPro(dict:[String : String])
 }
 
@@ -19,12 +21,15 @@ protocol CurrentTSDelegate : class {
     func passCurrentTSValue (currentTS : Int)
 }
 
-class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation {
+class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation{
+  
+    
     func dismissPro(dict:[String : String]) {
-        NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
+        //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
         self.dismiss(animated: true, completion: nil)
     }
     private let TAG:String = "TtsAlertController"
+    var callObserver = CXCallObserver()
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
     @IBOutlet weak var fromTranslateLabel: UILabel!
@@ -49,7 +54,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var chatEntity : ChatEntity?
     let cornerRadius : CGFloat = 15
     let fontSize : CGFloat = FontUtility.getFontSize()
-    let reverseFontSize : CGFloat = FontUtility.getBiggerFontSize()
+    let biggerFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
    weak var delegate : SpeechControllerDismissDelegate?
@@ -75,15 +80,17 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var isRecreation: Bool = false
     var isFromSpeechProcessing = false
     weak var currentTSDelegate : CurrentTSDelegate?
-    weak var speechProDismissDelegateFromTTS : SpeechProcessingDismissDelegate?
+    //weak var speechProDismissDelegateFromTTS : SpeechProcessingDismissDelegate?
     var isReverse = false
     
     private var socketManager = SocketManager.sharedInstance
     private var speechProcessingVM : SpeechProcessingViewModeling!
+    private var languageHasUpdated = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        callObserver.setDelegate(self, queue: nil)
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
         self.getTtsValue()
@@ -94,14 +101,22 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         bindData()
         //SocketManager.sharedInstance.connect()
 //        socketManager.socketManagerDelegate = self
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        }
+
         if(!isSpeaking){
             playTTS()
         }
+        registerNotification()
+    }
+
+    func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name: .ttsNotofication, object: nil)
+    }
+
+
+    func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.ttsNotofication, object: nil)
+        NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -116,9 +131,20 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        callObserver.setDelegate(nil, queue: nil)
+        stopTTS()
+    }
+    
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
     }
+
+    @objc func removeChild(notification: Notification) {
+        if let vc = view.subviews.last?.parentViewController{
+                remove(asChildViewController: vc)
+            }
+        }
     
     /// Initial UI set up
     func setUpUI () {
@@ -130,7 +156,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         
         //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
         self.toLanguageLabel.textAlignment = .center
-        self.toLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.toLanguageLabel.font = UIFont.systemFont(ofSize: biggerFontSize, weight: .regular)
         self.toLanguageLabel.textColor = UIColor._blackColor()
         self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
         self.fromLanguageLabel.sizeToFit()
@@ -153,8 +179,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         if(LanguageSelectionManager.shared.isArrowUp){
             changeTranslationButton.image(for: UIControl.State.normal)
         }
-        talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-        talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+//        talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
+//        talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
         setLanguageDirection()
         longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         longTapGesture!.minimumPressDuration = 0.2
@@ -284,6 +310,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     
     @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
+        languageHasUpdated = true
         if LanguageSelectionManager.shared.isArrowUp{
             LanguageSelectionManager.shared.isArrowUp = false
         }else{
@@ -313,10 +340,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         let languageManager = LanguageSelectionManager.shared
         let language = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem?.textTranslatedLanguage)!)
         if languageManager.hasSttSupport(languageCode: language!.code){
-            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code)")
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport has support \(language?.code ?? "")")
             populateData(withPronounciation: true)
         }else{
-            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code)")
+            PrintUtility.printLog(tag: "TAG", text: "checkSttSupport not support \(language?.code ?? "")")
             populateData(withPronounciation: false)
         }
         vc.items = self.itemsToShowOnContextMenu
@@ -350,24 +377,36 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
-        self.dismissPopUp()
+        self.zoomOutDismissAnimation()
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
-        self.dismissPopUp()
+        self.zoomOutDismissAnimation()
     }
+    
+    private func zoomOutDismissAnimation() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
+        }) { _ in
+            self.dismissPopUp()
+        }
+    }
+    
     func dismissPopUp(){
         stopTTS()
         self.stopAnimation()
-        if(isFromSpeechProcessing){
-            NotificationCenter.default.post(name: .languageSelectionArrowNotification, object: nil)
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-               appDelegate.window?.rootViewController?.dismiss(animated: false, completion: nil)
-               (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: false)
+        if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+            if languageHasUpdated{
+                 NotificationCenter.default.post(name: .languageSelectionArrowNotification, object: nil)
+                languageHasUpdated = false
             }
+            remove(asChildViewController: self)
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
+        }else if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
+            remove(asChildViewController: self)
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }else{
-            self.ttsAlertControllerDelegate?.dismissed()
-            self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }
         
     }
@@ -383,13 +422,13 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
-            controller.speechProcessingDismissDelegate = self
+            //controller.speechProcessingDismissDelegate = self
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
             let currentTs = GlobalMethod.getCurrentTimeStamp(with: 0)
             self.currentTSDelegate?.passCurrentTSValue(currentTS: currentTs)
-            NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
+            //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -418,6 +457,10 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             }
         }
     }
+    deinit {
+        stopTTS()
+        unregisterNotification()
+    }
 
     func stopTTS(){
         ttsResponsiveView.stopTTS()
@@ -425,22 +468,25 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 
     func shareData(chatItemModel: HistoryChatItemModel?){
-        let languageManager = LanguageSelectionManager.shared
-        let tranlatedLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textTranslatedLanguage)!)?.englishName ?? ""
-        let tranlatedText = chatItemModel?.chatItem?.textTranslated ?? ""
+        if Reachability.isConnectedToNetwork() {
+            let languageManager = LanguageSelectionManager.shared
+            let tranlatedLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textTranslatedLanguage)!)?.englishName ?? ""
+            let tranlatedText = chatItemModel?.chatItem?.textTranslated ?? ""
 
-        let nativeLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textNativeLanguage)!)?.englishName ?? ""
-        let nativeText = chatItemModel?.chatItem?.textNative ?? ""
+            let nativeLang = languageManager.getLanguageCodeByName(langName: (chatItemModel?.chatItem!.textNativeLanguage)!)?.englishName ?? ""
+            let nativeText = chatItemModel?.chatItem?.textNative ?? ""
 
-        let sharedData = "Translated language: \(tranlatedLang)\n" + "\(tranlatedText) \n\n" +
-        "Original language: \(nativeLang)\n" + "\(nativeText)"
+            let sharedData = "Translated language: \(tranlatedLang)\n" + "\(tranlatedText) \n\n" +
+            "Original language: \(nativeLang)\n" + "\(nativeText)"
 
-        let dataToSend = [sharedData]
-
-        PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
-        let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        self.present(activityViewController, animated: true, completion: nil)
+            let dataToSend = [sharedData]
+            PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
+            let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        } else {
+            GlobalMethod.showNoInternetAlert(in: self)
+        }
     }
     
     func bindData(){
@@ -485,11 +531,12 @@ extension TtsAlertController : RetranslationDelegate {
         socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                let nativeText = self!.chatItemModel?.chatItem!.textNative
-                let nativeLangName = self!.chatItemModel?.chatItem!.textNativeLanguage!
+                let nativeText = self?.chatItemModel?.chatItem!.textNative
+                let nativeLangName = self?.chatItemModel?.chatItem!.textNativeLanguage!
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: selectedLanguage)
-                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                self?.socketManager.sendTextData(text: textFrameData, completion: nil)
+                ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
             }
         }else {
             GlobalMethod.showNoInternetAlert()
@@ -520,7 +567,17 @@ extension TtsAlertController : AlertReusableDelegate {
         vc.delegate = self
         vc.isFromHistory = isFromHistory
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+//        let text = chatItemModel!.chatItem!.textTranslated!
+//        let languageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: (chatItemModel!.chatItem!.textTranslatedLanguage)!)
+
+        if  ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
+            vc.isFromHistoryTTS = true
+        }
+
+        add(asChildViewController: vc, containerView:self.view, animation: nil)
+        ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren ? .HistroyPronunctiation :.PronunciationPractice
+        //self.present(vc, animated: true, completion: nil)
+
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
@@ -529,12 +586,15 @@ extension TtsAlertController : AlertReusableDelegate {
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
-        if(self.navigationController != nil){
-            self.navigationController?.pushViewController(controller, animated: true)
-        }else{
-            controller.modalPresentationStyle = .fullScreen
-            self.present(controller, animated: true, completion: nil)
-        }
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        add(asChildViewController: controller, containerView: view, animation: transition)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+//        if(self.navigationController != nil){
+//            self.navigationController?.pushViewController(controller, animated: true)
+//        }else{
+//            controller.modalPresentationStyle = .fullScreen
+//            self.present(controller, animated: true, completion: nil)
+//        }
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
@@ -581,7 +641,7 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
 
 extension TtsAlertController : SpeechProcessingDismissDelegate {
     func showTutorial() {
-        self.speechProDismissDelegateFromTTS?.showTutorial()
+       // self.speechProDismissDelegateFromTTS?.showTutorial()
     }
 }
 
@@ -597,4 +657,28 @@ extension TtsAlertController : SocketManagerDelegate{
     
     func getData(data: Data) {}
     
+}
+
+extension TtsAlertController: CXCallObserverDelegate{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        PrintUtility.printLog(tag: TAG, text: "callObserver")
+        stopTTS()
+        if call.hasConnected {
+            stopTTS()
+        }
+
+           if call.isOutgoing {
+               stopTTS()
+           }
+
+           if call.hasEnded {
+               self.dismiss(animated: false, completion: nil)
+           }
+
+           if call.isOnHold {
+               stopTTS()
+             }
+        
+//        TtsAlertController.ttsResponsiveView.stopTTS()
+    }
 }

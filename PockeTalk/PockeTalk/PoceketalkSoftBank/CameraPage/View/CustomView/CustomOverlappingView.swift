@@ -5,7 +5,7 @@
 
 import UIKit
 
-protocol CropOverlappingViewDelegates {
+protocol CropOverlappingViewDelegates: class {
     func didMoveOverlappingView(newFrame: CGRect)
 }
 
@@ -15,9 +15,9 @@ class CustomOverlappingView: UIView {
                            UIButton(),
                            UIButton(),
                            UIButton()]
-    private let horizontalVerticalcrossOverView = UIView()
+    let horizontalVerticalcrossOverView = UIView()
 
-    private var cornerButtonWidth: CGFloat = 50
+    private var cornerButtonWidth: CGFloat = 70
 
     private let cornerLineWidth: CGFloat = 3
     private var cornerLineLength: CGFloat {
@@ -34,13 +34,14 @@ class CustomOverlappingView: UIView {
     var isResizable = false
     var isdragable = false
     var minCropArea = CGSize.zero
-    var delegate: CropOverlappingViewDelegates?
+    weak var delegate: CropOverlappingViewDelegates?
 
     var croppedRect: CGRect {
-        return CGRect(x: frame.origin.x + outterGap,
-                      y: frame.origin.y + outterGap,
-                      width: frame.size.width - 2 * outterGap,
-                      height: frame.size.height - 2 * outterGap)
+        // Visible area with border use as crop rectangle
+        return CGRect(x: frame.origin.x + outterGap+CameraCropControllerMargin,
+                      y: frame.origin.y + outterGap+CameraCropControllerMargin,
+                      width: ((frame.size.width-(CameraCropControllerMargin * 2)) - 2 * outterGap),
+                      height: ((frame.size.height-(CameraCropControllerMargin * 2)) - 2 * outterGap))
     }
 
     internal override init(frame: CGRect) {
@@ -69,6 +70,7 @@ class CustomOverlappingView: UIView {
         rectangleCornerButtons.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
+            //$0.backgroundColor = .clear
 
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dragWith(dragableGesture:)))
             $0.addGestureRecognizer(panGesture)
@@ -103,13 +105,13 @@ class CustomOverlappingView: UIView {
         horizontalVerticalcrossOverView.layer.borderWidth = 1
         horizontalVerticalcrossOverView.layer.borderColor = UIColor.white.cgColor
 
-        horizontalVerticalcrossOverView.topAnchor.constraint(equalTo: topAnchor, constant: outterGap).isActive = true
-        horizontalVerticalcrossOverView.leftAnchor.constraint(equalTo: leftAnchor, constant: outterGap).isActive = true
-        horizontalVerticalcrossOverView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -outterGap).isActive = true
-        horizontalVerticalcrossOverView.rightAnchor.constraint(equalTo: rightAnchor, constant: -outterGap).isActive = true
+        horizontalVerticalcrossOverView.topAnchor.constraint(equalTo: topAnchor, constant: CameraCropControllerMargin).isActive = true
+        horizontalVerticalcrossOverView.leftAnchor.constraint(equalTo: leftAnchor, constant: CameraCropControllerMargin).isActive = true
+        horizontalVerticalcrossOverView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -CameraCropControllerMargin).isActive = true
+        horizontalVerticalcrossOverView.rightAnchor.constraint(equalTo: rightAnchor, constant: -CameraCropControllerMargin).isActive = true
 
         drawCornerLines()
-        loadPrecisionLines()
+        //loadPrecisionLines()
     }
 
     private func drawCornerLines() {
@@ -252,6 +254,16 @@ class CustomOverlappingView: UIView {
                 delegate?.didMoveOverlappingView(newFrame: resizedFrame)
             }
         }
+        
+        if dragableGesture.state == .ended {
+            for subview in horizontalVerticalcrossOverView.subviews {
+                subview.removeFromSuperview()
+            }
+            drawCornerLines()
+        } else {
+            loadPrecisionLines()
+        }
+
     }
     
     private func loadPrecisionLines() {

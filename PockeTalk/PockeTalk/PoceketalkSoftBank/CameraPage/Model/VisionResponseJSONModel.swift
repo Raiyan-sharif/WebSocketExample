@@ -7,17 +7,28 @@ import Foundation
 
 // MARK: - GoogleCloudOCRResponse
 struct GoogleCloudOCRResponse: Codable {
-    let responses: [Response]?
+    let result_code: String
+    let ocr_response: Ocr_Response
+
+    enum CodingKeys: String, CodingKey {
+        case result_code
+        case ocr_response
+    }
+}
+
+// MARK: - OcrResponse
+struct Ocr_Response: Codable {
+    let responses: [Response]
 }
 
 // MARK: - Response
 struct Response: Codable {
-    let fullTextAnnotation: FullTextAnnotation?
-    let textAnnotations: [TextAnnotation]?
+    let full_text_annotation: Full_Text_Annotation?
+    let text_annotations: [Text_Annotation]?
 }
 
 // MARK: - FullTextAnnotation
-struct FullTextAnnotation: Codable {
+struct Full_Text_Annotation: Codable {
     let pages: [Page]?
     let text: String?
 }
@@ -32,8 +43,8 @@ struct Page: Codable {
 
 // MARK: - Block
 struct Block: Codable {
-    let blockType: String?
-    let boundingBox: Bounding?
+    let block_type: String?
+    let bounding_box: Bounding?
     let confidence: Double?
     let paragraphs: [Paragraph]?
     let property: ParagraphProperty?
@@ -53,7 +64,7 @@ struct Vertex: Codable {
 
 // MARK: - Paragraph
 struct Paragraph: Codable {
-    let boundingBox: Bounding?
+    let bounding_box: Bounding?
     let confidence: Double?
     let property: ParagraphProperty?
     let words: [Word]?
@@ -61,19 +72,19 @@ struct Paragraph: Codable {
 
 // MARK: - ParagraphProperty
 struct ParagraphProperty: Codable {
-    let detectedLanguages: [PurpleDetectedLanguage]?
+    let detected_languages: [PurpleDetectedLanguage]?
 
 }
 
 // MARK: - PurpleDetectedLanguage
 struct PurpleDetectedLanguage: Codable {
     let confidence: Double?
-    let languageCode: String?
+    let language_code: String?
 }
 
 // MARK: - Word
 struct Word: Codable {
-    let boundingBox: Bounding?
+    let bounding_box: Bounding?
     let confidence: Double?
     let property: ParagraphProperty?
     let symbols: [Symbol]?
@@ -81,12 +92,12 @@ struct Word: Codable {
 
 // MARK: - FluffyDetectedLanguage
 struct FluffyDetectedLanguage: Codable {
-    let languageCode: String?
+    let language_code: String?
 }
 
 // MARK: - Symbol
 struct Symbol: Codable {
-    let boundingBox: Bounding?
+    let bounding_box: Bounding?
     let confidence: Double?
     let property: SymbolProperty?
     let text: String?
@@ -94,8 +105,8 @@ struct Symbol: Codable {
 
 // MARK: - SymbolProperty
 struct SymbolProperty: Codable {
-    let detectedLanguages: [FluffyDetectedLanguage]?
-    let detectedBreak: DetectedBreak?
+    let detected_languages: [FluffyDetectedLanguage]?
+    let detected_break: DetectedBreak?
 }
 
 //// MARK: - DetectedBreak
@@ -103,14 +114,14 @@ struct DetectedBreak: Codable {
     let type: String?
 }
 // MARK: - TextAnnotation
-struct TextAnnotation: Codable {
-    let boundingPoly: Bounding?
-    let textAnnotationDescription: String?
+struct Text_Annotation: Codable {
+    let bounding_poly: Bounding?
+    let text_Annotation_Description: String?
     let locale: String?
 
     enum CodingKeys: String, CodingKey {
-        case boundingPoly
-        case textAnnotationDescription = "description"
+        case bounding_poly
+        case text_Annotation_Description = "description"
         case locale
     }
 }

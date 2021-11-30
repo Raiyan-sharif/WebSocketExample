@@ -15,33 +15,42 @@ class CountryWiseLanguageListViewController: BaseViewController {
     var countryName = ""
     var selectedIndexPath: IndexPath?
     var isNative: Int = 0
+    var isFromTranslation = false
+    let INVALID_SELECTION = -1
 
     var countryListItem: CountryListItemElement?
     var languageList = [LanguageItem]()
 
     @IBAction func onOkButtonPressed(_ sender: Any) {
+        if getSelectedItemPosition() == INVALID_SELECTION {
+            PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
+            return
+        }
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
-        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
-        if isNative == LanguageName.bottomLang.rawValue{
-            LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
+
+        if isFromTranslation{
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+            NotificationCenter.default.post(name: .updateTranlationNotification, object: nil)
         }else{
-            LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
-        }
-        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
-        LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-        PrintUtility.printLog(tag: TAG, text: "\(CountryWiseLanguageListViewController.self) changed language to \(selectedLanguageCode)")
-        NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
-        for controller in self.navigationController!.viewControllers as Array {
-            if controller.isKind(of: HomeViewController.self) {
-                self.navigationController!.popToViewController(controller, animated: true)
-                       break
+            if isNative == LanguageName.bottomLang.rawValue{
+                LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
+            }else{
+                LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
             }
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
+            NotificationCenter.default.post(name:.containerViewSelection, object: nil)
         }
+        self.navigationController?.popViewController(animated: false)
     }
 
     @IBAction func onBackButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +98,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
                 return i
             }
         }
-        return 0
+        return INVALID_SELECTION
     }
 
     func getLanugageList(){
@@ -123,24 +132,41 @@ extension CountryWiseLanguageListViewController : UICollectionViewDataSource{
         let item = languageList[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: langListCollectionViewCell.identifier, for: indexPath) as! langListCollectionViewCell
         PrintUtility.printLog(tag: TAG, text: "showing as \(dataShowingLanguageCode)")
+//        cell.languageNameLableSelected.isHidden = true
         if dataShowingLanguageCode == systemLanguageCodeEN{
             cell.languageNameLabel.text = "\(item.englishName) (\(item.name))"
+            cell.languageNameLableSelected.text = "\(item.englishName) (\(item.name))"
         }else if dataShowingLanguageCode == systemLanguageCodeJP{
             cell.languageNameLabel.text = "\(item.sysLangName) (\(item.name))"
+            cell.languageNameLableSelected.text = "\(item.sysLangName) (\(item.name))"
         }
 
         if UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value == item.code{
             let languageManager = LanguageSelectionManager.shared
             if(languageManager.hasTtsSupport(languageCode: item.code)){
                 cell.imageviewNoVoice.isHidden = true
+                cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
             }else{
                 cell.imageviewNoVoice.isHidden = false
+                cell.unselectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
+                cell.selectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
             }
             cell.imageLanguageSelection.isHidden = false
+            cell.languageNameLableSelected.isHidden = false
+            cell.languageNameLabel.isHidden = true
+            cell.languageNameLableSelected.holdScrolling = false
+            cell.languageNameLableSelected.type = .continuous
+            cell.languageNameLableSelected.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+            cell.languageNameLableSelected.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
             cell.langListItemContainer.backgroundColor = UIColor(hex: "#008FE8")
             PrintUtility.printLog(tag: TAG, text: "matched lang \(String(describing: UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value)) languageItem.code \(item.code)")
         }else{
+            cell.unselectedLabelTrailingConstraint.constant = kUnselectedLanguageTrailingConstant
+            cell.languageNameLableSelected.isHidden = true
+            cell.languageNameLabel.isHidden = false
             cell.imageLanguageSelection.isHidden = true
+            cell.languageNameLableSelected.holdScrolling = true
             cell.imageviewNoVoice.isHidden = true
             cell.langListItemContainer.backgroundColor = .black
         }

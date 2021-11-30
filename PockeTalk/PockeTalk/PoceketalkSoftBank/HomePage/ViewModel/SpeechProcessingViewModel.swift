@@ -21,9 +21,13 @@ protocol SpeechProcessingViewModeling {
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func getTimeDifference (startTime : Int, endTime : Int) -> Int
+    var startTime:Date! { set get }
+    func getTimeDifference(endTime:Date)->Int
+
 }
 
 class SpeechProcessingViewModel: SpeechProcessingViewModeling {
+    var startTime: Date!
 
     var isGettingActualData:Bool = false
 
@@ -162,5 +166,10 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
     /// Calculate time difference
     func getTimeDifference (startTime : Int, endTime : Int) -> Int {
         return endTime - startTime
+    }
+
+    func getTimeDifference(endTime:Date)->Int{
+        let diff = endTime.timeIntervalSince1970 - self.startTime.timeIntervalSince1970
+        return Int(diff)
     }
 }

@@ -328,6 +328,27 @@ class GlobalMethod {
            let jsonData = try! JSONEncoder().encode(["stt": sttdata, "srclang": srcLang,"destlang": destlang])
            return String(data: jsonData, encoding: .utf8)!
     }
+    
+    static func getTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+        let transition = CATransition()
+        transition.duration = duration
+        transition.type = CATransitionType.moveIn
+        transition.subtype = animationStyle
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        
+        return transition
+    }
+    
+    static func getBackTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+        let transition = CATransition()
+        transition.duration = duration
+        transition.type = CATransitionType.reveal
+        transition.subtype = animationStyle
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        
+        return transition
+    }
+
 
 }
 
@@ -353,12 +374,12 @@ class GlobalAlternative{
        controller.ttsAlertControllerDelegate = ttsAlertControllerDelegate
        controller.isRecreation = isRecreation
        controller.isFromSpeechProcessing = fromSpeech
-       controller.currentTSDelegate = viewController as? CurrentTSDelegate
-       controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
+       //controller.currentTSDelegate = viewController as? CurrentTSDelegate
+       //controller.speechProDismissDelegateFromTTS = viewController as? SpeechProcessingDismissDelegate
        if(viewController?.navigationController != nil){
            if fromHistory {
                controller.modalPresentationStyle = .fullScreen
-               viewController?.present(controller, animated: true, completion: nil)
+            viewController?.navigationController?.pushViewController(controller, animated: true)
            } else {
                let navController = UINavigationController.init(rootViewController: controller)
                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

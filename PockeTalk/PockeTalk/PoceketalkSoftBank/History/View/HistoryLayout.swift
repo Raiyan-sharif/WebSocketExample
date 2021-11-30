@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol HistoryLayoutDelegate {
+protocol HistoryLayoutDelegate:class{
 
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat
 }
@@ -14,7 +14,7 @@ class HistoryLayout: UICollectionViewLayout {
     var attributes  = Array<UICollectionViewLayoutAttributes>()
     var initialAttributes = Array<UICollectionViewLayoutAttributes>()
     var contentSize: CGSize = .zero
-    var delegate: HistoryLayoutDelegate!
+    weak var delegate: HistoryLayoutDelegate!
 
     override func prepare() {
         super.prepare()
@@ -32,7 +32,7 @@ class HistoryLayout: UICollectionViewLayout {
 
         for item in 0..<limit {
             let indexPath = IndexPath(item: item, section: 0)
-            let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT - 60)
+            let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT)
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             let frame = CGRect(x: left, y: top, width: width!, height: height)
             
@@ -40,7 +40,7 @@ class HistoryLayout: UICollectionViewLayout {
             attribute.zIndex = item
             // let gap = self.itemGap
             self.attributes.append(attribute)
-            top += height - 25
+            top += height - 100
 
         }
         if self.attributes.count > 0 {

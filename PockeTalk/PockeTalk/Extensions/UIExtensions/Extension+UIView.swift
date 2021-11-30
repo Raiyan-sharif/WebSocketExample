@@ -6,18 +6,14 @@
 import Foundation
 import UIKit
 
-
 extension UIView {
-
-   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        layer.mask = mask
-    }
-}
-
-extension UIView {
+    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+         let mask = CAShapeLayer()
+         mask.path = path.cgPath
+         layer.mask = mask
+     }
+    
     func changeFontSize(){
         let fontSize = FontUtility.getFontSize()
         if let view = self as? UIButton {
@@ -31,5 +27,17 @@ extension UIView {
                 view.changeFontSize()
             }
         }
+    }
+    
+    var parentViewController: UIViewController? {
+        // Starts from next (As we know self is not a UIViewController).
+        var parentResponder: UIResponder? = self.next
+        while parentResponder != nil {
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+            parentResponder = parentResponder?.next
+        }
+        return nil
     }
 }
