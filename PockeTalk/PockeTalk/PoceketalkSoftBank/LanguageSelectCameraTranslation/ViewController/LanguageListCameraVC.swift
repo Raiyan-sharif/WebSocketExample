@@ -136,5 +136,15 @@ extension LanguageListCameraVC: UITableViewDataSource,UITableViewDelegate{
         UserDefaultsProperty<String>(KSelectedLanguageCamera).value = languageItem.code
         self.langListTableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+            let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.bounds.height / 4))
+            footerView.backgroundColor = .clear
+            return footerView
+        }
+
+        func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+            return self.view.bounds.height / 4
+        }
 
 }
