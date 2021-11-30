@@ -279,11 +279,16 @@ extension HomeViewController {
     @objc private func handleCardPanForViewGesture (recognizer:UIPanGestureRecognizer) {
         switch recognizer.state {
         case .ended:
-            animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
-            self.historyCardVC.updateData()
-            if nextState == .collapsed {
-                self.historyImageView.isHidden = false
+            let translationY = recognizer.translation(in: self.view).y
+            if nextState == .collapsed && translationY < 0 {
+                animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                self.historyCardVC.updateData()
             }
+            if nextState == .expanded && translationY > 0 {
+                animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                self.historyCardVC.updateData()
+            }
+            self.historyImageView.isHidden = false
         default:
             break
         }
