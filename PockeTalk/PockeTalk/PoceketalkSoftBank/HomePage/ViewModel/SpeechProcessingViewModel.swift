@@ -19,7 +19,7 @@ protocol SpeechProcessingViewModeling {
     var isGettingActualData:Bool {set get}
     func updateLanguage()
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
-    func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
+    func animateRightImage (leftImage: UIImageView, rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func getTimeDifference (startTime : Int, endTime : Int) -> Int
     var startTime:Date! { set get }
     func getTimeDifference(endTime:Date)->Int
@@ -50,6 +50,8 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
     let animationDuration = 0.6
 
     let animationDelay = 0
+    
+    static var isLoading = false
 
     init() {
         self.getData()
@@ -149,18 +151,32 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
         })
     }
 
-    func animateRightImage (rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat) {
+    func animateRightImage (leftImage : UIImageView, rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat) {
         /// Set frame for expanded postion. 'x' will be right shifted, 'y' will be in a bit higher positiion, 'width' will be adjusted with the changed x position, 'height' will be increased according to the changed 'y' posiition.
-        let expandedFrame = CGRect(x: rightImage.frame.origin.x + xPos, y: rightImage.frame.origin.y - yPos, width: rightImage.frame.size.width + xPos, height: rightImage.frame.size.height + yPos)
+        let expandedFrame = CGRect(x: leftImage.frame.origin.x - xPos, y: leftImage.frame.origin.y - yPos, width: leftImage.frame.size.width + xPos, height: leftImage.frame.size.height + yPos)
+        let expandedFrame2 = CGRect(x: rightImage.frame.origin.x, y: rightImage.frame.origin.y - yPos, width: rightImage.frame.size.width + xPos, height: rightImage.frame.size.height + yPos)
+        let rotateForwardAnimationDuration: TimeInterval = 0.35
+        let rotateBackAnimationDuration: TimeInterval = 0.35
+            let animationDuration: TimeInterval = rotateForwardAnimationDuration + rotateBackAnimationDuration
+        UIView.animateKeyframes(withDuration: animationDuration, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: rotateForwardAnimationDuration) {
+                    leftImage.frame = expandedFrame
+                }
+            UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: rotateForwardAnimationDuration) {
+    
+                rightImage.frame = expandedFrame2
+                }
 
-        /// Set frame for shrinked postion. 'x' will be left shifted, 'width' is adjusted as per the shifted 'x' position.
-        let shrinkedFrame = CGRect(x: rightImage.frame.origin.x - xPos, y: rightImage.frame.origin.y , width: rightImage.frame.size.width + xPos   , height: rightImage.frame.size.height + yPos )
-        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
-            rightImage.frame = shrinkedFrame
-        })
-        UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
-            rightImage.frame = expandedFrame
-        })
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: rotateBackAnimationDuration) {
+                    leftImage.transform = .identity
+                    rightImage.transform = .identity
+                    
+                }
+            }) { (isFinished) in
+                if(!SpeechProcessingViewModel.isLoading){
+                    self.animateRightImage(leftImage: leftImage, rightImage: rightImage, yPos: yPos, xPos: xPos)
+                }
+            }
     }
 
     /// Calculate time difference

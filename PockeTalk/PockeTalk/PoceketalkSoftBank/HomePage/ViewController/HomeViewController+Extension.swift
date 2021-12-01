@@ -181,7 +181,7 @@ extension HomeViewController{
                      NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
                      }
                      */
-                    
+                    SpeechProcessingViewModel.isLoading = false;
                     self.homeVCDelegate?.startRecord()
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
                     TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
@@ -204,6 +204,7 @@ extension HomeViewController{
                      NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
                      }
                      */
+                    SpeechProcessingViewModel.isLoading = true;
                     if !self.speechVC.isMinimumLimitExceed {
                         self.enableORDisableMicrophoneButton(isEnable: false)
                     }else{

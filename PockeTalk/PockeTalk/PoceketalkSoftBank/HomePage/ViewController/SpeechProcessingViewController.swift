@@ -73,13 +73,13 @@ class SpeechProcessingViewController: BaseViewController{
     private var isSSTavailable = false
     private var spinnerView : SpinnerView!
     
-    private let changedXPos : CGFloat = 15
+    private let changedXPos : CGFloat = 20
     private let changedYPos : CGFloat = 20
     
-    private let leftImgWidth : CGFloat = 30
-    private let leftImgHeight : CGFloat = 35
+    private let leftImgWidth : CGFloat = 45
+    private let leftImgHeight : CGFloat = 45
     private let rightImgWidth : CGFloat = 45
-    private let rightImgHeight : CGFloat = 55
+    private let rightImgHeight : CGFloat = 45
     
     var pronunciationText : String = ""
     var pronunciationLanguageCode : String = ""
@@ -190,7 +190,7 @@ class SpeechProcessingViewController: BaseViewController{
         self.leftImgWidthConstraint.constant = leftImgWidth
         self.speechProcessingLeftParentView.layoutIfNeeded()
         
-        self.speechProcessingVM.animateLeftImage(leftImage: self.speechProcessingLeftImgView, yPos: changedYPos, xPos: changedXPos)
+//        self.speechProcessingVM.animateLeftImage(leftImage: self.speechProcessingLeftImgView, yPos: changedYPos, xPos: changedXPos)
         
         self.rightImgHeightConstraint.isActive = true
         self.rightImgWidthConstraint.isActive = true
@@ -198,7 +198,7 @@ class SpeechProcessingViewController: BaseViewController{
         self.rightImgHeightConstraint.constant = rightImgHeight
         self.speecProcessingRightParentView.layoutIfNeeded()
         
-        self.speechProcessingVM.animateRightImage(rightImage: self.speechProcessingRightImgView, yPos: changedYPos, xPos: changedXPos)
+        self.speechProcessingVM.animateRightImage(leftImage: self.speechProcessingLeftImgView, rightImage: self.speechProcessingRightImgView, yPos: changedYPos, xPos: changedXPos)
     }
     
     private func setupAudio(){
