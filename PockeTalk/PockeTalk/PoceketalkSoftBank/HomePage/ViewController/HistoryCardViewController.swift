@@ -271,6 +271,8 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
         let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
+        cell.deleteLabel.text = "delete_from_fv".localiz()
+        cell.favouriteLabel.text = "Favorite".localiz()
         //let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
         
         if(indexPath.row == historyViewModel.items.value.count - 1){
