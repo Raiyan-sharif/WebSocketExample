@@ -345,7 +345,7 @@ class ITTServerViewModel: BaseModel {
            // PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
             //PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
             
-            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTablesRow {
                 if entities.contains(where: { $0.id == historyID }) {
                     updateDataOnDatabase(id: historyID)
                 } else {

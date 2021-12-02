@@ -12,6 +12,7 @@ protocol CameraHistoryViewModelDelegates {
 }
 
 class CameraHistoryViewModel: BaseModel {
+    private let TAG = "\(CameraHistoryViewModel.self)"
     
     var cameraHistoryImages =  [CameraHistoryDataModel]() {
         didSet {
@@ -36,17 +37,17 @@ class CameraHistoryViewModel: BaseModel {
     
     func viewDidLoad<T>(_ vc: T) {
         self.delegate = vc.self as? CameraHistoryViewModelDelegates
+        cameraHistoryImages.removeAll()
     }
     
-    
-    func fetchCameraHistoryImages() {
+    func fetchCameraHistoryImages(size: Int) {
         
-        cameraHistoryImages.removeAll()
-        if let cameraHistoryData = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+        if let cameraHistoryData = try? CameraHistoryDBModel().findAllEntities(size: size) as? [CameraEntity] {
             
-            for index in stride(from: cameraHistoryData.count-1, to: -1, by: -1) {
+            for (index,camHistoryData) in cameraHistoryData.enumerated() {
                 if let imageData = cameraHistoryData[index].image {
                     let image = UIImage.convertBase64ToImage(imageString: imageData)
+                    PrintUtility.printLog(tag: TAG, text: "cameraHistoryData id: \(cameraHistoryData[index].id)")
                     cameraHistoryImages.append(CameraHistoryDataModel.init(image: image, dbID: cameraHistoryData[index].id))
                 }
                 
