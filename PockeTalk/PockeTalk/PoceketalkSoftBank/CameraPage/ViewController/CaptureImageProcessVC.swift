@@ -727,6 +727,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
         DispatchQueue.main.async { [self] in
             activity.showLoading(view: self.view)
             isClickable = false
+            backButton.isUserInteractionEnabled = false
         }
     }
     
@@ -734,6 +735,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
         socketManager.disconnect()
         activity.hideLoading()
         isClickable = true
+        backButton.isUserInteractionEnabled = true
     }
 }
 
