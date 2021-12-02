@@ -218,14 +218,6 @@ extension HomeViewController {
         self.view.addSubview(historyCardVC.view)
         historyCardVC.delegate = self
         
-        /*
-        historyCardVC.view.frame = CGRect(
-            x: 0,
-            y: -cardHeight + UIApplication.shared.statusBarFrame.height,
-            width: self.view.bounds.width,
-            height: cardHeight)
-        */
-        
         historyCardVC.view.frame = CGRect(
                 x: self.view.bounds.width / 3,
                 y: -cardHeight + UIApplication.shared.statusBarFrame.height,
@@ -236,8 +228,6 @@ extension HomeViewController {
     
     func setupGestureForCardView() {
         historyImageView.isUserInteractionEnabled = true
-        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleCardTap(recognzier:)))
-        //historyImageView.addGestureRecognizer(tapGestureRecognizer)
         
         imageViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCardPanForImageGesture(recognizer:)))
         self.historyImageView.addGestureRecognizer(imageViewPanGesture)
@@ -245,17 +235,6 @@ extension HomeViewController {
         viewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCardPanForViewGesture(recognizer:)))
         self.view.addGestureRecognizer(viewPanGesture)
         
-    }
-    
-    @objc private func handleCardTap(recognzier:UITapGestureRecognizer) {
-        switch recognzier.state {
-        case .ended:
-            animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
-            self.historyCardVC.updateData()
-            
-        default:
-            break
-        }
     }
     
     @objc private func handleCardPanForImageGesture (recognizer:UIPanGestureRecognizer) {
@@ -283,6 +262,8 @@ extension HomeViewController {
             if nextState == .collapsed && translationY < 0 {
                 animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
                 self.historyCardVC.updateData()
+                //Remove all the child container while swipe up to dismiss
+                removeAllChildControllers(Int(IsTop.top.rawValue))
             }
             if nextState == .expanded && translationY > 0 {
                 animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
