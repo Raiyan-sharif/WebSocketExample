@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -135,11 +135,13 @@
                 <outlet property="deleteImgView" destination="YBN-UG-st2" id="wpc-LJ-mrb"/>
                 <outlet property="deleteLabel" destination="2Js-mi-XDs" id="o0S-1m-f6O"/>
                 <outlet property="deleteStackView" destination="lwX-8L-GJU" id="VPb-hv-jS6"/>
+                <outlet property="deleteStackViewHeightConstraint" destination="Tp2-gq-jup" id="Ynk-bC-viI"/>
                 <outlet property="favImagView" destination="PNX-AL-Eey" id="QLg-Pp-rmE"/>
                 <outlet property="favView" destination="731-Fm-Ibg" id="CnM-pe-ebc"/>
                 <outlet property="favoriteRightBarBottom" destination="QKp-1u-gsc" id="CJN-Ie-ULT"/>
                 <outlet property="favouriteLabel" destination="uiq-8o-RpT" id="xY6-Fj-q4L"/>
                 <outlet property="favouriteStackView" destination="Bog-ik-aOR" id="3dI-4P-irn"/>
+                <outlet property="favouriteStackViewHeightConstraint" destination="60R-w4-1pN" id="BPD-7D-7BM"/>
                 <outlet property="fromLabel" destination="U60-ox-9aR" id="Jjn-3u-sUg"/>
                 <outlet property="toLabel" destination="eP8-Hy-fyJ" id="bMn-BX-Z7D"/>
                 <outlet property="topStackViewOfLabel" destination="7FX-3x-ELI" id="9lh-dn-nGo"/>
