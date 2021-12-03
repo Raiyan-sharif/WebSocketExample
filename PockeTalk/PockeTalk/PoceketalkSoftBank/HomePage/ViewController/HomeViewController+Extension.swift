@@ -14,73 +14,74 @@ protocol HomeVCDelegate:class {
 }
 
 extension HomeViewController{
-
-     func setUPLongPressGesture(){
+    
+    func setUPLongPressGesture(){
         let talkBtnImgView = UIImageView()
         talkBtnImgView.tag = 109
         talkBtnImgView.image = UIImage(named: "talk_button")
         talkBtnImgView.isUserInteractionEnabled = true
         talkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
-         bottomImageView.translatesAutoresizingMaskIntoConstraints = false
+        bottomImageView.translatesAutoresizingMaskIntoConstraints = false
         talkBtnImgView.tintColor = UIColor._skyBlueColor()
         talkBtnImgView.layer.cornerRadius = width/2
         talkBtnImgView.clipsToBounds = true
-         bottomView.addSubview(bottomImageView)
+        bottomView.addSubview(bottomImageView)
         self.bottomView.addSubview(talkBtnImgView)
         talkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
         talkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
         talkBtnImgView.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
         talkBtnImgView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor).isActive = true
-         
-         bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
-         bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
-         bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
-         bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
-         self.bottomImageView.isHidden = true
-         self.pulseGrayWave.isHidden = true
-         self.pulseLayer.isHidden = true
-         self.midCircleViewOfPulse.isHidden = true
-         self.bottomImageView.isHidden = true
-         self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
+        
+        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
+        bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
+        bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
+        bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
+        self.bottomImageView.isHidden = true
+        self.pulseGrayWave.isHidden = true
+        self.pulseLayer.isHidden = true
+        self.midCircleViewOfPulse.isHidden = true
+        self.bottomImageView.isHidden = true
+        self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
         longPress.minimumPressDuration = 0.1
         talkBtnImgView.addGestureRecognizer(longPress)
     }
-
+    
     func enableORDisableMicrophoneButton(isEnable:Bool){
         if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
             imgView.isUserInteractionEnabled = isEnable
         }
     }
-
+    
     func homeGestureEnableOrDiable(){
         homeContainerView.isHidden = self.homeContainerView.subviews.count == 0
     }
-
+    
     func hideSpeechView(){
         self.speechContainerView.isHidden = true
         homeGestureEnableOrDiable()
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     private func openSpeechView(){
-
+        
         if self.isFromPronuntiationPractice() != true{
             UIView.animate(withDuration: fadeAnimationDuration, delay: fadeAnimationDelay, options: .curveEaseOut) {
-                self.historyCardVC.view.alpha = 0.0
-            } completion: { _ in
-                self.dissmissHistory()
-                if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
-                    let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
-                    self.speechContainerView.layer.add(transition, forKey: nil)
+                if self.isFromlanguageSelection() == false {
+                    self.historyCardVC.view.alpha = self.fadeOutAlpha
                 }
+            } completion: { _ in
+                if self.isFromlanguageSelection() == false {
+                    self.dissmissHistory()
+                }
+                let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.speechContainerView.isHidden = false
             }
-
+            
         } else {
-            if self.isFromlanguageSelection() != true && self.isFromPronuntiationPractice() != true{
-                let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromTop)
-                self.speechContainerView.layer.add(transition, forKey: nil)
-            }
+            
+            let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
             self.speechContainerView.isHidden = false
         }
     }
@@ -92,7 +93,7 @@ extension HomeViewController{
         if isFromCameraPreview {
             let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
             self.view.window!.layer.add(transition, forKey: kCATransition)
-
+            
         }
         for view in homeContainerView.subviews{
             if let controller = view.parentViewController{
@@ -104,7 +105,7 @@ extension HomeViewController{
                     remove(asChildViewController: controller, animation: tr)
                 }else{
                     remove(asChildViewController: controller)
-
+                    
                 }
             }
         }
@@ -118,28 +119,28 @@ extension HomeViewController{
         homeGestureEnableOrDiable()
         isFromCameraPreview = false
     }
-
+    
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
                 let imageView = gesture.view! as! UIImageView
                 if gesture.state == .began {
-
+                    
                     SocketManager.sharedInstance.connect()
                     SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
-
+                    
                     if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
                         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                     }
                     self.speechVC.updateLanguageType()
-
+                    
                     if self.speechVC.languageHasUpdated{
                         self.speechVC.updateLanguageInRemote()
                     }
-
+                    
                     self.speechVC.hideOrOpenExampleText(isHidden: true)
                     imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
-
+                    
                     self.openSpeechView()
                     if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
                         self.removeAllChildControllers(Int(IsTop.top.rawValue))
@@ -148,40 +149,40 @@ extension HomeViewController{
                     
                     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
                     /*
-                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-                        NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
-                    }
-                    
-                    if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-                        NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
-                    }
-                    
-                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-                        NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-                    }
+                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+                     NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+                     }
+                     
+                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+                     }
+                     
+                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
+                     }
                      */
                     
                     self.homeVCDelegate?.startRecord()
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
                     TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
-
+                
                 if gesture.state == .ended {
                     imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-
+                    
                     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
                     /*
-                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
-                            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-                    }
-                    
-                    if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
-                            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-                    }
-                    
-                    if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
-                            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
-                    }
+                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
+                     NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                     }
+                     
+                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
+                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+                     }
+                     
+                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
+                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+                     }
                      */
                     if !self.speechVC.isMinimumLimitExceed {
                         self.enableORDisableMicrophoneButton(isEnable: false)
@@ -196,16 +197,16 @@ extension HomeViewController{
             }
         }
     }
-
-     func isFromPronuntiationPractice()-> Bool{
+    
+    func isFromPronuntiationPractice()-> Bool{
         return ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice ||
-            ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation
-        }
-
+        ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation
+    }
+    
     func isFromlanguageSelection()-> Bool{
-       return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
-            ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
-     }
+        return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
+    }
 }
 
 
@@ -219,10 +220,10 @@ extension HomeViewController {
         historyCardVC.delegate = self
         
         historyCardVC.view.frame = CGRect(
-                x: self.view.bounds.width / 3,
-                y: -cardHeight + UIApplication.shared.statusBarFrame.height,
-                width: self.view.bounds.width / 3,
-                height: cardHeight)
+            x: self.view.bounds.width / 3,
+            y: -cardHeight + UIApplication.shared.statusBarFrame.height,
+            width: self.view.bounds.width / 3,
+            height: cardHeight)
         historyCardVC.view.clipsToBounds = true
     }
     

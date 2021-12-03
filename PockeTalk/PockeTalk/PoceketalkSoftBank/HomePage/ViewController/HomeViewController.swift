@@ -47,6 +47,7 @@ class HomeViewController: BaseViewController {
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
     let fadeAnimationDuration: TimeInterval = 0.1
     let fadeAnimationDelay: TimeInterval = 0.2
+    let fadeOutAlpha: CGFloat = 0.0
 
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
