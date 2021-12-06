@@ -6,6 +6,7 @@
 import UIKit
 import CallKit
 import WXImageCompress
+import MarqueeLabel
 
 class CaptureImageProcessVC: BaseViewController {
     
@@ -21,7 +22,7 @@ class CaptureImageProcessVC: BaseViewController {
     private let cameraHistoryViewModel = CameraHistoryViewModel()
     private let activity = ActivityIndicator()
     var socketManager = SocketManager.sharedInstance
-
+    
     var imageView = UIImageView()
     var fromHistoryVC: Bool = false
     var cameraHistoryImageIndex = Int()
@@ -42,7 +43,6 @@ class CaptureImageProcessVC: BaseViewController {
     var nativeText: String = ""
     var targetText: String = ""
     var playNative = true
-    
     var isClickable = true
     
     lazy var modeSwitchButton: UIButton = {
@@ -95,6 +95,9 @@ class CaptureImageProcessVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         socketManager.connect()
+        UserDefaults.standard.set(false, forKey: "modeSwitchState")
+        UserDefaults.standard.set(false, forKey: "isTransLateSuccessful")
+
         PrintUtility.printLog(tag: TAG, text: "screen maxCropFrameHeight: \(Int(maxCropFrameHeight)), \(Int(maxCropFrameWidth))")
         callObserver.setDelegate(self, queue: nil)
         cameraImageView.center = self.view.center
@@ -117,7 +120,30 @@ class CaptureImageProcessVC: BaseViewController {
             NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         }
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,            object: nil)
     }
+    
+    @objc func applicationDidBecomeActive() {
+        
+        let isTransLateSuccessful = UserDefaults.standard.value(forKey: "isTransLateSuccessful") as! Bool
+        let modeSwitchState = UserDefaults.standard.value(forKey: "modeSwitchState") as! Bool
+        
+        if ((modeSwitchState == false) &&  (isTransLateSuccessful == false)) {
+            activity.hideLoading()
+            startConfirmController()
+        } else if ((modeSwitchState == true) && (isTransLateSuccessful == false))  {
+            activity.hideLoading()
+//            let id = try? CameraHistoryDBModel().getMaxId()
+//            if !fromHistoryVC {
+//                self.iTTServerViewModel.historyID = Int64(id!)
+//                self.iTTServerViewModel.fromHistoryVC = false
+//            }
+            modeSwitchButtonEventListener(modeSwitchButton)
+        }
+    }
+    
     
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
@@ -230,6 +256,11 @@ class CaptureImageProcessVC: BaseViewController {
         
         PrintUtility.printLog(tag: "row index", text: "\(historyID)")
         self.iTTServerViewModel.historyID = historyID
+        
+        showHistoryData(historyID: historyID)
+    }
+    
+    func showHistoryData(historyID: Int64) {
         let translatedData: TranslatedTextJSONModel? = CameraHistoryDBModel().getTranslatedData(id: historyID)
         let detectedData: DetectedJSON? = CameraHistoryDBModel().getDetectedData(id: historyID)
         let encoder = JSONEncoder()
@@ -267,6 +298,7 @@ class CaptureImageProcessVC: BaseViewController {
         else {
             PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
         }
+
     }
     
     @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
@@ -476,8 +508,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             view.addSubview(modeSwitchButton)
             setupModeSwitchButton()
         }
-        //backButton.isUserInteractionEnabled = true
         
+        //backButton.isUserInteractionEnabled = true
     }
     
     func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
@@ -575,12 +607,24 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         callObserver.setDelegate(self, queue: nil)
         removeFloatingButton()
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIApplication.didBecomeActiveNotification,
+                                                  object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        PrintUtility.printLog(tag: TAG, text: "viewDidDisappear")
+        
     }
     
     func removeFloatingButton() {
@@ -593,6 +637,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
     
     @objc func modeSwitchButtonEventListener(_ button: UIButton) {
+        UserDefaults.standard.set(true, forKey: "modeSwitchState")
+        UserDefaults.standard.set(false, forKey: "isTransLateSuccessful")
         socketManager.connect()
         let id = try? CameraHistoryDBModel().getMaxId()
         if !fromHistoryVC {
@@ -626,7 +672,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                                 self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: self.fromHistoryVC)
                                 UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
                             }
-
+                            
                         }
                     } else {
                         GlobalMethod.showNoInternetAlert()

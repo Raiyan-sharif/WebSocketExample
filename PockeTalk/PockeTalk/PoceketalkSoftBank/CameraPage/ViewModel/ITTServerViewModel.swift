@@ -316,6 +316,7 @@ class ITTServerViewModel: BaseModel {
     }
     
     func commandToGenerateTextView() {
+        UserDefaults.standard.set(true, forKey: "isTransLateSuccessful")
         let type = UserDefaults.standard.string(forKey: modeSwitchType)
         let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
         

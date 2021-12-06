@@ -56,6 +56,8 @@ extension ITTServerViewModel: SocketManagerDelegate {
                 self.tttCount = self.tttCount + 1
                 if self.tttCount == self.totalBlockCount {
                     self.commandToGenerateTextView()
+                } else {
+                    UserDefaults.standard.set(false, forKey: "isTransLateSuccessful")
                 }
 
             }
