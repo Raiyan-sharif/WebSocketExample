@@ -280,11 +280,15 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             cell.favouriteRightBarBottom.constant = -20
             cell.topStackViewOfLabel.constant = 25
             cell.favouriteRightBarTop.constant = 20
+            cell.deleteStackViewHeightConstraint.constant = 0
+            cell.favouriteStackViewHeightConstraint.constant = 0
         }
         else{
             cell.topStackViewOfLabel.constant = 25
             cell.bottomStackViewOfLabel.constant = 85
             cell.favouriteRightBarBottom.constant = -70
+            cell.deleteStackViewHeightConstraint.constant = -30
+            cell.favouriteStackViewHeightConstraint.constant = -30
         }
         if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()

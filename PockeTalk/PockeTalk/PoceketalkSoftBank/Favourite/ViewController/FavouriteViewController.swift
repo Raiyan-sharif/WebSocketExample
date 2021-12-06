@@ -253,11 +253,15 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.bottomStackViewOfLabel.constant = 25
             cell.favoriteRightBarBottom.constant = -20
             cell.topStackViewOfLabel.constant = 25
+            cell.deleteStackViewHeightConstraint.constant = 0
+            cell.favouriteStackViewHeightConstraint.constant = 0
           }
           else{
               cell.topStackViewOfLabel.constant = 25
               cell.bottomStackViewOfLabel.constant = 85
               cell.favoriteRightBarBottom.constant = -70
+              cell.deleteStackViewHeightConstraint.constant = -30
+              cell.favouriteStackViewHeightConstraint.constant = -30
           }
         
         if item.chatIsTop == IsTop.noTop.rawValue {

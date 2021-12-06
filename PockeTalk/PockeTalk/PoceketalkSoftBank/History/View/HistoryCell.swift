@@ -22,7 +22,8 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
     @IBOutlet weak var favouriteRightBarBottom: NSLayoutConstraint!
     @IBOutlet weak var topStackViewOfLabel: NSLayoutConstraint!
     @IBOutlet weak var favouriteRightBarTop: NSLayoutConstraint!
-    
+    @IBOutlet weak var deleteStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var favouriteStackViewHeightConstraint: NSLayoutConstraint!
     //forces the system to do one layout pass
     var isHeightCalculated: Bool = false
     var initialColor:UIColor!
