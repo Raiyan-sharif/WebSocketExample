@@ -60,6 +60,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath) as! SettingsTableViewCell
             
         cell.labelTitle.text = SettingsItemType.settingsItems[indexPath.row].localiz()
+        cell.selectionStyle = .none
         return cell
             
     }
