@@ -140,6 +140,7 @@ let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500
+let MAX_HISTORY_ROW = 10000
 
 // Selection of font
 let KFontSelection = "KFontSelection"
