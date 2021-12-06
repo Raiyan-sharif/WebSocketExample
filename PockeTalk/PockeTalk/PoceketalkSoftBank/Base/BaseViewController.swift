@@ -7,13 +7,13 @@ import UIKit
 enum SpeechProcessingScreenOpeningPurpose{
     case HomeSpeechProcessing
     case LanguageSelectionVoice
+    case LanguageHistorySelectionVoice
     case CountrySelectionByVoice
     case LanguageSelectionCamera
+    case LanguageHistorySelectionCamera
     case PronunciationPractice
-   // case PronunciationPracticeResult
     case HistoryScrren
     case HistroyPronunctiation
-   // case HistroyPronuntiationResult
 }
 
 class BaseViewController: UIViewController {

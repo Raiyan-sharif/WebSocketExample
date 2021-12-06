@@ -25,7 +25,6 @@ class CountryWiseLanguageListViewController: BaseViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLanguageProperty()
         setupUI()
         configureCollectionView()
         getLanugageList()
@@ -39,16 +38,6 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     //MARK: - Initial setup
-    private func setupLanguageProperty(){
-        PrintUtility.printLog(tag: TAG, text: " isNative \(isNative)")
-        
-        if isNative == LanguageName.bottomLang.rawValue{
-            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
-        }else{
-            UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
-        }
-    }
-    
     private func setupUI(){
         buttonOk.layer.cornerRadius = 15
         if dataShowingLanguageCode == systemLanguageCodeEN{

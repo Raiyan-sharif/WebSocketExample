@@ -422,9 +422,12 @@ class HomeViewController: BaseViewController {
     }
     
     private func openLanguageSelectionScreen(isNative: Int){
-        print("\(HomeViewController.self) isNative \(isNative)")
+        PrintUtility.printLog(tag: TAG, text: "\(HomeViewController.self) isNative \(isNative)")
+        
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+        
+        //Update home container bottom view
         controller.updateHomeContainer = { [weak self]  isFullScreen in
             guard let `self` = self else { return }
             HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
@@ -434,17 +437,22 @@ class HomeViewController: BaseViewController {
             isFullScreen ? self.view.bringSubviewToFront(self.bottomView) : self.view.sendSubviewToBack(self.bottomView)
             self.homeContainerView.layoutIfNeeded()
         }
+        
+        //Update language change
         controller.languageHasUpdated = { [weak self] in
             self?.speechVC.languageHasUpdated = true
         }
         controller.isNative = isNative
+        
+        //Add transition animation
         var transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         if isNative != LanguageName.bottomLang.rawValue{
             transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         }
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
         
+        //Add as child and other UI property
+        add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }

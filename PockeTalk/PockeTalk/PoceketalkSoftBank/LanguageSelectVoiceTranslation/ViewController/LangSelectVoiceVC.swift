@@ -5,16 +5,19 @@
 
 import UIKit
 import SwiftyXMLParser
-protocol RetranslationDelegate {
+
+protocol RetranslationDelegate: AnyObject {
     func showRetranslation (selectedLanguage : String)
 }
 
 class LangSelectVoiceVC: BaseViewController {
+    @IBOutlet weak private var tabsView: UIView!
+    @IBOutlet weak private var btnHistoryList: UIButton!
+    @IBOutlet weak private var btnLangList: UIButton!
+    @IBOutlet weak private var btnBack: UIButton!
+    @IBOutlet weak private var toolbarTitleLabel: UILabel!
+    
     let TAG = "\(LangSelectVoiceVC.self)"
-    @IBOutlet weak var tabsView: UIView!
-    @IBOutlet weak var btnHistoryList: UIButton!
-    @IBOutlet weak var btnLangList: UIButton!
-    @IBOutlet weak var btnBack: UIButton!
     var languageHasUpdated:(()->())?
     var updateHomeContainer:((_ isfullScreen:Bool)->())?
 
@@ -32,6 +35,7 @@ class LangSelectVoiceVC: BaseViewController {
     var pageController: UIPageViewController!
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedLanguageCode = ""
+    
     var isNative: Int = 0
     let trailing : CGFloat = -20
     let width : CGFloat = 100
@@ -43,40 +47,13 @@ class LangSelectVoiceVC: BaseViewController {
 
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
-    @IBOutlet weak var toolbarTitleLabel: UILabel!
-
-    @IBAction func onLangSelectButton(_ sender: Any) {
-        updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
-    }
-
-    @IBAction func onHistoryButtonTapped(_ sender: Any) {
-        updateButton(index: 1)
-        tabsViewDidSelectItemAt(position: 1)
-    }
-
-    @IBAction func onCountryButtonTapped(_ sender: Any) {
-        //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
-        controller.isFromTranslation = fromRetranslation
-        controller.isNative = isNative
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-        //self.navigationController?.pushViewController(controller, animated: true);
-        add(asChildViewController: controller, containerView: view, animation: transition)
-        
-        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
-        //removeFloatingBtn()
-    }
-
+    var isFirstTimeLoad = true
+    
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaultsProperty<Int>(kIsNative).value = isNative
-        setButtonTopCornerRadius(btnLangList)
-        setButtonTopCornerRadius(btnHistoryList)
-        toolbarTitleLabel.text = "Language".localiz()
-        toolbarTitleLabel.textColor = UIColor.white
-        updateButton(index:0)
+        setupUI()
         setupPageViewController()
         registerNotification()
     }
@@ -98,54 +75,33 @@ class LangSelectVoiceVC: BaseViewController {
         unregisterNotification()
     }
     
-    private func registerNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .popFromCountrySelectionVoice, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.updateTranlationNotification, object: nil)
+    //MARK: - Initial setup
+    private func setupUI(){
+        UserDefaultsProperty<Int>(kIsNative).value = isNative
+        setButtonTopCornerRadius(btnLangList)
+        setButtonTopCornerRadius(btnHistoryList)
+        toolbarTitleLabel.text = "Language".localiz()
+        toolbarTitleLabel.textColor = UIColor.white
+        updateButton(index:0)
     }
     
-    @objc func hideMicrophoneButton(notification: Notification) {
-        //removeFloatingBtn()
-    }
-    
-    @objc func showMicrophoneButton(notification: Notification) {
-       //setUpMicroPhoneIcon()
-    }
-
-    private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.updateTranlationNotification, object: nil)
-    }
-
-    func setButtonTopCornerRadius(_ button: UIButton){
+    private func setButtonTopCornerRadius(_ button: UIButton){
         if #available(iOS 11.0, *) {
             button.layer.cornerRadius = 8
             button.layer.masksToBounds = true
             button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else {
-            // Fallback on earlier versions
         }
     }
-
-    func setupPageViewController() {
-        // PageViewController
+    
+    private func setupPageViewController() {
       self.pageController = storyboard?.instantiateViewController(withIdentifier: tabsPageViewController) as! TabsPageViewController
       self.addChild(self.pageController)
       self.view.addSubview(self.pageController.view)
 
-      // Set PageViewController Delegate & DataSource
       pageController.delegate = self
       pageController.dataSource = self
-
-      // Set the selected ViewController in the PageViewController when the app starts
       pageController.setViewControllers([showViewController(0)!], direction: .forward, animated: true, completion: nil)
 
-      // PageViewController Constraints
       self.pageController.view.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([
         self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
@@ -155,6 +111,77 @@ class LangSelectVoiceVC: BaseViewController {
         ])
         self.pageController.didMove(toParent: self)
     }
+    
+    private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .popFromCountrySelectionVoice, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.updateTranlationNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageHistoryListNotification, object: nil)
+    }
+
+    //MARK: - IBActions
+    @IBAction func onLangSelectButton(_ sender: Any) {
+        isFirstTimeLoad = false
+        updateButton(index: 0)
+        tabsViewDidSelectItemAt(position: 0)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+    }
+
+    @IBAction func onHistoryButtonTapped(_ sender: Any) {
+        isFirstTimeLoad = false
+        updateButton(index: 1)
+        tabsViewDidSelectItemAt(position: 1)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
+    }
+
+    @IBAction func onCountryButtonTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
+        controller.isFromTranslation = fromRetranslation
+        controller.isNative = isNative
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        add(asChildViewController: controller, containerView: view, animation: transition)
+        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
+        //removeFloatingBtn()
+    }
+    
+    @IBAction func onBackButtonPressed(_ sender: Any) {
+        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
+        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
+        if !fromRetranslation {
+            if isNative == LanguageName.bottomLang.rawValue{
+                if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.isBottomLanguageChanged = true
+                    LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
+                    self.languageHasUpdated?()
+                }
+            }else{
+                if LanguageSelectionManager.shared.topLanguage != selectedLanguageCode{
+                    LanguageSelectionManager.shared.isTopLanguageChanged = true
+                    LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
+                    self.languageHasUpdated?()
+                }
+            }
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+            //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
+        }
+
+        if fromRetranslation == true {
+            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+            self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+            self.remove(asChildViewController: self)
+        }else{
+            NotificationCenter.default.post(name: .containerViewSelection, object: nil)
+        }
+    }
+
 
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
     /*
@@ -178,61 +205,51 @@ class LangSelectVoiceVC: BaseViewController {
         floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
      */
-
-
-    func updateButton(index:Int){
-        PrintUtility.printLog(tag: TAG, text: "Index position \(index)")
-        if index == 0{
-            btnLangList.backgroundColor = .black
-            btnHistoryList.backgroundColor = .darkGray
-            btnLangList.setImage(UIImage(named: iconGlobalSelect), for: UIControl.State.normal)
-            btnHistoryList.setImage(UIImage(named: iconHistoryUnSelect), for: UIControl.State.normal)
-        }else{
-            btnLangList.backgroundColor = .darkGray
-            btnHistoryList.backgroundColor = .black
-            btnLangList.setImage(UIImage(named: iconGlobalUnSelect), for: UIControl.State.normal)
-            btnHistoryList.setImage(UIImage(named: iconHistorySelect), for: UIControl.State.normal)
-        }
-    }
-
-    func tabsViewDidSelectItemAt(position: Int) {
-
-        PrintUtility.printLog(tag: TAG, text: "current-index \(currentIndex) position \(position)")
-        // Check if the selected tab cell position is the same with the current position in pageController, if not, then go forward or backward
-        if position != currentIndex {
-            if position > currentIndex {
-                self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
-            } else {
-                self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
-            }
-        }
-    }
-        // Show ViewController for the current position
+    
+    //MARK: - View Transactions
     func showViewController(_ index: Int) -> UIViewController? {
         currentIndex = index
         if index == 0 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier:tagLanguageListVC) as! LanguageListVC
             contentVC.pageIndex = index
+            contentVC.isFirstTimeLoad = self.isFirstTimeLoad
             return contentVC
         } else if index == 1 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier: tagHistoryListVC) as! HistoryListVC
-                //contentVC.name = tabsView.tabs[index].title
             contentVC.pageIndex = index
             return contentVC
         }else {
             let contentVC = storyboard?.instantiateViewController(withIdentifier: tagLanguageListVC) as! LanguageListVC
-                //contentVC.name = tabsView.tabs[index].title
             contentVC.pageIndex = index
+            contentVC.isFirstTimeLoad = self.isFirstTimeLoad
             return contentVC
         }
     }
 
 
-    func objectToJson(from object:Any) -> String? {
-        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
-            return nil
-        }
-        return String(data: data, encoding: String.Encoding.utf8)
+    //MARK: - Utils
+    @objc func hideMicrophoneButton(notification: Notification) {
+        //removeFloatingBtn()
+    }
+    
+    @objc func showMicrophoneButton(notification: Notification) {
+       //setUpMicroPhoneIcon()
+    }
+    
+    @objc func updateLanguageSelection(notification: Notification) {
+        self.isFirstTimeLoad = false
+        
+        updateButton(index: 0)
+        tabsViewDidSelectItemAt(position: 0)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+    }
+
+    private func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .updateTranlationNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .languageListNotofication, object: nil)
     }
     
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
@@ -267,104 +284,92 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     @objc private func removeChild(notification: Notification) {
-       // onBackButtonPressed(UIButton())
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
         self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
         self.remove(asChildViewController: self)
     }
-
-
-    @IBAction func onBackButtonPressed(_ sender: Any) {
-        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
-        PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
-        if !fromRetranslation {
-            if isNative == LanguageName.bottomLang.rawValue{
-                if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
-                    LanguageSelectionManager.shared.isBottomLanguageChanged = true
-                    LanguageSelectionManager.shared.bottomLanguage = selectedLanguageCode
-                    self.languageHasUpdated?()
-                }
-            }else{
-                if LanguageSelectionManager.shared.topLanguage != selectedLanguageCode{
-                    LanguageSelectionManager.shared.isTopLanguageChanged = true
-                    LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
-                    self.languageHasUpdated?()
-                }
-            }
-            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
-            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
-            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
-        }
-
-        if fromRetranslation == true {
-            let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
-            _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
-            self.remove(asChildViewController: self)
+    
+    private func updateButton(index:Int){
+        PrintUtility.printLog(tag: TAG, text: "Index position \(index)")
+        if index == 0{
+            btnLangList.backgroundColor = .black
+            btnHistoryList.backgroundColor = .darkGray
+            btnLangList.setImage(UIImage(named: iconGlobalSelect), for: UIControl.State.normal)
+            btnHistoryList.setImage(UIImage(named: iconHistoryUnSelect), for: UIControl.State.normal)
         }else{
-            NotificationCenter.default.post(name: .containerViewSelection, object: nil)
+            btnLangList.backgroundColor = .darkGray
+            btnHistoryList.backgroundColor = .black
+            btnLangList.setImage(UIImage(named: iconGlobalUnSelect), for: UIControl.State.normal)
+            btnHistoryList.setImage(UIImage(named: iconHistorySelect), for: UIControl.State.normal)
         }
-
     }
 
+    private func tabsViewDidSelectItemAt(position: Int) {
+        if position != currentIndex {
+            if position > currentIndex {
+                self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
+            } else {
+                self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
+            }
+        }
+    }
 }
 
-
-    extension LangSelectVoiceVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-        // return ViewController when go forward
-        func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-            let vc = pageViewController.viewControllers?.first
-            var index: Int
-            index = getVCPageIndex(vc)
-            // Don't do anything when viewpager reach the number of tabs
-            if index == 1 {
-                return nil
-            } else {
-                index += 1
-                return self.showViewController(index)
-            }
+//MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
+extension LangSelectVoiceVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    // return ViewController when go forward
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        let vc = pageViewController.viewControllers?.first
+        var index: Int
+        index = getVCPageIndex(vc)
+        // Don't do anything when viewpager reach the number of tabs
+        if index == 1 {
+            return nil
+        } else {
+            index += 1
+            return self.showViewController(index)
         }
-
-        // return ViewController when go backward
-        func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-            let vc = pageViewController.viewControllers?.first
-            var index: Int
-            index = getVCPageIndex(vc)
-
-            if index == 0 {
-                return nil
-            } else {
-                index -= 1
-                return self.showViewController(index)
-            }
+    }
+    
+    // return ViewController when go backward
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        let vc = pageViewController.viewControllers?.first
+        var index: Int
+        index = getVCPageIndex(vc)
+        
+        if index == 0 {
+            return nil
+        } else {
+            index -= 1
+            return self.showViewController(index)
         }
-
-        func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-            if finished {
-                if completed {
-                    guard let vc = pageViewController.viewControllers?.first else { return }
-                    let index: Int
-
-                    index = getVCPageIndex(vc)
-
-                    updateButton(index: index)
-                }
-            }
-        }
-
-        // Return the current position that is saved in the UIViewControllers we have in the UIPageViewController
-        func getVCPageIndex(_ viewController: UIViewController?) -> Int {
-            switch viewController {
-            case is LanguageListVC:
-                let vc = viewController as! LanguageListVC
-                return vc.pageIndex
-            case is HistoryListVC:
-                let vc = viewController as! HistoryListVC
-                return vc.pageIndex
-            default:
-                let vc = viewController as! LanguageListVC
-                return vc.pageIndex
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if finished {
+            if completed {
+                guard let vc = pageViewController.viewControllers?.first else { return }
+                let index: Int
+                
+                index = getVCPageIndex(vc)
+                
+                updateButton(index: index)
             }
         }
     }
+    
+    // Return the current position that is saved in the UIViewControllers we have in the UIPageViewController
+    func getVCPageIndex(_ viewController: UIViewController?) -> Int {
+        switch viewController {
+        case is LanguageListVC:
+            let vc = viewController as! LanguageListVC
+            return vc.pageIndex
+        case is HistoryListVC:
+            let vc = viewController as! HistoryListVC
+            return vc.pageIndex
+        default:
+            let vc = viewController as! LanguageListVC
+            return vc.pageIndex
+        }
+    }
+}
