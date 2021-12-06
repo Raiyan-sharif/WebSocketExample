@@ -136,6 +136,9 @@ let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 let BLOCK_DIRECTION:Int = -1
 let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
+let flashDisabledBatteryPercentage: Float = 15
+let cameraDisableBatteryPercentage: Float = 5
+let batteryMaxPercent: Float = 100
 
 
 //MARK: - Database Constants

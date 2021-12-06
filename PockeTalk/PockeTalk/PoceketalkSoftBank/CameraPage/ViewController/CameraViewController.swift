@@ -151,6 +151,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
                                                selector: #selector(didInterrupted),
                                                name: .AVCaptureSessionWasInterrupted,
                                                object: session)
+        
     }
     
     @objc
@@ -348,6 +349,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             }
         }
     }
+    
 }
 
 extension CameraViewController {
@@ -469,28 +471,41 @@ extension CameraViewController {
     }
     
     @IBAction func didTouchFlashButton(sender: UIButton) {
-        if activeCamera!.hasTorch {
-            // lock your device for configuration
-            do {
-                _ = try activeCamera!.lockForConfiguration()
-            } catch {
-                PrintUtility.printLog(tag: "error", text: "")
-            }
-            // if flash is on turn it off, if turn off turn it on
-            if activeCamera!.isTorchActive {
-                activeCamera!.torchMode = AVCaptureDevice.TorchMode.off
-                flashButton.setImage(UIImage(named: "flash"), for: .normal)
-                
-            } else {
-                // sets the torch intensity to 100%
+        let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
+        if batteryPercentage <= flashDisabledBatteryPercentage {
+            showLowBatteryErrorAlert(message: "camera_flash_unavailable".localiz())
+        } else {
+            if activeCamera!.hasTorch {
+                // lock your device for configuration
                 do {
-                    _ = try activeCamera!.setTorchModeOn(level: 1.0)
-                    flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
+                    _ = try activeCamera!.lockForConfiguration()
                 } catch {
                     PrintUtility.printLog(tag: "error", text: "")
                 }
+                // if flash is on turn it off, if turn off turn it on
+                if activeCamera!.isTorchActive {
+                    activeCamera!.torchMode = AVCaptureDevice.TorchMode.off
+                    flashButton.setImage(UIImage(named: "flash"), for: .normal)
+                    
+                } else {
+                    // sets the torch intensity to 100%
+                    do {
+                        _ = try activeCamera!.setTorchModeOn(level: 1.0)
+                        flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
+                    } catch {
+                        PrintUtility.printLog(tag: "error", text: "")
+                    }
+                }
+                activeCamera!.unlockForConfiguration()
             }
-            activeCamera!.unlockForConfiguration()
+
         }
     }
+    
+    func showLowBatteryErrorAlert(message: String){
+        let alertService = CustomAlertViewModel()
+        let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {}
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }

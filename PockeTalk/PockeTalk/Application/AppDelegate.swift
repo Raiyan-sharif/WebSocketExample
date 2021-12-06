@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
+        UIDevice.current.isBatteryMonitoringEnabled = true
         setUpinitialLaucnh()
         return true
     }
