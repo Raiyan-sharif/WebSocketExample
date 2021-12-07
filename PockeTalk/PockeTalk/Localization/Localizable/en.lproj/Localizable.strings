@@ -68,3 +68,4 @@
 "low_battery" = "Low Battery";
 "charge_the_device" = "Please charge the device";
 "camera_flash_unavailable" = "Camera Flash is not available as battery level is not sufficient.";
+"can_not_translate" = "Can not translate";

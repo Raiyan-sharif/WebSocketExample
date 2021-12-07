@@ -440,6 +440,10 @@ class CaptureImageProcessVC: BaseViewController {
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
+    func showErrorAlert() {
+        showErrorAlert(message: "can_not_translate".localiz())
+    }
+    
     
     func updateView() {
         DispatchQueue.main.async {[self] in
@@ -515,10 +519,18 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
         cameraTTSDiaolog.fromLanguageLabel.text = nativeText
         
-        let nativeLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: nativeLanguage)
-        cameraTTSDiaolog.fromTranslateLabel.text = getTTSDialogLanguageName(languageItem: nativeLangItem!)
+        //TODO remove this code after Language detection API implementation
+        var nativeLangItem: LanguageItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode:systemLanguageCodeEN)!
+        if nativeLanguage == LANGUAGE_CODE_UND || nativeLanguage == CHINESE_LANGUAGE_CODE_ZH {
+            cameraTTSDiaolog.fromTranslateLabel.text = nativeLanguage
+        }
+        else {
+            nativeLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: nativeLanguage)!
+            cameraTTSDiaolog.fromTranslateLabel.text = getTTSDialogLanguageName(languageItem: nativeLangItem)
+        }
+        
         cameraTTSDiaolog.toLanguageLabel.text = translateText
-        fromLanguage = nativeLangItem!.sysLangName
+        fromLanguage = nativeLangItem.sysLangName
         toLanguage = translateText
         
         let targetLangItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: translateLanguage)
@@ -649,7 +661,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         self.iTTServerViewModel.historyID = fromHistoryVC ? historyID : Int64(id!)
         
         let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) : CameraHistoryDBModel().getTranslatedData(id: Int64(id!))
-        
+        print("TranslatedData.line count: \(translatedData.line!.translatedText.count), translatedData.block count: \(translatedData.block!.translatedText.count)")
         let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
         PrintUtility.printLog(tag: "translated data : -", text: "\(String(describing: translatedData))")
         if modeSwitchTypes == blockMode {
