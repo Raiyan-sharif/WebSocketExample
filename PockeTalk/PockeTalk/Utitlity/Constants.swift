@@ -141,7 +141,7 @@ let cameraDisableBatteryPercentage: Float = 5
 let batteryMaxPercent: Float = 100
 let LANGUAGE_CODE_UND: String = "und"
 let CHINESE_LANGUAGE_CODE_ZH = "zh"
-
+let CameraDefaultLang = "Automatic Recognition"
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500

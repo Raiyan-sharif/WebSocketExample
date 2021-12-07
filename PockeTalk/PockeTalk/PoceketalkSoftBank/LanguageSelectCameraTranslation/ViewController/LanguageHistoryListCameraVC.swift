@@ -14,6 +14,7 @@ class LanguageHistoryListCameraVC: BaseViewController {
     var selectedIndexPath: IndexPath?
     var isSlecetedItemExist: Bool = false
     private let languageManager = LanguageSelectionManager.shared
+    var index = Int()
 
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -32,6 +33,18 @@ class LanguageHistoryListCameraVC: BaseViewController {
                 isSlecetedItemExist = true
             }
         }
+        
+        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
+        if langSelectFor == false {
+            for (index, _) in languages.enumerated() {
+                if (languages[index].name == CameraDefaultLang) {
+                    self.index = index
+                    break
+                }
+            }
+            languages.remove(at: self.index)
+        }
+        
     }
     
     private func setupTableView(){
