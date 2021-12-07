@@ -139,6 +139,8 @@ let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
 let flashDisabledBatteryPercentage: Float = 15
 let cameraDisableBatteryPercentage: Float = 5
 let batteryMaxPercent: Float = 100
+let LANGUAGE_CODE_UND: String = "und"
+let CHINESE_LANGUAGE_CODE_ZH = "zh"
 
 
 //MARK: - Database Constants
