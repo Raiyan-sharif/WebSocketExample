@@ -26,6 +26,7 @@ class HomeViewController: BaseViewController {
     static var bottomViewRef: UIView!
     static var bottomImageViewOfAnimationRef: UIImageView!
     static var cameraTapFlag = 0
+    let talkBtnImgView = UIImageView()
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
@@ -244,6 +245,7 @@ class HomeViewController: BaseViewController {
         HomeViewController.bottomViewRef = self.bottomView
         HomeViewController.bottomImageViewOfAnimationRef = self.bottomImageViewOfAnimation
         NotificationCenter.default.addObserver(self, selector: #selector(updateContainer(notification:)), name:.containerViewSelection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(animationDidEnterBackground(notification:)), name: .animationDidEnterBackground, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
@@ -419,6 +421,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name:.containerViewSelection, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .animationDidEnterBackground, object: nil)
     }
     
     private func openLanguageSelectionScreen(isNative: Int){
