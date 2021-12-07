@@ -90,6 +90,13 @@ class ChatDBModel: BaseDBModel {
 
     func insert(item: BaseEntity) throws -> Int64 {
         if let chatTableModel = item as? ChatEntity {
+            
+            let rowCount = try getRowCount(isFavorite: false)
+            if rowCount >= MAX_HISTORY_ROW {
+                let minId = try getMinId()
+                _ = try? delete(idToDelte: Int64(minId))
+            }
+            
             let insertStatement = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
 
             guard let rowId = try? insert(queryString: insertStatement) else { return -1 }
