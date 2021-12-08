@@ -7,17 +7,17 @@ import UIKit
 import WebKit
 import CallKit
 
-protocol TtsAlertControllerDelegate : class{
+protocol TtsAlertControllerDelegate: AnyObject{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
     func dismissed()
 }
-protocol Pronunciation:class {
+protocol Pronunciation: AnyObject{
     func dismissPro(dict:[String : String])
 }
 
-protocol CurrentTSDelegate : class {
+protocol CurrentTSDelegate: AnyObject{
     func passCurrentTSValue (currentTS : Int)
 }
 
@@ -221,7 +221,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     /// Retreive tts value from respective language code
     func getTtsValue () {
-        PrintUtility.printLog(tag: "TTT CHAT", text: "\(chatItemModel!.chatItem!.textTranslatedLanguage)")
+        PrintUtility.printLog(tag: "TTT CHAT", text: "\(String(describing: chatItemModel!.chatItem!.textTranslatedLanguage))")
+        
         let languageManager = LanguageSelectionManager.shared
         let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
         let item = LanguageEngineParser.shared.getTtsValue(langCode: targetLanguageItem!.code)

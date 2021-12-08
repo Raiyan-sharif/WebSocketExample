@@ -2,8 +2,6 @@
 //  HistoryCardViewController.swift
 //  PockeTalk
 //
-//  Created by BJIT on 16/11/21.
-//
 
 import UIKit
 protocol HistoryCardViewControllerDelegate: AnyObject {
@@ -47,10 +45,10 @@ class HistoryCardViewController: BaseViewController {
     private lazy var backBtn:UIButton = {
         guard let window = UIApplication.shared.keyWindow else {return UIButton()}
         let topPadding = window.safeAreaInsets.top
-        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
-        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
-        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
-        return okBtn
+        let backBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+        backBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+        backBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+        return backBtn
     }()
     
     //MARK: - Lifecycle methods
@@ -391,7 +389,7 @@ extension HistoryCardViewController : RetranslationDelegate{
             self.isReverse = false
             SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 let nativeText = chatItem!.textNative
                 let nativeLangName = chatItem!.textNativeLanguage!
                 

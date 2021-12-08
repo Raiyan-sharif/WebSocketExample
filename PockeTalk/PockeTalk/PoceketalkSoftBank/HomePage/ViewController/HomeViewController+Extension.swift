@@ -2,13 +2,10 @@
 //  HomeViewController+Extension.swift
 //  PockeTalk
 //
-//  Created by Morshed Alam on 10/21/21.
-//
-
 
 import UIKit
 
-protocol HomeVCDelegate:class {
+protocol HomeVCDelegate: AnyObject{
     func startRecord()
     func stopRecord()
 }
@@ -54,6 +51,20 @@ extension HomeViewController{
     
     func homeGestureEnableOrDiable(){
         homeContainerView.isHidden = self.homeContainerView.subviews.count == 0
+    }
+    
+    private func isSwipUpGestureEnable() -> Bool {
+        var isAlertViewPresent = false
+        
+        if historyCardVC.view.subviews.count > 0 {
+            for view in historyCardVC.view.subviews {
+                if view.tag == ttsAlertViewTag {
+                    isAlertViewPresent = true
+                }
+            }
+        }
+        
+        return isAlertViewPresent
     }
     
     func hideSpeechView(){
@@ -270,11 +281,15 @@ extension HomeViewController {
         case .ended:
             let translationY = recognizer.translation(in: self.view).y
             if nextState == .collapsed && translationY < 0 {
-                animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
-                self.historyCardVC.updateData()
-                //Remove all the child container while swipe up to dismiss
-                removeAllChildControllers(Int(IsTop.top.rawValue))
+                if !isSwipUpGestureEnable() {
+                    animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                    self.historyCardVC.updateData()
+                    
+                    //Remove all the child container while swipe up to dismiss
+                    removeAllChildControllers(Int(IsTop.top.rawValue))
+                }
             }
+            
             if nextState == .expanded && translationY > 0 {
                 animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
                 self.historyCardVC.updateData()
