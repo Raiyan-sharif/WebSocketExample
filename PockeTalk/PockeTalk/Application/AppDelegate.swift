@@ -92,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         SocketManager.sharedInstance.disconnect()
+        NotificationCenter.default.post(name: .animationDidEnterBackground, object: nil)
     }
 }
 

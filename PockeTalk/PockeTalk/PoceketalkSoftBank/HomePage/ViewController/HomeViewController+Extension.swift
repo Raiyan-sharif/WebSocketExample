@@ -16,7 +16,6 @@ protocol HomeVCDelegate:class {
 extension HomeViewController{
     
     func setUPLongPressGesture(){
-        let talkBtnImgView = UIImageView()
         talkBtnImgView.tag = 109
         talkBtnImgView.image = UIImage(named: "talk_button")
         talkBtnImgView.isUserInteractionEnabled = true
@@ -61,6 +60,16 @@ extension HomeViewController{
         self.speechContainerView.isHidden = true
         homeGestureEnableOrDiable()
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
+    }
+    @objc func animationDidEnterBackground(notification: Notification) {
+        talkBtnImgView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+        if !self.speechVC.isMinimumLimitExceed {
+            self.enableORDisableMicrophoneButton(isEnable: false)
+        }else{
+            self.speechVC.isMinimumLimitExceed = false
+        }
+        self.homeVCDelegate?.stopRecord()
+        TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
     }
     private func openSpeechView(){
         
