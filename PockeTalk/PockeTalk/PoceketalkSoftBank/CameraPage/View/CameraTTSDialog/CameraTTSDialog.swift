@@ -40,6 +40,7 @@ class CameraTTSDialog: UIView {
         styleViewWithAttributes()
         setUpFontAttribute()
         setUpDataInput()
+        changeFontSize()
     }
 
     required init?(coder: NSCoder) {
