@@ -71,18 +71,18 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="ka" stt_engine=""/>
     <item code="gu" stt_engine=""/>
     <item code="jw" stt_engine=""/>
-    <item code="kn" stt_engine="" tts_engine=""/>
+    <item code="kn" stt_engine="" tts_engine="google"/>
     <item code="lo" stt_engine=""/>
     <item code="lt" stt_engine=""/>
     <item code="ms" stt_engine="" tts_engine=""/>
-    <item code="ml" stt_engine="" tts_engine=""/>
+    <item code="ml" stt_engine="" tts_engine="google"/>
     <item code="mr" stt_engine=""/>
     <item code="ne" stt_engine="" tts_engine="" tts_value="Nepali"/>
     <item code="fa" stt_engine=""/>
     <item code="si" stt_engine="" tts_engine="" tts_value="Sinhala"/>
     <item code="sl" stt_engine=""/>
     <item code="su" stt_engine=""/>
-    <item code="te" stt_engine="" tts_engine=""/>
+    <item code="te" stt_engine="" tts_engine="google"/>
     <item code="uk" stt_engine="" tts_engine="" tts_value="Ukrainian Female"/>
     <item code="ur" stt_engine=""/>
     <item code="zu" stt_engine=""/>

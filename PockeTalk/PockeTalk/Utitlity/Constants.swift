@@ -178,12 +178,14 @@ let response_ok = "OK"
 let base_url = "https://test.pt-v.com"
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
+let tts_url = "/handsfree/api/pub/tts"
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
 let iosListener = "iosListener"
 let speakingListener = "speakingListener"
+let KEngineSeparator = ","
 
 // api key
 // TO DO : This will update/change in future
@@ -196,3 +198,11 @@ let languageSelectVoiceFloatingbtnTag = 1101
 let countrySelectVoiceFloatingbtnTag = 1102
 let languageSelectVoiceCameraFloatingBtnTag = 1103
 let ttsAlertViewTag = 11223
+
+// TTS API
+let licenseToken = "license_token"
+let language = "language"
+let text = "text"
+let tempo = "tempo"
+let engineName = "google"
+let normal = "normal"

@@ -9,6 +9,7 @@ import Moya
 enum NetworkServiceAPI {
     case authkey(params:[String:Any])
     case changeLanguage(params:[String:Any])
+    case tts(params:[String:Any])
 
 }
 extension NetworkServiceAPI:TargetType{
@@ -24,11 +25,15 @@ extension NetworkServiceAPI:TargetType{
             return stream_auth_key_url
         case .changeLanguage:
             return language_channge_url
+        case .tts:
+            return tts_url
         }
+        
+        
     }
     var method: Moya.Method {
         switch self {
-        case .authkey, .changeLanguage:
+        case .authkey, .changeLanguage, .tts:
             return .post
         }
     }
@@ -39,7 +44,8 @@ extension NetworkServiceAPI:TargetType{
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .changeLanguage(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.httpBody)
-
+        case let .tts(params) :
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
 
@@ -49,11 +55,13 @@ extension NetworkServiceAPI:TargetType{
             return "{\"description is \": \"\(config)\"}".utf8Encoded
         case let .changeLanguage(value) :
             return "{\"description is \": \"\(value)\"}".utf8Encoded
+        case let .tts(value) :
+            return "{\"description is \": \"\(value)\"}".utf8Encoded
         }
     }
     var headers: [String: String]? {
         switch self {
-        case .authkey:
+        case .authkey, .tts:
             return  ["Content-type": "application/x-www-form-urlencoded"]
         default :
            return nil
