@@ -49,7 +49,8 @@ class HomeViewController: BaseViewController {
     let fadeAnimationDuration: TimeInterval = 0.1
     let fadeAnimationDelay: TimeInterval = 0.2
     let fadeOutAlpha: CGFloat = 0.0
-    
+    static var isCameraButtonClickable = Bool()
+
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
     
@@ -125,6 +126,7 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        HomeViewController.isCameraButtonClickable = true
         view.changeFontSize()
         self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
         self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
@@ -160,7 +162,7 @@ class HomeViewController: BaseViewController {
         if let lanCode = self.homeVM.getLanguageName() {
             self.deviceLanguage = lanCode
         }
-        
+                
         self.topNativeLangNameLable.titleLabel?.textAlignment = .center
         self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
         self.topNativeLangNameLable.setTitleColor(UIColor._whiteColor(), for: .normal)
@@ -337,36 +339,40 @@ class HomeViewController: BaseViewController {
     
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
-        let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
-        if batteryPercentage <= cameraDisableBatteryPercentage {
-            showBatteryWarningAlert()
-        } else {
-            RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
-                guard let `self` = self else { return }
-                if isGranted {
-                    let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
-                    if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
-                        cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
-                            guard let `self` = self else { return }
-                            HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
-                            self.bottomView.layer.zPosition = isFullScreen ? 0: 103
-                            isFullScreen ? self.view.sendSubviewToBack(HomeViewController.bottomViewRef) : self.view.bringSubviewToFront(HomeViewController.bottomViewRef)
-                            self.homeContainerView.layoutIfNeeded()
-                            if(HomeViewController.cameraTapFlag != 0){
-                                HomeViewController.homeContainerViewBottomConstraint.constant = self.bottomView.bounds.height
+        if HomeViewController.isCameraButtonClickable == true {
+            HomeViewController.isCameraButtonClickable = false
+            let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
+            if batteryPercentage <= cameraDisableBatteryPercentage {
+                showBatteryWarningAlert()
+            } else {
+                RuntimePermissionUtil().requestAuthorizationPermission(for: .video) { [weak self] (isGranted) in
+                    guard let `self` = self else { return }
+                    if isGranted {
+                        let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
+                        if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
+                            cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
+                                guard let `self` = self else { return }
+                                HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
+                                self.bottomView.layer.zPosition = isFullScreen ? 0: 103
+                                isFullScreen ? self.view.sendSubviewToBack(HomeViewController.bottomViewRef) : self.view.bringSubviewToFront(HomeViewController.bottomViewRef)
+                                self.homeContainerView.layoutIfNeeded()
+                                if(HomeViewController.cameraTapFlag != 0){
+                                    HomeViewController.homeContainerViewBottomConstraint.constant = self.bottomView.bounds.height
+                                }
                             }
+                            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                            self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
+                            ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+                            self.hideSpeechView()
+                            self.isFromCameraPreview = true
                         }
-                        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
-                        self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
-                        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
-                        self.hideSpeechView()
-                        self.isFromCameraPreview = true
+                    } else {
+                        GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
                     }
-                } else {
-                    GlobalMethod.showPermissionAlert(viewController: self, title : kCameraUsageTitle, message : kCameraUsageMessage)
                 }
+                
             }
-            
+
         }
     }
     

@@ -25,6 +25,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     private var initialScale: CGFloat = 0
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
+    var isCaptureButtonClickable = Bool()
     
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
@@ -201,7 +202,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     func setUPViews() {
-        captureButton.isExclusiveTouch = true
         changeStatusBarColor()
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
@@ -241,6 +241,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
@@ -275,6 +276,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
         registerNotification()
         updateLanguageNames()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
+        self.cameraHistoryImageView.addGestureRecognizer(tap)
+        captureButton.isExclusiveTouch = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -405,6 +414,7 @@ extension CameraViewController {
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.updateHomeContainer?(false)
         HomeViewController.homeContainerViewBottomConstraint.constant = 0
+        HomeViewController.isCameraButtonClickable = true
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         //        if(self.navigationController == nil){
         //            self.dismiss(animated: true, completion: nil)
@@ -419,27 +429,31 @@ extension CameraViewController {
     
     @IBAction func captureButtonEventListener(_ sender: Any) {
         
-        takePhoto { [self] photo in
-            let image = photo.image()
-            let originalSize: CGSize
-            let visibleLayerFrame = cropImageRect
-            
-            let metaRect = (previewLayer.metadataOutputRectConverted(fromLayerRect: visibleLayerFrame ))
-            
-            if (image!.imageOrientation == UIImage.Orientation.left || image!.imageOrientation == UIImage.Orientation.right) {
-                originalSize = CGSize(width: (image?.size.height)!, height: image!.size.width)
-            } else {
-                originalSize = image!.size
-            }
-            let cropRect: CGRect = CGRect(x: metaRect.origin.x * originalSize.width, y: metaRect.origin.y * originalSize.height, width: metaRect.size.width * originalSize.width, height: metaRect.size.height * originalSize.height).integral
-            
-            if let finalCgImage = image!.cgImage?.cropping(to: cropRect) {
-                let image = UIImage(cgImage: finalCgImage, scale: 1.0, orientation: image!.imageOrientation)
+        if isCaptureButtonClickable == true {
+            isCaptureButtonClickable = false
+            takePhoto { [self] photo in
                 
-                self.capturedImage = image
+                let image = photo.image()
+                let originalSize: CGSize
+                let visibleLayerFrame = cropImageRect
+                
+                let metaRect = (previewLayer.metadataOutputRectConverted(fromLayerRect: visibleLayerFrame ))
+                
+                if (image!.imageOrientation == UIImage.Orientation.left || image!.imageOrientation == UIImage.Orientation.right) {
+                    originalSize = CGSize(width: (image?.size.height)!, height: image!.size.width)
+                } else {
+                    originalSize = image!.size
+                }
+                let cropRect: CGRect = CGRect(x: metaRect.origin.x * originalSize.width, y: metaRect.origin.y * originalSize.height, width: metaRect.size.width * originalSize.width, height: metaRect.size.height * originalSize.height).integral
+                
+                if let finalCgImage = image!.cgImage?.cropping(to: cropRect) {
+                    let image = UIImage(cgImage: finalCgImage, scale: 1.0, orientation: image!.imageOrientation)
+                    
+                    self.capturedImage = image
+                }
+                //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
+                layoutCameraResult(uiImage: image!)
             }
-            //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
-            layoutCameraResult(uiImage: image!)
         }
     }
     
