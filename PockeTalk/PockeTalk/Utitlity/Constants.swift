@@ -157,9 +157,10 @@ let blockMode = "blockMode"
 let lineMode = "lineMode"
 
 //FontSizes [range (11-22) ]
-let FONTSIZE: [CGFloat] = [0.7, 0.85, 1.0, 1.15, 1.3, 1.45]
-let DEFAULT_FONTSIZE: CGFloat = 17.0
+let FONTSIZE: [CGFloat] = [0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
+let DEFAULT_FONTSIZE: CGFloat = 24.0
 let DEFAULT_FONTSIZE_INDEX: Int = 2
+let DEFAULT_FONT_MULTIPLYER: CGFloat = 0.1
 let FONT_SIZE_KEY: String = "FontSize"
 
 // Socket url connection

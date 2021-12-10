@@ -126,6 +126,10 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         view.changeFontSize()
+        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
+        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        self.topSysLangName.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        self.bottomLangNativeName.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         setHistoryAndFavouriteView()
