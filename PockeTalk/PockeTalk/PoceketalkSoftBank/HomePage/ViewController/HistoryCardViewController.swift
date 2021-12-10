@@ -172,11 +172,13 @@ class HistoryCardViewController: BaseViewController {
         }
     }
     
-    func updateData(){
+    func updateData(shouldCVScrollToBottom: Bool){
         deletedCellHeight = 0
         historyViewModel.getData()
         collectionView.reloadData()
-        self.scrollToBottom()
+        if shouldCVScrollToBottom {
+            self.scrollToBottom()
+        }
     }
     //MARK: - View Transactions
     private func openTTTResultAlert(_ idx: IndexPath){

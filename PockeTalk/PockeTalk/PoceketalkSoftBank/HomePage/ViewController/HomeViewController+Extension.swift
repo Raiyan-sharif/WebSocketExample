@@ -264,7 +264,7 @@ extension HomeViewController {
         case .began:
             self.historyImageView.isHidden = true
             startInteractiveTransition(state: nextState, duration: historyCardAnimationDuration)
-            self.historyCardVC.updateData()
+            self.historyCardVC.updateData(shouldCVScrollToBottom: true)
         case .changed:
             let translation = recognizer.translation(in: self.view)
             var fractionComplete = translation.y / cardHeight
@@ -284,7 +284,7 @@ extension HomeViewController {
             if nextState == .collapsed && translationY < 0 {
                 if !isSwipUpGestureEnable() {
                     animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
-                    self.historyCardVC.updateData()
+                    self.historyCardVC.updateData(shouldCVScrollToBottom: true)
                     
                     //Remove all the child container while swipe up to dismiss
                     removeAllChildControllers(Int(IsTop.top.rawValue))
@@ -293,7 +293,7 @@ extension HomeViewController {
             
             if nextState == .expanded && translationY > 0 {
                 animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
-                self.historyCardVC.updateData()
+                self.historyCardVC.updateData(shouldCVScrollToBottom: true)
             }
             self.historyImageView.isHidden = false
         default:

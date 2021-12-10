@@ -105,6 +105,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 //        if(!isSpeaking){
 //            playTTS()
 //        }
+        self.view.backgroundColor = .black
         registerNotification()
         checkTTSValueAndPlay()
 
@@ -428,10 +429,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
+        self.backButton.isHidden = true
         self.zoomOutDismissAnimation()
     }
     
     private func zoomOutDismissAnimation() {
+        self.view.backgroundColor = .clear
         UIView.animate(withDuration: 0.5, animations: {
             self.containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
         }) { _ in

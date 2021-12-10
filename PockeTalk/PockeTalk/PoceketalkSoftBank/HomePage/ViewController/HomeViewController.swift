@@ -478,7 +478,7 @@ class HomeViewController: BaseViewController {
         historyDissmissed()
         self.historyImageView.becomeFirstResponder()
         self.view.becomeFirstResponder()
-        self.historyCardVC.updateData()
+        self.historyCardVC.updateData(shouldCVScrollToBottom: false)
     }
 }
 
