@@ -15,7 +15,7 @@ class LanguageSelectCameraVC: BaseViewController {
     let TAG = "\(LanguageSelectCameraVC.self)"
     var currentIndex: Int = 0
     let tabsPageViewController = "TabsPageViewController"
-
+    
     let iconGlobalSelect = "icon_language_global_select.png"
     let iconGlobalUnSelect = "icon_language_global_unselect.png"
     let iconHistorySelect = "icon_language_history_select.png"
@@ -31,7 +31,7 @@ class LanguageSelectCameraVC: BaseViewController {
     var updateHomeContainer:(()->())?
     let window :UIWindow = UIApplication.shared.keyWindow!
     var isFirstTimeLoad = true
-
+    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +57,12 @@ class LanguageSelectCameraVC: BaseViewController {
     deinit {
         unregisterNotification()
     }
-
+    
     //MARK: - Initial setup
     private func navigationViewCustomization(){
         toolbarTitleLabel.text = "Language".localiz()
         toolbarTitleLabel.textColor = UIColor.white
-       
+        
         back_btn.setTitleColor(UIColor.white, for: .selected)
         back_btn.setImage(UIImage(named: "icon_arrow_left.9"), for: .selected)
     }
@@ -76,27 +76,27 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     private func setupPageViewController() {
-      self.pageController = storyboard?.instantiateViewController(withIdentifier: tabsPageViewController) as! TabsPageViewController
-      self.addChild(self.pageController)
-      self.view.addSubview(self.pageController.view)
-
-      pageController.delegate = self
-      pageController.dataSource = self
-      pageController.setViewControllers([showViewController(0)!], direction: .forward, animated: true, completion: nil)
-
-      self.pageController.view.translatesAutoresizingMaskIntoConstraints = false
-      NSLayoutConstraint.activate([
-        self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
-        self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        self.pageController = storyboard?.instantiateViewController(withIdentifier: tabsPageViewController) as! TabsPageViewController
+        self.addChild(self.pageController)
+        self.view.addSubview(self.pageController.view)
+        
+        pageController.delegate = self
+        pageController.dataSource = self
+        pageController.setViewControllers([showViewController(0)!], direction: .forward, animated: true, completion: nil)
+        
+        self.pageController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.pageController.view.topAnchor.constraint(equalTo: self.tabsView.bottomAnchor),
+            self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         self.pageController.didMove(toParent: self)
     }
     
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCameralanguageSelection(notification:)), name: .cameraHistorySelectionLanguage, object: nil)
@@ -104,25 +104,25 @@ class LanguageSelectCameraVC: BaseViewController {
     
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
     /*
-    func setUpMicroPhoneIcon () {
-        let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
-        
-        let floatingButton = UIButton(frame: CGRect(
-            x: self.window.frame.maxX - 60,
-            y: self.window.frame.maxY - bottomMergin,
-            width: width,
-            height: width)
-        )
-        
-        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
-        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingButton.layer.cornerRadius = width/2
-        floatingButton.clipsToBounds = true
-        floatingButton.tag = languageSelectVoiceCameraFloatingBtnTag
-        self.window.addSubview(floatingButton)
-        
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-    }
+     func setUpMicroPhoneIcon () {
+     let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
+     
+     let floatingButton = UIButton(frame: CGRect(
+     x: self.window.frame.maxX - 60,
+     y: self.window.frame.maxY - bottomMergin,
+     width: width,
+     height: width)
+     )
+     
+     floatingButton.setImage(UIImage(named: "mic"), for: .normal)
+     floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
+     floatingButton.layer.cornerRadius = width/2
+     floatingButton.clipsToBounds = true
+     floatingButton.tag = languageSelectVoiceCameraFloatingBtnTag
+     self.window.addSubview(floatingButton)
+     
+     floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+     }
      */
     
     //MARK: - IBActions
@@ -132,7 +132,7 @@ class LanguageSelectCameraVC: BaseViewController {
         tabsViewDidSelectItemAt(position: 0)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
-
+    
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
         updateButton(index: 1)
@@ -161,10 +161,10 @@ class LanguageSelectCameraVC: BaseViewController {
     
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
     /*
-    @objc func microphoneTapAction (sender:UIButton) {
-        LnaguageSettingsTutorialCameraVC.openShowViewController(navigationController: self.navigationController)
-        //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
-    }
+     @objc func microphoneTapAction (sender:UIButton) {
+     LnaguageSettingsTutorialCameraVC.openShowViewController(navigationController: self.navigationController)
+     //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
+     }
      */
     
     //MARK: - Utils
@@ -173,7 +173,7 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     @objc func showMicrophoneButton(notification: Notification) {
-       //setUpMicroPhoneIcon()
+        //setUpMicroPhoneIcon()
     }
     
     private func unregisterNotification(){
@@ -191,11 +191,11 @@ class LanguageSelectCameraVC: BaseViewController {
     
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
     /*
-    private func removeFloatingBtn(){
-        window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.removeFromSuperview()
-    }
+     private func removeFloatingBtn(){
+     window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.removeFromSuperview()
+     }
      */
-
+    
     private func updateButton(index:Int){
         PrintUtility.printLog(tag: TAG , text: "Index position \(index)")
         if index == 0{
@@ -210,7 +210,7 @@ class LanguageSelectCameraVC: BaseViewController {
             btnHistoryList.setImage(UIImage(named: iconHistorySelect), for: UIControl.State.normal)
         }
     }
-
+    
     private func tabsViewDidSelectItemAt(position: Int) {
         if position != currentIndex {
             if position > currentIndex {
@@ -220,7 +220,7 @@ class LanguageSelectCameraVC: BaseViewController {
             }
         }
     }
- 
+    
     private func showViewController(_ index: Int) -> UIViewController? {
         currentIndex = index
         if index == 0 {
@@ -239,7 +239,7 @@ class LanguageSelectCameraVC: BaseViewController {
             return contentVC
         }
     }
-
+    
     private func isLanguageSupportRecognition(code: String?) -> Bool{
         let recogLangList = CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()
         for item in recogLangList{
@@ -296,10 +296,10 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
     // Return the current position that is saved in the UIViewControllers we have in the UIPageViewController
     func getVCPageIndex(_ viewController: UIViewController?) -> Int {
         switch viewController {
-        case is LanguageListVC:
+        case is LanguageListCameraVC:
             let vc = viewController as! LanguageListCameraVC
             return vc.pageIndex
-        case is HistoryListVC:
+        case is LanguageHistoryListCameraVC:
             let vc = viewController as! LanguageHistoryListCameraVC
             return vc.pageIndex
         default:
