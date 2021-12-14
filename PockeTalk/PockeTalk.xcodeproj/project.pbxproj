@@ -224,6 +224,8 @@
 		89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */; };
 		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
 		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
+		89E0F2AE277AD5430031782D /* LangDetectionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */; };
+		89E0F2AF277AD5430031782D /* LangDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AD277AD5430031782D /* LangDetection.swift */; };
 		960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960835B826E75549006DB9F9 /* PronunciationModel.swift */; };
 		963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963D8EA926F4A3E700E32162 /* FontUtility.swift */; };
 		967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */; };
@@ -466,6 +468,8 @@
 		89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureProcessor.swift; sourceTree = "<group>"; };
 		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
+		89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetectionResponseModel.swift; sourceTree = "<group>"; };
+		89E0F2AD277AD5430031782D /* LangDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetection.swift; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		963D8EA926F4A3E700E32162 /* FontUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtility.swift; sourceTree = "<group>"; };
 		967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertDialog.storyboard; sourceTree = "<group>"; };
@@ -1573,6 +1577,8 @@
 		96D123A226E86AFF003F3572 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				89E0F2AD277AD5430031782D /* LangDetection.swift */,
+				89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */,
 				8940E31B26FC299B0083E4FA /* CropUtils.swift */,
 				89495B2626F0A92300CEA19D /* DetectedJSONModel.swift */,
 				89495B2726F0A92300CEA19D /* PointUtils.swift */,
@@ -1934,6 +1940,7 @@
 				4AE97AD926E8E1E7007344FC /* ChatEntity.swift in Sources */,
 				8915C20F26F9DFED0091BF8B /* FavouriteLayout.swift in Sources */,
 				87B56E1526EB2FD800BF613B /* HistoryCell.swift in Sources */,
+				89E0F2AF277AD5430031782D /* LangDetection.swift in Sources */,
 				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
 				4A68C52A270440A0007DB329 /* ConfiguraitonFactory.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
@@ -2019,6 +2026,7 @@
 				89C0F7D326F1CE08000CD5FC /* Reachability.swift in Sources */,
 				89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */,
 				8782DF2126E0B6CE003A1681 /* SystemLanguages.swift in Sources */,
+				89E0F2AE277AD5430031782D /* LangDetectionResponseModel.swift in Sources */,
 				4A40AC9826F89BC800019A5B /* BaseModel.swift in Sources */,
 				50675D5F26EB2BF300A775E5 /* LanguageHistoryListCameraVC.swift in Sources */,
 				89495B3E26F0AA2600CEA19D /* Animation.swift in Sources */,
