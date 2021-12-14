@@ -42,10 +42,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var crossButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var bottomTalkView: UIView!
     @IBOutlet weak var containerViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var fromLangLabelBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var toLangLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewtrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
@@ -430,6 +427,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
         self.backButton.isHidden = true
+        self.bottomView.isHidden = true
         self.zoomOutDismissAnimation()
     }
     
