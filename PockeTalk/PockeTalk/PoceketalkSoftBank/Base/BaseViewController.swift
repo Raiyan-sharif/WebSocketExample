@@ -6,11 +6,17 @@
 import UIKit
 enum SpeechProcessingScreenOpeningPurpose{
     case HomeSpeechProcessing
+    
     case LanguageSelectionVoice
     case LanguageHistorySelectionVoice
+    case LanguageSettingsSelectionVoice
     case CountrySelectionByVoice
+    case CountrySettingsSelectionByVoice
+    
     case LanguageSelectionCamera
     case LanguageHistorySelectionCamera
+    case LanguageSettingsSelectionCamera
+    
     case PronunciationPractice
     case HistoryScrren
     case HistroyPronunctiation

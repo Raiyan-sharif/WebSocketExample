@@ -110,10 +110,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive),
-                                               name: UIApplication.didBecomeActiveNotification,            object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     func unregisterNotification(){
@@ -121,7 +118,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     deinit {
-        //unregisterNotification()
+        unregisterNotification()
     }
     
     override func viewDidLoad() {

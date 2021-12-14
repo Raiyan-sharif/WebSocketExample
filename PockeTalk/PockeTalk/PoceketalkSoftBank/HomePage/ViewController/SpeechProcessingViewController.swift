@@ -19,6 +19,10 @@ protocol SpeechProcessingDismissDelegate : AnyObject {
     func showTutorial()
 }
 
+protocol STTDelegate: AnyObject{
+    func isSTTAvailable(hasSTTValue: Bool)
+}
+
 class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var exampleLabel: UILabel!
@@ -39,6 +43,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
     weak var pronunciationDelegate : DismissPronunciationFromHistory?
+    weak var sttDelegate: STTDelegate?
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
 
     var isFromTutorial : Bool = false
@@ -264,7 +269,7 @@ class SpeechProcessingViewController: BaseViewController{
 
     private func showExampleText() {
         switch ScreenTracker.sharedInstance.screenPurpose {
-        case .LanguageSelectionVoice, .LanguageSelectionCamera, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera:
+        case .LanguageSelectionVoice, .LanguageSelectionCamera, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
             self.titleLabel.text = "language_selection_voice_message".localiz()
             break
         case .HomeSpeechProcessing:
@@ -277,7 +282,7 @@ class SpeechProcessingViewController: BaseViewController{
             exampleLabel.text = speechLanguage?.exampleText
             descriptionLabel.text = speechLanguage?.secText
             break
-        case .CountrySelectionByVoice:
+        case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             self.titleLabel.text = "country_selection_voice_msg".localiz()
             break
         case .PronunciationPractice, .HistoryScrren, .HistroyPronunctiation: break
@@ -317,57 +322,73 @@ class SpeechProcessingViewController: BaseViewController{
                 LanguageSelectionManager.shared.tempSourceLanguage = nil
                 DispatchQueue.main.async { [weak self] in
                     guard let `self` = self else { return }
-                //if let purpose = self.screenPurpose{
-                switch ScreenTracker.sharedInstance.screenPurpose {
+                    switch ScreenTracker.sharedInstance.screenPurpose {
                     case .CountrySelectionByVoice:
-                       // self.speechProcessingDelegate?.searchCountry(text: self.speechProcessingVM.getSST_Text.value)
                         NotificationCenter.default.post(name: .countySlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
+                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
                         
-                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                        //NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-                        //self.navigationController?.popViewController(animated: true)
-                    
+                        self.homeVC?.hideSpeechView()
+                        break
+                    case .CountrySettingsSelectionByVoice:
+                        NotificationCenter.default.post(name: .countySettingsSlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
+                        
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
                         
-                        /// notification for showing microphone btn
                         NotificationCenter.default.post(name: .languageListNotofication, object: nil)
-                    
-                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                        //NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-                    
+                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                        
                         self.homeVC?.hideSpeechView()
                         break
                     case  .LanguageHistorySelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        
                         NotificationCenter.default.post(name: .languageHistoryListNotification, object: nil)
+                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+                        
+                        self.homeVC?.hideSpeechView()
+                        break
+                    case .LanguageSettingsSelectionVoice:
+                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        
+                        NotificationCenter.default.post(name: .languageSettingsListNotification, object: nil)
+                        
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        
                         NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
-                    
-                        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                        //NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
-                    
+                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+                        
+                        self.homeVC?.hideSpeechView()
+                        break
+                    case .LanguageSettingsSelectionCamera:
+                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        
+                        NotificationCenter.default.post(name: .cameraLanguageSettingsListNotification, object: nil, userInfo:nil)
+                        
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageHistorySelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        
+                        
                         NotificationCenter.default.post(name: .cameraHistorySelectionLanguage, object: nil, userInfo:nil)
+                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+                        
                         self.homeVC?.hideSpeechView()
                         break
                     case .HomeSpeechProcessing :
                         self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
                         break
-                case .PronunciationPractice,.HistroyPronunctiation:
+                    case .PronunciationPractice,.HistroyPronunctiation:
                         self.homeVC?.hideSpeechView()
                         self.showPronunciationPracticeResult(stt: self.speechProcessingVM.getSST_Text.value)
-
-                default:
-                    break
+                    default:
+                        break
                     }
                 self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
                 }
@@ -532,6 +553,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         self.spinnerView.isHidden = false
         service?.stopRecord()
         service?.timerInvalidate()
+        sttDelegate?.isSTTAvailable(hasSTTValue: isSSTavailable)
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !isSSTavailable {
                 self.showTutorial()
@@ -605,7 +627,7 @@ extension SpeechProcessingViewController{
                     speechLangCode = languageManager.topLanguage
                 }
                 break
-            case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice:
+            case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
                 if countrySearchspeechLangCode != "" {
                     speechLangCode = countrySearchspeechLangCode
                 } else {

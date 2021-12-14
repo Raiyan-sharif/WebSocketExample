@@ -22,16 +22,13 @@ class LanguageListVC: BaseViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLanguageProperty()
         setupTableView()
         registerNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG, text:" position \(String(describing: selectedItemPosition))")
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        setupLanguageProperty()
+        updateTableView()
     }
     
     deinit {
@@ -60,6 +57,13 @@ class LanguageListVC: BaseViewController {
         self.langListTableView.backgroundColor = UIColor.clear
     }
     
+    private func updateTableView(){
+        let selectedItemPosition = getSelectedItemPosition
+        PrintUtility.printLog(tag: TAG, text:" position \(String(describing: selectedItemPosition))")
+        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
+        langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+    }
+    
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageListNotofication, object: nil)
     }
@@ -69,7 +73,7 @@ class LanguageListVC: BaseViewController {
         NotificationCenter.default.removeObserver(self, name:.languageListNotofication, object: nil)
     }
 
-    @objc func updateLanguageSelection(notification: Notification) {
+    @objc private func updateLanguageSelection(notification: Notification) {
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
         self.langListTableView.reloadData()

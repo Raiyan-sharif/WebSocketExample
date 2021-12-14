@@ -21,6 +21,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     
     var countryListItem: CountryListItemElement?
     var languageList = [LanguageItem]()
+    private let window :UIWindow = UIApplication.shared.keyWindow!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -82,7 +83,8 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     //MARK: - IBActions
-    @IBAction func onOkButtonPressed(_ sender: Any) {
+    @IBAction private func onOkButtonPressed(_ sender: Any) {
+        removeFloatingBtn()
         if getSelectedItemPosition() == INVALID_SELECTION {
             PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
             return
@@ -108,8 +110,13 @@ class CountryWiseLanguageListViewController: BaseViewController {
         self.navigationController?.popViewController(animated: false)
     }
     
-    @IBAction func onBackButtonPressed(_ sender: Any) {
+    @IBAction private func onBackButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func removeFloatingBtn(){
+        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
+        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
     }
 }
 

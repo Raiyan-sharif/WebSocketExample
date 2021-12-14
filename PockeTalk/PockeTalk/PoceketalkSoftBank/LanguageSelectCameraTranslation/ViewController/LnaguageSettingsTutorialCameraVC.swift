@@ -2,34 +2,47 @@
 //  LnaguageSettingsTutorialCameraVC.swift
 //  PockeTalk
 //
-//  Created by BJIT on 10/11/21.
-//
 
 import UIKit
 
+//MARK: - LnaguageSettingsTutorialCameraProtocol
+protocol LnaguageSettingsTutorialCameraProtocol: AnyObject{
+    func updateLanguageByVoice()
+}
+
 class LnaguageSettingsTutorialCameraVC: BaseViewController {
-
-    @IBAction func onBackPressed(_ sender: Any) {
-        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-        //NotificationCenter.default.post(name: .popFromCameralanguageSelectionVoice, object: nil)
-        
-        self.navigationController?.popViewController(animated: true)
-    }
-    @IBOutlet weak var toolbarTitleLabel: UILabel!
-
-    @IBOutlet weak var guidelineTextLabel: UILabel!
+    @IBOutlet weak private var toolbarTitleLabel: UILabel!
+    @IBOutlet weak private var guidelineTextLabel: UILabel!
+    weak var delegate: LnaguageSettingsTutorialCameraProtocol?
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         toolbarTitleLabel.text = "Language Settings".localiz()
         guidelineTextLabel.text = "Speech Guideline".localiz()
-        // Do any additional setup after loading the view.
+        registerNotification()
     }
     
-    static func openShowViewController(navigationController: UINavigationController?){
-        //self.showToast(message: "Show country selection screen", seconds: toastVisibleTime)
-        let storyboard = UIStoryboard(name: "LanguageSelectCamera", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "LnaguageSettingsTutorialCameraVC")as! LnaguageSettingsTutorialCameraVC
-        navigationController?.pushViewController(controller, animated: true);
+    private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUI(notification:)), name: .cameraLanguageSettingsListNotification, object: nil)
     }
-
+    
+    //MARK: - IBActions
+    @IBAction func onBackPressed(_ sender: Any) {
+        removeVC()
+    }
+    
+    //MARK: - Utils
+    private func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name: .cameraLanguageSettingsListNotification, object: nil)
+    }
+    
+    @objc func updateUI(notification: Notification) {
+        removeVC()
+    }
+    
+    private func removeVC(){
+        delegate?.updateLanguageByVoice()
+        remove(asChildViewController: self)
+    }
 }

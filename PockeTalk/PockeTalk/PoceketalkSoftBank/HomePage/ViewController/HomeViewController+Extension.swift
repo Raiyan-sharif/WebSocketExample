@@ -145,7 +145,6 @@ extension HomeViewController{
             if isGranted {
                 let imageView = gesture.view! as! UIImageView
                 if gesture.state == .began {
-                    
                     SocketManager.sharedInstance.connect()
                     SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                     
@@ -166,21 +165,8 @@ extension HomeViewController{
                         self.removeAllChildControllers(Int(IsTop.top.rawValue))
                     }
                     
-                    
-                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                    /*
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
-                     }
+                    self.hideMicrophoneBtnInLanguageScene()
                      
-                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-                     }
-                     */
                     SpeechProcessingViewModel.isLoading = false;
                     self.homeVCDelegate?.startRecord()
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
@@ -190,20 +176,6 @@ extension HomeViewController{
                 if gesture.state == .ended {
                     imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
                     
-                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                    /*
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
-                     }
-                     */
                     SpeechProcessingViewModel.isLoading = true;
                     if !self.speechVC.isMinimumLimitExceed {
                         self.enableORDisableMicrophoneButton(isEnable: false)
@@ -227,6 +199,51 @@ extension HomeViewController{
     func isFromlanguageSelection()-> Bool{
         return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
         ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
+    }
+    
+    private func hideMicrophoneBtnInLanguageScene(){
+        
+        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+    }
+    
+    func showMicrophoneBtnInLanguageScene(){
+        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
     }
 }
 

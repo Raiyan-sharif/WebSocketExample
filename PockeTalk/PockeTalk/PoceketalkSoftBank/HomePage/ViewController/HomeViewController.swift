@@ -96,6 +96,7 @@ class HomeViewController: BaseViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let speechVC = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
         homeVCDelegate = speechVC
+        speechVC.sttDelegate = self
         return speechVC
     }()
     
@@ -552,5 +553,14 @@ extension HomeViewController : SpeechProcessingDismissDelegate {
 extension HomeViewController : DismissTutorialDelegate {
     func dismissTutorialWhileFirstTimeLoad() {
         removeAllChildControllers(Int(IsTop.top.rawValue))
+    }
+}
+
+//MARK: - STTDelegate
+extension HomeViewController: STTDelegate{
+    func isSTTAvailable(hasSTTValue: Bool) {
+        if hasSTTValue == false{
+            showMicrophoneBtnInLanguageScene()
+        }
     }
 }

@@ -31,6 +31,7 @@ class LanguageSelectCameraVC: BaseViewController {
     var updateHomeContainer:(()->())?
     let window :UIWindow = UIApplication.shared.keyWindow!
     var isFirstTimeLoad = true
+    private var floatingMicrophoneButton: UIButton!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -41,17 +42,9 @@ class LanguageSelectCameraVC: BaseViewController {
         updateButton(index:0)
         setupPageViewController()
         registerNotification()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-        //setUpMicroPhoneIcon()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        //removeFloatingBtn()
+        DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) { [weak self] in
+            self?.setUpMicroPhoneIcon()
+        }
     }
     
     deinit {
@@ -95,35 +88,33 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     private func registerNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCameralanguageSelection(notification:)), name: .cameraHistorySelectionLanguage, object: nil)
     }
     
-    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-    /*
-     func setUpMicroPhoneIcon () {
-     let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
-     
-     let floatingButton = UIButton(frame: CGRect(
-     x: self.window.frame.maxX - 60,
-     y: self.window.frame.maxY - bottomMergin,
-     width: width,
-     height: width)
-     )
-     
-     floatingButton.setImage(UIImage(named: "mic"), for: .normal)
-     floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
-     floatingButton.layer.cornerRadius = width/2
-     floatingButton.clipsToBounds = true
-     floatingButton.tag = languageSelectVoiceCameraFloatingBtnTag
-     self.window.addSubview(floatingButton)
-     
-     floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-     }
-     */
+    private func setUpMicroPhoneIcon () {
+        let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
+        
+        floatingMicrophoneButton = UIButton(frame: CGRect(
+            x: self.window.frame.maxX - 60,
+            y: self.window.frame.maxY - bottomMergin,
+            width: width,
+            height: width)
+        )
+        
+        floatingMicrophoneButton.setImage(UIImage(named: "mic"), for: .normal)
+        floatingMicrophoneButton.backgroundColor = UIColor._buttonBackgroundColor()
+        floatingMicrophoneButton.layer.cornerRadius = width/2
+        floatingMicrophoneButton.clipsToBounds = true
+        floatingMicrophoneButton.tag = languageSelectVoiceCameraFloatingBtnTag
+        self.window.addSubview(floatingMicrophoneButton)
+        
+        floatingMicrophoneButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
     
     //MARK: - IBActions
     @IBAction func onLangSelectButton(_ sender: Any) {
@@ -157,28 +148,46 @@ class LanguageSelectCameraVC: BaseViewController {
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
         self.updateHomeContainer?()
         remove(asChildViewController: self)
+        removeFloatingBtn()
     }
     
-    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-    /*
-     @objc func microphoneTapAction (sender:UIButton) {
-     LnaguageSettingsTutorialCameraVC.openShowViewController(navigationController: self.navigationController)
-     //self.showToast(message: "Navigate to Speech Controller", seconds: toastVisibleTime)
-     }
-     */
+    @objc func microphoneTapAction (sender:UIButton) {
+        microphoneIcon(isHidden: true)
+        navigateToLanguageScene()
+    }
+    
+    //MARK: - View Transactions
+    private func navigateToLanguageScene(){
+        let storyboard = UIStoryboard(name: "LanguageSelectCamera", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "LnaguageSettingsTutorialCameraVC")as! LnaguageSettingsTutorialCameraVC
+        controller.delegate = self
+        add(asChildViewController: controller, containerView: self.view)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionCamera
+    }
     
     //MARK: - Utils
     @objc func hideMicrophoneButton(notification: Notification) {
-        //removeFloatingBtn()
+        microphoneIcon(isHidden: true)
     }
     
     @objc func showMicrophoneButton(notification: Notification) {
-        //setUpMicroPhoneIcon()
+        microphoneIcon(isHidden: false)
+    }
+    
+    private func microphoneIcon(isHidden: Bool){
+        self.floatingMicrophoneButton.isHidden = isHidden
+    }
+    
+    private func updateUI(){
+        self.isFirstTimeLoad = false
+        updateButton(index: 0)
+        tabsViewDidSelectItemAt(position: 0)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
         NotificationCenter.default.removeObserver(self, name: .cameraHistorySelectionLanguage, object: nil)
     }
     
@@ -189,13 +198,10 @@ class LanguageSelectCameraVC: BaseViewController {
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
-    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-    /*
-     private func removeFloatingBtn(){
-     window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.removeFromSuperview()
-     }
-     */
-    
+    private func removeFloatingBtn(){
+        window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.removeFromSuperview()
+    }
+
     private func updateButton(index:Int){
         PrintUtility.printLog(tag: TAG , text: "Index position \(index)")
         if index == 0{
@@ -217,7 +223,9 @@ class LanguageSelectCameraVC: BaseViewController {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
             } else {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
-            }
+            } 
+        } else {
+            self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
         }
     }
     
@@ -251,14 +259,21 @@ class LanguageSelectCameraVC: BaseViewController {
     }
 }
 
+//MARK: - LanguageSelectCameraVC
+extension LanguageSelectCameraVC: LnaguageSettingsTutorialCameraProtocol{
+    func updateLanguageByVoice() {
+        microphoneIcon(isHidden: false)
+        updateUI()
+    }
+}
+
 //MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    // return ViewController when go forward
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let vc = pageViewController.viewControllers?.first
         var index: Int
         index = getVCPageIndex(vc)
-        // Don't do anything when viewpager reach the number of tabs
+
         if index == 1 {
             return nil
         } else {
@@ -267,7 +282,7 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
         }
     }
     
-    // return ViewController when go backward
+  
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let vc = pageViewController.viewControllers?.first
         var index: Int
@@ -293,7 +308,6 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
         }
     }
     
-    // Return the current position that is saved in the UIViewControllers we have in the UIPageViewController
     func getVCPageIndex(_ viewController: UIViewController?) -> Int {
         switch viewController {
         case is LanguageListCameraVC:
