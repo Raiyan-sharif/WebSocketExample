@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -53,33 +53,33 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="349-ky-eL4">
-                                <rect key="frame" x="0.0" y="114" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="114" width="414" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xdx-6B-AsP">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpf-A2-1uQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="206" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="206" height="50"/>
                                                 <state key="normal" image="icon_language_global_unselect"/>
                                                 <connections>
                                                     <action selector="onLangSelectButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="QG5-54-DfB"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHc-oM-XuF">
-                                                <rect key="frame" x="208" y="0.0" width="206" height="60"/>
+                                                <rect key="frame" x="208" y="0.0" width="206" height="50"/>
                                                 <state key="normal" image="icon_language_history_unselect"/>
                                                 <connections>
                                                     <action selector="onHistoryButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="66e-3P-I38"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="xdx-6B-AsP" firstAttribute="leading" secondItem="349-ky-eL4" secondAttribute="leading" id="Asc-rN-rHb"/>
-                                    <constraint firstAttribute="height" constant="60" id="HbA-s0-ebH"/>
+                                    <constraint firstAttribute="height" constant="50" id="HbA-s0-ebH"/>
                                     <constraint firstItem="xdx-6B-AsP" firstAttribute="top" secondItem="349-ky-eL4" secondAttribute="top" id="dhm-6U-8gu"/>
                                     <constraint firstAttribute="bottom" secondItem="xdx-6B-AsP" secondAttribute="bottom" id="gas-Ju-UXe"/>
                                     <constraint firstAttribute="trailing" secondItem="xdx-6B-AsP" secondAttribute="trailing" id="jcM-ge-AEn"/>

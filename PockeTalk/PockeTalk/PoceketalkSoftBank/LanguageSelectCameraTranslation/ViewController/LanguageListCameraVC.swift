@@ -9,12 +9,12 @@ import SwiftyXMLParser
 class LanguageListCameraVC: BaseViewController {
     @IBOutlet weak private var langListTableView: UITableView!
     let TAG = "\(LanguageListCameraVC.self)"
-    var pageIndex: Int!
+    var isFirstTimeLoad = Bool()
+    var pageIndex = Int()
     var languageItems = [LanguageItem]()
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedIndexPath: IndexPath?
     var listShowingForFromLanguage = true
-    var isFirstTimeLoad: Bool!
     private let languageManager = LanguageSelectionManager.shared
     
     //MARK: - Lifecycle methods
@@ -56,8 +56,8 @@ class LanguageListCameraVC: BaseViewController {
     }
     
     private func setupTableView(){
-        langListTableView.delegate = self
         langListTableView.dataSource = self
+        langListTableView.delegate = self
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
@@ -78,11 +78,11 @@ class LanguageListCameraVC: BaseViewController {
         }
         return 0
     }
-
+    
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name: .cameraSelectionLanguage, object: nil)
     }
-
+    
     @objc func updateCameralanguageSelection (notification:Notification) {
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
@@ -98,7 +98,7 @@ extension LanguageListCameraVC: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LangListCell",for: indexPath) as! LangListCell
-
+        
         let languageItem = languageItems[indexPath.row]
         cell.lableLangName.text = "\(languageItem.sysLangName) (\(languageItem.name))"
         cell.langNameUnSelecteLabel.text = "\(languageItem.sysLangName) (\(languageItem.name))"
@@ -150,13 +150,13 @@ extension LanguageListCameraVC: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-            let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.bounds.height / 4))
-            footerView.backgroundColor = .clear
-            return footerView
-        }
-
-        func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-            return self.view.bounds.height / 4
-        }
-
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.bounds.height / 4))
+        footerView.backgroundColor = .clear
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return self.view.bounds.height / 4
+    }
+    
 }
