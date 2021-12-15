@@ -6,11 +6,11 @@
 import UIKit
 
 class CountryListViewController: BaseViewController {
-    let TAG = "\(CountryListViewController.self)"
-    @IBOutlet weak var viewEnglishName: UIView!
-    @IBOutlet weak var countryNameLabel: UILabel!
-    @IBOutlet weak var countryListCollectionView: UICollectionView!
+    @IBOutlet weak private var viewEnglishName: UIView!
+    @IBOutlet weak private var countryNameLabel: UILabel!
+    @IBOutlet weak private var countryListCollectionView: UICollectionView!
    
+    let TAG = "\(CountryListViewController.self)"
     var countryList = [CountryListItemElement]()
     var dataShowingAsEnlish = false
     var dataShowingLanguageCode = LanguageManager.shared.currentLanguage.rawValue
@@ -23,17 +23,89 @@ class CountryListViewController: BaseViewController {
     var isFromTranslation = false
     let window :UIWindow = UIApplication.shared.keyWindow!
 
+    //MARK: - Lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        configureCollectionView()
+        registerNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        //setUpMicroPhoneIcon()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        //removeFloatingBtn()
+    }
+    
+    deinit {
+        unregisterNotification()
+    }
+    
+    //MARK: - Initial setup
+    private func setupUI() {
+        countryNameLabel.text = "Region".localiz()
+        viewEnglishName.layer.cornerRadius = 15
+        viewEnglishName.backgroundColor = .clear
+        setViewBorder()
+        
+        if sysLangCode == systemLanguageCodeEN{
+            dataShowingAsEnlish = true
+            viewEnglishName.isHidden = true
+        }else{
+            dataShowingAsEnlish = false
+            viewEnglishName.isHidden = false
+        }
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
+        self.viewEnglishName.addGestureRecognizer(gesture)
+    }
+    private func configureCollectionView() {
+        countryList.removeAll()
+        countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: sysLangCode)!.countryList
+        let layout = UICollectionViewFlowLayout()
+        countryListCollectionView.collectionViewLayout = layout
+        
+        countryListCollectionView.register(
+            CountryListCollectionViewCell.nib(),
+            forCellWithReuseIdentifier: CountryListCollectionViewCell.identifier)
+        
+        countryListCollectionView.register(
+            FooterCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: FooterCollectionReusableView.identifier)
+        
+        countryListCollectionView.delegate = self
+        countryListCollectionView.dataSource = self
+    }
+    
+    private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+    }
+    
+    //MARK: - View Transactions
+    private func showLanguageListScreen(item: CountryListItemElement){
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "CountryWiseLanguageListViewController")as! CountryWiseLanguageListViewController
+        controller.countryListItem = item
+        controller.dataShowingLanguageCode = dataShowingLanguageCode
+        controller.isNative = isNative
+        controller.isFromTranslation = isFromTranslation
+        self.navigationController?.pushViewController(controller, animated: true);
+    }
+    
+    //MARK: - IBActions
     @IBAction func onBackButtonPressed(_ sender: Any) {
         remove(asChildViewController: self)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
     }
-
-    fileprivate func setViewBorder() {
-        viewEnglishName.layer.borderWidth = 2
-        viewEnglishName.layer.borderColor = UIColor.gray.cgColor
-    }
-
+    
     @objc func clickOnEnglishButton(_ sender:UITapGestureRecognizer){
         PrintUtility.printLog(tag: TAG, text: " Clickedn on english button")
         if dataShowingAsEnlish{
@@ -58,72 +130,12 @@ class CountryListViewController: BaseViewController {
         countryListCollectionView.reloadData()
     }
 
-    fileprivate func configureCollectionView() {
-        countryList.removeAll()
-        countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: sysLangCode)!.countryList
-        let layout = UICollectionViewFlowLayout()
-        countryListCollectionView.collectionViewLayout = layout
-        countryListCollectionView.register(CountryListCollectionViewCell.nib(), forCellWithReuseIdentifier: CountryListCollectionViewCell.identifier)
-        countryListCollectionView.delegate = self
-        countryListCollectionView.dataSource = self
+    //MARK: - Utils
+    private func setViewBorder() {
+        viewEnglishName.layer.borderWidth = 2
+        viewEnglishName.layer.borderColor = UIColor.gray.cgColor
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        countryNameLabel.text = "Region".localiz()
-        viewEnglishName.layer.cornerRadius = 15
-        viewEnglishName.backgroundColor = .clear
-        setViewBorder()
-        if sysLangCode == systemLanguageCodeEN{
-            dataShowingAsEnlish = true
-            viewEnglishName.isHidden = true
-        }else{
-            dataShowingAsEnlish = false
-            viewEnglishName.isHidden = false
-        }
-        configureCollectionView()
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
-        self.viewEnglishName.addGestureRecognizer(gesture)
-        registerNotification()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        //setUpMicroPhoneIcon()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        //removeFloatingBtn()
-    }
-
-    // TODO microphone tap event
-    @objc func speechButtonTapAction (sender:UIButton) {
-        if Reachability.isConnectedToNetwork() {
-            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-                if isGranted {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.CountrySelectionByVoice
-                    controller.countrySearchspeechLangCode = self.dataShowingLanguageCode
-                   // controller.initDelegate(self)
-                    self.navigationController?.pushViewController(controller, animated: true);
-                } else {
-                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
-                }
-            }
-        } else {
-            GlobalMethod.showNoInternetAlert()
-        }
-    }
-
-    func registerNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-    }
-    
     @objc func hideMicrophoneButton(notification: Notification) {
         //removeFloatingBtn()
     }
@@ -132,7 +144,7 @@ class CountryListViewController: BaseViewController {
        //setUpMicroPhoneIcon()
     }
 
-    func unregisterNotification(){
+    private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.countySlectionByVoiceNotofication, object: nil)
         NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name:.tapOffMicrophoneCountrySelectionVoice, object: nil)
@@ -142,10 +154,6 @@ class CountryListViewController: BaseViewController {
         if let country = notification.userInfo!["country"] as? String{
             searchCountry(text: country)
         }
-    }
-
-    deinit {
-        unregisterNotification()
     }
 
     // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
@@ -182,30 +190,19 @@ class CountryListViewController: BaseViewController {
     */
 }
 
+//MARK: - UICollectionViewDelegate
 extension CountryListViewController : UICollectionViewDelegate{
-
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         PrintUtility.printLog(tag: TAG, text: " didSelectItemAt clicked")
         let countryItem = countryList[indexPath.row] as CountryListItemElement
-        
+    
         //removeFloatingBtn()
         showLanguageListScreen(item: countryItem)
     }
-
-    func showLanguageListScreen(item: CountryListItemElement){
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "CountryWiseLanguageListViewController")as! CountryWiseLanguageListViewController
-        controller.countryListItem = item
-        controller.dataShowingLanguageCode = dataShowingLanguageCode
-        controller.isNative = isNative
-        controller.isFromTranslation = isFromTranslation
-        self.navigationController?.pushViewController(controller, animated: true);
-    }
 }
 
+//MARK: - UICollectionViewDataSource
 extension CountryListViewController : UICollectionViewDataSource{
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return countryList.count
     }
@@ -224,11 +221,25 @@ extension CountryListViewController : UICollectionViewDataSource{
         cell.configureFlagImage(with: UIImage(named: countryItem.countryName.en)!)
         return cell
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+        case UICollectionView.elementKindSectionFooter:
+            let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionFooter,
+                withReuseIdentifier: FooterCollectionReusableView.identifier,
+                for: indexPath)
+            return footerView
+        default:
+            PrintUtility.printLog(tag: TAG, text: "Unexpected element kind")
+        }
+        return UICollectionReusableView()
+    }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
 extension CountryListViewController : UICollectionViewDelegateFlowLayout{
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width / 2 - 5
         return CGSize(width: width, height: 140)
@@ -237,10 +248,14 @@ extension CountryListViewController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width, height: self.view.bounds.height / 4)
+    }
 }
 
+//MARK: - SpeechProcessingVCDelegates
 extension CountryListViewController: SpeechProcessingVCDelegates{
-
     func searchCountry(text: String) {
         PrintUtility.printLog(tag: TAG, text: "speech text \(text)")
         let seconds = 0.2

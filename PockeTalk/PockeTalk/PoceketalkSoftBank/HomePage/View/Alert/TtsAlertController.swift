@@ -7,17 +7,17 @@ import UIKit
 import WebKit
 import CallKit
 
-protocol TtsAlertControllerDelegate : class{
+protocol TtsAlertControllerDelegate: AnyObject{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
     func dismissed()
 }
-protocol Pronunciation:class {
+protocol Pronunciation: AnyObject{
     func dismissPro(dict:[String : String])
 }
 
-protocol CurrentTSDelegate : class {
+protocol CurrentTSDelegate: AnyObject{
     func passCurrentTSValue (currentTS : Int)
 }
 
@@ -42,10 +42,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var crossButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var bottomTalkView: UIView!
     @IBOutlet weak var containerViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var fromLangLabelBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var toLangLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewtrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
@@ -82,7 +79,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     weak var currentTSDelegate : CurrentTSDelegate?
     //weak var speechProDismissDelegateFromTTS : SpeechProcessingDismissDelegate?
     var isReverse = false
-    
+
     private var socketManager = SocketManager.sharedInstance
     private var speechProcessingVM : SpeechProcessingViewModeling!
     private var languageHasUpdated = false
@@ -102,10 +99,29 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         //SocketManager.sharedInstance.connect()
 //        socketManager.socketManagerDelegate = self
 
-        if(!isSpeaking){
-            playTTS()
-        }
+//        if(!isSpeaking){
+//            playTTS()
+//        }
+        self.view.backgroundColor = .black
         registerNotification()
+        checkTTSValueAndPlay()
+
+    }
+
+    func checkTTSValueAndPlay(){
+        let translateText = chatItemModel?.chatItem?.textTranslated
+        let languageManager = LanguageSelectionManager.shared
+        let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)!.code
+        if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:targetLanguageItem){
+            if(!isSpeaking){
+                playTTS()
+            }
+        }else{
+            AudioPlayer.sharedInstance.delegate = self
+            if !AudioPlayer.sharedInstance.isPlaying{
+                AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText: translateText!, targetLanguageItem: targetLanguageItem, tempo: "normal")
+            }
+        }
     }
 
     func registerNotification(){
@@ -134,10 +150,12 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     override func viewWillDisappear(_ animated: Bool) {
         callObserver.setDelegate(nil, queue: nil)
         stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
     
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
 
     @objc func removeChild(notification: Notification) {
@@ -221,7 +239,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     /// Retreive tts value from respective language code
     func getTtsValue () {
-        PrintUtility.printLog(tag: "TTT CHAT", text: "\(chatItemModel!.chatItem!.textTranslatedLanguage)")
+        PrintUtility.printLog(tag: "TTT CHAT", text: "\(String(describing: chatItemModel!.chatItem!.textTranslatedLanguage))")
+        
         let languageManager = LanguageSelectionManager.shared
         let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
         let item = LanguageEngineParser.shared.getTtsValue(langCode: targetLanguageItem!.code)
@@ -231,17 +250,42 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizer.State.ended){
+            AudioPlayer.sharedInstance.stop()
             self.stopTTS()
             self.openContextMenu()
         }
         
     }
     @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
-        if(!isSpeaking){
-            playTTS()
-        }
-        
+//        let translateText = chatItemModel?.chatItem?.textTranslated
+//        let languageManager = LanguageSelectionManager.shared
+//        let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
+//        let params:[String:String]  = [
+//            imei : "862793051345020",
+//            "license_token":"" ,
+//            "language" : targetLanguageItem!.code,
+//            "text" : translateText ?? "",
+//            "tempo": "normal"
+//        ]
+//        NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
+//            guard let data = data, let self = self else { return }
+//            do {
+//                let result = try JSONDecoder().decode(TTSModel.self, from: data)
+//                if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
+//                    self.startAnimation()
+//                    AudioPlayer.sharedInstance.play(data: ttsData)
+//                }
+//            }catch{
+//            }
+//        }
+//        if(!isSpeaking){
+//            playTTS()
+//        }
+        checkTTSValueAndPlay()
+
     }
+    
+    
     /// Start animation on background image view
     func startAnimation () {
         self.backgroundImageView.transform = CGAffineTransform.identity
@@ -357,6 +401,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }else{
             self.present(navController, animated: true, completion: nil)
         }
+        AudioPlayer.sharedInstance.stop()
     }
 
     // Populate item to show on context menu
@@ -381,10 +426,13 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
+        self.backButton.isHidden = true
+        self.bottomView.isHidden = true
         self.zoomOutDismissAnimation()
     }
     
     private func zoomOutDismissAnimation() {
+        self.view.backgroundColor = .clear
         UIView.animate(withDuration: 0.5, animations: {
             self.containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.01, y: 0.01)
         }) { _ in
@@ -458,6 +506,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
     }
     deinit {
+        AudioPlayer.sharedInstance.stop()
         stopTTS()
         unregisterNotification()
     }
@@ -678,7 +727,17 @@ extension TtsAlertController: CXCallObserverDelegate{
            if call.isOnHold {
                stopTTS()
              }
-        
+        AudioPlayer.sharedInstance.stop()
 //        TtsAlertController.ttsResponsiveView.stopTTS()
+    }
+}
+
+extension TtsAlertController :AudioPlayerDelegate{
+    func didStartAudioPlayer() {
+        startAnimation()
+    }
+
+    func didStopAudioPlayer(flag: Bool) {
+        stopAnimation()
     }
 }

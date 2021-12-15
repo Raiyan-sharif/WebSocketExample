@@ -145,7 +145,9 @@
 		87B56E6426EB710100BF613B /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B56E6326EB710100BF613B /* Extension+String.swift */; };
 		87C78F0B27212DA3004BC276 /* HomeViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C78F0A27212DA3004BC276 /* HomeViewController+Extension.swift */; };
 		87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9F4E26F22DA1008B28E7 /* HighLight.swift */; };
+		87F832BC2759DC4A007329BA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F832BB2759DC4A007329BA /* AudioPlayer.swift */; };
 		890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */; };
+		890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */; };
 		8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */; };
 		8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */; };
 		8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */; };
@@ -385,7 +387,9 @@
 		87B56E6326EB710100BF613B /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		87C78F0A27212DA3004BC276 /* HomeViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Extension.swift"; sourceTree = "<group>"; };
 		87EC9F4E26F22DA1008B28E7 /* HighLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighLight.swift; sourceTree = "<group>"; };
+		87F832BB2759DC4A007329BA /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LnaguageSettingsTutorialCameraVC.swift; sourceTree = "<group>"; };
+		890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
@@ -639,6 +643,7 @@
 		4A66139D26DDEC91004A925D /* Utitlity */ = {
 			isa = PBXGroup;
 			children = (
+				87F832BB2759DC4A007329BA /* AudioPlayer.swift */,
 				89C0F7CA26F1CE08000CD5FC /* AlertMenuType.swift */,
 				89C0F7D026F1CE08000CD5FC /* Bindable.swift */,
 				89C0F7CF26F1CE08000CD5FC /* Constants.swift */,
@@ -879,6 +884,7 @@
 			children = (
 				500AAFBF26E9AF1000A3E4D9 /* CountryWiseLanguageListViewController.swift */,
 				50193E0126E861D20052F170 /* CountryListViewController.swift */,
+				890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */,
 			);
 			path = CountryWiseLanguage;
 			sourceTree = "<group>";
@@ -1869,6 +1875,7 @@
 				890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */,
 				87B56E6426EB710100BF613B /* Extension+String.swift in Sources */,
 				4A68C52C27044136007DB329 /* InitialDBConfiguration.swift in Sources */,
+				890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
@@ -1965,6 +1972,7 @@
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
 				502939A22717F2B8004EB8C0 /* ResetListTableViewCell.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
+				87F832BC2759DC4A007329BA /* AudioPlayer.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */,
 				873F8C4926F0760A00CD5F9B /* FontSelectionCell.swift in Sources */,

@@ -7,51 +7,75 @@ import UIKit
 import SwiftyXMLParser
 
 class LanguageListVC: BaseViewController {
+    @IBOutlet weak private var langListTableView: UITableView!
+    
     let TAG = "\(LanguageListVC.self)"
-    @IBOutlet weak var langListTableView: UITableView!
     var pageIndex: Int!
     var languageItems = [LanguageItem]()
     var mLanguageFile = "conversation_languages_"
-    let langListArray:NSMutableArray = NSMutableArray()
+    let langListArray: NSMutableArray = NSMutableArray()
     var selectedIndexPath: IndexPath?
     var isNative: Int = 0
-    //let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+    var isFirstTimeLoad: Bool!
+    private let languageManager = LanguageSelectionManager.shared
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        isNative = UserDefaultsProperty<Int>(kIsNative).value!
-        PrintUtility.printLog(tag: TAG, text:"KSelectedLanguageVoice \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value)")
-        if isNative == LanguageName.bottomLang.rawValue{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
-        }else{
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
-        }
-        PrintUtility.printLog(tag: TAG, text:"isnative \(isNative) selectedLanguage \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value))")
-
-        PrintUtility.printLog(tag: TAG, text:" LanguageSelectionManager.shared.nativeLanguage \(LanguageSelectionManager.shared.bottomLanguage) LanguageSelectionManager.shared.targetLanguage \(LanguageSelectionManager.shared.topLanguage)")
-        languageItems = LanguageSelectionManager.shared.languageItems
-        langListTableView.delegate = self
-        langListTableView.dataSource = self
-        let nib = UINib(nibName: "LangListCell", bundle: nil)
-        langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
-        self.langListTableView.backgroundColor = UIColor.clear
+        setupLanguageProperty()
+        setupTableView()
         registerNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG, text:" position \(selectedItemPosition)")
+        PrintUtility.printLog(tag: TAG, text:" position \(String(describing: selectedItemPosition))")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
     }
-
-    func objectToJson(from object:Any) -> String? {
-        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
-            return nil
+    
+    deinit {
+        unregisterNotification()
+    }
+    
+    //MARK: - Initial setup
+    private func setupLanguageProperty(){
+        if isFirstTimeLoad {
+            isNative = UserDefaultsProperty<Int>(kIsNative).value!
+            if isNative == LanguageName.bottomLang.rawValue{
+                UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.bottomLanguage
+            }else{
+                UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
+            }
         }
-        return String(data: data, encoding: String.Encoding.utf8)
+        
+        languageItems = LanguageSelectionManager.shared.languageItems
+    }
+    
+    private func setupTableView(){
+        langListTableView.delegate = self
+        langListTableView.dataSource = self
+        let nib = UINib(nibName: "LangListCell", bundle: nil)
+        langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
+        self.langListTableView.backgroundColor = UIColor.clear
+    }
+    
+    private func registerNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageListNotofication, object: nil)
     }
 
-    func getSelectedItemPosition() -> Int{
+    //MARK: - Utils
+    private func unregisterNotification(){
+        NotificationCenter.default.removeObserver(self, name:.languageListNotofication, object: nil)
+    }
+
+    @objc func updateLanguageSelection(notification: Notification) {
+        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
+        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        self.langListTableView.reloadData()
+    }
+    
+    private func getSelectedItemPosition() -> Int{
         let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
         for i in 0...languageItems.count - 1{
             let item = languageItems[i]
@@ -61,35 +85,44 @@ class LanguageListVC: BaseViewController {
         }
         return 0
     }
-
-    func registerNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageListNotofication, object: nil)
+    
+    private func setSelectedCellProperty(using cell: LangListCell, and languageCode: String){
+        if(languageManager.hasTtsSupport(languageCode: languageCode)){
+            cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
+            cell.selectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
+            cell.imageNoVoice.isHidden = true
+        }else{
+            cell.unselectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
+            cell.selectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
+            cell.imageNoVoice.isHidden = false
+        }
+        cell.lableLangName.isHidden = false
+        cell.langNameUnSelecteLabel.isHidden = true
+        cell.lableLangName.holdScrolling = false
+        cell.lableLangName.type = .continuous
+        cell.lableLangName.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+        cell.lableLangName.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
+        cell.imageLangItemSelector.isHidden = false
+        cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
     }
-
-
-    func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.languageListNotofication, object: nil)
+    
+    private func setDeselectedCellProperty(using cell: LangListCell){
+        cell.unselectedLabelTrailingConstraint.constant = kUnselectedLanguageTrailingConstant
+        cell.lableLangName.isHidden = true
+        cell.langNameUnSelecteLabel.isHidden = false
+        cell.lableLangName.holdScrolling = true
+        cell.imageLangItemSelector.isHidden = true
+        cell.imageNoVoice.isHidden = true
+        cell.langListCellContainer.backgroundColor = .black
     }
-
-    @objc func updateLanguageSelection(notification: Notification) {
-        let selectedItemPosition = getSelectedItemPosition()
-        selectedIndexPath = IndexPath(row: selectedItemPosition, section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        self.langListTableView.reloadData()
-    }
-
-    deinit {
-        unregisterNotification()
-    }
-
 }
 
-
-extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
+//MARK: - UITableview Datasource
+extension LanguageListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languageItems.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LangListCell",for: indexPath) as! LangListCell
         
@@ -98,45 +131,31 @@ extension LanguageListVC: UITableViewDataSource,UITableViewDelegate{
         cell.langNameUnSelecteLabel.text = "\(languageItem.sysLangName) (\(languageItem.name))"
         cell.langNameUnSelecteLabel.adjustsFontSizeToFitWidth = false
         cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
-        PrintUtility.printLog(tag: TAG, text:" value \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
+        
         if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
-            let languageManager = LanguageSelectionManager.shared
-            if(languageManager.hasTtsSupport(languageCode: languageItem.code)){
-                cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
-                cell.selectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
-                cell.imageNoVoice.isHidden = true
-            }else{
-                cell.unselectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
-                cell.selectedLabelTrailingConstraint.constant = kTtsAvailableTrailingConstant
-                cell.imageNoVoice.isHidden = false
-            }
-            cell.lableLangName.isHidden = false
-            cell.langNameUnSelecteLabel.isHidden = true
-            cell.lableLangName.holdScrolling = false
-            cell.lableLangName.type = .continuous
-            cell.lableLangName.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
-            cell.lableLangName.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
-
-            cell.imageLangItemSelector.isHidden = false
-            cell.langListCellContainer.backgroundColor = UIColor(hex: "#008FE8")
-            PrintUtility.printLog(tag: TAG, text:" matched lang \(UserDefaultsProperty<String>(KSelectedLanguageVoice).value) languageItem.code \(languageItem.code)")
+            setSelectedCellProperty(using: cell, and: languageItem.code)
         }else{
-            cell.unselectedLabelTrailingConstraint.constant = kUnselectedLanguageTrailingConstant
-            cell.lableLangName.isHidden = true
-            cell.langNameUnSelecteLabel.isHidden = false
-            cell.lableLangName.holdScrolling = true
-            cell.imageLangItemSelector.isHidden = true
-            cell.imageNoVoice.isHidden = true
-            cell.langListCellContainer.backgroundColor = .black
+            setDeselectedCellProperty(using: cell)
         }
         return cell
     }
+}
 
+//MARK: - UITableview Delegate
+extension LanguageListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //tableView.deselectRow(at: indexPath, animated: false)
         let languageItem = languageItems[indexPath.row]
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
         self.langListTableView.reloadData()
     }
-
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.bounds.height / 4))
+        footerView.backgroundColor = .clear
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return self.view.bounds.height / 4
+    }
 }

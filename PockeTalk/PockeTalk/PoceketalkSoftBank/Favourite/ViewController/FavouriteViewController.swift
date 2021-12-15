@@ -248,15 +248,20 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
         let item = favouriteViewModel.items.value[indexPath.item] as! ChatEntity
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
+        cell.deleteLabel.text = "delete_from_fv".localiz()
         if(indexPath.row == favouriteViewModel.items.value.count - 1){
             cell.bottomStackViewOfLabel.constant = 25
             cell.favoriteRightBarBottom.constant = -20
             cell.topStackViewOfLabel.constant = 25
+            cell.deleteStackViewHeightConstraint.constant = 0
+            cell.favouriteStackViewHeightConstraint.constant = 0
           }
           else{
               cell.topStackViewOfLabel.constant = 25
               cell.bottomStackViewOfLabel.constant = 85
               cell.favoriteRightBarBottom.constant = -70
+              cell.deleteStackViewHeightConstraint.constant = -30
+              cell.favouriteStackViewHeightConstraint.constant = -30
           }
         
         if item.chatIsTop == IsTop.noTop.rawValue {

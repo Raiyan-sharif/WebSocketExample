@@ -65,3 +65,7 @@
 "error_network" = "Network error";
 "language_selection_voice_message" = "Please say the language name.\nEx: \"German\"";
 "country_selection_voice_msg" = "Please say the country name.\nEx: \"Germany\"";
+"low_battery" = "Low Battery";
+"charge_the_device" = "Please charge the device";
+"camera_flash_unavailable" = "Camera Flash is not available as battery level is not sufficient.";
+"can_not_translate" = "Can not translate";

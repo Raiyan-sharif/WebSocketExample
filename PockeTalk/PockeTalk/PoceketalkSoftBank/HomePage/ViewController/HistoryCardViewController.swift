@@ -2,8 +2,6 @@
 //  HistoryCardViewController.swift
 //  PockeTalk
 //
-//  Created by BJIT on 16/11/21.
-//
 
 import UIKit
 protocol HistoryCardViewControllerDelegate: AnyObject {
@@ -47,10 +45,10 @@ class HistoryCardViewController: BaseViewController {
     private lazy var backBtn:UIButton = {
         guard let window = UIApplication.shared.keyWindow else {return UIButton()}
         let topPadding = window.safeAreaInsets.top
-        let okBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
-        okBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
-        okBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
-        return okBtn
+        let backBtn = UIButton(frame: CGRect(x: window.safeAreaInsets.left, y: topPadding, width: 40, height: 40))
+        backBtn.setImage(UIImage(named: "btn_back_tempo.png"), for: UIControl.State.normal)
+        backBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
+        return backBtn
     }()
     
     //MARK: - Lifecycle methods
@@ -174,11 +172,13 @@ class HistoryCardViewController: BaseViewController {
         }
     }
     
-    func updateData(){
+    func updateData(shouldCVScrollToBottom: Bool){
         deletedCellHeight = 0
         historyViewModel.getData()
         collectionView.reloadData()
-        self.scrollToBottom()
+        if shouldCVScrollToBottom {
+            self.scrollToBottom()
+        }
     }
     //MARK: - View Transactions
     private func openTTTResultAlert(_ idx: IndexPath){
@@ -271,6 +271,8 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
         let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
+        cell.deleteLabel.text = "delete_from_fv".localiz()
+        cell.favouriteLabel.text = "Favorite".localiz()
         //let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
         
         if(indexPath.row == historyViewModel.items.value.count - 1){
@@ -278,11 +280,15 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             cell.favouriteRightBarBottom.constant = -20
             cell.topStackViewOfLabel.constant = 25
             cell.favouriteRightBarTop.constant = 20
+            cell.deleteStackViewHeightConstraint.constant = 0
+            cell.favouriteStackViewHeightConstraint.constant = 0
         }
         else{
             cell.topStackViewOfLabel.constant = 25
             cell.bottomStackViewOfLabel.constant = 85
             cell.favouriteRightBarBottom.constant = -70
+            cell.deleteStackViewHeightConstraint.constant = -30
+            cell.favouriteStackViewHeightConstraint.constant = -30
         }
         if item.chatIsTop == IsTop.noTop.rawValue {
             cell.childView.backgroundColor = UIColor._lightGrayColor()
@@ -385,7 +391,7 @@ extension HistoryCardViewController : RetranslationDelegate{
             self.isReverse = false
             SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 let nativeText = chatItem!.textNative
                 let nativeLangName = chatItem!.textNativeLanguage!
                 

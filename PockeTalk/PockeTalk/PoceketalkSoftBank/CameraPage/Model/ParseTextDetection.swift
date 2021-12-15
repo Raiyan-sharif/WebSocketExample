@@ -84,7 +84,14 @@ class ParseTextDetection: BaseModel {
                 textView.numberOfLines = 0
                 textView.adjustsFontSizeToFitWidth = true
                 textView.minimumScaleFactor = 0.5
-                textView.text = arrTranslatedText[index]
+                
+                if arrTranslatedText[index] == "" {
+                    textView.text = "can_not_translate".localiz()
+                }
+                else {
+                    textView.text = arrTranslatedText[index]
+                }
+                
                 textView.sizeToFit()
 
                 PrintUtility.printLog(tag: "angle", text: "\(angle)")
@@ -150,7 +157,12 @@ class ParseTextDetection: BaseModel {
             textView.minimumScaleFactor = 0.5
             
             //textView.text = each.text
-            textView.text = arrTranslatedText[index]
+            if arrTranslatedText[index] == "" {
+                textView.text = "can_not_translate".localiz()
+            }
+            else {
+                textView.text = arrTranslatedText[index]
+            }
             textView.sizeToFit()
             textView.isUserInteractionEnabled = true
             textView.tag = index

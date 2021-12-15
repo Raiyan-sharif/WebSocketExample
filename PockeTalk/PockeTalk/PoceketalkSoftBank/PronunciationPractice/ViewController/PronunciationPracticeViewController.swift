@@ -68,6 +68,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
 
     @objc func gotoPronuntiationPacticeVC(notification: Notification) {
@@ -88,6 +89,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     
     @objc func pronunciationStopTTS(notification: Notification) {
         stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +116,20 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         labelOriginalText.addGestureRecognizer(tapForTTS)
         labelOriginalText.text = orginalText
     }
+    
+    
+    func checkTTSValueAndPlay(){
+        if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:languageCode){
+            if(!isSpeaking){
+                playTTS()
+            }
+        }else{
+            AudioPlayer.sharedInstance.delegate = self
+            if !AudioPlayer.sharedInstance.isPlaying{
+                AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText:orginalText, targetLanguageItem: languageCode, tempo:normal)
+            }
+        }
+    }
 
     /// Retreive tts value from respective language code
     func getTtsValue () {
@@ -131,6 +147,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
+        AudioPlayer.sharedInstance.stop()
         if Reachability.isConnectedToNetwork() {
             RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
                 if isGranted {
@@ -174,6 +191,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
 
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
+        AudioPlayer.sharedInstance.stop()
         LanguageSelectionManager.shared.tempSourceLanguage = nil
         if isFromSpeechProcessing {
             speechDelegate?.dismissResultHome()
@@ -199,9 +217,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-        if(!isSpeaking){
-            playTTS()
-        }
+//        if(!isSpeaking){
+//            playTTS()
+//        }
+        checkTTSValueAndPlay()
     }
     func playTTS(){
         ttsResponsiveView.checkSpeakingStatus()
@@ -232,4 +251,14 @@ struct PronuntiationValue {
     let practiceText:String
     let orginalText:String
     let languageCcode:String
+}
+
+extension PronunciationPracticeViewController :AudioPlayerDelegate{
+    func didStartAudioPlayer() {
+
+    }
+
+    func didStopAudioPlayer(flag: Bool) {
+
+    }
 }

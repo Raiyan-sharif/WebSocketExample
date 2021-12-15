@@ -1,17 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "ic_anim_right_white.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "ic_anim_left_white-1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

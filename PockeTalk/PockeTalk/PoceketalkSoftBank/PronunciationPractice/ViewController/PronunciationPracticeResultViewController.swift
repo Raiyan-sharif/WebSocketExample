@@ -28,6 +28,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var rate : String = "1.0"
     var isSpeaking : Bool = false
     var isFromHistoryTTS = false
+    var tempo:String = "normal"
     
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
@@ -91,6 +92,10 @@ class PronunciationPracticeResultViewController: BaseViewController {
             let pronumtiationValue = PronuntiationValue(practiceText:"" , orginalText: self.orginalText, languageCcode:self.languageCode)
             NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":pronumtiationValue])
         }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AudioPlayer.sharedInstance.stop()
     }
 
     func registerNotification(){
@@ -193,10 +198,24 @@ class PronunciationPracticeResultViewController: BaseViewController {
         }
     }
 
-    @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-        if(!isSpeaking){
-            playTTS()
+    func checkTTSValueAndPlay(){
+        if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:languageCode){
+            if(!isSpeaking){
+                playTTS()
+            }
+        }else{
+            AudioPlayer.sharedInstance.delegate = self
+            if !AudioPlayer.sharedInstance.isPlaying{
+                AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText:orginalText, targetLanguageItem: languageCode, tempo:tempo)
+            }
         }
+    }
+
+    @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
+//        if(!isSpeaking){
+//            playTTS()
+//        }
+        checkTTSValueAndPlay()
     }
 
     deinit {
@@ -226,15 +245,28 @@ extension PronunciationPracticeResultViewController: TempoControlSelectionDelega
     func onStandardSelection() {
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .standard)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+        tempo = "normal"
     }
     
     func onSlowSelection() {
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .slow)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+        tempo = "slow"
     }
     
     func onVerySlowSelection() {
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .verySlow)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
+        tempo = "veryslow"
+    }
+}
+
+extension PronunciationPracticeResultViewController :AudioPlayerDelegate{
+    func didStartAudioPlayer() {
+
+    }
+
+    func didStopAudioPlayer(flag: Bool) {
+
     }
 }

@@ -8,6 +8,7 @@ import UIKit
 
 protocol ITTServerViewModelDelegates {
     func updateView()
+    func showErrorAlert()
 }
 
 class ITTServerViewModel: BaseModel {
@@ -207,12 +208,40 @@ class ITTServerViewModel: BaseModel {
             if mode == blockMode {
                 self.blockListFromJson = self.getBlockListFromJson(data: detectionData)
                 PrintUtility.printLog(tag: "blockListFromJson", text: "\(blockListFromJson.count)")
-                self.translateText(arrayBlocks: blockListFromJson, type: "blockMode", isFromHistoryVC: isFromHistoryVC)
+                
+                var sourceLan: String = ""
+                for (index,block) in blockListFromJson.enumerated() {
+                    sourceLan = block.detectedLanguage!
+                    if sourceLan == LANGUAGE_CODE_UND || sourceLan == CHINESE_LANGUAGE_CODE_ZH {
+                        break
+                    }
+                }
+                if sourceLan == LANGUAGE_CODE_UND || sourceLan == CHINESE_LANGUAGE_CODE_ZH {
+                    self.delegate?.showErrorAlert()
+                }
+                else{
+                    self.translateText(arrayBlocks: blockListFromJson, type: "blockMode", isFromHistoryVC: isFromHistoryVC)
+                }
+                
             } else {
                 
                 self.lineListFromJson = self.getLineListFromJson(data: detectionData)
                 PrintUtility.printLog(tag: "lineListFromJson lineListFromJson", text: "\(self.lineListFromJson)")
-                self.translateText(arrayBlocks: lineListFromJson, type: "lineMode", isFromHistoryVC: isFromHistoryVC)
+                
+                var sourceLan: String = ""
+                for (index,block) in lineListFromJson.enumerated() {
+                    sourceLan = block.detectedLanguage!
+                    if sourceLan == LANGUAGE_CODE_UND || sourceLan == CHINESE_LANGUAGE_CODE_ZH {
+                        break
+                    }
+                }
+                if sourceLan == LANGUAGE_CODE_UND || sourceLan == CHINESE_LANGUAGE_CODE_ZH {
+                    self.delegate?.showErrorAlert()
+                }
+                else{
+                    self.translateText(arrayBlocks: lineListFromJson, type: "lineMode", isFromHistoryVC: isFromHistoryVC)
+                }
+                
             }
             
         } else {
@@ -300,22 +329,25 @@ class ITTServerViewModel: BaseModel {
             let detectedText = block.text
             let sourceLan = block.detectedLanguage
             let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
-            if Reachability.isConnectedToNetwork() {
-                self.translate(source: sourceLan!, target: targetLan!, text: detectedText!)
-                
-                if index == arrayBlocks.count-1 {
-                    PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
+            
+                if Reachability.isConnectedToNetwork() {
+                    self.translate(source: sourceLan!, target: targetLan!, text: detectedText!)
                     
+                    if index == arrayBlocks.count-1 {
+                        PrintUtility.printLog(tag: TAG, text: "blockTranslatedText size: \(blockTranslatedText.count), lineTranslatedText size: \(lineTranslatedText.count)")
+                        
+                    } else {
+                        PrintUtility.printLog(tag: "completion ", text: " \(index) false")
+                    }
                 } else {
-                    PrintUtility.printLog(tag: "completion ", text: " \(index) false")
+                    GlobalMethod.showNoInternetAlert()
                 }
-            } else {
-                GlobalMethod.showNoInternetAlert()
-            }
+            
         }
     }
     
     func commandToGenerateTextView() {
+        UserDefaults.standard.set(true, forKey: "isTransLateSuccessful")
         let type = UserDefaults.standard.string(forKey: modeSwitchType)
         let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
         
@@ -345,7 +377,7 @@ class ITTServerViewModel: BaseModel {
            // PrintUtility.printLog(tag: "", text: "mTranslatedJSON: \(String(data: data!, encoding: .utf8)!)")
             //PrintUtility.printLog(tag: "fromHistoryVC from itt", text: "\(fromHistoryVC)")
             
-            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTables {
+            if let entities = try? CameraHistoryDBModel().getAllCameraHistoryTablesRow {
                 if entities.contains(where: { $0.id == historyID }) {
                     updateDataOnDatabase(id: historyID)
                 } else {

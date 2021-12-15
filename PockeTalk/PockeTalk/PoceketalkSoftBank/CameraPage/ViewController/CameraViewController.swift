@@ -25,6 +25,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     private var initialScale: CGFloat = 0
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
+    var isCaptureButtonClickable = Bool()
     
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
@@ -81,7 +82,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         controller.updateHomeContainer = { [weak self] in
             self?.updateHomeContainer?(true)
         }
-       // self.navigationController?.pushViewController(controller, animated: true);
+        // self.navigationController?.pushViewController(controller, animated: true);
         self.updateHomeContainer?(false)
         let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: controller, containerView: view, animation: transition)
@@ -105,9 +106,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func onCameraLanguageChanged(notification: Notification) {
         updateLanguageNames()
     }
-        
+    
     func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.onCameraLanguageChanged(notification:)), name: .languageSelectionCameraNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,            object: nil)
+
     }
     
     func unregisterNotification(){
@@ -158,16 +164,44 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         PrintUtility.printLog(tag: "Session", text: "\(session.isInterrupted)")
     }
     
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
+    @objc func applicationDidBecomeActive() {
+        guard let isCameraFlashOn: Bool = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool else {return}
+        PrintUtility.printLog(tag: "applicationDidBecomeActive", text: "\(isCameraFlashOn)")
+        if isCameraFlashOn == true {
+            turnOnCameraFlash()
+        }
+    }
+    
+    func turnOnCameraFlash() {
+        if let activeCamera = activeCamera {
+            if activeCamera.hasTorch {
+                // lock your device for configuration
+                do {
+                    _ = try activeCamera.lockForConfiguration()
+                } catch {
+                    PrintUtility.printLog(tag: "error", text: "")
+                }
+                do {
+                    _ = try activeCamera.setTorchModeOn(level: 1.0)
+                    flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
+                } catch {
+                    PrintUtility.printLog(tag: "error", text: "")
+                }
+                activeCamera.unlockForConfiguration()
+            }
+        }
+    }
+    
+    
+    //    override var prefersStatusBarHidden: Bool {
+    //        return true
+    //    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     func setUPViews() {
-        captureButton.isExclusiveTouch = true
         changeStatusBarColor()
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
@@ -181,17 +215,17 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     func changeStatusBarColor() {
         if #available(iOS 13.0, *) {
-                let app = UIApplication.shared
-                let statusBarHeight: CGFloat = app.statusBarFrame.size.height
-
-                let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
-                statusbarView.backgroundColor = UIColor.black
-                view.addSubview(statusbarView)
-            } else {
-                let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
-                statusBar?.backgroundColor = UIColor.red
-            }
-
+            let app = UIApplication.shared
+            let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+            
+            let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
+            statusbarView.backgroundColor = UIColor.black
+            view.addSubview(statusbarView)
+        } else {
+            let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+            statusBar?.backgroundColor = UIColor.red
+        }
+        
     }
     
     
@@ -206,8 +240,10 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
-        self.cameraHistoryViewModel.fetchCameraHistoryImages()
+        self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
         } else {
@@ -225,10 +261,29 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
                     return
                 }
                 self.session.startRunning()
+                if let flashOn: Bool = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool {
+                    if flashOn == true {
+                        DispatchQueue.main.async {
+                            self.turnOnCameraFlash()
+                        }
+                        
+                    }
+                }else {
+                    UserDefaults.standard.set(false, forKey: isCameraFlashOn)
+                }
+                
             }
         }
         registerNotification()
         updateLanguageNames()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
+        self.cameraHistoryImageView.addGestureRecognizer(tap)
+        captureButton.isExclusiveTouch = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -242,6 +297,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
                 }
             }
         }
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIApplication.didBecomeActiveNotification,
+                                                  object: nil)
     }
     
     override func viewWillLayoutSubviews() {
@@ -268,24 +326,24 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         processor.completion = { [unowned self] processor in
             if let photo = processor.photo {
                 // To DO: keep this code for check image quality and size.  will delete when task is finished
-//                RuntimePermissionUtil().requestAuthorizationPermissionForUsingPhotoLibrary { (isAuthorized) in
-//                    if isAuthorized {
-//                        PHPhotoLibrary.shared().performChanges({
-//                            // Add the captured photo's file data as the main resource for the Photos asset.
-//                            //let creationRequest = PHAssetCreationRequest.forAsset()
-//                            //creationRequest.addResource(with: .photo, data: photo.fileDataRepresentation()!, options: nil)
-//                        }, completionHandler: nil)
-//
-//                        completion?(Photo(photo: photo, orientation: processor.orientation))
-//
-//                    } else {
-//                        GlobalMethod.showAlert(title: kPhotosUsageTitle, message: kPhotosUsageMessage, in: self) {
-//                            GlobalMethod.openSettingsApplication()
-//                        }
-//
-//                    }
-//                }
-
+                //                RuntimePermissionUtil().requestAuthorizationPermissionForUsingPhotoLibrary { (isAuthorized) in
+                //                    if isAuthorized {
+                //                        PHPhotoLibrary.shared().performChanges({
+                //                            // Add the captured photo's file data as the main resource for the Photos asset.
+                //                            //let creationRequest = PHAssetCreationRequest.forAsset()
+                //                            //creationRequest.addResource(with: .photo, data: photo.fileDataRepresentation()!, options: nil)
+                //                        }, completionHandler: nil)
+                //
+                //                        completion?(Photo(photo: photo, orientation: processor.orientation))
+                //
+                //                    } else {
+                //                        GlobalMethod.showAlert(title: kPhotosUsageTitle, message: kPhotosUsageMessage, in: self) {
+                //                            GlobalMethod.openSettingsApplication()
+                //                        }
+                //
+                //                    }
+                //                }
+                
                 completion?(Photo(photo: photo, orientation: processor.orientation))
             }
             
@@ -348,6 +406,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             }
         }
     }
+    
 }
 
 extension CameraViewController {
@@ -355,12 +414,13 @@ extension CameraViewController {
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.updateHomeContainer?(false)
         HomeViewController.homeContainerViewBottomConstraint.constant = 0
+        HomeViewController.isCameraButtonClickable = true
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
-//        if(self.navigationController == nil){
-//            self.dismiss(animated: true, completion: nil)
-//        }else{
-//            self.navigationController?.popViewController(animated: true)
-//        }
+        //        if(self.navigationController == nil){
+        //            self.dismiss(animated: true, completion: nil)
+        //        }else{
+        //            self.navigationController?.popViewController(animated: true)
+        //        }
     }
     
     var croppingParameters: CropUtils {
@@ -369,27 +429,31 @@ extension CameraViewController {
     
     @IBAction func captureButtonEventListener(_ sender: Any) {
         
-        takePhoto { [self] photo in
-            let image = photo.image()
-            let originalSize: CGSize
-            let visibleLayerFrame = cropImageRect
-            
-            let metaRect = (previewLayer.metadataOutputRectConverted(fromLayerRect: visibleLayerFrame ))
-            
-            if (image!.imageOrientation == UIImage.Orientation.left || image!.imageOrientation == UIImage.Orientation.right) {
-                originalSize = CGSize(width: (image?.size.height)!, height: image!.size.width)
-            } else {
-                originalSize = image!.size
-            }
-            let cropRect: CGRect = CGRect(x: metaRect.origin.x * originalSize.width, y: metaRect.origin.y * originalSize.height, width: metaRect.size.width * originalSize.width, height: metaRect.size.height * originalSize.height).integral
-            
-            if let finalCgImage = image!.cgImage?.cropping(to: cropRect) {
-                let image = UIImage(cgImage: finalCgImage, scale: 1.0, orientation: image!.imageOrientation)
+        if isCaptureButtonClickable == true {
+            isCaptureButtonClickable = false
+            takePhoto { [self] photo in
                 
-                self.capturedImage = image
+                let image = photo.image()
+                let originalSize: CGSize
+                let visibleLayerFrame = cropImageRect
+                
+                let metaRect = (previewLayer.metadataOutputRectConverted(fromLayerRect: visibleLayerFrame ))
+                
+                if (image!.imageOrientation == UIImage.Orientation.left || image!.imageOrientation == UIImage.Orientation.right) {
+                    originalSize = CGSize(width: (image?.size.height)!, height: image!.size.width)
+                } else {
+                    originalSize = image!.size
+                }
+                let cropRect: CGRect = CGRect(x: metaRect.origin.x * originalSize.width, y: metaRect.origin.y * originalSize.height, width: metaRect.size.width * originalSize.width, height: metaRect.size.height * originalSize.height).integral
+                
+                if let finalCgImage = image!.cgImage?.cropping(to: cropRect) {
+                    let image = UIImage(cgImage: finalCgImage, scale: 1.0, orientation: image!.imageOrientation)
+                    
+                    self.capturedImage = image
+                }
+                //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
+                layoutCameraResult(uiImage: image!)
             }
-            //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
-            layoutCameraResult(uiImage: image!)
         }
     }
     
@@ -469,28 +533,44 @@ extension CameraViewController {
     }
     
     @IBAction func didTouchFlashButton(sender: UIButton) {
-        if activeCamera!.hasTorch {
-            // lock your device for configuration
-            do {
-                _ = try activeCamera!.lockForConfiguration()
-            } catch {
-                PrintUtility.printLog(tag: "error", text: "")
-            }
-            // if flash is on turn it off, if turn off turn it on
-            if activeCamera!.isTorchActive {
-                activeCamera!.torchMode = AVCaptureDevice.TorchMode.off
-                flashButton.setImage(UIImage(named: "flash"), for: .normal)
-                
-            } else {
-                // sets the torch intensity to 100%
-                do {
-                    _ = try activeCamera!.setTorchModeOn(level: 1.0)
-                    flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
-                } catch {
-                    PrintUtility.printLog(tag: "error", text: "")
+        let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
+        if batteryPercentage <= flashDisabledBatteryPercentage {
+            showLowBatteryErrorAlert(message: "camera_flash_unavailable".localiz())
+        } else {
+            if let activeCamera = activeCamera {
+                if activeCamera.hasTorch {
+                    // lock your device for configuration
+                    do {
+                        _ = try activeCamera.lockForConfiguration()
+                    } catch {
+                        PrintUtility.printLog(tag: "error", text: "")
+                    }
+                    // if flash is on turn it off, if turn off turn it on
+                    if activeCamera.isTorchActive {
+                        activeCamera.torchMode = AVCaptureDevice.TorchMode.off
+                        flashButton.setImage(UIImage(named: "flash"), for: .normal)
+                        
+                        UserDefaults.standard.set(false, forKey: isCameraFlashOn)
+                    } else {
+                        // sets the torch intensity to 100%
+                        do {
+                            _ = try activeCamera.setTorchModeOn(level: 1.0)
+                            flashButton.setImage(UIImage(named: "btn_flash_push"), for: .normal)
+                            UserDefaults.standard.set(true, forKey: isCameraFlashOn)
+                        } catch {
+                            PrintUtility.printLog(tag: "error", text: "")
+                        }
+                    }
+                    activeCamera.unlockForConfiguration()
                 }
             }
-            activeCamera!.unlockForConfiguration()
         }
     }
+    
+    func showLowBatteryErrorAlert(message: String){
+        let alertService = CustomAlertViewModel()
+        let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {}
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }

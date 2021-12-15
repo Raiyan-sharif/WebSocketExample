@@ -104,4 +104,20 @@ func getData () {
         }
         return nil
     }
+    
+    public func getTTTSSupportEngine(langCode: String) -> String? {
+        for item in languageEngineList{
+            if(langCode == item.code){
+                PrintUtility.printLog(tag: TAG, text: "checkTtsSupport getTTTSEngine \(item.ttsEngine)")
+                if item.ttsEngine != nil{
+                    if item.ttsEngine!.contains(KEngineSeparator){
+                        return item.ttsEngine!.components(separatedBy: KEngineSeparator)[0]
+                    }else{
+                        return item.ttsEngine
+                    }
+                }
+            }
+        }
+        return nil
+    }
 }

@@ -21,7 +21,8 @@ class FavouriteCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusa
     @IBOutlet weak var favoriteRightBarBottom: NSLayoutConstraint!
     @IBOutlet weak var bottomStackViewOfLabel: NSLayoutConstraint!
     @IBOutlet weak var topStackViewOfLabel: NSLayoutConstraint!
-    
+    @IBOutlet weak var deleteStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var favouriteStackViewHeightConstraint: NSLayoutConstraint!
     //forces the system to do one layout pass
     var isHeightCalculated: Bool = false
 

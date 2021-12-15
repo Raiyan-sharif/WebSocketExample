@@ -22,7 +22,8 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
     @IBOutlet weak var favouriteRightBarBottom: NSLayoutConstraint!
     @IBOutlet weak var topStackViewOfLabel: NSLayoutConstraint!
     @IBOutlet weak var favouriteRightBarTop: NSLayoutConstraint!
-    
+    @IBOutlet weak var deleteStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var favouriteStackViewHeightConstraint: NSLayoutConstraint!
     //forces the system to do one layout pass
     var isHeightCalculated: Bool = false
     var initialColor:UIColor!
@@ -87,30 +88,35 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
     }
 
     @objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
-       // let percent = max(pan.translation(in: self).x, 0) / self.frame.width
         let target = pan.view
-        let velocity = pan.velocity(in: self)
+        let panViewMinX = pan.view?.frame.minX ?? 0.0
+        
         switch pan.state {
         case .began:
             viewCenter = target?.center
             initialCenter = target?.center
-            if velocity.x > 0 {
-                deleteStackView.isHidden = true
-                favouriteStackView.isHidden = false
-                containerView.backgroundColor = UIColor._mangoColor()
+            
+            if panViewMinX > 0 {
+                showHideStackView(isDeleteStackViewHidden: true, isFavouriteStackViewHidden: false)
             }else{
-                deleteStackView.isHidden = false
-                favouriteStackView.isHidden = true
-                containerView.backgroundColor = UIColor._pastelRedColor()
+                showHideStackView(isDeleteStackViewHidden: false, isFavouriteStackViewHidden: true)
             }
+            
         case .changed:
             let translation = pan.translation(in: self)
             target!.center = CGPoint(x: viewCenter!.x + translation.x, y: viewCenter!.y)
+            
+            if panViewMinX > 0{
+                showHideStackView(isDeleteStackViewHidden: true, isFavouriteStackViewHidden: false)
+            } else {
+                showHideStackView(isDeleteStackViewHidden: false, isFavouriteStackViewHidden: true)
+            }
+            
         case .ended:
-            let translation = pan.translation(in: self)
-            let translationX = abs(translation.x)
+            let translationX = abs(pan.translation(in: self).x)
+            
             if translationX > childView.bounds.width/2 {
-                if velocity.x > 0 {
+                if panViewMinX > 0  {
                     favImagView.tintColor = .yellow
                     favView.backgroundColor = .orange
                     target!.center = CGPoint(x:self.bounds.maxX*2, y: viewCenter!.y)
@@ -119,6 +125,7 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
                     target!.center = CGPoint(x: -self.bounds.maxX*2, y: viewCenter!.y)
                     self.deleteItem?(self.center)
                 }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
                     target?.center = self.initialCenter
                 })
@@ -141,6 +148,13 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
         favImagView.layer.cornerRadius = 30
         favImagView.tintColor = .white
         favView.backgroundColor = .white
+    }
+    
+    private func showHideStackView(isDeleteStackViewHidden: Bool, isFavouriteStackViewHidden: Bool) {
+        deleteStackView.isHidden = isDeleteStackViewHidden
+        favouriteStackView.isHidden = isFavouriteStackViewHidden
+        isDeleteStackViewHidden ? (containerView.backgroundColor = UIColor._mangoColor()) :
+                                  (containerView.backgroundColor = UIColor._pastelRedColor())
     }
 }
 

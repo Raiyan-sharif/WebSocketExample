@@ -11,6 +11,7 @@ protocol Network {
     var provider: MoyaProvider<NetworkServiceAPI> { get }
     func getAuthkey(completion:@escaping (Data?)->Void)
     func changeLanguageSettingApi(completion:@escaping (Data?)->Void)
+    func ttsApi(params:[String:String],completion:@escaping (Data?)->Void)
 }
 
 
@@ -70,6 +71,14 @@ struct NetworkManager:Network {
             }
         }
     }
+    
+    func ttsApi(params:[String:String],completion:@escaping (Data?)->Void){
+        provider.request(.tts(params: params)){ result in
+            self.requestCompletion(target: .tts(params: params), result: result) { data in
+                completion(data)
+            }
+        }
+    }
 
     func requestCompletion(target:NetworkServiceAPI,result:Result<Moya.Response, MoyaError>,completion:@escaping (Data?)->Void){
         switch result {
@@ -120,6 +129,30 @@ struct ResultModel : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         accessKey = try values.decodeIfPresent(String.self, forKey: .accessKey)
+        resultCode = try values.decodeIfPresent(String.self, forKey: .resultCode)
+    }
+
+}
+
+struct TTSModel : Codable {
+
+    let tts : String?
+    let codec : String?
+    let tempo : String?
+    let resultCode : String?
+
+    enum CodingKeys: String, CodingKey {
+        case tts = "tts"
+        case codec = "codec"
+        case tempo = "tempo"
+        case resultCode = "result_code"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        tts = try values.decodeIfPresent(String.self, forKey: .tts)
+        codec = try values.decodeIfPresent(String.self, forKey: .codec)
+        tempo = try values.decodeIfPresent(String.self, forKey: .tempo)
         resultCode = try values.decodeIfPresent(String.self, forKey: .resultCode)
     }
 

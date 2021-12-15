@@ -65,3 +65,7 @@
 "error_network" = "ネットワークエラー。";
 "language_selection_voice_message" = "言語名を話してください.\n例: \"ドイツ語\"";
 "country_selection_voice_msg" = "地域名を言ってください。\n例：\ 「ドイツ\」";
+"low_battery" = "ローバッテリー";
+"charge_the_device" = "デバイスを充電してください";
+"camera_flash_unavailable" = "バッテリー残量が不足しているため、カメラのフラッシュは使用できません。";
+"can_not_translate" = "翻訳できません。";

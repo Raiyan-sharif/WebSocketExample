@@ -27,6 +27,7 @@ let CameraCropControllerMargin: CGFloat = 12.5
 let kScreenTransitionTime: Double = 0.5
 let kFadeAnimationTransitionTime: TimeInterval = 0.35
 let viewsAlphaValue: CGFloat = 0.0
+let speechViewTransitionTime = 0.28
 
 
 //MARK: - Link
@@ -134,10 +135,18 @@ let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 let BLOCK_DIRECTION:Int = -1
-
+let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
+let flashDisabledBatteryPercentage: Float = 15
+let cameraDisableBatteryPercentage: Float = 5
+let batteryMaxPercent: Float = 100
+let LANGUAGE_CODE_UND: String = "und"
+let CHINESE_LANGUAGE_CODE_ZH = "zh"
+let CameraDefaultLang = "Automatic Recognition"
+let isCameraFlashOn = "isCameraFlashOn"
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500
+let MAX_HISTORY_ROW = 10000
 
 // Selection of font
 let KFontSelection = "KFontSelection"
@@ -148,9 +157,10 @@ let blockMode = "blockMode"
 let lineMode = "lineMode"
 
 //FontSizes [range (11-22) ]
-let FONTSIZE: [CGFloat] = [0.7, 0.85, 1.0, 1.15, 1.3, 1.45]
-let DEFAULT_FONTSIZE: CGFloat = 17.0
+let FONTSIZE: [CGFloat] = [0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
+let DEFAULT_FONTSIZE: CGFloat = 24.0
 let DEFAULT_FONTSIZE_INDEX: Int = 2
+let DEFAULT_FONT_MULTIPLYER: CGFloat = 0.1
 let FONT_SIZE_KEY: String = "FontSize"
 
 // Socket url connection
@@ -169,12 +179,14 @@ let response_ok = "OK"
 let base_url = "https://test.pt-v.com"
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
+let tts_url = "/handsfree/api/pub/tts"
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
 let iosListener = "iosListener"
 let speakingListener = "speakingListener"
+let KEngineSeparator = ","
 
 // api key
 // TO DO : This will update/change in future
@@ -187,3 +199,11 @@ let languageSelectVoiceFloatingbtnTag = 1101
 let countrySelectVoiceFloatingbtnTag = 1102
 let languageSelectVoiceCameraFloatingBtnTag = 1103
 let ttsAlertViewTag = 11223
+
+// TTS API
+let licenseToken = "license_token"
+let language = "language"
+let text = "text"
+let tempo = "tempo"
+let engineName = "google"
+let normal = "normal"

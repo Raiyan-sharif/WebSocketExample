@@ -28,6 +28,14 @@ class FontUtility {
         return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex() + 1]
     }
 
+    static func getBiggestFontSize () -> CGFloat {
+        return getBiggerFontSize() + DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER * 2
+    }
+
+    static func getSmallFontSize () -> CGFloat {
+        return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex()] - DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER
+    }
+
     static func setFontSize (selectedFont:String) {
         UserDefaultsProperty<String>(KFontSelection).value = selectedFont
         switch selectedFont {
