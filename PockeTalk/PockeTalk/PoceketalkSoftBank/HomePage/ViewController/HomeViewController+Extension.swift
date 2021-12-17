@@ -308,8 +308,10 @@ extension HomeViewController {
             }
             
             if nextState == .expanded && translationY > 0 {
-                animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
-                self.historyCardVC.updateData(shouldCVScrollToBottom: true)
+                if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing {
+                    animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
+                    self.historyCardVC.updateData(shouldCVScrollToBottom: true)
+                }
             }
             self.historyImageView.isHidden = false
         default:
