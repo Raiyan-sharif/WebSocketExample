@@ -5,7 +5,7 @@
 
 import UIKit
 protocol HistoryCardViewControllerDelegate: AnyObject {
-    func dissmissHistory(shouldUpdateViewAlpha: Bool)
+    func dissmissHistory()
 }
 
 class HistoryCardViewController: BaseViewController {
@@ -123,7 +123,7 @@ class HistoryCardViewController: BaseViewController {
         historyViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
                 DispatchQueue.main.async {
-                    self?.dismissHistory(shouldUpdateViewAlpha: false)
+                    self?.dismissHistory(animated: true, completion: nil)
                 }
             }
             if items.count > 0{
@@ -233,8 +233,8 @@ class HistoryCardViewController: BaseViewController {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
-    private func dismissHistory(shouldUpdateViewAlpha: Bool) {
-        delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha)
+    private func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
+        delegate?.dissmissHistory()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
     }
     
@@ -243,7 +243,7 @@ class HistoryCardViewController: BaseViewController {
         UIView.animate(withDuration: kFadeAnimationTransitionTime, delay: animationDelay, options: .curveEaseOut) {
             self.view.alpha = viewsAlphaValue
         } completion: { _ in
-            self.dismissHistory(shouldUpdateViewAlpha: true)
+            self.dismissHistory(animated: true, completion: nil )
         }
     }
     
@@ -357,7 +357,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
 extension HistoryCardViewController {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if collectionView.contentSize.height + 30 < (scrollView.contentOffset.y + collectionView.bounds.height){
-            self.dismissHistory(shouldUpdateViewAlpha: false)
+            self.dismissHistory(animated: true, completion: nil )
         }
     }
 }
