@@ -91,13 +91,12 @@ extension HomeViewController{
                 }
             } completion: { _ in
                 if self.isFromlanguageSelection() == false {
-                    self.dissmissHistory()
+                    self.dissmissHistory(shouldUpdateViewAlpha: false)
                 }
                 let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.speechContainerView.isHidden = false
             }
-            
         } else {
             
             let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
@@ -258,9 +257,9 @@ extension HomeViewController {
         historyCardVC.delegate = self
         
         historyCardVC.view.frame = CGRect(
-            x: self.view.bounds.width / 3,
+            x: 0,
             y: -cardHeight + UIApplication.shared.statusBarFrame.height,
-            width: self.view.bounds.width / 3,
+            width: self.view.bounds.width,
             height: cardHeight)
         historyCardVC.view.clipsToBounds = true
     }
@@ -300,7 +299,7 @@ extension HomeViewController {
             let translationY = recognizer.translation(in: self.view).y
             if nextState == .collapsed && translationY < 0 {
                 if !isSwipUpGestureEnable() {
-                    animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                    animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                     self.historyCardVC.updateData(shouldCVScrollToBottom: true)
                     
                     //Remove all the child container while swipe up to dismiss
@@ -309,7 +308,7 @@ extension HomeViewController {
             }
             
             if nextState == .expanded && translationY > 0 {
-                animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                 self.historyCardVC.updateData(shouldCVScrollToBottom: true)
             }
             self.historyImageView.isHidden = false
@@ -322,7 +321,7 @@ extension HomeViewController {
     //MARK: - CardView animation functionalities
     private func startInteractiveTransition(state:CardState, duration:TimeInterval) {
         if runningAnimations.isEmpty {
-            animateTransitionIfNeeded(state: state, duration: duration)
+            animateTransitionIfNeeded(state: state, shouldUpdateCardViewAlpha: false)
         }
         for animator in runningAnimations {
             animator.pauseAnimation()
@@ -342,20 +341,20 @@ extension HomeViewController {
         }
     }
     
-    private func animateTransitionIfNeeded (state:CardState, duration:TimeInterval) {
+    private func animateTransitionIfNeeded (state:CardState, shouldUpdateCardViewAlpha: Bool) {
         if runningAnimations.isEmpty {
-            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) { [weak self] in
+            
+            if !shouldUpdateCardViewAlpha {
+                self.historyCardVC.view.alpha = 1
+            }
+            
+            let frameAnimator = UIViewPropertyAnimator(duration: historyCardAnimationDuration, dampingRatio: 1) { [weak self] in
                 guard let `self` = self else { return }
                 switch state {
                 case .expanded:
                     self.historyCardVC.view.frame.origin.y = 0
-                    self.historyCardVC.view.frame.origin.x = 0
-                    self.historyCardVC.view.frame.size.width = self.view.bounds.width
-                    self.historyCardVC.view.alpha = 1
                 case .collapsed:
                     self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
-                    self.historyCardVC.view.frame.origin.x = self.view.bounds.width / 3
-                    self.historyCardVC.view.frame.size.width = self.view.bounds.width / 3
                     self.historyDissmissed()
                 }
             }
@@ -373,9 +372,9 @@ extension HomeViewController {
 
 //MARK: - HistoryCardViewControllerDelegate
 extension HomeViewController: HistoryCardViewControllerDelegate {
-    func dissmissHistory() {
+    func dissmissHistory(shouldUpdateViewAlpha: Bool) {
         historyDissmissed()
-        animateTransitionIfNeeded(state: .collapsed, duration: historyCardAnimationDuration)
+        animateTransitionIfNeeded(state: .collapsed, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
     }
 }
 
