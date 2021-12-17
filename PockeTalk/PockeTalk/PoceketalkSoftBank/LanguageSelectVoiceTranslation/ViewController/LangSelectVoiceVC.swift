@@ -48,7 +48,7 @@ class LangSelectVoiceVC: BaseViewController {
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
     var isFirstTimeLoad = true
-    
+    private var floatingMicrophoneButton: UIButton!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -56,18 +56,13 @@ class LangSelectVoiceVC: BaseViewController {
         setupUI()
         setupPageViewController()
         registerNotification()
+        DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) { [weak self] in
+            self?.setUpMicroPhoneIcon()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.updateHomeContainer?(true)
-        super.viewWillAppear(true)
-        // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-        //setUpMicroPhoneIcon()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        //removeFloatingBtn()
     }
     
     deinit {
@@ -122,6 +117,26 @@ class LangSelectVoiceVC: BaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageHistoryListNotification, object: nil)
     }
+    
+    private func setUpMicroPhoneIcon() {
+        let bottomMergin = (self.window.frame.maxY / 4) / 2 + widthMicrophone / 2
+        
+        floatingMicrophoneButton = UIButton(frame: CGRect(
+            x: self.window.frame.maxX - 60,
+            y: self.window.frame.maxY - bottomMergin,
+            width: widthMicrophone,
+            height: widthMicrophone)
+        )
+        
+        floatingMicrophoneButton.setImage(UIImage(named: "mic"), for: .normal)
+        floatingMicrophoneButton.backgroundColor = UIColor._buttonBackgroundColor()
+        floatingMicrophoneButton.layer.cornerRadius = widthMicrophone/2
+        floatingMicrophoneButton.clipsToBounds = true
+        floatingMicrophoneButton.tag = languageSelectVoiceFloatingbtnTag
+        window.addSubview(floatingMicrophoneButton)
+        
+        floatingMicrophoneButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+    }
 
     //MARK: - IBActions
     @IBAction func onLangSelectButton(_ sender: Any) {
@@ -139,14 +154,13 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     @IBAction func onCountryButtonTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
-        controller.isFromTranslation = fromRetranslation
-        controller.isNative = isNative
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-        add(asChildViewController: controller, containerView: view, animation: transition)
-        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
-        //removeFloatingBtn()
+        microphoneIcon(isHidden: true)
+        navigateToCountryScene()
+    }
+    
+    @objc func microphoneTapAction (sender:UIButton) {
+        microphoneIcon(isHidden: true)
+        navigateToLanguageSettingsScene()
     }
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
@@ -168,7 +182,6 @@ class LangSelectVoiceVC: BaseViewController {
             }
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            //btnBack.setTitleColor(._skyBlueColor(), for: .selected)
             NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         }
 
@@ -180,31 +193,8 @@ class LangSelectVoiceVC: BaseViewController {
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         }
+        removeFloatingBtn()
     }
-
-
-    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-    /*
-    private func setUpMicroPhoneIcon() {
-        let bottomMergin = (self.window.frame.maxY / 4) / 2 + widthMicrophone / 2
-        
-        let floatingButton = UIButton(frame: CGRect(
-            x: self.window.frame.maxX - 60,
-            y: self.window.frame.maxY - bottomMergin,
-            width: widthMicrophone,
-            height: widthMicrophone)
-        )
-        
-        floatingButton.setImage(UIImage(named: "mic"), for: .normal)
-        floatingButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingButton.layer.cornerRadius = widthMicrophone/2
-        floatingButton.clipsToBounds = true
-        floatingButton.tag = languageSelectVoiceFloatingbtnTag
-        self.window.addSubview(floatingButton)
-        
-        floatingButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-    }
-     */
     
     //MARK: - View Transactions
     func showViewController(_ index: Int) -> UIViewController? {
@@ -225,64 +215,62 @@ class LangSelectVoiceVC: BaseViewController {
             return contentVC
         }
     }
-
+    
+    private func navigateToCountryScene(){
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
+        controller.isFromTranslation = fromRetranslation
+        controller.isNative = isNative
+        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        add(asChildViewController: controller, containerView: view, animation: transition)
+        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
+    }
+    
+    private func navigateToLanguageSettingsScene(){
+        let vc = UIStoryboard(name: "LanguageSelectVoice", bundle: nil).instantiateViewController(withIdentifier: "LanguageSettingsTutorialVC")as! LanguageSettingsTutorialVC
+        vc.delegate = self
+        vc.isFromLanguageScene = true
+        add(asChildViewController: vc, containerView: self.view)
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionVoice
+    }
 
     //MARK: - Utils
     @objc func hideMicrophoneButton(notification: Notification) {
-        //removeFloatingBtn()
+        microphoneIcon(isHidden: true)
     }
     
     @objc func showMicrophoneButton(notification: Notification) {
-       //setUpMicroPhoneIcon()
+        microphoneIcon(isHidden: false)
     }
     
     @objc func updateLanguageSelection(notification: Notification) {
+        updateUI()
+    }
+    
+    private func microphoneIcon(isHidden: Bool){
+        self.floatingMicrophoneButton.isHidden = isHidden
+    }
+    
+    private func updateUI(){
         self.isFirstTimeLoad = false
-        
         updateButton(index: 0)
         tabsViewDidSelectItemAt(position: 0)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
 
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .updateTranlationNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageListNotofication, object: nil)
     }
     
-    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-    /*
     private func removeFloatingBtn(){
         window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
+        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
     }
     
-    @objc func microphoneTapAction (sender:UIButton) {
-        removeFloatingBtn()
-        LanguageSettingsTutorialVC.openShowViewController(navigationController: self.navigationController)
-    }
-    */
-
-
-    // TODO microphone tap event
-    @objc func speechButtonTapAction (sender:UIButton) {
-        if Reachability.isConnectedToNetwork() {
-            RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
-                if isGranted {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
-                    controller.screenOpeningPurpose = SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice
-                    self.navigationController?.pushViewController(controller, animated: true);
-                } else {
-                    GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
-                }
-            }
-        } else {
-            GlobalMethod.showNoInternetAlert()
-        }
-    }
-
     @objc private func removeChild(notification: Notification) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
         self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
@@ -311,18 +299,26 @@ class LangSelectVoiceVC: BaseViewController {
             } else {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
             }
+        } else {
+            self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
         }
+    }
+}
+
+//MARK: - LanguageSettingsProtocol
+extension LangSelectVoiceVC: LanguageSettingsTutorialProtocol{
+    func updateLanguageByVoice() {
+        microphoneIcon(isHidden: false)
+        updateUI()
     }
 }
 
 //MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension LangSelectVoiceVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    // return ViewController when go forward
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let vc = pageViewController.viewControllers?.first
         var index: Int
         index = getVCPageIndex(vc)
-        // Don't do anything when viewpager reach the number of tabs
         if index == 1 {
             return nil
         } else {
@@ -331,7 +327,6 @@ extension LangSelectVoiceVC: UIPageViewControllerDataSource, UIPageViewControlle
         }
     }
     
-    // return ViewController when go backward
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let vc = pageViewController.viewControllers?.first
         var index: Int
@@ -358,7 +353,6 @@ extension LangSelectVoiceVC: UIPageViewControllerDataSource, UIPageViewControlle
         }
     }
     
-    // Return the current position that is saved in the UIViewControllers we have in the UIPageViewController
     func getVCPageIndex(_ viewController: UIViewController?) -> Int {
         switch viewController {
         case is LanguageListVC:

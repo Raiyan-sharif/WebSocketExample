@@ -16,8 +16,12 @@ extension Notification.Name {
     static let historyNotofication = Notification.Name("HistoryNotofication")
     static let languageListNotofication = Notification.Name("languageListNotofication")
     static let languageHistoryListNotification = Notification.Name("languageHistoryListNotification")
+    static let languageSettingsListNotification = Notification.Name("languageSettingsListNotification")
     
     static let countySlectionByVoiceNotofication = Notification.Name("countySlectionByVoiceNotofication")
+    static let countySettingsSlectionByVoiceNotofication = Notification.Name("countySettingsSlectionByVoiceNotofication")
+    static let cameraLanguageSettingsListNotification = Notification.Name("cameraLanguageSettingsListNotification")
+    
     static let cameraSelectionLanguage = Notification.Name("CameraSelectionLanguage")
     static let cameraHistorySelectionLanguage = Notification.Name("cameraHistorySelectionLanguage")
     
@@ -31,7 +35,7 @@ extension Notification.Name {
     static let pronuntiationTTSStopNotification = Notification.Name("pronuntiationTTSStopNotification")
     static let popFromCameralanguageSelectionVoice = Notification.Name("popFromCameralanguageSelectionVoice")
     
-    static let tapOnMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOnMicrophoneCountrySelectionVoiceCamera")
-    static let tapOffMicrophoneCountrySelectionVoiceCamera = Notification.Name("tapOffMicrophoneCountrySelectionVoiceCamera")
+    static let tapOnMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOnMicrophoneLanguageSelectionVoiceCamera")
+    static let tapOffMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOffMicrophoneLanguageSelectionVoiceCamera")
     static let updateTranlationNotification = Notification.Name("UpdateTranlationNotification")
 }

@@ -91,13 +91,12 @@ extension HomeViewController{
                 }
             } completion: { _ in
                 if self.isFromlanguageSelection() == false {
-                    self.dissmissHistory()
+                    self.dissmissHistory(shouldUpdateViewAlpha: false)
                 }
                 let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.speechContainerView.isHidden = false
             }
-            
         } else {
             
             let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
@@ -145,7 +144,6 @@ extension HomeViewController{
             if isGranted {
                 let imageView = gesture.view! as! UIImageView
                 if gesture.state == .began {
-                    
                     SocketManager.sharedInstance.connect()
                     SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                     
@@ -166,21 +164,8 @@ extension HomeViewController{
                         self.removeAllChildControllers(Int(IsTop.top.rawValue))
                     }
                     
-                    
-                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                    /*
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
-                     }
+                    self.hideMicrophoneBtnInLanguageScene()
                      
-                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-                     NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoiceCamera, object: nil)
-                     }
-                     */
                     SpeechProcessingViewModel.isLoading = false;
                     self.homeVCDelegate?.startRecord()
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
@@ -190,20 +175,6 @@ extension HomeViewController{
                 if gesture.state == .ended {
                     imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
                     
-                    // TODO: Remove micrphone functionality as per current requirement. Will modify after final confirmation.
-                    /*
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice  && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
-                     }
-                     
-                     if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera  && speechVC.isSTTDataAvailable(){
-                     NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoiceCamera, object: nil)
-                     }
-                     */
                     SpeechProcessingViewModel.isLoading = true;
                     if !self.speechVC.isMinimumLimitExceed {
                         self.enableORDisableMicrophoneButton(isEnable: false)
@@ -228,6 +199,51 @@ extension HomeViewController{
         return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
         ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
     }
+    
+    private func hideMicrophoneBtnInLanguageScene(){
+        
+        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+            NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+    }
+    
+    func showMicrophoneBtnInLanguageScene(){
+        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+        
+        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        }
+    }
 }
 
 
@@ -241,9 +257,9 @@ extension HomeViewController {
         historyCardVC.delegate = self
         
         historyCardVC.view.frame = CGRect(
-            x: self.view.bounds.width / 3,
+            x: 0,
             y: -cardHeight + UIApplication.shared.statusBarFrame.height,
-            width: self.view.bounds.width / 3,
+            width: self.view.bounds.width,
             height: cardHeight)
         historyCardVC.view.clipsToBounds = true
     }
@@ -283,7 +299,7 @@ extension HomeViewController {
             let translationY = recognizer.translation(in: self.view).y
             if nextState == .collapsed && translationY < 0 {
                 if !isSwipUpGestureEnable() {
-                    animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                    animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                     self.historyCardVC.updateData(shouldCVScrollToBottom: true)
                     
                     //Remove all the child container while swipe up to dismiss
@@ -292,7 +308,7 @@ extension HomeViewController {
             }
             
             if nextState == .expanded && translationY > 0 {
-                animateTransitionIfNeeded(state: nextState, duration: historyCardAnimationDuration)
+                animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                 self.historyCardVC.updateData(shouldCVScrollToBottom: true)
             }
             self.historyImageView.isHidden = false
@@ -305,7 +321,7 @@ extension HomeViewController {
     //MARK: - CardView animation functionalities
     private func startInteractiveTransition(state:CardState, duration:TimeInterval) {
         if runningAnimations.isEmpty {
-            animateTransitionIfNeeded(state: state, duration: duration)
+            animateTransitionIfNeeded(state: state, shouldUpdateCardViewAlpha: false)
         }
         for animator in runningAnimations {
             animator.pauseAnimation()
@@ -325,20 +341,20 @@ extension HomeViewController {
         }
     }
     
-    private func animateTransitionIfNeeded (state:CardState, duration:TimeInterval) {
+    private func animateTransitionIfNeeded (state:CardState, shouldUpdateCardViewAlpha: Bool) {
         if runningAnimations.isEmpty {
-            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) { [weak self] in
+            
+            if !shouldUpdateCardViewAlpha {
+                self.historyCardVC.view.alpha = 1
+            }
+            
+            let frameAnimator = UIViewPropertyAnimator(duration: historyCardAnimationDuration, dampingRatio: 1) { [weak self] in
                 guard let `self` = self else { return }
                 switch state {
                 case .expanded:
                     self.historyCardVC.view.frame.origin.y = 0
-                    self.historyCardVC.view.frame.origin.x = 0
-                    self.historyCardVC.view.frame.size.width = self.view.bounds.width
-                    self.historyCardVC.view.alpha = 1
                 case .collapsed:
                     self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
-                    self.historyCardVC.view.frame.origin.x = self.view.bounds.width / 3
-                    self.historyCardVC.view.frame.size.width = self.view.bounds.width / 3
                     self.historyDissmissed()
                 }
             }
@@ -356,9 +372,9 @@ extension HomeViewController {
 
 //MARK: - HistoryCardViewControllerDelegate
 extension HomeViewController: HistoryCardViewControllerDelegate {
-    func dissmissHistory() {
+    func dissmissHistory(shouldUpdateViewAlpha: Bool) {
         historyDissmissed()
-        animateTransitionIfNeeded(state: .collapsed, duration: historyCardAnimationDuration)
+        animateTransitionIfNeeded(state: .collapsed, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
     }
 }
 
