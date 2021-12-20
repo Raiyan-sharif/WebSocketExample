@@ -41,7 +41,7 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="sv" stt_engine="" tts_engine="" tts_value="Swedish Female"/>
     <item code="tr" stt_engine="" tts_engine="" tts_value="Turkish Female"/>
     <item code="hy" stt_engine="" tts_engine="" tts_value="Armenian Male_0.2"/>
-    <item code="ja" stt_engine="" tts_engine="" tts_value="Japanese Female"/>
+    <item code="ja" stt_engine="" tts_engine=""/>
     <item code="ko" stt_engine="" tts_engine="" tts_value="Korean Female"/>
     <item code="hr" stt_engine="" tts_engine=""/>
     <item code="hi" stt_engine="" tts_engine=""/>
