@@ -24,6 +24,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var historyImageView: UIImageView!
     @IBOutlet weak var bottomImageViewOfAnimation: UIImageView!
     static var bottomViewRef: UIView!
+    var isLanguageListVCOpened = false
     static var bottomImageViewOfAnimationRef: UIImageView!
     static var cameraTapFlag = 0
     let talkBtnImgView = UIImageView()
@@ -123,6 +124,7 @@ class HomeViewController: BaseViewController {
         setupGestureForCardView()
         setupCardView()
         setupStatusBarView()
+        setupGestureForBottomView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -284,6 +286,7 @@ class HomeViewController: BaseViewController {
     
     @IBAction private func topLanguageBtnAction(_ sender: UIButton) {
         openLanguageSelectionScreen(isNative: LanguageName.topLang.rawValue)
+        
     }
     
     @IBAction private func bottomLanguageBtnAction(_ sender: UIButton) {

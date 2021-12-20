@@ -249,6 +249,25 @@ extension HomeViewController{
 
 //MARK: - HistoryCardVC Functionalities
 extension HomeViewController {
+    //MARK: - Talk Button Selection Point Post Notification
+    func setupGestureForBottomView() {
+    
+        self.bottomView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleBottomGesture(recognizer:))))
+    }
+    @objc private func handleBottomGesture(recognizer: UITapGestureRecognizer) {
+        if(recognizer.state == .ended){
+            let point = recognizer.location(in: view)
+            print(type(of: point))
+            var pointDictionary = [String: CGPoint]()
+            pointDictionary["point"] = point
+            
+            if(ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice || ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice){
+                NotificationCenter.default.post(name: .talkButtonContainerSelectionPoint, object: nil, userInfo: pointDictionary)
+                print(point)
+            }
+        }
+    }
+    
     //MARK: - HistoryCardview setup
     func setupCardView() {
         historyCardVC = HistoryCardViewController(nibName: "HistoryCardViewController", bundle: nil)

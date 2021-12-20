@@ -17,6 +17,7 @@ extension Notification.Name {
     static let languageListNotofication = Notification.Name("languageListNotofication")
     static let languageHistoryListNotification = Notification.Name("languageHistoryListNotification")
     static let languageSettingsListNotification = Notification.Name("languageSettingsListNotification")
+    static let talkButtonContainerSelectionPoint = Notification.Name("talkButtonContainerSelectionPoint")
     
     static let countySlectionByVoiceNotofication = Notification.Name("countySlectionByVoiceNotofication")
     static let countySettingsSlectionByVoiceNotofication = Notification.Name("countySettingsSlectionByVoiceNotofication")

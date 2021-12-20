@@ -7,7 +7,7 @@ import UIKit
 import SwiftyXMLParser
 
 class LanguageListVC: BaseViewController {
-    @IBOutlet weak private var langListTableView: UITableView!
+    @IBOutlet weak var langListTableView: UITableView!
     
     let TAG = "\(LanguageListVC.self)"
     var pageIndex: Int!
@@ -18,7 +18,7 @@ class LanguageListVC: BaseViewController {
     var isNative: Int = 0
     var isFirstTimeLoad: Bool!
     private let languageManager = LanguageSelectionManager.shared
-    
+    var tabsHeight:CGFloat = 0
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,6 +148,7 @@ extension LanguageListVC: UITableViewDataSource {
 //MARK: - UITableview Delegate
 extension LanguageListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
         let languageItem = languageItems[indexPath.row]
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
         self.langListTableView.reloadData()
