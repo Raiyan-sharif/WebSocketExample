@@ -561,12 +561,9 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         }
         removeAnimation()
     }
-
 }
 
 extension SpeechProcessingViewController{
-
-
     func removeAnimation(){
         self.speechProcessingLeftImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.layer.removeAllAnimations()
@@ -614,34 +611,34 @@ extension SpeechProcessingViewController{
             }
         }
     }
+    
     func updateLanguageType(){
         let languageManager = LanguageSelectionManager.shared
         pronunciationView.isHidden = true
-        //if let purpose = self.screenPurpose{
-            switch ScreenTracker.sharedInstance.screenPurpose {
-            case .HomeSpeechProcessing:
-                languageManager.tempSourceLanguage = nil
-                if languageManager.isArrowUp{
-                    speechLangCode = languageManager.bottomLanguage
-                }else{
-                    speechLangCode = languageManager.topLanguage
-                }
-                break
-            case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
-                if countrySearchspeechLangCode != "" {
-                    speechLangCode = countrySearchspeechLangCode
-                } else {
-                    speechLangCode = LanguageManager.shared.currentLanguage.rawValue
-                }
-                languageManager.tempSourceLanguage = speechLangCode
-                languageHasUpdated = true
-                break
-            case .PronunciationPractice, .HistroyPronunctiation:
-                speechLangCode = pronunciationLanguageCode
-                languageHasUpdated = true
-                break
-            default:
-                break
+        switch ScreenTracker.sharedInstance.screenPurpose {
+        case .HomeSpeechProcessing:
+            languageManager.tempSourceLanguage = nil
+            if languageManager.isArrowUp{
+                speechLangCode = languageManager.bottomLanguage
+            }else{
+                speechLangCode = languageManager.topLanguage
             }
+            break
+        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
+            if countrySearchspeechLangCode != "" {
+                speechLangCode = countrySearchspeechLangCode
+            } else {
+                speechLangCode = LanguageManager.shared.currentLanguage.rawValue
+            }
+            languageManager.tempSourceLanguage = speechLangCode
+            languageHasUpdated = true
+            break
+        case .PronunciationPractice, .HistroyPronunctiation:
+            speechLangCode = pronunciationLanguageCode
+            languageHasUpdated = true
+            break
+        default:
+            break
+        }
     }
 }

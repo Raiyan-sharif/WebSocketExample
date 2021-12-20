@@ -58,17 +58,23 @@ extension HomeViewController{
     }
     
     private func isSwipUpGestureEnable() -> Bool {
-        var isAlertViewPresent = false
-        
         if historyCardVC.view.subviews.count > 0 {
             for view in historyCardVC.view.subviews {
                 if view.tag == ttsAlertViewTag {
-                    isAlertViewPresent = true
+                    return true
                 }
             }
         }
         
-        return isAlertViewPresent
+        if isFromlanguageSelection(){
+            return true
+        }
+        
+        if ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation {
+            return true
+        }
+        
+        return false
     }
     
     func hideSpeechView(){
@@ -211,8 +217,16 @@ extension HomeViewController{
     }
     
     func isFromlanguageSelection()-> Bool{
-        return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
-        ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera
+        return ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice ||
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageSettingsSelectionVoice ||
+        
+        ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
+        ScreenTracker.sharedInstance.screenPurpose == .CountrySettingsSelectionByVoice ||
+        
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera ||
+        ScreenTracker.sharedInstance.screenPurpose == .LanguageSettingsSelectionCamera
     }
     
     private func hideMicrophoneBtnInLanguageScene(){

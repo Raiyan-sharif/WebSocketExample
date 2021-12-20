@@ -408,9 +408,7 @@ extension HistoryCardViewController : RetranslationDelegate{
 
 //MARK:- AlertReusableDelegate
 extension HistoryCardViewController : AlertReusableDelegate{
-    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
-        
-    }
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {}
     
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
@@ -450,7 +448,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view)
-        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){

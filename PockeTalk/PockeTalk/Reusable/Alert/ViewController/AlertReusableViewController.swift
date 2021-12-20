@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol AlertReusableDelegate:class {
+protocol AlertReusableDelegate: AnyObject {
     func updateFavourite(chatItemModel: HistoryChatItemModel)
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?)
     func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
