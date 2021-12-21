@@ -285,7 +285,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             self.titleLabel.text = "country_selection_voice_msg".localiz()
             break
-        case .PronunciationPractice, .HistoryScrren, .HistroyPronunctiation: break
+        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen: break
         }
     }
     

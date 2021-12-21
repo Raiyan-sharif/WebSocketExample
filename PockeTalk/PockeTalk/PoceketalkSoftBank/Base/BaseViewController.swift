@@ -20,6 +20,7 @@ enum SpeechProcessingScreenOpeningPurpose{
     case PronunciationPractice
     case HistoryScrren
     case HistroyPronunctiation
+    case FavouriteScreen
 }
 
 class BaseViewController: UIViewController {
@@ -34,7 +35,11 @@ class BaseViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
     }
 }
 
