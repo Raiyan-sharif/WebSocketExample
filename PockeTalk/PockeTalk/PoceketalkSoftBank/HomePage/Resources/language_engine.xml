@@ -14,7 +14,7 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="en-IN" stt_engine="" tts_engine="" tts_value="US English Female"/>
     <item code="en-AU" stt_engine="" tts_engine="" tts_value="Australian Female"/>
     <item code="en-PH" stt_engine="" tts_engine="" tts_value="US English Female"/>
-    <item code="en-SO" stt_engine="" tts_engine="" tts_value="US English Female_-2.0"/>
+    <item code="en-SO" stt_engine="" tts_engine="" tts_value="US English Female_0.7"/>
     <item code="ar" stt_engine="" tts_engine="" tts_value="Arabic Male"/>
     <item code="ca" stt_engine="" tts_engine=""/>
     <item code="da" stt_engine="" tts_engine="" tts_value="Danish Female"/>
