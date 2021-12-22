@@ -12,7 +12,7 @@ class ITTSN { //TODO GoogleCloudOCR will be changed later
     private let apiKey = googleOCRKey
     private var apiURL: URL {
         return URL(string: "https://test.pt-v.com/handsfree/api/pub/images_annotate")!
-
+        
     }
     
     func detect(from image: UIImage, langCode: String, completion: @escaping (GoogleCloudOCRResponse?) -> Void) {
@@ -36,12 +36,12 @@ class ITTSN { //TODO GoogleCloudOCR will be changed later
         
         var lanCode = String()
         if langCode.contains(",") {
-           lanCode = ""
+            lanCode = ""
         } else {
             lanCode = langCode
         }
         let parameters: [String: Any] = ["imei": imeiCode, "lang_code": lanCode, "image_string": base64EncodedImage]
-
+        
         PrintUtility.printLog(tag: "parameters parameters", text: "\(apiURL)")
         let headers: HTTPHeaders = ["X-Ios-Bundle-Identifier": Bundle.main.bundleIdentifier ?? "",]
         
@@ -67,9 +67,9 @@ class ITTSN { //TODO GoogleCloudOCR will be changed later
             
             PrintUtility.printLog(tag: self.TAG, text: " 11111 GoogleCloudOCR() >> callGoogleVisionAPI() >> got response \(data)")
             
-            if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                print("json: \(json)")
-            }
+            //            if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+            //                print("json: \(json)")
+            //            }
             
             // Decode the JSON data into a `GoogleCloudOCRResponse` object.
             let ocrResponse = try? JSONDecoder().decode(GoogleCloudOCRResponse.self, from: data)
