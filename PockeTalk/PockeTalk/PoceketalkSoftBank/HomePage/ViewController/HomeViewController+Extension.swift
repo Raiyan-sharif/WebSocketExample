@@ -41,11 +41,15 @@ extension HomeViewController{
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
         longPress.minimumPressDuration = 0.1
         talkBtnImgView.addGestureRecognizer(longPress)
+        bottmViewGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
+        bottmViewGesture.minimumPressDuration = 0.1
+        bottomView.addGestureRecognizer(bottmViewGesture)
     }
     
     func enableORDisableMicrophoneButton(isEnable:Bool){
         if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
             imgView.isUserInteractionEnabled = isEnable
+            bottomView.isUserInteractionEnabled = isEnable
         }
     }
     
@@ -137,17 +141,18 @@ extension HomeViewController{
         
         homeGestureEnableOrDiable()
         isFromCameraPreview = false
+        enableorDisableGesture(notification: nil)
     }
     
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
-                let imageView = gesture.view! as! UIImageView
+                let imageView = self.bottomView.viewWithTag(109) as! UIImageView
                 if gesture.state == .began {
                     SocketManager.sharedInstance.connect()
                     SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                     
-                    if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
+                    if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
                         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                     }
                     self.speechVC.updateLanguageType()
@@ -307,6 +312,8 @@ extension HomeViewController {
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             continueInteractiveTransition()
+            ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+            self.enableorDisableGesture(notification:nil)
         default:
             break
         }
@@ -320,9 +327,11 @@ extension HomeViewController {
                 if !isSwipUpGestureEnable() {
                     animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                     self.historyCardVC.updateData(shouldCVScrollToBottom: true)
-                    
+
                     //Remove all the child container while swipe up to dismiss
                     removeAllChildControllers(Int(IsTop.top.rawValue))
+                    ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                    self.enableorDisableGesture(notification:nil)
                 }
             }
             
@@ -330,6 +339,8 @@ extension HomeViewController {
                 if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing {
                     animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                     self.historyCardVC.updateData(shouldCVScrollToBottom: true)
+                    ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+                    self.enableorDisableGesture(notification:nil)
                 }
             }
             self.historyImageView.isHidden = false

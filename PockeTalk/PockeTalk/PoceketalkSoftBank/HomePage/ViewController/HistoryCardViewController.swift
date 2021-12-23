@@ -236,6 +236,7 @@ class HistoryCardViewController: BaseViewController {
     private func dismissHistory(shouldUpdateViewAlpha: Bool) {
         delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
     }
     
     //MARK: - IBActions

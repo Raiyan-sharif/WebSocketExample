@@ -54,6 +54,7 @@ class HomeViewController: BaseViewController {
 
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
+    var bottmViewGesture:UILongPressGestureRecognizer!
     
     ///HistoryCardVC properties
     enum CardState {
@@ -107,6 +108,10 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .black
         return view
     }()
+    private var isEnableGessture:Bool{
+        return ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing || ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice ||
+            ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation
+    }
     
     static var homeContainerViewBottomConstraint:NSLayoutConstraint!
     
@@ -258,6 +263,8 @@ class HomeViewController: BaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
+
     }
     
     //MARK: - IBActions
@@ -338,7 +345,7 @@ class HomeViewController: BaseViewController {
         let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
-        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        ScreenTracker.sharedInstance.screenPurpose = .FavouriteScreen
     }
     
     /// Navigate to Camera page
@@ -436,6 +443,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .animationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
     }
     
     private func openLanguageSelectionScreen(isNative: Int){
@@ -484,11 +492,17 @@ class HomeViewController: BaseViewController {
         setLanguageDirection()
         setHistoryAndFavouriteView()
     }
+    @objc func enableorDisableGesture(notification: Notification?) {
+        print(ScreenTracker.sharedInstance.screenPurpose)
+        self.bottmViewGesture.isEnabled = self.isEnableGessture
+    }
     
     
     @objc func updateContainer(notification: Notification) {
         self.removeAllChildControllers(self.selectedTab)
-        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        if ScreenTracker.sharedInstance.screenPurpose != .HistoryScrren{
+            ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        }
         historyDissmissed()
         self.historyImageView.becomeFirstResponder()
         self.view.becomeFirstResponder()
