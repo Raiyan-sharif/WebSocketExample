@@ -99,17 +99,16 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap_home_bg" translatesAutoresizingMaskIntoConstraints="NO" id="r9m-bG-pm2">
-                                        <rect key="frame" x="86" y="229" width="172" height="139"/>
+                                        <rect key="frame" x="86" y="209.33333333333331" width="172" height="158.66666666666669"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Iv-aD-vH5" userLabel="ButtonBackgroundView">
-                                        <rect key="frame" x="97" y="109" width="150" height="150"/>
+                                        <rect key="frame" x="116.66666666666666" y="128.66666666666669" width="110.66666666666666" height="110.66666666666669"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-Ie-wc2" customClass="HighlightedButton" customModule="PockeTalk" customModuleProvider="target">
-                                        <rect key="frame" x="97" y="109" width="150" height="150"/>
+                                        <rect key="frame" x="116.66666666666666" y="128.66666666666669" width="110.66666666666666" height="110.66666666666669"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="JC1-fw-lL5"/>
-                                            <constraint firstAttribute="width" constant="150" id="mEu-5e-hPq"/>
+                                            <constraint firstAttribute="width" secondItem="4iA-Ie-wc2" secondAttribute="height" multiplier="1:1" id="tZe-v6-XEx"/>
                                         </constraints>
                                         <state key="normal" image="arrow_circular_up"/>
                                         <connections>
@@ -229,6 +228,7 @@
                             <constraint firstItem="ezf-zO-Z1Y" firstAttribute="top" secondItem="mjI-JA-TBG" secondAttribute="top" constant="-30" id="i9e-bf-HSG"/>
                             <constraint firstItem="eoC-NK-acp" firstAttribute="trailing" secondItem="TQW-nv-IlO" secondAttribute="trailing" id="lKE-rL-eYf"/>
                             <constraint firstItem="oYg-He-7j5" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" constant="15" id="tIh-z8-UHD"/>
+                            <constraint firstItem="4iA-Ie-wc2" firstAttribute="height" secondItem="EBf-Xw-0MQ" secondAttribute="height" multiplier="0.1" id="wb2-CD-z79"/>
                             <constraint firstItem="ezf-zO-Z1Y" firstAttribute="centerX" secondItem="eoC-NK-acp" secondAttribute="centerX" id="y9J-CH-708"/>
                         </constraints>
                     </view>
