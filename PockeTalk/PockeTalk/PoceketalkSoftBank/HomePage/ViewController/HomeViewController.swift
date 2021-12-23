@@ -259,8 +259,7 @@ class HomeViewController: BaseViewController {
         HomeViewController.bottomViewRef = self.bottomView
         HomeViewController.bottomImageViewOfAnimationRef = self.bottomImageViewOfAnimation
         NotificationCenter.default.addObserver(self, selector: #selector(updateContainer(notification:)), name:.containerViewSelection, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(animationDidEnterBackground(notification:)), name: .animationDidEnterBackground, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(animationDidEnterBackground(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
@@ -439,10 +438,9 @@ class HomeViewController: BaseViewController {
     }
     
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.containerViewSelection, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .containerViewSelection, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .animationDidEnterBackground, object: nil)
         NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
     }
     

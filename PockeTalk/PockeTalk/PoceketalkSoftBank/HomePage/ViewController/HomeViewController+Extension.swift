@@ -76,18 +76,23 @@ extension HomeViewController{
         homeGestureEnableOrDiable()
         HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
+    
     @objc func animationDidEnterBackground(notification: Notification) {
-        talkBtnImgView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-        if !self.speechVC.isMinimumLimitExceed {
-            self.enableORDisableMicrophoneButton(isEnable: false)
-        }else{
-            self.speechVC.isMinimumLimitExceed = false
+        if TalkButtonAnimation.isTalkBtnAnimationExist {
+            talkBtnImgView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+            if !self.speechVC.isMinimumLimitExceed {
+                self.enableORDisableMicrophoneButton(isEnable: false)
+            }else{
+                self.speechVC.isMinimumLimitExceed = false
+            }
+            self.homeVCDelegate?.stopRecord()
+            
+            TalkButtonAnimation.isTalkBtnAnimationExist = false
+            TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
         }
-        self.homeVCDelegate?.stopRecord()
-        TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
     }
+    
     private func openSpeechView(){
-        
         if self.isFromPronuntiationPractice() != true{
             UIView.animate(withDuration: fadeAnimationDuration, delay: fadeAnimationDelay, options: .curveEaseOut) {
                 if self.isFromlanguageSelection() == false {
@@ -108,6 +113,7 @@ extension HomeViewController{
             self.speechContainerView.isHidden = false
         }
     }
+    
     func getLastVCFromContainer()->UIViewController?{
         return homeContainerView.subviews.last?.parentViewController
     }
@@ -174,6 +180,8 @@ extension HomeViewController{
                     SpeechProcessingViewModel.isLoading = false;
                     self.homeVCDelegate?.startRecord()
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
+                    
+                    TalkButtonAnimation.isTalkBtnAnimationExist = true
                     TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
                 
@@ -187,6 +195,8 @@ extension HomeViewController{
                         self.speechVC.isMinimumLimitExceed = false
                     }
                     self.homeVCDelegate?.stopRecord()
+                    
+                    TalkButtonAnimation.isTalkBtnAnimationExist = false
                     TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
             } else {

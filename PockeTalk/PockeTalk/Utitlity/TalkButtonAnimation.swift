@@ -9,6 +9,8 @@ import UIKit
 
 
 class TalkButtonAnimation{
+    static var isTalkBtnAnimationExist: Bool = false
+    
     static func startTalkButtonAnimation(imageView: UIImageView, pulseGrayWave: UIView, pulseLayer: CAShapeLayer, midCircleViewOfPulse: UIView, bottomImageView: UIImageView){
         let width = 100
         pulseGrayWave.frame = CGRect(x: Int(imageView.frame.midX) - width/2, y: Int(imageView.frame.midY) - width/2, width: width, height: width)
