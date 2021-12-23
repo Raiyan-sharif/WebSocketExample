@@ -9,6 +9,7 @@ import UIKit
 protocol ITTServerViewModelDelegates {
     func updateView()
     func showErrorAlert()
+    func showNetworkError()
 }
 
 class ITTServerViewModel: BaseModel {
@@ -17,6 +18,8 @@ class ITTServerViewModel: BaseModel {
     var capturedImage: UIImage?
     var imageWidth = CGFloat()
     var imageHeight = CGFloat()
+    var timer: Timer? = nil
+    var timeInterval: TimeInterval = 60
     
     var mXFactor:Float = 1
     var mYFactor:Float = 1
@@ -325,12 +328,15 @@ class ITTServerViewModel: BaseModel {
     func translateText(arrayBlocks: [BlockDetection], type: String, isFromHistoryVC: Bool) {
         totalBlockCount = arrayBlocks.count
         tttCount = 0
+        timeInterval = 60
+        startCountdown()
         for (index,block) in arrayBlocks.enumerated() {
             let detectedText = block.text
             let sourceLan = block.detectedLanguage
             let targetLan = UserDefaults.standard.string(forKey: KCameraTargetLanguageCode)
             
                 if Reachability.isConnectedToNetwork() {
+
                     self.translate(source: sourceLan!, target: targetLan!, text: detectedText!)
                     
                     if index == arrayBlocks.count-1 {
@@ -342,7 +348,6 @@ class ITTServerViewModel: BaseModel {
                 } else {
                     GlobalMethod.showNoInternetAlert()
                 }
-            
         }
     }
     

@@ -440,6 +440,10 @@ class CaptureImageProcessVC: BaseViewController {
 }
 
 extension CaptureImageProcessVC: ITTServerViewModelDelegates {
+    func showNetworkError() {
+        self.showErrorAlert(message: "error_network".localiz())
+    }
+    
     func showErrorAlert() {
         showErrorAlert(message: "can_not_translate".localiz())
     }
