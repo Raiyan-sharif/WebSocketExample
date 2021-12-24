@@ -287,7 +287,7 @@ class GlobalMethod {
     /// show microphone, camera, photo library permission alert
     static func showPermissionAlert (viewController : UIViewController?, title : String, message : String) {
         let alertService = CustomAlertViewModel()
-        let alert = alertService.alertDialogWithTitleWithActionButton(title: title, message:message, buttonTitle: kTitleOk, cancelTitle: kNotAllow) {
+        let alert = alertService.alertDialogWithTitleWithActionButton(title: title.localiz(), message:message.localiz(), buttonTitle: kTitleOk.localiz(), cancelTitle: kNotAllow.localiz()) {
         }
         alert.buttonAction = {
             GlobalMethod.openSettingsApplication()

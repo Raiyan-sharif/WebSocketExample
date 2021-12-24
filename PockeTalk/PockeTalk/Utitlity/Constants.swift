@@ -65,16 +65,16 @@ let kTranslateIntoOtherLanguageUnderDevelopment = "Translate into other language
 
 // Alert message, title and action for app specific permission
 
-let kActionAllowAccess = "Allow access"
-let kActionCancel = "Cancel"
-let kMicrophoneUsageTitle = #""PockeTalk" Would Like to Access the Microphone"#
-let kMicrophoneUsageMessage = "PockeTalk needs permission to use the microphone"
-let kPhotosUsageTitle = "Can't use photos"
-let kPhotosUsageMessage = "PockeTalk needs permission to access the photo library"
-let kCameraUsageTitle = #""PockeTalk" Would Like to Access the Camera"#
-let kCameraUsageMessage = "PockeTalk needs permission to use the camera"
-let kTitleOk = "OK"
-let kNotAllow = "Don't Allow"
+let kActionAllowAccess = "kActionAllowAccess"
+let kActionCancel = "kActionCancel"
+let kMicrophoneUsageTitle = "kMicrophoneUsageTitle"
+let kMicrophoneUsageMessage = "kMicrophoneUsageMessage"
+let kPhotosUsageTitle = "kPhotosUsageTitle"
+let kPhotosUsageMessage = "kPhotosUsageMessage"
+let kCameraUsageTitle = "kCameraUsageTitle"
+let kCameraUsageMessage = "kCameraUsageMessage"
+let kTitleOk = "kTitleOk"
+let kNotAllow = "kNotAllow"
 
 
 

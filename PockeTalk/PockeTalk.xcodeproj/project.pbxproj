@@ -118,6 +118,7 @@
 		79CA3BBB2706FC7D00884682 /* ITTSN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBA2706FC7D00884682 /* ITTSN.swift */; };
 		79CA3BBD270D539D00884682 /* TranslatedTextJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */; };
 		8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8705289026F0ACF100555AF6 /* TextSizeViewController.swift */; };
+		87194F36277475700005B16C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87194F38277475700005B16C /* InfoPlist.strings */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
 		8732CAD726FC282200843BFE /* NetworkServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */; };
@@ -361,6 +362,8 @@
 		79CA3BBA2706FC7D00884682 /* ITTSN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITTSN.swift; sourceTree = "<group>"; };
 		79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedTextJSONModel.swift; sourceTree = "<group>"; };
 		8705289026F0ACF100555AF6 /* TextSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeViewController.swift; sourceTree = "<group>"; };
+		87194F37277475700005B16C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		87194F39277475880005B16C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
 		8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceAPI.swift; sourceTree = "<group>"; };
@@ -1175,6 +1178,7 @@
 			isa = PBXGroup;
 			children = (
 				8782DEDF26E08D10003A1681 /* Localizable.strings */,
+				87194F38277475700005B16C /* InfoPlist.strings */,
 			);
 			path = Localizable;
 			sourceTree = "<group>";
@@ -1750,6 +1754,7 @@
 				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
 				50193E0626E864570052F170 /* CountryListCollectionViewCell.xib in Resources */,
 				8915C21326F9E0D50091BF8B /* FavouriteCell.xib in Resources */,
+				87194F36277475700005B16C /* InfoPlist.strings in Resources */,
 				503AEEB926EB0EE000B03978 /* LanguageSelectCamera.storyboard in Resources */,
 				89B4066B274386D50031CB65 /* HistoryCardViewController.xib in Resources */,
 				3B86A5C626F0631600175073 /* Reset.storyboard in Resources */,
@@ -2082,6 +2087,15 @@
 				4A66138526DDCF5D004A925D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		87194F38277475700005B16C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				87194F37277475700005B16C /* en */,
+				87194F39277475880005B16C /* ja */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		8782DEDF26E08D10003A1681 /* Localizable.strings */ = {
