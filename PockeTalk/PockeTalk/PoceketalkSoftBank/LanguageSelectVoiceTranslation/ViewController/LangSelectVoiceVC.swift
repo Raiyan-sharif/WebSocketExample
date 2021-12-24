@@ -254,16 +254,18 @@ class LangSelectVoiceVC: BaseViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
         controller.isFromTranslation = fromRetranslation
         controller.isNative = isNative
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
     }
     
     private func navigateToLanguageSettingsScene(){
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromTop)
         let vc = UIStoryboard(name: "LanguageSelectVoice", bundle: nil).instantiateViewController(withIdentifier: "LanguageSettingsTutorialVC")as! LanguageSettingsTutorialVC
         vc.delegate = self
         vc.isFromLanguageScene = true
-        add(asChildViewController: vc, containerView: self.view)
+        add(asChildViewController: vc, containerView: self.view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionVoice
     }
 

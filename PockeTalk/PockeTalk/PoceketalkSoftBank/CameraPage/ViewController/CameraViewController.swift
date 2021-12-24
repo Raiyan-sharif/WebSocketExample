@@ -82,9 +82,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         controller.updateHomeContainer = { [weak self] in
             self?.updateHomeContainer?(true)
         }
-        // self.navigationController?.pushViewController(controller, animated: true);
+        
         self.updateHomeContainer?(false)
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         add(asChildViewController: controller, containerView: view, animation: transition)
     }
     
@@ -229,7 +229,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
-            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.navigationController?.pushViewController(vc, animated: false)
         }
@@ -524,7 +524,7 @@ extension CameraViewController {
             self?.onCompletion?(image, asset)
             self?.onCompletion = nil
         }
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.navigationController?.pushViewController(vc, animated: false)
     }

@@ -155,11 +155,12 @@ class CountryListViewController: BaseViewController {
     }
     
     private func navigateToLanguageSettingsScene(){
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromTop)
         let vc = UIStoryboard(name: "LanguageSelectVoice", bundle: nil).instantiateViewController(withIdentifier: "LanguageSettingsTutorialVC")as! LanguageSettingsTutorialVC
         vc.delegate = self
         vc.isFromLanguageScene = false
         ScreenTracker.sharedInstance.screenPurpose = .CountrySettingsSelectionByVoice
-        add(asChildViewController: vc, containerView: self.view)
+        add(asChildViewController: vc, containerView: self.view, animation: transition)
     }
 
     //MARK: - Utils

@@ -341,7 +341,7 @@ class HomeViewController: BaseViewController {
     @objc func goToFavouriteScreen () {
         HomeViewController.bottomViewRef.backgroundColor = .black
         let fv = FavouriteViewController()
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .FavouriteScreen
@@ -370,7 +370,7 @@ class HomeViewController: BaseViewController {
                                     HomeViewController.homeContainerViewBottomConstraint.constant = self.bottomView.bounds.height
                                 }
                             }
-                            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                             self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
                             ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
                             self.hideSpeechView()
@@ -468,9 +468,9 @@ class HomeViewController: BaseViewController {
         controller.isNative = isNative
         
         //Add transition animation
-        var transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        var transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         if isNative != LanguageName.bottomLang.rawValue{
-            transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         }
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         

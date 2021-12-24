@@ -82,7 +82,7 @@ class CameraHistoryViewController: BaseViewController {
     }
     
     @objc func backButtonEventListener(_ button: UIButton) {
-        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.navigationController?.popViewController(animated: false)
     }
@@ -146,7 +146,8 @@ extension CameraHistoryViewController: UICollectionViewDelegate, UICollectionVie
                     vc.historyID = id
                 }
             }
-            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.navigationController?.pushViewController(vc, animated: false)
         }
@@ -176,7 +177,7 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
             self.viewModel.cameraHistoryImages.remove(at: index)
             self.collectionView.reloadData()
             if self.viewModel.cameraHistoryImages.count == 0 {
-                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.navigationController?.popViewController(animated: false)
             }
@@ -194,7 +195,8 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
                     vc.historyID = id
                 }
             }
-            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.navigationController?.pushViewController(vc, animated: false)
         }

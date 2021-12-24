@@ -635,15 +635,10 @@ extension TtsAlertController : AlertReusableDelegate {
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
-//        if(self.navigationController != nil){
-//            self.navigationController?.pushViewController(controller, animated: true)
-//        }else{
-//            controller.modalPresentationStyle = .fullScreen
-//            self.present(controller, animated: true, completion: nil)
-//        }
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {

@@ -232,7 +232,7 @@ class FavouriteViewController: BaseViewController {
     }
     
     private func addBackNavigationTransationalAnimation() {
-        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         self.view.window!.layer.add(transition, forKey: kCATransition)
     }
 }
@@ -386,7 +386,8 @@ extension FavouriteViewController : AlertReusableDelegate {
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.modalPresentationStyle = .fullScreen
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice

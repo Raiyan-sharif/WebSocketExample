@@ -108,13 +108,13 @@ extension HomeViewController{
                 if self.isFromlanguageSelection() == false {
                     self.dissmissHistory(shouldUpdateViewAlpha: false)
                 }
-                let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.speechContainerView.isHidden = false
             }
         } else {
             
-            let transition = GlobalMethod.getTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.speechContainerView.isHidden = false
         }
@@ -126,16 +126,16 @@ extension HomeViewController{
     
     func removeAllChildControllers(_ isNative: Int){
         if isFromCameraPreview {
-            let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             
         }
         for view in homeContainerView.subviews{
             if let controller = view.parentViewController{
                 if(controller is LangSelectVoiceVC){
-                    var tr = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromLeft)
+                    var tr = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromLeft)
                     if isNative == IsTop.top.rawValue{
-                        tr = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromRight)
+                        tr = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: .fromRight)
                     }
                     remove(asChildViewController: controller, animation: tr)
                 }else{

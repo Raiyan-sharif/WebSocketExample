@@ -727,7 +727,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func backButtonEventListener(_ button: UIButton) {
         if isClickable {
             if fromHistoryVC {
-                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.navigationController?.popViewController(animated: false)
             } else {
@@ -735,7 +735,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "\(viewControllers)")
                 for viewController in viewControllers {
                     if viewController is HomeViewController {
-                        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                        let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
                         self.view.window!.layer.add(transition, forKey: kCATransition)
                         self.navigationController?.popToViewController(viewController, animated: false)
                     }

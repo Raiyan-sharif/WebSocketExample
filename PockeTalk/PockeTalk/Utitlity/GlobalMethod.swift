@@ -329,7 +329,7 @@ class GlobalMethod {
            return String(data: jsonData, encoding: .utf8)!
     }
     
-    static func getTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+    static func addMoveInTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
         let transition = CATransition()
         transition.duration = duration
         transition.type = CATransitionType.moveIn
@@ -339,7 +339,7 @@ class GlobalMethod {
         return transition
     }
     
-    static func getBackTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
+    static func addMoveOutTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
         let transition = CATransition()
         transition.duration = duration
         transition.type = CATransitionType.reveal
