@@ -13,31 +13,6 @@ protocol HomeVCDelegate: AnyObject{
 extension HomeViewController{
     
     func setUPLongPressGesture(){
-        talkBtnImgView.tag = 109
-        talkBtnImgView.image = UIImage(named: "talk_button")
-        talkBtnImgView.isUserInteractionEnabled = true
-        talkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
-        bottomImageView.translatesAutoresizingMaskIntoConstraints = false
-        talkBtnImgView.tintColor = UIColor._skyBlueColor()
-        talkBtnImgView.layer.cornerRadius = width/2
-        talkBtnImgView.clipsToBounds = true
-        bottomView.addSubview(bottomImageView)
-        self.bottomView.addSubview(talkBtnImgView)
-        talkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        talkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
-        talkBtnImgView.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
-        talkBtnImgView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor).isActive = true
-        
-        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
-        bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
-        bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
-        bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
-        self.bottomImageView.isHidden = true
-        self.pulseGrayWave.isHidden = true
-        self.pulseLayer.isHidden = true
-        self.midCircleViewOfPulse.isHidden = true
-        self.bottomImageView.isHidden = true
-        self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
         longPress.minimumPressDuration = 0.1
         talkBtnImgView.addGestureRecognizer(longPress)
@@ -45,11 +20,14 @@ extension HomeViewController{
         bottmViewGesture.minimumPressDuration = 0.1
         bottomView.addGestureRecognizer(bottmViewGesture)
     }
-    
+    func hideORShowlTalkButton(isEnable:Bool){
+        if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
+            imgView.isHidden = isEnable
+        }
+    }
     func enableORDisableMicrophoneButton(isEnable:Bool){
         if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
-            imgView.isUserInteractionEnabled = isEnable
-            bottomView.isUserInteractionEnabled = isEnable
+            
         }
     }
     
@@ -159,7 +137,7 @@ extension HomeViewController{
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
-                let imageView = self.bottomView.viewWithTag(109) as! UIImageView
+                let imageView = self.window.viewWithTag(109) as! UIImageView
                 if gesture.state == .began {
                     SocketManager.sharedInstance.connect()
                     SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
@@ -188,7 +166,7 @@ extension HomeViewController{
                     self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
                     
                     TalkButtonAnimation.isTalkBtnAnimationExist = true
-                    TalkButtonAnimation.startTalkButtonAnimation(imageView: imageView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
+                    TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
                 
                 if gesture.state == .ended {

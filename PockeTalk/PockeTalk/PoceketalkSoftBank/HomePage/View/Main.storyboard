@@ -186,9 +186,16 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomBackgroudImage" translatesAutoresizingMaskIntoConstraints="NO" id="k7E-wK-34G">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                        </accessibility>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstItem="k7E-wK-34G" firstAttribute="top" secondItem="4we-IE-5Qe" secondAttribute="top" id="0x6-ET-VeE"/>
                                     <constraint firstAttribute="bottom" secondItem="k7E-wK-34G" secondAttribute="bottom" id="RT4-Ty-uY2"/>
@@ -203,7 +210,7 @@
                         <constraints>
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="height" secondItem="oYg-He-7j5" secondAttribute="height" id="1c1-rS-JeI"/>
                             <constraint firstItem="eoC-NK-acp" firstAttribute="trailing" secondItem="oYg-He-7j5" secondAttribute="trailing" constant="35" id="3P5-I9-dVU"/>
-                            <constraint firstItem="4we-IE-5Qe" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" id="3eb-Qv-ZD0"/>
+                            <constraint firstItem="4we-IE-5Qe" firstAttribute="leading" secondItem="EBf-Xw-0MQ" secondAttribute="leading" id="3eb-Qv-ZD0"/>
                             <constraint firstItem="mjI-JA-TBG" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" constant="35" id="5Xt-15-emG"/>
                             <constraint firstItem="TQW-nv-IlO" firstAttribute="top" secondItem="eoC-NK-acp" secondAttribute="top" id="6ZM-de-jdf"/>
                             <constraint firstItem="c0d-DF-QGv" firstAttribute="trailing" secondItem="eoC-NK-acp" secondAttribute="trailing" constant="-35" id="Fge-my-wz3"/>
@@ -216,7 +223,7 @@
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="top" secondItem="oYg-He-7j5" secondAttribute="bottom" constant="5" id="ZOb-K8-OVo"/>
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="width" secondItem="oYg-He-7j5" secondAttribute="width" id="ZfF-pl-OUm"/>
                             <constraint firstItem="c0d-DF-QGv" firstAttribute="leading" secondItem="eoC-NK-acp" secondAttribute="leading" constant="35" id="Zvp-Pv-RwV"/>
-                            <constraint firstItem="4we-IE-5Qe" firstAttribute="trailing" secondItem="eoC-NK-acp" secondAttribute="trailing" id="c0m-7Q-w8t"/>
+                            <constraint firstItem="4we-IE-5Qe" firstAttribute="trailing" secondItem="EBf-Xw-0MQ" secondAttribute="trailing" id="c0m-7Q-w8t"/>
                             <constraint firstAttribute="bottom" secondItem="4we-IE-5Qe" secondAttribute="bottom" id="hl5-kp-MwT"/>
                             <constraint firstItem="YGf-dW-PHE" firstAttribute="centerX" secondItem="oYg-He-7j5" secondAttribute="centerX" id="hpb-Ll-gmi"/>
                             <constraint firstItem="ezf-zO-Z1Y" firstAttribute="top" secondItem="mjI-JA-TBG" secondAttribute="top" constant="-30" id="i9e-bf-HSG"/>

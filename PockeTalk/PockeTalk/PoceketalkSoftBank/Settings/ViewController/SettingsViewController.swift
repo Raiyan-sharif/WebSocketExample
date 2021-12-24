@@ -16,6 +16,8 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var buttonBack: UIButton!
     @IBOutlet weak var labelTopBarTitle: UILabel!
     @IBOutlet weak var imageViewOk: UIImageView!
+    var talkButtonImageView: UIImageView!
+    let window = UIApplication.shared.keyWindow!
 
     @IBAction func actionBack(_ sender: UIButton) {
         let transition = CATransition()
@@ -26,13 +28,16 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         self.view.window!.layer.add(transition, forKey: kCATransition)
         if(self.navigationController == nil){
             self.dismiss(animated: false, completion: nil)
+            talkButtonImageView.isHidden = false
         }else{
             self.navigationController?.popViewController(animated: false)
+            talkButtonImageView.isHidden = false
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
         self.tableView.reloadData()
         labelTopBarTitle?.text = "menu".localiz()
         self.title = kTitleOk.localiz()

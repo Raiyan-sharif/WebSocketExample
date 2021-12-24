@@ -32,10 +32,12 @@ class LanguageSelectCameraVC: BaseViewController {
     let window :UIWindow = UIApplication.shared.keyWindow!
     var isFirstTimeLoad = true
     private var floatingMicrophoneButton: UIButton!
+    var talkButtonImageView: UIImageView!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
         navigationViewCustomization()
@@ -49,6 +51,7 @@ class LanguageSelectCameraVC: BaseViewController {
     
     deinit {
         unregisterNotification()
+        talkButtonImageView.isHidden = true
     }
     
     //MARK: - Initial setup

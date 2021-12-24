@@ -24,6 +24,8 @@ class CustomAlertDailogViewController: BaseViewController {
     var noActionButton = Bool()
     var buttonAction:(() -> Void)?
     var hideCancelButton:Bool = false
+    let window = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,19 @@ class CustomAlertDailogViewController: BaseViewController {
         setupUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView.isHidden = true
+        HomeViewController.dummyTalkBtnImgView.isHidden = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        talkButtonImageView.isHidden = false
+    }
+    deinit{
+        HomeViewController.dummyTalkBtnImgView.isHidden = true
+    }
     func setupUI() {
         alertView.layer.cornerRadius = 12
 //        titleView.layer.cornerRadius = 12

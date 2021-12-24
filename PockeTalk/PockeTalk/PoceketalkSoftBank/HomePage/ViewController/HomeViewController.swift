@@ -28,6 +28,8 @@ class HomeViewController: BaseViewController {
     static var bottomImageViewOfAnimationRef: UIImageView!
     static var cameraTapFlag = 0
     let talkBtnImgView = UIImageView()
+    static var dummyTalkBtnImgView = UIImageView()
+    var window = UIApplication.shared.keyWindow ?? UIWindow()
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
@@ -120,12 +122,17 @@ class HomeViewController: BaseViewController {
         bottomView.layer.zPosition = 103
         bottomView.backgroundColor = .clear
         view.backgroundColor = .clear
+        bottomView.isUserInteractionEnabled = true
+        bottomImageView.isUserInteractionEnabled = false
+        bottomImageViewOfAnimation.isUserInteractionEnabled = false
+        window = UIApplication.shared.keyWindow ?? UIWindow()
         registerNotification()
         self.homeVM = HomeViewModel()
         self.setUpUI()
         setLanguageDirection()
         
         cardHeight = (self.view.bounds.height / 4) * 3
+        setupUITalkButton()
         setupGestureForCardView()
         setupCardView()
         setupStatusBarView()
@@ -153,6 +160,47 @@ class HomeViewController: BaseViewController {
         unregisterNotification()
     }
     
+    private func setupUITalkButton(){
+        talkBtnImgView.tag = 109
+        HomeViewController.dummyTalkBtnImgView.image = UIImage(named: "talk_button")
+        HomeViewController.dummyTalkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
+        HomeViewController.dummyTalkBtnImgView.tintColor = UIColor._skyBlueColor()
+        HomeViewController.dummyTalkBtnImgView.layer.cornerRadius = width/2
+        HomeViewController.dummyTalkBtnImgView.clipsToBounds = true
+        self.bottomView.addSubview(HomeViewController.dummyTalkBtnImgView)
+        HomeViewController.dummyTalkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        HomeViewController.dummyTalkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
+        HomeViewController.dummyTalkBtnImgView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
+        HomeViewController.dummyTalkBtnImgView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: (UIScreen.main.bounds.height > 667) ? -75 : -50).isActive = true
+        HomeViewController.dummyTalkBtnImgView.isHidden = true
+        
+        talkBtnImgView.image = UIImage(named: "talk_button")
+        talkBtnImgView.isUserInteractionEnabled = true
+        talkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
+        bottomImageView.translatesAutoresizingMaskIntoConstraints = false
+        talkBtnImgView.tintColor = UIColor._skyBlueColor()
+        talkBtnImgView.layer.cornerRadius = width/2
+        talkBtnImgView.clipsToBounds = true
+        bottomView.addSubview(bottomImageView)
+        bottomImageView.isUserInteractionEnabled = false
+        self.window.addSubview(talkBtnImgView)
+        talkBtnImgView.isHidden = false
+        talkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        talkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
+        talkBtnImgView.centerXAnchor.constraint(equalTo: self.window.centerXAnchor).isActive = true
+        talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: (UIScreen.main.bounds.height > 667) ? -75 : -50).isActive = true
+        
+        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
+        bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
+        bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
+        bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
+        self.bottomImageView.isHidden = true
+        self.pulseGrayWave.isHidden = true
+        self.pulseLayer.isHidden = true
+        self.midCircleViewOfPulse.isHidden = true
+        self.bottomImageView.isHidden = true
+        self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
+    }
     //MARK: - Initial Setup
     private func setUpUI () {
         navigationController?.navigationBar.barTintColor = UIColor.black
@@ -224,9 +272,9 @@ class HomeViewController: BaseViewController {
     }
     
     func addTalkButtonAnimationViews(){
-        self.bottomView.addSubview(pulseGrayWave)
-        self.bottomView.layer.addSublayer(pulseLayer)
-        self.bottomView.addSubview(midCircleViewOfPulse)
+        self.window.addSubview(pulseGrayWave)
+        self.window.layer.addSublayer(pulseLayer)
+        self.window.addSubview(midCircleViewOfPulse)
     }
     
     func addSpeechProcessingVC(){
@@ -268,6 +316,7 @@ class HomeViewController: BaseViewController {
     
     //MARK: - IBActions
     @IBAction private func menuAction(_ sender: UIButton) {
+        talkBtnImgView.isHidden = true
         let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
         if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
             let transition = CATransition()
@@ -361,6 +410,7 @@ class HomeViewController: BaseViewController {
                         if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
                             cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
                                 guard let `self` = self else { return }
+                                self.hideORShowlTalkButton(isEnable: isFullScreen)
                                 HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
                                 self.bottomView.layer.zPosition = isFullScreen ? 0: 103
                                 isFullScreen ? self.view.sendSubviewToBack(HomeViewController.bottomViewRef) : self.view.bringSubviewToFront(HomeViewController.bottomViewRef)
@@ -492,6 +542,7 @@ class HomeViewController: BaseViewController {
     @objc func enableorDisableGesture(notification: Notification?) {
         print(ScreenTracker.sharedInstance.screenPurpose)
         self.bottmViewGesture.isEnabled = self.isEnableGessture
+        self.bottomView.isUserInteractionEnabled = self.isEnableGessture
     }
     
     

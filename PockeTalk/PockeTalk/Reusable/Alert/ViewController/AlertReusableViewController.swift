@@ -18,6 +18,8 @@ class AlertReusableViewController: BaseViewController {
     /// Views
     @IBOutlet weak var alertTableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    let window = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
 
     /// Properties
     var items : [AlertItems] = []
@@ -38,8 +40,17 @@ class AlertReusableViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView.isHidden = true
+        HomeViewController.dummyTalkBtnImgView.isHidden = false
         self.navigationController?.navigationBar.isHidden = true
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(items.count)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        talkButtonImageView.isHidden = false
+        HomeViewController.dummyTalkBtnImgView.isHidden = true
     }
 
     func setUpUI () {

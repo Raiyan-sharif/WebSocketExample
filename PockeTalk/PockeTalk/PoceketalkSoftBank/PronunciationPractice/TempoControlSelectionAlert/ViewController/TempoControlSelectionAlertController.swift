@@ -26,12 +26,25 @@ class TempoControlSelectionAlertController: BaseViewController {
     @IBOutlet weak var labelVerySlow: UILabel!
     @IBOutlet weak var ivVerySlow: UIImageView!
     var delegate: TempoControlSelectionDelegate?
+    var talkButtonImageView: UIImageView!
+    let window = UIApplication.shared.keyWindow!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView.isHidden = true
+        HomeViewController.dummyTalkBtnImgView.isHidden = false
+    }
+    
+    deinit {
+        talkButtonImageView.isHidden = false
+        HomeViewController.dummyTalkBtnImgView.isHidden = true
+    }
     func setUpUI(){
         self.view.backgroundColor = UIColor._blackColor().withAlphaComponent(0.5)
         self.viewRoot.layer.cornerRadius = 20
