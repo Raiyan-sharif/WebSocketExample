@@ -350,7 +350,6 @@ class HomeViewController: BaseViewController {
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
         if HomeViewController.isCameraButtonClickable == true {
-            HomeViewController.isCameraButtonClickable = false
             let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
             if batteryPercentage <= cameraDisableBatteryPercentage {
                 showBatteryWarningAlert()
