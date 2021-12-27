@@ -94,4 +94,8 @@ class CameraTTSContextMenu: UIView {
         dismissContextMenu()
     }
 
+    override func layoutSubviews() {
+        changeFontSize()
+    }
+
 }
