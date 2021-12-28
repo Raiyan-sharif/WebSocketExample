@@ -105,17 +105,21 @@ class ITTServerViewModel: BaseModel {
                 if let fullTextAnnotation = response.full_text_annotation {
                     let lanCode = response.text_annotations![0].locale
                     //PrintUtility.printLog(tag: "mDetectedLanguageCode: ", text: "\(lanCode!)")
-                    let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor)
-                    var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor:self.mXFactor, yFactor:self.mYFactor)
-                    self.detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
-                    
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = .prettyPrinted
-                    let data = try? encoder.encode(self.detectedJSON)
-                    //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
-                    
-                    completion(self.detectedJSON, nil)
-                    
+                    let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor) { blockresult in
+
+                        PointUtils.parseResponseForLine(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self.mXFactor, yFactor: self.mYFactor) { lineResult in
+                            
+                            self.detectedJSON = DetectedJSON(block: blockresult, line: lineResult)
+                            
+                            let encoder = JSONEncoder()
+                            encoder.outputFormatting = .prettyPrinted
+                            let data = try? encoder.encode(self.detectedJSON)
+                            //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
+                            
+                            completion(self.detectedJSON, nil)
+
+                        }
+                    }
                     //self.saveDataOnDatabase()
                 } else {
                     self.loaderdelegate?.hideLoader()
@@ -128,75 +132,6 @@ class ITTServerViewModel: BaseModel {
             }
         }
     }
-    
-    
-    func getITTServerDetectionData(resource: Resource) {
-        
-        if Reachability.isConnectedToNetwork() {
-            self.loaderdelegate?.showLoader()
-            
-            WebService.load(resource: resource) {[weak self] (result) in
-                
-                switch result {
-                    
-                case .success(let data, let status):
-                    switch status {
-                    case HTTPStatusCodes.OK:
-                        
-                        
-                        JSONDecoder.decodeData(model: GoogleCloudOCRResponse.self, data) { [weak self](result) in
-                            switch result
-                            {
-                            case .success(let ocrResponse):
-                                //PrintUtility.printLog(tag: "OCR Response", text: "\(ocrResponse)")
-                                //self?.getScreenProperties()
-                                let response = ocrResponse.ocr_response.responses[0]
-                                let lanCode = response.text_annotations![0].locale
-                                //PrintUtility.printLog(tag: "mDetectedLanguageCode: ", text: "\(lanCode!)")
-                                let blockBlockClass = PointUtils.parseResponseForBlock(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor: self!.mXFactor, yFactor: self!.mYFactor)
-                                var lineBlockClass = PointUtils.parseResponseForLine(dataToParse: response.full_text_annotation, mDetectedLanguageCode: lanCode!, xFactor:self!.mXFactor, yFactor:self!.mYFactor)
-                                self?.detectedJSON = DetectedJSON(block: blockBlockClass, line: lineBlockClass)
-                                
-                                let encoder = JSONEncoder()
-                                encoder.outputFormatting = .prettyPrinted
-                                let data = try? encoder.encode(self?.detectedJSON)
-                                //PrintUtility.printLog(tag: "DetectedJSON: ", text: "\(String(data: data!, encoding: .utf8)!)")
-                                // self?.delegate?.gettingServerDetectionDataSuccessful()
-                                
-                                //self?.saveDataOnDatabase()
-                                
-                                break
-                                
-                            case .failure(_):
-                                self?.loaderdelegate?.hideLoader()
-                                break
-                            }
-                        }
-                        
-                        break
-                    case HTTPStatusCodes.BadRequest:
-                        self?.loaderdelegate?.hideLoader()
-                        break
-                        
-                    case HTTPStatusCodes.InternalServerError:
-                        self?.loaderdelegate?.hideLoader()
-                        break
-                        
-                    default:
-                        self?.loaderdelegate?.hideLoader()
-                        break
-                        
-                    }
-                    break
-                case .failure(_):
-                    self?.loaderdelegate?.hideLoader()
-                    break
-                }
-            }
-        }
-    }
-    
-    
     
     func getblockAndLineModeData(_ detectedJSON: DetectedJSON?, _for mode: String, isFromHistoryVC: Bool) {
         

@@ -237,7 +237,9 @@ class CaptureImageProcessVC: BaseViewController {
                 if let detectedData = data {
                     if Reachability.isConnectedToNetwork() {
                         let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
-                        PrintUtility.printLog(tag: "previously selected mode: ", text: "\(String(describing: modeSwitchTypes))")
+                        if(modeSwitchTypes == nil) {
+                            UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
+                        }
                         self?.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self!.fromHistoryVC)
                     } else {
                         GlobalMethod.showNoInternetAlert()
@@ -402,12 +404,14 @@ class CaptureImageProcessVC: BaseViewController {
     }
     
     func showErrorAlert(message: String){
-        let alertService = CustomAlertViewModel()
-        let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {
-            self.startConfirmController()
-            
+        DispatchQueue.main.async {
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogWithoutTitleWithOkButtonAction(message: message) {
+                self.startConfirmController()
+                
+            }
+            self.present(alert, animated: true, completion: nil)
         }
-        self.present(alert, animated: true, completion: nil)
     }
     
     open var onCompletion: CameraViewCompletion?
