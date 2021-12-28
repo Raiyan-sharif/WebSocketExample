@@ -7,7 +7,7 @@ TAG tts_value define that this language will be played through responsive engine
 -->
 <engine name="engine">
     <item code="eu" stt_engine=""/>
-    <item code="yue" stt_engine="" tts_engine="" tts_value="Chinese (Hong Kong) Female"/>
+    <item code="yue" stt_engine="" tts_engine="" />
     <item code="zh-TW" stt_engine="" tts_engine="" tts_value="Chinese Taiwan Female"/>
     <item code="en" stt_engine="" tts_engine="" tts_value="US English Female"/>
     <item code="en-GB" stt_engine="" tts_engine="" tts_value="UK English Female"/>
