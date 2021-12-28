@@ -7,35 +7,31 @@ import UIKit
 import WebKit
 import CallKit
 
+//MARK: - TtsAlertControllerDelegate
 protocol TtsAlertControllerDelegate: AnyObject{
     func itemAdded(_ chatItemModel: HistoryChatItemModel)
     func itemDeleted(_ chatItemModel: HistoryChatItemModel)
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel)
     func dismissed()
 }
+
+//MARK: - Pronunciation
 protocol Pronunciation: AnyObject{
     func dismissPro(dict:[String : String])
 }
 
+//MARK: - CurrentTSDelegate
 protocol CurrentTSDelegate: AnyObject{
     func passCurrentTSValue (currentTS : Int)
 }
 
-class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronunciation{
-  
-    
-    func dismissPro(dict:[String : String]) {
-        //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
-        self.dismiss(animated: true, completion: nil)
-    }
+class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private let TAG:String = "TtsAlertController"
     var callObserver = CXCallObserver()
     ///Views
     @IBOutlet weak var toTranslateLabel: UILabel!
     @IBOutlet weak var fromTranslateLabel: UILabel!
     @IBOutlet weak var changeTranslationButton: UIButton!
-    @IBOutlet weak var fromLanguageLabel: UILabel!
-    @IBOutlet weak var toLanguageLabel: UILabel!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var containerView: UIView!
@@ -46,7 +42,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     @IBOutlet weak var containerViewtrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
-    ///Properties
+    @IBOutlet weak private var placeholderContainerView: UIView!
+    @IBOutlet weak private var ttsResultTV: UITableView!
+    
     var ttsVM : TtsAlertViewModel!
     var chatEntity : ChatEntity?
     let cornerRadius : CGFloat = 15
@@ -54,17 +52,18 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     let biggerFontSize : CGFloat = FontUtility.getBiggerFontSize()
     let width : CGFloat = 100
     let toastVisibleTime : CGFloat = 2.0
-   weak var delegate : SpeechControllerDismissDelegate?
+    
     var itemsToShowOnContextMenu : [AlertItems] = []
     var talkButton : UIButton?
     let animationDuration : CGFloat = 0.6
     let animationDelay : CGFloat = 0
     let transform : CGFloat = 0.97
     var chatItemModel: HistoryChatItemModel?
+    
     var hideMenuButton = false
     var hideBottomView = false
     var hideTalkButton = false
-    weak var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
+    
     var longTapGesture : UILongPressGestureRecognizer?
     var wkView:WKWebView!
     var ttsResponsiveView = TTSResponsiveView()
@@ -76,17 +75,27 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     var isSpeaking : Bool = false
     var isRecreation: Bool = false
     var isFromSpeechProcessing = false
-    weak var currentTSDelegate : CurrentTSDelegate?
-    //weak var speechProDismissDelegateFromTTS : SpeechProcessingDismissDelegate?
     var isReverse = false
 
     private var socketManager = SocketManager.sharedInstance
     private var speechProcessingVM : SpeechProcessingViewModeling!
     private var languageHasUpdated = false
-
+    
+    weak var delegate : SpeechControllerDismissDelegate?
+    weak var ttsAlertControllerDelegate: TtsAlertControllerDelegate?
+    weak var currentTSDelegate : CurrentTSDelegate?
+    
+    //tts Result TV property
+    private var defaultTextLabelCellHeight = CGFloat()
+    private var toTextLabelCellHeight = CGFloat()
+    private var fromTextLabelCellHeight = CGFloat()
+    
+    private var isTextFittedInCell = true
+    private var sttText = [String](repeating: "", count: 3)
+    private var leftRightPadding: CGFloat = 150
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         callObserver.setDelegate(self, queue: nil)
         self.ttsVM = TtsAlertViewModel()
         self.setUpUI()
@@ -96,16 +105,58 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         ttsResponsiveView.isHidden = true
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
-        //SocketManager.sharedInstance.connect()
-//        socketManager.socketManagerDelegate = self
 
-//        if(!isSpeaking){
-//            playTTS()
-//        }
         self.view.backgroundColor = .black
         registerNotification()
         checkTTSValueAndPlay()
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if(!isRecreation){
+            self.startAnimation()
+        }
+        
+        defaultTextLabelCellHeight = ((placeholderContainerView.frame.size.height * 45) / 100)
+        setupTTSTableViewProperty()
+        setupTTSTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        callObserver.setDelegate(nil, queue: nil)
+        stopTTS()
+        AudioPlayer.sharedInstance.stop()
+    }
+    
+    private func setupTTSTableView(){
+        ttsResultTV.delegate = self
+        ttsResultTV.dataSource = self
+        ttsResultTV.separatorStyle = .none
+        ttsResultTV.showsVerticalScrollIndicator = false
+        ttsResultTV.register(UINib(nibName: "SingleLabelCell", bundle: nil), forCellReuseIdentifier: "SingleLabelCell")
+    }
+    
+    private func setupTTSTableViewProperty(){
+        sttText[0] = chatItemModel?.chatItem?.textTranslated ?? ""
+        sttText[2] = chatItemModel?.chatItem?.textNative ?? ""
+        let font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
+        
+        toTextLabelCellHeight = sttText[0].heightWithConstrainedWidth(
+            width: UIScreen.main.bounds.width - leftRightPadding,
+            font: font)
+        
+        fromTextLabelCellHeight = sttText[2].heightWithConstrainedWidth(
+            width: UIScreen.main.bounds.width - leftRightPadding,
+            font: font)
+        
+        PrintUtility.printLog(tag: TAG, text: "PCH \(placeholderContainerView.frame.size.height), TVH \(ttsResultTV.bounds.height), DTLH \(defaultTextLabelCellHeight), TTLH \(toTextLabelCellHeight), FTLH \(fromTextLabelCellHeight) TTxt: \(sttText[0]), FTxt: \(sttText[2])")
+        
+        if toTextLabelCellHeight < defaultTextLabelCellHeight && fromTextLabelCellHeight < defaultTextLabelCellHeight {
+            isTextFittedInCell = true
+            ttsResultTV.isScrollEnabled = false
+        } else {
+            isTextFittedInCell = false
+            ttsResultTV.isScrollEnabled = true
+        }
     }
 
     func checkTTSValueAndPlay(){
@@ -140,19 +191,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if(!isRecreation){
-            self.startAnimation()
-            
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        callObserver.setDelegate(nil, queue: nil)
-        stopTTS()
-        AudioPlayer.sharedInstance.stop()
-    }
-    
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
         AudioPlayer.sharedInstance.stop()
@@ -160,29 +198,14 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     @objc func removeChild(notification: Notification) {
         if let vc = view.subviews.last?.parentViewController{
-                remove(asChildViewController: vc)
-            }
+            remove(asChildViewController: vc)
         }
+    }
     
-    /// Initial UI set up
     func setUpUI () {
         self.backgroundImageView.layer.masksToBounds = true
         self.backgroundImageView.sizeToFit()
         self.backgroundImageView.layer.cornerRadius = cornerRadius
-        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
-        self.fromLanguageLabel.sizeToFit()
-        
-        //self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
-        self.toLanguageLabel.textAlignment = .center
-        self.toLanguageLabel.font = UIFont.systemFont(ofSize: biggerFontSize, weight: .regular)
-        self.toLanguageLabel.textColor = UIColor._blackColor()
-        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
-        self.fromLanguageLabel.sizeToFit()
-        
-        //self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
-        self.fromLanguageLabel.textAlignment = .center
-        self.fromLanguageLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        self.fromLanguageLabel.textColor = UIColor.gray
 
         self.toTranslateLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslatedLanguage : chatItemModel?.chatItem?.textNativeLanguage
         self.toTranslateLabel.textAlignment = .right
@@ -197,8 +220,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         if(LanguageSelectionManager.shared.isArrowUp){
             changeTranslationButton.image(for: UIControl.State.normal)
         }
-//        talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-//        talkButton?.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
+        
         setLanguageDirection()
         longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         longTapGesture!.minimumPressDuration = 0.2
@@ -237,7 +259,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         spinnerView.isHidden = true
     }
 
-    /// Retreive tts value from respective language code
     func getTtsValue () {
         PrintUtility.printLog(tag: "TTT CHAT", text: "\(String(describing: chatItemModel!.chatItem!.textTranslatedLanguage))")
         
@@ -256,37 +277,11 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         }
         
     }
+    
     @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
-//        let translateText = chatItemModel?.chatItem?.textTranslated
-//        let languageManager = LanguageSelectionManager.shared
-//        let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)
-//        let params:[String:String]  = [
-//            imei : "862793051345020",
-//            "license_token":"" ,
-//            "language" : targetLanguageItem!.code,
-//            "text" : translateText ?? "",
-//            "tempo": "normal"
-//        ]
-//        NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
-//            guard let data = data, let self = self else { return }
-//            do {
-//                let result = try JSONDecoder().decode(TTSModel.self, from: data)
-//                if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
-//                    self.startAnimation()
-//                    AudioPlayer.sharedInstance.play(data: ttsData)
-//                }
-//            }catch{
-//            }
-//        }
-//        if(!isSpeaking){
-//            playTTS()
-//        }
         checkTTSValueAndPlay()
-
     }
     
-    
-    /// Start animation on background image view
     func startAnimation () {
         self.backgroundImageView.transform = CGAffineTransform.identity
         UIView.animate(withDuration: TimeInterval(animationDuration), delay: TimeInterval(animationDelay), options: [.repeat, .autoreverse], animations: {
@@ -294,7 +289,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         },completion: { Void in()  })
     }
 
-    /// Stop animation on background image view
     func stopAnimation () {
         self.backgroundImageView.layer.removeAllAnimations()
     }
@@ -304,11 +298,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.updateConstraints()
         self.startAnimation()
 
-        self.toLanguageLabel.text = chatItemModel?.chatItem?.textTranslated
-        self.fromLanguageLabel.text = chatItemModel?.chatItem?.textNative
-//        self.toLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
-//        self.fromLanguageLabel.font = UIFont.systemFont(ofSize: reverseFontSize, weight: .semibold)
-        
+        self.setupTTSTableViewProperty()
+        self.ttsResultTV.reloadData()
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         
         self.containerView.removeGestureRecognizer(longTapGesture!)
@@ -343,14 +334,11 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
         self.backButton.isHidden = true
     }
 
-    /// Update constraints for Reverse translation
     func updateConstraints () {
         self.containerViewTopConstraint.constant = 20
         self.containerViewtrailingConstraint.constant = 25
         self.containerViewBottomConstraint.constant = 25
         self.containerViewLeadingConstraint.constant = 25
-        //self.toLangLabelTopConstraint.constant = 220
-        //self.fromLangLabelBottomConstraint.constant = 60
     }
     
     @IBAction func actionLanguageDirectionChange(_ sender: UIButton) {
@@ -461,7 +449,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
 
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
-       // self.showToast(message: "Navigate to Speech Controller", seconds: Double(toastVisibleTime))
         self.stopTTS()
         if isFromHistory {
             let currentTS = GlobalMethod.getCurrentTimeStamp(with: 0)
@@ -470,13 +457,11 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
             controller.homeMicTapTimeStamp = currentTS
             controller.languageHasUpdated = true
             controller.screenOpeningPurpose = .HomeSpeechProcessing
-            //controller.speechProcessingDismissDelegate = self
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
         } else {
             let currentTs = GlobalMethod.getCurrentTimeStamp(with: 0)
             self.currentTSDelegate?.passCurrentTSValue(currentTS: currentTs)
-            //NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -572,6 +557,14 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate, Pronu
     }
 }
 
+//MARK: - PronunciationDelegate
+extension TtsAlertController: Pronunciation{
+    func dismissPro(dict:[String : String]) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: - RetranslationDelegate
 extension TtsAlertController : RetranslationDelegate {
     func showRetranslation(selectedLanguage: String) {
         if Reachability.isConnectedToNetwork() {
@@ -593,6 +586,7 @@ extension TtsAlertController : RetranslationDelegate {
     }
 }
 
+//MARK: - AlertReusableDelegate
 extension TtsAlertController : AlertReusableDelegate {
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {
         PrintUtility.printLog(tag: TAG, text: "TtsAlertController shareJson called")
@@ -616,8 +610,6 @@ extension TtsAlertController : AlertReusableDelegate {
         vc.delegate = self
         vc.isFromHistory = isFromHistory
         vc.modalPresentationStyle = .fullScreen
-//        let text = chatItemModel!.chatItem!.textTranslated!
-//        let languageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: (chatItemModel!.chatItem!.textTranslatedLanguage)!)
 
         if  ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
             vc.isFromHistoryTTS = true
@@ -663,6 +655,7 @@ extension TtsAlertController : AlertReusableDelegate {
     
 }
 
+//MARK: - TTSResponsiveViewDelegate
 extension TtsAlertController : TTSResponsiveViewDelegate {
     
     func onVoiceEnd() {
@@ -683,12 +676,14 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     }
 }
 
+//MARK: - SpeechProcessingDismissDelegate
 extension TtsAlertController : SpeechProcessingDismissDelegate {
     func showTutorial() {
        // self.speechProDismissDelegateFromTTS?.showTutorial()
     }
 }
 
+//MARK: - SocketManagerDelegate
 extension TtsAlertController : SocketManagerDelegate{
     func faildSocketConnection(value: String) {
         PrintUtility.printLog(tag: TAG, text: value)
@@ -703,6 +698,7 @@ extension TtsAlertController : SocketManagerDelegate{
     
 }
 
+//MARK: - CXCallObserverDelegate
 extension TtsAlertController: CXCallObserverDelegate{
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         PrintUtility.printLog(tag: TAG, text: "callObserver")
@@ -723,10 +719,10 @@ extension TtsAlertController: CXCallObserverDelegate{
                stopTTS()
              }
         AudioPlayer.sharedInstance.stop()
-//        TtsAlertController.ttsResponsiveView.stopTTS()
     }
 }
 
+//MARK: - AudioPlayerDelegate
 extension TtsAlertController :AudioPlayerDelegate{
     func didStartAudioPlayer() {
         startAnimation()
@@ -734,5 +730,31 @@ extension TtsAlertController :AudioPlayerDelegate{
 
     func didStopAudioPlayer(flag: Bool) {
         stopAnimation()
+    }
+}
+
+//MARK: - UITableViewDelegate, UITableViewDataSource
+extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = ttsResultTV.dequeueReusableCell(withIdentifier: "SingleLabelCell", for: indexPath) as! SingleLabelCell
+        cell.configCell(ttsText: sttText[indexPath.row], indexPath: indexPath)
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 1 {
+            return isTextFittedInCell ? (0) : (20)
+        }
+        
+        if isTextFittedInCell{
+            return defaultTextLabelCellHeight
+        } else {
+            return UITableView.automaticDimension
+        }
     }
 }

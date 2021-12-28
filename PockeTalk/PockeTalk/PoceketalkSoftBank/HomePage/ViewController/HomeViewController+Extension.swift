@@ -270,7 +270,6 @@ extension HomeViewController {
             
             if(ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice || ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice){
                 NotificationCenter.default.post(name: .talkButtonContainerSelectionPoint, object: nil, userInfo: pointDictionary)
-                print(point)
             }
         }
     }
@@ -350,7 +349,6 @@ extension HomeViewController {
             break
         }
     }
-    
     
     //MARK: - CardView animation functionalities
     private func startInteractiveTransition(state:CardState, duration:TimeInterval) {
