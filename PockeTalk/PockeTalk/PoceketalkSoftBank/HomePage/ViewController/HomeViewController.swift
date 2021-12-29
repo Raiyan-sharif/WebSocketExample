@@ -191,8 +191,8 @@ class HomeViewController: BaseViewController {
         talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
         
         
-        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width * 1.2).isActive = true
-        bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
+        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width * 1.4).isActive = true
+        bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8).isActive = true
         bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
         bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
         self.bottomImageView.isHidden = true
