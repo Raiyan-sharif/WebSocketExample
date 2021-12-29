@@ -570,9 +570,9 @@ extension HistoryViewController:HistoryLayoutDelegate{
     }
 }
 
-
+// RetranslationDelegate
 extension HistoryViewController : RetranslationDelegate{
-    func showRetranslation(selectedLanguage: String) {
+    func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!

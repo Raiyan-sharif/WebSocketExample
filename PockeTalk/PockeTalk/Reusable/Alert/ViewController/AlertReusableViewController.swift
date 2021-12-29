@@ -93,7 +93,6 @@ class AlertReusableViewController: BaseViewController {
     
     func deleteItemPressed () {
         self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
-        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
 
     func showPracticeView () {

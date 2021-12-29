@@ -441,6 +441,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         }else if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren{
             remove(asChildViewController: self)
             NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
+        }else if ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
+            remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil, userInfo: nil)
         }
@@ -566,7 +568,7 @@ extension TtsAlertController: Pronunciation{
 
 //MARK: - RetranslationDelegate
 extension TtsAlertController : RetranslationDelegate {
-    func showRetranslation(selectedLanguage: String) {
+    func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             self.isReverse = false
@@ -578,7 +580,7 @@ extension TtsAlertController : RetranslationDelegate {
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: selectedLanguage)
                 self?.socketManager.sendTextData(text: textFrameData, completion: nil)
-                ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             }
         }else {
             GlobalMethod.showNoInternetAlert()
@@ -625,8 +627,10 @@ extension TtsAlertController : AlertReusableDelegate {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
+        
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
+        controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
         
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: controller, containerView: view, animation: transition)

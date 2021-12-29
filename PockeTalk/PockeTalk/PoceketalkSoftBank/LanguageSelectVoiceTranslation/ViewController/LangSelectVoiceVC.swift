@@ -7,7 +7,7 @@ import UIKit
 import SwiftyXMLParser
 
 protocol RetranslationDelegate: AnyObject {
-    func showRetranslation (selectedLanguage : String)
+    func showRetranslation (selectedLanguage : String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose)
 }
 
 class LangSelectVoiceVC: BaseViewController {
@@ -50,6 +50,7 @@ class LangSelectVoiceVC: BaseViewController {
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
     var isFirstTimeLoad = true
+    var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose = .HomeSpeechProcessing
     private var floatingMicrophoneButton: UIButton!
     
     //MARK: - Lifecycle methods
@@ -216,7 +217,11 @@ class LangSelectVoiceVC: BaseViewController {
         if fromRetranslation == true {
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+            
+            self.retranslationDelegate?.showRetranslation(
+                selectedLanguage: selectedLanguageCode,
+                fromScreenPurpose: fromScreenPurpose)
+            
             self.remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
@@ -309,7 +314,9 @@ class LangSelectVoiceVC: BaseViewController {
     
     @objc private func removeChild(notification: Notification) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
-        self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+        self.retranslationDelegate?.showRetranslation(
+            selectedLanguage: selectedLanguageCode,
+            fromScreenPurpose: fromScreenPurpose)
         self.remove(asChildViewController: self)
     }
     

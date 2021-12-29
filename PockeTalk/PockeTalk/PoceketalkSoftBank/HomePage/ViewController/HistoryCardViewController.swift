@@ -383,9 +383,9 @@ extension HistoryCardViewController: HistoryLayoutDelegate {
     }
 }
 
-//MARK: - RetranslationDelegate
+//MARK: - RetranslationDelegate   
 extension HistoryCardViewController : RetranslationDelegate{
-    func showRetranslation(selectedLanguage: String) {
+    func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!
@@ -398,7 +398,7 @@ extension HistoryCardViewController : RetranslationDelegate{
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
-                ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+                ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             }
         }else{
             GlobalMethod.showNoInternetAlert()
@@ -438,8 +438,11 @@ extension HistoryCardViewController : AlertReusableDelegate{
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
+        
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
+        controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
+        
         controller.modalPresentationStyle = .fullScreen
         let transition = CATransition()
         transition.duration = 0.5
