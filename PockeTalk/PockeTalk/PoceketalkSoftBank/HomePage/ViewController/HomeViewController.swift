@@ -171,7 +171,7 @@ class HomeViewController: BaseViewController {
         HomeViewController.dummyTalkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
         HomeViewController.dummyTalkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
         HomeViewController.dummyTalkBtnImgView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
-        HomeViewController.dummyTalkBtnImgView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: (UIScreen.main.bounds.height > 667) ? -75 : -50).isActive = true
+        HomeViewController.dummyTalkBtnImgView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
         HomeViewController.dummyTalkBtnImgView.isHidden = true
         
         talkBtnImgView.image = UIImage(named: "talk_button")
@@ -186,12 +186,13 @@ class HomeViewController: BaseViewController {
         self.window.addSubview(talkBtnImgView)
         talkBtnImgView.isHidden = false
         talkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        talkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
+        talkBtnImgView.heightAnchor.constraint(equalToConstant: width ).isActive = true
         talkBtnImgView.centerXAnchor.constraint(equalTo: self.window.centerXAnchor).isActive = true
-        talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: (UIScreen.main.bounds.height > 667) ? -75 : -50).isActive = true
+        talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
         
-        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width).isActive = true
-        bottomImageView.heightAnchor.constraint(equalToConstant: bottomView.frame.width / 1.2).isActive = true
+        
+        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width * 1.2).isActive = true
+        bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
         bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
         bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
         self.bottomImageView.isHidden = true

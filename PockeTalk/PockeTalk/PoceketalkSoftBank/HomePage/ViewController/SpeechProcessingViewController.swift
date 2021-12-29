@@ -39,6 +39,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak private var pronunciationView: UIView!
     @IBOutlet weak private var pronunciationLable: UILabel!
+    var talkButtonImageView = UIImageView()
 
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
@@ -85,7 +86,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let leftImgHeight : CGFloat = 45
     private let rightImgWidth : CGFloat = 45
     private let rightImgHeight : CGFloat = 45
-    
+    let window = UIApplication.shared.keyWindow!
     var pronunciationText : String = ""
     var pronunciationLanguageCode : String = ""
     //weak var speechProcessingDismissDelegate : SpeechProcessingDismissDelegate?
@@ -103,6 +104,7 @@ class SpeechProcessingViewController: BaseViewController{
         self.speechProcessingAnimationView.layer.zPosition = 104
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
+        setupTriangeAnimationView()
         registerForNotification()
         bindData()
         setupAudio()
@@ -127,6 +129,17 @@ class SpeechProcessingViewController: BaseViewController{
         return self.parent as? HomeViewController
     }
     
+    private func setupTriangeAnimationView(){
+        self.speechProcessingRightImgView.isHidden = true
+        self.speechProcessingLeftImgView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+            self?.talkButtonImageView = self?.window.viewWithTag(109) as? UIImageView ?? UIImageView()
+            self?.window.addSubview(self?.speechProcessingAnimationView ?? UIView())
+            self?.speechProcessingAnimationView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor).isActive = true
+            self?.speechProcessingAnimationView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -16).isActive = true
+        }
+        
+    }
     private func setupUI () {
         addSpinner()
 
