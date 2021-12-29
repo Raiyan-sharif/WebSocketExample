@@ -15,12 +15,14 @@ protocol AudioPlayerDelegate:class{
 class AudioPlayer: NSObject {
     static let sharedInstance = AudioPlayer()
     private var player: AVAudioPlayer?
-    weak var delegate:AudioPlayerDelegate!
+    weak var delegate:AudioPlayerDelegate?
     var isPlaying = false
     func play(data:Data) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
+            if(AVCaptureDevice.authorizationStatus(for: .audio) != .authorized){
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+            }
 
             player = try AVAudioPlayer(data: data, fileTypeHint: AVFileType.wav.rawValue)
             guard let player = player else { return }
@@ -56,16 +58,19 @@ class AudioPlayer: NSObject {
                 do {
                     let result = try JSONDecoder().decode(TTSModel.self, from: data)
                     if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
-                        self.delegate.didStartAudioPlayer()
-                        self.isPlaying = true
-                        if self.isHeaderExist(data: ttsData){
-                            self.play(data: ttsData)
-                        }else{
-                            let sampleRate = self.codecValue(value: result.codec!)
-                            let headerData = self.createWaveHeader(sampleRate: (sampleRate as NSString).integerValue, data: ttsData)
-                            let playData = headerData + ttsData
-                            self.play(data: playData)
+                        if let delegate = self.delegate {
+                            delegate.didStartAudioPlayer()
+                            self.isPlaying = true
+                            if self.isHeaderExist(data: ttsData){
+                                self.play(data: ttsData)
+                            }else{
+                                let sampleRate = self.codecValue(value: result.codec!)
+                                let headerData = self.createWaveHeader(sampleRate: (sampleRate as NSString).integerValue, data: ttsData)
+                                let playData = headerData + ttsData
+                                self.play(data: playData)
+                            }
                         }
+                        
 
                     }
                 }catch{
@@ -156,7 +161,7 @@ class AudioPlayer: NSObject {
 extension AudioPlayer:AVAudioPlayerDelegate{
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         self.isPlaying = false
-        self.delegate.didStopAudioPlayer(flag: flag)
+        self.delegate?.didStopAudioPlayer(flag: flag)
         self.player = nil
     }
 }
