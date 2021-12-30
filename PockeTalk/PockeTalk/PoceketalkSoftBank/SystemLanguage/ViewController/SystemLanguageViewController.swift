@@ -13,6 +13,7 @@ class SystemLanguageViewController: BaseViewController {
 
     ///languageList for all languages
     var languageList = [SystemLanguages]()
+    var currentSelectedLanguage = String()
 
     /// load viewLanguages.ja.rawValue
     override func loadView() {
@@ -51,6 +52,7 @@ class SystemLanguageViewController: BaseViewController {
         getData()
         //Set the UI
         setUpUI()
+        currentSelectedLanguage = LanguageManager.shared.currentLanguage.rawValue
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
 
@@ -67,6 +69,10 @@ class SystemLanguageViewController: BaseViewController {
 
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
+        if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
+            let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
+            NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
+        }
     }
 
     ///Get data from XML

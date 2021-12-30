@@ -9,7 +9,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
-    var isAppRelaunch = false
+    //var isAppRelaunch = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //Database create tables
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
             UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value = true
-            setUpAppFirstLaunch()
+            setUpAppFirstLaunch(isUpdateArrow: shouldSetAppWindow)
         }else{
             LanguageSelectionManager.shared.loadLanguageListData()
         }
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
             FontUtility.setInitialFontSize()
         }
-        generateAccessKey()
+        AppDelegate.generateAccessKey()
     }
     
     private func setupWindow(){
@@ -51,28 +51,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
     }
 
-    func setUpAppFirstLaunch(){
+    func setUpAppFirstLaunch(isUpdateArrow: Bool){
         PrintUtility.printLog(tag: TAG, text: "App first launch called.")
         setInitialLanguage()
         LanguageSelectionManager.shared.loadLanguageListData()
         LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
         LanguageSelectionManager.shared.isArrowUp = true
+        
         LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
         CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
     }
 
-    func generateAccessKey(){
+   class func generateAccessKey(){
        // if UserDefaultsProperty<String>(authentication_key).value == nil{
-            NetworkManager.shareInstance.getAuthkey { [weak self] data  in
-                guard let data = data, let self = self else { return }
+            NetworkManager.shareInstance.getAuthkey { data  in
+                guard let data = data else { return }
                 do {
                     let result = try JSONDecoder().decode(ResultModel.self, from: data)
                     if result.resultCode == response_ok{
                         UserDefaultsProperty<String>(authentication_key).value = result.accessKey
-                        if self.isAppRelaunch {
+                        //if self.isAppRelaunch {
                             SocketManager.sharedInstance.updateRequestKey()
-                            self.isAppRelaunch = false
-                        }
+                        UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
+                            //self.isAppRelaunch = false
+                        //}
                     }
                 }catch{
                 }
@@ -91,12 +93,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
-        isAppRelaunch = true
+        //isAppRelaunch = true
         setUpInitialLaunch(shouldSetAppWindow: false)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        //SocketManager.sharedInstance.connect()
+        SocketManager.sharedInstance.connect()
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         SocketManager.sharedInstance.disconnect()

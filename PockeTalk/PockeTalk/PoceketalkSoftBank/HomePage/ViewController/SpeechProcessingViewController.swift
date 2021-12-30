@@ -110,6 +110,17 @@ class SpeechProcessingViewController: BaseViewController{
         setupAudio()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+            if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                let accessKey = UserDefaultsProperty<String>(authentication_key).value
+                if accessKey == nil {
+                    SocketManager.sharedInstance.disconnect()
+                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = true
+                    AppDelegate.generateAccessKey()
+                }
+            }
+            
+
+           
         }
     }
     
@@ -489,8 +500,8 @@ class SpeechProcessingViewController: BaseViewController{
     @objc private func appBecomeActive() {
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        SocketManager.sharedInstance.connect()
-        PrintUtility.printLog(tag: "ForeGround App: ", text: "yes")
+        //SocketManager.sharedInstance.connect()
+        //PrintUtility.printLog(tag: "ForeGround App: ", text: "yes")
 //        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
 //            service?.startRecord()
 //        }

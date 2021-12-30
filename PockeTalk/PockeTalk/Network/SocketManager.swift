@@ -30,7 +30,7 @@ class SocketManager: NSObject {
     public override init() {
         super.init()
         //var request = URLRequest(url:URL(string: SOCKET_CONNECTION_URL)!)
-        let keyValue = UserDefaultsProperty<String>(authentication_key).value!
+        let keyValue = UserDefaultsProperty<String>(authentication_key).value ?? ""
         PrintUtility.printLog(tag: "SocketKEY", text: keyValue)
         var request = URLRequest(url: URL(string: AUDIO_STREAM_URL)!)
         request.timeoutInterval = 5 // Sets the timeout for the connection

@@ -130,7 +130,7 @@ class HomeViewController: BaseViewController {
         registerNotification()
         self.homeVM = HomeViewModel()
         self.setUpUI()
-        setLanguageDirection()
+        //setLanguageDirection()
         
         cardHeight = (self.view.bounds.height / 4) * 3
         setupUITalkButton()
@@ -154,10 +154,16 @@ class HomeViewController: BaseViewController {
         
         talkButtonImageView = window.viewWithTag(109) as? UIImageView
         talkButtonImageView.isHidden = false
+        
+        setLanguageDirection()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         updateLanguageNames()
+        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed){
+            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
+            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
+        }
     }
     
     deinit {
@@ -215,10 +221,10 @@ class HomeViewController: BaseViewController {
         let sharedApplication = UIApplication.shared
         sharedApplication.delegate?.window??.tintColor = UIColor.white
         
-        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
-            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
-            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
-        }
+//        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
+//            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
+//            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
+//        }
         
         if let lanCode = self.homeVM.getLanguageName() {
             self.deviceLanguage = lanCode
@@ -316,6 +322,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.languageChangedFromSettings(notification:)), name: .languageChangeFromSettingsNotification, object: nil)
 
     }
     
@@ -361,13 +368,26 @@ class HomeViewController: BaseViewController {
     
     //MARK: - View Transactions
     private func dislayTutorialScreen(shwoingTutorialForTheFirstTime: Bool) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
-        let navController = UINavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = .overFullScreen
-        navController.modalTransitionStyle = .crossDissolve
-        navController.navigationBar.isHidden = true
-        controller.navController = navController
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
+//        let navController = UINavigationController(rootViewController: controller)
+//        navController.modalPresentationStyle = .overFullScreen
+//        navController.modalTransitionStyle = .crossDissolve
+//        navController.navigationBar.isHidden = true
+//        controller.navController = navController
+//        controller.speechProDismissDelegateFromTutorial = self
+//        
+//        controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
+//        if shwoingTutorialForTheFirstTime {
+//            controller.dismissTutorialDelegate = self
+//        } else {
+//            controller.dismissTutorialDelegate = nil
+//        }
+//
+//        add(asChildViewController: controller, containerView:homeContainerView)
+        
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
+        
         controller.speechProDismissDelegateFromTutorial = self
         
         controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
@@ -377,6 +397,7 @@ class HomeViewController: BaseViewController {
             controller.dismissTutorialDelegate = nil
         }
         
+        homeContainerView.isHidden = false
         add(asChildViewController: controller, containerView:homeContainerView)
     }
     
@@ -496,6 +517,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .languageChangeFromSettingsNotification, object: nil)
     }
     
     private func openLanguageSelectionScreen(isNative: Int){
@@ -548,6 +570,14 @@ class HomeViewController: BaseViewController {
         print(ScreenTracker.sharedInstance.screenPurpose)
         self.bottmViewGesture.isEnabled = self.isEnableGessture
         self.bottomView.isUserInteractionEnabled = self.isEnableGessture
+    }
+    
+    @objc func languageChangedFromSettings(notification: Notification?) {
+        if let languageInfo = notification?.userInfo as? [String: Bool] {
+            if (languageInfo["isLanguageChanged"] ?? false) == true {
+                speechVC.languageHasUpdated = true
+            }
+        }
     }
     
     
