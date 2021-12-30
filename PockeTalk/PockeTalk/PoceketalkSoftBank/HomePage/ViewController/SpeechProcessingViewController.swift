@@ -489,7 +489,8 @@ class SpeechProcessingViewController: BaseViewController{
     @objc private func appBecomeActive() {
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        
+        SocketManager.sharedInstance.connect()
+        PrintUtility.printLog(tag: "ForeGround App: ", text: "yes")
 //        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
 //            service?.startRecord()
 //        }
