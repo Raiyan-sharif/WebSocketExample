@@ -16,6 +16,7 @@ class NoInternetAlert: BaseViewController {
     let viewAlpha : CGFloat = 0.8
     let window = UIApplication.shared.keyWindow!
     var talkButtonImageView: UIImageView!
+    var flagTalkButton = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +27,20 @@ class NoInternetAlert: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
-                talkButtonImageView.isHidden = true
-                HomeViewController.dummyTalkBtnImgView.isHidden = false
+        flagTalkButton = talkButtonImageView.isHidden
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = true
+            HomeViewController.dummyTalkBtnImgView.isHidden = false
+        }
 
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(3)
     }
     
     deinit{
-        talkButtonImageView.isHidden = false
-        HomeViewController.dummyTalkBtnImgView.isHidden = true
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = false
+            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        }
     }
 
     func setUpUI () {

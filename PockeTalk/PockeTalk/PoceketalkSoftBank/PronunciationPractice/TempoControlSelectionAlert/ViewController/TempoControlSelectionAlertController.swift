@@ -28,7 +28,7 @@ class TempoControlSelectionAlertController: BaseViewController {
     var delegate: TempoControlSelectionDelegate?
     var talkButtonImageView: UIImageView!
     let window = UIApplication.shared.keyWindow!
-        
+    var flagTalkButton = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -37,13 +37,18 @@ class TempoControlSelectionAlertController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
-        talkButtonImageView.isHidden = true
-        HomeViewController.dummyTalkBtnImgView.isHidden = false
+        flagTalkButton = talkButtonImageView.isHidden
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = true
+            HomeViewController.dummyTalkBtnImgView.isHidden = false
+        }
     }
     
     deinit {
-        talkButtonImageView.isHidden = false
-        HomeViewController.dummyTalkBtnImgView.isHidden = true
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = false
+            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        }
     }
     func setUpUI(){
         self.view.backgroundColor = UIColor._blackColor().withAlphaComponent(0.5)
