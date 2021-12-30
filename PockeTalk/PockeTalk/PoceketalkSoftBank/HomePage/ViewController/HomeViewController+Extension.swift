@@ -139,34 +139,40 @@ extension HomeViewController{
             if isGranted {
                 let imageView = self.window.viewWithTag(109) as! UIImageView
                 if gesture.state == .began {
-                    SocketManager.sharedInstance.connect()
-                    SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
-                    
-                    if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
-                        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                    if Reachability.isConnectedToNetwork() {
+                        SocketManager.sharedInstance.connect()
+                        SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
+                        
+                        if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
+                            ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                        }
+                        self.speechVC.updateLanguageType()
+                        
+                        if self.speechVC.languageHasUpdated{
+                            self.speechVC.updateLanguageInRemote()
+                        }
+                        
+                        self.speechVC.hideOrOpenExampleText(isHidden: true)
+                        imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
+                        
+                        self.openSpeechView()
+                        if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+                            self.removeAllChildControllers(Int(IsTop.top.rawValue))
+                        }
+                        
+                        self.hideMicrophoneBtnInLanguageScene()
+                        
+                        SpeechProcessingViewModel.isLoading = false;
+                        self.homeVCDelegate?.startRecord()
+                        self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
+                        
+                        TalkButtonAnimation.isTalkBtnAnimationExist = true
+                        TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
+                        
+                        
+                    }else {
+                        GlobalMethod.showNoInternetAlert()
                     }
-                    self.speechVC.updateLanguageType()
-                    
-                    if self.speechVC.languageHasUpdated{
-                        self.speechVC.updateLanguageInRemote()
-                    }
-                    
-                    self.speechVC.hideOrOpenExampleText(isHidden: true)
-                    imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
-                    
-                    self.openSpeechView()
-                    if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-                        self.removeAllChildControllers(Int(IsTop.top.rawValue))
-                    }
-                    
-                    self.hideMicrophoneBtnInLanguageScene()
-                     
-                    SpeechProcessingViewModel.isLoading = false;
-                    self.homeVCDelegate?.startRecord()
-                    self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
-                    
-                    TalkButtonAnimation.isTalkBtnAnimationExist = true
-                    TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
                 
                 if gesture.state == .ended {
@@ -183,6 +189,7 @@ extension HomeViewController{
                     TalkButtonAnimation.isTalkBtnAnimationExist = false
                     TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
+                
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
