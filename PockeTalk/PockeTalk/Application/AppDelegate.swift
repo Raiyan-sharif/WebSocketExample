@@ -16,12 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
         UIDevice.current.isBatteryMonitoringEnabled = true
-        setUpinitialLaucnh()
+        setUpInitialLaunch(shouldSetAppWindow: true)
         return true
     }
 
     /// Initial launch setup
-    func setUpinitialLaucnh() {
+    func setUpInitialLaunch(shouldSetAppWindow: Bool) {
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
@@ -30,17 +30,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }else{
             LanguageSelectionManager.shared.loadLanguageListData()
         }
+        
+        if shouldSetAppWindow{
+            setupWindow()
+        }
+        
+        if  UserDefaultsProperty<String>(KFontSelection).value == nil{
+            UserDefaultsProperty<String>(KFontSelection).value = "Medium"
+            FontUtility.setInitialFontSize()
+        }
+        generateAccessKey()
+    }
+    
+    private func setupWindow(){
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let navigationController = UINavigationController.init(rootViewController: viewController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-        if  UserDefaultsProperty<String>(KFontSelection).value == nil{
-            UserDefaultsProperty<String>(KFontSelection).value = "Medium"
-            FontUtility.setInitialFontSize()
-        }
-        generateAccessKey()
     }
 
     func setUpAppFirstLaunch(){
@@ -84,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         isAppRelaunch = true
-        setUpinitialLaucnh()
+        setUpInitialLaunch(shouldSetAppWindow: false)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

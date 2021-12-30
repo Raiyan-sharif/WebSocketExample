@@ -57,6 +57,7 @@ class HomeViewController: BaseViewController {
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
     var bottmViewGesture:UILongPressGestureRecognizer!
+    var talkButtonImageView: UIImageView!
     
     ///HistoryCardVC properties
     enum CardState {
@@ -150,6 +151,9 @@ class HomeViewController: BaseViewController {
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         setHistoryAndFavouriteView()
+        
+        talkButtonImageView = window.viewWithTag(109) as? UIImageView
+        talkButtonImageView.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
