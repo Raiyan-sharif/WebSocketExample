@@ -42,7 +42,10 @@ class AudioPlayer: NSObject {
     }
 
     func getTTSDataAndPlay(translateText:String,targetLanguageItem:String, tempo:String){
-        let item = LanguageEngineParser.shared.getTTTSSupportEngine(langCode: targetLanguageItem)!
+
+        guard let item = LanguageEngineParser.shared.getTTTSSupportEngine(langCode: targetLanguageItem) else {
+            return
+        }
         PrintUtility.printLog(tag: "Engine Name", text: item)
 
         let params:[String:String]  = [
