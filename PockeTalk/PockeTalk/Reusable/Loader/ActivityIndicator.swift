@@ -9,7 +9,7 @@ import UIKit
 @objc open class ActivityIndicator: NSObject {
     var container: UIView = UIView()
     let loadingIndicator: CustomLoaderProgressView = {
-        let progress = CustomLoaderProgressView(colors: [.darkGray], widthOfLine: 5)
+        let progress = CustomLoaderProgressView(colors: [.white], widthOfLine: 5)
         progress.translatesAutoresizingMaskIntoConstraints = false
         return progress
     }()
