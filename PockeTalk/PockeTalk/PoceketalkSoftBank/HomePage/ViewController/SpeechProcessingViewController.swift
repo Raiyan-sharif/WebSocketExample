@@ -263,7 +263,6 @@ class SpeechProcessingViewController: BaseViewController{
                             innerTimer.invalidate()
                             if !self.isFinalProvided {
                                 self.loaderInvisible()
-                                SocketManager.sharedInstance.disconnect()
                             }
                         }
                     }
@@ -274,6 +273,7 @@ class SpeechProcessingViewController: BaseViewController{
             }}}
 
     private func loaderInvisible(){
+        SocketManager.sharedInstance.disconnect()
         self.spinnerView.isHidden = true
         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
         self.homeVC?.hideSpeechView()
