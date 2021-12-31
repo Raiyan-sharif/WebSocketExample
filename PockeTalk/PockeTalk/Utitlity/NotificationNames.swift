@@ -9,7 +9,7 @@ extension Notification.Name {
     static let languageSelectionCameraNotification = Notification.Name("languageSelectionCameraNotification")
     static let languageSelectionArrowNotification = Notification.Name("languageSelectionArrowNotification")
     static let containerViewSelection = Notification.Name("ContainerViewSelection")
-    static let animationDidEnterBackground = Notification.Name("animationDidEnterBackground")
+    
     static let ttsNotofication = Notification.Name("TTSVCNotification")
     static let pronuntiationNotification = Notification.Name("PronuntiationNotification")
     static let pronuntiationResultNotification = Notification.Name("pronuntiationResultNotification")
@@ -17,6 +17,7 @@ extension Notification.Name {
     static let languageListNotofication = Notification.Name("languageListNotofication")
     static let languageHistoryListNotification = Notification.Name("languageHistoryListNotification")
     static let languageSettingsListNotification = Notification.Name("languageSettingsListNotification")
+    static let talkButtonContainerSelectionPoint = Notification.Name("talkButtonContainerSelectionPoint")
     
     static let countySlectionByVoiceNotofication = Notification.Name("countySlectionByVoiceNotofication")
     static let countySettingsSlectionByVoiceNotofication = Notification.Name("countySettingsSlectionByVoiceNotofication")
@@ -38,4 +39,6 @@ extension Notification.Name {
     static let tapOnMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOnMicrophoneLanguageSelectionVoiceCamera")
     static let tapOffMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOffMicrophoneLanguageSelectionVoiceCamera")
     static let updateTranlationNotification = Notification.Name("UpdateTranlationNotification")
+    static let bottmViewGestureNotification = Notification.Name("BottmViewGestureNotification")
+    static let languageChangeFromSettingsNotification = Notification.Name("languageChangeFromSettingsNotification")
 }

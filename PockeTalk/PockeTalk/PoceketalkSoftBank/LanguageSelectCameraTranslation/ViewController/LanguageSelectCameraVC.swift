@@ -32,10 +32,12 @@ class LanguageSelectCameraVC: BaseViewController {
     let window :UIWindow = UIApplication.shared.keyWindow!
     var isFirstTimeLoad = true
     private var floatingMicrophoneButton: UIButton!
+    var talkButtonImageView: UIImageView!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
         navigationViewCustomization()
@@ -49,6 +51,7 @@ class LanguageSelectCameraVC: BaseViewController {
     
     deinit {
         unregisterNotification()
+        talkButtonImageView.isHidden = true
     }
     
     //MARK: - Initial setup
@@ -143,11 +146,13 @@ class LanguageSelectCameraVC: BaseViewController {
         }else{
             CameraLanguageSelectionViewModel.shared.targetLanguage = selectedLanguageCode
         }
+        
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
         CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
         self.updateHomeContainer?()
-        remove(asChildViewController: self)
+        let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
+        remove(asChildViewController: self, animation: transation)
         removeFloatingBtn()
     }
     
@@ -158,10 +163,10 @@ class LanguageSelectCameraVC: BaseViewController {
     
     //MARK: - View Transactions
     private func navigateToLanguageScene(){
-        let storyboard = UIStoryboard(name: "LanguageSelectCamera", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "LnaguageSettingsTutorialCameraVC")as! LnaguageSettingsTutorialCameraVC
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromTop)
+        let controller = UIStoryboard(name: "LanguageSelectCamera", bundle: nil).instantiateViewController(withIdentifier: "LnaguageSettingsTutorialCameraVC")as! LnaguageSettingsTutorialCameraVC
         controller.delegate = self
-        add(asChildViewController: controller, containerView: self.view)
+        add(asChildViewController: controller, containerView: self.view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionCamera
     }
     

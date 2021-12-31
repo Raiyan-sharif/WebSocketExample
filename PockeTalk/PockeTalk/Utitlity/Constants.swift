@@ -65,16 +65,16 @@ let kTranslateIntoOtherLanguageUnderDevelopment = "Translate into other language
 
 // Alert message, title and action for app specific permission
 
-let kActionAllowAccess = "Allow access"
-let kActionCancel = "Cancel"
-let kMicrophoneUsageTitle = #""PockeTalk" Would Like to Access the Microphone"#
-let kMicrophoneUsageMessage = "PockeTalk needs permission to use the microphone"
-let kPhotosUsageTitle = "Can't use photos"
-let kPhotosUsageMessage = "PockeTalk needs permission to access the photo library"
-let kCameraUsageTitle = #""PockeTalk" Would Like to Access the Camera"#
-let kCameraUsageMessage = "PockeTalk needs permission to use the camera"
-let kTitleOk = "OK"
-let kNotAllow = "Don't Allow"
+let kActionAllowAccess = "kActionAllowAccess"
+let kActionCancel = "kActionCancel"
+let kMicrophoneUsageTitle = "kMicrophoneUsageTitle"
+let kMicrophoneUsageMessage = "kMicrophoneUsageMessage"
+let kPhotosUsageTitle = "kPhotosUsageTitle"
+let kPhotosUsageMessage = "kPhotosUsageMessage"
+let kCameraUsageTitle = "kCameraUsageTitle"
+let kCameraUsageMessage = "kCameraUsageMessage"
+let kTitleOk = "kTitleOk"
+let kNotAllow = "kNotAllow"
 
 
 
@@ -158,7 +158,7 @@ let lineMode = "lineMode"
 
 //FontSizes [range (11-22) ]
 let FONTSIZE: [CGFloat] = [0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
-let DEFAULT_FONTSIZE: CGFloat = 24.0
+let DEFAULT_FONTSIZE: CGFloat = 22.0
 let DEFAULT_FONTSIZE_INDEX: Int = 2
 let DEFAULT_FONT_MULTIPLYER: CGFloat = 0.1
 let FONT_SIZE_KEY: String = "FontSize"
@@ -207,3 +207,4 @@ let text = "text"
 let tempo = "tempo"
 let engineName = "google"
 let normal = "normal"
+let isNetworkAvailable = "isNetworkAvailable"

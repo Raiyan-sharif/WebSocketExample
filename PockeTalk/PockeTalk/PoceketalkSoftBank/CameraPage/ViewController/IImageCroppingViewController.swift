@@ -318,7 +318,7 @@ class ImageCroppingViewController: BaseViewController {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         for viewController in viewControllers {
             if viewController is HomeViewController {
-                let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.navigationController?.popToViewController(viewController, animated: false)
             }
@@ -354,7 +354,8 @@ class ImageCroppingViewController: BaseViewController {
                 vc.maxCropFrameWidth = imageView.frame.size.width
                 vc.maxCropFrameHeight = imageView.frame.size.height
                 vc.originalImage = image
-                let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
                 self.navigationController?.pushViewController(vc, animated: false)
             }

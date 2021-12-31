@@ -39,6 +39,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var leftImgWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak private var pronunciationView: UIView!
     @IBOutlet weak private var pronunciationLable: UILabel!
+    var talkButtonImageView = UIImageView()
 
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
@@ -85,7 +86,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let leftImgHeight : CGFloat = 45
     private let rightImgWidth : CGFloat = 45
     private let rightImgHeight : CGFloat = 45
-    
+    let window = UIApplication.shared.keyWindow!
     var pronunciationText : String = ""
     var pronunciationLanguageCode : String = ""
     //weak var speechProcessingDismissDelegate : SpeechProcessingDismissDelegate?
@@ -100,14 +101,26 @@ class SpeechProcessingViewController: BaseViewController{
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.speechProcessingAnimationView.layer.zPosition = 104
+        self.speechProcessingAnimationView.layer.zPosition = 103
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
+        setupTriangeAnimationView()
         registerForNotification()
         bindData()
         setupAudio()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+            if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                let accessKey = UserDefaultsProperty<String>(authentication_key).value
+                if accessKey == nil {
+                    SocketManager.sharedInstance.disconnect()
+                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = true
+                    AppDelegate.generateAccessKey()
+                }
+            }
+            
+
+           
         }
     }
     
@@ -127,6 +140,20 @@ class SpeechProcessingViewController: BaseViewController{
         return self.parent as? HomeViewController
     }
     
+    private func setupTriangeAnimationView(){
+        self.speechProcessingRightImgView.isHidden = true
+        self.speechProcessingLeftImgView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+            self?.talkButtonImageView = self?.window.viewWithTag(109) as? UIImageView ?? UIImageView()
+            self?.window.addSubview(self?.speechProcessingLeftImgView ?? UIView())
+            self?.window.addSubview(self?.speechProcessingRightImgView ?? UIView())
+            self?.speechProcessingLeftImgView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor, constant: -25).isActive = true
+            self?.speechProcessingLeftImgView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -41).isActive = true
+            self?.speechProcessingRightImgView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor, constant: 25).isActive = true
+            self?.speechProcessingRightImgView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -41).isActive = true
+        }
+        
+    }
     private func setupUI () {
         addSpinner()
 
@@ -239,7 +266,6 @@ class SpeechProcessingViewController: BaseViewController{
                             innerTimer.invalidate()
                             if !self.isFinalProvided {
                                 self.loaderInvisible()
-                                SocketManager.sharedInstance.disconnect()
                             }
                         }
                     }
@@ -250,6 +276,7 @@ class SpeechProcessingViewController: BaseViewController{
             }}}
 
     private func loaderInvisible(){
+        SocketManager.sharedInstance.disconnect()
         self.spinnerView.isHidden = true
         self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
         self.homeVC?.hideSpeechView()
@@ -285,7 +312,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             self.titleLabel.text = "country_selection_voice_msg".localiz()
             break
-        case .PronunciationPractice, .HistoryScrren, .HistroyPronunctiation: break
+        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen: break
         }
     }
     
@@ -476,7 +503,8 @@ class SpeechProcessingViewController: BaseViewController{
     @objc private func appBecomeActive() {
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        
+        //SocketManager.sharedInstance.connect()
+        //PrintUtility.printLog(tag: "ForeGround App: ", text: "yes")
 //        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
 //            service?.startRecord()
 //        }
@@ -561,12 +589,9 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         }
         removeAnimation()
     }
-
 }
 
 extension SpeechProcessingViewController{
-
-
     func removeAnimation(){
         self.speechProcessingLeftImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.layer.removeAllAnimations()
@@ -614,34 +639,34 @@ extension SpeechProcessingViewController{
             }
         }
     }
+    
     func updateLanguageType(){
         let languageManager = LanguageSelectionManager.shared
         pronunciationView.isHidden = true
-        //if let purpose = self.screenPurpose{
-            switch ScreenTracker.sharedInstance.screenPurpose {
-            case .HomeSpeechProcessing:
-                languageManager.tempSourceLanguage = nil
-                if languageManager.isArrowUp{
-                    speechLangCode = languageManager.bottomLanguage
-                }else{
-                    speechLangCode = languageManager.topLanguage
-                }
-                break
-            case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
-                if countrySearchspeechLangCode != "" {
-                    speechLangCode = countrySearchspeechLangCode
-                } else {
-                    speechLangCode = LanguageManager.shared.currentLanguage.rawValue
-                }
-                languageManager.tempSourceLanguage = speechLangCode
-                languageHasUpdated = true
-                break
-            case .PronunciationPractice, .HistroyPronunctiation:
-                speechLangCode = pronunciationLanguageCode
-                languageHasUpdated = true
-                break
-            default:
-                break
+        switch ScreenTracker.sharedInstance.screenPurpose {
+        case .HomeSpeechProcessing:
+            languageManager.tempSourceLanguage = nil
+            if languageManager.isArrowUp{
+                speechLangCode = languageManager.bottomLanguage
+            }else{
+                speechLangCode = languageManager.topLanguage
             }
+            break
+        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
+            if countrySearchspeechLangCode != "" {
+                speechLangCode = countrySearchspeechLangCode
+            } else {
+                speechLangCode = LanguageManager.shared.currentLanguage.rawValue
+            }
+            languageManager.tempSourceLanguage = speechLangCode
+            languageHasUpdated = true
+            break
+        case .PronunciationPractice, .HistroyPronunctiation:
+            speechLangCode = pronunciationLanguageCode
+            languageHasUpdated = true
+            break
+        default:
+            break
+        }
     }
 }

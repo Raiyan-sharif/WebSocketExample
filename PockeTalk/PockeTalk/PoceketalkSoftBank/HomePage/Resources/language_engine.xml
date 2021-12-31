@@ -7,14 +7,14 @@ TAG tts_value define that this language will be played through responsive engine
 -->
 <engine name="engine">
     <item code="eu" stt_engine=""/>
-    <item code="yue" stt_engine="" tts_engine="" tts_value="Chinese (Hong Kong) Female"/>
+    <item code="yue" stt_engine="" tts_engine="" />
     <item code="zh-TW" stt_engine="" tts_engine="" tts_value="Chinese Taiwan Female"/>
     <item code="en" stt_engine="" tts_engine="" tts_value="US English Female"/>
     <item code="en-GB" stt_engine="" tts_engine="" tts_value="UK English Female"/>
     <item code="en-IN" stt_engine="" tts_engine="" tts_value="US English Female"/>
     <item code="en-AU" stt_engine="" tts_engine="" tts_value="Australian Female"/>
     <item code="en-PH" stt_engine="" tts_engine="" tts_value="US English Female"/>
-    <item code="en-SO" stt_engine="" tts_engine="" tts_value="US English Female_-2.0"/>
+    <item code="en-SO" stt_engine="" tts_engine="" tts_value="US English Female_0.7"/>
     <item code="ar" stt_engine="" tts_engine="" tts_value="Arabic Male"/>
     <item code="ca" stt_engine="" tts_engine=""/>
     <item code="da" stt_engine="" tts_engine="" tts_value="Danish Female"/>
@@ -41,7 +41,7 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="sv" stt_engine="" tts_engine="" tts_value="Swedish Female"/>
     <item code="tr" stt_engine="" tts_engine="" tts_value="Turkish Female"/>
     <item code="hy" stt_engine="" tts_engine="" tts_value="Armenian Male_0.2"/>
-    <item code="ja" stt_engine="" tts_engine="" tts_value="Japanese Female"/>
+    <item code="ja" stt_engine="" tts_engine=""/>
     <item code="ko" stt_engine="" tts_engine="" tts_value="Korean Female"/>
     <item code="hr" stt_engine="" tts_engine=""/>
     <item code="hi" stt_engine="" tts_engine=""/>

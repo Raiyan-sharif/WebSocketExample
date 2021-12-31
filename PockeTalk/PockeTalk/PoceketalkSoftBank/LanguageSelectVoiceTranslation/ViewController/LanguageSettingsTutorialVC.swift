@@ -41,7 +41,7 @@ class LanguageSettingsTutorialVC: BaseViewController {
             toolbarTitleLabel.text = "Language Settings".localiz()
             guidelineTextLabel.text = "Speech Guideline".localiz()
         } else {
-            toolbarTitleLabel.text = "Country Language Settings".localiz()
+            toolbarTitleLabel.text = "Language Settings".localiz()
             guidelineTextLabel.text = "Country Speech Guideline".localiz()
         }
     }

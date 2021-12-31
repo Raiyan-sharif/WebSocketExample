@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  PockeTalk
+
+  Created by Morshed Alam on 12/23/21.
+  
+*/
+"NSCameraUsageDescription" = "PockeTalk needs permission to use the camera";
+"NSMicrophoneUsageDescription" = "PockeTalk needs permission to use the microphone";
+"NSPhotoLibraryUsageDescription" = "Add photo to image";

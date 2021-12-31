@@ -26,6 +26,8 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var capturedImage = UIImage()
     var allowsLibraryAccess = true
     var isCaptureButtonClickable = Bool()
+    let window = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
     
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
@@ -67,6 +69,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
+        talkButtonImageView.isHidden = false
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
@@ -74,6 +77,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
+        talkButtonImageView.isHidden = false
     }
     
     func openCameraLanguageListScreen(){
@@ -82,9 +86,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         controller.updateHomeContainer = { [weak self] in
             self?.updateHomeContainer?(true)
         }
-        // self.navigationController?.pushViewController(controller, animated: true);
+        
         self.updateHomeContainer?(false)
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         add(asChildViewController: controller, containerView: view, animation: transition)
     }
     
@@ -129,6 +133,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         previewView.frame = cameraPreviewView.frame
         cropImageRect = cameraPreviewView.frame
         previewView.layer.addSublayer(previewLayer)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
         view.insertSubview(previewView, at: 0)
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
@@ -229,7 +234,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
-            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.navigationController?.pushViewController(vc, animated: false)
         }
@@ -238,6 +243,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
@@ -412,6 +418,7 @@ extension CameraViewController {
         self.updateHomeContainer?(false)
         HomeViewController.homeContainerViewBottomConstraint.constant = 0
         HomeViewController.isCameraButtonClickable = true
+        talkButtonImageView.isHidden = false
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         //        if(self.navigationController == nil){
         //            self.dismiss(animated: true, completion: nil)
@@ -524,7 +531,7 @@ extension CameraViewController {
             self?.onCompletion?(image, asset)
             self?.onCompletion = nil
         }
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.navigationController?.pushViewController(vc, animated: false)
     }

@@ -18,7 +18,7 @@
 "Region" = "地域";
 "TtsToLanguage" = "Hola como estas";
 "TtsFromLanguage" = "Hello how are you?";
-"Language Settings" = "言語設定(Language Settings)";
+"Language Settings" = "言語設定";
 "Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";
 "history_add_fav" = "お気に入りに追加";
 "history_remove_fav" = "お気に入りから削除";
@@ -69,3 +69,14 @@
 "charge_the_device" = "デバイスを充電してください";
 "camera_flash_unavailable" = "バッテリー残量が不足しているため、カメラのフラッシュは使用できません。";
 "can_not_translate" = "翻訳できません。";
+"Country Speech Guideline" = "ボタンを押したまま、検索したい地域を言ってください。";
+"kActionAllowAccess" = "アクセスを許可します";
+"kActionCancel" = "キャンセル";
+"kMicrophoneUsageTitle" = "\"PockeTalk\" マイクにアクセスしたい";
+"kMicrophoneUsageMessage" = "PockeTalkにはマイクを使用するための許可が必要です";
+"kPhotosUsageTitle" = "写真は使えません";
+"kPhotosUsageMessage" = "PockeTalkには、フォトライブラリにアクセスするための許可が必要です";
+"kCameraUsageTitle" = "\"PockeTalk\" カメラにアクセスしたい";
+"kCameraUsageMessage" = "PockeTalkはカメラを使用するための許可が必要です";
+"kTitleOk" = "わかっ";
+"kNotAllow" = "許可しない";

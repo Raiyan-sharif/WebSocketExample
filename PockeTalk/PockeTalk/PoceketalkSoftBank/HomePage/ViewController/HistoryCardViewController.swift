@@ -5,7 +5,7 @@
 
 import UIKit
 protocol HistoryCardViewControllerDelegate: AnyObject {
-    func dissmissHistory()
+    func dissmissHistory(shouldUpdateViewAlpha: Bool)
 }
 
 class HistoryCardViewController: BaseViewController {
@@ -123,7 +123,7 @@ class HistoryCardViewController: BaseViewController {
         historyViewModel.items.bindAndFire { [weak self] items in
             if items.count == 0{
                 DispatchQueue.main.async {
-                    self?.dismissHistory(animated: true, completion: nil)
+                    self?.dismissHistory(shouldUpdateViewAlpha: false)
                 }
             }
             if items.count > 0{
@@ -233,9 +233,10 @@ class HistoryCardViewController: BaseViewController {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
-    private func dismissHistory(animated: Bool, completion: (() -> Void)? = nil) {
-        delegate?.dissmissHistory()
+    private func dismissHistory(shouldUpdateViewAlpha: Bool) {
+        delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
     }
     
     //MARK: - IBActions
@@ -243,7 +244,7 @@ class HistoryCardViewController: BaseViewController {
         UIView.animate(withDuration: kFadeAnimationTransitionTime, delay: animationDelay, options: .curveEaseOut) {
             self.view.alpha = viewsAlphaValue
         } completion: { _ in
-            self.dismissHistory(animated: true, completion: nil )
+            self.dismissHistory(shouldUpdateViewAlpha: true)
         }
     }
     
@@ -357,7 +358,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
 extension HistoryCardViewController {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if collectionView.contentSize.height + 30 < (scrollView.contentOffset.y + collectionView.bounds.height){
-            self.dismissHistory(animated: true, completion: nil )
+            self.dismissHistory(shouldUpdateViewAlpha: false)
         }
     }
 }
@@ -382,9 +383,9 @@ extension HistoryCardViewController: HistoryLayoutDelegate {
     }
 }
 
-//MARK: - RetranslationDelegate
+//MARK: - RetranslationDelegate   
 extension HistoryCardViewController : RetranslationDelegate{
-    func showRetranslation(selectedLanguage: String) {
+    func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!
@@ -397,7 +398,7 @@ extension HistoryCardViewController : RetranslationDelegate{
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
-                ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+                ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             }
         }else{
             GlobalMethod.showNoInternetAlert()
@@ -407,9 +408,7 @@ extension HistoryCardViewController : RetranslationDelegate{
 
 //MARK:- AlertReusableDelegate
 extension HistoryCardViewController : AlertReusableDelegate{
-    func onSharePressed(chatItemModel: HistoryChatItemModel?) {
-        
-    }
+    func onSharePressed(chatItemModel: HistoryChatItemModel?) {}
     
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
@@ -439,8 +438,11 @@ extension HistoryCardViewController : AlertReusableDelegate{
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
+        
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
+        controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
+        
         controller.modalPresentationStyle = .fullScreen
         let transition = CATransition()
         transition.duration = 0.5
@@ -449,7 +451,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view)
-        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){

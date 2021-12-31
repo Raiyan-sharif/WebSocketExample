@@ -7,7 +7,7 @@ import UIKit
 import SwiftyXMLParser
 
 class LanguageListVC: BaseViewController {
-    @IBOutlet weak private var langListTableView: UITableView!
+    @IBOutlet weak var langListTableView: UITableView!
     
     let TAG = "\(LanguageListVC.self)"
     var pageIndex: Int!
@@ -18,7 +18,7 @@ class LanguageListVC: BaseViewController {
     var isNative: Int = 0
     var isFirstTimeLoad: Bool!
     private let languageManager = LanguageSelectionManager.shared
-    
+    var tabsHeight:CGFloat = 0
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,13 +153,4 @@ extension LanguageListVC: UITableViewDelegate {
         self.langListTableView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: self.view.bounds.height / 4))
-        footerView.backgroundColor = .clear
-        return footerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return self.view.bounds.height / 4
-    }
 }

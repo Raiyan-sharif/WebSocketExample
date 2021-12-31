@@ -72,11 +72,11 @@ class TutorialViewController: BaseViewController {
 
         self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
-        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .semibold)
+        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getTutorialFontSize(), weight: .semibold)
         self.titleLabel.textColor = UIColor._blackColor()
 
         self.infoLabel.text = tutorialLanguage?.lineTwo
-        self.infoLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .regular)
+        self.infoLabel.font = UIFont.systemFont(ofSize: FontUtility.getTutorialFontSize(), weight: .regular)
         self.infoLabel.setLineHeight(lineHeight: lineSpacing)
         self.infoLabel.textAlignment = .center
         self.infoLabel.textColor = UIColor._blackColor()

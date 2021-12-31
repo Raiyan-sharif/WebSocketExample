@@ -104,6 +104,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_all_data_reset".localiz(), buttonTitle: "delete_all_data".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                
                 do {
                     /// Delete all from tables
                     try CameraHistoryDBModel().deleteAll()
@@ -113,11 +114,13 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 } catch _ {
 
                 }
+                
                 /// Clear UserDefautlts
                 UserDefaultsUtility.resetDefaults()
 
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
+                self.navigationController?.popToRootViewController(animated: false)
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showDeleteAllDataDialog()

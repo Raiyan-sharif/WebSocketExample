@@ -7,7 +7,7 @@ import UIKit
 import SwiftyXMLParser
 
 protocol RetranslationDelegate: AnyObject {
-    func showRetranslation (selectedLanguage : String)
+    func showRetranslation (selectedLanguage : String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose)
 }
 
 class LangSelectVoiceVC: BaseViewController {
@@ -35,6 +35,8 @@ class LangSelectVoiceVC: BaseViewController {
     var pageController: UIPageViewController!
     let langListArray:NSMutableArray = NSMutableArray()
     var selectedLanguageCode = ""
+    var langugeListVC: LanguageListVC!
+    var languageHistoryListVC: HistoryListVC!
     
     var isNative: Int = 0
     let trailing : CGFloat = -20
@@ -48,6 +50,7 @@ class LangSelectVoiceVC: BaseViewController {
     /// check if navigation from Retranslation
     var fromRetranslation : Bool = false
     var isFirstTimeLoad = true
+    var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose = .HomeSpeechProcessing
     private var floatingMicrophoneButton: UIButton!
     
     //MARK: - Lifecycle methods
@@ -116,6 +119,32 @@ class LangSelectVoiceVC: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.updateTranlationNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageHistoryListNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePointLanguageSelection(notification:)), name: .talkButtonContainerSelectionPoint, object: nil)
+    }
+    
+    //MARK: - LanguageListVC Notification for Point
+    @objc func updatePointLanguageSelection(notification: Notification) {
+        if let dict = notification.userInfo as NSDictionary? {
+            if let point = dict["point"] as? CGPoint{
+                print(point)
+                if(ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice){
+                    let gap = SIZE_HEIGHT - langugeListVC.langListTableView.bounds.height
+                    print("GAP \(gap)")
+                    let newPoint = CGPoint(x: point.x,y: point.y - gap + langugeListVC.langListTableView.contentOffset.y)
+                    if  let newIndexPath = langugeListVC.langListTableView.indexPathForRow(at: newPoint){
+                        langugeListVC.tableView(langugeListVC.langListTableView, didSelectRowAt: newIndexPath)
+                    }
+                }
+                else if(ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice){
+                    let gap = SIZE_HEIGHT - languageHistoryListVC.historyListTableView.bounds.height
+                    print("GAP \(gap)")
+                    let newPoint = CGPoint(x: point.x,y: point.y - gap + languageHistoryListVC.historyListTableView.contentOffset.y)
+                    if  let newIndexPath = languageHistoryListVC.historyListTableView.indexPathForRow(at: newPoint){
+                        languageHistoryListVC.tableView(languageHistoryListVC.historyListTableView, didSelectRowAt: newIndexPath)
+                    }
+                }
+            }
+        }
     }
     
     private func setUpMicroPhoneIcon() {
@@ -188,7 +217,11 @@ class LangSelectVoiceVC: BaseViewController {
         if fromRetranslation == true {
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+            
+            self.retranslationDelegate?.showRetranslation(
+                selectedLanguage: selectedLanguageCode,
+                fromScreenPurpose: fromScreenPurpose)
+            
             self.remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
@@ -202,16 +235,21 @@ class LangSelectVoiceVC: BaseViewController {
         if index == 0 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier:tagLanguageListVC) as! LanguageListVC
             contentVC.pageIndex = index
+            contentVC.tabsHeight = tabsView.bounds.height
             contentVC.isFirstTimeLoad = self.isFirstTimeLoad
+            langugeListVC = contentVC
             return contentVC
         } else if index == 1 {
             let contentVC = storyboard?.instantiateViewController(withIdentifier: tagHistoryListVC) as! HistoryListVC
             contentVC.pageIndex = index
+            languageHistoryListVC = contentVC
             return contentVC
         }else {
             let contentVC = storyboard?.instantiateViewController(withIdentifier: tagLanguageListVC) as! LanguageListVC
+            contentVC.tabsHeight = tabsView.bounds.height
             contentVC.pageIndex = index
             contentVC.isFirstTimeLoad = self.isFirstTimeLoad
+            langugeListVC = contentVC
             return contentVC
         }
     }
@@ -221,16 +259,18 @@ class LangSelectVoiceVC: BaseViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "CountryListViewController")as! CountryListViewController
         controller.isFromTranslation = fromRetranslation
         controller.isNative = isNative
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
     }
     
     private func navigateToLanguageSettingsScene(){
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromTop)
         let vc = UIStoryboard(name: "LanguageSelectVoice", bundle: nil).instantiateViewController(withIdentifier: "LanguageSettingsTutorialVC")as! LanguageSettingsTutorialVC
         vc.delegate = self
         vc.isFromLanguageScene = true
-        add(asChildViewController: vc, containerView: self.view)
+        add(asChildViewController: vc, containerView: self.view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionVoice
     }
 
@@ -264,6 +304,7 @@ class LangSelectVoiceVC: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .updateTranlationNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageListNotofication, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.talkButtonContainerSelectionPoint, object: nil)
     }
     
     private func removeFloatingBtn(){
@@ -273,7 +314,9 @@ class LangSelectVoiceVC: BaseViewController {
     
     @objc private func removeChild(notification: Notification) {
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
-        self.retranslationDelegate?.showRetranslation(selectedLanguage: selectedLanguageCode)
+        self.retranslationDelegate?.showRetranslation(
+            selectedLanguage: selectedLanguageCode,
+            fromScreenPurpose: fromScreenPurpose)
         self.remove(asChildViewController: self)
     }
     

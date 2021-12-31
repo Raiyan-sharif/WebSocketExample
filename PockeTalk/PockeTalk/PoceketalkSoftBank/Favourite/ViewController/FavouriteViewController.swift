@@ -232,7 +232,7 @@ class FavouriteViewController: BaseViewController {
     }
     
     private func addBackNavigationTransationalAnimation() {
-        let transition = GlobalMethod.getBackTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         self.view.window!.layer.add(transition, forKey: kCATransition)
     }
 }
@@ -340,7 +340,7 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
 
 //MARK: - RetranslationDelegate
 extension FavouriteViewController : RetranslationDelegate{
-    func showRetranslation(selectedLanguage: String) {
+    func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             let chatItem = selectedChatItemModel?.chatItem!
@@ -352,7 +352,7 @@ extension FavouriteViewController : RetranslationDelegate{
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 self!.socketManager.sendTextData(text: textFrameData, completion: nil)
-                ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             }
         }else {
             GlobalMethod.showNoInternetAlert()
@@ -384,9 +384,12 @@ extension FavouriteViewController : AlertReusableDelegate {
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
         controller.retranslationDelegate = self
+        
         controller.fromRetranslation = true
+        controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
         controller.modalPresentationStyle = .fullScreen
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         add(asChildViewController: controller, containerView: view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice

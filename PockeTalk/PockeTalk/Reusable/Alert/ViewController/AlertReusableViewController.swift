@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol AlertReusableDelegate:class {
+protocol AlertReusableDelegate: AnyObject {
     func updateFavourite(chatItemModel: HistoryChatItemModel)
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?)
     func transitionFromRetranslation (chatItemModel: HistoryChatItemModel?)
@@ -18,6 +18,9 @@ class AlertReusableViewController: BaseViewController {
     /// Views
     @IBOutlet weak var alertTableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    let window = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
+    var flagTalkButton = false
 
     /// Properties
     var items : [AlertItems] = []
@@ -38,8 +41,22 @@ class AlertReusableViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        flagTalkButton = talkButtonImageView.isHidden
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = true
+            HomeViewController.dummyTalkBtnImgView.isHidden = false
+        }
         self.navigationController?.navigationBar.isHidden = true
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(items.count)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = false
+            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        }
     }
 
     func setUpUI () {
@@ -82,7 +99,6 @@ class AlertReusableViewController: BaseViewController {
     
     func deleteItemPressed () {
         self.delegate?.onDeleteItem(chatItemModel: self.chatItemModel)
-        NotificationCenter.default.post(name: .containerViewSelection, object: nil)
     }
 
     func showPracticeView () {

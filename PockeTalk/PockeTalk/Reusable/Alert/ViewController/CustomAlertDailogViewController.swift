@@ -10,7 +10,7 @@ class CustomAlertDailogViewController: BaseViewController {
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var messageLable: UILabel!
     @IBOutlet weak var alertView: UIView!
-    @IBOutlet weak var titleView: UIView!
+//    @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
 
     @IBOutlet var bottomDevider: UIView!
@@ -24,6 +24,9 @@ class CustomAlertDailogViewController: BaseViewController {
     var noActionButton = Bool()
     var buttonAction:(() -> Void)?
     var hideCancelButton:Bool = false
+    let window = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
+    var flagTalkButton = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +34,29 @@ class CustomAlertDailogViewController: BaseViewController {
         setupUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        flagTalkButton = talkButtonImageView.isHidden
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = true
+            HomeViewController.dummyTalkBtnImgView.isHidden = false
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if(!flagTalkButton){
+            talkButtonImageView.isHidden = false
+        }
+    }
+    deinit{
+        if(!flagTalkButton){
+            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        }
+    }
     func setupUI() {
         alertView.layer.cornerRadius = 12
-        titleView.layer.cornerRadius = 12
+//        titleView.layer.cornerRadius = 12
 
         titleLable.text = alertTitle
         titleLable.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .bold)
@@ -56,7 +79,7 @@ class CustomAlertDailogViewController: BaseViewController {
 
         actionButton.setTitle(alertButton, for: .normal)
         actionButton.setTitleColor(UIColor.systemBlue, for: .normal)
-        titleView.visiblity(gone: noTitleShown, dimension: 60)
+//        titleView.visiblity(gone: noTitleShown, dimension: 60)
         actionButton.visiblity(gone: noActionButton)
         if hideCancelButton{
             self.cancelButton.isHidden = true
@@ -83,5 +106,14 @@ extension UIView {
             self.layoutIfNeeded()
             self.isHidden = gone
         }
+    }
+}
+
+class CustomSizeButton: UIButton {
+    override var intrinsicContentSize: CGSize {
+        let labelSize = titleLabel?.sizeThatFits(CGSize(width: frame.size.width, height: CGFloat.greatestFiniteMagnitude)) ?? .zero
+        let desiredButtonSize = CGSize(width: labelSize.width + titleEdgeInsets.left + titleEdgeInsets.right, height: labelSize.height + titleEdgeInsets.top + titleEdgeInsets.bottom)
+
+        return desiredButtonSize
     }
 }

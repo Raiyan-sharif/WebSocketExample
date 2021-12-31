@@ -21,13 +21,13 @@ protocol SpeechProcessingViewModeling {
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func animateRightImage (leftImage: UIImageView, rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func getTimeDifference (startTime : Int, endTime : Int) -> Int
-    var startTime:Date! { set get }
+    var startTime:Date { set get }
     func getTimeDifference(endTime:Date)->Int
 
 }
 
 class SpeechProcessingViewModel: SpeechProcessingViewModeling {
-    var startTime: Date!
+    var startTime: Date = Date()
 
     var isGettingActualData:Bool = false
 

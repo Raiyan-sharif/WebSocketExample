@@ -58,8 +58,13 @@ struct NetworkManager:Network {
             srcLang = src
         }
 
+        guard let accesKey = UserDefaultsProperty<String>(authentication_key).value, accesKey.count > 0 else {
+            completion(nil)
+            return
+        }
+        
         let params:[String:String]  = [
-            access_key:UserDefaultsProperty<String>(authentication_key).value! ,
+            access_key:accesKey,
             srclang : srcLang,
             destlang : desLang
         ]

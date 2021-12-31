@@ -24,9 +24,12 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var historyImageView: UIImageView!
     @IBOutlet weak var bottomImageViewOfAnimation: UIImageView!
     static var bottomViewRef: UIView!
+    var isLanguageListVCOpened = false
     static var bottomImageViewOfAnimationRef: UIImageView!
     static var cameraTapFlag = 0
     let talkBtnImgView = UIImageView()
+    static var dummyTalkBtnImgView = UIImageView()
+    var window = UIApplication.shared.keyWindow ?? UIWindow()
     
     let TAG = "\(HomeViewController.self)"
     private var homeVM : HomeViewModeling!
@@ -53,6 +56,8 @@ class HomeViewController: BaseViewController {
 
     weak var homeVCDelegate: HomeVCDelegate?
     var isFromCameraPreview: Bool = false
+    var bottmViewGesture:UILongPressGestureRecognizer!
+    var talkButtonImageView: UIImageView!
     
     ///HistoryCardVC properties
     enum CardState {
@@ -106,6 +111,10 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .black
         return view
     }()
+    private var isEnableGessture:Bool{
+        return ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing || ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice ||
+            ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation
+    }
     
     static var homeContainerViewBottomConstraint:NSLayoutConstraint!
     
@@ -114,15 +123,21 @@ class HomeViewController: BaseViewController {
         bottomView.layer.zPosition = 103
         bottomView.backgroundColor = .clear
         view.backgroundColor = .clear
+        bottomView.isUserInteractionEnabled = true
+        bottomImageView.isUserInteractionEnabled = false
+        bottomImageViewOfAnimation.isUserInteractionEnabled = false
+        window = UIApplication.shared.keyWindow ?? UIWindow()
         registerNotification()
         self.homeVM = HomeViewModel()
         self.setUpUI()
-        setLanguageDirection()
+        //setLanguageDirection()
         
         cardHeight = (self.view.bounds.height / 4) * 3
+        setupUITalkButton()
         setupGestureForCardView()
         setupCardView()
         setupStatusBarView()
+        setupGestureForBottomView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,16 +151,66 @@ class HomeViewController: BaseViewController {
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         setHistoryAndFavouriteView()
+        
+        talkButtonImageView = window.viewWithTag(109) as? UIImageView
+        talkButtonImageView.isHidden = false
+        
+        setLanguageDirection()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         updateLanguageNames()
+        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed){
+            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
+            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
+        }
     }
     
     deinit {
         unregisterNotification()
     }
     
+    private func setupUITalkButton(){
+        talkBtnImgView.tag = 109
+        HomeViewController.dummyTalkBtnImgView.image = UIImage(named: "talk_button")
+        HomeViewController.dummyTalkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
+        HomeViewController.dummyTalkBtnImgView.tintColor = UIColor._skyBlueColor()
+        HomeViewController.dummyTalkBtnImgView.layer.cornerRadius = width/2
+        HomeViewController.dummyTalkBtnImgView.clipsToBounds = true
+        self.bottomView.addSubview(HomeViewController.dummyTalkBtnImgView)
+        HomeViewController.dummyTalkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        HomeViewController.dummyTalkBtnImgView.heightAnchor.constraint(equalToConstant: width).isActive = true
+        HomeViewController.dummyTalkBtnImgView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
+        HomeViewController.dummyTalkBtnImgView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
+        HomeViewController.dummyTalkBtnImgView.isHidden = true
+        
+        talkBtnImgView.image = UIImage(named: "talk_button")
+        talkBtnImgView.isUserInteractionEnabled = true
+        talkBtnImgView.translatesAutoresizingMaskIntoConstraints = false
+        bottomImageView.translatesAutoresizingMaskIntoConstraints = false
+        talkBtnImgView.tintColor = UIColor._skyBlueColor()
+        talkBtnImgView.layer.cornerRadius = width/2
+        talkBtnImgView.clipsToBounds = true
+        bottomView.addSubview(bottomImageView)
+        bottomImageView.isUserInteractionEnabled = false
+        self.window.addSubview(talkBtnImgView)
+        talkBtnImgView.isHidden = false
+        talkBtnImgView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        talkBtnImgView.heightAnchor.constraint(equalToConstant: width ).isActive = true
+        talkBtnImgView.centerXAnchor.constraint(equalTo: self.window.centerXAnchor).isActive = true
+        talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
+        
+        
+        bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width * 1.4).isActive = true
+        bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8).isActive = true
+        bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
+        bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
+        self.pulseGrayWave.isHidden = true
+        self.pulseLayer.isHidden = true
+        self.midCircleViewOfPulse.isHidden = true
+        self.bottomImageView.isHidden = true
+        self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
+    }
     //MARK: - Initial Setup
     private func setUpUI () {
         navigationController?.navigationBar.barTintColor = UIColor.black
@@ -155,10 +220,10 @@ class HomeViewController: BaseViewController {
         let sharedApplication = UIApplication.shared
         sharedApplication.delegate?.window??.tintColor = UIColor.white
         
-        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
-            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
-            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
-        }
+//        if !UserDefaultsUtility.getBoolValue(forKey: kUserDefaultIsTutorialDisplayed) {
+//            UserDefaultsUtility.setBoolValue(true, forKey: kUserDefaultIsTutorialDisplayed)
+//            self.dislayTutorialScreen(shwoingTutorialForTheFirstTime: true)
+//        }
         
         if let lanCode = self.homeVM.getLanguageName() {
             self.deviceLanguage = lanCode
@@ -217,9 +282,9 @@ class HomeViewController: BaseViewController {
     }
     
     func addTalkButtonAnimationViews(){
-        self.bottomView.addSubview(pulseGrayWave)
-        self.bottomView.layer.addSublayer(pulseLayer)
-        self.bottomView.addSubview(midCircleViewOfPulse)
+        self.window.addSubview(pulseGrayWave)
+        self.window.layer.addSublayer(pulseLayer)
+        self.window.addSubview(midCircleViewOfPulse)
     }
     
     func addSpeechProcessingVC(){
@@ -252,14 +317,17 @@ class HomeViewController: BaseViewController {
         HomeViewController.bottomViewRef = self.bottomView
         HomeViewController.bottomImageViewOfAnimationRef = self.bottomImageViewOfAnimation
         NotificationCenter.default.addObserver(self, selector: #selector(updateContainer(notification:)), name:.containerViewSelection, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(animationDidEnterBackground(notification:)), name: .animationDidEnterBackground, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(animationDidEnterBackground(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onVoiceLanguageChanged(notification:)), name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.languageChangedFromSettings(notification:)), name: .languageChangeFromSettingsNotification, object: nil)
+
     }
     
     //MARK: - IBActions
     @IBAction private func menuAction(_ sender: UIButton) {
+        talkBtnImgView.isHidden = true
         let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
         if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
             let transition = CATransition()
@@ -284,6 +352,7 @@ class HomeViewController: BaseViewController {
     
     @IBAction private func topLanguageBtnAction(_ sender: UIButton) {
         openLanguageSelectionScreen(isNative: LanguageName.topLang.rawValue)
+        
     }
     
     @IBAction private func bottomLanguageBtnAction(_ sender: UIButton) {
@@ -298,13 +367,26 @@ class HomeViewController: BaseViewController {
     
     //MARK: - View Transactions
     private func dislayTutorialScreen(shwoingTutorialForTheFirstTime: Bool) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
-        let navController = UINavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = .overFullScreen
-        navController.modalTransitionStyle = .crossDissolve
-        navController.navigationBar.isHidden = true
-        controller.navController = navController
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
+//        let navController = UINavigationController(rootViewController: controller)
+//        navController.modalPresentationStyle = .overFullScreen
+//        navController.modalTransitionStyle = .crossDissolve
+//        navController.navigationBar.isHidden = true
+//        controller.navController = navController
+//        controller.speechProDismissDelegateFromTutorial = self
+//        
+//        controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
+//        if shwoingTutorialForTheFirstTime {
+//            controller.dismissTutorialDelegate = self
+//        } else {
+//            controller.dismissTutorialDelegate = nil
+//        }
+//
+//        add(asChildViewController: controller, containerView:homeContainerView)
+        
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
+        
         controller.speechProDismissDelegateFromTutorial = self
         
         controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
@@ -314,6 +396,7 @@ class HomeViewController: BaseViewController {
             controller.dismissTutorialDelegate = nil
         }
         
+        homeContainerView.isHidden = false
         add(asChildViewController: controller, containerView:homeContainerView)
     }
     
@@ -332,16 +415,15 @@ class HomeViewController: BaseViewController {
     @objc func goToFavouriteScreen () {
         HomeViewController.bottomViewRef.backgroundColor = .black
         let fv = FavouriteViewController()
-        let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
         hideSpeechView()
-        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        ScreenTracker.sharedInstance.screenPurpose = .FavouriteScreen
     }
     
     /// Navigate to Camera page
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
         if HomeViewController.isCameraButtonClickable == true {
-            HomeViewController.isCameraButtonClickable = false
             let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
             if batteryPercentage <= cameraDisableBatteryPercentage {
                 showBatteryWarningAlert()
@@ -353,6 +435,7 @@ class HomeViewController: BaseViewController {
                         if let cameraViewController = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraViewController.self)) as? CameraViewController {
                             cameraViewController.updateHomeContainer = { [weak self]  isFullScreen in
                                 guard let `self` = self else { return }
+                                self.hideORShowlTalkButton(isEnable: isFullScreen)
                                 HomeViewController.homeContainerViewBottomConstraint.constant = isFullScreen ? self.bottomView.bounds.height: 0
                                 self.bottomView.layer.zPosition = isFullScreen ? 0: 103
                                 isFullScreen ? self.view.sendSubviewToBack(HomeViewController.bottomViewRef) : self.view.bringSubviewToFront(HomeViewController.bottomViewRef)
@@ -361,7 +444,7 @@ class HomeViewController: BaseViewController {
                                     HomeViewController.homeContainerViewBottomConstraint.constant = self.bottomView.bounds.height
                                 }
                             }
-                            let transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+                            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                             self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
                             ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
                             self.hideSpeechView()
@@ -429,10 +512,11 @@ class HomeViewController: BaseViewController {
     }
     
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.containerViewSelection, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .containerViewSelection, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionVoiceNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .animationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .languageChangeFromSettingsNotification, object: nil)
     }
     
     private func openLanguageSelectionScreen(isNative: Int){
@@ -459,9 +543,9 @@ class HomeViewController: BaseViewController {
         controller.isNative = isNative
         
         //Add transition animation
-        var transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        var transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         if isNative != LanguageName.bottomLang.rawValue{
-            transition = GlobalMethod.getTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         }
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         
@@ -481,11 +565,26 @@ class HomeViewController: BaseViewController {
         setLanguageDirection()
         setHistoryAndFavouriteView()
     }
+    @objc func enableorDisableGesture(notification: Notification?) {
+        print(ScreenTracker.sharedInstance.screenPurpose)
+        self.bottmViewGesture.isEnabled = self.isEnableGessture
+        self.bottomView.isUserInteractionEnabled = self.isEnableGessture
+    }
+    
+    @objc func languageChangedFromSettings(notification: Notification?) {
+        if let languageInfo = notification?.userInfo as? [String: Bool] {
+            if (languageInfo["isLanguageChanged"] ?? false) == true {
+                speechVC.languageHasUpdated = true
+            }
+        }
+    }
     
     
     @objc func updateContainer(notification: Notification) {
         self.removeAllChildControllers(self.selectedTab)
-        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        if ScreenTracker.sharedInstance.screenPurpose != .HistoryScrren{
+            ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+        }
         historyDissmissed()
         self.historyImageView.becomeFirstResponder()
         self.view.becomeFirstResponder()

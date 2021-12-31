@@ -22,9 +22,12 @@ class CountryWiseLanguageListViewController: BaseViewController {
     var countryListItem: CountryListItemElement?
     var languageList = [LanguageItem]()
     private let window :UIWindow = UIApplication.shared.keyWindow!
+    var talkButtonImageView: UIImageView!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
+        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView.isHidden = true
         super.viewDidLoad()
         setupUI()
         configureCollectionView()
@@ -36,6 +39,10 @@ class CountryWiseLanguageListViewController: BaseViewController {
         PrintUtility.printLog(tag: TAG, text: "position \(String(describing: selectedItemPosition))")
         selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
         self.languageListCollectionView.scrollToItem(at: selectedIndexPath!, at: .centeredVertically, animated: true)
+    }
+    
+    deinit{
+        talkButtonImageView.isHidden = false
     }
     
     //MARK: - Initial setup
@@ -84,6 +91,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     
     //MARK: - IBActions
     @IBAction private func onOkButtonPressed(_ sender: Any) {
+        talkButtonImageView.isHidden = false
         removeFloatingBtn()
         if getSelectedItemPosition() == INVALID_SELECTION {
             PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
@@ -111,6 +119,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     @IBAction private func onBackButtonPressed(_ sender: Any) {
+        talkButtonImageView.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     
