@@ -101,7 +101,7 @@ class SpeechProcessingViewController: BaseViewController{
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.speechProcessingAnimationView.layer.zPosition = 104
+        self.speechProcessingAnimationView.layer.zPosition = 103
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
         setupTriangeAnimationView()
@@ -145,9 +145,12 @@ class SpeechProcessingViewController: BaseViewController{
         self.speechProcessingLeftImgView.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
             self?.talkButtonImageView = self?.window.viewWithTag(109) as? UIImageView ?? UIImageView()
-            self?.window.addSubview(self?.speechProcessingAnimationView ?? UIView())
-            self?.speechProcessingAnimationView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor).isActive = true
-            self?.speechProcessingAnimationView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -16).isActive = true
+            self?.window.addSubview(self?.speechProcessingLeftImgView ?? UIView())
+            self?.window.addSubview(self?.speechProcessingRightImgView ?? UIView())
+            self?.speechProcessingLeftImgView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor, constant: -25).isActive = true
+            self?.speechProcessingLeftImgView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -41).isActive = true
+            self?.speechProcessingRightImgView.centerXAnchor.constraint(equalTo: self!.window.centerXAnchor, constant: 25).isActive = true
+            self?.speechProcessingRightImgView.bottomAnchor.constraint(equalTo: (self?.window.viewWithTag(109) as! UIImageView).topAnchor, constant: -41).isActive = true
         }
         
     }

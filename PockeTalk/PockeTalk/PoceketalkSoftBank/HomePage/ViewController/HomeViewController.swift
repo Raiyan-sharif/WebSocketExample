@@ -205,7 +205,6 @@ class HomeViewController: BaseViewController {
         bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8).isActive = true
         bottomImageView.centerXAnchor.constraint(equalTo: self.bottomView.centerXAnchor).isActive = true
         bottomImageView.centerYAnchor.constraint(equalTo: self.bottomView.centerYAnchor).isActive = true
-        self.bottomImageView.isHidden = true
         self.pulseGrayWave.isHidden = true
         self.pulseLayer.isHidden = true
         self.midCircleViewOfPulse.isHidden = true

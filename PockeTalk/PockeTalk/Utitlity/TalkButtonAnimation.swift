@@ -12,6 +12,14 @@ class TalkButtonAnimation{
     static var isTalkBtnAnimationExist: Bool = false
     
     static func startTalkButtonAnimation(pulseGrayWave: UIView, pulseLayer: CAShapeLayer, midCircleViewOfPulse: UIView, bottomImageView: UIImageView){
+        DispatchQueue.main.async {
+            if (ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice || ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation){
+                bottomImageView.isHidden = true
+            }
+            else{
+                bottomImageView.isHidden = false
+            }
+        }
         let width = 100
         let window = UIApplication.shared.keyWindow ?? UIWindow()
         let imageView = window.viewWithTag(109) as! UIImageView
