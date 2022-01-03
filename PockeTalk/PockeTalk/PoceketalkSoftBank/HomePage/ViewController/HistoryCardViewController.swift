@@ -455,8 +455,8 @@ extension HistoryCardViewController : AlertReusableDelegate{
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){
+        self.spinnerView.isHidden = false
         if Reachability.isConnectedToNetwork() {
-            self.spinnerView.isHidden = false
             SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
@@ -471,7 +471,10 @@ extension HistoryCardViewController : AlertReusableDelegate{
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
             }
         }else{
-            GlobalMethod.showNoInternetAlert()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self?.spinnerView.isHidden = true
+                GlobalMethod.showNoInternetAlert()
+            }
         }
     }
 }

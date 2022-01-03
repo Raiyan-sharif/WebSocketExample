@@ -638,26 +638,28 @@ extension TtsAlertController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
+        spinnerView.isHidden = false
         if Reachability.isConnectedToNetwork() {
-            spinnerView.isHidden = false
             self.isReverse = true
-        socketManager.socketManagerDelegate = self
+            socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                let nativeText = chatItemModel?.chatItem!.textTranslated
-                let nativeLangName = chatItemModel?.chatItem!.textTranslatedLanguage
-                let targetLangName = chatItemModel?.chatItem!.textNativeLanguage!
 
-                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
-                self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                    let nativeText = chatItemModel?.chatItem!.textTranslated
+                    let nativeLangName = chatItemModel?.chatItem!.textTranslatedLanguage
+                    let targetLangName = chatItemModel?.chatItem!.textNativeLanguage!
+
+                    let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+                    self!.socketManager.sendTextData(text: textFrameData, completion: nil)
+                }
+            }else{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                    self?.spinnerView.isHidden = true
+                    GlobalMethod.showNoInternetAlert()
+                }
             }
-        }else{
-            GlobalMethod.showNoInternetAlert()
         }
-        
     }
-    
-}
 
 //MARK: - TTSResponsiveViewDelegate
 extension TtsAlertController : TTSResponsiveViewDelegate {

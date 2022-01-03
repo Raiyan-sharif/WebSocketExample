@@ -200,7 +200,7 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         case .reverse:
             //self.showToast(message: kReverseTranslationUnderDevelopment, seconds: toastDisplayTime)
             /// ToDo in next version
-             self.dismiss(animated: true, completion: nil)
+             self.dismiss(animated: false, completion: nil)
             self.reverseTranslation()
             break
         case .practice :

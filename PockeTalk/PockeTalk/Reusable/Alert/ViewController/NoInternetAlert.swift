@@ -38,7 +38,7 @@ class NoInternetAlert: BaseViewController {
     
     deinit{
         if(!flagTalkButton){
-            talkButtonImageView.isHidden = false
+            talkButtonImageView?.isHidden = false
             HomeViewController.dummyTalkBtnImgView.isHidden = true
         }
     }
@@ -119,6 +119,7 @@ extension NoInternetAlert: UITableViewDelegate, UITableViewDataSource {
         case 0:
             break
         case 1:
+            self.dismiss(animated: false, completion: nil)
             self.moveToSettings()
         case 2:
             self.dismiss(animated: false, completion: nil)
