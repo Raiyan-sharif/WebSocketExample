@@ -519,6 +519,7 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
         ttsVC.hideMenuButton = hideMenuButton
         ttsVC.hideBottomView = hideBottmSection
         ttsVC.view.tag = ttsAlertViewTag
+        ttsVC.ttsAlertControllerDelegate = ttsAlertControllerDelegate
         add(asChildViewController: ttsVC, containerView: self.view)
         
     }
