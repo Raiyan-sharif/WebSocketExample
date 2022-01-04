@@ -28,6 +28,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     var isCaptureButtonClickable = Bool()
     let window = UIApplication.shared.keyWindow!
     var talkButtonImageView: UIImageView!
+    var isLanguageViewPresent = false
     
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toLangLabel: MarqueeLabel!
@@ -59,6 +60,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let lineWidth : CGFloat = 2
     let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
+    var circleColor: UIColor = .white
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
@@ -89,7 +91,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         
         self.updateHomeContainer?(false)
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        
         add(asChildViewController: controller, containerView: view, animation: transition)
+        guard let activeCamera = activeCamera else {
+            return
+        }
+        controller.activeCamera = activeCamera
+        isLanguageViewPresent = true
+        turnOffCamera()
     }
     
     fileprivate func updateLanguageNames() {
@@ -109,6 +118,13 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     @objc func onCameraLanguageChanged(notification: Notification) {
         updateLanguageNames()
+        let flashStatus = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool
+        PrintUtility.printLog(tag: "flash status", text: "\(flashStatus)")
+        if let flashStatus = flashStatus, flashStatus {
+            turnOnCameraFlash()
+        }
+        isLanguageViewPresent = false
+        circleColor = .white
     }
     
     func registerNotification(){
@@ -168,8 +184,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     @objc func applicationDidBecomeActive() {
         guard let isCameraFlashOn: Bool = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool else {return}
-        PrintUtility.printLog(tag: "applicationDidBecomeActive", text: "\(isCameraFlashOn)")
-        if isCameraFlashOn == true {
+        if isCameraFlashOn == true && isLanguageViewPresent == false {
             turnOnCameraFlash()
         }
     }
@@ -483,7 +498,7 @@ extension CameraViewController {
                     device.focusPointOfInterest = focusPoint
                     
                     /// Pass the touch point of camera preview view as center point
-                    pointInCamera(centerPoint: focusCircleLocation)
+                    pointInCamera(centerPoint: focusCircleLocation, circleColor: circleColor)
                     device.focusMode = .autoFocus
                     device.exposurePointOfInterest = focusPoint
                     device.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
@@ -496,7 +511,7 @@ extension CameraViewController {
         }
     }
     
-    func pointInCamera(centerPoint:CGPoint){
+    func pointInCamera(centerPoint:CGPoint, circleColor: UIColor){
         ///Get the path based on the center point
         let circlePath = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: startAngle, endAngle:endAngle, clockwise: true)
         
@@ -504,7 +519,7 @@ extension CameraViewController {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.cgPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = circleColor.cgColor
         shapeLayer.lineWidth = lineWidth
         
         view.layer.addSublayer(shapeLayer)
@@ -569,6 +584,20 @@ extension CameraViewController {
                 }
             }
         }
+    }
+    
+    func turnOffCamera() {
+        do {
+            if let activeCamera = activeCamera {
+                _ = try activeCamera.lockForConfiguration()
+                activeCamera.torchMode = AVCaptureDevice.TorchMode.off
+                flashButton.setImage(UIImage(named: "flash"), for: .normal)
+                circleColor = .clear
+            }
+        } catch {
+            PrintUtility.printLog(tag: "error", text: "")
+        }
+
     }
     
     func showLowBatteryErrorAlert(message: String){

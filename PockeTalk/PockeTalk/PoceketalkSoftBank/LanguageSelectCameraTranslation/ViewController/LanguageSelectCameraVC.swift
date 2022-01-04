@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class LanguageSelectCameraVC: BaseViewController {
     @IBOutlet weak private var tabsView: UIView!
@@ -33,6 +34,7 @@ class LanguageSelectCameraVC: BaseViewController {
     var isFirstTimeLoad = true
     private var floatingMicrophoneButton: UIButton!
     var talkButtonImageView: UIImageView!
+    var activeCamera: AVCaptureDevice?
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -135,6 +137,7 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
+        CameraViewController().turnOnCameraFlash()
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
         let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
         PrintUtility.printLog(tag: TAG , text: " isnativeval \(String(describing: langSelectFor))")
@@ -154,6 +157,7 @@ class LanguageSelectCameraVC: BaseViewController {
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
         removeFloatingBtn()
+        
     }
     
     @objc func microphoneTapAction (sender:UIButton) {
