@@ -14,7 +14,7 @@ class TalkButtonAnimation{
     static func startTalkButtonAnimation(pulseGrayWave: UIView, pulseLayer: CAShapeLayer, midCircleViewOfPulse: UIView, bottomImageView: UIImageView){
         DispatchQueue.main.async {
             if (ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice || ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation){
-                bottomImageView.isHidden = true
+                bottomImageView.isHidden = false
             }
             else{
                 bottomImageView.isHidden = false
@@ -78,6 +78,5 @@ class TalkButtonAnimation{
         pulseGrayWave.isHidden = true
         pulseLayer.isHidden = true
         midCircleViewOfPulse.isHidden = true
-        bottomImageView.isHidden = true
     }
 }

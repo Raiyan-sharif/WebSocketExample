@@ -17,9 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pronunciation_bg" translatesAutoresizingMaskIntoConstraints="NO" id="ONa-3e-mnS">
-                                <rect key="frame" x="0.0" y="77" width="414" height="785"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WeU-RP-ahU">
                                 <rect key="frame" x="15" y="74" width="384" height="673"/>
                                 <subviews>
@@ -65,7 +62,7 @@
                                     <constraint firstItem="E8R-cQ-TEW" firstAttribute="top" secondItem="WeU-RP-ahU" secondAttribute="top" id="kUV-kD-Fn9"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZT-7B-fQF" userLabel="BottomView">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZT-7B-fQF" userLabel="BottomView">
                                 <rect key="frame" x="0.0" y="762" width="414" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press the button and pronunce it" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLc-eo-ed1">
@@ -101,13 +98,9 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="1an-G7-RJd"/>
-                            <constraint firstItem="ONa-3e-mnS" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="33" id="4PL-YI-8k2"/>
-                            <constraint firstItem="ONa-3e-mnS" firstAttribute="bottom" secondItem="CZT-7B-fQF" secondAttribute="bottom" id="4VV-ha-g8U"/>
                             <constraint firstItem="era-wu-Hn2" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="15" id="6YE-Hg-ET8"/>
                             <constraint firstItem="WeU-RP-ahU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="30" id="Cfq-es-tpa"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="CZT-7B-fQF" secondAttribute="bottom" id="Egx-2K-ds8"/>
-                            <constraint firstItem="ONa-3e-mnS" firstAttribute="leading" secondItem="CZT-7B-fQF" secondAttribute="leading" id="FdT-6B-bsX"/>
-                            <constraint firstItem="ONa-3e-mnS" firstAttribute="trailing" secondItem="CZT-7B-fQF" secondAttribute="trailing" id="I8I-m8-TzS"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="top" secondItem="WeU-RP-ahU" secondAttribute="bottom" constant="15" id="IqR-6a-n0g"/>
                             <constraint firstItem="CZT-7B-fQF" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="JWI-5i-fHG"/>
                             <constraint firstItem="era-wu-Hn2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WAE-uF-39H"/>
@@ -117,6 +110,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomViewBottomLayoutConstrain" destination="Egx-2K-ds8" id="NFl-Qu-n7L"/>
                         <outlet property="btnBack" destination="era-wu-Hn2" id="1Jk-HF-Prz"/>
                         <outlet property="labelOriginalText" destination="kEq-cG-2Rz" id="utR-lB-7dm"/>
                         <outlet property="labelPronunciationGuideline" destination="cLc-eo-ed1" id="iOL-E0-Eb7"/>
@@ -367,6 +361,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomViewBottomLayoutConstrain" destination="8FC-jv-7Dd" id="Ss6-F2-dV8"/>
                         <outlet property="labelFailedOriginalText" destination="hfV-Az-9Fe" id="SWs-fx-Tuu"/>
                         <outlet property="labelFailedPronuncedText" destination="18d-2h-jC5" id="g7F-SL-yfd"/>
                         <outlet property="labelSuccessText" destination="eQT-5s-zyp" id="nGZ-nD-PZh"/>
@@ -385,7 +380,6 @@
         <image name="btn_back" width="90" height="90"/>
         <image name="btn_speed" width="90" height="90"/>
         <image name="mark_ok" width="212" height="146"/>
-        <image name="pronunciation_bg" width="480" height="800"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

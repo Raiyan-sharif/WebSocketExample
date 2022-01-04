@@ -16,7 +16,8 @@ class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var labelFailedPronuncedText: UILabel!
     @IBOutlet weak var viewSuccessContainer: UIView!
     @IBOutlet weak var labelSuccessText: UILabel!
-    @IBOutlet weak var bottomTalkView: UIView!
+    @IBOutlet weak private var bottomViewBottomLayoutConstrain: NSLayoutConstraint!
+    
     let width : CGFloat = 100
     var practiceText : String = ""
     var orginalText : String = ""
@@ -60,13 +61,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
                 }
             }
         } else {
-            //self.remove(asChildViewController: self)
             self.delegate?.dismissResultHome()
-//            if(self.navigationController != nil){
-//                self.navigationController?.popViewController(animated: true)
-//            }else{
-//                self.dismiss(animated: true, completion: nil)
-//            }
         }
     }
 
@@ -91,7 +86,9 @@ class PronunciationPracticeResultViewController: BaseViewController {
             guard let `self` = self else { return }
             let pronumtiationValue = PronuntiationValue(practiceText:"" , orginalText: self.orginalText, languageCcode:self.languageCode)
             NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":pronumtiationValue])
+            
         }
+        bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -113,19 +110,11 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
 
     @objc func updatePronuntiationPacticeResult(notification: Notification) {
-//        if let value = notification.userInfo!["value"] as? PronuntiationValue{
-//            self.orginalText = value.orginalText
-//            self.practiceText = value.practiceText
-//            self.languageCode = value.languageCcode
-//            showResultView()
-//        }
         stopTTS()
         remove(asChildViewController: self)
     }
 
-    // Initial UI set up
-    func setUpUI () {
-        self.setUpMicroPhoneIcon()
+    func setUpUI() {
         self.viewContainer.layer.cornerRadius = 20
         self.viewContainer.layer.masksToBounds = true
 
@@ -140,19 +129,13 @@ class PronunciationPracticeResultViewController: BaseViewController {
         labelSuccessText.addGestureRecognizer(tapForTTSSuccess)
 
     }
-    /// Retreive tts value from respective language code
+    
     func getTtsValue () {
         let item = LanguageEngineParser.shared.getTtsValue(langCode: languageCode)
         self.voice = item.voice
         self.rate = item.rate
     }
-
-    // floating microphone button
-    func setUpMicroPhoneIcon () {
-//        let talkButton = GlobalMethod.setUpMicroPhoneIcon(view: self.bottomTalkView, width: width, height: width)
-//        talkButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
-    }
-
+    
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
@@ -163,7 +146,6 @@ class PronunciationPracticeResultViewController: BaseViewController {
                     dict["vc"] = "PronunciationPracticeResultViewController"
                     dict["text"] = self.orginalText
                     dict["langCode"] = self.languageCode
-                   // NotificationCenter.default.post(name: SpeechProcessingViewController.didPressMicroBtn, object: nil, userInfo: dict)
                     if(self.navigationController != nil){
                         self.navigationController?.popViewController(animated: true)
                     }else{
@@ -212,9 +194,6 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
-//        if(!isSpeaking){
-//            playTTS()
-//        }
         checkTTSValueAndPlay()
     }
 

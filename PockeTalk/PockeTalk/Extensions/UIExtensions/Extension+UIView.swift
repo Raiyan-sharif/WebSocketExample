@@ -40,4 +40,26 @@ extension UIView {
         }
         return nil
     }
+    
+    func bottomImageView(usingState: BottomImageViewState){
+        let imageView = UIImageView()
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = CGRect(
+            x: self.frame.minX - 5,
+            y: self.frame.maxY - HomeViewController.homeVCBottomViewHeight,
+            width: self.frame.width + 10,
+            height: HomeViewController.homeVCBottomViewHeight + 5
+        )
+        
+        switch usingState {
+            case .gradient:
+                imageView.image = UIImage(named: "bottomBackgroudImage")
+            case .black:
+                imageView.image = UIImage(named: "blackView")
+            case .hidden:
+                imageView.image = UIImage()
+        }
+        self.addSubview(imageView)
+        
+    }
 }

@@ -44,6 +44,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var placeholderContainerView: UIView!
     @IBOutlet weak private var ttsResultTV: UITableView!
+    @IBOutlet weak private var bottomViewBottomLayoutConstrain: NSLayoutConstraint!
+    
     
     var ttsVM : TtsAlertViewModel!
     var chatEntity : ChatEntity?
@@ -246,6 +248,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         }
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         addSpinner()
+        
+        bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
     }
     
     private func addSpinner(){
@@ -574,13 +578,12 @@ extension TtsAlertController : RetranslationDelegate {
             self.isReverse = false
         socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
+            ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                let nativeText = self?.chatItemModel?.chatItem!.textNative
-                let nativeLangName = self?.chatItemModel?.chatItem!.textNativeLanguage!
-                
-                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: selectedLanguage)
+                guard let nativeText = self?.chatItemModel?.chatItem!.textNative, let nativeLangName = self?.chatItemModel?.chatItem!.textNativeLanguage else{ return}
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 self?.socketManager.sendTextData(text: textFrameData, completion: nil)
-                ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
+                
             }
         }else {
             GlobalMethod.showNoInternetAlert()
@@ -644,19 +647,20 @@ extension TtsAlertController : AlertReusableDelegate {
             SocketManager.sharedInstance.connect()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                    let nativeText = chatItemModel?.chatItem!.textTranslated
-                    let nativeLangName = chatItemModel?.chatItem!.textTranslatedLanguage
-                    let targetLangName = chatItemModel?.chatItem!.textNativeLanguage!
-
-                    let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
-                    self!.socketManager.sendTextData(text: textFrameData, completion: nil)
-                }
-            }else{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                    self?.spinnerView.isHidden = true
-                    GlobalMethod.showNoInternetAlert()
-                }
+                guard let `self` = self else {return}
+                let nativeText = chatItemModel?.chatItem!.textTranslated
+                let nativeLangName = chatItemModel?.chatItem!.textTranslatedLanguage
+                let targetLangName = chatItemModel?.chatItem!.textNativeLanguage!
+                
+                let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
+                self.socketManager.sendTextData(text: textFrameData, completion: nil)
             }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self?.spinnerView.isHidden = true
+                GlobalMethod.showNoInternetAlert()
+            }
+        }
         }
     }
 

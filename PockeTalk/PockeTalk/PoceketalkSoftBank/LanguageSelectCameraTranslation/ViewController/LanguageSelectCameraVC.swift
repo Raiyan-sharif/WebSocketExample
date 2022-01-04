@@ -29,7 +29,6 @@ class LanguageSelectCameraVC: BaseViewController {
     let speechButtonWidth : CGFloat = 100
     let trailing : CGFloat = -20
     let toastVisibleTime : Double = 2.0
-    var updateHomeContainer:(()->())?
     let window :UIWindow = UIApplication.shared.keyWindow!
     var isFirstTimeLoad = true
     private var floatingMicrophoneButton: UIButton!
@@ -49,6 +48,7 @@ class LanguageSelectCameraVC: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) { [weak self] in
             self?.setUpMicroPhoneIcon()
         }
+        self.view.bottomImageView(usingState: .gradient)
     }
     
     deinit {
@@ -153,7 +153,6 @@ class LanguageSelectCameraVC: BaseViewController {
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
         CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
-        self.updateHomeContainer?()
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
         removeFloatingBtn()

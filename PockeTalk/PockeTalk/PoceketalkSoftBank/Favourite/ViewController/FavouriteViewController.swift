@@ -24,7 +24,6 @@ class FavouriteViewController: BaseViewController {
 
     var itemsToShowOnContextMenu : [AlertItems] = []
     var selectedChatItemModel : HistoryChatItemModel?
-    //var deletedCellHeight = CGFloat()
     weak var speechProDismissDelegateFromFav : SpeechProcessingDismissDelegate?
     var isReverse = false
     private var socketManager = SocketManager.sharedInstance
@@ -63,6 +62,7 @@ class FavouriteViewController: BaseViewController {
         favouriteViewModel = FavouriteViewModel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             self.showCollectionView()
+            self.view.bottomImageView(usingState: .gradient)
         }
         populateData()
         self.speechProcessingVM = SpeechProcessingViewModel()

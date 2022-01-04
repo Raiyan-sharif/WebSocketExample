@@ -41,7 +41,8 @@ class CountryWiseLanguageListViewController: BaseViewController {
         self.languageListCollectionView.scrollToItem(at: selectedIndexPath!, at: .centeredVertically, animated: true)
     }
     
-    deinit{
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         talkButtonImageView.isHidden = false
     }
     
@@ -91,7 +92,6 @@ class CountryWiseLanguageListViewController: BaseViewController {
     
     //MARK: - IBActions
     @IBAction private func onOkButtonPressed(_ sender: Any) {
-        talkButtonImageView.isHidden = false
         removeFloatingBtn()
         if getSelectedItemPosition() == INVALID_SELECTION {
             PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
@@ -119,7 +119,6 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     @IBAction private func onBackButtonPressed(_ sender: Any) {
-        talkButtonImageView.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     

@@ -59,6 +59,7 @@ class CountryListViewController: BaseViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.clickOnEnglishButton(_:)))
         self.viewEnglishName.addGestureRecognizer(gesture)
+        self.view.bottomImageView(usingState: .gradient)
     }
     
     private func configureCollectionView() {

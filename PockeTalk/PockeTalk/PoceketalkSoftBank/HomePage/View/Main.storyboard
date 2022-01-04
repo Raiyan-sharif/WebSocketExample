@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y8L-Ms-o17">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -182,25 +182,11 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4we-IE-5Qe">
                                 <rect key="frame" x="0.0" y="552" width="414" height="184"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomBackgroudImage" translatesAutoresizingMaskIntoConstraints="NO" id="k7E-wK-34G">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
-                                <constraints>
-                                    <constraint firstItem="k7E-wK-34G" firstAttribute="top" secondItem="4we-IE-5Qe" secondAttribute="top" id="0x6-ET-VeE"/>
-                                    <constraint firstAttribute="bottom" secondItem="k7E-wK-34G" secondAttribute="bottom" id="RT4-Ty-uY2"/>
-                                    <constraint firstItem="k7E-wK-34G" firstAttribute="leading" secondItem="4we-IE-5Qe" secondAttribute="leading" id="cNJ-We-byR"/>
-                                    <constraint firstAttribute="trailing" secondItem="k7E-wK-34G" secondAttribute="trailing" id="fnN-ra-BIV"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eoC-NK-acp"/>
@@ -237,7 +223,6 @@
                         <outlet property="bottomCircleleImgView" destination="r9m-bG-pm2" id="cGD-cF-e6F"/>
                         <outlet property="bottomClickView" destination="oPf-o2-SXI" id="cmY-As-hmE"/>
                         <outlet property="bottomFlipImageView" destination="tFF-5Y-gz5" id="n0C-3O-fz8"/>
-                        <outlet property="bottomImageViewOfAnimation" destination="k7E-wK-34G" id="GQ8-Op-7G5"/>
                         <outlet property="bottomLangNativeName" destination="Kdr-me-0xI" id="JvV-um-PTK"/>
                         <outlet property="bottomLangSysLangName" destination="0To-dN-20N" id="k8Q-BB-bMU"/>
                         <outlet property="bottomView" destination="4we-IE-5Qe" id="3Nc-LV-0jS"/>
@@ -340,6 +325,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomTalkView" destination="UHN-YM-8ce" id="6Gs-5p-why"/>
+                        <outlet property="bottomViewBottomLayoutConstrain" destination="AmN-Ku-gp4" id="Gqh-vq-DiM"/>
                         <outlet property="containerView" destination="2eN-ke-mdU" id="RPC-22-5o4"/>
                         <outlet property="crossButton" destination="1gE-4T-4yt" id="Z1s-q2-SGx"/>
                         <outlet property="infoLabel" destination="yCI-Ga-E7w" id="zO5-5Y-Kfa"/>
@@ -684,6 +670,7 @@
                         <outlet property="backButton" destination="Q1b-U2-IaS" id="AVf-gy-AXt"/>
                         <outlet property="backgroundImageView" destination="2Ri-F7-gAp" id="Xq8-pg-HFB"/>
                         <outlet property="bottomView" destination="mlc-TZ-GgA" id="6nE-xK-Wgw"/>
+                        <outlet property="bottomViewBottomLayoutConstrain" destination="fX4-87-D52" id="NFG-YG-vyV"/>
                         <outlet property="changeTranslationButton" destination="its-cr-Uvr" id="Zx5-PE-cxb"/>
                         <outlet property="containerView" destination="s4c-gQ-DAh" id="6eZ-96-1SS"/>
                         <outlet property="containerViewBottomConstraint" destination="qTP-ly-JXg" id="kZP-w4-hFj"/>
@@ -746,7 +733,6 @@
         <image name="arrow_back_icon" width="50" height="50"/>
         <image name="arrow_circular_up" width="168" height="168"/>
         <image name="back_texture_white" width="480" height="640"/>
-        <image name="bottomBackgroudImage" width="724" height="340"/>
         <image name="btn_back_tempo" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
         <image name="demo_mode_reboot_cancel_button" width="90" height="90"/>

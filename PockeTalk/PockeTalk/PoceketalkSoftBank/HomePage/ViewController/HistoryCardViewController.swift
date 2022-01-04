@@ -42,6 +42,14 @@ class HistoryCardViewController: BaseViewController {
         return collectionView
     }()
     
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.isUserInteractionEnabled = false
+        imageView.image = UIImage(named: "bottomBackgroudImage")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private lazy var backBtn:UIButton = {
         guard let window = UIApplication.shared.keyWindow else {return UIButton()}
         let topPadding = window.safeAreaInsets.top
@@ -59,7 +67,7 @@ class HistoryCardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpCollectionView()
+        setUpUIView()
         historyViewModel = HistoryViewModel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
             self?.showCollectionView()
@@ -75,7 +83,7 @@ class HistoryCardViewController: BaseViewController {
     }
     
     //MARK:- Initial setup
-    private func setUpCollectionView(){
+    private func setUpUIView(){
         self.view.addSubview(collectionView)
         addSpinner()
         
@@ -89,6 +97,12 @@ class HistoryCardViewController: BaseViewController {
         topConstraintOfCV.isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         self.view.addSubview(backBtn)
+        self.view.addSubview(imageView)
+
+        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 5).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: HomeViewController.homeVCBottomViewHeight + 5).isActive = true
     }
     
     private func addSpinner(){

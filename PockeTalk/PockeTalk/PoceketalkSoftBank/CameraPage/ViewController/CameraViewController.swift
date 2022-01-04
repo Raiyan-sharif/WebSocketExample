@@ -64,32 +64,25 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
-    var updateHomeContainer:((_ isfullScreen:Bool)->())?
+    var updateHomeContainer:((_ isTalkButtonVisible:Bool)->())?
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
-        HomeViewController.bottomViewRef.backgroundColor = .clear
+        self.updateHomeContainer?(false)
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
-        talkButtonImageView.isHidden = false
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
-        HomeViewController.bottomViewRef.backgroundColor = .clear
+        self.updateHomeContainer?(false)
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
-        talkButtonImageView.isHidden = false
     }
     
     func openCameraLanguageListScreen(){
         let storyboard = UIStoryboard(name: KStoryBoardCamera, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KiDLangSelectCamera)as! LanguageSelectCameraVC
-        controller.updateHomeContainer = { [weak self] in
-            self?.updateHomeContainer?(true)
-        }
-        
-        self.updateHomeContainer?(false)
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         
         add(asChildViewController: controller, containerView: view, animation: transition)
@@ -99,6 +92,10 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         controller.activeCamera = activeCamera
         isLanguageViewPresent = true
         turnOffCamera()
+        DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime) {
+            [weak self] in
+            self?.talkButtonImageView.isHidden = false
+        }
     }
     
     fileprivate func updateLanguageNames() {
@@ -257,7 +254,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+//        HomeViewController.setBlackGradientImageToBottomView(usingState: .hidden)
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
@@ -431,15 +428,9 @@ extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
         self.updateHomeContainer?(false)
-        HomeViewController.homeContainerViewBottomConstraint.constant = 0
         HomeViewController.isCameraButtonClickable = true
         talkButtonImageView.isHidden = false
         NotificationCenter.default.post(name: .containerViewSelection, object: nil)
-        //        if(self.navigationController == nil){
-        //            self.dismiss(animated: true, completion: nil)
-        //        }else{
-        //            self.navigationController?.popViewController(animated: true)
-        //        }
     }
     
     var croppingParameters: CropUtils {

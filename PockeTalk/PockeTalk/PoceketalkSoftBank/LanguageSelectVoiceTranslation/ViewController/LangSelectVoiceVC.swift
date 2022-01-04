@@ -62,6 +62,7 @@ class LangSelectVoiceVC: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) { [weak self] in
             self?.setUpMicroPhoneIcon()
         }
+        self.view.bottomImageView(usingState: .gradient)
     }
     
     override func viewWillAppear(_ animated: Bool) {

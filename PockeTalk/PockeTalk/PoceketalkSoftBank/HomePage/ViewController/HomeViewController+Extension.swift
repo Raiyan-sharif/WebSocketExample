@@ -14,10 +14,10 @@ extension HomeViewController{
     
     func setUPLongPressGesture(){
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
-        longPress.minimumPressDuration = 0.1
+        longPress.minimumPressDuration = 0.5
         talkBtnImgView.addGestureRecognizer(longPress)
         bottmViewGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(gesture:)))
-        bottmViewGesture.minimumPressDuration = 0.1
+        bottmViewGesture.minimumPressDuration = 0.5
         bottomView.addGestureRecognizer(bottmViewGesture)
     }
     func hideORShowlTalkButton(isEnable:Bool){
@@ -27,7 +27,8 @@ extension HomeViewController{
     }
     func enableORDisableMicrophoneButton(isEnable:Bool){
         if let imgView = self.bottomView.viewWithTag(109) as? UIImageView{
-            
+            imgView.isUserInteractionEnabled = isEnable
+            bottomView.isUserInteractionEnabled = isEnable
         }
     }
     
@@ -57,8 +58,9 @@ extension HomeViewController{
     
     func hideSpeechView(){
         self.speechContainerView.isHidden = true
+        TalkButtonAnimation.stopAnimation(bottomView: bottomView, pulseGrayWave: pulseGrayWave, pulseLayer: pulseLayer, midCircleViewOfPulse: midCircleViewOfPulse, bottomImageView: bottomImageView)
+        bottomImageView.isHidden = true
         homeGestureEnableOrDiable()
-        HomeViewController.bottomImageViewOfAnimationRef.image = UIImage(named: "bottomBackgroudImage")
     }
     
     @objc func animationDidEnterBackground(notification: Notification) {
@@ -78,6 +80,7 @@ extension HomeViewController{
     
     private func openSpeechView(){
         if self.isFromPronuntiationPractice() != true{
+            bottomImageViewHeight.constant = view.frame.height * 0.8
             UIView.animate(withDuration: fadeAnimationDuration, delay: fadeAnimationDelay, options: .curveEaseOut) {
                 if self.isFromlanguageSelection() == false {
                     self.historyCardVC.view.alpha = self.fadeOutAlpha
@@ -91,7 +94,7 @@ extension HomeViewController{
                 self.speechContainerView.isHidden = false
             }
         } else {
-            
+            bottomImageViewHeight.constant = view.frame.height * 0.5
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.speechContainerView.isHidden = false
@@ -140,6 +143,7 @@ extension HomeViewController{
                 let imageView = self.window.viewWithTag(109) as! UIImageView
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
+//                        self.setBlackGradientImageToBottomView(usingState: .black)
                         SocketManager.sharedInstance.connect()
                         SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                         
@@ -164,7 +168,6 @@ extension HomeViewController{
                         
                         SpeechProcessingViewModel.isLoading = false;
                         self.homeVCDelegate?.startRecord()
-                        self.bottomImageViewOfAnimation.image = UIImage(named: "blackView")
                         
                         TalkButtonAnimation.isTalkBtnAnimationExist = true
                         TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
@@ -415,6 +418,12 @@ extension HomeViewController: HistoryCardViewControllerDelegate {
         historyDissmissed()
         animateTransitionIfNeeded(state: .collapsed, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
     }
+}
+
+enum BottomImageViewState{
+    case gradient
+    case black
+    case hidden
 }
 
 

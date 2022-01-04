@@ -38,6 +38,10 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
     }

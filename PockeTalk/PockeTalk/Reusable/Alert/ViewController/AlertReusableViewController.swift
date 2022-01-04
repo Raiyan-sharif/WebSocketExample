@@ -53,9 +53,13 @@ class AlertReusableViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if(!flagTalkButton){
-            talkButtonImageView.isHidden = false
-            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        if #available(iOS 13.0, *) {
+            if(!flagTalkButton){
+                talkButtonImageView.isHidden = false
+                HomeViewController.dummyTalkBtnImgView.isHidden = true
+            }
+        } else {
+            PrintUtility.printLog(tag: "AlertReusableViewController", text: "Fall into previous version than iOS 13")
         }
     }
 

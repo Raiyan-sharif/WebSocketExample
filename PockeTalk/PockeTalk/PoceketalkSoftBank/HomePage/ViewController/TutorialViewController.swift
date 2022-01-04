@@ -21,6 +21,7 @@ class TutorialViewController: BaseViewController {
     @IBOutlet weak private var containerView: UIView!
     @IBOutlet weak private var bottomTalkView: UIView!
     @IBOutlet weak private var tutorialContainerView: UIView!
+    @IBOutlet weak var bottomViewBottomLayoutConstrain: NSLayoutConstraint!
     
     ///Properties
     private let TAG = "\(TutorialViewController.self)"
@@ -67,6 +68,7 @@ class TutorialViewController: BaseViewController {
 
     //MARK: - Initial Setup
     private func setUpUI () {
+        bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
         self.containerView.layer.masksToBounds = true
         self.containerView.layer.cornerRadius = cornerRadius
 
