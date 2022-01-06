@@ -106,11 +106,6 @@ class HistoryCardViewController: BaseViewController {
     private func showCollectionView(){
         isCollectionViewVisible = true
         collectionView.scrollToItem(at: IndexPath(item: historyViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
-        
-        let diff = collectionView.frame.height - collectionView.contentSize.height
-        if diff > 0 {
-            collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
-        }
         PrintUtility.printLog(tag: "contentSize.height", text: "\(collectionView.contentSize.height)")
     }
     
@@ -121,21 +116,9 @@ class HistoryCardViewController: BaseViewController {
     //MARK: - Load Data
     private func bindData(){
         historyViewModel.items.bindAndFire { [weak self] items in
-            if items.count == 0{
-                DispatchQueue.main.async {
-                    self?.dismissHistory(shouldUpdateViewAlpha: false)
-                }
-            }
             if items.count > 0{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    guard let `self` = self else { return }
-                    
-                    let collectionViewHeight = self.collectionView.frame.height
-                    
-                    let diff = CGFloat(collectionViewHeight) - CGFloat(self.collectionView.contentSize.height - self.deletedCellHeight)
-                    if diff > 0 {
-                        self.collectionView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
-                    }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                    self?.collectionView.reloadData()
                 }
             }
         }
@@ -314,14 +297,28 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             self.historyViewModel.deleteHistory(indexpath.item)
             self.deletedCellHeight = cell.frame.height
             PrintUtility.printLog(tag: "cell Height", text: "\(self.deletedCellHeight)")
-            self.collectionView.performBatchUpdates{
-                self.collectionView.deleteItems(at: [indexpath])
-                if(self.historyViewModel.items.value.count == indexpath.row){
-                    self.collectionView.reloadItems(at: [IndexPath(item: self.historyViewModel.items.value.count - 1, section: 0)])
-                }
+            
+            self.collectionView.performBatchUpdates { [weak self]  in
+                guard let `self`  = self else {return}
                 
+                self.collectionView.deleteItems(at: [indexpath])
+                let itemCount = self.historyViewModel.items.value.count
+                if itemCount > 0{
+                    if(itemCount == indexpath.row){
+                        self.collectionView.reloadItems(at: [IndexPath(item: itemCount - 1, section: 0)])
+                    }
+                }else{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self]  in
+                        guard let `self` = self else { return }
+                        self.dismissHistory(shouldUpdateViewAlpha: false)
+                    }
+                }
             }
+        completion: { [weak self] _ in
+            self?.historylayout.deletedCellHeight = 0
         }
+        }
+        
         
         cell.favouriteItem = { [weak self] point in
             guard let `self`  = self else {
@@ -413,7 +410,13 @@ extension HistoryCardViewController : AlertReusableDelegate{
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
         self.collectionView.performBatchUpdates{
-            self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
+            let itemCount = self.collectionView.numberOfItems(inSection: 0)
+            if(itemCount > 0){
+                self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
+                if(itemCount  == 1){
+                  self.dismissHistory(shouldUpdateViewAlpha: false)
+                }
+            }
         }
     }
     
@@ -492,11 +495,16 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
     }
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {
-        self.historyViewModel.removeItem(chatItemModel.idxPath!.item)
+        self.historyViewModel.deleteHistory(chatItemModel.idxPath!.item)
         self.collectionView.performBatchUpdates{
-            self.collectionView.deleteItems(at: [chatItemModel.idxPath!])
+            let itemCount = self.collectionView.numberOfItems(inSection: 0)
+            if(itemCount > 0){
+                self.collectionView.deleteItems(at: [chatItemModel.idxPath!])
+                if(itemCount  == 1){
+                  self.dismissHistory(shouldUpdateViewAlpha: false)
+                }
+            }
         }
-        
     }
     
     func updatedFavourite(_ chatItemModel: HistoryChatItemModel) {

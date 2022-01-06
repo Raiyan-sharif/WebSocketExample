@@ -596,9 +596,8 @@ extension TtsAlertController : AlertReusableDelegate {
     }
 
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
-        self.dismissPopUp()
-        ttsVM.deleteChatItemFromHistory(chatItem: chatItemModel!.chatItem!)
         ttsAlertControllerDelegate?.itemDeleted(chatItemModel!)
+        self.dismissPopUp()
     }
     
     func updateFavourite(chatItemModel: HistoryChatItemModel) {

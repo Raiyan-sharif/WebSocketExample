@@ -15,6 +15,7 @@ class HistoryLayout: UICollectionViewLayout {
     var initialAttributes = Array<UICollectionViewLayoutAttributes>()
     var contentSize: CGSize = .zero
     weak var delegate: HistoryLayoutDelegate!
+    var deletedCellHeight:CGFloat = 0
 
     override func prepare() {
         super.prepare()
@@ -48,8 +49,18 @@ class HistoryLayout: UICollectionViewLayout {
             let newHeight = (lastItemAttributes?.frame.origin.y)! + (lastItemAttributes?.frame.size.height)!
             let newWidth = (self.collectionView?.frame.size.width)!
             self.contentSize = CGSize(width: newWidth, height: newHeight)
+            updateContentInset()
         }
 
+    }
+    
+    func updateContentInset() {
+        var contentInsetTop = collectionView!.bounds.size.height
+        contentInsetTop -= contentSize.height - deletedCellHeight
+        if contentInsetTop <= 0 {
+            contentInsetTop = 0
+        }
+        collectionView!.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
     }
 
     override var collectionViewContentSize: CGSize {
@@ -69,8 +80,7 @@ class HistoryLayout: UICollectionViewLayout {
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-
-        return self.attributes[indexPath.item]
+           return self.attributes[indexPath.item]
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
