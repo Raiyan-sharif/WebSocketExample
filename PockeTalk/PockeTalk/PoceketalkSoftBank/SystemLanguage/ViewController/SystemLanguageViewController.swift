@@ -14,6 +14,8 @@ class SystemLanguageViewController: BaseViewController {
     ///languageList for all languages
     var languageList = [SystemLanguages]()
     var currentSelectedLanguage = String()
+    
+    var mIndexPath = IndexPath()
 
     /// load viewLanguages.ja.rawValue
     override func loadView() {
@@ -53,6 +55,7 @@ class SystemLanguageViewController: BaseViewController {
         //Set the UI
         setUpUI()
         currentSelectedLanguage = LanguageManager.shared.currentLanguage.rawValue
+        selectedLanguage = currentSelectedLanguage
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
 
@@ -70,6 +73,12 @@ class SystemLanguageViewController: BaseViewController {
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
         if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
+            let languageItem = languageList[mIndexPath.row]
+            LanguageManager.shared.setLanguage(language: Languages(rawValue: languageItem.lanType) ?? .en)
+            UserDefaultsProperty<Bool>(KFirstInitialized).value = true
+            UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
+            LanguageSelectionManager.shared.loadLanguageListData()
+            LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
             let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
             NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
         }
@@ -157,7 +166,7 @@ extension SystemLanguageViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let languageItem = languageList[indexPath.row]
-        let currentLangType = LanguageManager.shared.currentLanguage.rawValue
+        let currentLangType = selectedLanguage
 
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: SystemLanguageCell.self)
         cell.selectionStyle = .none
@@ -178,15 +187,13 @@ extension SystemLanguageViewController:UITableViewDataSource{
 extension SystemLanguageViewController:UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mIndexPath = indexPath
         let languageItem = languageList[indexPath.row]
         if UserDefaultsProperty<String>(KSelectedLanguage).value == nil{
             //self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
         }
-        UserDefaultsProperty<Bool>(KFirstInitialized).value = true
-        UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
-        LanguageManager.shared.setLanguage(language: Languages(rawValue: languageItem.lanType) ?? .en)
-        LanguageSelectionManager.shared.loadLanguageListData()
-        LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
+        
+        
         //self.title = "Language".localiz()
         selectedLanguage = languageItem.lanType
         self.tableView.reloadData()
