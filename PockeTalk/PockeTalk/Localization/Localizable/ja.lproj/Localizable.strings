@@ -80,3 +80,28 @@
 "kCameraUsageMessage" = "PockeTalkはカメラを使用するための許可が必要です";
 "kTitleOk" = "わかっ";
 "kNotAllow" = "許可しない";
+"kNextButtonTitle" = "次へ";
+//TermsAndConditionsVC
+"kTermsAndConditionsVCTitle" = "販売台数世界一の AI翻訳機ポケトーク のアプリ版です";
+"kTermsAndConditionsVCBulletPointOneTitle" = "瞬間音声翻訳";
+"kTermsAndConditionsVCBulletPointTwoTitle" = "〇〇言語対応";
+"kTermsAndConditionsVCCheckTermsButtonTitle" = "利用規約を確認する";
+"kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "規約に同意して はじめる";
+//InitialPermissionSettingsVC
+"kInitialPermissionSettingsVCTitle" = "音声入力やカメラ翻訳、通知のため 次の機能を許可して 下さい";
+"kInitialPermissionSettingsVCMicrophoneLabel" = "マイク";
+"kInitialPermissionSettingsVCCameraLabel" = "カメラ";
+"kInitialPermissionSettingsVCNotificationLabel" = "通知";
+//PaidPlanViewController
+"kPaidPlanVCTitleLabel" = "ポケトークアプリの 利用には有料プランが 必要です";
+"kPaidPlanVCBulletPointOneLabel" = "週間以内の解約で料金は発生しません";
+"kPaidPlanVCBulletPointTwoLabel" = "無料期間最終日の翌日より上記料金が継続的に課金されます。";
+"kPaidPlanVCPurchaseButtonTitle" = "一週間無料で 利用開始";
+"kPaidPlanVCRestorePurchaseHistoryButton" = "購入履歴を復元する";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを 選択してください";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490円/月1週間の無料利用";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000円/年 1週間の無料利用";
+//WelcomeViewController
+"kWelcomeVCTitleLabelTop" = "ようこそ";
+"kWelcomeVCTitleLabelBottom" = "ポケトークへ";
+"kWelcomeVCStartUsingButtonTitle" = "利用開始";

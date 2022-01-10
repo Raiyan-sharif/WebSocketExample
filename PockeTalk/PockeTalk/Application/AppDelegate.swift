@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if shouldSetAppWindow{
-            setupWindow()
+            setUpWelcomeViewController ()
         }
         
         if  UserDefaultsProperty<String>(KFontSelection).value == nil{
@@ -42,13 +42,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.generateAccessKey()
     }
     
-    private func setupWindow(){
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        let navigationController = UINavigationController.init(rootViewController: viewController)
-        self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
+    private func setUpWelcomeViewController() {
+        if UserDefaultsProperty<Bool>(kUserDefaultIsUserPurchasedThePlan).value == true {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let navigationController = UINavigationController.init(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        } else {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "TermsAndConditionsViewController") as! TermsAndConditionsViewController
+            let navigationController = UINavigationController.init(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }
     }
 
     func setUpAppFirstLaunch(isUpdateArrow: Bool){

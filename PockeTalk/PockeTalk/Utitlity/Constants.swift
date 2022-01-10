@@ -34,6 +34,7 @@ let speechViewTransitionTime = 0.15
 let SUPPORT_URL = "https://www.sourcenext.com/" // TODO: Need to change
 let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
 let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
+let TERMS_AND_CONDITIONS_URL = "https://www.sourcenext.com/" // TODO: Need to change
 
 
 //MARK: - Notification Name
@@ -53,7 +54,7 @@ let kLastSavedChatID = "lastSavedChatID"
 let kUserDefaultDatabaseOldVersion = "databaseOldVersion"
 let kTempoControlSpeed = "kTempoControlSpeed"
 let kUserDefaultIsSpeechProcessingDisplayedFirstTime = "kUserDefaultIsSpeechProcessingDisplayedFirstTime"
-
+let kUserDefaultIsUserPurchasedThePlan = "kUserDefaultIsUserPurchasedThePlan"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
