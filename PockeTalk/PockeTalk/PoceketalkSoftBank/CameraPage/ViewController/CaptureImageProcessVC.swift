@@ -44,6 +44,7 @@ class CaptureImageProcessVC: BaseViewController {
     var targetText: String = ""
     var playNative = true
     var isClickable = true
+    var isLoading = Bool()
     
     lazy var modeSwitchButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -96,8 +97,8 @@ class CaptureImageProcessVC: BaseViewController {
         super.viewDidLoad()
         socketManager.connect()
         UserDefaults.standard.set(false, forKey: "modeSwitchState")
-        UserDefaults.standard.set(false, forKey: "isTransLateSuccessful")
-
+        UserDefaults.standard.set(false, forKey: isTransLationSuccessful)
+        
         PrintUtility.printLog(tag: TAG, text: "screen maxCropFrameHeight: \(Int(maxCropFrameHeight)), \(Int(maxCropFrameWidth))")
         callObserver.setDelegate(self, queue: nil)
         cameraImageView.center = self.view.center
@@ -127,19 +128,21 @@ class CaptureImageProcessVC: BaseViewController {
     
     @objc func applicationDidBecomeActive() {
         
-        let isTransLateSuccessful = UserDefaults.standard.value(forKey: "isTransLateSuccessful") as! Bool
+        let isTransLateSuccessful = UserDefaults.standard.value(forKey: isTransLationSuccessful) as! Bool
         let modeSwitchState = UserDefaults.standard.value(forKey: "modeSwitchState") as! Bool
         
         if ((modeSwitchState == false) &&  (isTransLateSuccessful == false)) {
-            activity.hideLoading()
-            startConfirmController()
+            if isLoading == false {} else {
+                activity.hideLoading()
+                startConfirmController()
+            }
         } else if ((modeSwitchState == true) && (isTransLateSuccessful == false))  {
             activity.hideLoading()
-//            let id = try? CameraHistoryDBModel().getMaxId()
-//            if !fromHistoryVC {
-//                self.iTTServerViewModel.historyID = Int64(id!)
-//                self.iTTServerViewModel.fromHistoryVC = false
-//            }
+            //            let id = try? CameraHistoryDBModel().getMaxId()
+            //            if !fromHistoryVC {
+            //                self.iTTServerViewModel.historyID = Int64(id!)
+            //                self.iTTServerViewModel.fromHistoryVC = false
+            //            }
             modeSwitchButtonEventListener(modeSwitchButton)
         }
     }
@@ -250,6 +253,7 @@ class CaptureImageProcessVC: BaseViewController {
     }
     
     func setUpViewForHistoryVC() {
+        isLoading = false
         imageView.image = image
         imageView.frame = CGRect(x: 0, y: 0, width: image.size.width  , height:  image.size.height)
         cameraImageView.addSubview(imageView)
@@ -282,6 +286,7 @@ class CaptureImageProcessVC: BaseViewController {
             
             PrintUtility.printLog(tag: "block data count : \(String(describing: blockData?.count))", text: "line data count: \(String(describing: lineData?.count))")
             if (( blockData!.count > 0) && (lineData!.count > 0)) {
+                UserDefaults.standard.set(true, forKey: isTransLationSuccessful)
                 self.iTTServerViewModel.getTextviewListForCameraHistory(detectedData: detectedData, translatedData: translatedData)
             } else if (blockData!.count>0) {
                 if modeSwitchTypes != blockMode {
@@ -300,7 +305,7 @@ class CaptureImageProcessVC: BaseViewController {
         else {
             PrintUtility.printLog(tag: "Detected or Translated data not found", text: "")
         }
-
+        
     }
     
     @objc func scrollViewTapped(sender : UITapGestureRecognizer) {
@@ -455,6 +460,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     func updateView() {
         DispatchQueue.main.async {[self] in
+            UserDefaults.standard.set(true, forKey: isTransLationSuccessful)
             let blockModeTextViews = self.iTTServerViewModel.blockModeTextViewList
             let lineModeTextViews = self.iTTServerViewModel.lineModetTextViewList
             PrintUtility.printLog(tag: "blockModeTextViews & lineModeTextViews", text: "\(self.iTTServerViewModel.blockModeTextViewList.count), \(self.iTTServerViewModel.lineModetTextViewList.count)")
@@ -658,7 +664,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     
     @objc func modeSwitchButtonEventListener(_ button: UIButton) {
         UserDefaults.standard.set(true, forKey: "modeSwitchState")
-        UserDefaults.standard.set(false, forKey: "isTransLateSuccessful")
+        UserDefaults.standard.set(false, forKey: isTransLationSuccessful)
         socketManager.connect()
         let id = try? CameraHistoryDBModel().getMaxId()
         if !fromHistoryVC {
@@ -793,6 +799,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
         DispatchQueue.main.async { [self] in
             activity.showLoading(view: self.view)
             isClickable = false
+            isLoading = true
             backButton.isUserInteractionEnabled = false
         }
     }
@@ -801,6 +808,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
         socketManager.disconnect()
         activity.hideLoading()
         isClickable = true
+        isLoading = false
         backButton.isUserInteractionEnabled = true
     }
 }
