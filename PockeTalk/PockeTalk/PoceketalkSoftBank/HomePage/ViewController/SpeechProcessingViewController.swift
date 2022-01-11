@@ -652,7 +652,7 @@ extension SpeechProcessingViewController{
                 speechLangCode = languageManager.topLanguage
             }
             break
-        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
+        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera, .CountrySettingsSelectionByVoice:
             if countrySearchspeechLangCode != "" {
                 speechLangCode = countrySearchspeechLangCode
             } else {
