@@ -25,19 +25,20 @@ extension Notification.Name {
     
     static let cameraSelectionLanguage = Notification.Name("CameraSelectionLanguage")
     static let cameraHistorySelectionLanguage = Notification.Name("cameraHistorySelectionLanguage")
-    
     static let pronumTiationTextUpdate = Notification.Name("PronumTiationTextUpdate")
-    static let tapOnMicrophoneLanguageSelectionVoice = Notification.Name("tapOnMicrophoneLanguageSelectionVoice")
-    static let tapOffMicrophoneLanguageSelectionVoice = Notification.Name("tapOffMicrophoneLanguageSelectionVoice")
     
-    static let tapOnMicrophoneCountrySelectionVoice = Notification.Name("tapOnCountrySelectionVoice")
-    static let tapOffMicrophoneCountrySelectionVoice = Notification.Name("tapOffCountrySelectionVoice")
+    static let hideMicrophoneLanguageSelectionVoice = Notification.Name("hideMicrophoneLanguageSelectionVoice")
+    static let hideMicrophoneCountrySelectionVoice = Notification.Name("hideMicrophoneCountrySelectionVoice")
+    static let hideMicrophoneLanguageSelectionVoiceCamera = Notification.Name("hideMicrophoneLanguageSelectionVoiceCamera")
+    
+    static let showMicrophoneLanguageSelectionVoice = Notification.Name("showMicrophoneLanguageSelectionVoice")
+    static let showMicrophoneCountrySelectionVoice = Notification.Name("showMicrophoneCountrySelectionVoice")
+    static let showMicrophoneLanguageSelectionVoiceCamera = Notification.Name("showMicrophoneLanguageSelectionVoiceCamera")
+    
     static let popFromCountrySelectionVoice = Notification.Name("popFromCountrySelectionVoice")
-    static let pronuntiationTTSStopNotification = Notification.Name("pronuntiationTTSStopNotification")
     static let popFromCameralanguageSelectionVoice = Notification.Name("popFromCameralanguageSelectionVoice")
     
-    static let tapOnMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOnMicrophoneLanguageSelectionVoiceCamera")
-    static let tapOffMicrophoneLanguageSelectionVoiceCamera = Notification.Name("tapOffMicrophoneLanguageSelectionVoiceCamera")
+    static let pronuntiationTTSStopNotification = Notification.Name("pronuntiationTTSStopNotification")
     static let updateTranlationNotification = Notification.Name("UpdateTranlationNotification")
     static let bottmViewGestureNotification = Notification.Name("BottmViewGestureNotification")
     static let languageChangeFromSettingsNotification = Notification.Name("languageChangeFromSettingsNotification")

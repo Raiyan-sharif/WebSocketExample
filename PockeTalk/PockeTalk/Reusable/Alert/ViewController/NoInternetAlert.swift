@@ -6,27 +6,27 @@
 import UIKit
 
 class NoInternetAlert: BaseViewController {
-    /// Views
-    @IBOutlet weak var noInternetAlertTableView: UITableView!
-    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
-
-    ///Properties
-    let cellHeight : CGFloat = 60.0
-    let cornerRadius : CGFloat = 15.0
-    let viewAlpha : CGFloat = 0.8
-    let window = UIApplication.shared.keyWindow!
-    var talkButtonImageView: UIImageView!
-    var flagTalkButton = false
-
+    @IBOutlet weak private var noInternetAlertTableView: UITableView!
+    @IBOutlet weak private var tableViewHeightConstraint: NSLayoutConstraint!
+    
+    private let cellHeight: CGFloat = 60.0
+    private let cornerRadius: CGFloat = 15.0
+    private let viewAlpha: CGFloat = 0.8
+    private let window = UIApplication.shared.keyWindow!
+    private var talkButtonImageView: UIImageView!
+    private var flagTalkButton = false
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         self.setUpUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView = window.viewWithTag(109) as? UIImageView
+        hideFloatingMicrophoneBtn(true)
+        
         flagTalkButton = talkButtonImageView.isHidden
         if(!flagTalkButton){
             talkButtonImageView.isHidden = true
@@ -36,14 +36,20 @@ class NoInternetAlert: BaseViewController {
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(3)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        hideFloatingMicrophoneBtn(false)
+    }
+    
     deinit{
         if(!flagTalkButton){
             talkButtonImageView?.isHidden = false
             HomeViewController.dummyTalkBtnImgView.isHidden = true
         }
     }
-
-    func setUpUI () {
+    
+    //MARK: - Initial setup
+    private func setUpUI () {
         self.view.backgroundColor = UIColor.black.withAlphaComponent(viewAlpha)
         self.noInternetAlertTableView.layer.cornerRadius = cornerRadius
         self.noInternetAlertTableView.layer.masksToBounds = true
@@ -52,54 +58,54 @@ class NoInternetAlert: BaseViewController {
         self.noInternetAlertTableView.register(UINib(nibName: KNoInternetAlertTableViewCell, bundle: nil), forCellReuseIdentifier: KNoInternetAlertTableViewCell)
     }
 
-    func moveToSettings () {
+    //MARK: - View Transactions
+    private func moveToSettings () {
         if let url = URL(string:UIApplication.openSettingsURLString) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    /// Dynamically update table view height
-    func updateTableViewHeight () {
+    
+    //MARK: - Utils
+    private func updateTableViewHeight () {
         UIView.animate(withDuration: 0, animations: {
             self.noInternetAlertTableView.layoutIfNeeded()
         }) { (complete) in
             var heightOfTableView: CGFloat = 0.0
-            // Get visible cells and sum up their heights
             let cells = self.noInternetAlertTableView.visibleCells
             for cell in cells {
                 heightOfTableView += cell.frame.height
             }
-            // Edit heightOfTableViewConstraint's constant to update height of table view
             self.tableViewHeightConstraint.constant = heightOfTableView
         }
     }
-
+    
+    private func hideFloatingMicrophoneBtn(_ isHidden: Bool){
+        print(ScreenTracker.sharedInstance.screenPurpose)
+        if ScreenTracker.sharedInstance.screenPurpose != .LanguageSettingsSelectionVoice &&
+            ScreenTracker.sharedInstance.screenPurpose != .CountrySettingsSelectionByVoice &&
+            ScreenTracker.sharedInstance.screenPurpose != .LanguageSettingsSelectionCamera{
+            window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.isHidden = isHidden
+            window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.isHidden = isHidden
+            window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.isHidden = isHidden
+        }
+    }
 }
 
-extension NoInternetAlert: UITableViewDelegate, UITableViewDataSource {
-
+//MARK: - UITableViewDataSource
+extension NoInternetAlert: UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Obtain table view cells.
         let defaultCell = tableView.dequeueReusableCell(withIdentifier: KNoInternetAlertTableViewCell) as! NoInternetAlertTableViewCell
-        //internet_connection_error
+       
         switch indexPath.row {
         case 0:
             defaultCell.configureCell(title: "internet_connection_error".localiz())
@@ -113,7 +119,10 @@ extension NoInternetAlert: UITableViewDelegate, UITableViewDataSource {
         updateTableViewHeight()
         return defaultCell
     }
+}
 
+//MARK: - UITableViewDelegate
+extension NoInternetAlert: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:

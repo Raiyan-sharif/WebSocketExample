@@ -112,9 +112,9 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     private func registerNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.hideMicrophoneLanguageSelectionVoice, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .showMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .popFromCountrySelectionVoice, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.updateTranlationNotification, object: nil)
@@ -300,12 +300,12 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .hideMicrophoneLanguageSelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .showMicrophoneLanguageSelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .popFromCountrySelectionVoice, object: nil)
         NotificationCenter.default.removeObserver(self, name: .updateTranlationNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageListNotofication, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.talkButtonContainerSelectionPoint, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .talkButtonContainerSelectionPoint, object: nil)
     }
     
     private func removeFloatingBtn(){

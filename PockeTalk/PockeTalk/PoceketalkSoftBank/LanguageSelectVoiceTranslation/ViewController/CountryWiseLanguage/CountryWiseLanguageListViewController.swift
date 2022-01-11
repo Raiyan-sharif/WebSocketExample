@@ -92,10 +92,11 @@ class CountryWiseLanguageListViewController: BaseViewController {
     
     //MARK: - IBActions
     @IBAction private func onOkButtonPressed(_ sender: Any) {
-        removeFloatingBtn()
         if getSelectedItemPosition() == INVALID_SELECTION {
             PrintUtility.printLog(tag: TAG, text: "ok_button nothing to change")
             return
+        } else {
+            removeFloatingBtn()
         }
         selectedLanguageCode = UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value!
         
