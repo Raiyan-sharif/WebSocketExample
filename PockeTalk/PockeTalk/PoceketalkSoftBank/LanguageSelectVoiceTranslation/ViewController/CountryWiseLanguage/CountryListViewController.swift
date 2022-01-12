@@ -83,8 +83,8 @@ class CountryListViewController: BaseViewController {
     
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.hideMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .showMicrophoneCountrySelectionVoice, object: nil)
     }
     
     private func setUpMicroPhoneIcon() {
@@ -180,8 +180,8 @@ class CountryListViewController: BaseViewController {
 
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.countySlectionByVoiceNotofication, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneCountrySelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.tapOffMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.hideMicrophoneCountrySelectionVoice, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.showMicrophoneCountrySelectionVoice, object: nil)
     }
 
     @objc func updateCountrySelection(notification: Notification) {
@@ -191,7 +191,8 @@ class CountryListViewController: BaseViewController {
     }
     
     private func microphoneIcon(isHidden: Bool){
-        self.floatingMicrophoneButton.isHidden = isHidden
+        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.isHidden = isHidden
+        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.isHidden = isHidden
     }
 
     private func removeFloatingBtn() {

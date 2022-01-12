@@ -100,7 +100,6 @@ class HomeViewController: BaseViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let speechVC = storyboard.instantiateViewController(withIdentifier: KSpeechProcessingViewController)as! SpeechProcessingViewController
         homeVCDelegate = speechVC
-        speechVC.sttDelegate = self
         return speechVC
     }()
     
@@ -241,6 +240,7 @@ class HomeViewController: BaseViewController {
         homeContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         homeContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         homeContainerView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: 0).isActive = true
+        
         speechContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         speechContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         speechContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -561,7 +561,7 @@ extension HomeViewController {
                     self?.bottomCircleleImgView.isHidden = true
                     self?.selectedTouchView = nil
                 }
-            }  else {
+            } else {
                 return
             }
         }
@@ -602,11 +602,3 @@ extension HomeViewController : DismissTutorialDelegate {
     }
 }
 
-//MARK: - STTDelegate
-extension HomeViewController: STTDelegate{
-    func isSTTAvailable(hasSTTValue: Bool) {
-        if hasSTTValue == false{
-            showMicrophoneBtnInLanguageScene()
-        }
-    }
-}

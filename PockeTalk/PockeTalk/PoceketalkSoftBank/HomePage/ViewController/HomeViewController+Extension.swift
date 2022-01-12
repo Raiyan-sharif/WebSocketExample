@@ -61,6 +61,7 @@ extension HomeViewController{
         TalkButtonAnimation.stopAnimation(bottomView: bottomView, pulseGrayWave: pulseGrayWave, pulseLayer: pulseLayer, midCircleViewOfPulse: midCircleViewOfPulse, bottomImageView: bottomImageView)
         bottomImageView.isHidden = true
         homeGestureEnableOrDiable()
+        showMicrophoneBtnInLanguageScene()
     }
     
     @objc func animationDidEnterBackground(notification: Notification) {
@@ -99,6 +100,7 @@ extension HomeViewController{
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.speechContainerView.isHidden = false
         }
+        self.hideMicrophoneBtnInLanguageScene()
     }
     
     func getLastVCFromContainer()->UIViewController?{
@@ -164,8 +166,6 @@ extension HomeViewController{
                             self.removeAllChildControllers(Int(IsTop.top.rawValue))
                         }
                         
-                        self.hideMicrophoneBtnInLanguageScene()
-                        
                         SpeechProcessingViewModel.isLoading = false;
                         self.homeVCDelegate?.startRecord()
                         
@@ -218,47 +218,46 @@ extension HomeViewController{
     }
     
     private func hideMicrophoneBtnInLanguageScene(){
-        
         if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
-            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-            NotificationCenter.default.post(name: .tapOnMicrophoneCountrySelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .hideMicrophoneCountrySelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
-            NotificationCenter.default.post(name: .tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
         }
     }
     
-    func showMicrophoneBtnInLanguageScene(){
+    private func showMicrophoneBtnInLanguageScene(){
         if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
-            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-            NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
+            NotificationCenter.default.post(name: .showMicrophoneCountrySelectionVoice, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
         }
         
         else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
-            NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
         }
     }
 }

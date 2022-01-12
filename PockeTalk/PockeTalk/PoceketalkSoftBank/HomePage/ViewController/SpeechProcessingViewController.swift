@@ -19,10 +19,6 @@ protocol SpeechProcessingDismissDelegate : AnyObject {
     func showTutorial()
 }
 
-protocol STTDelegate: AnyObject{
-    func isSTTAvailable(hasSTTValue: Bool)
-}
-
 class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var exampleLabel: UILabel!
@@ -43,11 +39,10 @@ class SpeechProcessingViewController: BaseViewController{
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
     weak var pronunciationDelegate : DismissPronunciationFromHistory?
-    weak var sttDelegate: STTDelegate?
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
     
     var isFromTutorial : Bool = false
-    
+
     var languageHasUpdated = false
     private var socketData = [Data]()
     private let selectedLanguageIndex : Int = 8
@@ -88,7 +83,6 @@ class SpeechProcessingViewController: BaseViewController{
     let window = UIApplication.shared.keyWindow ?? UIWindow()
     var pronunciationText : String = ""
     var pronunciationLanguageCode : String = ""
-    //weak var speechProcessingDismissDelegate : SpeechProcessingDismissDelegate?
     
     private var isShowTutorial : Bool = false
     private let timeDifferenceToShowTutorial : Int = 1
@@ -116,9 +110,6 @@ class SpeechProcessingViewController: BaseViewController{
                     AppDelegate.generateAccessKey()
                 }
             }
-            
-            
-            
         }
     }
     
@@ -127,13 +118,11 @@ class SpeechProcessingViewController: BaseViewController{
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        //self.updateAnimation()
+    deinit {
+        connectivity.cancel()
+        NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
     }
-    
-    
-    
+
     private weak var homeVC:HomeViewController?  {
         return self.parent as? HomeViewController
     }
@@ -152,6 +141,7 @@ class SpeechProcessingViewController: BaseViewController{
         }
         
     }
+    
     private func setupUI () {
         addSpinner()
         
@@ -182,15 +172,11 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func registerForNotification() {
-        /// App become active
         NotificationCenter.default.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
-        ///app entered background
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [weak self](notification) in
             guard let `self` = self else { return }
             PrintUtility.printLog(tag: "Foreground", text: "last Background")
             self.service?.timerInvalidate()
-            // self.service?.stopRecord()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
     }
@@ -263,8 +249,9 @@ class SpeechProcessingViewController: BaseViewController{
                 }
             }else{
                 self.loaderInvisible()
-                
-            }}}
+            }
+        }
+    }
     
     private func loaderInvisible(isFromTutorial:Bool = false){
         let second =  isFromTutorial ? 0.5 : 0.0
@@ -347,7 +334,6 @@ class SpeechProcessingViewController: BaseViewController{
                     switch ScreenTracker.sharedInstance.screenPurpose {
                     case .CountrySelectionByVoice:
                         NotificationCenter.default.post(name: .countySlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
-                        NotificationCenter.default.post(name: .tapOffMicrophoneCountrySelectionVoice, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
@@ -358,32 +344,25 @@ class SpeechProcessingViewController: BaseViewController{
                         break
                     case .LanguageSelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        
                         NotificationCenter.default.post(name: .languageListNotofication, object: nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case  .LanguageHistorySelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        
                         NotificationCenter.default.post(name: .languageHistoryListNotification, object: nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoice, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSettingsSelectionVoice:
                         LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        
                         NotificationCenter.default.post(name: .languageSettingsListNotification, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        
                         NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
@@ -396,10 +375,7 @@ class SpeechProcessingViewController: BaseViewController{
                         break
                     case .LanguageHistorySelectionCamera:
                         CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
-                        
-                        
                         NotificationCenter.default.post(name: .cameraHistorySelectionLanguage, object: nil, userInfo:nil)
-                        NotificationCenter.default.post(name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
@@ -471,12 +447,7 @@ class SpeechProcessingViewController: BaseViewController{
         
         self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: false, fromSpeech: true)
     }
-    
-    deinit {
-        connectivity.cancel()
-        NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
-    }
-    
+
     @objc private func pronunciationTextUpdate(notification:NSNotification) {
         if let value = notification.userInfo!["pronuntiationText"] as? PronuntiationValue{
             pronunciationLable.text = value.orginalText
@@ -498,17 +469,8 @@ class SpeechProcessingViewController: BaseViewController{
     @objc private func appBecomeActive() {
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        //SocketManager.sharedInstance.connect()
-        //PrintUtility.printLog(tag: "ForeGround App: ", text: "yes")
-        //        if let topVC = UIApplication.getTopViewController(), topVC is SpeechProcessingViewController {
-        //            service?.startRecord()
-        //        }
-        //        addSpinner()
-        //        updateAnimation ()
         self.loaderInvisible()
     }
-    
-    
     
     func showPronunciationPracticeResult (stt:String) {
         let pronumtiationValue = PronuntiationValue(practiceText: stt, orginalText: pronunciationText, languageCcode: pronunciationLanguageCode)
@@ -518,10 +480,7 @@ class SpeechProcessingViewController: BaseViewController{
 
 //MARK: - PronunciationResult
 extension SpeechProcessingViewController: PronunciationResult {
-    func dismissResultHome() {
-        
-    }
-    
+    func dismissResultHome() {}
 }
 
 //MARK: - SpeechControllerDismissDelegate
@@ -533,9 +492,8 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 
 //MARK: - SocketManagerDelegate
 extension SpeechProcessingViewController : SocketManagerDelegate{
-    func socket(isConnected: Bool) {
-    }
-    
+    func socket(isConnected: Bool) {}
+
     func getText(text: String) {
         speechProcessingVM.isGettingActualData = true
         speechProcessingVM.setTextFromScoket(value: text)
@@ -545,16 +503,15 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
     func faildSocketConnection(value: String) {}
 }
 
-
-extension SpeechProcessingViewController:HomeVCDelegate{
-    
+//MARK: - HomeVCDelegate
+extension SpeechProcessingViewController: HomeVCDelegate{
     func startRecord() {
-        // updateLanguageType()
+
         isFinalProvided = false
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
             NotificationCenter.default.post(name: .pronuntiationTTSStopNotification, object: nil, userInfo:nil)
-            //FromPronunciation()
+            
             pronunciationView.isHidden = false
             titleLabel.isHidden = true
             hideOrOpenExampleText(isHidden: true)
@@ -576,7 +533,7 @@ extension SpeechProcessingViewController:HomeVCDelegate{
         self.spinnerView.isHidden = false
         service?.stopRecord()
         service?.timerInvalidate()
-        sttDelegate?.isSTTAvailable(hasSTTValue: isSSTavailable)
+    
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !isSSTavailable {
                 self.showTutorial()
@@ -586,13 +543,13 @@ extension SpeechProcessingViewController:HomeVCDelegate{
     }
 }
 
+//MARK: - SpeechProcessingViewController Extension
 extension SpeechProcessingViewController{
     func removeAnimation(){
         self.speechProcessingLeftImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.isHidden = true
         self.speechProcessingLeftImgView.isHidden = true
-        
     }
     
     func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
@@ -607,16 +564,13 @@ extension SpeechProcessingViewController{
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let  ttsVC = storyboard.instantiateViewController(withIdentifier: KTtsAlertController) as! TtsAlertController
-        //ttsVC.delegate = self
         ttsVC.chatItemModel = chatItemModel
         ttsVC.hideMenuButton = hideMenuButton
         ttsVC.hideBottomView = hideBottmSection
         ttsVC.isFromHistory = fromHistory
-        //ttsVC!.ttsAlertControllerDelegate = ttsAlertControllerDelegate
         ttsVC.isRecreation = isRecreation
         ttsVC.isFromSpeechProcessing = fromSpeech
-        //isViewOpened = .tts
-        
+
         self.homeVC?.add(asChildViewController: ttsVC, containerView:homeVC!.homeContainerView, animation: nil)
         homeVC?.hideSpeechView()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing

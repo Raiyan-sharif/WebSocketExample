@@ -94,9 +94,9 @@ class LanguageSelectCameraVC: BaseViewController {
     
     private func registerNotification(){
 
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCameralanguageSelection(notification:)), name: .cameraHistorySelectionLanguage, object: nil)
     }
@@ -194,8 +194,8 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.tapOnMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .tapOffMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
         NotificationCenter.default.removeObserver(self, name: .cameraHistorySelectionLanguage, object: nil)
     }
     
