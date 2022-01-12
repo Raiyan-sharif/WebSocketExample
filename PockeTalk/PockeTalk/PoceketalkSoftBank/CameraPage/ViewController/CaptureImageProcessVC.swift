@@ -150,6 +150,7 @@ class CaptureImageProcessVC: BaseViewController {
     
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
     
     func setUpViewForCapturedImage() {
@@ -383,10 +384,20 @@ class CaptureImageProcessVC: BaseViewController {
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(lang)")
             PrintUtility.printLog(tag: "Translate ", text: "lang: \(lang) text: \(text)" )
             
-            getTtsValue(langCode: lang)
-            ttsResponsiveView.checkSpeakingStatus()
-            ttsResponsiveView.setRate(rate: rate)
-            ttsResponsiveView.TTSPlay(voice: voice,text: text.components(separatedBy: .newlines).joined())
+            if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:lang){
+                if(!isSpeaking){
+                    getTtsValue(langCode: lang)
+                    ttsResponsiveView.checkSpeakingStatus()
+                    ttsResponsiveView.setRate(rate: rate)
+                    ttsResponsiveView.TTSPlay(voice: voice,text: text.components(separatedBy: .newlines).joined())
+                }
+            }else{
+                AudioPlayer.sharedInstance.delegate = self
+                if !AudioPlayer.sharedInstance.isPlaying{
+                    AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText: text, targetLanguageItem: lang, tempo: "normal")
+                }
+            }
+            
         }else{
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(lang)")
             let seconds = 1.0
@@ -395,8 +406,10 @@ class CaptureImageProcessVC: BaseViewController {
             }
         }
     }
+    
     func stopTTS(){
         ttsResponsiveView.stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
     
     /// Retreive tts value from respective language code
@@ -571,9 +584,11 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func actionTappedOnNativeTTSText(sender:UITapGestureRecognizer) {
         //ttsResponsiveView.isSpeaking()
         playNative = true
-        if(!isSpeaking){
+        if(!isSpeaking && !AudioPlayer.sharedInstance.isPlaying){
             playTTS()
-        }else{
+        }
+        else{
+            AudioPlayer.sharedInstance.stop()
             stopTTS()
         }
     }
@@ -581,9 +596,10 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     @objc func actionTappedOnTargetTTSText(sender:UITapGestureRecognizer) {
         //ttsResponsiveView.isSpeaking()
         playNative = false
-        if(!isSpeaking){
+        if(!isSpeaking && !AudioPlayer.sharedInstance.isPlaying){
             playTTS()
         }else{
+            AudioPlayer.sharedInstance.stop()
             stopTTS()
         }
     }
@@ -644,6 +660,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         NotificationCenter.default.removeObserver(self,
                                                   name: UIApplication.didBecomeActiveNotification,
                                                   object: nil)
+        AudioPlayer.sharedInstance.stop()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -830,18 +847,20 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     
     func cameraTTSDialogToPlaybutton() {
         playNative = false
-        if(!isSpeaking){
+        if(!isSpeaking && !AudioPlayer.sharedInstance.isPlaying){
             playTTS()
         }else{
+            AudioPlayer.sharedInstance.stop()
             stopTTS()
         }
     }
     
     func cameraTTSDialogFromPlaybutton() {
         playNative = true
-        if(!isSpeaking){
+        if(!isSpeaking && !AudioPlayer.sharedInstance.isPlaying){
             playTTS()
         }else{
+            AudioPlayer.sharedInstance.stop()
             stopTTS()
         }
     }
@@ -920,7 +939,7 @@ extension CaptureImageProcessVC: CXCallObserverDelegate{
         if call.isOnHold {
             stopTTS()
         }
-        
+        AudioPlayer.sharedInstance.stop()
         //        TtsAlertController.ttsResponsiveView.stopTTS()
     }
 }
@@ -937,4 +956,15 @@ extension CaptureImageProcessVC : SocketManagerDelegate{
     
     func getData(data: Data) {}
     
+}
+
+//MARK: - AudioPlayerDelegate
+extension CaptureImageProcessVC :AudioPlayerDelegate{
+    func didStartAudioPlayer() {
+        
+    }
+
+    func didStopAudioPlayer(flag: Bool) {
+        
+    }
 }
