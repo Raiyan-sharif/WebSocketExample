@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "country_liechtenstein@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "country_liechtenstein@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
