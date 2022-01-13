@@ -283,8 +283,8 @@ class CaptureImageProcessVC: BaseViewController {
             let data = translatedData
             let blockData = data.block?.translatedText
             let lineData = data.line?.translatedText
-            self.iTTServerViewModel.detectedJSON = detectedData
             
+            self.iTTServerViewModel.detectedJSON = detectedData
             PrintUtility.printLog(tag: "block data count : \(String(describing: blockData?.count))", text: "line data count: \(String(describing: lineData?.count))")
             if (( blockData!.count > 0) && (lineData!.count > 0)) {
                 UserDefaults.standard.set(true, forKey: isTransLationSuccessful)
@@ -293,12 +293,14 @@ class CaptureImageProcessVC: BaseViewController {
                 if modeSwitchTypes != blockMode {
                     UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
                 }
+                UserDefaults.standard.set(translatedData.block?.languageCodeTo, forKey: KCameraTargetLanguageCode)
                 self.iTTServerViewModel.getSelectedModeTextViewListFromHistory(detectedData: detectedData, translatedData: translatedData, selectedMode: blockMode)
                 
             } else if (lineData!.count > 0) {
                 if modeSwitchTypes != lineMode {
                     UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
                 }
+                UserDefaults.standard.set(translatedData.line?.languageCodeTo, forKey: KCameraTargetLanguageCode)
                 self.iTTServerViewModel.getSelectedModeTextViewListFromHistory(detectedData: detectedData, translatedData: translatedData, selectedMode: lineMode)
             }
         }
@@ -700,7 +702,6 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             if let data = translatedData.line {
                 if data.translatedText.count > 0 {
                     UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
-                    
                     for each in self.iTTServerViewModel.blockModeTextViewList {
                         each.view.removeFromSuperview()
                     }
