@@ -179,20 +179,20 @@ extension HomeViewController{
                 }
                 
                 if gesture.state == .ended {
-                    imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-                    
-                    SpeechProcessingViewModel.isLoading = true;
-                    if !self.speechVC.isMinimumLimitExceed {
-                        self.enableORDisableMicrophoneButton(isEnable: false)
-                    }else{
-                        self.speechVC.isMinimumLimitExceed = false
+                    if Reachability.isConnectedToNetwork() {
+                        imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+                        SpeechProcessingViewModel.isLoading = true;
+                        if !self.speechVC.isMinimumLimitExceed {
+                            self.enableORDisableMicrophoneButton(isEnable: false)
+                        }else{
+                            self.speechVC.isMinimumLimitExceed = false
+                        }
+                        self.homeVCDelegate?.stopRecord()
+                        
+                        TalkButtonAnimation.isTalkBtnAnimationExist = false
+                        TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                     }
-                    self.homeVCDelegate?.stopRecord()
-                    
-                    TalkButtonAnimation.isTalkBtnAnimationExist = false
-                    TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                 }
-                
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
             }
