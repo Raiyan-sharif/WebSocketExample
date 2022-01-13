@@ -21,6 +21,8 @@ class HistoryCardViewController: BaseViewController {
     var selectedChatItemModel : HistoryChatItemModel?
     private var speechProcessingVM : SpeechProcessingViewModeling!
     var animationDelay = 0.2
+    var timer: Timer? = nil
+    var timeInterval: TimeInterval = 30
     
     let buttonWidth : CGFloat = 100
     var deletedCellHeight = CGFloat()
@@ -140,6 +142,9 @@ class HistoryCardViewController: BaseViewController {
             guard let `self` = self else { return }
             if isFinal{
                 SocketManager.sharedInstance.disconnect()
+                if self.timer != nil {
+                    self.timer?.invalidate()
+                }
                 PrintUtility.printLog(tag: "TTT text: ",text: self.speechProcessingVM.getTTT_Text)
                 PrintUtility.printLog(tag: "TTT src: ", text: self.speechProcessingVM.getSrcLang_Text)
                 PrintUtility.printLog(tag: "TTT dest: ", text: self.speechProcessingVM.getDestLang_Text)
@@ -409,6 +414,7 @@ extension HistoryCardViewController : RetranslationDelegate{
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName)!.code,destlang: selectedLanguage)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
+                self.startCountdown()
                 ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             }
         }else{
@@ -486,6 +492,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
                 
                 let textFrameData = GlobalMethod.getRetranslationAndReverseTranslationData(sttdata: nativeText!,srcLang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLangName!)!.code,destlang: LanguageSelectionManager.shared.getLanguageCodeByName(langName: targetLangName!)!.code)
                 SocketManager.sharedInstance.sendTextData(text: textFrameData, completion: nil)
+                self?.startCountdown()
             }
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
@@ -494,6 +501,20 @@ extension HistoryCardViewController : AlertReusableDelegate{
             }
         }
     }
+    
+    func startCountdown() {
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            self?.timeInterval -= 1
+            if self?.timeInterval == 0 {
+                timer.invalidate()
+                self?.spinnerView.isHidden = true
+                self?.timeInterval = 30
+            } else if let seconds = self?.timeInterval {
+                //PrintUtility.printLog(tag: "Timer On Favorite : ", text: "\(seconds)")
+            }
+        }
+    }
+
 }
 
 //MARK: - TtsAlertControllerDelegate

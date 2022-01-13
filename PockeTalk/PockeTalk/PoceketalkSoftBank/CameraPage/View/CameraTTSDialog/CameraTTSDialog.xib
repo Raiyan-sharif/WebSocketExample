@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -176,7 +176,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-gK-jRf" userLabel="Dialog Dismiss Button">
-                    <rect key="frame" x="12" y="81" width="40" height="40"/>
+                    <rect key="frame" x="5" y="74" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="3wE-QM-0Jz"/>
                         <constraint firstAttribute="width" constant="40" id="chl-do-pjt"/>
@@ -191,9 +191,9 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="LLz-gK-jRf" firstAttribute="leading" secondItem="egD-lc-h5g" secondAttribute="leading" constant="-8" id="3b2-Pl-Sxx"/>
+                <constraint firstItem="LLz-gK-jRf" firstAttribute="leading" secondItem="egD-lc-h5g" secondAttribute="leading" constant="-15" id="3b2-Pl-Sxx"/>
                 <constraint firstItem="wZX-nu-Cal" firstAttribute="top" secondItem="iDl-I4-s0Z" secondAttribute="top" constant="45" id="4xi-jU-vWg"/>
-                <constraint firstItem="LLz-gK-jRf" firstAttribute="top" secondItem="egD-lc-h5g" secondAttribute="top" constant="-8" id="Fvb-ma-h7J"/>
+                <constraint firstItem="LLz-gK-jRf" firstAttribute="top" secondItem="egD-lc-h5g" secondAttribute="top" constant="-15" id="Fvb-ma-h7J"/>
                 <constraint firstItem="wZX-nu-Cal" firstAttribute="leading" secondItem="iDl-I4-s0Z" secondAttribute="leading" constant="20" id="bm6-6j-BPX"/>
                 <constraint firstItem="iDl-I4-s0Z" firstAttribute="bottom" secondItem="wZX-nu-Cal" secondAttribute="bottom" constant="45" id="hCu-a6-tBG"/>
                 <constraint firstItem="iDl-I4-s0Z" firstAttribute="trailing" secondItem="wZX-nu-Cal" secondAttribute="trailing" constant="20" id="mzx-kg-F3a"/>
