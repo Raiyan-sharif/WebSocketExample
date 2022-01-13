@@ -63,6 +63,7 @@ class TutorialViewController: BaseViewController {
     }
 
     deinit {
+        stopTTS()
         PrintUtility.printLog(tag: TAG, text: "Tutorial deinit Got Called")
     }
 
@@ -166,7 +167,14 @@ class TutorialViewController: BaseViewController {
         
         if(languageManager.hasTtsSupport(languageCode: selectedLanguageCode)){
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(selectedLanguageCode)")
-            proceedAndPlayTTS()
+            if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:selectedLanguageCode){
+                proceedAndPlayTTS()
+            }else{
+                AudioPlayer.sharedInstance.delegate = self
+                if !AudioPlayer.sharedInstance.isPlaying{
+                    AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText: tutorialLanguage?.lineTwo ?? "", targetLanguageItem: selectedLanguageCode, tempo:normal)
+                }
+            }
         }else{
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport don't have TTS support \(selectedLanguageCode)")
             let seconds = 1.0
@@ -178,6 +186,7 @@ class TutorialViewController: BaseViewController {
 
     private func stopTTS(){
         ttsResponsiveView.stopTTS()
+        AudioPlayer.sharedInstance.stop()
     }
     
     private func proceedAndPlayTTS() {
@@ -204,4 +213,14 @@ extension TutorialViewController: TTSResponsiveViewDelegate{
     func speakingStatusChanged(isSpeaking: Bool) {}
     func onReady() {}
     func onVoiceEnd() {}
+}
+
+extension TutorialViewController :AudioPlayerDelegate{
+    func didStartAudioPlayer() {
+
+    }
+
+    func didStopAudioPlayer(flag: Bool) {
+
+    }
 }
