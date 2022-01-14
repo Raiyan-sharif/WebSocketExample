@@ -143,36 +143,47 @@ extension HomeViewController{
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
                 let imageView = self.window.viewWithTag(109) as! UIImageView
+                let languageManager = LanguageSelectionManager.shared
+                let isArrowUp = languageManager.isArrowUp
+                var nativeLangCode = LanguageSelectionManager.shared.bottomLanguage
+                let targetLangCode = LanguageSelectionManager.shared.topLanguage
+                if (!isArrowUp){
+                    nativeLangCode = targetLangCode
+                }
+                let hasSttSupport = languageManager.hasSttSupport(languageCode: nativeLangCode)
+                if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
+                    ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                }
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
-//                        self.setBlackGradientImageToBottomView(usingState: .black)
-                        SocketManager.sharedInstance.connect()
-                        SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
-                        
-                        if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
-                            ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                        if (ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing && !hasSttSupport){
+                            GlobalMethod.showAlert("no_stt_msg".localiz(), in: self, completion: nil)
+                        }else{
+                            //self.setBlackGradientImageToBottomView(usingState: .black)
+                            SocketManager.sharedInstance.connect()
+                            SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
+                            self.speechVC.updateLanguageType()
+                            
+                            if self.speechVC.languageHasUpdated{
+                                self.speechVC.updateLanguageInRemote()
+                            }
+                            
+                            self.speechVC.hideOrOpenExampleText(isHidden: true)
+                            imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
+                            
+                            self.openSpeechView()
+                            if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+                                self.removeAllChildControllers(Int(IsTop.top.rawValue))
+                            }
+                            
+                            self.hideMicrophoneBtnInLanguageScene()
+                            
+                            SpeechProcessingViewModel.isLoading = false;
+                            self.homeVCDelegate?.startRecord()
+                            
+                            TalkButtonAnimation.isTalkBtnAnimationExist = true
+                            TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                         }
-                        self.speechVC.updateLanguageType()
-                        
-                        if self.speechVC.languageHasUpdated{
-                            self.speechVC.updateLanguageInRemote()
-                        }
-                        
-                        self.speechVC.hideOrOpenExampleText(isHidden: true)
-                        imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysTemplate)
-                        
-                        self.openSpeechView()
-                        if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-                            self.removeAllChildControllers(Int(IsTop.top.rawValue))
-                        }
-                        
-                        SpeechProcessingViewModel.isLoading = false;
-                        self.homeVCDelegate?.startRecord()
-                        
-                        TalkButtonAnimation.isTalkBtnAnimationExist = true
-                        TalkButtonAnimation.startTalkButtonAnimation(pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
-                        
-                        
                     }else {
                         GlobalMethod.showNoInternetAlert()
                     }
@@ -180,17 +191,19 @@ extension HomeViewController{
                 
                 if gesture.state == .ended {
                     if Reachability.isConnectedToNetwork() {
-                        imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
-                        SpeechProcessingViewModel.isLoading = true;
-                        if !self.speechVC.isMinimumLimitExceed {
-                            self.enableORDisableMicrophoneButton(isEnable: false)
-                        }else{
-                            self.speechVC.isMinimumLimitExceed = false
+                        if (ScreenTracker.sharedInstance.screenPurpose != .HomeSpeechProcessing || hasSttSupport){
+                            imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+                            SpeechProcessingViewModel.isLoading = true;
+                            if !self.speechVC.isMinimumLimitExceed {
+                                self.enableORDisableMicrophoneButton(isEnable: false)
+                            }else{
+                                self.speechVC.isMinimumLimitExceed = false
+                            }
+                            self.homeVCDelegate?.stopRecord()
+                            
+                            TalkButtonAnimation.isTalkBtnAnimationExist = false
+                            TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                         }
-                        self.homeVCDelegate?.stopRecord()
-                        
-                        TalkButtonAnimation.isTalkBtnAnimationExist = false
-                        TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                     }
                 }
             } else {
