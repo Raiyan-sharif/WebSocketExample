@@ -19,13 +19,8 @@ class Photo {
     }
     
     func image() -> UIImage? {
-        var cgImage: CGImage!
-        
-        #if swift(>=5.0)
-            cgImage = photo.cgImageRepresentation()
-        #elseif swift(>=4.0)
-            cgImage = photo.cgImageRepresentation()?.takeUnretainedValue()
-        #endif
+        guard let cgImage = photo.cgImageRepresentation()?.takeUnretainedValue() else { return nil }
+        //guard let cgImage = photo.cgImageRepresentation() else { return nil }
         
         let imageOrientation: UIImage.Orientation
         switch orientation {
