@@ -97,7 +97,8 @@ class HistoryCardViewController: BaseViewController {
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0)
         
         topConstraintOfCV.isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
+        
         self.view.addSubview(backBtn)
         self.view.addSubview(imageView)
 
@@ -121,8 +122,15 @@ class HistoryCardViewController: BaseViewController {
     
     private func showCollectionView(){
         isCollectionViewVisible = true
-        collectionView.scrollToItem(at: IndexPath(item: historyViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
-        PrintUtility.printLog(tag: "contentSize.height", text: "\(collectionView.contentSize.height)")
+        let contentSize = self.collectionView.contentSize
+        let bottmInset = self.collectionView.bounds.size.height * 0.25
+        historylayout.bottomInset = bottmInset
+        
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height + bottmInset  - self.collectionView.bounds.size.height)
+        self.collectionView.setContentOffset(bottomOffset, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.collectionView.alpha = 1.0
+        }
     }
     
     private func registerNotification(){
@@ -132,9 +140,13 @@ class HistoryCardViewController: BaseViewController {
     //MARK: - Load Data
     private func bindData(){
         historyViewModel.items.bindAndFire { [weak self] items in
+            guard let `self` = self else { return }
             if items.count > 0{
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-                    self?.collectionView.reloadData()
+                    guard let `self` = self else { return }
+                    if items.count <= 1 {
+                        self.showCollectionView()
+                    }
                 }
             }
         }
@@ -177,8 +189,8 @@ class HistoryCardViewController: BaseViewController {
     func updateData(shouldCVScrollToBottom: Bool){
         deletedCellHeight = 0
         historyViewModel.getData()
-        collectionView.reloadData()
         if shouldCVScrollToBottom {
+            collectionView.reloadData()
             self.scrollToBottom()
         }
     }
@@ -317,11 +329,12 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             guard let `self`  = self else {
                 return
             }
+            let bottomInset = self.collectionView.contentInset.bottom
+            self.historylayout.bottomInset = bottomInset
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.historyViewModel.deleteHistory(indexpath.item)
             self.deletedCellHeight = cell.frame.height
-            PrintUtility.printLog(tag: "cell Height", text: "\(self.deletedCellHeight)")
             
             self.collectionView.performBatchUpdates { [weak self]  in
                 guard let `self`  = self else {return}
@@ -379,7 +392,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
 //MARK: - ScrollView Delegate
 extension HistoryCardViewController {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if collectionView.contentSize.height + 30 < (scrollView.contentOffset.y + collectionView.bounds.height){
+        if collectionView.contentSize.height + (SIZE_HEIGHT / 4 + 10) < (scrollView.contentOffset.y + collectionView.bounds.height){
             self.dismissHistory(shouldUpdateViewAlpha: false)
         }
     }
@@ -533,7 +546,6 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.addItem(chatItemModel.chatItem!)
         self.collectionView.reloadData()
-        self.scrollToBottom()
     }
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {

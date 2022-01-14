@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol HistoryLayoutDelegate:class{
+protocol HistoryLayoutDelegate: AnyObject{
 
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat
 }
@@ -16,6 +16,7 @@ class HistoryLayout: UICollectionViewLayout {
     var contentSize: CGSize = .zero
     weak var delegate: HistoryLayoutDelegate!
     var deletedCellHeight:CGFloat = 0
+    var bottomInset :CGFloat = 0
 
     override func prepare() {
         super.prepare()
@@ -60,7 +61,7 @@ class HistoryLayout: UICollectionViewLayout {
         if contentInsetTop <= 0 {
             contentInsetTop = 0
         }
-        collectionView!.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
+        collectionView!.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: bottomInset,right: 0)
     }
 
     override var collectionViewContentSize: CGSize {

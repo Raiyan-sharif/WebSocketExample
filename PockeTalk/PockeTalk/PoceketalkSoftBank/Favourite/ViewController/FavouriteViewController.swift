@@ -63,7 +63,6 @@ class FavouriteViewController: BaseViewController {
         setUpCollectionView()
         favouriteViewModel = FavouriteViewModel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            self.showCollectionView()
             self.view.bottomImageView(usingState: .gradient)
         }
         populateData()
@@ -92,35 +91,21 @@ class FavouriteViewController: BaseViewController {
         
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: margin.topAnchor, constant:0)
         topConstraintOfCV.isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
         collectionView.alpha = 0.0
         self.view.addSubview(backBtn)
     }
 
     private func showCollectionView(){
         isCollectionViewVisible = true
-        collectionView.scrollToItem(at: IndexPath(item: favouriteViewModel.items.value.count-1, section: 0), at: .bottom, animated: false)
-        collectionView.alpha = 1.0
-        
-        //TODO: Remove animation from collectionview. Will remove permanently after final confirmation.
-        
-        /*
-        let transitionAnimation = CABasicAnimation(keyPath: "position.y")
-        transitionAnimation.fromValue = view.layer.position.y -
-            view.frame.size.height
-        transitionAnimation.toValue = view.layer.position.y - buttonWidth/2
-
-        let scalAnimation = CABasicAnimation(keyPath: "transform.scale")
-        scalAnimation.fromValue = 0.5
-        scalAnimation.toValue = 1.0
-
-        let transitionAndScale = CAAnimationGroup()
-        transitionAndScale.fillMode = .removed
-        transitionAndScale.isRemovedOnCompletion = true
-        transitionAndScale.animations = [ transitionAnimation, scalAnimation]
-        transitionAndScale.duration = 1.0
-        collectionView.layer.add(transitionAndScale, forKey: nil)
-        */
+        let contentSize = self.collectionView.contentSize
+        let bottmInset = self.collectionView.bounds.size.height * 0.25
+        favouritelayout.bottomInset = bottmInset
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height + bottmInset  - self.collectionView.bounds.size.height)
+        self.collectionView.setContentOffset(bottomOffset, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+            self?.collectionView.alpha = 1.0
+        }
     }
     
     private func addSpinner(){
@@ -137,12 +122,13 @@ class FavouriteViewController: BaseViewController {
     //MARK: - Bind Data
     private func bindData(){
         favouriteViewModel.items.bindAndFire { [weak self] items in
-            if items.count == 0{
-                
-            }
+            guard let `self` = self else { return }
             if items.count > 0{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self?.collectionView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                    guard let `self` = self else { return }
+                    if !self.isCollectionViewVisible{
+                        self.showCollectionView()
+                    }
                 }
             }
         }
@@ -282,6 +268,8 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             guard let `self`  = self else {
                 return
             }
+            let bottomInset = self.collectionView.contentInset.bottom
+            self.favouritelayout.bottomInset = bottomInset
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             self.favouriteViewModel.deleteFavourite(indexpath.item)
