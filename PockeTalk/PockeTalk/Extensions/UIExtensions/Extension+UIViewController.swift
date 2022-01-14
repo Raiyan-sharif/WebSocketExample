@@ -5,7 +5,20 @@
 
 import UIKit
 
-extension UIViewController{
+extension UIViewController {
+    //MARK: For AlertView
+    func popupAlert(title: String, message: String, actionTitles:[String], actionStyle: [UIAlertAction.Style], action:[((UIAlertAction) -> Void)]) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.view.tintColor = UIColor.black
+            for (index, title) in actionTitles.enumerated() {
+                let action = UIAlertAction(title: title, style: actionStyle[index], handler: action[index])
+                alert.addAction(action)
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // Define toast message and duration
     func showToast(message : String, seconds: Double){
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)

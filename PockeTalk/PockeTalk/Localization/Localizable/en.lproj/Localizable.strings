@@ -82,4 +82,28 @@
 "kCameraUsageMessage" = "PockeTalk needs permission to use the camera";
 "kTitleOk" = "OK";
 "kNotAllow" = "Don't Allow";
-
+"kNextButtonTitle" = "Next";
+//TermsAndConditionsVC
+"kTermsAndConditionsVCTitle" = "It is an App of the AI translator POCKETALK with the highest cell in the world.";
+"kTermsAndConditionsVCBulletPointOneTitle" = "Instant speech translation";
+"kTermsAndConditionsVCBulletPointTwoTitle" = "Support xx languages";
+"kTermsAndConditionsVCCheckTermsButtonTitle" = "Check the terms of use";
+"kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "Accept the terms and start";
+//InitialPermissionSettingsVC
+"kInitialPermissionSettingsVCTitle" = "Please allow access to the following functions for voice input, camera  translation and notification";
+"kInitialPermissionSettingsVCMicrophoneLabel" = "Microphone";
+"kInitialPermissionSettingsVCCameraLabel" = "Camera";
+"kInitialPermissionSettingsVCNotificationLabel" = "Notifications";
+//PaidPlanViewController
+"kPaidPlanVCTitleLabel" = "A paid plan is required to use POCKETALK App";
+"kPaidPlanVCBulletPointOneLabel" = "No charges will be incurred if cancel within one week.";
+"kPaidPlanVCBulletPointTwoLabel" = "The above charges will continue to be charged from the day after the last day of the free period.";
+"kPaidPlanVCPurchaseButtonTitle" = "Start using with free for one week";
+"kPaidPlanVCRestorePurchaseHistoryButton" = "Restore the purchase history";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Please select a usage plan";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+//WelcomeViewController
+"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kWelcomeVCTitleLabelBottom" = "POCKETALK";
+"kWelcomeVCStartUsingButtonTitle" = "Start using";
