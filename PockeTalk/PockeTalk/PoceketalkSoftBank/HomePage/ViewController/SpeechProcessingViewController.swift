@@ -177,6 +177,7 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             PrintUtility.printLog(tag: "Foreground", text: "last Background")
             self.service?.timerInvalidate()
+            self.removeAnimation()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
     }
@@ -226,6 +227,7 @@ class SpeechProcessingViewController: BaseViewController{
             if count == 30 {
                 self.isMinimumLimitExceed = true
                 self.service?.stopRecord()
+                self.removeAnimation()
             }
         }
         service?.recordDidStop = { [weak self]  in
@@ -243,12 +245,14 @@ class SpeechProcessingViewController: BaseViewController{
                             innerTimer.invalidate()
                             if !self.isFinalProvided {
                                 self.loaderInvisible()
+                                self.removeAnimation()
                             }
                         }
                     }
                 }
             }else{
                 self.loaderInvisible()
+                self.removeAnimation()
             }
         }
     }
@@ -506,7 +510,7 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
 //MARK: - HomeVCDelegate
 extension SpeechProcessingViewController: HomeVCDelegate{
     func startRecord() {
-
+        self.spinnerView.isHidden = true
         isFinalProvided = false
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
@@ -533,7 +537,6 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         self.spinnerView.isHidden = false
         service?.stopRecord()
         service?.timerInvalidate()
-    
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !isSSTavailable {
                 self.showTutorial()
@@ -550,6 +553,7 @@ extension SpeechProcessingViewController{
         self.speechProcessingRightImgView.layer.removeAllAnimations()
         self.speechProcessingRightImgView.isHidden = true
         self.speechProcessingLeftImgView.isHidden = true
+        self.talkButtonImageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
     }
     
     func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
