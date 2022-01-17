@@ -151,11 +151,12 @@ extension HomeViewController{
                     nativeLangCode = targetLangCode
                 }
                 let hasSttSupport = languageManager.hasSttSupport(languageCode: nativeLangCode)
-                if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
-                    ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
-                }
+
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
+                        if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
+                            ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
+                        }
                         if (ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing && !hasSttSupport){
                             GlobalMethod.showAlert("no_stt_msg".localiz(), in: self, completion: nil)
                         }else{
