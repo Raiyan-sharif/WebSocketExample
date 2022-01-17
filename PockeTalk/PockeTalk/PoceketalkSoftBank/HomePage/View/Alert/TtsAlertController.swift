@@ -311,9 +311,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
         
         self.containerView.removeGestureRecognizer(longTapGesture!)
-        if(!isSpeaking){
-            playTTS()
-        }
+        checkTTSValueAndPlay()
     }
     
     func UpdateUIForHidingMenu(){
@@ -704,8 +702,8 @@ extension TtsAlertController : TTSResponsiveViewDelegate {
     }
     
     func onReady() {
-        if(!isSpeaking && !isRecreation){
-            playTTS()
+        if(!isRecreation){
+            checkTTSValueAndPlay()
         }
     }
 }
