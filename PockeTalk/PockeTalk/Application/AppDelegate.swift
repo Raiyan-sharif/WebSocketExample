@@ -16,24 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
         UIDevice.current.isBatteryMonitoringEnabled = true
-        setUpInitialLaunch(shouldSetAppWindow: true)
+        setUpInitialLaunch()
         return true
     }
 
     /// Initial launch setup
-    func setUpInitialLaunch(shouldSetAppWindow: Bool) {
+    func setUpInitialLaunch() {
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
             UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value = true
-            setUpAppFirstLaunch(isUpdateArrow: shouldSetAppWindow)
+            setUpAppFirstLaunch(isUpdateArrow: true)
         }else{
             LanguageSelectionManager.shared.loadLanguageListData()
         }
         
-        if shouldSetAppWindow{
-            setUpWelcomeViewController ()
-        }
+        setUpWelcomeViewController ()
         
         if  UserDefaultsProperty<String>(KFontSelection).value == nil{
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
@@ -43,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setUpWelcomeViewController() {
+        self.window?.rootViewController = nil
         if UserDefaultsProperty<Bool>(kUserDefaultIsUserPurchasedThePlan).value == true {
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -103,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         //isAppRelaunch = true
-        setUpInitialLaunch(shouldSetAppWindow: false)
+        setUpInitialLaunch()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

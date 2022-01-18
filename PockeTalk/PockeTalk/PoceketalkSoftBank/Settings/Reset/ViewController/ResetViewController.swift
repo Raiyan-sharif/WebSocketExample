@@ -120,7 +120,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
-                self.navigationController?.popToRootViewController(animated: false)
+//                self.navigationController?.popToRootViewController(animated: false)
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showDeleteAllDataDialog()
