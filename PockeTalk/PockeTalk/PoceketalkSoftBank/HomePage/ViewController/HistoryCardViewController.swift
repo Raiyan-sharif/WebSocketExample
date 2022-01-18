@@ -239,12 +239,18 @@ class HistoryCardViewController: BaseViewController {
         delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
+        if self.spinnerView.isHidden == false {
+            self.spinnerView.isHidden = true
+        }
     }
     
     //MARK: - IBActions
     @objc private func actionBack() {
         UIView.animate(withDuration: kFadeAnimationTransitionTime, delay: animationDelay, options: .curveEaseOut) {
             self.view.alpha = viewsAlphaValue
+            if self.spinnerView.isHidden == false {
+                self.spinnerView.isHidden = true
+            }
         } completion: { _ in
             self.dismissHistory(shouldUpdateViewAlpha: true)
         }
@@ -478,6 +484,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){
+        addSpinner()
         self.spinnerView.isHidden = false
         if Reachability.isConnectedToNetwork() {
             SocketManager.sharedInstance.socketManagerDelegate = self

@@ -330,11 +330,11 @@
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-Xi-qgB">
-                                <rect key="frame" x="16" y="566" width="40" height="40"/>
+                                <rect key="frame" x="16" y="551" width="55" height="55"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="DsM-wr-xUa"/>
-                                    <constraint firstAttribute="width" constant="40" id="oxi-WB-8zK"/>
+                                    <constraint firstAttribute="height" constant="55" id="DsM-wr-xUa"/>
+                                    <constraint firstAttribute="width" constant="55" id="oxi-WB-8zK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

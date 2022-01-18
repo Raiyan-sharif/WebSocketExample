@@ -180,6 +180,9 @@ class FavouriteViewController: BaseViewController {
     
     //MARK: - IBActions
     @objc private func actionBack() {
+        if self.spinnerView.isHidden == false {
+            self.spinnerView.isHidden = true
+        }
         dismissFavourite(byBackBtnPress: true)
     }
 
@@ -405,6 +408,8 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
+        addSpinner()
+        self.spinnerView.isHidden = false
         if Reachability.isConnectedToNetwork() {
             spinnerView.isHidden = false
             selectedChatItemModel = chatItemModel
@@ -420,8 +425,10 @@ extension FavouriteViewController : AlertReusableDelegate {
                 self?.startCountdown()
             }
         }else {
-            PrintUtility.printLog(tag: TAG, text: "No internet!")
-            GlobalMethod.showNoInternetAlert()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.spinnerView.isHidden = true
+                GlobalMethod.showNoInternetAlert()
+            }
         }
     }
     
