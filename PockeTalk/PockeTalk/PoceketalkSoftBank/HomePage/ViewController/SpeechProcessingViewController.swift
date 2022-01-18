@@ -90,7 +90,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let waitngISFinalSecond:Int = 6
     var isMinimumLimitExceed = false
     private var connectivity = Connectivity()
-    
+
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -258,7 +258,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func loaderInvisible(isFromTutorial:Bool = false){
-        let second =  isFromTutorial ? 0.5 : 0.0
+        let second =  isFromTutorial ? 0.5 : 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
             SocketManager.sharedInstance.disconnect()
@@ -538,7 +538,8 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         service?.stopRecord()
         service?.timerInvalidate()
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
-            if speechProcessingVM.getTimeDifference(endTime: Date()) < 2  && !isSSTavailable {
+            hideOrOpenExampleText(isHidden: true)
+            if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable {
                 self.showTutorial()
             }
         }
