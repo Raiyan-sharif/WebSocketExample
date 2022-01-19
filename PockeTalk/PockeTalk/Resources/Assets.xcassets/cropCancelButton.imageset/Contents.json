@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "closeButton.png",
+      "filename" : "demo_mode_reboot_cancel_button.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "closeButton@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "closeButton@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

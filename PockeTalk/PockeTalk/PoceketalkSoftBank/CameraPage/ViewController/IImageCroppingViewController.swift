@@ -31,7 +31,7 @@ class ImageCroppingViewController: BaseViewController {
     
     var cancelBtn: UIButton = {
         let button = UIButton(frame: .zero)
-        button.setImage(UIImage(named: "demo_mode_reboot_cancel_button"), for: .normal)
+        button.setImage(UIImage(named: "cropCancelButton"), for: .normal)
         button.addTarget(self, action: #selector(cancelButtonEventListener(_:)), for: .touchUpInside)
         return button
     }()
