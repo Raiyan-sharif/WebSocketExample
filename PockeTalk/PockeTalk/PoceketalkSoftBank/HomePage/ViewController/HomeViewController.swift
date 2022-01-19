@@ -192,8 +192,7 @@ class HomeViewController: BaseViewController {
         talkBtnImgView.heightAnchor.constraint(equalToConstant: width ).isActive = true
         talkBtnImgView.centerXAnchor.constraint(equalTo: self.window.centerXAnchor).isActive = true
         talkBtnImgView.bottomAnchor.constraint(equalTo: self.window.bottomAnchor, constant: -(bottomView.bounds.height/2 + window.safeAreaInsets.bottom - width/2)).isActive = true
-        
-        
+        putGlowEffectUnderTalkButton()
         bottomImageView.widthAnchor.constraint(equalToConstant: bottomView.frame.width * 1.4).isActive = true
         bottomImageViewHeight = bottomImageView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8)
         bottomImageViewHeight.isActive = true
@@ -205,6 +204,23 @@ class HomeViewController: BaseViewController {
         self.bottomImageView.isHidden = true
         self.bottomImageView.image = #imageLiteral(resourceName: "bg_speak").withRenderingMode(.alwaysOriginal)
     }
+    
+    func putGlowEffectUnderTalkButton(){
+        let talkButtonShadow = UIImageView()
+        window.addSubview(talkButtonShadow)
+        talkButtonShadow.image = UIImage(named: "bg_speak")
+        talkButtonShadow.tag = 110
+        talkButtonShadow.isUserInteractionEnabled = true
+        talkButtonShadow.translatesAutoresizingMaskIntoConstraints = false
+        talkButtonShadow.layer.cornerRadius = width/2
+        talkButtonShadow.clipsToBounds = true
+        talkButtonShadow.widthAnchor.constraint(equalToConstant: width*1.5).isActive = true
+        talkButtonShadow.heightAnchor.constraint(equalToConstant: width*2 ).isActive = true
+        talkButtonShadow.centerXAnchor.constraint(equalTo: self.talkBtnImgView.centerXAnchor).isActive = true
+        talkButtonShadow.topAnchor.constraint(equalTo: self.talkBtnImgView.bottomAnchor, constant: window.safeAreaInsets.bottom - width/4).isActive = true
+        talkButtonShadow.isHidden = true
+    }
+    
     //MARK: - Initial Setup
     private func setUpUI () {
         navigationController?.navigationBar.barTintColor = UIColor.black

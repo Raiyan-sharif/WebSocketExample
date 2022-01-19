@@ -63,6 +63,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         } else {
             self.delegate?.dismissResultHome()
         }
+        HomeViewController.showOrHideTalkButtonImage(true)
     }
 
     //TODO: need to replace with valid action
@@ -93,6 +94,11 @@ class PronunciationPracticeResultViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AudioPlayer.sharedInstance.stop()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HomeViewController.showOrHideTalkButtonImage(true)
     }
 
     func registerNotification(){

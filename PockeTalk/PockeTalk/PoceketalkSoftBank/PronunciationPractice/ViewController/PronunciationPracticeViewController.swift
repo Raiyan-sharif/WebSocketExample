@@ -41,7 +41,6 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     var isFromHistoryTTS = false
     var talkBtnImgView = UIImageView()
     let window :UIWindow = UIApplication.shared.keyWindow!
-    let talkButtonShadow = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +73,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     @objc func willResignActive(_ notification: Notification) {
         self.stopTTS()
         AudioPlayer.sharedInstance.stop()
-        talkButtonShadow.removeFromSuperview()
-        putGlowEffectUnderTalkButton()
+        HomeViewController.showOrHideTalkButtonImage(false)
     }
 
     @objc func gotoPronuntiationPacticeVC(notification: Notification) {
@@ -88,7 +86,6 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
             controller.practiceText = value.practiceText
             controller.languageCode = value.languageCcode
             controller.isFromHistoryTTS = isFromHistoryTTS
-            talkButtonShadow.removeFromSuperview()
             add(asChildViewController: controller, containerView: view, animation: nil)
         }
     }
@@ -97,17 +94,17 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     @objc func pronunciationStopTTS(notification: Notification) {
         stopTTS()
         AudioPlayer.sharedInstance.stop()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        putGlowEffectUnderTalkButton()
+        HomeViewController.showOrHideTalkButtonImage(false)
         self.navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        talkButtonShadow.removeFromSuperview()
     }
     // Initial UI set up
     func setUpUI () {
@@ -131,21 +128,6 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
     
     //MARK: Glow effect Under Talk Button
-    
-    func putGlowEffectUnderTalkButton(){
-        talkBtnImgView = window.viewWithTag(109) as! UIImageView
-        window.addSubview(talkButtonShadow)
-        talkButtonShadow.image = UIImage(named: "bg_speak")
-        talkButtonShadow.isUserInteractionEnabled = true
-        talkButtonShadow.translatesAutoresizingMaskIntoConstraints = false
-        talkButtonShadow.layer.cornerRadius = width/2
-        talkButtonShadow.clipsToBounds = true
-        talkButtonShadow.widthAnchor.constraint(equalToConstant: width*1.5).isActive = true
-        talkButtonShadow.heightAnchor.constraint(equalToConstant: width*2 ).isActive = true
-        talkButtonShadow.centerXAnchor.constraint(equalTo: self.talkBtnImgView.centerXAnchor).isActive = true
-        talkButtonShadow.topAnchor.constraint(equalTo: self.talkBtnImgView.bottomAnchor, constant: window.safeAreaInsets.bottom - width/4).isActive = true
-    }
-    
     func checkTTSValueAndPlay(){
         if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:languageCode){
             if(!isSpeaking){
@@ -226,7 +208,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
                 NotificationCenter.default.post(name: .historyNotofication, object: nil)
             }
         }
-        talkButtonShadow.removeFromSuperview()
+        HomeViewController.showOrHideTalkButtonImage(true)
     }
 
     @objc func actionTappedOnTTSText(sender:UITapGestureRecognizer) {
