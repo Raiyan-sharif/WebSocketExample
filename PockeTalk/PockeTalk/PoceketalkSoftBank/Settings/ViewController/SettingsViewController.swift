@@ -43,6 +43,12 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         self.title = kTitleOk.localiz()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override var prefersStatusBarHidden: Bool{
         return true
     }

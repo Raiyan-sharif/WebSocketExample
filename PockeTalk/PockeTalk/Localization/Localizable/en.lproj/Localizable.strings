@@ -86,7 +86,7 @@
 //TermsAndConditionsVC
 "kTermsAndConditionsVCTitle" = "It is an App of the AI translator POCKETALK with the highest cell in the world.";
 "kTermsAndConditionsVCBulletPointOneTitle" = "Instant speech translation";
-"kTermsAndConditionsVCBulletPointTwoTitle" = "Support xx languages";
+"kTermsAndConditionsVCBulletPointTwoTitle" = "Support 115 Languages";
 "kTermsAndConditionsVCCheckTermsButtonTitle" = "Check the terms of use";
 "kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "Accept the terms and start";
 //InitialPermissionSettingsVC
