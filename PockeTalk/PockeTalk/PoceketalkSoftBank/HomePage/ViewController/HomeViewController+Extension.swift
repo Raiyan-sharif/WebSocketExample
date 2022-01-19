@@ -62,6 +62,8 @@ extension HomeViewController{
         bottomImageView.isHidden = true
         homeGestureEnableOrDiable()
         showMicrophoneBtnInLanguageScene()
+        HomeViewController.showOrHideTalkButtonImage(!self.isFromPronuntiationPractice())
+        PrintUtility.printLog(tag: "ScreenTracker.sharedInstance.screenPurpose", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
     
     @objc func animationDidEnterBackground(notification: Notification) {
@@ -154,6 +156,7 @@ extension HomeViewController{
 
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
+                        HomeViewController.showOrHideTalkButtonImage(true)
                         if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
                             ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                         }
@@ -292,6 +295,14 @@ extension HomeViewController {
             if(ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice || ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice){
                 NotificationCenter.default.post(name: .talkButtonContainerSelectionPoint, object: nil, userInfo: pointDictionary)
             }
+        }
+    }
+}
+
+extension HomeViewController{
+    class func showOrHideTalkButtonImage(_ isHidden: Bool){
+        if let img = UIApplication.shared.keyWindow?.viewWithTag(110) as? UIImageView{
+            img.isHidden = isHidden
         }
     }
 }
