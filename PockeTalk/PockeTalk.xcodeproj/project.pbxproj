@@ -2319,7 +2319,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.08;
+				MARKETING_VERSION = 0.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2345,7 +2345,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.08;
+				MARKETING_VERSION = 0.1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
