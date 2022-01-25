@@ -8,16 +8,25 @@ import SwiftyXMLParser
 
 class SystemLanguageViewController: BaseViewController {
 
-    /// tableview to show list
-    var tableView:UITableView!
-
-    ///languageList for all languages
+    private var tableView:UITableView!
     var languageList = [SystemLanguages]()
     var currentSelectedLanguage = String()
-    
     var mIndexPath = IndexPath()
+    private let TAG = "\(SystemLanguageViewController.self)"
+    private var selectedLanguage:String?
+    
+    private var leftBtn:UIButton!{
+        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        okBtn.changeFontSize()
+        okBtn.setTitle("OK", for: .normal)
+        okBtn.setImage(UIImage(named: "icon_arrow_left.9"), for: .normal)
+        okBtn.titleLabel?.textColor = .white
+        okBtn.clipsToBounds = true
+        okBtn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return okBtn
+    }
 
-    /// load viewLanguages.ja.rawValue
+    //MARK: - Lifecycle methods
     override func loadView() {
         view = UIView()
         view.backgroundColor = .black
@@ -39,71 +48,23 @@ class SystemLanguageViewController: BaseViewController {
         }
 
     }
-
-    private var selectedLanguage:String?
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.title = "Language".localiz()
-        self.navigationController?.navigationBar.isHidden = false
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Get data from XML
         getData()
-        //Set the UI
         setUpUI()
         currentSelectedLanguage = LanguageManager.shared.currentLanguage.rawValue
         selectedLanguage = currentSelectedLanguage
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
-
-    private var leftBtn:UIButton!{
-        let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        okBtn.changeFontSize()
-        okBtn.setTitle("OK", for: .normal)
-        okBtn.setImage(UIImage(named: "icon_arrow_left.9"), for: .normal)
-        okBtn.titleLabel?.textColor = .white
-        okBtn.clipsToBounds = true
-        okBtn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return okBtn
-    }
-
-    @objc func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-        if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
-            let languageItem = languageList[mIndexPath.row]
-            LanguageManager.shared.setLanguage(language: Languages(rawValue: languageItem.lanType) ?? .en)
-            UserDefaultsProperty<Bool>(KFirstInitialized).value = true
-            UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
-            LanguageSelectionManager.shared.loadLanguageListData()
-            LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
-            let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
-            NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
-        }
-    }
-
-    ///Get data from XML
-    private func getData(){
-        if let path = Bundle.main.path(forResource: "system_languages", ofType: "xml") {
-            do {
-                    let contents = try String(contentsOfFile: path)
-                    let xml =  try XML.parse(contents)
-                
-                // enumerate child Elements in the parent Element
-                for item in xml["language","child", "item"] {
-                    let attributes = item.attributes
-                    languageList.append(SystemLanguages(langName: attributes["name"]!, lanType: attributes["code"]!) )
-                }
-                } catch {
-                    print("Parse Error")
-                }
-        }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.title = "Language".localiz()
+        self.navigationController?.navigationBar.isHidden = false
     }
     
-    /// Setup all the UI here
+    //MARK: - Initial setup
     private func setUpUI() {
         tableView = UITableView(frame: .zero, style: .plain)
         view.addSubview(tableView)
@@ -116,25 +77,54 @@ class SystemLanguageViewController: BaseViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.black
-        // Register SystemLanguageCell
+        
         tableView.register(cellType: SystemLanguageCell.self)
         tableView.tableFooterView = UIView()
         
-        //Check selected language
         if let isSelected = UserDefaultsProperty<Bool>(KFirstInitialized).value, isSelected{
-           // self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
             self.title = "Language".localiz()
         }else{
             self.title = "Language"
         }
         
-        //Add Gesture in tableview Cell
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         tableView.addGestureRecognizer(longPress)
-
     }
     
-    ///Handle gesture for tableview cell
+    //MARK: - Load data
+    private func getData(){
+        if let path = Bundle.main.path(forResource: "system_languages", ofType: "xml") {
+            do {
+                let contents = try String(contentsOfFile: path)
+                let xml =  try XML.parse(contents)
+                
+                for item in xml["language","child", "item"] {
+                    let attributes = item.attributes
+                    languageList.append(SystemLanguages(langName: attributes["name"]!, lanType: attributes["code"]!) )
+                }
+            } catch {
+                PrintUtility.printLog(tag: TAG, text: "Parse Error")
+            }
+        }
+    }
+    
+    //MARK: - IBActions
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+        if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
+            let languageItem = languageList[mIndexPath.row]
+            let langCode = Languages(rawValue: languageItem.lanType) ?? .en
+            LanguageManager.shared.setLanguage(language: langCode)
+            
+            UserDefaultsProperty<Bool>(KFirstInitialized).value = true
+            UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
+            LanguageSelectionManager.shared.loadLanguageListData()
+            //LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
+            let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
+            NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
+        }
+    }
+    
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         let touchPoint = sender.location(in: tableView)
         if let indexPath = tableView.indexPathForRow(at: touchPoint) {
@@ -159,7 +149,8 @@ class SystemLanguageViewController: BaseViewController {
     }
 }
 
-extension SystemLanguageViewController:UITableViewDataSource{
+//MARK: - UITableViewDataSource
+extension SystemLanguageViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languageList.count
     }
@@ -178,23 +169,15 @@ extension SystemLanguageViewController:UITableViewDataSource{
             cell.imgView.image = nil
             cell.contentView.backgroundColor = .black
         }
-
         return cell
     }
-
-    
 }
-extension SystemLanguageViewController:UITableViewDelegate{
-    
+
+//MARK: - UITableViewDelegate
+extension SystemLanguageViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         mIndexPath = indexPath
         let languageItem = languageList[indexPath.row]
-        if UserDefaultsProperty<String>(KSelectedLanguage).value == nil{
-            //self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView:rightBtn)
-        }
-        
-        
-        //self.title = "Language".localiz()
         selectedLanguage = languageItem.lanType
         self.tableView.reloadData()
     }
@@ -204,10 +187,3 @@ extension SystemLanguageViewController:UITableViewDelegate{
     }
 }
 
-
-//let currentLangType = LanguageManager.shared.currentLanguage.rawValue
-//if languageItem.lanType == currentLangType {
-//    cell.nameLabel.text = languageItem.langName
-//    cell.imgView.image = #imageLiteral(resourceName: "ic_check_circle_white_selected")
-//    UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
-//}

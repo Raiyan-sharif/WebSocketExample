@@ -49,11 +49,8 @@ class CountryWiseLanguageListViewController: BaseViewController {
     //MARK: - Initial setup
     private func setupUI(){
         buttonOk.layer.cornerRadius = 15
-        if dataShowingLanguageCode == systemLanguageCodeEN{
-            countryNameLabel.text = countryListItem?.countryName.en
-        }else if dataShowingLanguageCode == systemLanguageCodeJP{
-            countryNameLabel.text = countryListItem?.countryName.ja
-        }
+        let countryCode = GlobalMethod.getCountryCodeFrom(countryListItem, and: dataShowingLanguageCode)
+        countryNameLabel.text = countryCode
     }
     
     private func configureCollectionView() {
@@ -149,10 +146,10 @@ extension CountryWiseLanguageListViewController: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: langListCollectionViewCell.identifier, for: indexPath) as! langListCollectionViewCell
         PrintUtility.printLog(tag: TAG, text: "showing as \(dataShowingLanguageCode)")
         
-        if dataShowingLanguageCode == systemLanguageCodeEN{
+        if dataShowingLanguageCode == systemLanguageCodeEN {
             cell.languageNameLabel.text = "\(item.englishName) (\(item.name))"
             cell.languageNameLableSelected.text = "\(item.englishName) (\(item.name))"
-        }else if dataShowingLanguageCode == systemLanguageCodeJP{
+        } else {
             cell.languageNameLabel.text = "\(item.sysLangName) (\(item.name))"
             cell.languageNameLableSelected.text = "\(item.sysLangName) (\(item.name))"
         }

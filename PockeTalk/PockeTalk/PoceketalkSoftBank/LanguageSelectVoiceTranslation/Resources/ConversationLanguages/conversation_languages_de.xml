@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<language name="target_languages">
+    <item name="Afrikaans" code="af" en="Afrikaans" es="Africaans" fr="Afrikaans" ja="アフリカーンス語" ko="아프리칸스어" zh="南非荷兰语" it="Afrikaans" de="Afrikaans" />
+    <item name="Shqip" code="sq" en="Albanian" es="Albanés" fr="Albanais" ja="アルバニア語" ko="알바니아어" zh="阿尔巴尼亚语" it="Albanese" de="Albanisch" />
+    <item name="አማርኛ" code="am" en="Amharic" es="Amárico" fr="Amharique" ja="アムハラ語" ko="암하라어" zh="阿姆哈拉语" it="Amarico" de="Amharisch" />
+    <item name="اللغة العربية" code="ar" en="Arabic" es="Arábica" fr="Arabe" ja="アラビア語" ko="아랍어" zh="阿拉伯语" it="Arabo" de="Arabisch" />
+    <item name="Հայերեն" code="hy" en="Armenian" es="Armenio" fr="Arménien" ja="アルメニア語" ko="아르메니아어" zh="亚美尼亚语" it="Armeno" de="Armenisch" />
+    <item name="Azərbaycanca" code="az" en="Azeerbaijani" es="Azerbaiyano" fr="Azerbaïdjanais" ja="アゼルバイジャン語" ko="아제르바이잔어" zh="阿塞拜疆语" it="Azero" de="Aserbaidschanisch" />
+    <item name="Euskara" code="eu" en="Basque" es="Vasco" fr="Bbasque" ja="バスク語" ko="바스크어" zh="巴斯克语" it="Basco" de="Baskisch" />
+    <item name="বাংলা" code="bn" en="Bengali" es="Bengalí" fr="Bengali" ja="ベンガル語" ko="벵골어" zh="孟加拉语" it="Bengali" de="Bengalisch" />
+    <item name="မြန်မာ" code="my" en="Burmese" es="Birmano" fr="Birman" ja="ミャンマー語" ko="버마어" zh="缅甸语" it="Birmano" de="Birmanisch" />
+    <item name="Bosanski" code="bs" en="Bosnian" es="Bosnio" fr="Bosniaque" ja="ボスニア語" ko="보스니아어" zh="波斯尼亚语" it="Bosniaco" de="Bosnisch" />
+    <item name="български език" code="bg" en="Bulgarian" es="Búlgaro" fr="Bulgare" ja="ブルガリア語" ko="불가리아어" zh="保加利亚语" it="Bulgaro" de="Bulgarisch" />
+    <item name="Sinugboanon" code="ceb" en="Cebuano" es="Cebuano" fr="Cebuano" ja="セブアノ語" ko="세부아노어" zh="宿务语" it="Cebuano" de="Cebuano" />
+    <item name="Chicheŵa" code="ny" en="Chichewa" es="Chichewa" fr="Chichewa" ja="チェワ語" ko="체와어" zh="奇切瓦语" it="Chewa" de="Chichewa" />
+    <item name="中文(繁體字)" code="zh-TW" en="Chinese_Traditional" es="Chino tradicional" fr="Chinois traditionnel" ja="中国語(繁体字)" ko="중국어(번체자)" zh="中文(繁体)" it="Cinese Tradizionale" de="Chinesisch (traditionell)" />
+    <item name="中文(简体字)" code="zh-CN" en="Chinese_Simplified" es="Chino simplificado" fr="Chinois simplifié" ja="中国語(簡体字)" ko="중국어(간체자)" zh="中文(简体)" it="Cinese Semplificato" de="Chinesisch (vereinfacht)" />
+    <item name="Dansk" code="da" en="Danish" es="Danés" fr="Danois" ja="デンマーク語" ko="덴마크어" zh="丹麦语" it="Danese" de="Dänisch" />
+    <item name="Deutsch" code="de" en="German" es="Alemán" fr="Allemand" ja="ドイツ語" ko="독일어" zh="德语" it="Tedesco" de="Deutsch" />
+    <item name="English(Australia)" code="en-AU" en="English(Australia)" es="Inglés (Australia)" fr="Anglais (Australie)" ja="英語(オーストラリア)" ko="영어(호주)" zh="英语(澳大利亚)" it="Inglese (Australia)" de="Englisch (Australien)" />
+    <item name="English(India)" code="en-IN" en="English(India)" es="Inglés (India)" fr="Anglais (Inde)" ja="英語(インド)" ko="영어(인도)" zh="英语(印度)" it="Inglese (India)" de="Englisch (Indien)" />
+    <item name="English(UK)" code="en-GB" en="English(UK)" es="Inglés (Reino Unido)" fr="Anglais (Royaume-Uni)" ja="英語(英国)" ko="영어(영국)" zh="英语(英国)" it="Inglese (Regno Unito)" de="Englisch (UK)" />
+    <item name="English(US)" code="en" en="English(US)" es="Inglés (EE. UU.)" fr="Anglais (États-Unis)" ja="英語(米国)" ko="영어(미국)" zh="英语(美国)" it="Inglese (Stati Uniti)" de="Englisch (US)" />
+    <item name="English(slowly)" code="en-SO" en="English(slowly)" de="Englisch (langsam)" />
+    <item name="English(Philippines)" code="en-PH" en="English(Philippines)" es="Inglés (Filipinas)" fr="Anglais (Philippines)" ja="英語(フィリピン)" ko="영어(필리핀)" zh="英语(菲律宾)" it="Inglese (Filippine)" de="Englisch (Philippinen)" />
+    <item name="Esperanto" code="eo" en="Esperanto" es="Esperanto" fr="Espéranto" ja="エスペラント語" ko="에스페란토" zh="世界语" it="Esperanto" de="Esperanto" />
+    <item name="Eesti keel" code="et" en="Estonian" es="Estonio" fr="Estonien" ja="エストニア語" ko="에스토니아어" zh="爱沙尼亚语" it="Estone" de="Estnisch" />
+    <item name="Filipino" code="tl" en="Filipino" es="Filipino" fr="Philippin" ja="フィリピノ語" ko="필리핀어" zh="菲律宾语" it="Filippina" de="Filipino" />
+    <item name="Suomen kieli / Suomi" code="fi" en="Finnish" es="Finlandés" fr="Finlandais" ja="フィンランド語" ko="핀란드어는" zh="芬兰语" it="Finlandese" de="Finnisch" />
+    <item name="Français" code="fr" en="French(France)" es="Francés" fr="Français" ja="フランス語(フランス)" ko="프랑스어(프랑스)" zh="法语(法国)" it="Francese" de="Französisch" />
+    <item name="Français canadian" code="fr-CA" en="French(Canada)" es="Francés (Canadá)" fr="Français(Canada)" ja="フランス語(カナダ)" ko="프랑스어 (캐나다)" zh="法语(加拿大)" it="Francese (Canada)" de="Französisch (Kanada)" />
+    <item name="Frysk" code="fy" en="Frisian" es="Frisio" fr="Frison" ja="フリジア語" ko="프리슬란트어" zh="弗里斯兰语" it="Frisone" de="Friesisch" />
+    <item name="Galego" code="gl" en="Galician" es="Gallego" fr="Galicien" ja="ガリシア語" ko="갈리시아어" zh="加利西亚语" it="Galiziano" de="Galizisch" />
+    <item name="ქართული ენა" code="ka" en="Georgian" es="Georgiano" fr="Géorgien" ja="ジョージア語" ko="조지아어" zh="格鲁吉亚语" it="Georgiano" de="Georgisch" />
+    <item name="Ελληνικά" code="el" en="Greek" es="Griego" fr="Grec" ja="ギリシャ語" ko="그리스어" zh="希腊语" it="Greco" de="Griechisch" />
+    <item name="ગુજરાતી" code="gu" en="Gujarati" es="Gujarati" fr="Gujarati" ja="グジャラート語" ko="구자라트어" zh="古吉拉特语" it="Gujarati" de="Gujarati" />
+    <item name="Krèyol ayisyen" code="ht" en="Haitian Creole" es="Criollo haitiano" fr="Créole haïtien" ja="ハイチ語" ko="아이티어" zh="海地克里奥尔语" it="Haitiano (Creolo)" de="Haitianisch (Kreol)" />
+    <item name="هَوُسَ" code="ha" en="Hausa" es="Hausa" fr="Hausa" ja="ハウサ語" ko="하우사어" zh="豪萨语" it="Hausa" de="Hausa" />
+    <item name="ʻŌlelo Hawaiʻi" code="haw" en="Hawaiian" es="Hawaiano" fr="Hawaïen" ja="ハワイ語" ko="하와이어" zh="夏威夷语" it="Hawaiano" de="Hawaiisch" />
+    <item name="עברית" code="iw" en="Hebrew" es="Hebreo" fr="Hébreu" ja="ヘブライ語" ko="히브리어" zh="希伯来语" it="Ebraico" de="Hebräisch" />
+    <item name="हिंदी" code="hi" en="Hindi" es="Hindi" fr="Hindi" ja="ヒンディー語" ko="힌디어" zh="印地语" it="Hindi" de="Hindi" />
+    <item name="Hmoob" code="hmn" en="Hmong" es="Hmong" fr="Hmong" ja="モン語" ko="티베트어" zh="苗族语" it="Hmong" de="Hmong" />
+    <item name="asụsụ Ndi Igbo" code="ig" en="Igbo" es="Igbo" fr="Igbo" ja="イボ語" ko="이그보어" zh="伊博语" it="Igbo" de="Igbo" />
+    <item name="Bahasa Indonesia" code="id" en="Indonesian" es="Indonesio" fr="Indonésien" ja="インドネシア語" ko="인도네시아어" zh="印尼语" it="Indonesiano" de="Indonesisch" />
+    <item name="Gaeilge" code="ga" en="Irish" es="Irlandesa" fr="Irlandais" ja="アイルランド語" ko="아일랜드어" zh="爱尔兰语" it="Irlandese" de="Irisch" />
+    <item name="Íslenska" code="is" en="Icelandic" es="Islandés" fr="Islandais" ja="アイスランド語" ko="아이슬란드어" zh="冰岛语" it="Islandese" de="Isländisch" />
+    <item name="Italiano" code="it" en="Italian" es="Italiano" fr="Italien" ja="イタリア語" ko="이탈리아어" zh="意大利语" it="Italiano" de="Italienisch" />
+    <item name="日本語" code="ja" en="Japanese" es="Japonés" fr="Japonais" ja="日本語" ko="일본어" zh="日语" it="Giapponese" de="Japanisch" />
+    <item name="Basa Jawa" code="jw" en="Javanese" es="Javanés" fr="Javanais" ja="ジャワ語" ko="자와어" zh="爪哇语" it="Giavanese" de="Javanisch" />
+    <item name="ייִדיש‎" code="yi" en="Yiddish" es="Yídish" fr="Yiddish" ja="イディッシュ語" ko="이디시어" zh="意第绪语" it="Yiddish" de="Jiddisch" />
+    <item name="ಕನ್ನಡ" code="kn" en="Kannada" es="Kannada" fr="Kannada" ja="カンナダ語" ko="칸나다어" zh="卡纳达语" it="Kannada" de="Kannada" />
+    <item name="粤語" code="yue" en="Cantonese" es="Cantonés" fr="Cantonais" ja="広東語" ko="광둥어" zh="广东话" it="Cantonese" de="Kantonesisch" />
+    <item name="Қазақ тілі" code="kk" en="Kazakh" es="Kazajo" fr="Kazakh" ja="カザフ語" ko="카자흐어" zh="哈萨克语" it="Kazako" de="Kasachisch" />
+    <item name="Català" code="ca" en="Catalan" es="Catalán" fr="Catalan" ja="カタルーニャ語" ko="카탈루냐어" zh="加泰罗尼亚语" it="Catalano" de="Katalanisch" />
+    <item name="ភាសាខ្មែរ" code="km" en="Khmer" es="Khmer" fr="Khmer" ja="クメール語" ko="크메르어" zh="高棉语" it="Khmer" de="Khmer" />
+    <item name="Кыргыз тили" code="ky" en="Kyrgyz" es="Kirguiso" fr="Kirghize" ja="キルギス語" ko="키르기스어" zh="吉尔吉斯语" it="Chirghiso" de="Kirgisisch" />
+    <item name="한국어" code="ko" en="Korean" es="Coreano" fr="Coréen" ja="韓国語" ko="한국어" zh="韩语" it="Coreano" de="Koreanisch" />
+    <item name="Corsu" code="co" en="Corsican" es="Corso" fr="Corse" ja="コルシカ語" ko="코르시카어" zh="科西嘉语" it="Còrso" de="Korsisch" />
+    <item name="Hrvatski " code="hr" en="Croatian" es="Croata" fr="Croate" ja="クロアチア語" ko="크로아티아어" zh="克罗地亚语" it="Croato" de="Kroatisch" />
+    <item name="Kurdî" code="ku" en="Kurdish" es="Kurdo" fr="Kurde" ja="クルド語" ko="쿠르드어" zh="库尔德语" it="Curdo" de="Kurdisch" />
+    <item name="ພາສາລາວ" code="lo" en="Lao" es="Lao" fr="Lao" ja="ラオ語" ko="라오어" zh="老挝语" it="Lao" de="Laotisch" />
+    <item name="lingua latina" code="la" en="Latin" es="latín" fr="Latin" ja="ラテン語" ko="라틴어" zh="拉丁语" it="Latino" de="Latein" />
+    <item name="Latviešu valoda" code="lv" en="Latvian" es="Letón" fr="Letton" ja="ラトビア語" ko="라트비아어" zh="拉脱维亚语" it="Lettone" de="Lettisch" />
+    <item name="lietuvių kalba" code="lt" en="Lithuanian" es="Lituano" fr="Lituanien" ja="リトアニア語" ko="리투아니아어" zh="立陶宛语" it="Lituano" de="Litauisch" />
+    <item name="Lëtzebuergesch" code="lb" en="Luxembourgish" es="Luxemburgués" fr="Luxembourgeois" ja="ルクセンブルク語" ko="룩셈부르크어" zh="卢森堡语" it="Lussemburghese" de="Luxemburgisch" />
+    <item name="Malagasy" code="mg" en="Malagasy" es="Madagascarí" fr="Malgache" ja="マダガスカル語" ko="말라가시어" zh="马尔加什语" it="Malgascio" de="Madagassisch" />
+    <item name="Bahasa Melayu" code="ms" en="Malay" es="Malayo" fr="Malais" ja="マレー語" ko="말레이어" zh="马来语" it="Malese" de="Malaiisch" />
+    <item name="മലയാളം" code="ml" en="Malayalam" es="Malayalam" fr="Malayalam" ja="マラヤーラム語" ko="말라얄람어" zh="马拉雅拉姆语" it="Malayalam" de="Malayalam" />
+    <item name="Malti" code="mt" en="Maltese" es="Maltés" fr="Maltais" ja="マルタ語" ko="몰타어" zh="马耳他语" it="Maltese" de="Maltesisch" />
+    <item name="Te Reo Māori" code="mi" en="Maori" es="Maorí" fr="Maori" ja="マオリ語" ko="마오리어" zh="毛利语" it="Māori" de="Maori" />
+    <item name="मराठी" code="mr" en="Marathi" es="Marathi" fr="Marathi" ja="マラーティー語" ko="마라티어" zh="马拉语" it="Marathi" de="Marathi" />
+    <item name="македонски јазик" code="mk" en="Macedonian" es="Macedónio" fr="Macédonien" ja="マケドニア語" ko="마케도니아어" zh="马其顿语" it="Macedone" de="Mazedonisch" />
+    <item name="Монгол хэл" code="mn" en="Mongolian" es="Mongol" fr="Mongol" ja="モンゴル語" ko="몽골어" zh="蒙语" it="Mongolo" de="Mongolisch" />
+    <item name="नेपाली" code="ne" en="Nepali" es="Nepalí" fr="Népalais" ja="ネパール語" ko="네팔어" zh="尼泊尔语" it="Nepali" de="Nepali" />
+    <item name="Nederlands" code="nl" en="Dutch" es="Holandés" fr="Néerlandais" ja="オランダ語" ko="네덜란드어" zh="荷兰语" it="Olandese" de="Niederländisch" />
+    <item name="Norsk" code="no" en="Norwegian" es="Noruego" fr="Norvégien" ja="ノルウェー語" ko="노르웨이어" zh="挪威语" it="Norvegese" de="Norwegisch" />
+    <item name="پښتو" code="ps" en="Pashto" es="Pashto" fr="Pashto" ja="パシュトー語" ko="파슈토어" zh="普什图语" it="Pashtu" de="Paschto" />
+    <item name="پارسی‌" code="fa" en="Persian" es="Persa" fr="Persan" ja="ペルシャ語" ko="페르시아어" zh="波斯语" it="Persiano" de="Persisch" />
+    <item name="Język polski" code="pl" en="Polish" es="Polaco" fr="Polonais" ja="ポーランド語" ko="폴란드어" zh="波兰语" it="Polacco" de="Polnisch" />
+    <item name="Português(Brasil)" code="pt-BR" en="Portuguese(Brazil)" es="Portugués (Brasil)" fr="Portugais (Brésil)" ja="ポルトガル語(ブラジル)" ko="포르투갈어(브라질)" zh="葡萄牙语(巴西)" it="Portoghese (Brasile)" de="Portugiesisch (Brasilien)" />
+    <item name="Português(Português)" code="pt" en="Portuguese(Portugal)" es="Portugués" fr="Portugais" ja="ポルトガル語(ポルトガル)" ko="포르투갈어(포르투갈)" zh="葡萄牙语(葡萄牙)" it="Portoghese (Portogallo)" de="Portugiesisch (Portugal)" />
+    <item name="ਪੰਜਾਬੀ" code="pa" en="Punjabi" es="Punjabi" fr="Punjabi" ja="パンジャーブ語" ko="펀자브어" zh="旁遮普语" it="Panjabi" de="Punjabi" />
+    <item name="Limba română" code="ro" en="Romanian" es="Rumano" fr="Roumain" ja="ルーマニア語" ko="루마니아어" zh="罗马尼亚语" it="Romeno" de="Rumänisch" />
+    <item name="русский язык" code="ru" en="Russian" es="Ruso" fr="Russe" ja="ロシア語" ko="러시아어" zh="俄语" it="Russo" de="Russisch" />
+    <item name="GaganaSāmoa" code="sm" en="Samoan" es="Samoano" fr="Samoan" ja="サモア語" ko="사모아어" zh="萨摩亚语" it="Samoano" de="Samoanisch" />
+    <item name="Gàidhlig na h-Alba" code="gd" en="Scots Gaelic" es="Escocés gaélico" fr="Écossais gaélique" ja="スコットランド・ゲール語" ko="스코틀랜드 게일어" zh="苏格兰盖尔语" it="Gaelico scozzese" de="Schottisch-Gälisch" />
+    <item name="Svenska" code="sv" en="Swedish" es="Sueco" fr="Suédois" ja="スウェーデン語" ko="스웨덴어" zh="瑞典语" it="Svedese" de="Schwedisch" />
+    <item name="српски језик" code="sr" en="Serbian" es="Serbio" fr="Serbe" ja="セルビア語" ko="세르비아어" zh="塞尔维亚语" it="Serbo" de="Serbisch" />
+    <item name="Sesotho" code="st" en="Sesotho" es="Sesotho" fr="Sesotho" ja="ソト語" ko="소토어" zh="塞索托语" it="Sotho del sud" de="Sesotho" />
+    <item name="ChiShona" code="sn" en="Shona" es="Shona" fr="Shona" ja="ショナ語" ko="쇼나어" zh="绍纳语" it="Shona" de="Shona" />
+    <item name="سنڌي" code="sd" en="Sindhi" es="Sindhi" fr="Sindhi" ja="シンド語" ko="신디어" zh="信德语" it="Sindhi" de="Sindhi" />
+    <item name="සිංහල" code="si" en="Sinhala" es="Sinhala" fr="Sinhala" ja="シンハラ語" ko="싱할라어" zh="僧伽罗语" it="Singalese" de="Singhalesisch" />
+    <item name="Slovenský jazyk" code="sk" en="Slovak" es="Eslovaco" fr="Slovaque" ja="スロバキア語" ko="슬로바키아어" zh="斯洛伐克语" it="Slovacco" de="Slowakisch" />
+    <item name="Slovenščina" code="sl" en="Slovenian" es="Esloveno" fr="Slovène" ja="スロベニア語" ko="슬로베니아어" zh="斯洛文尼亚语" it="Sloveno" de="Slowenisch" />
+    <item name="Af Soomaali" code="so" en="Somali" es="Somalí" fr="Somali" ja="ソマリ語" ko="소말리어" zh="索马里语" it="Somalo" de="Somali" />
+    <item name="Español" code="es" en="Spanish(Spain)" es="Español" fr="Espagnol (Espagne)" ja="スペイン語(スペイン)" ko="스페인어(스페인)" zh="西班牙语(西班牙)" it="Spagnolo" de="Spanisch" />
+    <item name="Español(América)" code="es-US" en="Spanish(US)" es="Español (EE. UU.)" fr="Espagnol (États-Unis)" ja="スペイン語(米国)" ko="스페인어(미국)" zh="西班牙语(美国)" it="Spagnola (Stati Uniti d'America)" de="Spanisch (Amerika)" />
+    <item name="Español (Argentina)" code="es-AR" en="Spanish(Argentina)" es="Español (argentina)" fr="Espagnol (Argentine)" ja="スペイン語(アルゼンチン)" ko="스페인어(아르헨티나)" zh="西班牙语(阿根廷)" it="Spagnolo (Argentina)" de="Spanisch (Argentinien)" />
+    <item name="Español(Colombia)" code="es-CO" en="Spanish(Colombia)" es="Español (colombia)" fr="Espagnol (Colombie)" ja="スペイン語(コロンビア)" ko="스페인어(콜롬비아)" zh="西班牙语(哥伦比亚)" it="Spagnolo (Colombia)" de="Spanisch (Kolumbien)" />
+    <item name="Basa Sunda" code="su" en="Sundanese" es="Sundanese" fr="Sundanais" ja="スンダ語" ko="순다어" zh="巽他语" it="Sundanese" de="Sundanesisch" />
+    <item name="Kiswahili" code="sw" en="Swahili" es="Swahili" fr="Swahili" ja="スワヒリ語" ko="스와힐리어" zh="斯瓦希裡语" it="Swahili" de="Swahili" />
+    <item name="тоҷикӣ" code="tg" en="Tajik" es="Tayiko" fr="Tadjik" ja="タジク語" ko="타지크어" zh="塔吉克" it="Tagico" de="Tadschikisch" />
+    <item name="தமிழ் " code="ta" en="Tamil" es="Tamil" fr="Tamil" ja="タミル語" ko="타밀어" zh="泰米尔语" it="Tamil" de="Tamil" />
+    <item name="తెలుగు" code="te" en="Telugu" es="Telugu" fr="Telugu" ja="テルグ語" ko="텔루구어" zh="泰卢固语" it="Telugu" de="Telugu" />
+    <item name="ภาษาไทย" code="th" en="Thai" es="Tailandés" fr="Thaïlandais" ja="タイ語" ko="태국어" zh="泰语" it="Thailandese" de="Thailändisch" />
+    <item name="Čeština" code="cs" en="Czech" es="Checo" fr="Tchèque" ja="チェコ語" ko="체코어" zh="捷克语" it="Ceco" de="Tschechisch" />
+    <item name="Türkçe" code="tr" en="Turkish" es="Turco" fr="Turc" ja="トルコ語" ko="터키어" zh="土耳其语" it="Turco" de="Türkisch" />
+    <item name="Українська мова" code="uk" en="Ukrainian" es="Ucranio" fr="Ukrainien" ja="ウクライナ語" ko="우크라이나어" zh="乌克兰语" it="Ucraino" de="Ukrainisch" />
+    <item name="Magyar nyelv" code="hu" en="Hungarian" es="Húngaro" fr="Hongrois" ja="ハンガリー語" ko="헝가리어" zh="匈牙利语" it="Ungherese" de="Ungarisch" />
+    <item name="اردو" code="ur" en="Urdu" es="Urdu" fr="Urdu" ja="ウルドゥー語" ko="우르두어" zh="乌尔都语" it="Urdu" de="Urdu" />
+    <item name="Oʻzbek tili" code="uz" en="Uzbek" es="Uzbekistán" fr="Ouzbek" ja="ウズベク語" ko="우즈베크어" zh="乌兹别克语" it="Uzbeco" de="Usbekisch" />
+    <item name="Tiếng Việt" code="vi" en="Vietnamese" es="Vietnamita" fr="Vietnamien" ja="ベトナム語" ko="베트남어" zh="越南语" it="Vietnamita" de="Vietnamesisch" />
+    <item name="Cymraeg" code="cy" en="Welsh" es="Galés" fr="Gallois" ja="ウェールズ語" ko="웨일스어" zh="威尔士语" it="Gallese" de="Walisisch" />
+    <item name="Беларуская мова" code="be" en="Belarusian" es="Bielorruso" fr="Biélorusse" ja="ベラルーシ語" ko="벨라루스어" zh="白俄罗斯语" it="Bielorusso" de="Weißrussisch" />
+    <item name="Xhosa" code="xh" en="Xhosa" es="Xhosa" fr="Xhosa" ja="コーサ語" ko="코사어" zh="科萨语" it="Xhosa" de="Xhosa" />
+    <item name="èdè Yorùbá" code="yo" en="Yoruba" es="Yoruba" fr="Yoruba" ja="ヨルバ語" ko="요루바어" zh="约鲁巴语" it="Yoruba" de="Yoruba" />
+    <item name="isiZulu" code="zu" en="Zulu" es="Zulú" fr="Zoulou" ja="ズールー語" ko="줄루어" zh="祖鲁语" it="Zulu" de="Zulu" />
+</language>
+
+

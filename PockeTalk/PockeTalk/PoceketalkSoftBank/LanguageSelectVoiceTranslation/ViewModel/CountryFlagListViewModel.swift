@@ -9,25 +9,22 @@ class CountryFlagListViewModel: BaseModel{
     var countryList = [CountryListItemElement]()
 
     override init() {
-        print("\(CountryFlagListViewModel.self) init called")
-        //loadCountryDataFromJson()
+        PrintUtility.printLog(tag: "\(CountryFlagListViewModel.self)", text: "init called")
     }
 
-    ///Get data from JSON
     func loadCountryDataFromJsonbyCode(countryCode: String) -> CountryList?{
-        print("\(CountryFlagListViewModel.self) loadCountryDataFromJson called")
-        //let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
-        let mLanguageFile = "\(countryConversationFileNamePrefix)\(countryCode)"
-        print("\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
+        let convertedCountryCode = GlobalMethod.getAlternativeSystemLanguageCode(of: countryCode)
+        let mLanguageFile = "\(countryConversationFileNamePrefix)\(convertedCountryCode)"
+        
         if let url = Bundle.main.url(forResource: mLanguageFile, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CountryList.self, from: data) as CountryList
-                print("\(CountryFlagListViewModel.self) countrylist \(jsonData.countryList.count) first-item \(String(describing: jsonData.countryList.first?.countryName))")
+                PrintUtility.printLog(tag: "\(CountryFlagListViewModel.self)", text: "\(CountryFlagListViewModel.self) countrylist \(jsonData.countryList.count) first-item \(String(describing: jsonData.countryList.first?.countryName))")
                 return jsonData
             } catch {
-                print("error:\(error)")
+                PrintUtility.printLog(tag: "\(CountryFlagListViewModel.self)", text: "error:\(error)")
                 return nil
             }
         }

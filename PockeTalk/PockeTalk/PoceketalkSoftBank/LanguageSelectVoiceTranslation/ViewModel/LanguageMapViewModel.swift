@@ -7,9 +7,8 @@ import SwiftyXMLParser
 
 public class LanguageMapViewModel{
     public static let sharedInstance: LanguageMapViewModel = LanguageMapViewModel()
-    let TAG = "\(LanguageMapViewModel.self)"
-    var fileName = "language_mapping_by_voice"
-    //var systemLanguageCode = "en"
+    private let TAG = "\(LanguageMapViewModel.self)"
+    private let fileName = "language_mapping_by_voice"
 
     fileprivate func parseXmlAndStoreToDb() {
         if let row = try? LanguageMapDBModel().getRowCount(){
@@ -44,12 +43,9 @@ public class LanguageMapViewModel{
         }
     }
 
-    ///Get data from XML
     public func storeLanguageMapDataToDB(){
-
         PrintUtility.printLog(tag: TAG,text: "getdata for \(fileName)")
         DispatchQueue.global(qos: .background).async {
-            //background code
             self.parseXmlAndStoreToDb()
             DispatchQueue.main.async { [self] in
                 PrintUtility.printLog(tag: TAG,text: "data storing is completed for \(self.fileName)")
@@ -68,7 +64,8 @@ public class LanguageMapViewModel{
 
     func findTextFromDb(languageCode: String, text: String) -> BaseEntity?{
         PrintUtility.printLog(tag: TAG, text: "Searching for languageCode \(String(describing: languageCode)) text \(String(describing: text))")
-        let item = try? LanguageMapDBModel().find(languageCode: languageCode, text: text) as? LanguageMapEntity
+        let srcLanguageCode = GlobalMethod.getAlternativeSystemLanguageCode(of: languageCode)
+        let item = try? LanguageMapDBModel().find(languageCode: srcLanguageCode, text: text) as? LanguageMapEntity
         PrintUtility.printLog(tag: TAG, text: "Found item.code \(String(describing: item?.textCode)) target \(String(describing: item?.textCodeTr))")
         return item
     }

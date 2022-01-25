@@ -17,7 +17,20 @@ class CameraLanguageSelectionViewModel:BaseModel{
     }
     private var mDefaultLanguageFile = "default_languages"
     private var mCameraLanguageCodes = [String]()
-    private var autoRecognitionNames = ["en": "Automatic Recognition", "ja": "自動認識"]
+    private var autoRecognitionNames = [SystemLanguageCode.en.rawValue: "Automatic Recognition",
+                                        SystemLanguageCode.ja.rawValue: "自動認識",
+                                        SystemLanguageCode.de.rawValue: "Automatische Erkennung",
+                                        SystemLanguageCode.es.rawValue: "Reconocimiento automático",
+                                        SystemLanguageCode.fr.rawValue: "Reconnaissance automatique",
+                                        SystemLanguageCode.it.rawValue: "Riconoscimento automatico",
+                                        SystemLanguageCode.ko.rawValue: "자동 인식",
+                                        SystemLanguageCode.ms.rawValue: "Pengecaman Automatik",
+                                        SystemLanguageCode.ptPT.rawValue: "Reconhecimento Automático",
+                                        SystemLanguageCode.ru.rawValue: "Автоматическое распознавание",
+                                        SystemLanguageCode.th.rawValue:"ระบบตรวจจับอัตโนมัติ",
+                                        SystemLanguageCode.zhHans.rawValue: "自动识别",
+                                        SystemLanguageCode.zhHant.rawValue: "自動辨識"
+    ]
 
     struct DetectionCodes: Codable {
         let detectionCodes: [String]
@@ -88,15 +101,22 @@ class CameraLanguageSelectionViewModel:BaseModel{
 
     public func getFromLanguageLanguageList() -> [LanguageItem]{
         PrintUtility.printLog(tag: TAG,text: " item-code getLanguageSelectionCameraData")
-        let autoRecogItem: LanguageItem?
         detectedLanguageItemsCamera.removeAll()
-        if(LanguageManager.shared.currentLanguage.rawValue == systemLanguageCodeEN){
-            autoRecogItem = LanguageItem(name: autoRecognitionNames["en"]!, code: mCameraLanguageCodes[0], englishName: autoRecognitionNames["en"]!, sysLangName: autoRecognitionNames["en"]!)
-            detectedLanguageItemsCamera.append(autoRecogItem!)
-        }else if(LanguageManager.shared.currentLanguage.rawValue == systemLanguageCodeJP){
-            autoRecogItem = LanguageItem(name: autoRecognitionNames["en"]!, code: mCameraLanguageCodes[0], englishName: autoRecognitionNames["en"]!, sysLangName: autoRecognitionNames["ja"]!)
-            detectedLanguageItemsCamera.append(autoRecogItem!)
-        }
+        
+        let currentLangCode = LanguageManager.shared.currentLanguage.rawValue
+        let englishLangCode = autoRecognitionNames[systemLanguageCodeEN] ?? ""
+        let firstCameraLangCode = mCameraLanguageCodes[0]
+        let systemLangCode = autoRecognitionNames[currentLangCode] ?? ""
+        
+        let autoRecogItem = LanguageItem(
+            name: englishLangCode,
+            code: firstCameraLangCode,
+            englishName: englishLangCode,
+            sysLangName: systemLangCode
+        )
+        
+        detectedLanguageItemsCamera.append(autoRecogItem)
+        
         for item in LanguageSelectionManager.shared.languageItems{
             PrintUtility.printLog(tag: TAG,text: "item-code \(item.code) camra-contains \(mCameraLanguageCodes.contains(item.code))")
             if mCameraLanguageCodes.contains(item.code){
@@ -169,12 +189,20 @@ class CameraLanguageSelectionViewModel:BaseModel{
     func findLanugageCodeAndSelect(_ text: String) {
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
-        let stringFromSpeech = text.replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range: nil)
+        var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        if systemLanguage == SystemLanguageCode.ru.rawValue{
+            stringFromSpeech = stringFromSpeech.capitalizingFirstLetter()
+        }
+        
         let codeFromLanguageMap = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: systemLanguage, text: stringFromSpeech) as? LanguageMapEntity
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates stringFromSpeech \(stringFromSpeech) codeFromLanguageMap = \(String(describing: codeFromLanguageMap?.textCodeTr))")
+        
         if let langCode = codeFromLanguageMap?.textCodeTr{
             let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
-            UserDefaultsProperty<String>(KSelectedLanguageCamera).value = langItem?.code
+            if langItem != nil {
+                UserDefaultsProperty<String>(KSelectedLanguageCamera).value = langItem?.code
+            }
         }
     }
 }

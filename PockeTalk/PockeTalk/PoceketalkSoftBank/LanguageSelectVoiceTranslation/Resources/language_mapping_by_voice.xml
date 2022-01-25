@@ -230,4 +230,1269 @@
     <item code="en" code_tr="yi" val1="Ideh" val2="Yiddish" />
     <item code="en" code_tr="yo" val1="Yoruba" />
     <item code="en" code_tr="zu" val1="Zulu" />
+    <item code="ko" code_tr="af" val1="아프리칸스어" />
+    <item code="ko" code_tr="sq" val1="알바니아" val2="알바니아어" />
+    <item code="ko" code_tr="am" val1="암하라" val2="암하라 어" />
+    <item code="ko" code_tr="ar" val1="아랍어" />
+    <item code="ko" code_tr="hy" val1="아르메니아" val2="아르메니아어" />
+    <item code="ko" code_tr="az" val1="아제르바이잔" val2="아제르바이잔 어" />
+    <item code="ko" code_tr="eu" val1="바스크어" />
+    <item code="ko" code_tr="be" val1="벨라루스" val2="벨로루시 어" />
+    <item code="ko" code_tr="bn" val1="벵골" val2="벵골어" />
+    <item code="ko" code_tr="bs" val1="보스니아" val2="보스니아 어" />
+    <item code="ko" code_tr="bg" val1="불가리아" val2="불가리아어" />
+    <item code="ko" code_tr="my" val1="미얀마" val2="버마" val3="미얀마어" val4="버마어" />
+    <item code="ko" code_tr="yue" val1="광동" val2="광동어" />
+    <item code="ko" code_tr="ca" val1="카탈로니아" val2="카탈로니아 어" />
+    <item code="ko" code_tr="ceb" val1="세부 아노" val2="세부 아 노어" />
+    <item code="ko" code_tr="ny" val1="치체" val2="치체와 어" val3="니안" />
+    <item code="ko" code_tr="zh-CN" val1="중국" val2="간체" val3="베이징" val4="북경어" />
+    <item code="ko" code_tr="zh-TW" val1="중국" val2="번체" val3="대만" val4="홍콩" />
+    <item code="ko" code_tr="co" val1="코르시카 어" val2="코르시카" />
+    <item code="ko" code_tr="hr" val1="크로아티아" val2="크로아티아어" />
+    <item code="ko" code_tr="cs" val1="체코" val2="체코 어" />
+    <item code="ko" code_tr="da" val1="덴마크" val2="덴마크어" />
+    <item code="ko" code_tr="nl" val1="네덜란드" />
+    <item code="ko" code_tr="en" val1="영어" val2="미국" />
+    <item code="ko" code_tr="en-SO" val1="영어" val2="미국" val3="천천히"/>
+    <item code="ko" code_tr="en-GB" val1="영국" />
+    <item code="ko" code_tr="en-IN" val1="인도" val2="인도 영어" />
+    <item code="ko" code_tr="en-AU" val1="호주" />
+    <item code="ko" code_tr="en-PH" val1="영어" val2="필리핀" />
+    <item code="ko" code_tr="eo" val1="에스페란토" />
+    <item code="ko" code_tr="et" val1="에스토니아" val2="에스토니아어" />
+    <item code="ko" code_tr="tl" val1="필리핀" val2="필리핀어" val3="타갈로그어" val4="필리핀어" val5="필리핀어" val6="타갈로그어" />
+    <item code="ko" code_tr="fi" val1="핀란드" val2="핀란드어" />
+    <item code="ko" code_tr="fr" val1="프랑스" val2="프렌치" val3="프랑스어" />
+    <item code="ko" code_tr="fr-CA" val1="캐나다" val2="캐나다 어" />
+    <item code="ko" code_tr="fy" val1="프리지아" val2="프리지아 어" />
+    <item code="ko" code_tr="gl" val1="갈리시아어" />
+    <item code="ko" code_tr="ka" val1="조지아 어" val2="그루지야 어" val3="조지아" val4="그루지야" />
+    <item code="ko" code_tr="de" val1="독일" />
+    <item code="ko" code_tr="el" val1="그리스" val2="그리스어" />
+    <item code="ko" code_tr="gu" val1="구자라트" val2="구자라트 어" />
+    <item code="ko" code_tr="ht" val1="아이티" val2="티어" val3="크리올 어" val4="크리올" val5="아이티 크리올" />
+    <item code="ko" code_tr="ha" val1="하우" val2="하우 사어" />
+    <item code="ko" code_tr="haw" val1="하와이" val2="하와이 어" />
+    <item code="ko" code_tr="iw" val1="히브리어" />
+    <item code="ko" code_tr="hi" val1="힌디어" />
+    <item code="ko" code_tr="hmn" val1="몽" val2="티베트어" val3="미아오" val4="몽어" />
+    <item code="ko" code_tr="hu" val1="헝가리" val2="헝가리어" />
+    <item code="ko" code_tr="is" val1="아이슬란드" val2="아이슬란드 어" />
+    <item code="ko" code_tr="ig" val1="사마귀" val2="이보 어" val3="이구보" val4="이구보 어" />
+    <item code="ko" code_tr="id" val1="인도네시아" val2="인도네시아어" />
+    <item code="ko" code_tr="ga" val1="아일랜드" val2="아일랜드어" />
+    <item code="ko" code_tr="it" val1="이탈리아" val2="이태리어" />
+    <item code="ko" code_tr="ja" val1="일본어" val2="일본" val3="재팬" val4="일본" />
+    <item code="ko" code_tr="jw" val1="자바" val2="자바어" />
+    <item code="ko" code_tr="kn" val1="칸나다어" />
+    <item code="ko" code_tr="kk" val1="카자흐어" />
+    <item code="ko" code_tr="km" val1="크메르" val2="크메르어" />
+    <item code="ko" code_tr="ko" val1="한국" val3="조선" val4="조선어" />
+    <item code="ko" code_tr="ku" val1="쿠르드" val2="쿠르드어" />
+    <item code="ko" code_tr="ky" val1="키르기스스탄" val2="키르기스 어" />
+    <item code="ko" code_tr="lo" val1="라오" val2="라오 어" val3="라오스" val4="라오스 어" />
+    <item code="ko" code_tr="la" val1="라틴" val2="라틴어" />
+    <item code="ko" code_tr="lv" val1="라트비아" val2="라트비아어" />
+    <item code="ko" code_tr="lt" val1="리투아니아" val2="리투아니아어" />
+    <item code="ko" code_tr="lb" val1="룩셈부르크 공국" val2="룩셈부르크 어" val3="룩셈부르크" />
+    <item code="ko" code_tr="mk" val1="마케도니아" val2="마케도니아 어" />
+    <item code="ko" code_tr="mg" val1="마라가시" val2="마라가시 어" val3="마다가스카르" val4="마다가스카르 어" />
+    <item code="ko" code_tr="ms" val1="머레이" val2="말레이어" />
+    <item code="ko" code_tr="ml" val1="말라 얄" val2="말라 얄 람어" />
+    <item code="ko" code_tr="mt" val1="몰타" val2="몰타어" />
+    <item code="ko" code_tr="mi" val1="마오리" val2="마오리어" />
+    <item code="ko" code_tr="mr" val1="마라티" val2="마라티 어" />
+    <item code="ko" code_tr="mn" val1="몽골" val2="몽골어" />
+    <item code="ko" code_tr="ne" val1="네팔" val2="네팔어" />
+    <item code="ko" code_tr="no" val1="노르웨이" val2="노르웨이어" />
+    <item code="ko" code_tr="ps" val1="파슈토어" val2="바슈토 어" val3="빠슈투스" val4="빠슈투스 어" />
+    <item code="ko" code_tr="fa" val1="페르시아" val2="페르시아어" val3="페르시아어" val4="페르시아어" />
+    <item code="ko" code_tr="pl" val1="폴란드" val2="폴란드어" />
+    <item code="ko" code_tr="pt" val1="포르투갈" val2="포르투갈어" />
+    <item code="ko" code_tr="pt-BR" val1="브라질" val2="브라질어" />
+    <item code="ko" code_tr="pa" val1="펀잡" val2="펀자 브어" />
+    <item code="ko" code_tr="ro" val1="루마니아" val2="루마니아어" />
+    <item code="ko" code_tr="ru" val1="러시아" val2="러시아어" />
+    <item code="ko" code_tr="sm" val1="사모아" val2="사모아 어" />
+    <item code="ko" code_tr="gd" val1="스코틀랜드 게 일어" />
+    <item code="ko" code_tr="sr" val1="세르비아" val2="세르비아어" />
+    <item code="ko" code_tr="st" val1="소토" val2="소토 어" val3="세소토" val4="세소토 어" />
+    <item code="ko" code_tr="sn" val1="쇼나" val2="쇼나 어" />
+    <item code="ko" code_tr="sd" val1="신드 어" val2="신디 어" val3="신디" val4="신드" />
+    <item code="ko" code_tr="si" val1="싱 할라 어" val2="싱 할라" />
+    <item code="ko" code_tr="sk" val1="슬로바키아" val2="슬로바키아어" />
+    <item code="ko" code_tr="sl" val1="슬로베니아" val2="슬로베니아어" />
+    <item code="ko" code_tr="so" val1="소말리아" val2="소말리아 어" />
+    <item code="ko" code_tr="es" val1="스페인" val2="스페인어" />
+    <item code="ko" code_tr="es-US" val1="스팽글 리시" />
+    <item code="ko" code_tr="es-CO" val1="콜롬비아" val2="콜롬비아 어" />
+    <item code="ko" code_tr="es-AR" val1="아르헨티나" val2="아르헨티나 어" />
+    <item code="ko" code_tr="su" val1="순다" val2="순 다어" />
+    <item code="ko" code_tr="sw" val1="스와힐리어" />
+    <item code="ko" code_tr="sv" val1="스웨덴" val2="스웨덴어" />
+    <item code="ko" code_tr="tg" val1="타지키스탄" val2="타지크 어" />
+    <item code="ko" code_tr="ta" val1="타밀" val2="타밀어" />
+    <item code="ko" code_tr="te" val1="텔루구" val2="텔루구 어" />
+    <item code="ko" code_tr="th" val1="타이" val2="타이어" />
+    <item code="ko" code_tr="tr" val1="터키" val2="터키어" />
+    <item code="ko" code_tr="uk" val1="우크라이나" val2="우크라이나어" />
+    <item code="ko" code_tr="ur" val1="우르두어" />
+    <item code="ko" code_tr="uz" val1="우즈베크" val2="우즈벡어" val3="우즈베키스탄" val4="우즈베키스탄 어" />
+    <item code="ko" code_tr="vi" val1="베트남" val2="베트남어" />
+    <item code="ko" code_tr="cy" val1="웨일즈" val2="웨일스 어" />
+    <item code="ko" code_tr="xh" val1="코사" val2="코사 어" />
+    <item code="ko" code_tr="yi" val1="이뎃슈" val2="이디시어" />
+    <item code="ko" code_tr="yo" val1="요 루바" val2="요 루바 어" />
+    <item code="ko" code_tr="zu" val1="줄루" val2="줄 루어" />
+    <item code="zh" code_tr="af" val1="南非荷兰语" val2="非洲语" val3="斐语" val4="阿非利卡语" />
+    <item code="zh" code_tr="sq" val1="阿尔巴尼亚" val2="阿尔巴尼亚人" />
+    <item code="zh" code_tr="am" val1="阿姆哈拉" val2="阿姆哈拉语" />
+    <item code="zh" code_tr="ar" val1="阿拉伯" val2="阿拉伯语" />
+    <item code="zh" code_tr="hy" val1="亚美尼亚" val2="亚美尼亚语" />
+    <item code="zh" code_tr="az" val1="阿塞拜疆" val2="阿塞拜疆语" />
+    <item code="zh" code_tr="eu" val1="巴斯克" val2="巴斯克语" />
+    <item code="zh" code_tr="be" val1="白俄罗斯" val2="白俄罗斯语" />
+    <item code="zh" code_tr="bn" val1="孟加拉" val2="孟加拉语" />
+    <item code="zh" code_tr="bs" val1="波斯尼亚" val2="波斯尼亚语" />
+    <item code="zh" code_tr="bg" val1="保加利亚" val2="保加利亚语" />
+    <item code="zh" code_tr="my" val1="缅甸" val2="缅甸语" />
+    <item code="zh" code_tr="yue" val1="广州" val2="广东话" val3="粤语" />
+    <item code="zh" code_tr="ca" val1="加泰罗尼亚" val2="加泰罗尼亚语" />
+    <item code="zh" code_tr="ceb" val1="宿务" val2="米沙鄢语" />
+    <item code="zh" code_tr="ny" val1="奇切瓦" val2="馬拉維语" val3="尼扬贾文" />
+    <item code="zh" code_tr="zh-CN" val1="中文" val2="简体中文" val3="中文简体" />
+    <item code="zh" code_tr="zh-TW" val1="中文" val2="繁体中文" val3="中文繁体" />
+    <item code="zh" code_tr="co" val1="科西嘉" val2="科西嘉语" />
+    <item code="zh" code_tr="hr" val1="克罗地亚" val2="克罗地亚语" />
+    <item code="zh" code_tr="cs" val1="捷克共和国" val2="捷克" val3="捷克语" />
+    <item code="zh" code_tr="da" val1="丹麦" val2="丹麦语" />
+    <item code="zh" code_tr="nl" val1="荷兰" val2="荷兰人" val3="荷兰语" />
+    <item code="zh" code_tr="en" val1="英语" val2="美国" val3="美式英语" />
+    <item code="zh" code_tr="en-SO" val1="英语" val2="美国" val3="美式英语" val4="慢速" />
+    <item code="zh" code_tr="en-GB" val1="英国" val2="英式英语" />
+    <item code="zh" code_tr="en-IN" val1="印度" val2="印度英语" />
+    <item code="zh" code_tr="en-AU" val1="澳大利亚" val2="澳洲英语" />
+    <item code="zh" code_tr="en-PH" val1="英语" val2="菲律宾" />
+    <item code="zh" code_tr="eo" val1="世界语" val2="希望语" />
+    <item code="zh" code_tr="et" val1="爱沙尼亚" val2="爱沙尼亚语" />
+    <item code="zh" code_tr="tl" val1="菲律宾" val2="菲律賓语" val3="他加禄语" val4="菲律宾" val5="他加禄语" />
+    <item code="zh" code_tr="fi" val1="芬兰" val2="芬兰语" />
+    <item code="zh" code_tr="fr" val1="法国" val2="法语" val3="法国" />
+    <item code="zh" code_tr="fr-CA" val1="加拿大" val2="加拿大语言" val3="加拿大法语" />
+    <item code="zh" code_tr="fy" val1="弗里斯兰" val2="西弗里西亚" val3="弗里斯语" val4="弗里西语" />
+    <item code="zh" code_tr="gl" val1="加利西亚" />
+    <item code="zh" code_tr="ka" val1="格鲁吉亚话" val2="格鲁吉亚语" val3="格鲁吉亚" />
+    <item code="zh" code_tr="de" val1="德国" val2="德语" />
+    <item code="zh" code_tr="el" val1="希腊" val2="希腊语" />
+    <item code="zh" code_tr="gu" val1="古吉拉特邦" val2="古吉拉特语" />
+    <item code="zh" code_tr="ht" val1="海地" val2="克里奥尔语" val3="海地克里奥尔语" />
+    <item code="zh" code_tr="ha" val1="豪萨语" />
+    <item code="zh" code_tr="haw" val1="夏威夷" val2="夏威夷语" />
+    <item code="zh" code_tr="iw" val1="希伯来语" />
+    <item code="zh" code_tr="hi" val1="印地文" val2="印地语" val3="北印度语" />
+    <item code="zh" code_tr="hmn" val1="蒙特" val2="苗族" val3="苗" val4="苗族语言" />
+    <item code="zh" code_tr="hu" val1="匈牙利" val2="马扎尔语" />
+    <item code="zh" code_tr="is" val1="冰岛" val2="冰岛语" />
+    <item code="zh" code_tr="ig" val1="疣" val2="伊博语" val3="伊博" />
+    <item code="zh" code_tr="id" val1="印度尼西亚" val2="印尼语" />
+    <item code="zh" code_tr="ga" val1="爱尔兰" val2="爱尔兰的" />
+    <item code="zh" code_tr="it" val1="意大利" val2="意大利语" />
+    <item code="zh" code_tr="ja" val1="日本" val2="日语" />
+    <item code="zh" code_tr="jw" val1="爪哇" val2="爪哇语" />
+    <item code="zh" code_tr="kn" val1="卡纳达语" />
+    <item code="zh" code_tr="kk" val1="哈萨克人" val2="哈萨克语" />
+    <item code="zh" code_tr="km" val1="高棉" val2="高棉语" />
+    <item code="zh" code_tr="ko" val1="韩国" val2="朝鲜的" val3="南韩" val4="北朝鲜" />
+    <item code="zh" code_tr="ku" val1="库尔德人" />
+    <item code="zh" code_tr="ky" val1="吉尔吉斯斯坦" val2="吉尔吉斯人" />
+    <item code="zh" code_tr="lo" val1="饶" val2="老挝" val3="老挝" val4="老挝" />
+    <item code="zh" code_tr="la" val1="拉丁" val2="拉丁文" val3="拉丁语" />
+    <item code="zh" code_tr="lv" val1="拉脱维亚" />
+    <item code="zh" code_tr="lt" val1="立陶宛" val2="立陶宛语" />
+    <item code="zh" code_tr="lb" val1="卢森堡公国" val2="卢森堡" val3="卢森堡" />
+    <item code="zh" code_tr="mk" val1="马其顿" />
+    <item code="zh" code_tr="mg" val1="马尔加什" val2="马达加斯加" val3="马尔加什" />
+    <item code="zh" code_tr="ms" val1="穆雷" val2="马来语" />
+    <item code="zh" code_tr="ml" val1="马拉雅拉姆语" />
+    <item code="zh" code_tr="mt" val1="马耳他" val2="马耳他语" />
+    <item code="zh" code_tr="mi" val1="毛利" val2="毛利语" />
+    <item code="zh" code_tr="mr" val1="Marati" val2="马拉地语" />
+    <item code="zh" code_tr="mn" val1="蒙古" val2="蒙古语" />
+    <item code="zh" code_tr="ne" val1="尼泊尔" val2="尼泊尔语" />
+    <item code="zh" code_tr="no" val1="挪威" val2="挪威语" />
+    <item code="zh" code_tr="ps" val1="普什图语" />
+    <item code="zh" code_tr="fa" val1="波斯语" val2="波斯" val3="波斯语" val4="波斯语" />
+    <item code="zh" code_tr="pl" val1="波兰" val2="波兰语" />
+    <item code="zh" code_tr="pt" val1="葡萄牙" val2="葡萄牙语" />
+    <item code="zh" code_tr="pt-BR" val1="巴西" val2="巴西人" />
+    <item code="zh" code_tr="pa" val1="旁遮普" val2="旁遮普语" />
+    <item code="zh" code_tr="ro" val1="罗马尼亚" />
+    <item code="zh" code_tr="ru" val1="俄罗斯" val2="俄语" />
+    <item code="zh" code_tr="sm" val1="萨摩亚" />
+    <item code="zh" code_tr="gd" val1="苏格兰盖尔语" val2="苏格兰大风" />
+    <item code="zh" code_tr="sr" val1="塞尔维亚" val2="塞尔维亚语" />
+    <item code="zh" code_tr="st" val1="索托" val2="塞索托语" />
+    <item code="zh" code_tr="sn" val1="绍纳语" val2="修納语" />
+    <item code="zh" code_tr="sd" val1="信德" val2="辛迪语言" val3="辛迪" val4="信德" />
+    <item code="zh" code_tr="si" val1="僧伽罗语" />
+    <item code="zh" code_tr="sk" val1="斯洛伐克" />
+    <item code="zh" code_tr="sl" val1="斯洛文尼亚" />
+    <item code="zh" code_tr="so" val1="索马里" val2="索马里语" />
+    <item code="zh" code_tr="es" val1="西班牙" val2="西班牙语" />
+    <item code="zh" code_tr="es-US" val1="美国西班牙语" />
+    <item code="zh" code_tr="es-CO" val1="哥伦比亚" val2="哥伦比亚西班牙语" />
+    <item code="zh" code_tr="es-AR" val1="阿根廷" val2="阿根廷语言" />
+    <item code="zh" code_tr="su" val1="巽" val2="巽他语" />
+    <item code="zh" code_tr="sw" val1="斯瓦希里" />
+    <item code="zh" code_tr="sv" val1="瑞典" val2="瑞典语" />
+    <item code="zh" code_tr="tg" val1="塔吉克" />
+    <item code="zh" code_tr="ta" val1="泰米尔人" val2="泰米尔语" />
+    <item code="zh" code_tr="te" val1="泰卢固语" />
+    <item code="zh" code_tr="th" val1="泰国" val2="泰语" />
+    <item code="zh" code_tr="tr" val1="土耳其" />
+    <item code="zh" code_tr="uk" val1="乌克兰" val2="乌克兰语" />
+    <item code="zh" code_tr="ur" val1="乌尔都语" />
+    <item code="zh" code_tr="uz" val1="乌兹别克" val2="乌兹别克斯坦" val3="乌兹别克语" />
+    <item code="zh" code_tr="vi" val1="越南" val2="越南语" />
+    <item code="zh" code_tr="cy" val1="威尔士" val2="威尔斯语" />
+    <item code="zh" code_tr="xh" val1="科萨" />
+    <item code="zh" code_tr="yi" val1="易碎语" val2="意第绪语" val3="意第绪语" />
+    <item code="zh" code_tr="yo" val1="约鲁巴" />
+    <item code="zh" code_tr="zu" val1="祖鲁" />
+    <item code="es" code_tr="af" val1="Afrikaans" />
+    <item code="es" code_tr="sq" val1="Albania" val2="Albanés" />
+    <item code="es" code_tr="am" val1="Amhara" val2="Amárico" />
+    <item code="es" code_tr="ar" val1="Arabia" val2="Árabe" />
+    <item code="es" code_tr="hy" val1="Armenia" val2="Armenio" />
+    <item code="es" code_tr="az" val1="Azerbaiyán" val2="Azerbaiyano" />
+    <item code="es" code_tr="eu" val1="Vasco" val2="Euskera" />
+    <item code="es" code_tr="be" val1="Belarús" val2="Bielorruso" />
+    <item code="es" code_tr="bn" val1="Bengala" val2="Idioma bengalí" />
+    <item code="es" code_tr="bs" val1="Bosnia" val2="Bosnio" />
+    <item code="es" code_tr="bg" val1="Bulgaria" val2="Búlgaro" />
+    <item code="es" code_tr="my" val1="Myanmar" val2="Birmania" val3="Myanmar" val4="Birmano" />
+    <item code="es" code_tr="yue" val1="Guangdong" val2="Cantonés" />
+    <item code="es" code_tr="ca" val1="Catalunya" val2="Lengua catalana" />
+    <item code="es" code_tr="ceb" val1="Cebuano" />
+    <item code="es" code_tr="ny" val1="Chewa" val3="Nyanka" val4="Nyanja" />
+    <item code="es" code_tr="zh-CN" val1="China" val2="Chino" val3="Chino simplificado" val4="Pekín" val5="Mandarín" />
+    <item code="es" code_tr="zh-TW" val1="China" val2="Chino" val3="Chino tradicional" val4="Taiwan" val5="Hong Kong" val6="Macau" />
+    <item code="es" code_tr="co" val1="Corso" val2="Córcega" />
+    <item code="es" code_tr="hr" val1="Croacia" val2="Croata" />
+    <item code="es" code_tr="cs" val1="Checo" />
+    <item code="es" code_tr="da" val1="Dinamarca" val2="Danés" />
+    <item code="es" code_tr="nl" val1="Países Bajos" val2="Holandés" />
+    <item code="es" code_tr="en" val1="Inglés" val2="América" />
+    <item code="es" code_tr="en-SO" val1="Inglés" val2="América" val3="despacio" />
+    <item code="es" code_tr="en-GB" val1="Reino Unido" />
+    <item code="es" code_tr="en-IN" val1="India" val2="Inglés indio" />
+    <item code="es" code_tr="en-AU" val1="Australia" />
+    <item code="es" code_tr="en-PH" val1="Inglés" val2="Filipinas" />
+    <item code="es" code_tr="eo" val1="Esperanto" />
+    <item code="es" code_tr="et" val1="Estonia" val2="Estonio" />
+    <item code="es" code_tr="tl" val1="Filipinas" val2="Filipino" val3="Tagalo" val4="Filipino" val5="Filipino" val6="Tagalo" />
+    <item code="es" code_tr="fi" val1="Finlandia" val2="Finlandés" />
+    <item code="es" code_tr="fr" val1="Francia" val2="Francés" val3="Francés" />
+    <item code="es" code_tr="fr-CA" val1="Canadá" val2="Canadiense" />
+    <item code="es" code_tr="fy" val1="Frisia" val2="Frisón occidental" />
+    <item code="es" code_tr="gl" val1="Galicia" val2="Gallego" />
+    <item code="es" code_tr="ka" val1="Georgiano" val2="Idioma georgiano" val3="Georgia" val4="Georgia" />
+    <item code="es" code_tr="de" val1="Alemania" val2="Alemán" />
+    <item code="es" code_tr="el" val1="Grecia" val2="Griego" />
+    <item code="es" code_tr="gu" val1="Gujarat" val2="Gujarati" />
+    <item code="es" code_tr="ht" val1="Haití" val2="Haitiano" val3="Lengua criolla" val4="Criollo" val5="Criollo haitiano" />
+    <item code="es" code_tr="ha" val1="Hausa" val2="Idioma Hausa" />
+    <item code="es" code_tr="haw" val1="Hawai" val2="Hawaiano" />
+    <item code="es" code_tr="iw" val1="Hebreo" />
+    <item code="es" code_tr="hi" val1="Hindi" />
+    <item code="es" code_tr="hmn" val1="Lunes" val2="Monje" val3="Miao" />
+    <item code="es" code_tr="hu" val1="Hungría" val2="Húngaro" />
+    <item code="es" code_tr="is" val1="Islandia" val2="Islandés" />
+    <item code="es" code_tr="ig" val1="Verruga" val2="Lenguaje Igbo" val3="Igbo" />
+    <item code="es" code_tr="id" val1="Indonesia" val2="Indonesio" />
+    <item code="es" code_tr="ga" val1="Irlanda" val2="Irlandés" />
+    <item code="es" code_tr="it" val1="Italia" val2="Italiano" />
+    <item code="es" code_tr="ja" val1="Japonés" val2="Japón" val3="Japón" />
+    <item code="es" code_tr="jw" val1="Java" val2="Javanés" />
+    <item code="es" code_tr="kn" val1="Canadá" val2="Kannada" />
+    <item code="es" code_tr="kk" val1="Kazajo" val2="Idioma kazajo" />
+    <item code="es" code_tr="km" val1="Khmer" val2="Idioma Khmer" />
+    <item code="es" code_tr="ko" val1="Corea" val2="Coreano" val3="Corea" val4="Coreano" />
+    <item code="es" code_tr="ku" val1="Kurdo" />
+    <item code="es" code_tr="ky" val1="Kirguistán" val2="Kirguiso" />
+    <item code="es" code_tr="lo" val1="Lao" val3="Laos" val4="Lao" />
+    <item code="es" code_tr="la" val1="Latín" />
+    <item code="es" code_tr="lv" val1="Letonia" val2="Letón" />
+    <item code="es" code_tr="lt" val1="Lituania" val2="Lituano" />
+    <item code="es" code_tr="lb" val1="Ducado de Luxemburgo" val2="Luxemburgués" val3="Luxemburgo" />
+    <item code="es" code_tr="mk" val1="Macedonia" val2="Macedonio" />
+    <item code="es" code_tr="mg" val1="Malagashi" val2="Malagasi" val3="Madagascar" val4="Madagascar" />
+    <item code="es" code_tr="ms" val1="Murray" val2="Lenguaje malayo" />
+    <item code="es" code_tr="ml" val1="Malayalam" />
+    <item code="es" code_tr="mt" val1="Malta" val2="Maltés" />
+    <item code="es" code_tr="mi" val1="Maorí" val2="Lengua maorí" />
+    <item code="es" code_tr="mr" val1="Marati" val2="Marathi" />
+    <item code="es" code_tr="mn" val1="Mongolia" val2="Idioma mongol" />
+    <item code="es" code_tr="ne" val1="Nepal" val2="Nepalí" />
+    <item code="es" code_tr="no" val1="Noruega" val2="Noruego" />
+    <item code="es" code_tr="ps" val1="Pashto" val2="Bashut" val3="Pashto" val4="Pashto" />
+    <item code="es" code_tr="fa" val1="Persia" val3="Persa" val4="Idioma persa" />
+    <item code="es" code_tr="pl" val1="Polonia" val2="Polaco" />
+    <item code="es" code_tr="pt" val1="Portugués" />
+    <item code="es" code_tr="pt-BR" val1="Brasil" val2="Brasileño" />
+    <item code="es" code_tr="pa" val1="Punjab" val2="Punjabi" />
+    <item code="es" code_tr="ro" val1="Rumania" val2="Rumano" />
+    <item code="es" code_tr="ru" val1="Rusia" val2="Idioma ruso" />
+    <item code="es" code_tr="sm" val1="Samoa" />
+    <item code="es" code_tr="gd" val1="Gaélico escocés" val2="Escocia Gale" />
+    <item code="es" code_tr="sr" val1="Serbia" val2="Serbio" />
+    <item code="es" code_tr="st" val1="Soto" val2="Sotho" val3="Sesotho" val4="Sesotho" />
+    <item code="es" code_tr="sn" val1="Shona" />
+    <item code="es" code_tr="sd" val1="Sindhi" val2="Cindi" val3="Cindy" val4="Sind" />
+    <item code="es" code_tr="si" val1="Sinhala" />
+    <item code="es" code_tr="sk" val1="Eslovaquia" val2="Slovak" />
+    <item code="es" code_tr="sl" val1="Eslovenia" val2="Esloveno" />
+    <item code="es" code_tr="so" val1="Somalí" val2="Idioma somalí" />
+    <item code="es" code_tr="es" val1="España" val2="Español" />
+    <item code="es" code_tr="es-US" val1="Parrilla" />
+    <item code="es" code_tr="es-CO" val1="Colombia" val2="Colombiano" />
+    <item code="es" code_tr="es-AR" val1="Argentina" val2="Argentino" />
+    <item code="es" code_tr="su" val1="Sunda" val2="Sundanese" />
+    <item code="es" code_tr="sw" val1="Swahili" />
+    <item code="es" code_tr="sv" val1="Suecia" val2="Sueco" />
+    <item code="es" code_tr="tg" val1="Tayiko" />
+    <item code="es" code_tr="ta" val1="Tamil" />
+    <item code="es" code_tr="te" val1="Telugu" />
+    <item code="es" code_tr="th" val1="Tailandés" />
+    <item code="es" code_tr="tr" val1="Turquía" val2="Turco" />
+    <item code="es" code_tr="uk" val1="Ucrania" val2="Ucraniano" />
+    <item code="es" code_tr="ur" val1="Urdu" />
+    <item code="es" code_tr="uz" val1="Uzbekistán" />
+    <item code="es" code_tr="vi" val1="Vietnam" val2="Vietnamita" />
+    <item code="es" code_tr="cy" val1="Gales" val2="Galés" />
+    <item code="es" code_tr="xh" val1="Kosa" val2="Xosa" />
+    <item code="es" code_tr="yi" val1="Idech" val2="Lenguaje de Idesh" val3="Yiddish" />
+    <item code="es" code_tr="yo" val1="Yoruba" />
+    <item code="es" code_tr="zu" val1="Zulú" />
+    <item code="fr" code_tr="af" val1="Afrikaans" />
+    <item code="fr" code_tr="sq" val1="Albanie" val2="Albanais" />
+    <item code="fr" code_tr="am" val1="Amhara" val2="Amharique" />
+    <item code="fr" code_tr="ar" val1="Saoudite" val2="Arabe" />
+    <item code="fr" code_tr="hy" val1="Arménie" val2="Arménien" />
+    <item code="fr" code_tr="az" val1="Azerbaïdjan" val2="Azerbaïdjanais" />
+    <item code="fr" code_tr="eu" val1="Basque" val2="Langue basque" />
+    <item code="fr" code_tr="be" val1="Bélarus" val2="Biélorusse" />
+    <item code="fr" code_tr="bn" val1="Bengal" val2="Bengali" />
+    <item code="fr" code_tr="bs" val1="Bosnie" val2="Bosniaque" />
+    <item code="fr" code_tr="bg" val1="Bulgarie" val2="Bulgare" />
+    <item code="fr" code_tr="my" val1="Myanmar" val2="Birmanie" val3="Myanmar" val4="Birman" />
+    <item code="fr" code_tr="yue" val1="Guangdong" val2="Cantonais" />
+    <item code="fr" code_tr="ca" val1="Catalunya" val2="Langue catalane" />
+    <item code="fr" code_tr="ceb" val1="Cebuano" />
+    <item code="fr" code_tr="ny" val1="Chewa" val2="Nyanka" val3="Nyanja" />
+    <item code="fr" code_tr="zh-CN" val1="Chine" val2="Chinois" val3="Chinois simplifié" val4="Pékin" val5="Mandarin" />
+    <item code="fr" code_tr="zh-TW" val1="Chine" val2="Chinois" val3="Chinois traditionnel" val4="Taiwan" val5="Hong Kong" val6="Macao" />
+    <item code="fr" code_tr="co" val1="Corse" />
+    <item code="fr" code_tr="hr" val1="Croatie" val2="Croate" />
+    <item code="fr" code_tr="cs" val1="Tchèque" />
+    <item code="fr" code_tr="da" val1="Danemark" val2="Danois" />
+    <item code="fr" code_tr="nl" val1="Hollande" val2="Néerlandais" />
+    <item code="fr" code_tr="en" val1="Anglais" val2="Amérique" />
+    <item code="fr" code_tr="en-SO" val1="Anglais" val2="Amérique" val3="lentement"/>
+    <item code="fr" code_tr="en-GB" val1="Royaume-Uni" />
+    <item code="fr" code_tr="en-IN" val1="Inde" val2="Anglais indien" />
+    <item code="fr" code_tr="en-AU" val1="Australie" />
+    <item code="fr" code_tr="en-PH" val1="Anglais" val2="Philippines" />
+    <item code="fr" code_tr="eo" val1="Espéranto" />
+    <item code="fr" code_tr="et" val1="Estonie" val2="Estonien" />
+    <item code="fr" code_tr="tl" val1="Philippines" val2="Philippin" val3="Tagalog" val4="Philippin" val5="Philippin" val6="Tagalog" />
+    <item code="fr" code_tr="fi" val1="Finlande" val2="Finlandais" />
+    <item code="fr" code_tr="fr" val1="France" val2="Français" />
+    <item code="fr" code_tr="fr-CA" val1="Canada" val2="Canadien" />
+    <item code="fr" code_tr="fy" val1="Frise" val2="Frison occidental" />
+    <item code="fr" code_tr="gl" val1="Galice" val2="Galicien" />
+    <item code="fr" code_tr="ka" val1="Géorgien" val2="Langue géorgienne" val3="Géorgie" val4="Géorgie" />
+    <item code="fr" code_tr="de" val1="Allemagne" val2="Allemand" />
+    <item code="fr" code_tr="el" val1="Grèce" val2="Grec" />
+    <item code="fr" code_tr="gu" val1="Gujarat" val2="Gujarati" />
+    <item code="fr" code_tr="ht" val1="Haïti" val2="Haïtien" val3="Langue créole" val4="Créole" val5="Créole haïtien" />
+    <item code="fr" code_tr="ha" val1="Hausa" val2="Langue haoussa" />
+    <item code="fr" code_tr="haw" val1="Hawaii" val2="Hawaïen" />
+    <item code="fr" code_tr="iw" val1="Hébreu" />
+    <item code="fr" code_tr="hi" val1="Hindi" />
+    <item code="fr" code_tr="hmn" val1="Mon" val2="Moine" val3="Miao" val4="Miao" />
+    <item code="fr" code_tr="hu" val1="Hongrie" />
+    <item code="fr" code_tr="is" val1="Islande" val2="Islandais" />
+    <item code="fr" code_tr="ig" val1="Verrue" val2="Langue Igbo" val3="Igbo" val4="Igbo" />
+    <item code="fr" code_tr="id" val1="Indonésie" val2="Indonésien" />
+    <item code="fr" code_tr="ga" val1="Irlande" val2="Irlandais" />
+    <item code="fr" code_tr="it" val1="Italie" val2="Italien" />
+    <item code="fr" code_tr="ja" val1="Japonais" val2="Japon" val3="Japonais" />
+    <item code="fr" code_tr="jw" val1="Java" val2="Javanais" />
+    <item code="fr" code_tr="kn" val1="Canada" val2="Kannada" />
+    <item code="fr" code_tr="kk" val1="Kazakh" val2="Langue kazakh" />
+    <item code="fr" code_tr="km" val1="Khmer" val2="Langue khmère" />
+    <item code="fr" code_tr="ko" val1="Corée" />
+    <item code="fr" code_tr="ku" val1="Kurde" />
+    <item code="fr" code_tr="ky" val1="Kirghizistan" val2="Kirghize" />
+    <item code="fr" code_tr="lo" val1="Lao" val2="Laos" />
+    <item code="fr" code_tr="la" val1="Latin" />
+    <item code="fr" code_tr="lv" val1="Lettonie" val2="Letton" />
+    <item code="fr" code_tr="lt" val1="Lituanie" val2="Lituanien" />
+    <item code="fr" code_tr="lb" val1="Duché de Luxembourg" val2="Luxembourgeois" val3="Luxembourg" />
+    <item code="fr" code_tr="mk" val1="Macédoine" val2="Macédonien" />
+    <item code="fr" code_tr="mg" val1="Malagashi" val2="Malagasi" val3="Madagascar" />
+    <item code="fr" code_tr="ms" val1="Murray" val2="Langue malaise" />
+    <item code="fr" code_tr="ml" val1="Malayalam" />
+    <item code="fr" code_tr="mt" val1="Malte" val2="Maltais" />
+    <item code="fr" code_tr="mi" val1="Maori" />
+    <item code="fr" code_tr="mr" val1="Marati" val2="Marathi" />
+    <item code="fr" code_tr="mn" val1="Mongolie" val2="Langue mongole" />
+    <item code="fr" code_tr="ne" val1="Nepal" val2="Népalais" />
+    <item code="fr" code_tr="no" val1="Norvège" val2="Norwegian" />
+    <item code="fr" code_tr="ps" val1="Pashto" val2="Bashut" val3="Pashto" />
+    <item code="fr" code_tr="fa" val1="Perse" val2="Persan" val3="Langue persane" />
+    <item code="fr" code_tr="pl" val1="Pologne" val2="Polonais" />
+    <item code="fr" code_tr="pt" val1="Portugais" />
+    <item code="fr" code_tr="pt-BR" val1="Brésil" val2="Brésilien" />
+    <item code="fr" code_tr="pa" val1="Punjab" val2="Punjabi" />
+    <item code="fr" code_tr="ro" val1="Roumanie" val2="Roumain" />
+    <item code="fr" code_tr="ru" val1="Russie" val2="Langue russe" />
+    <item code="fr" code_tr="sm" val1="Samoa" />
+    <item code="fr" code_tr="gd" val1="Gaélique écossais" val2="Ecosse Gale" />
+    <item code="fr" code_tr="sr" val1="Serbie" val2="Serbe" />
+    <item code="fr" code_tr="st" val1="Soto" val2="Sotho" val3="Sesotho" />
+    <item code="fr" code_tr="sn" val1="Shona" />
+    <item code="fr" code_tr="sd" val1="Sindhi" val2="Cindi" val3="Cindy" val4="Sind" />
+    <item code="fr" code_tr="si" val1="Sinhala" />
+    <item code="fr" code_tr="sk" val1="Slovaquie" val2="Slovak" />
+    <item code="fr" code_tr="sl" val1="Slovénie" val2="Slovène" />
+    <item code="fr" code_tr="so" val1="Somalien" val2="Langue somalienne" />
+    <item code="fr" code_tr="es" val1="Espagne" val2="Espagnol" />
+    <item code="fr" code_tr="es-US" val1="Grille d'envergure" />
+    <item code="fr" code_tr="es-CO" val1="Colombie" val2="Colombien" />
+    <item code="fr" code_tr="es-AR" val1="Argentine" />
+    <item code="fr" code_tr="su" val1="Sunda" val2="Sundanais" />
+    <item code="fr" code_tr="sw" val1="Swahili" />
+    <item code="fr" code_tr="sv" val1="Suède" val2="Suédois" />
+    <item code="fr" code_tr="tg" val1="Tadjik" />
+    <item code="fr" code_tr="ta" val1="Tamoul" />
+    <item code="fr" code_tr="te" val1="Telugu" />
+    <item code="fr" code_tr="th" val1="Thai" />
+    <item code="fr" code_tr="tr" val1="Turquie" val2="Turc" />
+    <item code="fr" code_tr="uk" val1="Ukraine" val2="Ukrainien" />
+    <item code="fr" code_tr="ur" val1="Urdu" />
+    <item code="fr" code_tr="uz" val1="Ouzbek" val2="Ouzbékistan" />
+    <item code="fr" code_tr="vi" val1="Vietnam" val2="Vietnamien" />
+    <item code="fr" code_tr="cy" val1="Le pays" val2="Gallois" />
+    <item code="fr" code_tr="xh" val1="Kosa" val2="Xosa" />
+    <item code="fr" code_tr="yi" val1="Idech" val2="Idesh" val3="Yiddish" />
+    <item code="fr" code_tr="yo" val1="Yoruba" />
+    <item code="fr" code_tr="zu" val1="Zoulou" />
+    <item code="de" code_tr="af" val1="Afrikaans" />
+    <item code="de" code_tr="sq" val1="Albanisch" />
+    <item code="de" code_tr="am" val1="Amhara" val2="Amharisch" />
+    <item code="de" code_tr="ar" val1="Arabisch" />
+    <item code="de" code_tr="hy" val1="Armenien" val2="Armenisch" />
+    <item code="de" code_tr="az" val1="Aserbaidschanisch" />
+    <item code="de" code_tr="eu" val1="Baskenland" val2="Baskisch" />
+    <item code="de" code_tr="be" val1="Belarussisch" val2="Weißrussland" val3="Weißrussisch" />
+    <item code="de" code_tr="bn" val1="Bengali" val2="Bengalisch" />
+    <item code="de" code_tr="bs" val1="Bosnien" val2="Bosnisch" />
+    <item code="de" code_tr="bg" val1="Bulgarien" val2="Bulgarisch" />
+    <item code="de" code_tr="my" val1="Myanmar" val2="Birma" val3="Burma" val4="Birmanisch" />
+    <item code="de" code_tr="yue" val1="Kantonesisch" val2="Hongkong" val3="Macau" />
+    <item code="de" code_tr="ca" val1="Katalanisch" />
+    <item code="de" code_tr="ceb" val1="Cebuano" />
+    <item code="de" code_tr="ny" val1="Chewa" val2="Nyanja" val3="Chichewa" />
+    <item code="de" code_tr="zh-CN" val1="Chinesisch" val2="Vereinfachtes Chinesisch" val3="Peking" val4="Mandarin" />
+    <item code="de" code_tr="zh-TW" val1="Chinesisch" val2="Traditionelles Chinesisch" val3="Taiwanisch" val4="Hongkong" val5="Macau" />
+    <item code="de" code_tr="co" val1="Korsisch" />
+    <item code="de" code_tr="hr" val1="Kroatisch" />
+    <item code="de" code_tr="cs" val1="Tschechisch" />
+    <item code="de" code_tr="da" val1="Dänisch" />
+    <item code="de" code_tr="nl" val1="Nederland" val2="Holländisch" val3="Niederländisch" />
+    <item code="de" code_tr="en" val1="Englisch" val2="Vereinigte Staaten" />
+    <item code="de" code_tr="en-SO" val1="Englisch" val2="Vereinigte Staaten" val3="langsam" />
+    <item code="de" code_tr="en-GB" val1="England" val2="Vereinigtes Königreich" val3="Britisch" />
+    <item code="de" code_tr="en-IN" val1="Indien" val2="Indisches Englisch" />
+    <item code="de" code_tr="en-AU" val1="Australien" />
+    <item code="de" code_tr="en-PH" val1="Englisch" val2="Philippinen" />
+    <item code="de" code_tr="eo" val1="Esperanto" />
+    <item code="de" code_tr="et" val1="Estland" />
+    <item code="de" code_tr="tl" val1="Philippinen" val2="Filipino" val3="Tagalog" />
+    <item code="de" code_tr="fi" val1="Finnland" val2="Finnisch" />
+    <item code="de" code_tr="fr" val1="Frankreich" val2="Französisch" />
+    <item code="de" code_tr="fr-CA" val1="Kanada" val2="Kanadisch" />
+    <item code="de" code_tr="fy" val1="Friesisch" />
+    <item code="de" code_tr="gl" val1="Galizisch" />
+    <item code="de" code_tr="ka" val1="Georgisch" val2="Georgien" />
+    <item code="de" code_tr="de" val1="Deutsch" />
+    <item code="de" code_tr="el" val1="Griechisch" />
+    <item code="de" code_tr="gu" val1="Gujarati" />
+    <item code="de" code_tr="ht" val1="Haiti" val2="Haitianisch" val3="Kreolisch" val4="Haitianisches Kreol" />
+    <item code="de" code_tr="ha" val1="Hausa" />
+    <item code="de" code_tr="haw" val1="Hawaii" val2="Hawaiisch" />
+    <item code="de" code_tr="iw" val1="Hebräisch" />
+    <item code="de" code_tr="hi" val1="Hindi" />
+    <item code="de" code_tr="hmn" val1="Hmong" val2="Miao" />
+    <item code="de" code_tr="hu" val1="Ungarn" val2="Ungarisch" />
+    <item code="de" code_tr="is" val1="Island" val2="Isländisch" />
+    <item code="de" code_tr="ig" val1="Ibo" val2="Igbo" />
+    <item code="de" code_tr="id" val1="Indonesisch" />
+    <item code="de" code_tr="ga" val1="Irisch" />
+    <item code="de" code_tr="it" val1="Italien" val2="Italienisch" />
+    <item code="de" code_tr="ja" val1="Japanisch" val2="Japan" />
+    <item code="de" code_tr="jw" val1="Java" val2="Javanisch" />
+    <item code="de" code_tr="kn" val1="Kannada" />
+    <item code="de" code_tr="kk" val1="Kasachisch" val2="Kasachische Sprache" />
+    <item code="de" code_tr="km" val1="Khmer" val2="Khmer-Sprache" />
+    <item code="de" code_tr="ko" val1="Koreanisch" />
+    <item code="de" code_tr="ku" val1="Kurdisch" />
+    <item code="de" code_tr="ky" val1="Kirgisistan" />
+    <item code="de" code_tr="lo" val1="Lao" val2="Laotisch" val3="Laos" />
+    <item code="de" code_tr="la" val1="Lateinisch" val2="Latein" />
+    <item code="de" code_tr="lv" val1="Lettland" val2="Lettisch" />
+    <item code="de" code_tr="lt" val1="Litauen" val2="Litauisch" />
+    <item code="de" code_tr="lb" val1="Luxemburgisch" val2="Luxemburg" />
+    <item code="de" code_tr="mk" val1="Mazedonien" val2="Mazedonisch" />
+    <item code="de" code_tr="mg" val1="Malagasy" val3="Madagassisch" val4="Malagassi" val5="Madagaskar" />
+    <item code="de" code_tr="ms" val1="Malaiisch" />
+    <item code="de" code_tr="ml" val1="Malayalam" />
+    <item code="de" code_tr="mt" val1="Maltesisch" />
+    <item code="de" code_tr="mi" val1="Maori" val2="Maori-Sprache" />
+    <item code="de" code_tr="mr" val1="Marathi" />
+    <item code="de" code_tr="mn" val1="Mongolisch" />
+    <item code="de" code_tr="ne" val1="Nepalesisch" val2="Nepalisch" val3="Nepali" />
+    <item code="de" code_tr="no" val1="Norwegen" val2="Norwegisch" />
+    <item code="de" code_tr="ps" val1="Pashto" val2="Paschto" val3="Paschtunisch" val4="Paschtu" />
+    <item code="de" code_tr="fa" val1="Persisch" />
+    <item code="de" code_tr="pl" val1="Polen" val2="Polnisch" />
+    <item code="de" code_tr="pt" val1="Polnisch" />
+    <item code="de" code_tr="pt-BR" val1="Brasilien" />
+    <item code="de" code_tr="pa" val1="Punjabi" val2="Panjabi" val3="Pandschabi" />
+    <item code="de" code_tr="ro" val1="Rumänien" val2="Rumänisch" />
+    <item code="de" code_tr="ru" val1="Russisch" />
+    <item code="de" code_tr="sm" val1="Samoa" />
+    <item code="de" code_tr="gd" val1="Schottisch-Gälisch" />
+    <item code="de" code_tr="sr" val1="Serbien" val2="Serbisch" />
+    <item code="de" code_tr="st" val1="Sesotho" />
+    <item code="de" code_tr="sn" val1="Schona" val2="Shona" />
+    <item code="de" code_tr="sd" val1="Sindhi" />
+    <item code="de" code_tr="si" val1="Sinhala" val2="Singhalesisch" />
+    <item code="de" code_tr="sk" val1="Slowakisch" />
+    <item code="de" code_tr="sl" val1="Slowenien" val2="Slowenisch" />
+    <item code="de" code_tr="so" val1="Somalisch" val2="Somali" />
+    <item code="de" code_tr="es" val1="Spanien" val2="Spanisch" />
+    <item code="de" code_tr="es-US" val1="Spanisch in den Vereinigten Staaten" />
+    <item code="de" code_tr="es-CO" val1="Kolumbien" val2="kolumbianisch" />
+    <item code="de" code_tr="es-AR" val1="Argentinien" val2="argentinisch" />
+    <item code="de" code_tr="su" val1="Sundanesisch" />
+    <item code="de" code_tr="sw" val1="Suaheli" val2="Kisuaheli" />
+    <item code="de" code_tr="sv" val1="Schwedisch" />
+    <item code="de" code_tr="tg" val1="Tadschikisch" />
+    <item code="de" code_tr="ta" val1="Tamil" val2="Tamilisch" />
+    <item code="de" code_tr="te" val1="Telugu" />
+    <item code="de" code_tr="th" val1="Thailändisch" />
+    <item code="de" code_tr="tr" val1="Türkisch" />
+    <item code="de" code_tr="uk" val1="Ukraine" />
+    <item code="de" code_tr="ur" val1="Urdu" />
+    <item code="de" code_tr="uz" val1="Usbekisch" val2="Usbekistan" />
+    <item code="de" code_tr="vi" val1="Vietnamesisch" />
+    <item code="de" code_tr="cy" val1="Wales" val2="Walisisch" />
+    <item code="de" code_tr="xh" val1="Xhosa" />
+    <item code="de" code_tr="yi" val1="Jiddisch" />
+    <item code="de" code_tr="yo" val1="Yoruba" />
+    <item code="de" code_tr="zu" val1="Zulu" />
+    <item code="it" code_tr="af" val1="Afrikaans" />
+    <item code="it" code_tr="sq" val1="Albanese" val2="Albania" />
+    <item code="it" code_tr="am" val1="Amarico" />
+    <item code="it" code_tr="ar" val1="Arabo" val2="Arabia" />
+    <item code="it" code_tr="hy" val1="Armeno" val2="Armenia" />
+    <item code="it" code_tr="az" val1="Azero" val2="Turco azerbaigiano" />
+    <item code="it" code_tr="eu" val1="Basco" />
+    <item code="it" code_tr="be" val1="Bielorusso" />
+    <item code="it" code_tr="bn" val1="Bengali" val2="Bengalese" val3="Bangladesh" />
+    <item code="it" code_tr="bs" val1="Bosniaco" />
+    <item code="it" code_tr="bg" val1="Bulgaro" val2="Bulgaria" />
+    <item code="it" code_tr="my" val1="Birmano" val2="Birmania" />
+    <item code="it" code_tr="yue" val1="Cantonese" val2="Hong Kong" val3=" Macao" />
+    <item code="it" code_tr="ca" val1="Catalano" val2="Catalano" val3="Catalogna" />
+    <item code="it" code_tr="ceb" val1="Cebuano" val2="Filippine" />
+    <item code="it" code_tr="ny" val1="Chewa" val2="Cinyanja" val3=" Nyanja" />
+    <item code="it" code_tr="zh-CN" val1="Caratteri semplificati" val2="Cinese standard" val3="Mandarino" />
+    <item code="it" code_tr="zh-TW" val1="Caratteri tradizionali" val2="Taiwan" val3="Hong Kong" val4="Macao" />
+    <item code="it" code_tr="co" val1="Còrso" val2="Corsu" />
+    <item code="it" code_tr="hr" val1="Croato" val2="Croazia" />
+    <item code="it" code_tr="cs" val1="Ceco" val2="Repubblica Ceca" />
+    <item code="it" code_tr="da" val1="Danese" val2="Danimarca" />
+    <item code="it" code_tr="nl" val1="Olandese" val2="Nederlandese" val3="Neerlandese" val4="Paesi Bassi" />
+    <item code="it" code_tr="en" val1="Inglese americano" val2="Stati Uniti d'America" />
+    <item code="it" code_tr="en-SO" val1="Inglese americano" val2="Stati Uniti d'America" val3="lentamente" />
+    <item code="it" code_tr="en-GB" val1="Regno Unito" val2="Gran Bretagna" />
+    <item code="it" code_tr="en-IN" val1="Inglese in India" />
+    <item code="it" code_tr="en-AU" val1="Australia" val2="Inglese australiano" />
+    <item code="it" code_tr="en-PH" val1="Inglese" val2="Filippine" />
+    <item code="it" code_tr="eo" val1="Esperanto" />
+    <item code="it" code_tr="et" val1="Estone" val2=" Estonia" />
+    <item code="it" code_tr="tl" val1="Filippina" val2="Tagalog" val3="Filippine" />
+    <item code="it" code_tr="fi" val1="Finlandese" val2="Finnico" val3="Finlandia" />
+    <item code="it" code_tr="fr" val1="Francese" val2="Francia" />
+    <item code="it" code_tr="fr-CA" val1="Francese canadese" val2="Francese del Canada" />
+    <item code="it" code_tr="fy" val1="Frisone" />
+    <item code="it" code_tr="gl" val1="Galiziano" val2="Gallego" val3="Galego" val4="Gagliego" val5="Galiziano" />
+    <item code="it" code_tr="ka" val1="Georgiano" />
+    <item code="it" code_tr="de" val1="Tedesco" val2="Germania" />
+    <item code="it" code_tr="el" val1="Greco" val2="Grecia" />
+    <item code="it" code_tr="gu" val1="Gujarati" />
+    <item code="it" code_tr="ht" val1="Creolo haitiano" val2="Haiti" />
+    <item code="it" code_tr="ha" val1="Hausa" />
+    <item code="it" code_tr="haw" val1="Hawaiano" val2="Hawaii" />
+    <item code="it" code_tr="iw" val1="Ebraico" />
+    <item code="it" code_tr="hi" val1="Hindi" />
+    <item code="it" code_tr="hmn" val1="Hmong" val2="Mong" val3="Miao" />
+    <item code="it" code_tr="hu" val1="Ungherese" val2="Magiaro" val3="Ungheria" />
+    <item code="it" code_tr="is" val1="Islandese" val2="Islanda" />
+    <item code="it" code_tr="ig" val1="Igbo" />
+    <item code="it" code_tr="id" val1="Indonesiano" val2="Indonesia" />
+    <item code="it" code_tr="ga" val1="Irlandese" val2="Irlanda" />
+    <item code="it" code_tr="it" val1="Italiano" val2="Italia" />
+    <item code="it" code_tr="ja" val1="Giapponese" val2="Giappone" />
+    <item code="it" code_tr="jw" val1="Giavanese" val2="Giava" />
+    <item code="it" code_tr="kn" val1="Kannada" val2="Karnataka" />
+    <item code="it" code_tr="kk" val1="Kazako" val2="Kazaco" val3="Cazaco" />
+    <item code="it" code_tr="km" val1="Khmer" />
+    <item code="it" code_tr="ko" val1="Coreano" val2="Corea" />
+    <item code="it" code_tr="ku" val1="Curdo" />
+    <item code="it" code_tr="ky" val1="Chirghiso" />
+    <item code="it" code_tr="lo" val1="Lao" val2="Laotiano" />
+    <item code="it" code_tr="la" val1="Latino" />
+    <item code="it" code_tr="lv" val1="Lettone" val2="Lettonia" />
+    <item code="it" code_tr="lt" val1="Lituano" val2="Lituania" />
+    <item code="it" code_tr="lb" val1="Lussemburghese" val2="Lussemburgo" />
+    <item code="it" code_tr="mk" val1="Macedone" val2="Macedonia" />
+    <item code="it" code_tr="mg" val1="Malgascio" val2="Malgascia" val3="Madagascar" />
+    <item code="it" code_tr="ms" val1="Malese" />
+    <item code="it" code_tr="ml" val1="Malayalam" />
+    <item code="it" code_tr="mt" val1="Maltese" val2="Malta" />
+    <item code="it" code_tr="mi" val1="Māori" />
+    <item code="it" code_tr="mr" val1="Marathi" val2="Maharashtra" val3="Maharathi" val4="Malhatee" val5="Marthi" val6="Muruthu" />
+    <item code="it" code_tr="mn" val1="Mongolo" val2="Mongolia" />
+    <item code="it" code_tr="ne" val1="Nepali" val2="Nepalese" val3="Nepal" />
+    <item code="it" code_tr="no" val1="Norvegese" val2="Norvegia" />
+    <item code="it" code_tr="ps" val1="Pashtu" val2="Afgano" />
+    <item code="it" code_tr="fa" val1="Persiano" />
+    <item code="it" code_tr="pl" val1="Polacco" val2="Polacca" val3="Polonia" />
+    <item code="it" code_tr="pt" val1="Portoghese" val2="Portogallo" />
+    <item code="it" code_tr="pt-BR" val1="Brasile" val2="Portoghese brasiliano" />
+    <item code="it" code_tr="pa" val1="Panjabi" val2="Pangiabi" val3="Pangiabico" />
+    <item code="it" code_tr="ro" val1="Romeno" val2="Rumeno" />
+    <item code="it" code_tr="ru" val1="Russo" val2="Russia" />
+    <item code="it" code_tr="sm" val1="Samoano" val2="Samoana" val3="Samoa" />
+    <item code="it" code_tr="gd" val1="Gaelico scozzese" />
+    <item code="it" code_tr="sr" val1="Serbo" />
+    <item code="it" code_tr="st" val1="Sotho del sud" val2="Sotho meridionale" val3="Sesotho" val4="Sotho" />
+    <item code="it" code_tr="sn" val1="Shona" />
+    <item code="it" code_tr="sd" val1="Sindhi" />
+    <item code="it" code_tr="si" val1="Singalese" val2="Cingalese" />
+    <item code="it" code_tr="sk" val1="Slovacco" />
+    <item code="it" code_tr="sl" val1="Sloveno" val2="Slovenia" />
+    <item code="it" code_tr="so" val1="Somalo" />
+    <item code="it" code_tr="es" val1="Spagnolo" val2="Castigliano" />
+    <item code="it" code_tr="es-US" val1="Spagnolo negli Stati Uniti" />
+    <item code="it" code_tr="es-CO" val1="Colombia" val2="Colombiano" />
+    <item code="it" code_tr="es-AR" val1="Argentina" val2="Argentino" />
+    <item code="it" code_tr="su" val1="Sundanese" val2="Sondanese" />
+    <item code="it" code_tr="sw" val1="Swahili" val2="Kiswahili" />
+    <item code="it" code_tr="sv" val1="Svedese" val2="Svezia" />
+    <item code="it" code_tr="tg" val1="Tagico" />
+    <item code="it" code_tr="ta" val1="Tamil" />
+    <item code="it" code_tr="te" val1="Telugu" />
+    <item code="it" code_tr="th" val1="Thailandese" val2="Tailandese" val3="Thai" />
+    <item code="it" code_tr="tr" val1="Turco" val2="Turchia" />
+    <item code="it" code_tr="uk" val1="Ucraino" val2="Ucraina" />
+    <item code="it" code_tr="ur" val1="Urdu" />
+    <item code="it" code_tr="uz" val1="Uzbeco" val2="Usbeco" />
+    <item code="it" code_tr="vi" val1="Vietnamita" val2="Vietnam" />
+    <item code="it" code_tr="cy" val1="Gallese" />
+    <item code="it" code_tr="xh" val1="Xhosa" />
+    <item code="it" code_tr="yi" val1="Yiddish" />
+    <item code="it" code_tr="yo" val1="Yoruba" />
+    <item code="it" code_tr="zu" val1="Zulu" />
+    <item code="ms" code_tr="af" val1="Afrikaan" val2="Afrika Selatan" />
+    <item code="ms" code_tr="sq" val1="Albania" />
+    <item code="ms" code_tr="am" val1="Amharik" val2="Ethiopia" />
+    <item code="ms" code_tr="ar" val1="Arab" val2="Emiriah Arab Bersatu" />
+    <item code="ms" code_tr="hy" val1="Armenia" />
+    <item code="ms" code_tr="az" val1="Azerbaijan" />
+    <item code="ms" code_tr="eu" val1="Basque" />
+    <item code="ms" code_tr="be" val1="Belarus" />
+    <item code="ms" code_tr="bn" val1="Bengali" val2="Bangladesh" val3="India" />
+    <item code="ms" code_tr="bs" val1="Bosnia" val2="Bosnia dan Herzegovina" />
+    <item code="ms" code_tr="bg" val1="Bulgaria" />
+    <item code="ms" code_tr="my" val1="Burma" val2="Myanmar" />
+    <item code="ms" code_tr="yue" val1="Kantonis" val2="China" />
+    <item code="ms" code_tr="ca" val1="Catalan" />
+    <item code="ms" code_tr="ceb" val1="Cebuano" />
+    <item code="ms" code_tr="ny" val1="Chichewa" />
+    <item code="ms" code_tr="zh-CN" val1="Cina Ringkas" val2="Cina" val3="China" />
+    <item code="ms" code_tr="zh-TW" val1="Cina Tradisional" val2="Cina" val3="China" />
+    <item code="ms" code_tr="co" val1="Corsica" />
+    <item code="ms" code_tr="hr" val1="Croatia" />
+    <item code="ms" code_tr="cs" val1="Czech" />
+    <item code="ms" code_tr="da" val1="Denmark" />
+    <item code="ms" code_tr="nl" val1="Belanda" />
+    <item code="ms" code_tr="en" val1="Inggeris" val2="Amerika Syarikat" />
+    <item code="ms" code_tr="en-SO" val1="Inggeris" val2="Amerika Syarikat" val3="perlahanlahan"/>
+    <item code="ms" code_tr="en-GB" val1="Inggeris" val2="United Kingdom" val3="Great Britain" val4="Ireland Utara" />
+    <item code="ms" code_tr="en-IN" val1="Inggeris" val2="India" />
+    <item code="ms" code_tr="en-AU" val1="Inggeris" val2="Australia" />
+    <item code="ms" code_tr="en-PH" val1="Inggeris" val2="Filipina" />
+    <item code="ms" code_tr="eo" val1="Esperanto" />
+    <item code="ms" code_tr="et" val1="Estonia" />
+    <item code="ms" code_tr="tl" val1="Filipino" val2="Filipina" />
+    <item code="ms" code_tr="fi" val1="Finland" />
+    <item code="ms" code_tr="fr" val1="Perancis" />
+    <item code="ms" code_tr="fr-CA" val1="Perancis" val2="Kanada" />
+    <item code="ms" code_tr="fy" val1="Frisia" />
+    <item code="ms" code_tr="gl" val1="Galicia" />
+    <item code="ms" code_tr="ka" val1="Georgia" />
+    <item code="ms" code_tr="de" val1="Jerman" />
+    <item code="ms" code_tr="el" val1="Greek" val2="Greece" />
+    <item code="ms" code_tr="gu" val1="Gujarati" />
+    <item code="ms" code_tr="ht" val1="Kreol Haiti" />
+    <item code="ms" code_tr="ha" val1="Hausa" />
+    <item code="ms" code_tr="haw" val1="Hawaii" val2="Amerika Syarikat" />
+    <item code="ms" code_tr="iw" val1="Ibrani" val2="Israel" />
+    <item code="ms" code_tr="hi" val1="Hindi" val2="India" />
+    <item code="ms" code_tr="hmn" val1="Hmong" val2="China" val3="Lao" val4="Vietnam" />
+    <item code="ms" code_tr="hu" val1="Hungary" />
+    <item code="ms" code_tr="is" val1="Iceland" />
+    <item code="ms" code_tr="ig" val1="Igbo" />
+    <item code="ms" code_tr="id" val1="Indonesia" val2="Indon" />
+    <item code="ms" code_tr="ga" val1="Irish" />
+    <item code="ms" code_tr="it" val1="Itali" />
+    <item code="ms" code_tr="ja" val1="Jepun" />
+    <item code="ms" code_tr="jw" val1="Jawa" />
+    <item code="ms" code_tr="kn" val1="Kannada" />
+    <item code="ms" code_tr="kk" val1="Kazakh" />
+    <item code="ms" code_tr="km" val1="Khmer" val2="Kemboja" />
+    <item code="ms" code_tr="ko" val1="Korea" />
+    <item code="ms" code_tr="ku" val1="Kurdish" />
+    <item code="ms" code_tr="ky" val1="Kyrgyz" />
+    <item code="ms" code_tr="lo" val1="Lao" />
+    <item code="ms" code_tr="la" val1="Latin" />
+    <item code="ms" code_tr="lv" val1="Latvia" />
+    <item code="ms" code_tr="lt" val1="Lithuania" />
+    <item code="ms" code_tr="lb" val1="Luxembourg" />
+    <item code="ms" code_tr="mk" val1="Macedonia" />
+    <item code="ms" code_tr="mg" val1="Malagasy" />
+    <item code="ms" code_tr="ms" val1="Melayu" val2="Malaysia" />
+    <item code="ms" code_tr="ml" val1="Malayalam" />
+    <item code="ms" code_tr="mt" val1="Malta" />
+    <item code="ms" code_tr="mi" val1="Maori" />
+    <item code="ms" code_tr="mr" val1="Marathi" />
+    <item code="ms" code_tr="mn" val1="Mongolia" />
+    <item code="ms" code_tr="ne" val1="Nepali" val2="Nepal" />
+    <item code="ms" code_tr="no" val1="Norway" />
+    <item code="ms" code_tr="ps" val1="Pashto" val2="Afghanistan" val3="Pakistan" />
+    <item code="ms" code_tr="fa" val1="Parsi" val2="Iran" />
+    <item code="ms" code_tr="pl" val1="Poland" />
+    <item code="ms" code_tr="pt" val1="Portugis" val2="Portugal" />
+    <item code="ms" code_tr="pt-BR" val1="Portugis" val2="Brazil" />
+    <item code="ms" code_tr="pa" val1="Punjabi" />
+    <item code="ms" code_tr="ro" val1="Romania" />
+    <item code="ms" code_tr="ru" val1="Rusia" />
+    <item code="ms" code_tr="sm" val1="Samoa" />
+    <item code="ms" code_tr="gd" val1="Scots Gaelic" />
+    <item code="ms" code_tr="sr" val1="Serbia" />
+    <item code="ms" code_tr="st" val1="Sesotho" />
+    <item code="ms" code_tr="sn" val1="Shona" />
+    <item code="ms" code_tr="sd" val1="Sindhi" />
+    <item code="ms" code_tr="si" val1="Sinhala" />
+    <item code="ms" code_tr="sk" val1="Slovak" />
+    <item code="ms" code_tr="sl" val1="Slovenia" />
+    <item code="ms" code_tr="so" val1="Somali" />
+    <item code="ms" code_tr="es" val1="Sepanyol" />
+    <item code="ms" code_tr="es-US" val1="Sepanyol" val2="Amerika" />
+    <item code="ms" code_tr="es-CO" val1="Sepanyol" val2="Colombia" />
+    <item code="ms" code_tr="es-AR" val1="Sepanyol" val2="Argentina" />
+    <item code="ms" code_tr="su" val1="Sunda" />
+    <item code="ms" code_tr="sw" val1="Swahili" />
+    <item code="ms" code_tr="sv" val1="Sweden" />
+    <item code="ms" code_tr="tg" val1="Tajik" val2="Tajikistan" val3="Uzbekistan" />
+    <item code="ms" code_tr="ta" val1="Tamil" val2="India" val3="Sri Lanka" />
+    <item code="ms" code_tr="te" val1="Telugu" val2="India" />
+    <item code="ms" code_tr="th" val1="Thai" val2="Siam" val3="Thailand" />
+    <item code="ms" code_tr="tr" val1="Turki" />
+    <item code="ms" code_tr="uk" val1="Ukraine" />
+    <item code="ms" code_tr="ur" val1="Urdu" val2="Pakistan" val3="India" />
+    <item code="ms" code_tr="uz" val1="Uzbek" val2="Uzbekistan" />
+    <item code="ms" code_tr="vi" val1="Vietnam" />
+    <item code="ms" code_tr="cy" val1="Wales" val2="United Kingdom" />
+    <item code="ms" code_tr="xh" val1="Xhosa" val2="Afrika Selatan" />
+    <item code="ms" code_tr="yi" val1="Yiddish" />
+    <item code="ms" code_tr="yo" val1="Yoruba" val2="Niger" val3="Benin" />
+    <item code="ms" code_tr="zu" val1="Zulu" val2="Afrika Selatan" />
+    <item code="ru" code_tr="af" val1="Африкаанс" />
+    <item code="ru" code_tr="sq" val1="Албанский" />
+    <item code="ru" code_tr="am" val1="Амхарский" />
+    <item code="ru" code_tr="ar" val1="Арабский" />
+    <item code="ru" code_tr="hy" val1="Армянский" />
+    <item code="ru" code_tr="az" val1="Азербайджанский" />
+    <item code="ru" code_tr="eu" val1="Баскский" />
+    <item code="ru" code_tr="be" val1="Белорусский" />
+    <item code="ru" code_tr="bn" val1="Бенгальский" />
+    <item code="ru" code_tr="bs" val1="Боснийский" />
+    <item code="ru" code_tr="bg" val1="Болгарский" />
+    <item code="ru" code_tr="my" val1="Бирманский" />
+    <item code="ru" code_tr="yue" val1="Кантонский" />
+    <item code="ru" code_tr="ca" val1="Каталанский" />
+    <item code="ru" code_tr="ceb" val1="Себуано" />
+    <item code="ru" code_tr="ny" val1="Чичева" />
+    <item code="ru" code_tr="zh-CN" val1="Китайский" />
+    <item code="ru" code_tr="zh-TW" val1="Китайский" />
+    <item code="ru" code_tr="co" val1="Корсикан" />
+    <item code="ru" code_tr="hr" val1="Хорватский" />
+    <item code="ru" code_tr="cs" val1="Чешский" />
+    <item code="ru" code_tr="da" val1="Датский" />
+    <item code="ru" code_tr="nl" val1="Голландский" val2="Нидерла́ндский" />
+    <item code="ru" code_tr="en" val1="Английский" />
+    <item code="ru" code_tr="en-SO" val1="Английский" val2="медленно"/>
+    <item code="ru" code_tr="en-GB" val1="Английский" />
+    <item code="ru" code_tr="en-IN" val1="Английский" />
+    <item code="ru" code_tr="en-AU" val1="Английский" />
+    <item code="ru" code_tr="en-PH" val1="Английский" val2="Филиппины" />
+    <item code="ru" code_tr="eo" val1="Эсперанто" />
+    <item code="ru" code_tr="et" val1="Эстонский" />
+    <item code="ru" code_tr="tl" val1="Филиппино" val2="филиппинский" />
+    <item code="ru" code_tr="fi" val1="Финский" />
+    <item code="ru" code_tr="fr" val1="Французский" />
+    <item code="ru" code_tr="fr-CA" val1="Французский Канада" />
+    <item code="ru" code_tr="fy" val1="Фризский" />
+    <item code="ru" code_tr="gl" val1="Галисиец" />
+    <item code="ru" code_tr="ka" val1="Грузинский" />
+    <item code="ru" code_tr="de" val1="Немецкий" />
+    <item code="ru" code_tr="el" val1="Греческий" />
+    <item code="ru" code_tr="gu" val1="Гуджарати" />
+    <item code="ru" code_tr="ht" val1="Гаитянский креольский язык" />
+    <item code="ru" code_tr="ha" val1="Хауса" />
+    <item code="ru" code_tr="haw" val1="Гавайский" />
+    <item code="ru" code_tr="iw" val1="Иврит" />
+    <item code="ru" code_tr="hi" val1="Хинди" />
+    <item code="ru" code_tr="hmn" val1="Хмонг" />
+    <item code="ru" code_tr="hu" val1="Венгерский" />
+    <item code="ru" code_tr="is" val1="Исландский" />
+    <item code="ru" code_tr="ig" val1="Игбо" />
+    <item code="ru" code_tr="id" val1="Индонезийский" />
+    <item code="ru" code_tr="ga" val1="Ирландский" />
+    <item code="ru" code_tr="it" val1="Итальянский" />
+    <item code="ru" code_tr="ja" val1="Японский" />
+    <item code="ru" code_tr="jw" val1="Яванец" />
+    <item code="ru" code_tr="kn" val1="Каннада" />
+    <item code="ru" code_tr="kk" val1="Казахский" val2="казахстан" />
+    <item code="ru" code_tr="km" val1="Кхмер" />
+    <item code="ru" code_tr="ko" val1="Корейский" />
+    <item code="ru" code_tr="ku" val1="Курдский" />
+    <item code="ru" code_tr="ky" val1="Кыргызы" val2="киргизский" />
+    <item code="ru" code_tr="lo" val1="Лао" />
+    <item code="ru" code_tr="la" val1="Латинский" />
+    <item code="ru" code_tr="lv" val1="Латышский" />
+    <item code="ru" code_tr="lt" val1="Литовский" />
+    <item code="ru" code_tr="lb" val1="Люксембург" />
+    <item code="ru" code_tr="mk" val1="Македонский" />
+    <item code="ru" code_tr="mg" val1="Малагасийский" />
+    <item code="ru" code_tr="ms" val1="Малай" />
+    <item code="ru" code_tr="ml" val1="Малаялам" />
+    <item code="ru" code_tr="mt" val1="Мальтийский" />
+    <item code="ru" code_tr="mi" val1="Маори" />
+    <item code="ru" code_tr="mr" val1="Маратхи" />
+    <item code="ru" code_tr="mn" val1="Монгольский" />
+    <item code="ru" code_tr="ne" val1="Непали" val2="Не пали" />
+    <item code="ru" code_tr="no" val1="Норвежский" />
+    <item code="ru" code_tr="ps" val1="Пашту" />
+    <item code="ru" code_tr="fa" val1="Персидский" />
+    <item code="ru" code_tr="pl" val1="Польский" />
+    <item code="ru" code_tr="pt" val1="Португальский" />
+    <item code="ru" code_tr="pt-BR" val1="Португальский" />
+    <item code="ru" code_tr="pa" val1="Пенджаби" />
+    <item code="ru" code_tr="ro" val1="Румынский" />
+    <item code="ru" code_tr="ru" val1="Русский" />
+    <item code="ru" code_tr="sm" val1="Самоа" />
+    <item code="ru" code_tr="gd" val1="Шотландский гаэльский" />
+    <item code="ru" code_tr="sr" val1="Сербский" />
+    <item code="ru" code_tr="st" val1="Сесото" />
+    <item code="ru" code_tr="sn" val1="Шона" />
+    <item code="ru" code_tr="sd" val1="Синдхи" />
+    <item code="ru" code_tr="si" val1="Синхала" />
+    <item code="ru" code_tr="sk" val1="Словацкий" />
+    <item code="ru" code_tr="sl" val1="Словенский" />
+    <item code="ru" code_tr="so" val1="Сомали" />
+    <item code="ru" code_tr="es" val1="Испанский" />
+    <item code="ru" code_tr="es-US" val1="Испанский" />
+    <item code="ru" code_tr="es-CO" val1="Испанский" />
+    <item code="ru" code_tr="es-AR" val1="Испанский" />
+    <item code="ru" code_tr="su" val1="Сунданский" />
+    <item code="ru" code_tr="sw" val1="Свахили" />
+    <item code="ru" code_tr="sv" val1="Шведский" />
+    <item code="ru" code_tr="tg" val1="Таджикский" />
+    <item code="ru" code_tr="ta" val1="Тамиль" />
+    <item code="ru" code_tr="te" val1="Телугу" />
+    <item code="ru" code_tr="th" val1="Таиланд" val2="таиландский" />
+    <item code="ru" code_tr="tr" val1="Турецкий" />
+    <item code="ru" code_tr="uk" val1="Украинский" />
+    <item code="ru" code_tr="ur" val1="Урду" />
+    <item code="ru" code_tr="uz" val1="Узбекский" />
+    <item code="ru" code_tr="vi" val1="Вьетнамский" />
+    <item code="ru" code_tr="cy" val1="Валлийский" />
+    <item code="ru" code_tr="xh" val1="Хоса" />
+    <item code="ru" code_tr="yi" val1="Идиш" />
+    <item code="ru" code_tr="yo" val1="Ёруба" />
+    <item code="ru" code_tr="zu" val1="Зулу" />
+    <item code="th" code_tr="af" val1="ภาษาแอฟริกานส์" val2="ภาษาแอฟริกา" val3="ภาษาแอฟริกาใต้" val4="ภาษาแอฟริกันส์" val5="แอฟริกา" val6="แอฟริกาใต้" val7="แอฟริกันส์" val8="แอฟริกานส์" val9="ภาษาอาฟรีกานส์" val10="อาฟรีกานส์" />
+    <item code="th" code_tr="sq" val1="ภาษาแอลเบเนีย" val2="แอลเบเนีย" val3="อัลบาเนีย" val4="ภาษาอัลบาเนีย" val5="แอลเบเนียน" val6="ภาษาแอลเบเนียน" />
+    <item code="th" code_tr="am" val1="ภาษาแอมฮาริค" val2="แอมฮาริค" val3="ภาษาอัมฮาริค" val4="อัมฮาริค" />
+    <item code="th" code_tr="ar" val1="ภาษาอาหรับ" val2="อาหรับ" val3="อารบิก" val4="ภาษาอารบิก" />
+    <item code="th" code_tr="hy" val1="ภาษาอาร์เมเนีย" val2="อาร์เมเนีย" val3="ภาษาอาร์มีเนีย" val4="อาร์มีเนีย" val5="อาร์เมเนียน" val6="ภาษาอาร์เมเนียน" />
+    <item code="th" code_tr="az" val1="ภาษาอาเซอร์ไบจาน" val2="อาเซอร์ไบจาน" val3="ภาษาอาเซอรี" val4="อาเซอรี" />
+    <item code="th" code_tr="eu" val1="ภาษาบาสก์" val2="บาสก์" />
+    <item code="th" code_tr="be" val1="ภาษาเบลารุส" val2="เบลารุส" val3="เบลารุเซียน" val4="ภาษาเบลารุเซียน" />
+    <item code="th" code_tr="bn" val1="ภาษาเบงกอล" val2="เบงกอล" val3="ภาษาเบงกาลี" val4="เบงกาลี" />
+    <item code="th" code_tr="bs" val1="ภาษาบอสเนีย" val2="บอสเนีย" val3="บอสเนียน" val4="บอสเนียและเฮอร์เซโกวีนา" val5="ภาษาบอสเนียน" />
+    <item code="th" code_tr="bg" val1="ภาษาบัลแกเรีย" val2="บัลแกเรีย" val3="บัลแกเรียน" val4="ภาษาบัลแกเรียน" />
+    <item code="th" code_tr="my" val1="ภาษาพม่า" val2="พม่า" val3="ภาษาเมียนมาร์" val4="เมียนมาร์" val5="เบอร์มีส" val6="ภาษาเบอร์มีส" />
+    <item code="th" code_tr="yue" val1="ภาษาจีนกวางตุ้ง" val2="จีนกวางตุ้ง" val3="กวางตุ้ง" val4="ภาษากวางตุ้ง" val5="แคนโทนีส" val6="ภาษากวางตุ้งมาตรฐาน" val7="ภาษาแคนโทนีส" />
+    <item code="th" code_tr="ca" val1="ภาษากาตาลา" val2="กาตาลา" val3="กาตาลัน" val4="ภาษาคาตาลัน" val5="คาตาลัน" />
+    <item code="th" code_tr="ceb" val1="ภาษาเซบู" val2="เซบู" val3="ภาษาเซบัวโน" val4="เซบัวโน" />
+    <item code="th" code_tr="ny" val1="ภาษาชิเชวา" val2="ชิเชวา" />
+    <item code="th" code_tr="zh-CN" val1="ภาษาจีนกลาง" val2="จีนกลาง" val3="ภาษาจีนประยุกต์" val4="จีนประยุกต์" val5="ภาษาจีนตัวย่อ" val6="จีนตัวย่อ" val7="ภาษาจีนแบบย่อ" val8="ภาษาจีน" />
+    <item code="th" code_tr="zh-TW" val1="ภาษาจีนไต้หวัน" val2="จีนไต้หวัน" val3="ภาษาจีนดั้งเดิม" val4="จีนดั้งเดิม" val5="ภาษาจีนตัวเต็ม" val6="จีนตัวเต็ม" val7="ภาษาจีนแบบดั้งเดิม" />
+    <item code="th" code_tr="co" val1="ภาษาคอร์ซิกา" val2="คอร์ซิกา" val3="กอร์ส" val4="ภาษากอร์ซิกา" val5="กอร์ซิกา" val6="ภาษาคอร์ซิกัน" val7="คอร์ซิกัน" val8="ภาษากอร์ซิกัน" val9="กอร์ซิกัน" />
+    <item code="th" code_tr="hr" val1="ภาษาโครเอเชีย" val2="โครเอเชีย" val3="โครเอเชียน" val4="ภาษาโครเอเชียน" />
+    <item code="th" code_tr="cs" val1="ภาษาเช็ก" val2="เช็ก" />
+    <item code="th" code_tr="da" val1="ภาษาเดนมาร์ก" val2="เดนมาร์ก" val3="เดนิช" val4="ภาษาเดนิช" />
+    <item code="th" code_tr="nl" val1="ภาษาดัตช์" val2="ดัตช์" val3="เนเธอร์แลนด์" />
+    <item code="th" code_tr="en" val1="ภาษาอังกฤษแบบอเมริกัน" val2="อังกฤษแบบอเมริกัน" val3="ภาษาอังกฤษสำเนียงอเมริกัน" val4="อังกฤษสำเนียงอเมริกัน" val5="อเมริกันอิงลิช" val6="อเมริกันอิงกลิช" val7="อเมริกัน" val8="อเมริกา" val9="ยูเอส" val10="ยูเอสเอ" val11="เมกา" />
+    <item code="th" code_tr="en-SO" val1="ภาษาอังกฤษแบบอเมริกัน" val2="อังกฤษแบบอเมริกัน" val3="ภาษาอังกฤษสำเนียงอเมริกัน" val4="อังกฤษสำเนียงอเมริกัน" val5="อเมริกันอิงลิช" val6="อเมริกันอิงกลิช" val7="ไม่ต้องรีบนะ" val8="อเมริกัน" val9="อเมริกา" val10="ยูเอส" val11="ยูเอสเอ" val12="เมกา" />
+    <item code="th" code_tr="en-GB" val1="ภาษาอังกฤษแบบบริติช" val2="อังกฤษแบบบริติช" val3="ภาษาอังกฤษสำเนียงบริติช" val4="อังกฤษสำเนียงบริติช" val5="บริติชอิงลิช" val6="บริติชอิงกลิช" val7="บริติช" val8="ยูเค" val9="สหราชอาณาจักร" />
+    <item code="th" code_tr="en-IN" val1="ภาษาอังกฤษแบบอินเดียน" val2="อังกฤษแบบอินเดียน" val3="ภาษาอังกฤษสำเนียงอินเดียน" val4="อังกฤษสำเนียงอินเดียน" val5="ภาษาอังกฤษแบบอินเดีย" val6="อังกฤษแบบอินเดีย" val7="ภาษาอังกฤษสำเนียงอินเดีย" val8="อังกฤษสำเนียงอินเดีย" val9="อินเดียนอิงลิช" val10="อินเดียนอิงกลิช" />
+    <item code="th" code_tr="en-AU" val1="ภาษาอังกฤษแบบออสเตรเลียน" val2="อังกฤษแบบออสเตรเลียน" val3="ภาษาอังกฤษสำเนียงออสเตรเลียน" val4="อังกฤษสำเนียงออสเตรเลียน" val5="ภาษาอังกฤษแบบออสเตรเลีย" val6="อังกฤษแบบออสเตรเลีย" val7="ภาษาอังกฤษสำเนียงออสเตรเลีย" val8="อังกฤษสำเนียงออสเตรเลีย" val9="ออสเตรเลียนอิงลิช" val10="ออสเตรเลียนอิงกลิช" val11="ภาษาอังกฤษสำเนียงออสซี่" val12="อังกฤษสำเนียงออสซี่" val13="ออสเตรเลีย" val14="ออสซี่" />
+    <item code="th" code_tr="en-PH" val1="ภาษาอังกฤษ" val2="ฟิลิปปินส์" />
+    <item code="th" code_tr="eo" val1="ภาษาเอสเปรันโต" val2="เอสเปรันโต" />
+    <item code="th" code_tr="et" val1="ภาษาเอสโตเนีย" val2="เอสโตเนีย" val3="เอสโตเนียน" val4="ภาษาเอสโตเนียน" />
+    <item code="th" code_tr="tl" val1="ภาษาฟิลิปปินส์" val2="ฟิลิปปินส์" val3="ภาษาฟิลิปีโน" val4="ฟิลิปีโน" val5="ปิลิปีโน" />
+    <item code="th" code_tr="fi" val1="ภาษาฟินแลนด์" val2="ฟินแลนด์" val3="ภาษาฟินนิช" val4="ฟินนิช" />
+    <item code="th" code_tr="fr" val1="ภาษาฝรั่งเศส" val2="ฝรั่งเศส" val3="เฟรนช์" />
+    <item code="th" code_tr="fr-CA" val1="ภาษาฝรั่งเศสแบบแคนาดา" val2="ฝรั่งเศสแบบแคนาดา" val3="ฝรั่งเศสสำเนียงแคนาดา" val4="ภาษาฝรั่งเศสสำเนียงแคนาดา" val5="แคนาเดียนเฟรนช์" val6="แคเนเดียนเฟรนช์" />
+    <item code="th" code_tr="fy" val1="ภาษาฟรีเชีย" val2="ฟรีเชีย" val3="ฟรีเชียน" val4="ภาษาฟรีเชียน" />
+    <item code="th" code_tr="gl" val1="ภาษากาลิเซีย" val2="กาลิเซีย" val3="ภาษากาลิเซียน" val4="กาลิเซียน" />
+    <item code="th" code_tr="ka" val1="ภาษาจอร์เจีย" val2="จอร์เจีย" val3="ภาษาจอร์เจียน" val4="จอร์เจียน" val5="ภาษาคาร์ตเวเลียน" val6="คาร์ตเวเลียน" />
+    <item code="th" code_tr="de" val1="ภาษาเยอรมัน" val2="เยอรมัน" val3="เยอรมนี" val4="เจอร์มัน" />
+    <item code="th" code_tr="el" val1="ภาษากรีก" val2="กรีก" val3="กรีซ" />
+    <item code="th" code_tr="gu" val1="ภาษาคุชราต" val2="คุชราต" val3="คุชราตี" val4="ภาษาคุชราตี" />
+    <item code="th" code_tr="ht" val1="ภาษาครีโอลเฮติ" val2="ครีโอลเฮติ" val3="เฮติ" val4="ภาษาเฮติครีโอล" val5="เฮติครีโอล" val6="เฮเชียนครีโอล" val7="ภาษาเฮเชียนครีโอล" />
+    <item code="th" code_tr="ha" val1="ภาษาเฮาซา" val2="เฮาซา" />
+    <item code="th" code_tr="haw" val1="ภาษาฮาวาย" val2="ฮาวาย" />
+    <item code="th" code_tr="iw" val1="ภาษาฮีบรู" val2="ฮีบรู" val3="อิสราเอล" />
+    <item code="th" code_tr="hi" val1="ภาษาฮินดี" val2="ฮินดี" val3="อินเดีย" />
+    <item code="th" code_tr="hmn" val1="ภาษาม้ง" val2="ม้ง" />
+    <item code="th" code_tr="hu" val1="ภาษาฮังการี" val2="ฮังการี" val3="ฮังกาเรียน" val4="ภาษาฮังกาเรียน" />
+    <item code="th" code_tr="is" val1="ภาษาไอซ์แลนด์" val2="ไอซ์แลนด์" val3="ภาษาไอซ์แลนดิก" val4="ไอซ์แลนดิก" />
+    <item code="th" code_tr="ig" val1="ภาษาอิกโบ" val2="อิกโบ" />
+    <item code="th" code_tr="id" val1="ภาษาอินโดนีเซีย" val2="อินโดนีเซีย" val3="อินโดนีเซียน" val4="ภาษาอินโด" val5="อินโด" />
+    <item code="th" code_tr="ga" val1="ภาษาไอริช" val2="ไอริช" val3="ภาษาเกลิก" val4="เกลิก" val5="ไอริชเกลิก" />
+    <item code="th" code_tr="it" val1="ภาษาอิตาลี" val2="อิตาลี" val3="อิตาเลียน" val4="ภาษาอิตาเลียน" />
+    <item code="th" code_tr="ja" val1="ภาษาญี่ปุ่น" val2="ญี่ปุ่น" val3="เจแปนนีส" />
+    <item code="th" code_tr="jw" val1="ภาษาชวา" val2="ชวา" val3="ภาษาจาวานีส" val4="จาวานีส" />
+    <item code="th" code_tr="kn" val1="ภาษากันนาดา" val2="กันนาดา" val3="กรณาฏกะ" val4="ภาษารัฐกรณาฏกะ" />
+    <item code="th" code_tr="kk" val1="ภาษาคาซัค" val2="คาซัค" val3="คาซัคสถาน" />
+    <item code="th" code_tr="km" val1="ภาษาเขมร" val2="เขมร" val3="ขแมร์" val4="กัมพูชา" val5="ภาษากัมพูชา" />
+    <item code="th" code_tr="ko" val1="ภาษาเกาหลี" val2="เกาหลี" val3="โคเรียน" />
+    <item code="th" code_tr="ku" val1="ภาษาเคิร์ด" val2="เคิร์ด" val3="เคอร์ดิช" val4="เคอร์ดิสถาน" />
+    <item code="th" code_tr="ky" val1="ภาษาคีร์กีซ" val2="คีร์กีซ" val3="คีร์กีซสถาน" />
+    <item code="th" code_tr="lo" val1="ภาษาลาว" val2="ลาว" />
+    <item code="th" code_tr="la" val1="ภาษาละติน" val2="ละติน" />
+    <item code="th" code_tr="lv" val1="ภาษาลัตเวีย" val2="ลัตเวีย" val3="ลัตเวียน" />
+    <item code="th" code_tr="lt" val1="ภาษาลิทัวเนีย" val2="ลิทัวเนีย" val3="ลิทัวเนียน" />
+    <item code="th" code_tr="lb" val1="ภาษาลักเซมเบิร์ก" val2="ลักเซมเบิร์ก" val3="ลักเซมเบิร์กกิช" />
+    <item code="th" code_tr="mk" val1="ภาษามาซิโดเนีย" val2="มาซิโดเนีย" val3="มาซิโดเนียน" />
+    <item code="th" code_tr="mg" val1="ภาษามาลากาซี" val2="มาลากาซี" val3="มาดากัสการ์" />
+    <item code="th" code_tr="ms" val1="ภาษามลายู" val2="มลายู" val3="มาเลย์" val4="ภาษามาเลย์" />
+    <item code="th" code_tr="ml" val1="ภาษามลยาฬัม" val2="มลยาฬัม" />
+    <item code="th" code_tr="mt" val1="ภาษามอลตา" val2="มอลตา" val3="มอลทีส" />
+    <item code="th" code_tr="mi" val1="ภาษาเมารี" val2="เมารี" />
+    <item code="th" code_tr="mr" val1="ภาษามราฐี" val2="มราฐี" val3="มหาราษฏระ" val4="ภาษารัฐมหาราษฏระ" />
+    <item code="th" code_tr="mn" val1="ภาษามองโกเลีย" val2="มองโกเลีย" val3="มองโกเลียน" val4="มองโกล" val5="ภาษามองโกล" />
+    <item code="th" code_tr="ne" val1="ภาษาเนปาล" val2="เนปาล" val3="เนปาลี" val4="เนปาลีส" />
+    <item code="th" code_tr="no" val1="ภาษานอร์เวย์" val2="นอร์เวย์" val3="นอร์วีเจียน" />
+    <item code="th" code_tr="ps" val1="ภาษาปาทาน" val2="ปาทาน" val3="ปาชตู" val4="ภาษาปาชตู" val5="ภาษาพาชตู" val6="พาชตู" val7="ภาษาพาชโต" val8="พาชโต" val9="ภาษาพัชโต" val10="พัชโต" />
+    <item code="th" code_tr="fa" val1="ภาษาเปอร์เซีย" val2="เปอร์เซีย" val3="เปอร์เซียน" val4="ฟาร์ซี" val5="ปาร์ซี" />
+    <item code="th" code_tr="pl" val1="ภาษาโปแลนด์" val2="โปแลนด์" val3="โปลิช" />
+    <item code="th" code_tr="pt" val1="ภาษาโปรตุเกส" val2="โปรตุเกส" val3="โปรตุกีส" />
+    <item code="th" code_tr="pt-BR" val1="ภาษาโปรตุเกส" val2="โปรตุเกส" val3="โปรตุกีส" />
+    <item code="th" code_tr="pa" val1="ภาษาปัญจาบ" val2="ปัญจาบ" val3="ปัญจาบี" val4="ปัญชาพี" />
+    <item code="th" code_tr="ro" val1="ภาษาโรมาเนีย" val2="โรมาเนีย" val3="โรมาเนียน" />
+    <item code="th" code_tr="ru" val1="ภาษารัสเซีย" val2="รัสเซีย" val3="รัสเซียน" />
+    <item code="th" code_tr="sm" val1="ภาษาซามัว" val2="ซามัว" val3="ภาษาซาโมน" val4="ซาโมน" />
+    <item code="th" code_tr="gd" val1="ภาษาเกลิกสกอต" val2="เกลิกสกอต" val3="ภาษาเกลิกแบบสกอตแลนด์" val4="เกลิกแบบสกอตแลนด์" val5="สกอตเกลิก" val6="ภาษาสกอตเกลิก" val7="สกอตติชเกลิก" />
+    <item code="th" code_tr="sr" val1="ภาษาเซอร์เบีย" val2="เซอร์เบีย" val3="เซอร์เบียน" />
+    <item code="th" code_tr="st" val1="ภาษาเซโซโท" val2="เซโซโท" val3="เลโซโท" />
+    <item code="th" code_tr="sn" val1="ภาษาโชนา" val2="โชนา" val3="ซิมบับเว" />
+    <item code="th" code_tr="sd" val1="ภาษาสินธี" val2="สินธี" val3="สินธ์" />
+    <item code="th" code_tr="si" val1="ภาษาสิงหล" val2="สิงหล" />
+    <item code="th" code_tr="sk" val1="ภาษาสโลวัก" val2="สโลวัก" val3="สโลวาเกีย" />
+    <item code="th" code_tr="sl" val1="ภาษาสโลวีเนีย" val2="สโลวีเนีย" val3="สโลวีเนียน" />
+    <item code="th" code_tr="so" val1="ภาษาโซมาลี" val2="โซมาลี" val3="โซมาเลีย" />
+    <item code="th" code_tr="es" val1="ภาษาสเปน" val2="สเปน" val3="ภาษากัสติยา" val4="สแปนิช" />
+    <item code="th" code_tr="es-US" val1="ภาษาสเปนแบบอเมริกัน" val2="สเปนแบบอเมริกัน" val3="ภาษาสเปนสำเนียงอเมริกัน" val4="สเปนสำเนียงอเมริกัน" val5="อเมริกันสแปนิช" />
+    <item code="th" code_tr="es-CO" val1="ภาษาสเปนแบบโคลอมเบียน" val2="สเปนแบบโคลอมเบียน" val3="ภาษาสเปนสำเนียงโคลอมเบียน" val4="สเปนสำเนียงโคลอมเบียน" val5="ภาษาสเปนแบบโคลอมเบีย" val6="สเปนแบบโคลอมเบีย" val7="ภาษาสเปนสำเนียงโคลอมเบีย" val8="สเปนสำเนียงโคลอมเบีย" val9="โคลอมเบียนสแปนิช" />
+    <item code="th" code_tr="es-AR" val1="ภาษาสเปนแบบอาร์เจนติเนียน" val2="สเปนแบบอาร์เจนติเนียน" val3="ภาษาสเปนสำเนียงอาร์เจนติเนียน" val4="สเปนสำเนียงอาร์เจนติเนียน" val5="ภาษาสเปนแบบอาร์เจนตินา" val6="สเปนแบบอาร์เจนตินา" val7="ภาษาสเปนสำเนียงอาร์เจนตินา" val8="สเปนสำเนียงอาร์เจนตินา" val9="อาร์เจนติเนียนสแปนิช" />
+    <item code="th" code_tr="su" val1="ภาษาซุนดา" val2="ซุนดา" val3="ซุนดานีส" />
+    <item code="th" code_tr="sw" val1="ภาษาสวาฮีลี" val2="สวาฮีลี" />
+    <item code="th" code_tr="sv" val1="ภาษาสวีเดน" val2="สวีเดน" val3="ภาษาสวีดิช" val4="สวีดิช" />
+    <item code="th" code_tr="tg" val1="ภาษาทาจิก" val2="ทาจิก" />
+    <item code="th" code_tr="ta" val1="ภาษาทมิฬ" val2="ทมิฬ" />
+    <item code="th" code_tr="te" val1="ภาษาเตลูกู" val2="เตลูกู" val3="" />
+    <item code="th" code_tr="th" val1="ภาษาไทย" val2="ไทย" />
+    <item code="th" code_tr="tr" val1="ภาษาตุรกี" val2="ตุรกี" val3="เตอร์กิช" />
+    <item code="th" code_tr="uk" val1="ภาษายูเครน" val2="ยูเครน" val3="ยูเครเนียน" />
+    <item code="th" code_tr="ur" val1="ภาษาอูรดู" val2="อูรดู" />
+    <item code="th" code_tr="uz" val1="ภาษาอุซเบก" val2="อุซเบก" val3="อุซเบกิสถาน" />
+    <item code="th" code_tr="vi" val1="ภาษาเวียดนาม" val2="เวียดนาม" val3="เวียดนามมีส" />
+    <item code="th" code_tr="cy" val1="ภาษาเวลส์" val2="เวลส์" />
+    <item code="th" code_tr="xh" val1="ภาษาโคซา" val2="โคซา" />
+    <item code="th" code_tr="yi" val1="ภาษายิดดิช" val2="ยิดดิช" />
+    <item code="th" code_tr="yo" val1="ภาษาโยรูบา" val2="โยรูบา" val3="ภาษายอรูบา" val4="ยอรูบา" />
+    <item code="th" code_tr="zu" val1="ภาษาซูลู" val2="ซูลู" />
+    <item code="pt" code_tr="af" val1="Afrikaans" />
+    <item code="pt" code_tr="sq" val1="Albanês" />
+    <item code="pt" code_tr="am" val1="Amárico" val2="Amhara" />
+    <item code="pt" code_tr="ar" val1="Árabe" />
+    <item code="pt" code_tr="hy" val1="Armênio" />
+    <item code="pt" code_tr="az" val1="Azeerbaijani" />
+    <item code="pt" code_tr="eu" val1="Basco" />
+    <item code="pt" code_tr="be" val1="Bielorrusso" />
+    <item code="pt" code_tr="bn" val1="Bengali" />
+    <item code="pt" code_tr="bs" val1="Bósnio" />
+    <item code="pt" code_tr="bg" val1="Búlgaro" />
+    <item code="pt" code_tr="my" val1="Myanmar" val2="Birmânia" val3="Birmânia" val4="Birmânia" val5="birmaneses" />
+    <item code="pt" code_tr="yue" val1="Cantonês" val2="Hong Kong" val3="Macau" />
+    <item code="pt" code_tr="ca" val1="Catalão" />
+    <item code="pt" code_tr="ceb" val1="Cebuano" />
+    <item code="pt" code_tr="ny" val1="Chichewa" val2="Nyanja" val3="Chichewa" />
+    <item code="pt" code_tr="zh-CN" val1="Chinês Simplificado" val2="Pequim" val3="Mandarim" />
+    <item code="pt" code_tr="zh-TW" val1="Chinês Tradicional" val2="Taiwanês" val3="Hong Kong" val4="Macau" />
+    <item code="pt" code_tr="co" val1="Corso" />
+    <item code="pt" code_tr="hr" val1="Croata" />
+    <item code="pt" code_tr="cs" val1="Checo" />
+    <item code="pt" code_tr="da" val1="Dinamarquês" />
+    <item code="pt" code_tr="nl" val1="Holandês" val2="Nederland" val3="Dutch" />
+    <item code="pt" code_tr="en" val1="Inglês" />
+    <item code="pt" code_tr="en-SO" val1="Inglês" val2="lentamente" />
+    <item code="pt" code_tr="en-GB" val1="Inglês" val2="Inglaterra" val3="Grã-Bretanha" />
+    <item code="pt" code_tr="en-IN" val1="Inglês" val2="Índia" />
+    <item code="pt" code_tr="en-AU" val1="Inglês" />
+    <item code="pt" code_tr="en-PH" val1="Inglês" val2="Filipinas" />
+    <item code="pt" code_tr="eo" val1="Esperanto" />
+    <item code="pt" code_tr="et" val1="Estoniano" />
+    <item code="pt" code_tr="tl" val1="Filipino" val2="Tagalog" />
+    <item code="pt" code_tr="fi" val1="Finlandês" val2="Finlândia" />
+    <item code="pt" code_tr="fr" val1="Francês" />
+    <item code="pt" code_tr="fr-CA" val1="Francês" />
+    <item code="pt" code_tr="fy" val1="Frísico" val2="Frísio" />
+    <item code="pt" code_tr="gl" val1="Galego" />
+    <item code="pt" code_tr="ka" val1="georgiano" val2="Georgia" />
+    <item code="pt" code_tr="de" val1="alemão" />
+    <item code="pt" code_tr="el" val1="grego" />
+    <item code="pt" code_tr="gu" val1="Guzerate" />
+    <item code="pt" code_tr="ht" val1="Crioulo Haitiano" val2="Haitiano" val3="crioulo" />
+    <item code="pt" code_tr="ha" val1="Hausa" />
+    <item code="pt" code_tr="haw" val1="Havaiano" val2="Havaí" />
+    <item code="pt" code_tr="iw" val1="Hebraico" />
+    <item code="pt" code_tr="hi" val1="Hindi" />
+    <item code="pt" code_tr="hmn" val1="Hmong" val2="Miao" />
+    <item code="pt" code_tr="hu" val1="Húngaro" val2="Hungria" />
+    <item code="pt" code_tr="is" val1="Islandês" val2="Islândia" />
+    <item code="pt" code_tr="ig" val1="Igbo" />
+    <item code="pt" code_tr="id" val1="Indonésio" />
+    <item code="pt" code_tr="ga" val1="Irlandês" />
+    <item code="pt" code_tr="it" val1="Italiano" />
+    <item code="pt" code_tr="ja" val1="Japonês" />
+    <item code="pt" code_tr="jw" val1="Javanês" />
+    <item code="pt" code_tr="kn" val1="Canarim" />
+    <item code="pt" code_tr="kk" val1="Cazaque" />
+    <item code="pt" code_tr="km" val1="Khmer" />
+    <item code="pt" code_tr="ko" val1="Coreano" />
+    <item code="pt" code_tr="ku" val1="Curdo" />
+    <item code="pt" code_tr="ky" val1="Quirguiz" />
+    <item code="pt" code_tr="lo" val1="Laos" />
+    <item code="pt" code_tr="la" val1="Latim" />
+    <item code="pt" code_tr="lv" val1="Letão" />
+    <item code="pt" code_tr="lt" val1="Lituano" />
+    <item code="pt" code_tr="lb" val1="Luxemburguês" />
+    <item code="pt" code_tr="mk" val1="Macedônio" />
+    <item code="pt" code_tr="mg" val1="Malgaxe" />
+    <item code="pt" code_tr="ms" val1="Malaio" />
+    <item code="pt" code_tr="ml" val1="Malaiala" />
+    <item code="pt" code_tr="mt" val1="Maltês" />
+    <item code="pt" code_tr="mi" val1="Maori" />
+    <item code="pt" code_tr="mr" val1="Marati" />
+    <item code="pt" code_tr="mn" val1="Mongol" />
+    <item code="pt" code_tr="ne" val1="Nepalês" />
+    <item code="pt" code_tr="no" val1="Norueguês" />
+    <item code="pt" code_tr="ps" val1="Pashto" val2="Pashtun" />
+    <item code="pt" code_tr="fa" val1="Persa" />
+    <item code="pt" code_tr="pl" val1="Polonês" />
+    <item code="pt" code_tr="pt" val1="Português" />
+    <item code="pt" code_tr="pt-BR" val1="Português" val2="brasileiro" />
+    <item code="pt" code_tr="pa" val1="Punjabi" val2="Panjabi" />
+    <item code="pt" code_tr="ro" val1="Romeno" />
+    <item code="pt" code_tr="ru" val1="Russo" />
+    <item code="pt" code_tr="sm" val1="Samoano" />
+    <item code="pt" code_tr="gd" val1="Escoceses" val2="gaelico" val3="escocês" />
+    <item code="pt" code_tr="sr" val1="Sérvio" />
+    <item code="pt" code_tr="st" val1="Sesotho" />
+    <item code="pt" code_tr="sn" val1="Shona" />
+    <item code="pt" code_tr="sd" val1="Sindhi" />
+    <item code="pt" code_tr="si" val1="Sinhala" />
+    <item code="pt" code_tr="sk" val1="Eslovaco" />
+    <item code="pt" code_tr="sl" val1="Esloveno" />
+    <item code="pt" code_tr="so" val1="Somali" />
+    <item code="pt" code_tr="es" val1="Espanhol" />
+    <item code="pt" code_tr="es-US" val1="Espanhol" />
+    <item code="pt" code_tr="es-CO" val1="Espanhol" />
+    <item code="pt" code_tr="es-AR" val1="Espanhol" />
+    <item code="pt" code_tr="su" val1="Sundanês" val2="Sundanesiano" />
+    <item code="pt" code_tr="sw" val1="Suaíli" val2="Kiswahili" />
+    <item code="pt" code_tr="sv" val1="Sueco" />
+    <item code="pt" code_tr="tg" val1="Tajique" />
+    <item code="pt" code_tr="ta" val1="Tamil" />
+    <item code="pt" code_tr="te" val1="Telugu" />
+    <item code="pt" code_tr="th" val1="Tailandês" />
+    <item code="pt" code_tr="tr" val1="Turco" />
+    <item code="pt" code_tr="uk" val1="Ucraniano" />
+    <item code="pt" code_tr="ur" val1="Urdu" />
+    <item code="pt" code_tr="uz" val1="Uzbeque" />
+    <item code="pt" code_tr="vi" val1="Vietnamita" />
+    <item code="pt" code_tr="cy" val1="Galês" />
+    <item code="pt" code_tr="xh" val1="Xhosa" />
+    <item code="pt" code_tr="yi" val1="Iídiche" />
+    <item code="pt" code_tr="yo" val1="Yoruba" />
+    <item code="pt" code_tr="zu" val1="Zulu" />
+    <item code="zh-TW" code_tr="af" val1="南非" />
+    <item code="zh-TW" code_tr="sq" val1="阿爾" />
+    <item code="zh-TW" code_tr="am" val1="阿姆" />
+    <item code="zh-TW" code_tr="ar" val1="阿拉伯" />
+    <item code="zh-TW" code_tr="hy" val1="亞美" />
+    <item code="zh-TW" code_tr="az" val1="亞塞" />
+    <item code="zh-TW" code_tr="eu" val1="巴斯" />
+    <item code="zh-TW" code_tr="be" val1="白俄" />
+    <item code="zh-TW" code_tr="bn" val1="孟加" />
+    <item code="zh-TW" code_tr="bs" val1="波士" />
+    <item code="zh-TW" code_tr="bg" val1="保加" />
+    <item code="zh-TW" code_tr="my" val1="緬甸" />
+    <item code="zh-TW" code_tr="yue" val1="粵" />
+    <item code="zh-TW" code_tr="ca" val1="加泰" />
+    <item code="zh-TW" code_tr="ceb" val1="宿霧" />
+    <item code="zh-TW" code_tr="ny" val1="齊切" />
+    <item code="zh-TW" code_tr="zh-CN" val1="簡中" />
+    <item code="zh-TW" code_tr="zh-TW" val1="繁中" />
+    <item code="zh-TW" code_tr="co" val1="科西" />
+    <item code="zh-TW" code_tr="hr" val1="克羅" />
+    <item code="zh-TW" code_tr="cs" val1="捷克" />
+    <item code="zh-TW" code_tr="da" val1="丹麥" />
+    <item code="zh-TW" code_tr="nl" val1="荷蘭" />
+    <item code="zh-TW" code_tr="en" val1="美國英文" />
+    <item code="zh-TW" code_tr="en-SO" val1="美國英文"  val2="慢速"/>
+    <item code="zh-TW" code_tr="en-GB" val1="英國英文" />
+    <item code="zh-TW" code_tr="en-IN" val1="印度英文" />
+    <item code="zh-TW" code_tr="en-AU" val1="澳洲英文" />
+    <item code="zh-TW" code_tr="en-PH" val1="英文" val2="菲律賓" />
+    <item code="zh-TW" code_tr="eo" val1="世界" />
+    <item code="zh-TW" code_tr="et" val1="愛沙" />
+    <item code="zh-TW" code_tr="tl" val1="菲律" />
+    <item code="zh-TW" code_tr="fi" val1="芬蘭" />
+    <item code="zh-TW" code_tr="fr" val1="法" />
+    <item code="zh-TW" code_tr="fr-CA" val1="加拿大法文" />
+    <item code="zh-TW" code_tr="fy" val1="菲士" />
+    <item code="zh-TW" code_tr="gl" val1="加利" />
+    <item code="zh-TW" code_tr="ka" val1="喬治" />
+    <item code="zh-TW" code_tr="de" val1="德" />
+    <item code="zh-TW" code_tr="el" val1="希臘" />
+    <item code="zh-TW" code_tr="gu" val1="古吉" />
+    <item code="zh-TW" code_tr="ht" val1="海克" />
+    <item code="zh-TW" code_tr="ha" val1="豪沙" />
+    <item code="zh-TW" code_tr="haw" val1="夏威" />
+    <item code="zh-TW" code_tr="iw" val1="希伯" />
+    <item code="zh-TW" code_tr="hi" val1="印度" />
+    <item code="zh-TW" code_tr="hmn" val1="苗" />
+    <item code="zh-TW" code_tr="hu" val1="匈牙" />
+    <item code="zh-TW" code_tr="is" val1="冰島" />
+    <item code="zh-TW" code_tr="ig" val1="伊博" />
+    <item code="zh-TW" code_tr="id" val1="印尼" />
+    <item code="zh-TW" code_tr="ga" val1="愛爾" />
+    <item code="zh-TW" code_tr="it" val1="義大" />
+    <item code="zh-TW" code_tr="ja" val1="日" />
+    <item code="zh-TW" code_tr="jw" val1="爪哇" />
+    <item code="zh-TW" code_tr="kn" val1="卡納" />
+    <item code="zh-TW" code_tr="kk" val1="哈薩" />
+    <item code="zh-TW" code_tr="km" val1="高棉" />
+    <item code="zh-TW" code_tr="ko" val1="韓" />
+    <item code="zh-TW" code_tr="ku" val1="庫德" />
+    <item code="zh-TW" code_tr="ky" val1="吉爾" />
+    <item code="zh-TW" code_tr="lo" val1="寮" />
+    <item code="zh-TW" code_tr="la" val1="拉丁" />
+    <item code="zh-TW" code_tr="lv" val1="拉脫" />
+    <item code="zh-TW" code_tr="lt" val1="立陶" />
+    <item code="zh-TW" code_tr="lb" val1="盧森" />
+    <item code="zh-TW" code_tr="mk" val1="馬其" />
+    <item code="zh-TW" code_tr="mg" val1="馬拉加" />
+    <item code="zh-TW" code_tr="ms" val1="馬來" />
+    <item code="zh-TW" code_tr="ml" val1="馬拉雅" />
+    <item code="zh-TW" code_tr="mt" val1="馬耳" />
+    <item code="zh-TW" code_tr="mi" val1="毛利" />
+    <item code="zh-TW" code_tr="mr" val1="馬拉地" />
+    <item code="zh-TW" code_tr="mn" val1="蒙古" />
+    <item code="zh-TW" code_tr="ne" val1="尼泊" />
+    <item code="zh-TW" code_tr="no" val1="挪威" />
+    <item code="zh-TW" code_tr="ps" val1="普什" />
+    <item code="zh-TW" code_tr="fa" val1="波斯" />
+    <item code="zh-TW" code_tr="pl" val1="波蘭" />
+    <item code="zh-TW" code_tr="pt" val1="葡" />
+    <item code="zh-TW" code_tr="pt-BR" val1="葡" />
+    <item code="zh-TW" code_tr="pa" val1="旁遮" />
+    <item code="zh-TW" code_tr="ro" val1="羅馬" />
+    <item code="zh-TW" code_tr="ru" val1="俄" />
+    <item code="zh-TW" code_tr="sm" val1="薩摩" />
+    <item code="zh-TW" code_tr="gd" val1="蘇蓋" />
+    <item code="zh-TW" code_tr="sr" val1="塞爾" />
+    <item code="zh-TW" code_tr="st" val1="塞索" />
+    <item code="zh-TW" code_tr="sn" val1="修納" />
+    <item code="zh-TW" code_tr="sd" val1="信德" />
+    <item code="zh-TW" code_tr="si" val1="僧伽羅" />
+    <item code="zh-TW" code_tr="sk" val1="斯洛伐" />
+    <item code="zh-TW" code_tr="sl" val1="斯洛維" />
+    <item code="zh-TW" code_tr="so" val1="索馬" />
+    <item code="zh-TW" code_tr="es" val1="西" />
+    <item code="zh-TW" code_tr="es-US" val1="美國西班牙文" />
+    <item code="zh-TW" code_tr="es-CO" val1="哥倫比亞西班牙文" />
+    <item code="zh-TW" code_tr="es-AR" val1="阿根廷西班牙文" />
+    <item code="zh-TW" code_tr="su" val1="巽他" />
+    <item code="zh-TW" code_tr="sw" val1="斯瓦" />
+    <item code="zh-TW" code_tr="sv" val1="瑞典" />
+    <item code="zh-TW" code_tr="tg" val1="塔吉" />
+    <item code="zh-TW" code_tr="ta" val1="泰米" />
+    <item code="zh-TW" code_tr="te" val1="泰盧" />
+    <item code="zh-TW" code_tr="th" val1="泰" />
+    <item code="zh-TW" code_tr="tr" val1="土耳" />
+    <item code="zh-TW" code_tr="uk" val1="烏克" />
+    <item code="zh-TW" code_tr="ur" val1="烏爾" />
+    <item code="zh-TW" code_tr="uz" val1="烏茲" />
+    <item code="zh-TW" code_tr="vi" val1="越南" />
+    <item code="zh-TW" code_tr="cy" val1="威爾" />
+    <item code="zh-TW" code_tr="xh" val1="科薩" />
+    <item code="zh-TW" code_tr="yi" val1="意第" />
+    <item code="zh-TW" code_tr="yo" val1="約魯" />
+    <item code="zh-TW" code_tr="zu" val1="祖魯" />
 </language>

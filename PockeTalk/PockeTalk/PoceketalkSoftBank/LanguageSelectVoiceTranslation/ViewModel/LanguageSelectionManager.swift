@@ -13,10 +13,10 @@ enum LanguageName: Int{
 
 public class LanguageSelectionManager{
     public static let shared: LanguageSelectionManager = LanguageSelectionManager()
-    let TAG = "\(LanguageSelectionManager.self)"
+    private let TAG = "\(LanguageSelectionManager.self)"
     var languageItems = [LanguageItem]()
-    var mDefaultLanguageFile = "default_languages"
-    //var systemLanguageCode = "en"
+    private let mDefaultLanguageFile = "default_languages"
+    
     public var bottomLanguage: String {
       get {
         guard let langCode = UserDefaults.standard.string(forKey: nativeLanguageCode) else {
@@ -95,27 +95,31 @@ public class LanguageSelectionManager{
         return nil
     }
 
-    ///Get data from XML
-    // Load all language list from xml
     public func loadLanguageListData(){
-        let systemLanguageCode = LanguageManager.shared.currentLanguage.rawValue
-        let mLanguageFile = "\(languageConversationFileNamePrefix)\(systemLanguageCode)"
+        let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
+        let convertedSystemlangCode = GlobalMethod.getAlternativeSystemLanguageCode(of: sysLangCode)
+        
+        let mLanguageFile = "\(languageConversationFileNamePrefix)\(convertedSystemlangCode)"
         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
+        
         if let path = Bundle.main.path(forResource: mLanguageFile, ofType: "xml") {
             do {
                 let contents = try String(contentsOfFile: path)
                 let xml =  try XML.parse(contents)
-                
-                // enumerate child Elements in the parent Element
                 languageItems.removeAll()
+                
                 for item in xml["language", "item"] {
                     let attributes = item.attributes
-                    languageItems.append(LanguageItem(name: attributes["name"] ?? "", code: attributes["code"] ?? "", englishName: attributes["en"] ?? "", sysLangName: attributes[systemLanguageCode] ?? ""))
+                    languageItems.append(LanguageItem(name: attributes["name"] ?? "",
+                                                      code: attributes["code"] ?? "",
+                                                      englishName: attributes["en"] ?? "",
+                                                      sysLangName: attributes[convertedSystemlangCode] ?? "")
+                    )
                 }
                 PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) final call \(languageItems.count)")
-                } catch {
-                    PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) Parse Error")
-                }
+            } catch {
+                PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) Parse Error")
+            }
         }
     }
 
@@ -126,7 +130,6 @@ public class LanguageSelectionManager{
         _ = insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: targetLangItem?.code, cameraOrVoice: LanguageType.voice.rawValue))
     }
     
-    ///Get data from XML
     public func setDefaultLanguageSettings(systemLanguageCode: String){
         PrintUtility.printLog(tag: TAG, text: "setDefaultLanguageSettings for \(mDefaultLanguageFile)  systemlang \(systemLanguageCode)")
         if let path = Bundle.main.path(forResource: mDefaultLanguageFile, ofType: "xml") {
@@ -134,34 +137,36 @@ public class LanguageSelectionManager{
                 let contents = try String(contentsOfFile: path)
                 let xml =  try XML.parse(contents)
                 
-                // enumerate child Elements in the parent Element
                 for item in xml["language", "item"] {
                     let attributes = item.attributes
                     PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(attributes.description)")
                     if systemLanguageCode == attributes["code"]{
-                        PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(String(describing: attributes["native"])) \(attributes["translate"])")
+                        PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(String(describing: attributes["native"])) \(attributes["translate"] ?? "")")
+                        
                         if LanguageSelectionManager.shared.isBottomLanguageChanged == false {
                             LanguageSelectionManager.shared.bottomLanguage = attributes["native"]!
                         }
                         if LanguageSelectionManager.shared.isTopLanguageChanged == false {
                             LanguageSelectionManager.shared.topLanguage = attributes["translate"]!
                         }
+                        
                         insertDefaultDataToDb(attributes)
                         return
                     }
                 }
-                //NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
                 PrintUtility.printLog(tag: TAG,text: "final call \(languageItems.count)")
-                } catch {
-                    PrintUtility.printLog(tag: TAG, text: "Parse Error")
-                }
+            } catch {
+                PrintUtility.printLog(tag: TAG, text: "Parse Error")
+            }
         }
     }
 
     func setLanguageAccordingToSystemLanguage(){
         let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         PrintUtility.printLog(tag: TAG,text: "\(LanguageManager.self) sysLangCode \(sysLangCode)")
-        LanguageSelectionManager.shared.setDefaultLanguageSettings(systemLanguageCode: sysLangCode)
+        
+        let convertedSystemlangCode = GlobalMethod.getAlternativeSystemLanguageCode(of: sysLangCode)
+        LanguageSelectionManager.shared.setDefaultLanguageSettings(systemLanguageCode: convertedSystemlangCode)
     }
 
     func insertIntoDb(entity: LanguageSelectionEntity) -> Int{
@@ -192,19 +197,27 @@ public class LanguageSelectionManager{
     func findLanugageCodeAndSelect(_ text: String) {
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
-        let stringFromSpeech = text.replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range: nil)
+        var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        if systemLanguage == SystemLanguageCode.ru.rawValue{
+            stringFromSpeech = stringFromSpeech.capitalizingFirstLetter()
+        }
+        
         let codeFromLanguageMap = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: systemLanguage, text: stringFromSpeech) as? LanguageMapEntity
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates stringFromSpeech \(stringFromSpeech) codeFromLanguageMap = \(String(describing: codeFromLanguageMap?.textCodeTr))")
+        
         if let langCode = codeFromLanguageMap?.textCodeTr{
             let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
-            UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
+            if langItem != nil {
+                UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
+            }
         }
     }
 
     func hasSttSupport(languageCode: String) -> Bool{
         let langitem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: languageCode)
         let sttValue = LanguageEngineParser.shared.getSttValue(langCode: languageCode)
-        PrintUtility.printLog(tag: TAG, text: "checkSttSupport \(sttValue) langitem \(langitem?.name) code \(langitem?.code)")
+        PrintUtility.printLog(tag: TAG, text: "checkSttSupport \(sttValue ?? "") langitem \(langitem?.name ?? "") code \(langitem?.code ?? "")")
         if sttValue == nil{
             return false
         }
@@ -214,7 +227,7 @@ public class LanguageSelectionManager{
     func hasTtsSupport(languageCode: String) -> Bool{
         let langitem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: languageCode)
         let ttsValue = LanguageEngineParser.shared.getTtsEngineName(langCode: languageCode)
-        PrintUtility.printLog(tag: TAG, text: "checkTtsSupport \(ttsValue) langitem \(langitem?.name) code \(langitem?.code)")
+        PrintUtility.printLog(tag: TAG, text: "checkTtsSupport \(ttsValue ?? "") langitem \(langitem?.name ?? "") code \(langitem?.code ?? "")")
         if ttsValue == nil{
             return false
         }
