@@ -307,6 +307,18 @@ class SpeechProcessingViewController: BaseViewController{
             }
             exampleLabel.text = speechLanguage?.exampleText
             descriptionLabel.text = speechLanguage?.secText
+            if speechLangCode == BURMESE_MY_LANGUAGE_CODE {
+                titleLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                exampleLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                descriptionLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+            } else {
+                titleLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+                exampleLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+                descriptionLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+            }
+            titleLabel.textAlignment = .center
+            exampleLabel.textAlignment = .center
+            descriptionLabel.textAlignment = .center
             break
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             self.titleLabel.text = "country_selection_voice_msg".localiz()

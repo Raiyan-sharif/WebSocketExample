@@ -20,12 +20,33 @@ class SingleLabelCell: UITableViewCell {
     }
     
     //MARK: - Configure cell
-    func configCell(ttsText: String, indexPath: IndexPath){
+    func configCell(ttsText: String, indexPath: IndexPath, chatItem: ChatEntity?) {
         infoLabel.text = ttsText
-        if indexPath.row == 2{
+        if indexPath.row == 2 {
             infoLabel.textColor = .gray
+            if let nativeLanguage = chatItem?.textNativeLanguage,
+               let nativeLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLanguage) {
+
+                if (nativeLanguageCode.code == BURMESE_MY_LANGUAGE_CODE) {
+                    infoLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                }
+                else {
+                    infoLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+                }
+            }
         } else {
             infoLabel.textColor = .black
+            if let translatedLanguage = chatItem?.textTranslatedLanguage,
+               let translatedLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: translatedLanguage) {
+
+                if (translatedLanguageCode.code == BURMESE_MY_LANGUAGE_CODE) {
+                    infoLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                }
+                else {
+                    infoLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+                }
+            }
         }
+        infoLabel.textAlignment = .center
     }
 }

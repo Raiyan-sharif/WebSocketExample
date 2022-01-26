@@ -125,6 +125,10 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         labelOriginalText.isUserInteractionEnabled = true
         labelOriginalText.addGestureRecognizer(tapForTTS)
         labelOriginalText.text = orginalText
+        if languageCode == BURMESE_MY_LANGUAGE_CODE {
+            labelOriginalText.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+            labelOriginalText.textAlignment = .center
+        }
     }
     
     //MARK: Glow effect Under Talk Button

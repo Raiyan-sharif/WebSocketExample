@@ -138,6 +138,7 @@ let IMAGE_HEIGHT:Int = 860
 let EXCEPTION_LANGUAGE_CODES: [String] = ["pt-PT"]
 let FILIPINO_FIL_LANGUAGE_CODE: String = "fil"
 let FILIPINO_TL_LANGUAGE_CODE: String = "tl"
+let BURMESE_MY_LANGUAGE_CODE: String = "my"
 let KAlertTempoControlSelectionAlert = "TempoControlSelectionAlert"
 let BLOCK_DIRECTION:Int = -1
 let CAMERA_HISTORY_DATA_LOAD_LIMIT = 10
@@ -150,6 +151,8 @@ let CameraDefaultLang = "Automatic Recognition"
 let isCameraFlashOn = "isCameraFlashOn"
 let isTransLationSuccessful = "isTransLateSuccessful"
 let cameraHistoryImageLimit: Int = 100
+let LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE : CGFloat = 8.0
+let LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE : CGFloat = 1.0
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500

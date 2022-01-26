@@ -290,6 +290,28 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: HistoryCell.self)
         let item = historyViewModel.items.value[indexPath.item] as! ChatEntity
+        if let nativeLanguage = item.textNativeLanguage,
+           let nativeLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLanguage) {
+
+            if (nativeLanguageCode.code == BURMESE_MY_LANGUAGE_CODE) {
+                cell.toLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+            }
+            else {
+                cell.toLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+            }
+        }
+        if let translatedLanguage = item.textTranslatedLanguage,
+           let translatedLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: translatedLanguage) {
+
+            if (translatedLanguageCode.code == BURMESE_MY_LANGUAGE_CODE) {
+                cell.fromLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+            }
+            else {
+                cell.fromLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+            }
+        }
+        cell.fromLabel.textAlignment = .center
+        cell.toLabel.textAlignment = .center
         cell.fromLabel.text = item.textTranslated
         cell.toLabel.text = item.textNative
         cell.deleteLabel.text = "delete_from_fv".localiz()

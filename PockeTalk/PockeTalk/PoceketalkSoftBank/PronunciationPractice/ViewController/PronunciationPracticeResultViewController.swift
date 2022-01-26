@@ -178,11 +178,21 @@ class PronunciationPracticeResultViewController: BaseViewController {
             viewFailureContainer.isHidden = true
             viewSuccessContainer.isHidden = false
             labelSuccessText.attributedText = result[1].set(style: style)
+            if languageCode == BURMESE_MY_LANGUAGE_CODE {
+                labelSuccessText.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                labelSuccessText.textAlignment = .center
+            }
         } else {
             viewFailureContainer.isHidden = false
             viewSuccessContainer.isHidden = true
             labelFailedOriginalText.attributedText = result[1].set(style: style)
             labelFailedPronuncedText.attributedText = result[2].set(style: style)
+            if languageCode == BURMESE_MY_LANGUAGE_CODE {
+                labelFailedOriginalText.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                labelFailedOriginalText.textAlignment = .center
+                labelFailedPronuncedText.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+                labelFailedPronuncedText.textAlignment = .center
+            }
         }
     }
 

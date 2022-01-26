@@ -548,6 +548,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
         cameraTTSDiaolog.fromLanguageLabel.text = nativeText
         
+        if (nativeLanguage == BURMESE_MY_LANGUAGE_CODE) {
+            cameraTTSDiaolog.fromLanguageLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+        }else {
+            cameraTTSDiaolog.fromLanguageLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+        }
+        cameraTTSDiaolog.fromLanguageLabel.textAlignment = .center
+
         let languageManager = LanguageSelectionManager.shared
         // Hide or show play button accoring to tts supported and not supported language
         if(languageManager.hasTtsSupport(languageCode: nativeLanguage)) {
@@ -572,6 +579,14 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         }
         
         cameraTTSDiaolog.toLanguageLabel.text = translateText
+        
+        if (translateLanguage == BURMESE_MY_LANGUAGE_CODE) {
+            cameraTTSDiaolog.toLanguageLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_BURMESE_LANGUAGE)
+        }else {
+            cameraTTSDiaolog.toLanguageLabel.setLineHeight(lineHeight: LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE)
+        }
+        
+        cameraTTSDiaolog.toLanguageLabel.textAlignment = .center
         fromLanguage = nativeLangItem.sysLangName
         toLanguage = translateText
         

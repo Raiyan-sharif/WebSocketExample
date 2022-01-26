@@ -773,7 +773,7 @@ extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ttsResultTV.dequeueReusableCell(withIdentifier: "SingleLabelCell", for: indexPath) as! SingleLabelCell
-        cell.configCell(ttsText: sttText[indexPath.row], indexPath: indexPath)
+        cell.configCell(ttsText: sttText[indexPath.row], indexPath: indexPath, chatItem: chatItemModel?.chatItem)
         cell.selectionStyle = .none
         return cell
     }
