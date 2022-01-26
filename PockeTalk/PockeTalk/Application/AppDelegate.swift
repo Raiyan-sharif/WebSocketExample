@@ -4,13 +4,14 @@
 //
 
 import UIKit
+import Kronos
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
     //var isAppRelaunch = false
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUpInitialLaunch()
         return true
     }
-
+    
     /// Initial launch setup
     func setUpInitialLaunch() {
         // Set initial language of the application
@@ -37,7 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
             FontUtility.setInitialFontSize()
         }
-        AppDelegate.generateAccessKey()
+        
+        NetworkManager.shareInstance.handleLicenseToken { result in
+            if result {
+                AppDelegate.generateAccessKey()
+            }
+        }
     }
     
     private func setUpWelcomeViewController() {
@@ -58,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         }
     }
-
+    
     func setUpAppFirstLaunch(isUpdateArrow: Bool){
         PrintUtility.printLog(tag: TAG, text: "App first launch called.")
         setInitialLanguage()
@@ -69,27 +75,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
         CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
     }
-
-   class func generateAccessKey(){
-       // if UserDefaultsProperty<String>(authentication_key).value == nil{
-            NetworkManager.shareInstance.getAuthkey { data  in
-                guard let data = data else { return }
-                do {
-                    let result = try JSONDecoder().decode(ResultModel.self, from: data)
-                    if result.resultCode == response_ok{
-                        UserDefaultsProperty<String>(authentication_key).value = result.accessKey
-                        //if self.isAppRelaunch {
-                            SocketManager.sharedInstance.updateRequestKey()
-                        UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
-                            //self.isAppRelaunch = false
-                        //}
-                    }
-                }catch{
+    
+    class func generateAccessKey(){
+        // if UserDefaultsProperty<String>(authentication_key).value == nil{
+        NetworkManager.shareInstance.getAuthkey { data  in
+            guard let data = data else { return }
+            do {
+                let result = try JSONDecoder().decode(ResultModel.self, from: data)
+                if result.resultCode == response_ok{
+                    UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                    //if self.isAppRelaunch {
+                    SocketManager.sharedInstance.updateRequestKey()
+                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
+                    AppDelegate().executeLicenseTokenRefreshFunctionality()
+                    //self.isAppRelaunch = false
+                    //}
                 }
+            }catch{
             }
-       // }
+        }
+        // }
     }
-
+    
     /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
     func setInitialLanguage () {
         var locale = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
@@ -98,19 +105,69 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         LanguageManager.shared.setLanguage(language: Languages(rawValue: locale) ?? .en)
     }
-
+    
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         //isAppRelaunch = true
         setUpInitialLaunch()
     }
-
+    
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        executeLicenseTokenRefreshFunctionality()
+    }
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         SocketManager.sharedInstance.connect()
     }
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         SocketManager.sharedInstance.disconnect()
     }
+    
+    func executeLicenseTokenRefreshFunctionality() {
+        let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
+        
+        if tokenCreationTime != nil {
+            
+            let tokenExpiryTime = tokenCreationTime! + 84600000   //(30*1000)  for 30 sec delay
+            
+            Clock.sync(completion:  { date, offset in
+                if let getResDate = date {
+                    PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
+                    let currentTime = getResDate.millisecondsSince1970
+                    
+                    let scheduleRefreshTime = (tokenExpiryTime - currentTime)/1000
+                
+                    if tokenExpiryTime > currentTime {
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(scheduleRefreshTime)) {
+                            PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
+                            NetworkManager.shareInstance.handleLicenseToken { result in
+                                if result {
+                                    AppDelegate.generateAccessKey()
+                                }
+                            }
+                        }
+                    } else if  (currentTime > tokenExpiryTime) {
+                        //expired
+                        PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
+                        NetworkManager.shareInstance.handleLicenseToken { result in
+                            if result {
+                                AppDelegate.generateAccessKey()
+                            }
+                        }
+                    } else {
+                        NetworkManager.shareInstance.startTokenRefreshProcedure()
+                    }
+                }
+            })
+
+        } else {
+            NetworkManager.shareInstance.startTokenRefreshProcedure()
+        }
+    }
+    
 }
 
 

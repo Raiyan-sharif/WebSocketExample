@@ -47,10 +47,12 @@ class AudioPlayer: NSObject {
             return
         }
         PrintUtility.printLog(tag: "Engine Name", text: item)
-
+        var licenseToken = ""
+        if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
+            licenseToken = token
+        }
         let params:[String:String]  = [
-            imei : "862793051345020",
-            licenseToken:"" ,
+            license_token: licenseToken,
             language : targetLanguageItem,
             text : translateText,
             tempo: item == engineName ? normal : tempo

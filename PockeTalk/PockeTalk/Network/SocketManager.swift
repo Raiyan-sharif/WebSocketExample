@@ -16,6 +16,7 @@ import AVFoundation
 }
 
 class SocketManager: NSObject {
+
     private let TAG:String = "SocketManager"
     private var connectionCount = 0
     static let sharedInstance = SocketManager()
@@ -36,6 +37,13 @@ class SocketManager: NSObject {
         request.timeoutInterval = 5 // Sets the timeout for the connection
         request.setValue(keyValue, forHTTPHeaderField: access_token_key)
         request.setValue("true", forHTTPHeaderField: "X-Push-Mode")
+        
+        var licenseToken = ""
+        if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
+            licenseToken = token
+        }
+        request.setValue(licenseToken, forHTTPHeaderField: "X-License-Token")
+
         //request.setValue("false", forHTTPHeaderField: "X-Auto-Detect")
         //request.setValue("permessage-deflate", forHTTPHeaderField: "Sec-WebSocket-Extensions")
         request.addValue(AUDIO_STREAM_URL_ORIGIN, forHTTPHeaderField: origin)
@@ -53,7 +61,11 @@ class SocketManager: NSObject {
     func updateRequestKey(){
         let keyValue = UserDefaultsProperty<String>(authentication_key).value!
         socket.request.setValue(keyValue, forHTTPHeaderField: "X-Access-Key")
+        if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
+            socket.request.setValue(token, forHTTPHeaderField: "X-License-Token")
+        }
     }
+    
 }
 
 extension SocketManager : WebSocketDelegate {

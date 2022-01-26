@@ -55,6 +55,9 @@ let kUserDefaultDatabaseOldVersion = "databaseOldVersion"
 let kTempoControlSpeed = "kTempoControlSpeed"
 let kUserDefaultIsSpeechProcessingDisplayedFirstTime = "kUserDefaultIsSpeechProcessingDisplayedFirstTime"
 let kUserDefaultIsUserPurchasedThePlan = "kUserDefaultIsUserPurchasedThePlan"
+let licenseTokenUserDefaultKey = "licenseToken"
+let tokenCreationTime = "tokenCreationTime"
+
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -178,11 +181,18 @@ let srclang = "srclang"
 let destlang = "destlang"
 let access_key = "access_key"
 let authentication_key = "authentication_key"
+let license_token = "license_token"
 let response_ok = "OK"
 let base_url = "https://test.pt-v.com"
+let base_url2 = "https://test2.pt-v.com"
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
 let tts_url = "/handsfree/api/pub/tts"
+let liscense_token_url = "/handsfree/api/pub/token"
+let image_annotate_url = "https://test2.pt-v.com/handsfree/api/pub/images_annotate"
+let detect_lang_url = "https://test2.pt-v.com/handsfree/api/pub/detect_lang"
+
+
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
@@ -209,3 +219,17 @@ let tempo = "tempo"
 let engineName = "google"
 let normal = "normal"
 let isNetworkAvailable = "isNetworkAvailable"
+
+
+// Error Response
+let WARN_INPUT_PARAM = "WARN_INPUT_PARAM"
+let WARN_NO_DEVICE = "WARN_NO_DEVICE"
+let ERR_CREATE_FAILED = "ERR_CREATE_FAILED"
+let ERR_UNKNOWN = "ERR_UNKNOWN"
+let WARN_INVALID_KEY = "WARN_INVALID_KEY"
+let WARN_INVALID_LANG = "WARN_INVALID_LANG"
+let ERR_SETTING_FAILED = "ERR_SETTING_FAILED"
+let WARN_INVALID_AUTH = "WARN_INVALID_AUTH"
+let ERR_TTS_FAILED = "ERR_TTS_FAILED"
+let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
+let ERR_API_FAILED = "ERR_API_FAILED"

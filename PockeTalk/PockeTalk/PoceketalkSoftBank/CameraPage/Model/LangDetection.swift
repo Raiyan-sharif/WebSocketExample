@@ -12,14 +12,17 @@ import Alamofire
 class LanguageDetection {
     
     private var apiURL: URL {
-        return URL(string: "https://test.pt-v.com/handsfree/api/pub/detect_lang")!
+        return URL(string: detect_lang_url)!
     }
     private var okResultCode = "OK"
     
     func getDetectedLanguage(with content: String, completion: @escaping (String?) -> Void) {
-        print("")
+        var licenseToken = ""
+        if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
+            licenseToken = token
+        }
         
-        let parameters: [String: Any] = ["imei": imeiCode, "content": content]
+        let parameters: [String: Any] = [license_token: licenseToken, "content": content]
 
         PrintUtility.printLog(tag: "parameters parameters", text: "\(apiURL)")
         let headers: HTTPHeaders = ["X-Ios-Bundle-Identifier": Bundle.main.bundleIdentifier ?? "",]
@@ -48,6 +51,7 @@ class LanguageDetection {
             }
             
             if let data = try? JSONDecoder().decode(LanguageDeteectionResponseModel.self, from: data) {
+                
                 if data.result_code == self.okResultCode {
                     if let detectResponse = data.detect_response {
                         if let languages = detectResponse.languages {
@@ -56,7 +60,22 @@ class LanguageDetection {
                             }
                         }
                     }
+                } else if data.result_code == INFO_INVALID_AUTH {
+                    PrintUtility.printLog(tag: "Language Detection : ", text: "License Token Credentials do not exist")
+                    NetworkManager.shareInstance.startTokenRefreshProcedure()
+                    
+                    completion(nil)
+                } else if data.result_code == WARN_INPUT_PARAM {
+                    PrintUtility.printLog(tag: "Language Detection : ", text: "Wrong Parameter")
+                    completion(nil)
+                } else if data.result_code == ERR_API_FAILED {
+                    PrintUtility.printLog(tag: "Language Detection : ", text: "Language Detection API Errors")
+                    completion(nil)
+                } else {
+                    PrintUtility.printLog(tag: "Language Detection : ", text: "Unknown error")
+                    completion(nil)
                 }
+                
             } else {
                 completion(nil)
             }
