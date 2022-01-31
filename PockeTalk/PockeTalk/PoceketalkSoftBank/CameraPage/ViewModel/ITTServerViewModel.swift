@@ -23,6 +23,7 @@ class ITTServerViewModel: BaseModel {
     
     var mXFactor:Float = 1
     var mYFactor:Float = 1
+    let cameraHistoryDBModel = CameraHistoryDBModel()
     
     private(set) var loaderdelegate: LoaderDelegate?
     private(set) var parseTextDetection = ParseTextDetection()
@@ -321,6 +322,10 @@ class ITTServerViewModel: BaseModel {
                 if entities.contains(where: { $0.id == historyID }) {
                     updateDataOnDatabase(id: historyID)
                 } else {
+                    if(entities.count >= cameraHistoryImageLimit){
+                        guard let id = try? CameraHistoryDBModel().getMinId() else { return }
+                        try? cameraHistoryDBModel.delete(item: CameraEntity(id: Int64(id), detectedData: nil, translatedData: nil, image: nil))
+                    }
                     self.saveDataOnDatabase()
                 }
                 

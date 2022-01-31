@@ -145,6 +145,7 @@ let CHINESE_LANGUAGE_CODE_ZH = "zh"
 let CameraDefaultLang = "Automatic Recognition"
 let isCameraFlashOn = "isCameraFlashOn"
 let isTransLationSuccessful = "isTransLateSuccessful"
+let cameraHistoryImageLimit: Int = 100
 
 //MARK: - Database Constants
 let rowFetchPerScroll = 500

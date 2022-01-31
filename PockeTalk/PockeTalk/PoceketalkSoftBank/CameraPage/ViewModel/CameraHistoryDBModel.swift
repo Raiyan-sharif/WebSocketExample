@@ -155,6 +155,15 @@ class CameraHistoryDBModel: BaseDBModel {
         let minId =  try DB.scalar(table.select(id.max))
         return Int(minId!)
     }
+    
+    // MARK: - Get Min ID
+    func getMinId() throws -> Int {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        let minId =  try DB.scalar(table.select(id.min))
+        return Int(minId!)
+    }
 
 
 }
