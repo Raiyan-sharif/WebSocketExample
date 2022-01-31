@@ -208,7 +208,8 @@ class SpeechProcessingViewController: BaseViewController{
         self.rightImgHeightConstraint.constant = rightImgHeight
         self.speecProcessingRightParentView.layoutIfNeeded()
         
-        self.speechProcessingVM.animateRightImage(leftImage: self.speechProcessingLeftImgView, rightImage: self.speechProcessingRightImgView, yPos: changedYPos, xPos: changedXPos)
+        self.speechProcessingVM.animateRightImage(leftImage: self.speechProcessingLeftImgView, rightImage: self.speechProcessingRightImgView, yPos: self.changedYPos, xPos: self.changedXPos)
+        self.speechProcessingVM.animateLeftImage(leftImage: self.speechProcessingLeftImgView, yPos: changedYPos, xPos: changedXPos)
     }
     
     private func setupAudio(){
@@ -230,6 +231,14 @@ class SpeechProcessingViewController: BaseViewController{
                 self.removeAnimation()
             }
         }
+        
+        service?.getPower = { [weak self] avgVal in
+            guard let `self` = self else { return }
+            PrintUtility.printLog(tag: "Frequency : ", text: "\(avgVal)")
+            let frequency = (avgVal >= 0.4) ? 0.9 : 0.5
+            self.speechProcessingVM.setFrequency(frequency)
+        }
+        
         service?.recordDidStop = { [weak self]  in
             guard let `self` = self else { return }
             if self.speechProcessingVM.isGettingActualData{
@@ -550,6 +559,7 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         
         speechProcessingVM.isGettingActualData = false
         service?.startRecord()
+        SpeechProcessingViewModel.isLoading = false
         updateAnimation()
         addSpinner()
     }
@@ -564,6 +574,7 @@ extension SpeechProcessingViewController: HomeVCDelegate{
                 self.showTutorial()
             }
         }
+        SpeechProcessingViewModel.isLoading = true
         removeAnimation()
     }
 }

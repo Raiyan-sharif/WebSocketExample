@@ -19,6 +19,7 @@ func AQAudioQueueInputCallback(inUserData: UnsafeMutableRawPointer?,
     if datalength > 0{
         let data = Data(bytes: inBuffer.pointee.mAudioData, count: Int(datalength))
         audioService.setAudioData(data: data)
+        //audioService.setDecibel()
     }else{
         audioService.recordHasStop()
     }
@@ -56,6 +57,7 @@ class MAAudioService {
     let bytesPerPacket: UInt32 = 2
     let seconds: UInt32 = 10
     var isRecordStop = true
+    var getPower:((_ val:Float)->())?
     var audioFormat: AudioStreamBasicDescription {
         return AudioStreamBasicDescription(mSampleRate: 48000,
                                            mFormatID: kAudioFormatLinearPCM,
@@ -99,6 +101,12 @@ class MAAudioService {
         prepareForRecord()
         let err: OSStatus = AudioQueueStart(audioQueueObject!, nil)
         PrintUtility.printLog(tag: TAG, text: "err: \(err)")
+
+        // Enable level meter
+        var enabledLevelMeter: UInt32 = 1
+        AudioQueueSetProperty(self.audioQueueObject!, kAudioQueueProperty_EnableLevelMetering, &enabledLevelMeter, UInt32(MemoryLayout<UInt32>.size))
+
+
         setTimer()
 
     }
@@ -229,16 +237,37 @@ class MAAudioService {
 
     func setTimer(){
         var runCount = 0
-       timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        timer =  Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
             print("Timer fired!")
             runCount += 1
-
+        self.setDecibel()
             if runCount == 30 {
                 timer.invalidate()
             }
             self.getTimer?(runCount)
         }
     }
+
+    func setDecibel(){
+        var levelMeter = AudioQueueLevelMeterState()
+        var propertySize = UInt32(MemoryLayout<AudioQueueLevelMeterState>.size)
+
+        AudioQueueGetProperty(
+            self.audioQueueObject!,
+            kAudioQueueProperty_CurrentLevelMeterDB,
+            &levelMeter,
+            &propertySize)
+
+        let absValue = abs(levelMeter.mAveragePower)
+
+        if absValue <= 100{
+            var avgPower = absValue/100
+            avgPower = (avgPower*10).rounded()/10
+            self.getPower?(avgPower)
+        }
+
+    }
+
     func timerInvalidate() {
         timer?.invalidate()
         timer = nil
@@ -249,5 +278,5 @@ class MAAudioService {
             self.recordDidStop?()
         }
     }
-    
+
 }
