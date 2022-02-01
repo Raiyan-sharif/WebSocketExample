@@ -140,23 +140,26 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HfX-dK-7MH">
                                         <rect key="frame" x="10" y="18.5" width="33" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="33" id="Q5D-mb-lZo"/>
+                                        </constraints>
                                         <state key="normal" image="icon_arrow_left.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="kdF-fi-MGg" eventType="touchUpInside" id="UtO-SU-yqM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Lx-zEG">
-                                        <rect key="frame" x="151.5" y="24.5" width="111" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Lx-zEG">
+                                        <rect key="frame" x="48" y="25" width="318" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puh-Hg-bf9">
-                                        <rect key="frame" x="304" y="12" width="100" height="46"/>
+                                        <rect key="frame" x="344" y="12" width="60" height="46"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lre-2x-cV8">
-                                                <rect key="frame" x="25" y="14" width="50" height="18"/>
+                                                <rect key="frame" x="5" y="14" width="50" height="18"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,7 +169,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="lre-2x-cV8" firstAttribute="centerY" secondItem="puh-Hg-bf9" secondAttribute="centerY" id="DKR-kb-cU4"/>
-                                            <constraint firstAttribute="width" constant="100" id="R6m-kC-jFZ"/>
+                                            <constraint firstItem="lre-2x-cV8" firstAttribute="leading" secondItem="puh-Hg-bf9" secondAttribute="leading" constant="5" id="N38-0N-8UE"/>
                                             <constraint firstItem="lre-2x-cV8" firstAttribute="centerX" secondItem="puh-Hg-bf9" secondAttribute="centerX" id="sXx-o6-Qgn"/>
                                         </constraints>
                                     </view>
@@ -175,10 +178,11 @@
                                 <constraints>
                                     <constraint firstItem="puh-Hg-bf9" firstAttribute="centerY" secondItem="Ezp-Ix-RJX" secondAttribute="centerY" id="1cj-Lx-fCF"/>
                                     <constraint firstItem="gcY-Lx-zEG" firstAttribute="centerY" secondItem="Ezp-Ix-RJX" secondAttribute="centerY" id="J0f-OI-tYk"/>
-                                    <constraint firstItem="gcY-Lx-zEG" firstAttribute="centerX" secondItem="Ezp-Ix-RJX" secondAttribute="centerX" id="MBG-eN-wXb"/>
                                     <constraint firstItem="HfX-dK-7MH" firstAttribute="leading" secondItem="Ezp-Ix-RJX" secondAttribute="leading" constant="10" id="P09-65-IR6"/>
                                     <constraint firstAttribute="height" constant="70" id="WEh-jG-gjC"/>
                                     <constraint firstAttribute="trailing" secondItem="puh-Hg-bf9" secondAttribute="trailing" constant="10" id="co8-vk-CGZ"/>
+                                    <constraint firstItem="gcY-Lx-zEG" firstAttribute="centerX" secondItem="Ezp-Ix-RJX" secondAttribute="centerX" id="gKv-GT-oXX"/>
+                                    <constraint firstItem="gcY-Lx-zEG" firstAttribute="leading" secondItem="HfX-dK-7MH" secondAttribute="trailing" constant="5" id="iwb-ia-JxS"/>
                                     <constraint firstItem="puh-Hg-bf9" firstAttribute="top" secondItem="Ezp-Ix-RJX" secondAttribute="top" constant="12" id="nGY-hA-tJ7"/>
                                     <constraint firstItem="HfX-dK-7MH" firstAttribute="centerY" secondItem="Ezp-Ix-RJX" secondAttribute="centerY" id="y3u-e2-Zpi"/>
                                 </constraints>
@@ -250,7 +254,10 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Adk-NL-W07">
-                                        <rect key="frame" x="10" y="18.5" width="40" height="33"/>
+                                        <rect key="frame" x="10" y="18.5" width="33" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="33" id="tIE-8M-Dzj"/>
+                                        </constraints>
                                         <state key="normal" image="icon_arrow_left.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
@@ -258,8 +265,8 @@
                                             <action selector="onBackButtonPressed:" destination="lja-Kd-kPL" eventType="touchUpInside" id="j2B-uT-rJ2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy">
-                                        <rect key="frame" x="55" y="24.5" width="304" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy">
+                                        <rect key="frame" x="48" y="25" width="318" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -286,8 +293,8 @@
                                     <constraint firstItem="szt-G5-3Iy" firstAttribute="centerX" secondItem="PHR-7n-hpU" secondAttribute="centerX" id="IaA-fy-Rm5"/>
                                     <constraint firstAttribute="height" constant="70" id="PTF-Ak-ZF6"/>
                                     <constraint firstAttribute="trailing" secondItem="pWF-3E-L8I" secondAttribute="trailing" constant="10" id="XoW-RA-hjW"/>
-                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="leading" secondItem="Adk-NL-W07" secondAttribute="trailing" constant="5" id="pE3-Nu-lEi"/>
-                                    <constraint firstItem="pWF-3E-L8I" firstAttribute="leading" secondItem="szt-G5-3Iy" secondAttribute="trailing" constant="5" id="pt9-nk-dyD"/>
+                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="leading" secondItem="Adk-NL-W07" secondAttribute="trailing" constant="5" id="iYY-t6-8BR"/>
+                                    <constraint firstItem="pWF-3E-L8I" firstAttribute="leading" relation="lessThanOrEqual" secondItem="szt-G5-3Iy" secondAttribute="trailing" constant="5" id="pt9-nk-dyD"/>
                                     <constraint firstItem="Adk-NL-W07" firstAttribute="leading" secondItem="PHR-7n-hpU" secondAttribute="leading" constant="10" id="uIG-LE-Lgf"/>
                                     <constraint firstItem="pWF-3E-L8I" firstAttribute="centerY" secondItem="PHR-7n-hpU" secondAttribute="centerY" id="zTm-dd-2Ey"/>
                                 </constraints>
@@ -509,7 +516,7 @@
     <resources>
         <image name="btn_country" width="40" height="40"/>
         <image name="icon_arrow_left.9" width="33" height="33"/>
-        <image name="icon_arrow_left_press.9" width="40" height="40"/>
+        <image name="icon_arrow_left_press.9" width="33" height="33"/>
         <image name="icon_language_global_unselect" width="20" height="20"/>
         <image name="icon_language_history_unselect" width="20" height="20"/>
         <image name="language_selection_tutorial_bg" width="400" height="340"/>
