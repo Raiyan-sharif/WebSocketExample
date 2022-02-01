@@ -28,6 +28,8 @@ target 'PockeTalk' do
   
   pod 'Kronos'
 
+  pod 'SwiftKeychainWrapper'
+
   # Pods for PockeTalk
 
   target 'PockeTalkTests' do

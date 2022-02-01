@@ -233,6 +233,7 @@
 		89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */; };
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
 		89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */; };
+		89C70BCD27A925A7005DA505 /* AppRater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C70BCC27A925A7005DA505 /* AppRater.swift */; };
 		89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */; };
 		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
 		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
@@ -549,6 +550,7 @@
 		89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHistoryPopUPViewController.swift; sourceTree = "<group>"; };
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMikeButton.swift; sourceTree = "<group>"; };
+		89C70BCC27A925A7005DA505 /* AppRater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRater.swift; sourceTree = "<group>"; };
 		89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureProcessor.swift; sourceTree = "<group>"; };
 		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 				8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */,
 				898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */,
 				89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */,
+				89C70BCC27A925A7005DA505 /* AppRater.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -2161,6 +2164,7 @@
 				4A40AC9726F89BC800019A5B /* BaseData.swift in Sources */,
 				4A66137A26DDCF59004A925D /* AppDelegate.swift in Sources */,
 				692E8DED26EB1B47003F7636 /* NoInternetAlert.swift in Sources */,
+				89C70BCD27A925A7005DA505 /* AppRater.swift in Sources */,
 				89C0F7DB26F1E4FC000CD5FC /* CameraHistoryViewController.swift in Sources */,
 				8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */,
 				87B56E1426EB2FD800BF613B /* HistoryLayout.swift in Sources */,

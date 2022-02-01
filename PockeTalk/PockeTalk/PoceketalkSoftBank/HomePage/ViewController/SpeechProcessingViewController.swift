@@ -397,6 +397,7 @@ class SpeechProcessingViewController: BaseViewController{
                         self.homeVC?.hideSpeechView()
                         break
                     case .HomeSpeechProcessing :
+                        AppRater.shared.incrementTranslationCount()
                         self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
                         break
                     case .PronunciationPractice,.HistroyPronunctiation:

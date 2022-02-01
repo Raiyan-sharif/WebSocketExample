@@ -53,6 +53,7 @@ class PaidPlanViewController: UIViewController {
     func fourHundredYenPermonth() {
         self.popupAlert(title: "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle".localiz(), message: "", actionTitles: ["OK", "cancel".localiz()], actionStyle: [.default, .cancel], action: [
             { ok in
+                AppRater.shared.saveAppLaunchTimeOnce()
                 self.goToWelcomeViewController(isUserPurchased: true)
             },{ cancel in
                 PrintUtility.printLog(tag: self.TAG, text: "Cancel button tapped.")
@@ -63,6 +64,7 @@ class PaidPlanViewController: UIViewController {
     func twoThousandYenPermonth() {
         self.popupAlert(title: "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle".localiz(), message: "", actionTitles: ["OK".localiz(), "cancel".localiz()], actionStyle: [.default, .cancel], action: [
             { ok in
+                AppRater.shared.saveAppLaunchTimeOnce()
                 self.goToWelcomeViewController(isUserPurchased: true)
             },{ cancel in
                 PrintUtility.printLog(tag: self.TAG, text: "Cancel button tapped.")

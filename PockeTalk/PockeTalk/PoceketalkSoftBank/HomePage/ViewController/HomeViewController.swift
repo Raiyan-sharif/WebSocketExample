@@ -24,7 +24,8 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak  var bottomView: UIView!
     @IBOutlet weak private var buttonFav: UIButton!
     @IBOutlet weak var historyImageView: UIImageView!
-    
+
+    private var shouldCheckAppReviewGuide = false
     var isLanguageListVCOpened = false
     static var cameraTapFlag = 0
     let talkBtnImgView = UIImageView()
@@ -139,6 +140,7 @@ class HomeViewController: BaseViewController {
         setupGestureForBottomView()
         setupFloatingMikeButton()
         bottomView.layer.zPosition = 103
+        AppRater.shared.saveAppLaunchTimeOnce()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,6 +160,11 @@ class HomeViewController: BaseViewController {
         talkButtonImageView.isHidden = false
         
         setLanguageDirection()
+
+        if self.shouldCheckAppReviewGuide {
+            _ = AppRater.shared.rateApp()
+            self.shouldCheckAppReviewGuide = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -350,6 +357,7 @@ class HomeViewController: BaseViewController {
             transition.subtype = CATransitionSubtype.fromLeft
             transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
             self.navigationController?.view.layer.add(transition, forKey: nil)
+            shouldCheckAppReviewGuide = true
             self.navigationController?.pushViewController(settinsViewController, animated: false)
         }
     }
