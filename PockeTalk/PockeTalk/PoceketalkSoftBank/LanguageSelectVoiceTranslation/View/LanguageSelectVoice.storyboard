@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -22,15 +22,16 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-TX-jdk">
-                                        <rect key="frame" x="5" y="23" width="43" height="24"/>
+                                        <rect key="frame" x="5" y="23" width="54" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="66e-aR-zRZ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="66e-aR-zRZ"/>
                                             <constraint firstAttribute="height" constant="24" id="dUo-v7-ops"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" systemColor="systemTealColor"/>
                                         <state key="normal" title="OK" image="icon_arrow_left_press.9">
-                                            <color key="titleColor" systemColor="systemTealColor"/>
+                                            <color key="titleColor" red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="icon_arrow_left.9">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -138,8 +139,8 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HfX-dK-7MH">
-                                        <rect key="frame" x="10" y="24" width="22" height="22"/>
-                                        <state key="normal" image="icon_arrow_left_press.9"/>
+                                        <rect key="frame" x="10" y="18.5" width="33" height="33"/>
+                                        <state key="normal" image="icon_arrow_left.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="kdF-fi-MGg" eventType="touchUpInside" id="UtO-SU-yqM"/>
@@ -249,8 +250,8 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Adk-NL-W07">
-                                        <rect key="frame" x="10" y="24" width="40" height="22"/>
-                                        <state key="normal" image="icon_arrow_left_press.9"/>
+                                        <rect key="frame" x="10" y="18.5" width="40" height="33"/>
+                                        <state key="normal" image="icon_arrow_left.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="kdF-fi-MGg" eventType="touchUpInside" id="Sep-KN-GTh"/>
@@ -346,9 +347,9 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PB-Cy-bL3">
-                                        <rect key="frame" x="10" y="24" width="22" height="22"/>
+                                        <rect key="frame" x="10" y="18.5" width="33" height="33"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="icon_arrow_left_press.9"/>
+                                        <state key="normal" image="icon_arrow_left.9"/>
                                         <state key="selected" image="icon_arrow_left.9"/>
                                         <connections>
                                             <action selector="onBackButtonPressed:" destination="lja-Kd-kPL" eventType="touchUpInside" id="Ak2-NQ-dOB"/>
@@ -507,8 +508,8 @@
     </scenes>
     <resources>
         <image name="btn_country" width="40" height="40"/>
-        <image name="icon_arrow_left.9" width="22" height="22"/>
-        <image name="icon_arrow_left_press.9" width="22" height="22"/>
+        <image name="icon_arrow_left.9" width="33" height="33"/>
+        <image name="icon_arrow_left_press.9" width="40" height="40"/>
         <image name="icon_language_global_unselect" width="20" height="20"/>
         <image name="icon_language_history_unselect" width="20" height="20"/>
         <image name="language_selection_tutorial_bg" width="400" height="340"/>
