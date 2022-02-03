@@ -243,6 +243,9 @@
 		89B65D8527C4F592009FD2E1 /* LanguageEngineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */; };
 		89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B744422721303500E1748D /* Extension+UIApplication.swift */; };
 		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
+		89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587727AB91B8005B46A4 /* IAPManager.swift */; };
+		89BE587A27AB91F3005B46A4 /* IAP_ProductIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */; };
+		89BE587D27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */; };
 		89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */; };
 		89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */; };
 		89C0F7C926F1CDDD000CD5FC /* URL+Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C826F1CDDD000CD5FC /* URL+Urls.swift */; };
@@ -263,6 +266,9 @@
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
 		89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */; };
 		89C70BCD27A925A7005DA505 /* AppRater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C70BCC27A925A7005DA505 /* AppRater.swift */; };
+		89CC577227C8A9F0008341D9 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC577127C8A9F0008341D9 /* AppDelegate+Extension.swift */; };
+		89CC577527C8D174008341D9 /* PurchasePlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC577427C8D174008341D9 /* PurchasePlanViewModel.swift */; };
+		89CC577727C90722008341D9 /* Productdetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC577627C90722008341D9 /* Productdetails.swift */; };
 		89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */; };
 		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
 		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
@@ -583,6 +589,9 @@
 		89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageEngineDownloader.swift; sourceTree = "<group>"; };
 		89B744422721303500E1748D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
+		89BE587727AB91B8005B46A4 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IAP_ProductIDs.plist; sourceTree = "<group>"; };
+		89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPStatusCheckDummyLoadingViewController.swift; sourceTree = "<group>"; };
 		89BFC32C279A826000CE73F2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		89BFC32D279A826000CE73F2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89BFC32E279A826E00CE73F2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -619,6 +628,9 @@
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMikeButton.swift; sourceTree = "<group>"; };
 		89C70BCC27A925A7005DA505 /* AppRater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRater.swift; sourceTree = "<group>"; };
+		89CC577127C8A9F0008341D9 /* AppDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extension.swift"; sourceTree = "<group>"; };
+		89CC577427C8D174008341D9 /* PurchasePlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasePlanViewModel.swift; sourceTree = "<group>"; };
+		89CC577627C90722008341D9 /* Productdetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Productdetails.swift; sourceTree = "<group>"; };
 		89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureProcessor.swift; sourceTree = "<group>"; };
 		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
@@ -802,6 +814,7 @@
 				8782DECF26E08BEE003A1681 /* Localization */,
 				4A6613B026DE47FB004A925D /* Application */,
 				4AEF500F26DF9FCD0052B6EB /* Extensions */,
+				89BE587527AB918E005B46A4 /* ManagerClasses */,
 				4A66139E26DDECA8004A925D /* PoceketalkSoftBank */,
 				4A66139D26DDEC91004A925D /* Utitlity */,
 				4A6613AF26DE47E9004A925D /* Resources */,
@@ -904,6 +917,7 @@
 			isa = PBXGroup;
 			children = (
 				4A66137926DDCF59004A925D /* AppDelegate.swift */,
+				89CC577127C8A9F0008341D9 /* AppDelegate+Extension.swift */,
 				4A66138726DDCF5D004A925D /* Info.plist */,
 			);
 			path = Application;
@@ -1726,6 +1740,7 @@
 			children = (
 				89A4F02427C5F83E00A718FA /* PermissionTVCellInfo.swift */,
 				89A4F02E27C6255200A718FA /* PurchasePlanTVCellInfo.swift */,
+				89CC577627C90722008341D9 /* Productdetails.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1850,12 +1865,45 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		89BE587527AB918E005B46A4 /* ManagerClasses */ = {
+			isa = PBXGroup;
+			children = (
+				89BE587627AB919B005B46A4 /* IAPManager */,
+			);
+			path = ManagerClasses;
+			sourceTree = "<group>";
+		};
+		89BE587627AB919B005B46A4 /* IAPManager */ = {
+			isa = PBXGroup;
+			children = (
+				89BE587727AB91B8005B46A4 /* IAPManager.swift */,
+				89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */,
+			);
+			path = IAPManager;
+			sourceTree = "<group>";
+		};
+		89BE587B27AB959F005B46A4 /* IAPStatusCheckDummyLoadingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */,
+			);
+			path = IAPStatusCheckDummyLoadingViewController;
+			sourceTree = "<group>";
+		};
 		89C0F7E026F1EA3F000CD5FC /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				89C0F7DE26F1EA28000CD5FC /* CameraHistoryCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		89CC577327C8D153008341D9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				89CC577427C8D174008341D9 /* PurchasePlanViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		89DEA1F127830E7600DB0801 /* ViewController */ = {
@@ -1882,10 +1930,12 @@
 		89DEA1F427830F8800DB0801 /* WelcomeAndPayment */ = {
 			isa = PBXGroup;
 			children = (
+				89CC577327C8D153008341D9 /* ViewModel */,
 				89A4F02327C5F82100A718FA /* Model */,
 				89A4F01C27C5E4B200A718FA /* ViewController */,
 				89B4D1EE27BE594500D1C7D2 /* View */,
 				8928E59927C767CC00638F6E /* Helper */,
+				89BE587B27AB959F005B46A4 /* IAPStatusCheckDummyLoadingViewController */,
 				89B159392784131400636574 /* TermsAndConditionsViewController */,
 				896C3D0727831BD6007C3560 /* InitialPermissionSettingsViewController */,
 				8946FA7227845B5B00DC6B39 /* PaidPlanViewController */,
@@ -2203,6 +2253,7 @@
 				89513CCC27ABDB2F008C6F99 /* responsivevoice_1.8.1.js in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 				89E6B2DC279E8DD200024A70 /* country_selection_list_zh.json in Resources */,
+				89BE587A27AB91F3005B46A4 /* IAP_ProductIDs.plist in Resources */,
 				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,
 				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
 			);
@@ -2286,6 +2337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE587D27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift in Sources */,
 				694BECA626E9D060004EFAB5 /* AlertReusableViewController.swift in Sources */,
 				89C0F7D426F1CE08000CD5FC /* UserDefaultsUtility.swift in Sources */,
 				89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */,
@@ -2296,6 +2348,7 @@
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
 				89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */,
+				89CC577227C8A9F0008341D9 /* AppDelegate+Extension.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* Extension+UIViewController.swift in Sources */,
 				89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
@@ -2306,6 +2359,7 @@
 				890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */,
 				89A4F02527C5F83E00A718FA /* PermissionTVCellInfo.swift in Sources */,
+				89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
 				8940A3B127ABC835005CB401 /* InformationSettingViewController.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
@@ -2340,6 +2394,7 @@
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
 				5028D55226E29E59002A5250 /* HistoryListVC.swift in Sources */,
 				89C0F7E626F1EC0E000CD5FC /* CameraHistoryDataModel.swift in Sources */,
+				89CC577727C90722008341D9 /* Productdetails.swift in Sources */,
 				89C0F7D726F1CE08000CD5FC /* Constants.swift in Sources */,
 				8782DF0526E099BF003A1681 /* UITableView+Reusable.swift in Sources */,
 				8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */,
@@ -2440,6 +2495,7 @@
 				898E6AA727841ABE00138035 /* AppsPermissionCheckingManager.swift in Sources */,
 				3B4C1F19274DF84200FA2E3B /* FileDownloader.swift in Sources */,
 				8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */,
+				89CC577527C8D174008341D9 /* PurchasePlanViewModel.swift in Sources */,
 				89A4F02827C5FF5500A718FA /* InfoLabelTableViewCell.swift in Sources */,
 				50193E0826E8876A0052F170 /* CountryFlagListViewModel.swift in Sources */,
 				4AF3410D26F8356D00E9DE31 /* BaseDBModel.swift in Sources */,
@@ -2705,7 +2761,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2714,6 +2772,9 @@
 				);
 				MARKETING_VERSION = 0.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				MARKETING_VERSION = 0.1.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2729,8 +2790,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2739,6 +2800,9 @@
 				);
 				MARKETING_VERSION = 0.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				MARKETING_VERSION = 0.1.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -3092,8 +3156,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (

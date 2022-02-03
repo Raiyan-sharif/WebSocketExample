@@ -16,19 +16,24 @@ class AppFirstLaunchViewController: UIViewController {
         setupUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        UserDefaultsUtility.setBoolValue(true, forKey: isTermAndConditionTap)
+    }
+
     //MARK: - Initial setup
-    private func setupUI(){
+    private func setupUI() {
         setupView()
         setupButtonProperty()
     }
 
-    private func setupView(){
+    private func setupView() {
         view.backgroundColor = .white
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         topView.backgroundColor = UIColor._lightYellowColor()
     }
 
-    private func setupButtonProperty(){
+    private func setupButtonProperty() {
         termAndConditionButton.setAttributedTitle(InitialFlowHelper().getTermAndConditionBtnAttributedString(), for: .normal)
         termAndConditionButton.backgroundColor = UIColor._royalBlueColor()
         termAndConditionButton.layer.cornerRadius = InitialFlowHelper().nextButtonCornerRadius
@@ -42,6 +47,29 @@ class AppFirstLaunchViewController: UIViewController {
             leadingAnchor: 10)
     }
 
+    //MARK: - View Transactions
+    private func goTOPurchaseScene() {
+        DispatchQueue.main.async {
+            PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
+            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController{
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                //viewController.purchasePlanVM = self.purchasePlanVM
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
+        }
+    }
+
+    //MARK: - Utils
+    private func showSingleAlert(withMessage message: String) {
+        DispatchQueue.main.async {
+            self.present( InitialFlowHelper().showSingleAlert(
+                message: message),
+                animated: true,
+                completion: nil)
+        }
+    }
+
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
         PrintUtility.printLog(tag: "initalFlow", text: "Tap on term and condition Btn")
@@ -50,11 +78,6 @@ class AppFirstLaunchViewController: UIViewController {
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
-        PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
-        if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController{
-            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-            self.navigationController?.view.layer.add(transition, forKey: nil)
-            self.navigationController?.pushViewController(viewController, animated: false)
-        }
+        goTOPurchaseScene()
     }
 }

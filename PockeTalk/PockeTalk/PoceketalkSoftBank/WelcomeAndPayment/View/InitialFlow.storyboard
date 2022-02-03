@@ -110,6 +110,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="3c0-5e-UCk" secondAttribute="bottom" id="pHH-dI-4Pu"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="nw7-W4-wE0"/>
                     <connections>
                         <outlet property="acceptAndStartButton" destination="xL2-ys-HE1" id="Lce-J6-Sch"/>
                         <outlet property="termAndConditionButton" destination="0Vf-cF-lye" id="pkX-p6-KqM"/>
@@ -118,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="120" y="119"/>
+            <point key="canvasLocation" x="1028.985507246377" y="118.52678571428571"/>
         </scene>
         <!--Permission View Controller-->
         <scene sceneID="Luu-kq-MW7">
@@ -165,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="af9-jv-DML" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1612" y="119"/>
+            <point key="canvasLocation" x="2521.739130434783" y="118.52678571428571"/>
         </scene>
         <!--Purchase Plan View Controller-->
         <scene sceneID="xcY-2f-QzF">
@@ -179,12 +180,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJ4-Zs-GCe">
-                                <rect key="frame" x="24" y="817.5" width="366" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJ4-Zs-GCe">
+                                <rect key="frame" x="24" y="838" width="366" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="9fg-v4-gi2">
+                                <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VoC-kE-zVk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -192,20 +197,23 @@
                             <constraint firstItem="OgD-aB-8ab" firstAttribute="leading" secondItem="VoC-kE-zVk" secondAttribute="leading" id="DAe-cu-wVZ"/>
                             <constraint firstItem="VoC-kE-zVk" firstAttribute="trailing" secondItem="GJ4-Zs-GCe" secondAttribute="trailing" constant="24" id="EXK-uw-aYn"/>
                             <constraint firstItem="GJ4-Zs-GCe" firstAttribute="leading" secondItem="VoC-kE-zVk" secondAttribute="leading" constant="24" id="Gg5-yZ-Pp9"/>
+                            <constraint firstItem="9fg-v4-gi2" firstAttribute="centerY" secondItem="VoC-kE-zVk" secondAttribute="centerY" id="JHZ-rV-eR2"/>
                             <constraint firstAttribute="trailing" secondItem="OgD-aB-8ab" secondAttribute="trailing" id="LuG-36-ZrD"/>
+                            <constraint firstItem="9fg-v4-gi2" firstAttribute="centerX" secondItem="VoC-kE-zVk" secondAttribute="centerX" id="SvF-ie-LoY"/>
                             <constraint firstItem="OgD-aB-8ab" firstAttribute="top" secondItem="VVS-Nt-7EH" secondAttribute="top" id="TkX-4a-XuC"/>
                             <constraint firstAttribute="bottom" secondItem="OgD-aB-8ab" secondAttribute="bottom" id="dvi-WL-YeE"/>
                             <constraint firstItem="VoC-kE-zVk" firstAttribute="bottom" secondItem="GJ4-Zs-GCe" secondAttribute="bottom" constant="24" id="vR6-B0-rHG"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="9fg-v4-gi2" id="inI-8q-IDt"/>
                         <outlet property="purchaseInfoLabel" destination="GJ4-Zs-GCe" id="Y1T-U8-VsK"/>
                         <outlet property="purchasePlanTV" destination="OgD-aB-8ab" id="Myb-ot-kha"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TgO-P4-9KN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="875" y="119"/>
+            <point key="canvasLocation" x="1784.057971014493" y="118.52678571428571"/>
         </scene>
         <!--Welcomes View Controller-->
         <scene sceneID="dDr-8C-C8W">
@@ -250,7 +258,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBY-TI-kdo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2345" y="119"/>
+            <point key="canvasLocation" x="3255.072463768116" y="118.52678571428571"/>
         </scene>
     </scenes>
     <resources>

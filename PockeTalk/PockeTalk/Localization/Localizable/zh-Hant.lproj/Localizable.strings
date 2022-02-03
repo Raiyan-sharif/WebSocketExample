@@ -103,3 +103,25 @@
 "information" = "Information";
 "manual" = "Manual";
 "application_version" = "Application Version";
+//Purchase alert scheme text
+"Day" = "Day";
+"Days" = "Days";
+"Week" = "Week";
+"Weeks" = "Weeks";
+"Month" = "Month";
+"Months" = "Months";
+"Year" = "Year";
+"Years" = "Years";
+
+"day" = "day";
+"days" = "days";
+"week" = "week";
+"weeks" = "weeks";
+"month" = "month";
+"months" = "months";
+"year" = "year";
+"years" = "years";
+
+"kTimeOut" = "Time Out!";
+"kAppleServerBusy" = "Apple server seems busy. Please try again.";
+"kTryAgain" = "Try again";

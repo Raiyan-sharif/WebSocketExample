@@ -34,4 +34,12 @@ class InitialFlowHelper{
             attributes: acceptBtnTextAttributes
         )
     }
+
+    func showSingleAlert(message: String) -> UIAlertController {
+        let alertController = UIAlertController(title: "kPockeTalk".localiz(), message: message, preferredStyle: .alert)
+        alertController.view.tintColor = UIColor.black
+        alertController.addAction(UIAlertAction(title: "OK".localiz(), style: .default, handler: nil))
+        return alertController
+
+    }
 }

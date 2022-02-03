@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import Kronos
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Initial UI setup
         UIDevice.current.isBatteryMonitoringEnabled = true
         setUpInitialLaunch()
+        IAPManager.shared.startObserving()
+        IAPManager.shared.receiptValidationAllow = true
+        IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
         return true
     }
 
@@ -27,16 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
-        if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil{
+        if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil {
             UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value = true
             setUpAppFirstLaunch(isUpdateArrow: true)
-        }else{
+        } else {
             LanguageSelectionManager.shared.loadLanguageListData()
         }
-
-        setUpWelcomeViewController ()
-
-        if  UserDefaultsProperty<String>(KFontSelection).value == nil{
+        
+        if  UserDefaultsProperty<String>(KFontSelection).value == nil {
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
             FontUtility.setInitialFontSize()
         }
@@ -55,25 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    private func setUpWelcomeViewController() {
-        self.window?.rootViewController = nil
-        if UserDefaultsProperty<Bool>(kUserDefaultIsUserPurchasedThePlan).value == true {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-            let navigationController = UINavigationController.init(rootViewController: viewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-        } else {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "TermsAndConditionsViewController") as! TermsAndConditionsViewController
-            let navigationController = UINavigationController.init(rootViewController: viewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-        }
-    }
-
     func setUpAppFirstLaunch(isUpdateArrow: Bool){
         PrintUtility.printLog(tag: TAG, text: "App first launch called.")
         setInitialLanguage()
@@ -85,61 +66,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
     }
 
-    class func generateAccessKey(){
-        // if UserDefaultsProperty<String>(authentication_key).value == nil{
-        NetworkManager.shareInstance.getAuthkey { data  in
-            guard let data = data else { return }
-            do {
-                let result = try JSONDecoder().decode(ResultModel.self, from: data)
-                if result.resultCode == response_ok{
-                    UserDefaultsProperty<String>(authentication_key).value = result.accessKey
-                    //if self.isAppRelaunch {
-                    SocketManager.sharedInstance.updateRequestKey()
-                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
-                    AppDelegate().executeLicenseTokenRefreshFunctionality()
-                    //self.isAppRelaunch = false
-                    //}
-                }
-            }catch{
-            }
-        }
-        // }
-    }
-
-    // Set device language as default language
-    func setInitialLanguage () {
-        ///Getting the actual device language code. Ex: zh-Hans-BD, es-BD
-        let deviceLanguageCode = NSLocale.preferredLanguages[0]
-
-        ///Remove "-" and country code. Ex: es-BD to es
-        let deviceLanguageCodeWithoutPunctuations = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
-
-        var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
-
-        if deviceLanguageCode.contains(Languages.zhHans.rawValue) {
-            languageCode = Languages.zhHans
-        } else if deviceLanguageCode.contains(Languages.zhHant.rawValue) {
-            languageCode = Languages.zhHant
-        } else if deviceLanguageCode == Languages.ptPT.rawValue {
-            languageCode = Languages.ptPT
-        }
-
-        LanguageManager.shared.setLanguage(language: languageCode)
-    }
-
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         //isAppRelaunch = true
+        UserDefaultsUtility.setBoolValue(true, forKey: kIsClearedDataAll)
+        self.navigateToTermsAndConditionsViewController()
         setUpInitialLaunch()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         executeLicenseTokenRefreshFunctionality()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         SocketManager.sharedInstance.connect()
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+
+        IAPManager.shared.receiptValidationAllow = true
+        IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -147,49 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ActivityIndicator.sharedInstance.hide()
     }
 
-    func executeLicenseTokenRefreshFunctionality() {
-        let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
-
-        if tokenCreationTime != nil {
-
-            let tokenExpiryTime = tokenCreationTime! + 84600000   //(30*1000)  for 30 sec delay
-
-            Clock.sync(completion:  { date, offset in
-                if let getResDate = date {
-                    PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
-                    let currentTime = getResDate.millisecondsSince1970
-
-                    let scheduleRefreshTime = (tokenExpiryTime - currentTime)/1000
-
-                    if tokenExpiryTime > currentTime {
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(scheduleRefreshTime)) {
-                            PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
-                            NetworkManager.shareInstance.handleLicenseToken { result in
-                                if result {
-                                    AppDelegate.generateAccessKey()
-                                }
-                            }
-                        }
-                    } else if  (currentTime > tokenExpiryTime) {
-                        //expired
-                        PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
-                        NetworkManager.shareInstance.handleLicenseToken { result in
-                            if result {
-                                AppDelegate.generateAccessKey()
-                            }
-                        }
-                    } else {
-                        NetworkManager.shareInstance.startTokenRefreshProcedure()
-                    }
-                }
-            })
-
-        } else {
-            NetworkManager.shareInstance.startTokenRefreshProcedure()
-        }
+    func applicationWillTerminate(_ application: UIApplication) {
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        IAPManager.shared.stopObserving()
     }
-
 }
 
 

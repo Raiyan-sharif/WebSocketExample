@@ -104,7 +104,31 @@
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを 選択してください";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490円/月1週間の無料利用";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000円/年 1週間の無料利用";
+"kPockeTalk" = "ポケトークへ";
 //WelcomeViewController
 "kWelcomeVCTitleLabelTop" = "ようこそ";
 "kWelcomeVCTitleLabelBottom" = "ポケトークへ";
 "kWelcomeVCStartUsingButtonTitle" = "利用開始";
+
+//Purchase alert scheme text
+"Day" = "Day";
+"Days" = "Days";
+"Week" = "Week";
+"Weeks" = "Weeks";
+"Month" = "Month";
+"Months" = "Months";
+"Year" = "Year";
+"Years" = "Years";
+
+"day" = "day";
+"days" = "days";
+"week" = "week";
+"weeks" = "weeks";
+"month" = "month";
+"months" = "months";
+"year" = "year";
+"years" = "years";
+
+"kTimeOut" = "Time Out!";
+"kAppleServerBusy" = "Apple server seems busy. Please try again.";
+"kTryAgain" = "Try again";

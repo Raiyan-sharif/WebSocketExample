@@ -106,7 +106,43 @@
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Please select a usage plan";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+"kPockeTalk" = "PockeTalk";
+
+//IAP Alert
+"kIAPError" = "In-App Purchase Error!";
+"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
+"kIAPNoProductsFound" = "No In-App Purchases were found.";
+"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
+"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
+"kfreeUse" = " free use";
+"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
+"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
+"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+
 //WelcomeViewController
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Start using";
+
+//Purchase alert scheme text
+"Day" = "Day";
+"Days" = "Days";
+"Week" = "Week";
+"Weeks" = "Weeks";
+"Month" = "Month";
+"Months" = "Months";
+"Year" = "Year";
+"Years" = "Years";
+
+"day" = "day";
+"days" = "days";
+"week" = "week";
+"weeks" = "weeks";
+"month" = "month";
+"months" = "months";
+"year" = "year";
+"years" = "years";
+
+"kTimeOut" = "Time Out!";
+"kAppleServerBusy" = "Apple server seems busy. Please try again.";
+"kTryAgain" = "Try again";

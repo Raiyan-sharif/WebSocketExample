@@ -26,6 +26,7 @@ class WelcomeViewController: UIViewController {
     }
     
     @IBAction func startUsingButtonAction(_ sender: Any) {
+        UserDefaultsUtility.setBoolValue(false, forKey: kIsClearedDataAll)
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
         if let homeViewController = mainStoryBoard.instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
             let transition = CATransition()

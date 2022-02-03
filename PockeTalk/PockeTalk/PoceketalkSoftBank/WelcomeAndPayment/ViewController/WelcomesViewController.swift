@@ -15,17 +15,17 @@ class WelcomesViewController: UIViewController {
     }
 
     //MARK: - Initial setup
-    private func setupUI(){
+    private func setupUI() {
         setupView()
         setupButtonProperty()
     }
 
-    private func setupView(){
+    private func setupView() {
         view.backgroundColor = .white
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    private func setupButtonProperty(){
+    private func setupButtonProperty() {
         nextBtn.setButtonAttributes(
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
             title: "kWelcomeVCStartUsingButtonTitle".localiz(),
@@ -34,6 +34,8 @@ class WelcomesViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
+        UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
+        UserDefaultsUtility.setBoolValue(false, forKey: kIsClearedDataAll)
         PrintUtility.printLog(tag: "initalFlow", text: "Tap on next Btn")
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)

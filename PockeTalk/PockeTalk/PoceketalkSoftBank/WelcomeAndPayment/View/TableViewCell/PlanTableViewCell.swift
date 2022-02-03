@@ -31,12 +31,24 @@ class PlanTableViewCell: UITableViewCell {
         planTypeLabel.textColor = UIColor._royalBlueColor()
         planDetailsLabel.textColor = UIColor.black
         rightView.layer.cornerRadius = rightView.frame.size.width / 2
-        freeFroThreeDaysLabel.text = "Free for \n 3 days"
     }
 
     //MARK: - ConfigCell
-    func configCell(indexPath: IndexPath, title: String, subTitle: String){
-        planTypeLabel.text = title
-        planDetailsLabel.text = subTitle
+    func configCell(indexPath: IndexPath, cellType: PurchasePlanTVCellInfo, productData: ProductDetails?){
+        planTypeLabel.text = cellType.planTitleText
+
+        if productData?.planPerUnitText == nil {
+            planDetailsLabel.text = "Loading..."
+        } else {
+            planDetailsLabel.text = productData?.planPerUnitText
+        }
+
+        if productData?.freeUsesDetailsText != nil {
+            rightView.isHidden = false
+            freeFroThreeDaysLabel.text = productData?.freeUsesDetailsText
+        } else {
+            rightView.isHidden = true
+            freeFroThreeDaysLabel.text = ""
+        }
     }
 }

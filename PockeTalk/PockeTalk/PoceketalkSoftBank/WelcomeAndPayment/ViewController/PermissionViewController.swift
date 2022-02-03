@@ -19,18 +19,18 @@ class PermissionViewController: UIViewController {
     }
 
     //MARK: - Initial setup
-    private func setupUI(){
+    private func setupUI() {
         setupView()
         setupTableView()
         setupButtonProperty()
     }
 
-    private func setupView(){
+    private func setupView() {
         view.backgroundColor = .white
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    private func setupTableView(){
+    private func setupTableView() {
         permissionTV.delegate = self
         permissionTV.dataSource = self
         permissionTV.separatorStyle = .none
@@ -40,14 +40,14 @@ class PermissionViewController: UIViewController {
         permissionTV.register(UINib(nibName: KPermissionTableViewCell, bundle: nil), forCellReuseIdentifier: KPermissionTableViewCell)
     }
 
-    private func setupButtonProperty(){
+    private func setupButtonProperty() {
         nextBtn.setButtonAttributes(
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
             title: "kNextButtonTitle".localiz(),
             backgroundColor:  UIColor._royalBlueColor())
     }
 
-    private func initializeData(){
+    private func initializeData() {
         row.append(PermissionTVCellInfo(cellType: .allowAccess, isPermissionGranted: false))
         row.append(PermissionTVCellInfo(cellType: .microphonePermission, isPermissionGranted: false))
         row.append(PermissionTVCellInfo(cellType: .cameraPermission, isPermissionGranted: false))
@@ -93,7 +93,7 @@ class PermissionViewController: UIViewController {
     }
 
     //MARK: - Utils
-    private func setGrantPermissionStatusAndReloadTV(for cellType: PermissionTVCellType, status permissionStatus: Bool ){
+    private func setGrantPermissionStatusAndReloadTV(for cellType: PermissionTVCellType, status permissionStatus: Bool ) {
         for item in 0..<row.count{
             if row[item].cellType == cellType{
                 row[item].isPermissionGranted = permissionStatus
@@ -114,7 +114,7 @@ class PermissionViewController: UIViewController {
 }
 
 //MARK: - UITableViewDataSource
-extension PermissionViewController: UITableViewDataSource{
+extension PermissionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return row.count
     }
@@ -138,7 +138,7 @@ extension PermissionViewController: UITableViewDataSource{
 }
 
 //MARK: - UITableViewDelegate
-extension PermissionViewController: UITableViewDelegate{
+extension PermissionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let rowType = row[indexPath.row].cellType
 

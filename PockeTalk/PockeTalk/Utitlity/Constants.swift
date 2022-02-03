@@ -120,6 +120,7 @@ let KiDLangSelectCamera = "LanguageSelectCameraVC"
 // Storyboard Name
 let KStoryBoardCamera = "LanguageSelectCamera"
 let KStoryboardInitialFlow = "InitialFlow"
+let KStoryboardMain = "Main"
 
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"
@@ -201,6 +202,7 @@ let tts_url = "/handsfree/api/pub/tts"
 let liscense_token_url = "/handsfree/api/pub/token"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
+let isTermAndConditionTap = "isTermAndConditionTap"
 
 
 
@@ -274,3 +276,25 @@ func getAudioStremUrl(_ key: String) -> String {
     return (Bundle.main.infoDictionary?[key] as? String)?
         .replacingOccurrences(of: "\\", with: "") ?? "wss://test.pt-v.com"
 }
+
+//IAP
+//TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
+let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
+let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
+let IAP_ProductIDs = "IAP_ProductIDs"
+
+//IAP JSON Parsing
+let IAPreceiptData = "receipt-data"
+let IAPPassword = "password"
+let expires_date = "expires_date"
+let latest_receipt_info = "latest_receipt_info"
+let cancellation_date = "cancellation_date"
+let product_id = "product_id"
+let is_in_intro_offer_period = "is_in_intro_offer_period"
+let is_trial_period = "is_trial_period"
+let IAPDateFormat = "yyyy-MM-dd HH:mm:ss VV"
+let kIsClearedDataAll = "kIsClearedDataAll"
+let kApple_dot_com = "https://www.apple.com"
+let kDate = "Date"
+let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
+let kIAPTimeoutInterval = 60.0
