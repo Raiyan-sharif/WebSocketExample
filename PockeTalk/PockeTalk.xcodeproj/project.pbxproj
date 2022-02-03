@@ -165,6 +165,10 @@
 		89396B292704156400D77760 /* TTTJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B282704156300D77760 /* TTTJSONModel.swift */; };
 		89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89396B2A2704176200D77760 /* CustomVerticalTextView.swift */; };
 		8939F821273BBDC0007EB5CD /* TalkButtonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */; };
+		8940A3B127ABC835005CB401 /* InformationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940A3B027ABC835005CB401 /* InformationSettingViewController.swift */; };
+		8940A3B327ABD9B8005CB401 /* LicenseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940A3B227ABD9B8005CB401 /* LicenseInfoViewController.swift */; };
+		8940A3B527ABDB14005CB401 /* text-license.html in Resources */ = {isa = PBXBuildFile; fileRef = 8940A3B427ABDB14005CB401 /* text-license.html */; };
+		8940A3B927ABEBCB005CB401 /* pron_w3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8940A3B827ABEBCB005CB401 /* pron_w3.otf */; };
 		8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */; };
 		8940E31826FC28DC0083E4FA /* CustomOverlappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */; };
 		8940E31A26FC28EC0083E4FA /* IImageCroppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */; };
@@ -420,6 +424,10 @@
 		89396B282704156300D77760 /* TTTJSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTJSONModel.swift; sourceTree = "<group>"; };
 		89396B2A2704176200D77760 /* CustomVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVerticalTextView.swift; sourceTree = "<group>"; };
 		8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkButtonAnimation.swift; sourceTree = "<group>"; };
+		8940A3B027ABC835005CB401 /* InformationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationSettingViewController.swift; sourceTree = "<group>"; };
+		8940A3B227ABD9B8005CB401 /* LicenseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseInfoViewController.swift; sourceTree = "<group>"; };
+		8940A3B427ABDB14005CB401 /* text-license.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "text-license.html"; sourceTree = "<group>"; };
+		8940A3B827ABEBCB005CB401 /* pron_w3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pron_w3.otf; sourceTree = "<group>"; };
 		8940E31526FC28AF0083E4FA /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
 		8940E31726FC28DC0083E4FA /* CustomOverlappingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOverlappingView.swift; sourceTree = "<group>"; };
 		8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IImageCroppingViewController.swift; sourceTree = "<group>"; };
@@ -728,6 +736,8 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8940A3B827ABEBCB005CB401 /* pron_w3.otf */,
+				8940A3B427ABDB14005CB401 /* text-license.html */,
 				8988B7972721763000FBBA40 /* engine-tempo-value.json */,
 				3BA8E133270B18D20095D036 /* responsivevoice_1.8.1.js */,
 				3BA8E132270B18D20095D036 /* resv_1.8.1.html */,
@@ -1540,6 +1550,8 @@
 			children = (
 				8705289026F0ACF100555AF6 /* TextSizeViewController.swift */,
 				4AF2608826E073C4009C616E /* SettingsViewController.swift */,
+				8940A3B027ABC835005CB401 /* InformationSettingViewController.swift */,
+				8940A3B227ABD9B8005CB401 /* LicenseInfoViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1837,11 +1849,13 @@
 				4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */,
 				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
 				502939A32717F2B8004EB8C0 /* ResetListTableViewCell.xib in Resources */,
+				8940A3B927ABEBCB005CB401 /* pron_w3.otf in Resources */,
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
+				8940A3B527ABDB14005CB401 /* text-license.html in Resources */,
 				4A66138326DDCF5D004A925D /* Assets.xcassets in Resources */,
 				8940E31626FC28AF0083E4FA /* ImageCropViewController.xib in Resources */,
 				694BECA726E9D060004EFAB5 /* AlertReusableViewController.xib in Resources */,
@@ -1958,6 +1972,7 @@
 				890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */,
 				89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
+				8940A3B127ABC835005CB401 /* InformationSettingViewController.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
 				4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */,
 				8939F821273BBDC0007EB5CD /* TalkButtonAnimation.swift in Sources */,
@@ -2124,6 +2139,7 @@
 				69C99F1326E744CB00D853AB /* SpeechProcessingModel.swift in Sources */,
 				89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */,
 				89495B4C26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift in Sources */,
+				8940A3B327ABD9B8005CB401 /* LicenseInfoViewController.swift in Sources */,
 				89495B2A26F0A92300CEA19D /* DetectedJSONModel.swift in Sources */,
 				89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */,
 				8915C21226F9E0D50091BF8B /* FavouriteCell.swift in Sources */,

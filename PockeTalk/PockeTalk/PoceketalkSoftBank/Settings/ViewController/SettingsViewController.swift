@@ -107,9 +107,11 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         case SettingsItemType.userManual.rawValue:
             PrintUtility.printLog(tag: "userManual: ", text: "userManual")
             GlobalMethod.openUrlInBrowser(url: USER_MANUAL_URL)
-        case SettingsItemType.promotion.rawValue:
-            PrintUtility.printLog(tag: "promotion: ", text: "promotion")
-            GlobalMethod.openUrlInBrowser(url: PROMOTION_URL)
+        case SettingsItemType.information.rawValue:
+            PrintUtility.printLog(tag: "information: ", text: "Information 2nd depth")
+            let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "InformationSettingViewController") as! InformationSettingViewController
+            self.navigationController?.pushViewController(viewController, animated: true)
         case SettingsItemType.reset.rawValue:
             let storyboard = UIStoryboard.init(name: "Reset", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "ResetViewController") as! ResetViewController

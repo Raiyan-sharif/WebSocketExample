@@ -31,10 +31,10 @@ let speechViewTransitionTime = 0.15
 
 
 //MARK: - Link
-let SUPPORT_URL = "https://www.sourcenext.com/" // TODO: Need to change
+let SUPPORT_URL = "https://rd.snxt.jp/PA002"
 let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
-let USER_MANUAL_URL = "https://www.sourcenext.com/" // TODO: Need to change
-let TERMS_AND_CONDITIONS_URL = "https://www.sourcenext.com/" // TODO: Need to change
+let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
+let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
 
 
 //MARK: - Notification Name
