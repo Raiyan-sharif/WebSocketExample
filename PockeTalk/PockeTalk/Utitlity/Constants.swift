@@ -198,9 +198,7 @@ let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
 let imeiCode = "862793051345020"
 
 //View Tag
-let languageSelectVoiceFloatingbtnTag = 1101
-let countrySelectVoiceFloatingbtnTag = 1102
-let languageSelectVoiceCameraFloatingBtnTag = 1103
+let floatingMikeButtonTag = 1101
 let ttsAlertViewTag = 11223
 
 // TTS API

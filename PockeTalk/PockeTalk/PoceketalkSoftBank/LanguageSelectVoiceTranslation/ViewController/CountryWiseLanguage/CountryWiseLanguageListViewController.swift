@@ -124,8 +124,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     private func removeFloatingBtn(){
-        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.removeFromSuperview()
-        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
+        FloatingMikeButton.sharedInstance.isHidden(true)
     }
 }
 

@@ -117,6 +117,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 
                 /// Clear UserDefautlts
                 UserDefaultsUtility.resetDefaults()
+                
+                ///Removing floating mike button from window before reset data
+                if FloatingMikeButton.sharedInstance.isMikeButtonExistOnWindow(){
+                    FloatingMikeButton.sharedInstance.remove()
+                }
 
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
