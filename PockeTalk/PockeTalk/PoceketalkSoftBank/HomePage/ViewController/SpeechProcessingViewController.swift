@@ -88,6 +88,7 @@ class SpeechProcessingViewController: BaseViewController{
     private let timeDifferenceToShowTutorial : Int = 1
     private let waitingTimeToShowExampleText : Double = 2.0
     private let waitngISFinalSecond:Int = 6
+    private let burmeseWaitngISFinalSecond:Int = 10
     var isMinimumLimitExceed = false
     private var connectivity = Connectivity()
 
@@ -241,7 +242,25 @@ class SpeechProcessingViewController: BaseViewController{
         
         service?.recordDidStop = { [weak self]  in
             guard let `self` = self else { return }
-            if self.speechProcessingVM.isGettingActualData{
+            if self.speechLangCode == BURMESE_LANG_CODE {
+                SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
+                DispatchQueue.main.async  { [weak self] in
+                    guard let `self` = self else { return }
+                    var runCount = 0
+                    self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self]
+                        innerTimer in
+                        guard let `self` = self else { return }
+                        runCount += 1
+                        if runCount == self.burmeseWaitngISFinalSecond {
+                            innerTimer.invalidate()
+                            if !self.isFinalProvided {
+                                self.loaderInvisible()
+                                self.removeAnimation()
+                            }
+                        }
+                    }
+                }
+            } else if self.speechProcessingVM.isGettingActualData{
                 self.speechProcessingVM.isGettingActualData = false
                 SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
                 DispatchQueue.main.async  { [weak self] in
@@ -261,7 +280,7 @@ class SpeechProcessingViewController: BaseViewController{
                         }
                     }
                 }
-            }else{
+            } else{
                 self.loaderInvisible()
                 self.removeAnimation()
                 //Show microphone button when failed to get STT text from server
@@ -301,6 +320,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .HomeSpeechProcessing:
             let speechLanguage = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)
             self.titleLabel.text = speechLanguage?.initText
+            
             DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
                 guard let `self` = self else { return }
                 self.hideOrOpenExampleText(isHidden: self.isSSTavailable)
@@ -349,7 +369,6 @@ class SpeechProcessingViewController: BaseViewController{
         speechProcessingVM.isFinal.bindAndFire{ [weak self] isFinal  in
             guard let `self` = self else { return }
             if isFinal{
-                
                 self.isFinalProvided = true
                 self.timer?.invalidate()
                 self.spinnerView.removeFromSuperview()
@@ -433,6 +452,10 @@ class SpeechProcessingViewController: BaseViewController{
                 self.hideOrOpenExampleText(isHidden: true)
             }else{
                 self.isSSTavailable = false
+            }
+            
+            if self.speechLangCode == BURMESE_LANG_CODE {
+                self.titleLabel.text = self.speechProcessingVM.getSST_Text.value
             }
         }
         
@@ -582,6 +605,11 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         service?.stopRecord()
         service?.timerInvalidate()
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+            if self.speechLangCode == BURMESE_LANG_CODE {
+                self.titleLabel.text = ""
+                self.exampleLabel.text = ""
+                self.descriptionLabel.text = ""
+            }
             hideOrOpenExampleText(isHidden: true)
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable {
                 self.showTutorial()

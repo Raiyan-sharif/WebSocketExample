@@ -224,7 +224,6 @@ let engineName = "google"
 let normal = "normal"
 let isNetworkAvailable = "isNetworkAvailable"
 
-
 // Error Response
 let WARN_INPUT_PARAM = "WARN_INPUT_PARAM"
 let WARN_NO_DEVICE = "WARN_NO_DEVICE"
@@ -237,3 +236,4 @@ let WARN_INVALID_AUTH = "WARN_INVALID_AUTH"
 let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
 let ERR_API_FAILED = "ERR_API_FAILED"
+let BURMESE_LANG_CODE = "my"

@@ -69,6 +69,19 @@ class MAAudioService {
                                            mBitsPerChannel: 16,
                                            mReserved: 0)
     }
+
+    // for Burmese only
+    var burmeseAudioFormat: AudioStreamBasicDescription {
+        return AudioStreamBasicDescription(mSampleRate: 16000,
+                                           mFormatID: kAudioFormatLinearPCM,
+                                           mFormatFlags: AudioFormatFlags(kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked),
+                                           mBytesPerPacket: 2,
+                                           mFramesPerPacket: 1,
+                                           mBytesPerFrame: 2,
+                                           mChannelsPerFrame: 1,
+                                           mBitsPerChannel: 16,
+                                           mReserved: 0)
+    }
     var data: NSData? {
         didSet {
            // NotificationCenter.default.post(name: .audioServiceDidUpdateData, object: self)
@@ -83,7 +96,7 @@ class MAAudioService {
             print(error)
         }
         startingPacketCount = 0
-        maxPacketCount = (48000 * seconds)
+        maxPacketCount = (16000 * seconds)
         buffer = UnsafeMutableRawPointer(malloc(Int(maxPacketCount * bytesPerPacket)))
     }
 
@@ -149,7 +162,29 @@ class MAAudioService {
 
     private func prepareForRecord() {
         PrintUtility.printLog(tag: TAG, text: "prepareForRecord")
-        var audioFormat = self.audioFormat
+
+        //PT_SK 8876 Burmese STT not working
+        var audioFormat = AudioStreamBasicDescription()
+        // get STT language
+        var srcLang = ""
+        if LanguageSelectionManager.shared.isArrowUp {
+            srcLang = LanguageSelectionManager.shared.bottomLanguage
+        }else{
+            srcLang = LanguageSelectionManager.shared.topLanguage
+        }
+        if let src = LanguageSelectionManager.shared.tempSourceLanguage {
+            srcLang = src
+        }
+        PrintUtility.printLog(tag: TAG, text: "language code : \(srcLang)")
+
+        // set audioFormat
+        if srcLang == BURMESE_LANG_CODE {
+            PrintUtility.printLog(tag: TAG, text: "audioFormat sample rate configured to 16000")
+            audioFormat = self.burmeseAudioFormat
+        } else {
+            PrintUtility.printLog(tag: TAG, text: "audioFormat sample rate configured to 48000")
+            audioFormat = self.audioFormat
+        }
 
         AudioQueueNewInput(&audioFormat,
                            AQAudioQueueInputCallback,
