@@ -84,7 +84,7 @@
 //TermsAndConditionsVC
 "kTermsAndConditionsVCTitle" = "販売台数世界一の AI翻訳機ポケトーク のアプリ版です";
 "kTermsAndConditionsVCBulletPointOneTitle" = "瞬間音声翻訳";
-"kTermsAndConditionsVCBulletPointTwoTitle" = "〇〇言語対応";
+"kTermsAndConditionsVCBulletPointTwoTitle" = "115言語対応";
 "kTermsAndConditionsVCCheckTermsButtonTitle" = "利用規約を確認する";
 "kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "規約に同意して はじめる";
 //InitialPermissionSettingsVC

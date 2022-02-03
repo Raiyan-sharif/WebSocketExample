@@ -71,11 +71,11 @@
 "can_not_translate" = "無法翻譯。";
 "kActionAllowAccess" = "Allow access";
 "kActionCancel" = "取消";
-"kMicrophoneUsageTitle" = "\PockeTalk\" Would Like to Access the Microphone";
+"kMicrophoneUsageTitle" = "\"PockeTalk\" Would Like to Access the Microphone";
 "kMicrophoneUsageMessage" = "PockeTalk needs permission to use the microphone";
 "kPhotosUsageTitle" = "Can't use photos";
 "kPhotosUsageMessage" = "PockeTalk needs permission to access the photo library";
-"kCameraUsageTitle" = "\PockeTalk\" Would Like to Access the Camera";
+"kCameraUsageTitle" = "\"PockeTalk\" Would Like to Access the Camera";
 "kCameraUsageMessage" = "PockeTalk needs permission to use the camera";
 "kTitleOk" = "OK";
 "kNotAllow" = "Don't Allow";

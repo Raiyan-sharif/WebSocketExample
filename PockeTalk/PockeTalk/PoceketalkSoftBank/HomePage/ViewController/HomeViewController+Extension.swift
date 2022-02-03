@@ -161,7 +161,10 @@ extension HomeViewController{
                             ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                         }
                         if (ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing && !hasSttSupport){
-                            GlobalMethod.showAlert("no_stt_msg".localiz(), in: self, completion: nil)
+                            let alertService = CustomAlertViewModel()
+                            let alert = alertService.alertDialogWithoutTitleWithOkButton(message: "no_stt_msg".localiz())
+                            self.present(alert, animated: true, completion: nil)
+//                            GlobalMethod.showAlert("no_stt_msg".localiz(), in: self, completion: nil)
                         }else{
                             //self.setBlackGradientImageToBottomView(usingState: .black)
                             SocketManager.sharedInstance.connect()

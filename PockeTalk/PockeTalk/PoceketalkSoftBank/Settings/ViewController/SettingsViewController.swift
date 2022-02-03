@@ -71,6 +71,10 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath) as! SettingsTableViewCell
             
         cell.labelTitle.text = SettingsItemType.settingsItems[indexPath.row].localiz()
+        cell.labelTitle.restartLabel()
+        cell.labelTitle.type = .continuous
+        cell.labelTitle.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+        cell.labelTitle.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
         cell.selectionStyle = .none
         return cell
             

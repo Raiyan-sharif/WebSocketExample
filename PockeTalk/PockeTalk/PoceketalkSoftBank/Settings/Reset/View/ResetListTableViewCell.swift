@@ -4,10 +4,11 @@
 //
 
 import UIKit
+import MarqueeLabel
 
 class ResetListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: MarqueeLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

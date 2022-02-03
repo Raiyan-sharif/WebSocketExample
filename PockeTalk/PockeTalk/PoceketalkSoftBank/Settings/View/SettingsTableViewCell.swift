@@ -4,10 +4,11 @@
 //
 
 import UIKit
+import MarqueeLabel
 
 class SettingsTableViewCell: UITableViewCell {
 
-    @IBOutlet var labelTitle : UILabel!
+    @IBOutlet var labelTitle : MarqueeLabel!
     @IBOutlet var imageViewRightArrow: UIImageView!
 
     override func awakeFromNib() {

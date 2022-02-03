@@ -48,7 +48,7 @@ class TextSizeViewController: BaseViewController {
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.heightAnchor.constraint(equalToConstant:tableHeight).isActive = true
-        tableView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH*0.7).isActive = true
+        tableView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH*0.8).isActive = true
     }
 }
 
