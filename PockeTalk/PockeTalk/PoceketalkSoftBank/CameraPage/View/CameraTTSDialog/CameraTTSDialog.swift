@@ -25,6 +25,9 @@ class CameraTTSDialog: UIView {
 
     @IBOutlet weak var fromTranslateLabel: MarqueeLabel!
     @IBOutlet weak var toTranslateLabel: MarqueeLabel!
+    
+    @IBOutlet weak var toLangPlayButton: UIButton!
+    @IBOutlet weak var fromLangPlayButton: UIButton!
 
     weak var delegate: CameraTTSDialogProtocol?
 

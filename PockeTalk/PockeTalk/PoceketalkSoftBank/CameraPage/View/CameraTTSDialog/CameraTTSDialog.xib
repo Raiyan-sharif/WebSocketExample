@@ -13,10 +13,12 @@
             <connections>
                 <outlet property="backgroundTextureImageView" destination="egD-lc-h5g" id="DeB-7D-sCs"/>
                 <outlet property="containerView" destination="5wc-rE-MkF" id="jnt-2T-1xa"/>
+                <outlet property="fromLangPlayButton" destination="nbb-se-IK5" id="8hi-xN-nXF"/>
                 <outlet property="fromLanguageLabel" destination="mOQ-Wx-brd" id="2Ky-LD-wIy"/>
                 <outlet property="fromTranslateLabel" destination="OxN-Au-O2b" id="QjK-hQ-8k9"/>
                 <outlet property="placeHolderView" destination="wZX-nu-Cal" id="uGj-pd-y4F"/>
                 <outlet property="scrollView" destination="s3u-6W-523" id="HyK-Xs-2A5"/>
+                <outlet property="toLangPlayButton" destination="2aD-cY-bkf" id="pQv-1S-hbm"/>
                 <outlet property="toLanguageLabel" destination="Rec-Wz-aAh" id="9oa-AY-zKk"/>
                 <outlet property="toTranslateLabel" destination="NKN-Xz-kZH" id="nKH-2d-t76"/>
             </connections>
@@ -213,7 +215,7 @@ The education boards are preparing with such a plan. Dhaka Board of Secondary an
         <image name="back_texture_white" width="480" height="640"/>
         <image name="btn_back" width="90" height="90"/>
         <image name="btn_menu" width="60" height="80"/>
-        <image name="ic_btn_play" width="42" height="42"/>
+        <image name="ic_btn_play" width="116" height="116"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

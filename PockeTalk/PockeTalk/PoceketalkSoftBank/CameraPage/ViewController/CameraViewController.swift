@@ -480,7 +480,7 @@ extension CameraViewController {
             let y = 1.0 - touchPoint.location(in: previewView).x / screenSize.width
             let focusPoint = CGPoint(x: x, y: y)
             let location = touchPoint.location(in: previewView)
-            let focusCircleLocation = CGPoint(x: location.x, y: location.y+radius)
+            let focusCircleLocation = CGPoint(x: location.x, y: location.y)
             let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
             
             if let device = backCamera {
@@ -513,7 +513,7 @@ extension CameraViewController {
         shapeLayer.strokeColor = circleColor.cgColor
         shapeLayer.lineWidth = lineWidth
         
-        view.layer.addSublayer(shapeLayer)
+        cameraPreviewView.layer.addSublayer(shapeLayer)
         self.zoomLevel.isHidden = false
         
         ///Remove the circle

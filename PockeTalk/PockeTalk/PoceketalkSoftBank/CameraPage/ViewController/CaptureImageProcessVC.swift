@@ -548,6 +548,19 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     func showTTSDialog(nativeText: String, nativeLanguage: String, translateText: String, translateLanguage: String){
         cameraTTSDiaolog.fromLanguageLabel.text = nativeText
         
+        let languageManager = LanguageSelectionManager.shared
+        // Hide or show play button accoring to tts supported and not supported language
+        if(languageManager.hasTtsSupport(languageCode: nativeLanguage)) {
+            cameraTTSDiaolog.fromLangPlayButton.isHidden = false
+        } else {
+            cameraTTSDiaolog.fromLangPlayButton.isHidden = true
+        }
+        if(languageManager.hasTtsSupport(languageCode: translateLanguage)){
+            cameraTTSDiaolog.toLangPlayButton.isHidden = false
+        } else {
+            cameraTTSDiaolog.toLangPlayButton.isHidden = true
+        }
+        
         //TODO remove this code after Language detection API implementation
         var nativeLangItem: LanguageItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode:systemLanguageCodeEN)!
         if nativeLanguage == LANGUAGE_CODE_UND || nativeLanguage == CHINESE_LANGUAGE_CODE_ZH {
