@@ -7,14 +7,16 @@ import UIKit
 import SwiftRichString
 
 class HomeViewController: BaseViewController {
-    @IBOutlet weak private var bottomLangSysLangName: UIButton!
+    @IBOutlet weak private var bottomLangNativeNameLabel: UILabel!
+    @IBOutlet weak private var bottomLangSysLangNameButton: UIButton!
+    
+    @IBOutlet weak private var topLangNativeNameLabel: UILabel!
+    @IBOutlet weak private var topLangSysLangNameButton: UIButton!
+    
     @IBOutlet weak private var languageChangedDirectionButton: UIButton!
-    @IBOutlet weak private var topNativeLangNameLable: UIButton!
     @IBOutlet weak private var bottomFlipImageView: UIImageView!
     @IBOutlet weak private var topFlipImageView: UIImageView!
     @IBOutlet weak private var menuButton: UIButton!
-    @IBOutlet weak private var topSysLangName: UILabel!
-    @IBOutlet weak private var bottomLangNativeName: UILabel!
     @IBOutlet weak private var topCircleImgView: UIImageView!
     @IBOutlet weak private var bottomCircleleImgView: UIImageView!
     @IBOutlet weak private var topClickView: UIView!
@@ -144,10 +146,10 @@ class HomeViewController: BaseViewController {
         bottomView.backgroundColor = .black
         HomeViewController.isCameraButtonClickable = true
         view.changeFontSize()
-        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
-        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        self.topSysLangName.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        self.bottomLangNativeName.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
+        self.bottomLangSysLangNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        self.topLangSysLangNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        self.bottomLangNativeNameLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
+        self.topLangNativeNameLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize(), weight: .bold)
         setNeedsStatusBarAppearanceUpdate()
         self.navigationController?.navigationBar.isHidden = true
         setHistoryAndFavouriteView()
@@ -240,17 +242,14 @@ class HomeViewController: BaseViewController {
         if let lanCode = self.homeVM.getLanguageName() {
             self.deviceLanguage = lanCode
         }
-                
-        self.topNativeLangNameLable.titleLabel?.textAlignment = .center
-        self.topNativeLangNameLable.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
-        self.topNativeLangNameLable.setTitleColor(UIColor._whiteColor(), for: .normal)
         
-        self.topSysLangName.textAlignment = .center
-        self.topSysLangName.textColor = UIColor._whiteColor()
+        self.bottomLangSysLangNameButton.titleLabel?.textAlignment = .center
+        self.bottomLangSysLangNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
+        self.bottomLangSysLangNameButton.setTitleColor(UIColor._whiteColor(), for: .normal)
         
-        self.bottomLangSysLangName.titleLabel?.textAlignment = .center
-        self.bottomLangSysLangName.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
-        self.bottomLangSysLangName.setTitleColor(UIColor._whiteColor(), for: .normal)
+        self.topLangSysLangNameButton.titleLabel?.textAlignment = .center
+        self.topLangSysLangNameButton.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getBiggerFontSize(), weight: .bold)
+        self.topLangSysLangNameButton.setTitleColor(UIColor._whiteColor(), for: .normal)
         
         ///Hide Circle Imageview at first
         self.topCircleImgView.isHidden = true
@@ -482,10 +481,10 @@ class HomeViewController: BaseViewController {
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         PrintUtility.printLog(tag: TAG, text: "UpdateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")
-        topSysLangName.text = targetLanguage?.sysLangName
-        topNativeLangNameLable.setTitle(targetLanguage?.name, for: .normal)
-        bottomLangSysLangName.setTitle(nativeLanguage?.sysLangName, for: .normal)
-        bottomLangNativeName.text = nativeLanguage?.name
+        bottomLangSysLangNameButton.setTitle(nativeLanguage?.sysLangName, for: .normal)
+        topLangSysLangNameButton.setTitle(targetLanguage?.sysLangName, for: .normal)
+        bottomLangNativeNameLabel.text = nativeLanguage?.name
+        topLangNativeNameLabel.text = targetLanguage?.name
     }
     
     private func unregisterNotification(){
