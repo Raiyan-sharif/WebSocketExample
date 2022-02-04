@@ -30,6 +30,7 @@ class HomeViewController: BaseViewController {
     var window = UIApplication.shared.keyWindow ?? UIWindow()
     var bottomImageViewHeight: NSLayoutConstraint!
     let TAG = "\(HomeViewController.self)"
+    
     private var homeVM : HomeViewModeling!
     let pulseLayer = CAShapeLayer()
     let pulseGrayWave: UIView = UIView(frame: CGRect(x: 50, y:  50, width: 100, height: 100))
@@ -39,12 +40,12 @@ class HomeViewController: BaseViewController {
     private var deviceLanguage : String = ""
     private let toastVisibleTime : Double = 2.0
     private let animationDuration : TimeInterval = 0.1
+    
     let width : CGFloat = 100
     private var selectedTab = 0
     private var historyItemCount = 0
     private var favouriteItemCount = 0;
-    var imageViewPanGesture: UIPanGestureRecognizer!
-    var viewPanGesture: UIPanGestureRecognizer!
+
     private var selectedTouchView:UIView!
     let waitingTimeToShowSpeechProcessingFromHome : Double = 0.4
     let fadeAnimationDuration: TimeInterval = 0.1
@@ -59,6 +60,11 @@ class HomeViewController: BaseViewController {
     static var homeVCBottomViewHeight = CGFloat()
     
     ///HistoryCardVC properties
+    var imageViewPanGesture: UIPanGestureRecognizer!
+    var imageViewTapGesture: UITapGestureRecognizer!
+    var viewPanGesture: UIPanGestureRecognizer!
+    let historyCardTAG = "historyCardTAG"
+
     enum CardState {
         case expanded
         case collapsed

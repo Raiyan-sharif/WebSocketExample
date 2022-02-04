@@ -5,7 +5,7 @@
 
 import UIKit
 protocol HistoryCardViewControllerDelegate: AnyObject {
-    func dissmissHistory(shouldUpdateViewAlpha: Bool)
+    func dissmissHistory(shouldUpdateViewAlpha: Bool, isFromHistoryScene: Bool)
 }
 
 class HistoryCardViewController: BaseViewController {
@@ -248,7 +248,7 @@ class HistoryCardViewController: BaseViewController {
     }
     
     private func dismissHistory(shouldUpdateViewAlpha: Bool) {
-        delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha)
+        delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha, isFromHistoryScene: true)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
         if self.spinnerView.isHidden == false {
@@ -546,6 +546,7 @@ extension HistoryCardViewController: TtsAlertControllerDelegate{
     func itemAdded(_ chatItemModel: HistoryChatItemModel) {
         self.historyViewModel.addItem(chatItemModel.chatItem!)
         self.collectionView.reloadData()
+        self.scrollToBottom()
     }
     
     func itemDeleted(_ chatItemModel: HistoryChatItemModel) {

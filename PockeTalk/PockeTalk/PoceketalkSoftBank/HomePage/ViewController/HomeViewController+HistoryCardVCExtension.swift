@@ -24,6 +24,10 @@ extension HomeViewController{
     func setupGestureForCardView() {
         historyImageView.isUserInteractionEnabled = true
         
+        imageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapForImageGesture(tapGestureRecognizer:)))
+        self.historyImageView.addGestureRecognizer(imageViewTapGesture)
+
+        
         imageViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCardPanForImageGesture(recognizer:)))
         self.historyImageView.addGestureRecognizer(imageViewPanGesture)
         
@@ -32,7 +36,18 @@ extension HomeViewController{
         
     }
     
+    ///HistoryImageView tap gesture functionality
+    @objc private func handleTapForImageGesture(tapGestureRecognizer: UITapGestureRecognizer){
+        PrintUtility.printLog(tag: historyCardTAG, text: "Tap on Hisotry ImageView,  Visibility: \(self.cardVisible) State:\(self.nextState)")
+        animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
+        self.historyCardVC.updateData(shouldCVScrollToBottom: true)
+        ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
+        self.enableorDisableGesture(notification:nil)
+    }
+    
+    ///HistoryImageView bottom pan gesture functionality
     @objc private func handleCardPanForImageGesture (recognizer:UIPanGestureRecognizer) {
+        PrintUtility.printLog(tag: historyCardTAG, text: "Card pan for Hisotry ImageView,  Visibility: \(self.cardVisible) State:\(self.nextState)")
         switch recognizer.state {
         case .began:
             self.historyImageView.isHidden = true
@@ -42,6 +57,7 @@ extension HomeViewController{
         case .changed:
             let translation = recognizer.translation(in: self.view)
             var fractionComplete = translation.y / cardHeight
+            PrintUtility.printLog(tag: historyCardTAG, text: "Card pan for Hisotry ImageView, fractionComplete \(fractionComplete)")
             fractionComplete = cardVisible ? -fractionComplete : fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
@@ -54,10 +70,14 @@ extension HomeViewController{
         }
     }
     
+    ///Home view pan to bottom
     @objc private func handleCardPanForViewGesture (recognizer:UIPanGestureRecognizer) {
         switch recognizer.state {
-        case .ended:
+        case .changed:
             let translationY = recognizer.translation(in: self.view).y
+            
+            //TODO: Disable code block because swipe up to dismiss history is currently disabled from home
+            /*
             if nextState == .collapsed && translationY < 0 {
                 if !isSwipUpGestureEnable() {
                     animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
@@ -69,16 +89,19 @@ extension HomeViewController{
                     self.enableorDisableGesture(notification:nil)
                 }
             }
+            */
+            PrintUtility.printLog(tag: historyCardTAG, text: "Card pan for View,  translationY \(translationY), Visibility: \(self.cardVisible) State:\(self.nextState)")
             
-            if nextState == .expanded && translationY > 0 {
+            if nextState == .expanded && translationY > 20 {
                 if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing {
                     animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
                     self.historyCardVC.updateData(shouldCVScrollToBottom: true)
                     ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
                     self.enableorDisableGesture(notification:nil)
+                    self.historyImageView.isHidden = false
                 }
             }
-            self.historyImageView.isHidden = false
+            
         default:
             break
         }
@@ -121,12 +144,13 @@ extension HomeViewController{
                     self.historyCardVC.view.frame.origin.y = 0
                 case .collapsed:
                     self.historyCardVC.view.frame.origin.y = -self.cardHeight + UIApplication.shared.statusBarFrame.height
-                    self.historyDissmissed()
                 }
             }
             
-            frameAnimator.addCompletion { _ in
+            frameAnimator.addCompletion { [self] _ in
+                PrintUtility.printLog(tag: historyCardTAG, text: "Before change visibility,  Visibility: \(self.cardVisible) State:\(self.nextState)")
                 self.cardVisible = !self.cardVisible
+                PrintUtility.printLog(tag: historyCardTAG, text: "After change visibility,  Visibility: \(self.cardVisible) State:\(self.nextState)")
                 self.runningAnimations.removeAll()
             }
             
@@ -169,8 +193,13 @@ extension HomeViewController{
 
 //MARK: - HistoryCardViewControllerDelegate
 extension HomeViewController: HistoryCardViewControllerDelegate {
-    func dissmissHistory(shouldUpdateViewAlpha: Bool) {
-        historyDissmissed()
-        animateTransitionIfNeeded(state: .collapsed, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
+    func dissmissHistory(shouldUpdateViewAlpha: Bool, isFromHistoryScene: Bool) {
+        if isFromHistoryScene{
+            animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
+            self.historyDissmissed()
+            PrintUtility.printLog(tag: historyCardTAG, text: "Dismiss history from history,  Visibility: \(self.cardVisible) State:\(self.nextState)")
+        } else {
+            PrintUtility.printLog(tag: historyCardTAG, text: "Dismiss history from home,  Visibility: \(self.cardVisible) State:\(self.nextState)")
+        }
     }
 }

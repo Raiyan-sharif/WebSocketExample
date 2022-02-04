@@ -89,7 +89,7 @@ extension HomeViewController{
                 }
             } completion: { _ in
                 if self.isFromlanguageSelection() == false {
-                    self.dissmissHistory(shouldUpdateViewAlpha: false)
+                    self.dissmissHistory(shouldUpdateViewAlpha: false, isFromHistoryScene: false)
                 }
                 let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: speechViewTransitionTime, animationStyle: CATransitionSubtype.fromTop)
                 self.view.window!.layer.add(transition, forKey: kCATransition)
