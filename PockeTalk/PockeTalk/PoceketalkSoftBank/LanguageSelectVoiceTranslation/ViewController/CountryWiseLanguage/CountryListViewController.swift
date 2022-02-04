@@ -30,12 +30,13 @@ class CountryListViewController: BaseViewController {
         setupUI()
         configureCollectionView()
         registerNotification()
-        setUpMicroPhoneIcon()
+        //setUpMicroPhoneIcon()
+        FloatingMikeButton.sharedInstance.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        microphoneIcon(isHidden: false)
+        //microphoneIcon(isHidden: false)
     }
     
     deinit {
@@ -83,33 +84,11 @@ class CountryListViewController: BaseViewController {
     
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(updateCountrySelection(notification:)), name: .countySlectionByVoiceNotofication, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name:.hideMicrophoneCountrySelectionVoice, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .showMicrophoneCountrySelectionVoice, object: nil)
-    }
-    
-    private func setUpMicroPhoneIcon() {
-        let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
-        
-        floatingMicrophoneButton = UIButton(frame: CGRect(
-            x: self.window.frame.maxX - 60,
-            y: self.window.frame.maxY - bottomMergin,
-            width: width,
-            height: width)
-        )
-        
-        floatingMicrophoneButton.setImage(UIImage(named: "mic"), for: .normal)
-        floatingMicrophoneButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingMicrophoneButton.layer.cornerRadius = width/2
-        floatingMicrophoneButton.clipsToBounds = true
-        floatingMicrophoneButton.tag = countrySelectVoiceFloatingbtnTag
-        self.window.addSubview(floatingMicrophoneButton)
-        
-        floatingMicrophoneButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
     
     //MARK: - IBActions
     @IBAction private func onBackButtonPressed(_ sender: Any) {
-        removeFloatingBtn()
+        FloatingMikeButton.sharedInstance.remove()
         remove(asChildViewController: self)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
@@ -139,11 +118,6 @@ class CountryListViewController: BaseViewController {
         countryListCollectionView.reloadData()
     }
     
-    @objc private func microphoneTapAction (sender:UIButton) {
-        microphoneIcon(isHidden: true)
-        navigateToLanguageSettingsScene()
-    }
-    
     //MARK: - View Transactions
     private func showLanguageListScreen(item: CountryListItemElement){
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
@@ -170,18 +144,8 @@ class CountryListViewController: BaseViewController {
         viewEnglishName.layer.borderColor = UIColor.gray.cgColor
     }
 
-    @objc private func hideMicrophoneButton(notification: Notification) {
-        microphoneIcon(isHidden: true)
-    }
-    
-    @objc private func showMicrophoneButton(notification: Notification) {
-        microphoneIcon(isHidden: false)
-    }
-
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.countySlectionByVoiceNotofication, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.hideMicrophoneCountrySelectionVoice, object: nil)
-        NotificationCenter.default.removeObserver(self, name:.showMicrophoneCountrySelectionVoice, object: nil)
     }
 
     @objc func updateCountrySelection(notification: Notification) {
@@ -191,12 +155,7 @@ class CountryListViewController: BaseViewController {
     }
     
     private func microphoneIcon(isHidden: Bool){
-        window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.isHidden = isHidden
-        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.isHidden = isHidden
-    }
-
-    private func removeFloatingBtn() {
-        window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.removeFromSuperview()
+        FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
 }
 
@@ -309,5 +268,18 @@ extension CountryListViewController: SpeechProcessingVCDelegates{
             }
         }
         return nil
+    }
+}
+
+//MARK: - FloatingMikeButtonDelegate
+extension CountryListViewController: FloatingMikeButtonDelegate{
+    func didTapOnMicrophoneButton() {
+        PrintUtility.printLog(tag: TAG, text: "Country List VC microphone tap")
+        if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
+            microphoneIcon(isHidden: true)
+            if FloatingMikeButton.sharedInstance.hiddenStatus() {
+                navigateToLanguageSettingsScene()
+            }
+        }
     }
 }

@@ -246,6 +246,8 @@ class SpeechProcessingViewController: BaseViewController{
                             if !self.isFinalProvided {
                                 self.loaderInvisible()
                                 self.removeAnimation()
+                                //Show microphone button when get STT text from server
+                                self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
                             }
                         }
                     }
@@ -253,6 +255,8 @@ class SpeechProcessingViewController: BaseViewController{
             }else{
                 self.loaderInvisible()
                 self.removeAnimation()
+                //Show microphone button when failed to get STT text from server
+                self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
             }
         }
     }
@@ -393,6 +397,9 @@ class SpeechProcessingViewController: BaseViewController{
                         break
                     }
                     self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
+                    
+                    //Show microphone button on language scene depend on screen purpose
+                    self.showMicrophoneBtnInLanguageScene(delayTime: 0)
                 }
             }
         }
@@ -479,6 +486,20 @@ class SpeechProcessingViewController: BaseViewController{
     func showPronunciationPracticeResult (stt:String) {
         let pronumtiationValue = PronuntiationValue(practiceText: stt, orginalText: pronunciationText, languageCcode: pronunciationLanguageCode)
         NotificationCenter.default.post(name: .pronuntiationNotification, object: nil, userInfo: ["value":pronumtiationValue])
+    }
+    
+    private func showMicrophoneBtnInLanguageScene(delayTime: Double){
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
+            if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||
+                ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice ||
+                ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice ||
+                ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
+                ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+                if FloatingMikeButton.sharedInstance.hiddenStatus() {
+                    FloatingMikeButton.sharedInstance.isHidden(false)
+                }
+            }
+        }
     }
 }
 

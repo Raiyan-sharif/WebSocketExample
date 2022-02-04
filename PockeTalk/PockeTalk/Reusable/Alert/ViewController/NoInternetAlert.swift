@@ -25,12 +25,12 @@ class NoInternetAlert: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         talkButtonImageView = window.viewWithTag(109) as? UIImageView
-        hideFloatingMicrophoneBtn(true)
         
         flagTalkButton = talkButtonImageView.isHidden
         if(!flagTalkButton){
             talkButtonImageView.isHidden = true
             HomeViewController.dummyTalkBtnImgView.isHidden = false
+            FloatingMikeButton.sharedInstance.isHidden(true)
         }
 
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(3)
@@ -38,7 +38,7 @@ class NoInternetAlert: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        hideFloatingMicrophoneBtn(false)
+        FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
     }
     
     deinit{
@@ -78,17 +78,6 @@ class NoInternetAlert: BaseViewController {
                 heightOfTableView += cell.frame.height
             }
             self.tableViewHeightConstraint.constant = heightOfTableView
-        }
-    }
-    
-    private func hideFloatingMicrophoneBtn(_ isHidden: Bool){
-        print(ScreenTracker.sharedInstance.screenPurpose)
-        if ScreenTracker.sharedInstance.screenPurpose != .LanguageSettingsSelectionVoice &&
-            ScreenTracker.sharedInstance.screenPurpose != .CountrySettingsSelectionByVoice &&
-            ScreenTracker.sharedInstance.screenPurpose != .LanguageSettingsSelectionCamera{
-            window.viewWithTag(languageSelectVoiceFloatingbtnTag)?.isHidden = isHidden
-            window.viewWithTag(countrySelectVoiceFloatingbtnTag)?.isHidden = isHidden
-            window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.isHidden = isHidden
         }
     }
 }

@@ -227,6 +227,7 @@
 		89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */; };
 		89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */; };
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
+		89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */; };
 		89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */; };
 		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
 		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
@@ -481,6 +482,7 @@
 		89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHistoryPopUPViewController.swift; sourceTree = "<group>"; };
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMikeButton.swift; sourceTree = "<group>"; };
 		89CE6AC526FDC29E000ECF17 /* PhotoCaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureProcessor.swift; sourceTree = "<group>"; };
 		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */,
 				8939F820273BBDC0007EB5CD /* TalkButtonAnimation.swift */,
 				898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */,
+				89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -1944,6 +1947,7 @@
 				963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */,
 				691FC66E26E9DCB800259407 /* AlertReusableModel.swift in Sources */,
 				8782DF0726E099BF003A1681 /* UICollectionView+Reusable.swift in Sources */,
+				89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */,
 				692CCEB526E1E9F9006E826B /* Extension+UIViewController.swift in Sources */,
 				89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */,
 				50675D5B26EB26C100A775E5 /* LanguageListCameraVC.swift in Sources */,
@@ -2312,7 +2316,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q446ZQDPHN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2338,7 +2342,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q446ZQDPHN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2346,7 +2350,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bjitgroup.pocketalk.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

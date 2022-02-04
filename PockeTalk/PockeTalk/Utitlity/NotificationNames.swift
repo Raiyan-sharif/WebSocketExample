@@ -27,14 +27,6 @@ extension Notification.Name {
     static let cameraHistorySelectionLanguage = Notification.Name("cameraHistorySelectionLanguage")
     static let pronumTiationTextUpdate = Notification.Name("PronumTiationTextUpdate")
     
-    static let hideMicrophoneLanguageSelectionVoice = Notification.Name("hideMicrophoneLanguageSelectionVoice")
-    static let hideMicrophoneCountrySelectionVoice = Notification.Name("hideMicrophoneCountrySelectionVoice")
-    static let hideMicrophoneLanguageSelectionVoiceCamera = Notification.Name("hideMicrophoneLanguageSelectionVoiceCamera")
-    
-    static let showMicrophoneLanguageSelectionVoice = Notification.Name("showMicrophoneLanguageSelectionVoice")
-    static let showMicrophoneCountrySelectionVoice = Notification.Name("showMicrophoneCountrySelectionVoice")
-    static let showMicrophoneLanguageSelectionVoiceCamera = Notification.Name("showMicrophoneLanguageSelectionVoiceCamera")
-    
     static let popFromCountrySelectionVoice = Notification.Name("popFromCountrySelectionVoice")
     static let popFromCameralanguageSelectionVoice = Notification.Name("popFromCameralanguageSelectionVoice")
     

@@ -129,6 +129,7 @@ class HomeViewController: BaseViewController {
         setupCardView()
         setupStatusBarView()
         setupGestureForBottomView()
+        setupFloatingMikeButton()
         bottomView.layer.zPosition = 103
     }
     
@@ -267,6 +268,13 @@ class HomeViewController: BaseViewController {
         setUPLongPressGesture()
         addSpeechProcessingVC()
         addTalkButtonAnimationViews()
+    }
+    
+    ///setup mike button first time
+    private func setupFloatingMikeButton(){
+        FloatingMikeButton.sharedInstance.window = self.window
+        FloatingMikeButton.sharedInstance.add()
+        FloatingMikeButton.sharedInstance.isHidden(true)
     }
     
     private func setHistoryAndFavouriteView(){

@@ -38,17 +38,23 @@ class LanguageSelectCameraVC: BaseViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        talkButtonImageView = window.viewWithTag(109) as? UIImageView
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
         navigationViewCustomization()
         updateButton(index:0)
         setupPageViewController()
         registerNotification()
-        DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) { [weak self] in
-            self?.setUpMicroPhoneIcon()
-        }
         self.view.bottomImageView(usingState: .gradient)
+        FloatingMikeButton.sharedInstance.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) {
+            if FloatingMikeButton.sharedInstance.hiddenStatus() == true{
+                FloatingMikeButton.sharedInstance.isHidden(false)
+            }
+        }
     }
     
     deinit {
@@ -93,32 +99,7 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     private func registerNotification(){
-
-        NotificationCenter.default.addObserver(self, selector: #selector(hideMicrophoneButton(notification:)), name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showMicrophoneButton(notification:)), name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCameralanguageSelection(notification:)), name: .cameraHistorySelectionLanguage, object: nil)
-    }
-    
-    private func setUpMicroPhoneIcon () {
-        let bottomMergin = (self.window.frame.maxY / 4) / 2 + width / 2
-        
-        floatingMicrophoneButton = UIButton(frame: CGRect(
-            x: self.window.frame.maxX - 60,
-            y: self.window.frame.maxY - bottomMergin,
-            width: width,
-            height: width)
-        )
-        
-        floatingMicrophoneButton.setImage(UIImage(named: "mic"), for: .normal)
-        floatingMicrophoneButton.backgroundColor = UIColor._buttonBackgroundColor()
-        floatingMicrophoneButton.layer.cornerRadius = width/2
-        floatingMicrophoneButton.clipsToBounds = true
-        floatingMicrophoneButton.tag = languageSelectVoiceCameraFloatingBtnTag
-        self.window.addSubview(floatingMicrophoneButton)
-        
-        floatingMicrophoneButton.addTarget(self, action: #selector(microphoneTapAction(sender:)), for: .touchUpInside)
     }
     
     //MARK: - IBActions
@@ -155,13 +136,7 @@ class LanguageSelectCameraVC: BaseViewController {
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
-        removeFloatingBtn()
-        
-    }
-    
-    @objc func microphoneTapAction (sender:UIButton) {
         microphoneIcon(isHidden: true)
-        navigateToLanguageScene()
     }
     
     //MARK: - View Transactions
@@ -174,16 +149,12 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     //MARK: - Utils
-    @objc func hideMicrophoneButton(notification: Notification) {
-        microphoneIcon(isHidden: true)
-    }
-    
     @objc func showMicrophoneButton(notification: Notification) {
         microphoneIcon(isHidden: false)
     }
     
     private func microphoneIcon(isHidden: Bool){
-        self.floatingMicrophoneButton.isHidden = isHidden
+        FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
     
     private func updateUI(){
@@ -194,8 +165,6 @@ class LanguageSelectCameraVC: BaseViewController {
     }
     
     private func unregisterNotification(){
-        NotificationCenter.default.removeObserver(self, name:.hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
         NotificationCenter.default.removeObserver(self, name: .cameraHistorySelectionLanguage, object: nil)
     }
     
@@ -206,10 +175,6 @@ class LanguageSelectCameraVC: BaseViewController {
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
-    private func removeFloatingBtn(){
-        window.viewWithTag(languageSelectVoiceCameraFloatingBtnTag)?.removeFromSuperview()
-    }
-
     private func updateButton(index:Int){
         PrintUtility.printLog(tag: TAG , text: "Index position \(index)")
         if index == 0{
@@ -232,8 +197,6 @@ class LanguageSelectCameraVC: BaseViewController {
             } else {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
             } 
-        } else {
-            self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
         }
     }
     
@@ -327,6 +290,20 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
         default:
             let vc = viewController as! LanguageListCameraVC
             return vc.pageIndex
+        }
+    }
+}
+
+//MARK: - FloatingMikeButtonDelegate
+extension LanguageSelectCameraVC: FloatingMikeButtonDelegate{
+    func didTapOnMicrophoneButton() {
+        PrintUtility.printLog(tag: TAG, text: "Language select voice camera Tap")
+        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
+            ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
+            microphoneIcon(isHidden: true)
+            if FloatingMikeButton.sharedInstance.hiddenStatus() {
+                navigateToLanguageScene()
+            }
         }
     }
 }

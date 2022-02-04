@@ -41,22 +41,20 @@ class CustomAlertDailogViewController: BaseViewController {
         if(!flagTalkButton){
             talkButtonImageView.isHidden = true
             HomeViewController.dummyTalkBtnImgView.isHidden = false
+            FloatingMikeButton.sharedInstance.isHidden(true)
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if(!flagTalkButton){
             talkButtonImageView.isHidden = false
-        }
-    }
-    deinit{
-        if(!flagTalkButton){
             HomeViewController.dummyTalkBtnImgView.isHidden = true
         }
+        FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
     }
+
     func setupUI() {
         alertView.layer.cornerRadius = 12
-//        titleView.layer.cornerRadius = 12
 
         titleLable.text = alertTitle
         titleLable.font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .bold)

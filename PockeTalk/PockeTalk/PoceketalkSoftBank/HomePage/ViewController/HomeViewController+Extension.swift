@@ -61,7 +61,6 @@ extension HomeViewController{
         TalkButtonAnimation.stopAnimation(bottomView: bottomView, pulseGrayWave: pulseGrayWave, pulseLayer: pulseLayer, midCircleViewOfPulse: midCircleViewOfPulse, bottomImageView: bottomImageView)
         bottomImageView.isHidden = true
         homeGestureEnableOrDiable()
-        showMicrophoneBtnInLanguageScene()
         HomeViewController.showOrHideTalkButtonImage(!self.isFromPronuntiationPractice())
         PrintUtility.printLog(tag: "ScreenTracker.sharedInstance.screenPurpose", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
@@ -102,7 +101,9 @@ extension HomeViewController{
             self.view.window!.layer.add(transition, forKey: kCATransition)
             self.speechContainerView.isHidden = false
         }
-        self.hideMicrophoneBtnInLanguageScene()
+        
+        //Hide microphone button when talk button tap and navigate to speech view
+        FloatingMikeButton.sharedInstance.isHidden(true)
     }
     
     func getLastVCFromContainer()->UIViewController?{
@@ -180,8 +181,6 @@ extension HomeViewController{
                                 self.removeAllChildControllers(Int(IsTop.top.rawValue))
                             }
                             
-                            self.hideMicrophoneBtnInLanguageScene()
-                            
                             SpeechProcessingViewModel.isLoading = false;
                             self.homeVCDelegate?.startRecord()
                             
@@ -232,50 +231,6 @@ extension HomeViewController{
         ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
         ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera ||
         ScreenTracker.sharedInstance.screenPurpose == .LanguageSettingsSelectionCamera
-    }
-    
-    private func hideMicrophoneBtnInLanguageScene(){
-        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
-            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-            NotificationCenter.default.post(name: .hideMicrophoneCountrySelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
-            NotificationCenter.default.post(name: .hideMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        }
-    }
-    
-    private func showMicrophoneBtnInLanguageScene(){
-        if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice {
-            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
-            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .CountrySelectionByVoice {
-            NotificationCenter.default.post(name: .showMicrophoneCountrySelectionVoice, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera {
-            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        }
-        
-        else if ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
-            NotificationCenter.default.post(name: .showMicrophoneLanguageSelectionVoiceCamera, object: nil)
-        }
     }
 }
 
