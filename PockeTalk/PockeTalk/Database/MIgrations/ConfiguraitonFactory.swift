@@ -11,7 +11,6 @@ protocol DBConfiguraion {
 
 class ConfiguraitonFactory {
     func getConfiguraitonFactory(oldVersion: Int? , newVersion: Int) -> DBConfiguraion? {
-
         PrintUtility.printLog(tag: String(describing: type(of: self)), text: "DB old version \(oldVersion as Optional)____New Version \(newVersion) ")
         if oldVersion == nil {
             let initialDBConfiguration =  InitialDBConfiguration()
@@ -20,6 +19,10 @@ class ConfiguraitonFactory {
         } else if oldVersion == newVersion {
             return nil
         } else {
+            if newVersion == 2 {
+                UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value = newVersion
+                LanguageMapViewModel().parseXmlAndStoreNewlyAddedLanguageMappingToDb()
+            }
             return nil
         }
     }
