@@ -204,6 +204,7 @@
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		8994A7CE26F4A83600657608 /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8994A7CD26F4A83600657608 /* img1.jpg */; };
 		89990F6F2783179600D39154 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89990F6E2783179600D39154 /* WelcomeViewController.swift */; };
+		899FB08227A2B12C00B83366 /* Date+Reuseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FB08127A2B12C00B83366 /* Date+Reuseable.swift */; };
 		89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A7B65926E5CC2000087537 /* CustomShapeButton.swift */; };
 		89B1593B2784133A00636574 /* TermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B1593A2784133A00636574 /* TermsAndConditionsViewController.swift */; };
 		89B2946526EB1D4F00747B61 /* TempoControlSelectionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */; };
@@ -463,6 +464,7 @@
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		8994A7CD26F4A83600657608 /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
 		89990F6E2783179600D39154 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		899FB08127A2B12C00B83366 /* Date+Reuseable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Reuseable.swift"; sourceTree = "<group>"; };
 		89A7B65926E5CC2000087537 /* CustomShapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeButton.swift; sourceTree = "<group>"; };
 		89B1593A2784133A00636574 /* TermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		89B2946326EB1D4F00747B61 /* TempoControlSelectionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TempoControlSelectionAlertController.swift; path = PockeTalk/PoceketalkSoftBank/PronunciationPractice/TempoControlSelectionAlert/ViewController/TempoControlSelectionAlertController.swift; sourceTree = SOURCE_ROOT; };
@@ -1252,6 +1254,7 @@
 				8782DF0026E099BF003A1681 /* UITableView+Reusable.swift */,
 				89495B4B26F0AAFA00CEA19D /* JSONDecoder+Reusable.swift */,
 				89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */,
+				899FB08127A2B12C00B83366 /* Date+Reuseable.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -2065,6 +2068,7 @@
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */,
 				4A6E08BA26FB2EB600147BAC /* CameraTTSDialog.swift in Sources */,
+				899FB08227A2B12C00B83366 /* Date+Reuseable.swift in Sources */,
 				89CFFC6C2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift in Sources */,
 				89495B2B26F0A92300CEA19D /* PointUtils.swift in Sources */,
 				4AB51D16270AF56B007D254A /* RuntimePermissionUtil.swift in Sources */,
@@ -2331,7 +2335,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2357,7 +2361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2366,7 +2370,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bjitgroup.pocketalk.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

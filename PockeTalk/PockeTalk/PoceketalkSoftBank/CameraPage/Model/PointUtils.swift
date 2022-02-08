@@ -118,6 +118,8 @@ public class PointUtils {
                                     intBlockIndex += intBlockIndex
                                     pageText += blockText
                                     semaphore.signal()
+                                } else {
+                                    semaphore.signal()
                                 }
                             }
                         } else {
@@ -296,6 +298,8 @@ public class PointUtils {
                                             LanguageDetection().getDetectedLanguage(with: lineText) { result in
                                                 if let langCode = result {
                                                     detectedLanCode = langCode
+                                                    semaphore.signal()
+                                                } else {
                                                     semaphore.signal()
                                                 }
                                             }

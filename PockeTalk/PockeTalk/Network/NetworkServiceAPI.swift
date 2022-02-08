@@ -10,15 +10,24 @@ enum NetworkServiceAPI {
     case authkey(params:[String:Any])
     case changeLanguage(params:[String:Any])
     case tts(params:[String:Any])
-
+    case liscense(params:[String:Any])
+    
 }
 extension NetworkServiceAPI:TargetType{
-
+    
     var baseURL: URL {
-        return URL(string:base_url)!
+        switch self {
+        case .liscense:
+            return URL(string:base_url2)!
+        case .changeLanguage:
+            return URL(string:base_url)!
+        case .authkey:
+            return URL(string:base_url2)!
+        case .tts:
+            return URL(string:base_url2)!
         }
-
-
+    }
+    
     var path: String {
         switch self {
         case .authkey:
@@ -27,28 +36,31 @@ extension NetworkServiceAPI:TargetType{
             return language_channge_url
         case .tts:
             return tts_url
+        case .liscense:
+            return liscense_token_url
         }
-        
         
     }
     var method: Moya.Method {
         switch self {
-        case .authkey, .changeLanguage, .tts:
+        case .authkey, .changeLanguage, .tts, .liscense:
             return .post
         }
     }
     var task: Task {
         switch self {
-
+            
         case let .authkey(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .changeLanguage(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.httpBody)
         case let .tts(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        case let .liscense(params) :
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
-
+    
     var sampleData: Data {
         switch self {
         case let .authkey(config) :
@@ -57,6 +69,8 @@ extension NetworkServiceAPI:TargetType{
             return "{\"description is \": \"\(value)\"}".utf8Encoded
         case let .tts(value) :
             return "{\"description is \": \"\(value)\"}".utf8Encoded
+        case let .liscense(value):
+            return "{\"description is \": \"\(value)\"}".utf8Encoded
         }
     }
     var headers: [String: String]? {
@@ -64,7 +78,7 @@ extension NetworkServiceAPI:TargetType{
         case .authkey, .tts:
             return  ["Content-type": "application/x-www-form-urlencoded"]
         default :
-           return nil
+            return nil
         }
     }
 }
@@ -74,7 +88,7 @@ private extension String {
     var urlEscaped: String {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
-
+    
     var utf8Encoded: Data {
         return data(using: .utf8)!
     }

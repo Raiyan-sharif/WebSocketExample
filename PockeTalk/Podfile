@@ -25,6 +25,8 @@ target 'PockeTalk' do
   pod 'Alamofire', '~> 5.0'
 
   pod 'WXImageCompress', '~> 0.1.1'
+  
+  pod 'Kronos'
 
   # Pods for PockeTalk
 
