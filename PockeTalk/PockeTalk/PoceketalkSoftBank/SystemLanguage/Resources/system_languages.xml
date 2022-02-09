@@ -4,5 +4,16 @@
     <child>
         <item name= "日本語で操作する" code="ja" />
         <item name= "Use in English" code="en" />
+        <item name= "使用简体中文操作" code="zh-Hans" />
+        <item name= "使用繁體中文操作" code="zh-Hant" />
+        <item name= "Uso en español" code="es" />
+        <item name= "Operar em português" code="pt-PT" />
+        <item name= "Работать на русском" code="ru" />
+        <item name= "Utilisation en français" code="fr" />
+        <item name= "Verwendung in deutsch" code="de" />
+        <item name= "한국어로 사용하다" code="ko" />
+        <item name= "Utilizzare in italia" code="it" />
+        <item name= "ใช้งานด้วยภาษาไทย" code="th" />
+        <item name= "Operasi Dalam Bahasa Melayu" code="ms" />
     </child>
 </language>

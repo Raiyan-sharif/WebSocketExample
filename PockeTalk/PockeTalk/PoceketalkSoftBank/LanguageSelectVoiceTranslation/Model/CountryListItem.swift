@@ -26,6 +26,11 @@ struct CountryListItemElement: Codable {
 
 // MARK: - CountryName
 struct CountryName: Codable {
-    let de, en, es, fr: String
-    let it, ja, ko, zh: String
+    let en, es, fr, zh, ja, zhTW: String?
+    let ko, de, it, ru, ms, th, pt: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case en, es, fr, zh, ja, ko, de, it, ru, ms, th, pt
+        case zhTW = "zh-TW"
+    }
 }

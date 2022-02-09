@@ -65,12 +65,32 @@ class LanguageMapDBModel: BaseDBModel {
 
 
     func find(languageCode: String, text: String) throws -> BaseEntity? {
-        let filterQuery = table.filter(languageCode == textCode && (text == textValueOne  || text == textValueTwo
-                                        || text == textValueThree || text == textValueFour || text == textValueFive
-                                        || text == textValueSix || text == textValueSeven))
+        let filterQuery = table.filter(
+            languageCode == textCode && (
+                text == textValueOne.collate(.nocase)  ||
+                text == textValueTwo.collate(.nocase) ||
+                text == textValueThree.collate(.nocase) ||
+                text == textValueFour.collate(.nocase) ||
+                text == textValueFive.collate(.nocase) ||
+                text == textValueSix.collate(.nocase) ||
+                text == textValueSeven.collate(.nocase)
+            )
+        )
+        
         let items = try find(filter: filterQuery)
         for item in  items {
-            return LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven])
+            return LanguageMapEntity.init(
+                id: item[id],
+                textCode: item[textCode],
+                textCodeTr: item[textCodeTr],
+                textValueOne: item[textValueOne],
+                textValueTwo: item[textValueTwo],
+                textValueThree: item[textValueThree],
+                textValueFour: item[textValueFour],
+                textValueFive: item[textValueFive],
+                textValueSix: item[textValueSix],
+                textValueSeven: item[textValueSeven]
+            )
         }
         return nil
    }

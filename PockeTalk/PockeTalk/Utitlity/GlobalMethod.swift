@@ -12,7 +12,7 @@ class GlobalMethod {
     static let screenSize: CGRect = UIScreen.main.bounds
     static let isWideScreen: Bool = GlobalMethod.screenSize.height >= 568.0
     static let displayScale: CGFloat = GlobalMethod.screenSize.width / 375.0
-    static let standardTableViewCellHeight: CGFloat = 44.0 * displayScale
+    static let standardTableViewCellHeight: CGFloat = 65.0 * displayScale
 
     // Fonts
     static let mainFont: UIFont = UIFont.systemFont(ofSize: 15.0 * GlobalMethod.displayScale)
@@ -348,8 +348,69 @@ class GlobalMethod {
         
         return transition
     }
-
-
+    
+    static func removePunctuation(of text: String) -> String{
+        let punctuationList = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
+        var textWithoutPronounciations = text
+        for pronounciationItem in punctuationList{
+            textWithoutPronounciations = textWithoutPronounciations.replacingOccurrences(
+                of: pronounciationItem,
+                with: "",
+                options: NSString.CompareOptions.literal,
+                range: nil
+            )
+        }
+        return textWithoutPronounciations
+    }
+    
+    static func getAlternativeSystemLanguageCode(of sysLangCode: String) -> String{
+        var convertedLangCode = sysLangCode
+        
+        if sysLangCode == SystemLanguageCode.zhHans.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.zh.rawValue
+        } else if sysLangCode == SystemLanguageCode.zhHant.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.zhTW.rawValue
+        } else if sysLangCode == SystemLanguageCode.ptPT.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.pt.rawValue
+        }
+        
+        return convertedLangCode
+    }
+    
+    static func getCountryCodeFrom(_ countryListItem: CountryListItemElement?, and langCode: String) -> String{
+        var countryCode = String()
+        let countryEnName = countryListItem?.countryName.en ?? "en"
+        
+        if langCode == SystemLanguageCode.ja.rawValue {
+            countryCode = countryListItem?.countryName.ja ?? countryEnName
+        } else if langCode == SystemLanguageCode.es.rawValue {
+            countryCode = countryListItem?.countryName.es ?? countryEnName
+        } else if langCode == SystemLanguageCode.fr.rawValue {
+            countryCode = countryListItem?.countryName.fr ?? countryEnName
+        } else if langCode == SystemLanguageCode.zhHans.rawValue {
+            countryCode = countryListItem?.countryName.zh ?? countryEnName
+        } else if langCode == SystemLanguageCode.ko.rawValue {
+            countryCode = countryListItem?.countryName.ko ?? countryEnName
+        } else if langCode == SystemLanguageCode.de.rawValue {
+            countryCode = countryListItem?.countryName.de ?? countryEnName
+        } else if langCode == SystemLanguageCode.it.rawValue{
+            countryCode = countryListItem?.countryName.it ?? countryEnName
+        } else if langCode == SystemLanguageCode.zhHant.rawValue {
+            countryCode = countryListItem?.countryName.zhTW ?? countryEnName
+        } else if langCode == SystemLanguageCode.ru.rawValue {
+            countryCode = countryListItem?.countryName.ru ?? countryEnName
+        } else if langCode == SystemLanguageCode.ms.rawValue {
+            countryCode = countryListItem?.countryName.ms ?? countryEnName
+        } else if langCode == SystemLanguageCode.th.rawValue {
+            countryCode = countryListItem?.countryName.th ?? countryEnName
+        } else if langCode == SystemLanguageCode.ptPT.rawValue {
+            countryCode = countryListItem?.countryName.pt ?? countryEnName
+        } else {
+            countryCode = countryEnName
+        }
+        
+        return countryCode
+    }
 }
 
 class GlobalAlternative{

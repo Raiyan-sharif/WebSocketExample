@@ -54,6 +54,9 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResetTableViewCell") as! ResetListTableViewCell
         cell.titleLabel?.text = ResetItemType.resetItems[indexPath.row].localiz()
         cell.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getFontSize())
+        cell.titleLabel.type = .continuous
+        cell.titleLabel.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+        cell.titleLabel.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
         print(ResetItemType.resetItems[indexPath.row].localiz())
         cell.backgroundColor = .black
         let bgColorView = UIView()

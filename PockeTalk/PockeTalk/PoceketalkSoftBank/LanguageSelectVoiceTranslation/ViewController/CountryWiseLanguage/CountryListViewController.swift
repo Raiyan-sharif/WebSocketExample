@@ -157,6 +157,11 @@ class CountryListViewController: BaseViewController {
     private func microphoneIcon(isHidden: Bool){
         FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
+    
+    private func getCountryName(countryItem: CountryListItemElement) -> String {
+        let countryCodeName = GlobalMethod.getCountryCodeFrom(countryItem, and: dataShowingLanguageCode)
+        return countryCodeName
+    }
 }
 
 //MARK: - LanguageSettingsProtocol
@@ -188,15 +193,9 @@ extension CountryListViewController : UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let countryItem = countryList[indexPath.row] as CountryListItemElement
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CountryListCollectionViewCell", for: indexPath) as! CountryListCollectionViewCell
-        var countryName = ""
-        switch dataShowingLanguageCode {
-            case systemLanguageCodeJP:
-                countryName = countryItem.countryName.ja
-            default:
-                countryName = countryItem.countryName.en
-        }
-        cell.countryNameLabel.text = countryName
-        cell.configureFlagImage(with: UIImage(named: countryItem.countryName.en)!)
+        
+        cell.countryNameLabel.text = getCountryName(countryItem: countryItem)
+        cell.configureFlagImage(with: UIImage(named: countryItem.countryName.en ?? "en")!)
         return cell
     }
     
@@ -252,18 +251,12 @@ extension CountryListViewController: SpeechProcessingVCDelegates{
         }
     }
 
-    func findCountryName(_ text: String) -> CountryListItemElement?{
-        let stringFromSpeech = text.replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range: nil)
+    private func findCountryName(_ text: String) -> CountryListItemElement?{
+        let stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         for item in countryList{
-            PrintUtility.printLog(tag: TAG, text: "countryname \(item.countryName.en) search for \(stringFromSpeech)")
-            var countryName = ""
-            switch dataShowingLanguageCode {
-                case systemLanguageCodeJP:
-                    countryName = item.countryName.ja
-                default:
-                    countryName = item.countryName.en
-            }
-            if countryName == stringFromSpeech{
+            PrintUtility.printLog(tag: TAG, text: "countryname \(item.countryName.en ?? "") search for \(stringFromSpeech)")
+            let countryCodeName = GlobalMethod.getCountryCodeFrom(item, and: dataShowingLanguageCode)
+            if countryCodeName.lowercased() == stringFromSpeech{
                 return item
             }
         }

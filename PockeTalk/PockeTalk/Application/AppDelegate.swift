@@ -96,14 +96,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         // }
     }
-    
-    /// Set device language as default language. If device language is different from Japanese or English, English will be set as default language.
+
+    // Set device language as default language
     func setInitialLanguage () {
-        var locale = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
-        if (locale != systemLanguageCodeEN) && (locale != systemLanguageCodeJP) {
-            locale = systemLanguageCodeEN
+        ///Getting the actual device language code. Ex: zh-Hans-BD, es-BD
+        let deviceLanguageCode = NSLocale.preferredLanguages[0]
+        
+        ///Remove "-" and country code. Ex: es-BD to es
+        let deviceLanguageCodeWithoutPunctuations = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
+        
+        
+        var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
+        
+        if deviceLanguageCode.contains(Languages.zhHans.rawValue) {
+            languageCode = Languages.zhHans
+        } else if deviceLanguageCode.contains(Languages.zhHant.rawValue) {
+            languageCode = Languages.zhHant
+        } else if deviceLanguageCode == Languages.ptPT.rawValue {
+            languageCode = Languages.ptPT
         }
-        LanguageManager.shared.setLanguage(language: Languages(rawValue: locale) ?? .en)
+        
+        LanguageManager.shared.setLanguage(language: languageCode)
     }
     
     // Relaunch Application upon deleting all data

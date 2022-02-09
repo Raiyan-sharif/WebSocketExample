@@ -138,7 +138,6 @@ public class LanguageManager {
 
     // set current language
     currentLanguage = language
-
   }
 
   private func getWindowsToChangeFrom(_ windows: [WindowAndTitle]?) -> [WindowAndTitle]? {

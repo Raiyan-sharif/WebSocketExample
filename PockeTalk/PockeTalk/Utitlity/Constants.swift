@@ -28,6 +28,7 @@ let kScreenTransitionTime: Double = 0.5
 let kFadeAnimationTransitionTime: TimeInterval = 0.35
 let viewsAlphaValue: CGFloat = 0.0
 let speechViewTransitionTime = 0.15
+let languageMappingTotalRowCount = 1495
 
 
 //MARK: - Link

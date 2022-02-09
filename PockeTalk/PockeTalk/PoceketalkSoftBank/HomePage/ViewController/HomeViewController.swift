@@ -478,6 +478,7 @@ class HomeViewController: BaseViewController {
         let languageManager = LanguageSelectionManager.shared
         let nativeLangCode = languageManager.bottomLanguage
         let targetLangCode = languageManager.topLanguage
+        PrintUtility.printLog(tag: TAG, text: "NativeLC \(nativeLangCode) TargetLC: \(targetLangCode)")
         let nativeLanguage = languageManager.getLanguageInfoByCode(langCode: nativeLangCode)
         let targetLanguage = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
         PrintUtility.printLog(tag: TAG, text: "UpdateLanguageNames nativeLanguage \(String(describing: nativeLanguage)) targetLanguage \(String(describing: targetLanguage))")

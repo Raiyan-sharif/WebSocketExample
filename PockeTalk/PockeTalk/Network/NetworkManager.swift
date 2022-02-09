@@ -95,7 +95,15 @@ struct NetworkManager:Network {
         }
         
         if let src = LanguageSelectionManager.shared.tempSourceLanguage {
-            srcLang = src
+            if src == SystemLanguageCode.zhHans.rawValue{
+                srcLang = AlternativeSystemLanguageCode.zhCN.rawValue
+            } else if src == SystemLanguageCode.zhHant.rawValue{
+                srcLang = AlternativeSystemLanguageCode.zhTW.rawValue
+            } else if src == SystemLanguageCode.ptPT.rawValue{
+                srcLang = AlternativeSystemLanguageCode.pt.rawValue
+            } else {
+                srcLang = src
+            }
         }
         
         guard let accesKey = UserDefaultsProperty<String>(authentication_key).value, accesKey.count > 0 else {

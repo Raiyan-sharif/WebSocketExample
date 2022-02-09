@@ -2,5 +2,16 @@
 
 <language name="default_languages">
     <item  code="en" native="en" translate="es"/>
+    <item  code="es" native="es" translate="en"/>
+    <item  code="fr" native="fr" translate="en"/>
+    <item  code="zh" native="zh-CN" translate="en"/>
     <item  code="ja" native="ja" translate="en"/>
+    <item  code="ko" native="ko" translate="en"/>
+    <item  code="de" native="de" translate="en"/>
+    <item  code="it" native="it" translate="en"/>
+    <item  code="zh-TW" native="zh-TW" translate="en"/>
+    <item  code="ru" native="ru" translate="en"/>
+    <item  code="ms" native="ms" translate="en"/>
+    <item  code="th" native="th" translate="en"/>
+    <item  code="pt" native="pt" translate="en"/>
 </language>

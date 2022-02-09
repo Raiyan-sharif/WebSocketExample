@@ -33,7 +33,7 @@ class NoInternetAlert: BaseViewController {
             FloatingMikeButton.sharedInstance.isHidden(true)
         }
 
-        self.tableViewHeightConstraint.constant = cellHeight * CGFloat(3)
+        self.tableViewHeightConstraint.constant = cellHeight * CGFloat(4)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
