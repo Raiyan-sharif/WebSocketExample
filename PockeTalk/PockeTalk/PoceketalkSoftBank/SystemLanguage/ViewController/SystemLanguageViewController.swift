@@ -62,8 +62,24 @@ class SystemLanguageViewController: BaseViewController {
         super.viewWillAppear(true)
         self.title = "Language".localiz()
         self.navigationController?.navigationBar.isHidden = false
+
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.getSelectedItemPosition(), section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .none, animated: false)
+        }
     }
-    
+
+    private func getSelectedItemPosition() -> Int{
+        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguage).value
+        for i in 0...languageList.count - 1{
+            let item = languageList[i]
+            if  selectedLangCode == item.lanType{
+                return i
+            }
+        }
+        return 0
+    }
+
     //MARK: - Initial setup
     private func setUpUI() {
         tableView = UITableView(frame: .zero, style: .plain)

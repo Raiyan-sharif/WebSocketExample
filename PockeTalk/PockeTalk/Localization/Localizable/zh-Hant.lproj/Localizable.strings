@@ -100,4 +100,6 @@
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Start using";
-
+"information" = "Information";
+"manual" = "Manual";
+"application_version" = "Application Version";
