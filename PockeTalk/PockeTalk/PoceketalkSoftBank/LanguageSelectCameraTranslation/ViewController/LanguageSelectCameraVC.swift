@@ -106,14 +106,14 @@ class LanguageSelectCameraVC: BaseViewController {
     @IBAction func onLangSelectButton(_ sender: Any) {
         isFirstTimeLoad = false
         updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
+        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
         updateButton(index: 1)
-        tabsViewDidSelectItemAt(position: 1)
+        tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera
     }
     
@@ -157,10 +157,10 @@ class LanguageSelectCameraVC: BaseViewController {
         FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
     
-    private func updateUI(){
+    private func updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: Bool = false){
         self.isFirstTimeLoad = false
         updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
+        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: isProvideSTTFromLanguageSettingCameraTutorialUI)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
@@ -171,7 +171,7 @@ class LanguageSelectCameraVC: BaseViewController {
     @objc func updateCameralanguageSelection (notification:Notification) {
         self.isFirstTimeLoad = false
         updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
+        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
@@ -190,13 +190,18 @@ class LanguageSelectCameraVC: BaseViewController {
         }
     }
     
-    private func tabsViewDidSelectItemAt(position: Int) {
+    private func tabsViewDidSelectItemAt(position: Int, isProvideSTTFromLanguageSettingCameraTutorialUI: Bool) {
         if position != currentIndex {
             if position > currentIndex {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
             } else {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
             } 
+        } else {
+            /// Handle case when tapping on mike button inside language list UI and provide successful STT. In this case both index are equal.
+            if isProvideSTTFromLanguageSettingCameraTutorialUI{
+                self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
+            }
         }
     }
     
@@ -234,7 +239,7 @@ class LanguageSelectCameraVC: BaseViewController {
 extension LanguageSelectCameraVC: LnaguageSettingsTutorialCameraProtocol{
     func updateLanguageByVoice() {
         microphoneIcon(isHidden: false)
-        updateUI()
+        updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: true)
     }
 }
 

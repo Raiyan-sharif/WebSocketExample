@@ -150,14 +150,14 @@ class LangSelectVoiceVC: BaseViewController {
     @IBAction func onLangSelectButton(_ sender: Any) {
         isFirstTimeLoad = false
         updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
+        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
 
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
         updateButton(index: 1)
-        tabsViewDidSelectItemAt(position: 1)
+        tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
     }
 
@@ -263,10 +263,10 @@ class LangSelectVoiceVC: BaseViewController {
         FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
     
-    private func updateUI(){
+    private func updateUI(isProvideSTTFromLanguageSettingTutorialUI: Bool = false){
         self.isFirstTimeLoad = false
         updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0)
+        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingTutorialUI: isProvideSTTFromLanguageSettingTutorialUI)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
     }
 
@@ -300,11 +300,16 @@ class LangSelectVoiceVC: BaseViewController {
         }
     }
 
-    private func tabsViewDidSelectItemAt(position: Int) {
+    private func tabsViewDidSelectItemAt(position: Int, isProvideSTTFromLanguageSettingTutorialUI: Bool) {
         if position != currentIndex {
             if position > currentIndex {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
             } else {
+                self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
+            }
+        } else {
+            /// Handle case when tapping on mike button inside language list UI and provide successful STT. In this case both index are equal.
+            if isProvideSTTFromLanguageSettingTutorialUI{
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
             }
         }
@@ -315,7 +320,7 @@ class LangSelectVoiceVC: BaseViewController {
 extension LangSelectVoiceVC: LanguageSettingsTutorialProtocol{
     func updateLanguageByVoice() {
         microphoneIcon(isHidden: false)
-        updateUI()
+        updateUI(isProvideSTTFromLanguageSettingTutorialUI: true)
     }
 }
 
