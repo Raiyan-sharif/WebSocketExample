@@ -57,6 +57,11 @@ class LanguageSelectCameraVC: BaseViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
     deinit {
         unregisterNotification()
         talkButtonImageView.isHidden = true
@@ -137,6 +142,8 @@ class LanguageSelectCameraVC: BaseViewController {
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
         microphoneIcon(isHidden: true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "Pop from \(ScreenTracker.sharedInstance.screenPurpose) To \(SpeechProcessingScreenOpeningPurpose.CameraScreen)")
+        ScreenTracker.sharedInstance.screenPurpose = .CameraScreen
     }
     
     //MARK: - View Transactions

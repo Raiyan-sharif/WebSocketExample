@@ -41,6 +41,7 @@ class AlertReusableViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        FloatingMikeButton.sharedInstance.isHidden(true)
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
         flagTalkButton = talkButtonImageView.isHidden
         if(!flagTalkButton){
@@ -61,6 +62,7 @@ class AlertReusableViewController: BaseViewController {
         } else {
             PrintUtility.printLog(tag: "AlertReusableViewController", text: "Fall into previous version than iOS 13")
         }
+        FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
     }
 
     func setUpUI () {

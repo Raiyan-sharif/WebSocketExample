@@ -23,6 +23,11 @@ class LanguageHistoryListCameraVC: BaseViewController {
         setupTableView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
     //MARK: - Initial setup
     private func setupLanguageProperty(){
         languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()

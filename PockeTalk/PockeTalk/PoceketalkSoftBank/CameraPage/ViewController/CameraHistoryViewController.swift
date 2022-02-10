@@ -57,6 +57,11 @@ class CameraHistoryViewController: BaseViewController {
         removeFloatingButton()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }

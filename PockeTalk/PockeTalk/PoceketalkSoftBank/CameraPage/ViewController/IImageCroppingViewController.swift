@@ -152,6 +152,7 @@ class ImageCroppingViewController: BaseViewController {
             }
             
         }
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
     
     public override func viewDidLayoutSubviews() {

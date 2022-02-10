@@ -455,7 +455,7 @@ class HomeViewController: BaseViewController {
                             }
                             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                             self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
-                            ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+                            ScreenTracker.sharedInstance.screenPurpose = .CameraScreen
                             self.hideSpeechView()
                             self.isFromCameraPreview = true
                         }

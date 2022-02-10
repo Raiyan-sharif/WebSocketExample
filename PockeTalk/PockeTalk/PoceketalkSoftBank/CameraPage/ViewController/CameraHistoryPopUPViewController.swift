@@ -34,8 +34,12 @@ class CameraHistoryPopUPViewController: BaseViewController {
     var index = Int()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
     
     func setUpViews() {

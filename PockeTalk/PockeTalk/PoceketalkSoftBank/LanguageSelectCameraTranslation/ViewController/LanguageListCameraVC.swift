@@ -32,6 +32,11 @@ class LanguageListCameraVC: BaseViewController {
         self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
     deinit {
         unregisterNotification()
     }

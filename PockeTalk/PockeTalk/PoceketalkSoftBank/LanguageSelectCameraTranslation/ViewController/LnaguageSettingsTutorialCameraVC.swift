@@ -23,6 +23,12 @@ class LnaguageSettingsTutorialCameraVC: BaseViewController {
         registerNotification()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
+    //MARK: - Initial setup
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(updateUI(notification:)), name: .cameraLanguageSettingsListNotification, object: nil)
     }
