@@ -96,7 +96,7 @@ class MAAudioService {
             print(error)
         }
         startingPacketCount = 0
-        maxPacketCount = (16000 * seconds)
+        maxPacketCount = (48000 * seconds)
         buffer = UnsafeMutableRawPointer(malloc(Int(maxPacketCount * bytesPerPacket)))
     }
 
