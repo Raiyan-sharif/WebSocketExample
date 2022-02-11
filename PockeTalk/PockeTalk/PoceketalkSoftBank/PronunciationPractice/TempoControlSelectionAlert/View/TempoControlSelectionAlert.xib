@@ -31,7 +31,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cHS-pp-OCN">
-                    <rect key="frame" x="48" y="320" width="318" height="256"/>
+                    <rect key="frame" x="48" y="318.5" width="318" height="259"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playback Speed" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv4-lc-5jV">
                             <rect key="frame" x="5" y="10" width="308" height="50"/>
@@ -43,8 +43,15 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vox-aH-H8M" userLabel="Horizontal Bar">
+                            <rect key="frame" x="0.0" y="70" width="318" height="3"/>
+                            <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="3" id="1PV-AJ-98W"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="rPi-Js-D8f">
-                            <rect key="frame" x="0.0" y="70" width="318" height="186"/>
+                            <rect key="frame" x="0.0" y="73" width="318" height="186"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sat-mk-I3z">
                                     <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
@@ -118,13 +125,16 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="vox-aH-H8M" firstAttribute="top" secondItem="lv4-lc-5jV" secondAttribute="bottom" constant="10" id="1Bx-gg-Npl"/>
                         <constraint firstItem="rPi-Js-D8f" firstAttribute="leading" secondItem="cHS-pp-OCN" secondAttribute="leading" id="82G-Rd-au1"/>
+                        <constraint firstItem="vox-aH-H8M" firstAttribute="leading" secondItem="cHS-pp-OCN" secondAttribute="leading" id="8ZY-Ab-4Nf"/>
+                        <constraint firstItem="rPi-Js-D8f" firstAttribute="top" secondItem="vox-aH-H8M" secondAttribute="bottom" id="DJR-ni-48N"/>
                         <constraint firstAttribute="trailing" secondItem="lv4-lc-5jV" secondAttribute="trailing" constant="5" id="FjH-39-VKd"/>
                         <constraint firstAttribute="trailing" secondItem="rPi-Js-D8f" secondAttribute="trailing" id="Lav-Fw-SAR"/>
-                        <constraint firstItem="rPi-Js-D8f" firstAttribute="top" secondItem="lv4-lc-5jV" secondAttribute="bottom" constant="10" id="NBQ-lM-p5t"/>
                         <constraint firstAttribute="bottom" secondItem="rPi-Js-D8f" secondAttribute="bottom" id="ZeZ-dE-auT"/>
                         <constraint firstItem="lv4-lc-5jV" firstAttribute="top" secondItem="cHS-pp-OCN" secondAttribute="top" constant="10" id="rE5-ia-KD4"/>
                         <constraint firstItem="lv4-lc-5jV" firstAttribute="leading" secondItem="cHS-pp-OCN" secondAttribute="leading" constant="5" id="sQR-q8-VEu"/>
+                        <constraint firstAttribute="trailing" secondItem="vox-aH-H8M" secondAttribute="trailing" id="xaM-Hc-1bc"/>
                     </constraints>
                 </view>
             </subviews>
@@ -142,6 +152,9 @@
         <image name="ic_check_circle_white_selected" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

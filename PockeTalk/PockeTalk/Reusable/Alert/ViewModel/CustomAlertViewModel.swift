@@ -38,7 +38,7 @@ class CustomAlertViewModel:BaseModel {
         let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
         //alertVC.alertTitle = "title"
         alertVC.alertMessage = message
-        alertVC.alertButton = "OK"
+        alertVC.alertButton = "OK".localiz()
         alertVC.hideCancelButton = true
         return alertVC
     }
