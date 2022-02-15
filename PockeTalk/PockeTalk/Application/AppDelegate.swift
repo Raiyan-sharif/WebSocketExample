@@ -136,6 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         SocketManager.sharedInstance.disconnect()
+        ActivityIndicator.sharedInstance.hide()
     }
     
     func executeLicenseTokenRefreshFunctionality() {

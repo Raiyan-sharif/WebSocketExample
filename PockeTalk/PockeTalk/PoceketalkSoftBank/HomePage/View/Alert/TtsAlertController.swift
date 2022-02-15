@@ -73,7 +73,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     var wkView:WKWebView!
     var ttsResponsiveView = TTSResponsiveView()
     var isFromHistory : Bool = false
-    private var spinnerView : SpinnerView!
     
     var voice : String = ""
     var rate : String = "1.0"
@@ -242,7 +241,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
             self.bottomView.isHidden = true
         }
         if hideMenuButton == true{
-            //updateUI()
             updateUIForFavourite ()
         }else{
             self.containerView.addGestureRecognizer(longTapGesture!)
@@ -251,20 +249,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
             self.talkButton?.isHidden = true
         }
         self.updateBackgroundImage(topSelected: chatItemModel?.chatItem?.chatIsTop ?? 0)
-        addSpinner()
-        
         bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
-    }
-    
-    private func addSpinner(){
-        spinnerView = SpinnerView();
-        self.view.addSubview(spinnerView)
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.isHidden = true
     }
     
     func getTtsValue () {
@@ -559,7 +544,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
                 chatEntity.id = row
                 self.chatItemModel?.chatItem = chatEntity
                 self.getTtsValue()
-                self.spinnerView.isHidden = true
+                ActivityIndicator.sharedInstance.hide()
                 self.updateUI()
                 self.ttsAlertControllerDelegate?.itemAdded(HistoryChatItemModel(chatItem: chatEntity, idxPath: nil))
                 
@@ -579,7 +564,7 @@ extension TtsAlertController: Pronunciation{
 extension TtsAlertController : RetranslationDelegate {
     func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
-            spinnerView.isHidden = false
+            ActivityIndicator.sharedInstance.show()
             self.isReverse = false
             socketManager.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
@@ -626,8 +611,6 @@ extension TtsAlertController : AlertReusableDelegate {
         
         add(asChildViewController: vc, containerView:self.view, animation: nil)
         ScreenTracker.sharedInstance.screenPurpose = ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren ? .HistroyPronunctiation :.PronunciationPractice
-        //self.present(vc, animated: true, completion: nil)
-        
     }
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?) {
@@ -645,7 +628,7 @@ extension TtsAlertController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        spinnerView.isHidden = false
+        ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
             self.isReverse = true
             socketManager.socketManagerDelegate = self
@@ -663,8 +646,8 @@ extension TtsAlertController : AlertReusableDelegate {
                 
             }
         }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.spinnerView.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                ActivityIndicator.sharedInstance.hide()
                 GlobalMethod.showNoInternetAlert()
             }
         }
@@ -675,10 +658,10 @@ extension TtsAlertController : AlertReusableDelegate {
             self?.timeInterval -= 1
             if self?.timeInterval == 0 {
                 timer.invalidate()
-                self?.spinnerView.isHidden = true
+                ActivityIndicator.sharedInstance.hide()
                 self?.timeInterval = 30
             } else if let seconds = self?.timeInterval {
-                //PrintUtility.printLog(tag: "Timer On TTS Alert : ", text: "\(seconds)")
+                PrintUtility.printLog(tag: self?.TAG ?? "", text: "Timer on TTSAlert\(seconds)")
             }
         }
     }

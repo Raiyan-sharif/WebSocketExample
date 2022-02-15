@@ -217,6 +217,7 @@ let imeiNumber = getIMEINumber("ImeiNumber")
 //View Tag
 let floatingMikeButtonTag = 1101
 let ttsAlertViewTag = 11223
+let activityIndictorViewTag = 1201
 
 // TTS API
 let licenseToken = "license_token"
@@ -240,6 +241,11 @@ let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
 let ERR_API_FAILED = "ERR_API_FAILED"
 let BURMESE_LANG_CODE = "my"
+
+// Activity Indicator
+let loaderWidth: CGFloat = 50.0
+let loaderPadding: CGFloat = 80.0
+let loaderLineWidth: CGFloat = 10.0
 
 ///Set base url depending of different build configuration
 func infoForKey(_ key: String) -> String {

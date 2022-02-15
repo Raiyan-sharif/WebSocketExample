@@ -149,6 +149,10 @@
 		87F832BC2759DC4A007329BA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F832BB2759DC4A007329BA /* AudioPlayer.swift */; };
 		890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */; };
 		890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */; };
+		8913EDE127C4BD34003452C2 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE027C4BD34003452C2 /* ActivityIndicatorView.swift */; };
+		8913EDE327C4BD5E003452C2 /* ActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE227C4BD5E003452C2 /* ActivityIndicatorShape.swift */; };
+		8913EDE527C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE427C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift */; };
+		8913EDE727C4BDB9003452C2 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE627C4BDB9003452C2 /* ActivityIndicator.swift */; };
 		8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */; };
 		8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */; };
 		8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */; };
@@ -185,7 +189,7 @@
 		89495B3E26F0AA2600CEA19D /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3826F0AA2600CEA19D /* Animation.swift */; };
 		89495B3F26F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3926F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift */; };
 		89495B4026F0AA2600CEA19D /* AnimatedSLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */; };
-		89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */; };
+		89495B4126F0AA2600CEA19D /* ActivityIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B3B26F0AA2600CEA19D /* ActivityIndicators.swift */; };
 		89495B4326F0AA5800CEA19D /* URLResponse+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */; };
 		89495B4826F0AAA500CEA19D /* URLRequest+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4526F0AAA500CEA19D /* URLRequest+Request.swift */; };
 		89495B4926F0AAA500CEA19D /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89495B4626F0AAA500CEA19D /* WebService.swift */; };
@@ -443,6 +447,10 @@
 		87F832BB2759DC4A007329BA /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LnaguageSettingsTutorialCameraVC.swift; sourceTree = "<group>"; };
 		890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		8913EDE027C4BD34003452C2 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
+		8913EDE227C4BD5E003452C2 /* ActivityIndicatorShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorShape.swift; sourceTree = "<group>"; };
+		8913EDE427C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorAnimationCircleStrokeSpin.swift; sourceTree = "<group>"; };
+		8913EDE627C4BDB9003452C2 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
@@ -479,7 +487,7 @@
 		89495B3826F0AA2600CEA19D /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		89495B3926F0AA2600CEA19D /* ColorProgressStrokeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorProgressStrokeAnimation.swift; sourceTree = "<group>"; };
 		89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSLayer.swift; sourceTree = "<group>"; };
-		89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		89495B3B26F0AA2600CEA19D /* ActivityIndicators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicators.swift; sourceTree = "<group>"; };
 		89495B4226F0AA5800CEA19D /* URLResponse+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLResponse+Extension.swift"; sourceTree = "<group>"; };
 		89495B4526F0AAA500CEA19D /* URLRequest+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Request.swift"; sourceTree = "<group>"; };
 		89495B4626F0AAA500CEA19D /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
@@ -1343,6 +1351,7 @@
 		8782DEFD26E099A7003A1681 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				8913EDDF27C4BCF5003452C2 /* ActivityIndicator */,
 				89495B4426F0AA8600CEA19D /* WebService */,
 				89495B3526F0AA1A00CEA19D /* Loader */,
 				89495B3226F0A9E100CEA19D /* Delegates */,
@@ -1414,6 +1423,17 @@
 				8979064126FC876000A74C1B /* HistoryChatItemModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8913EDDF27C4BCF5003452C2 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				8913EDE627C4BDB9003452C2 /* ActivityIndicator.swift */,
+				8913EDE027C4BD34003452C2 /* ActivityIndicatorView.swift */,
+				8913EDE227C4BD5E003452C2 /* ActivityIndicatorShape.swift */,
+				8913EDE427C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift */,
+			);
+			path = ActivityIndicator;
 			sourceTree = "<group>";
 		};
 		8915C1DD26F9D7740091BF8B /* Favourite */ = {
@@ -1532,7 +1552,7 @@
 		89495B3526F0AA1A00CEA19D /* Loader */ = {
 			isa = PBXGroup;
 			children = (
-				89495B3B26F0AA2600CEA19D /* ActivityIndicator.swift */,
+				89495B3B26F0AA2600CEA19D /* ActivityIndicators.swift */,
 				89495B3A26F0AA2600CEA19D /* AnimatedSLayer.swift */,
 				89495B3626F0AA2500CEA19D /* CustomLoaderProgressView.swift */,
 				89495B3726F0AA2600CEA19D /* RotationProgress.swift */,
@@ -2168,6 +2188,7 @@
 				4AE97AE226E8E294007344FC /* LanguageMapDBModel.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
 				89CE6AC626FDC29E000ECF17 /* PhotoCaptureProcessor.swift in Sources */,
+				8913EDE527C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift in Sources */,
 				8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */,
 				89C0F7C926F1CDDD000CD5FC /* URL+Urls.swift in Sources */,
 				967B746226FAD9DA001B1985 /* CustomAlertDailogViewController.swift in Sources */,
@@ -2219,6 +2240,7 @@
 				89E0F2AF277AD5430031782D /* LangDetection.swift in Sources */,
 				4AE97AE926E8E303007344FC /* SQLiteDataStore.swift in Sources */,
 				4A68C52A270440A0007DB329 /* ConfiguraitonFactory.swift in Sources */,
+				8913EDE127C4BD34003452C2 /* ActivityIndicatorView.swift in Sources */,
 				5028D55726E29FB7002A5250 /* LanguageListVC.swift in Sources */,
 				89495B3D26F0AA2600CEA19D /* RotationProgress.swift in Sources */,
 				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
@@ -2265,7 +2287,8 @@
 				873F8C4926F0760A00CD5F9B /* FontSelectionCell.swift in Sources */,
 				4A40AC9426F89BC800019A5B /* BaseEntity.swift in Sources */,
 				8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */,
-				89495B4126F0AA2600CEA19D /* ActivityIndicator.swift in Sources */,
+				8913EDE327C4BD5E003452C2 /* ActivityIndicatorShape.swift in Sources */,
+				89495B4126F0AA2600CEA19D /* ActivityIndicators.swift in Sources */,
 				89495B2C26F0A92300CEA19D /* VisionResponseJSONModel.swift in Sources */,
 				89396B272704155B00D77760 /* TTTSN.swift in Sources */,
 				8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */,
@@ -2287,6 +2310,7 @@
 				89495B4826F0AAA500CEA19D /* URLRequest+Request.swift in Sources */,
 				693D72F626E890F700F57533 /* TtsAlertController.swift in Sources */,
 				8946FA7427845C8100DC6B39 /* PaidPlanViewController.swift in Sources */,
+				8913EDE727C4BDB9003452C2 /* ActivityIndicator.swift in Sources */,
 				8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */,
 				87B56E1F26EB302C00BF613B /* HistoryModel.swift in Sources */,
 				89C0F7DF26F1EA28000CD5FC /* CameraHistoryCollectionViewCell.swift in Sources */,
@@ -2541,9 +2565,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2554,7 +2576,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

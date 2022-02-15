@@ -122,6 +122,8 @@ class SpeechProcessingViewController: BaseViewController{
     deinit {
         connectivity.cancel()
         NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     private weak var homeVC:HomeViewController?  {
@@ -174,12 +176,13 @@ class SpeechProcessingViewController: BaseViewController{
     
     private func registerForNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [weak self](notification) in
-            guard let `self` = self else { return }
-            PrintUtility.printLog(tag: "Foreground", text: "last Background")
-            self.service?.timerInvalidate()
-            self.removeAnimation()
+        
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
     }
     
@@ -272,6 +275,7 @@ class SpeechProcessingViewController: BaseViewController{
                         if runCount == self.waitngISFinalSecond {
                             innerTimer.invalidate()
                             if !self.isFinalProvided {
+                                PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
                                 self.loaderInvisible()
                                 self.removeAnimation()
                                 //Show microphone button when get STT text from server
@@ -280,7 +284,8 @@ class SpeechProcessingViewController: BaseViewController{
                         }
                     }
                 }
-            } else{
+            }else{
+                PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop Didnot GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
                 self.loaderInvisible()
                 self.removeAnimation()
                 //Show microphone button when failed to get STT text from server
@@ -294,7 +299,8 @@ class SpeechProcessingViewController: BaseViewController{
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
             SocketManager.sharedInstance.disconnect()
-            self.spinnerView.isHidden = true
+            ActivityIndicator.sharedInstance.hide()
+            PrintUtility.printLog(tag: self.TAG, text: "loaderInvisible")
             self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
             self.homeVC?.hideSpeechView()
             self.isSSTavailable = false
@@ -361,6 +367,7 @@ class SpeechProcessingViewController: BaseViewController{
         let controller = storyboard.instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
         controller.delegate = self
         self.homeVC!.add(asChildViewController: controller, containerView: self.homeVC!.homeContainerView)
+        PrintUtility.printLog(tag: TAG, text: "Showing Tutorial")
         self.loaderInvisible(isFromTutorial: true)
     }
     
@@ -371,7 +378,8 @@ class SpeechProcessingViewController: BaseViewController{
             if isFinal{
                 self.isFinalProvided = true
                 self.timer?.invalidate()
-                self.spinnerView.removeFromSuperview()
+                ActivityIndicator.sharedInstance.hide()
+                PrintUtility.printLog(tag: self.TAG, text: "isFinal: \(self.isFinalProvided)")
                 self.service?.stopRecord()
                 self.service?.timerInvalidate()
                 self.isSSTavailable = false
@@ -522,7 +530,18 @@ class SpeechProcessingViewController: BaseViewController{
         }
     }
     
+    @objc private func appDidEnterBackground() {
+        PrintUtility.printLog(tag: TAG, text: "Did enter background")
+        //TODO: Comment out this code because it has some impact on the STT process in background
+        /*
+        self.service?.timerInvalidate()
+        self.removeAnimation()
+         */
+        ActivityIndicator.sharedInstance.hide()
+    }
+    
     @objc private func appBecomeActive() {
+        PrintUtility.printLog(tag: TAG, text: "Become Active")
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
         self.loaderInvisible()
@@ -576,7 +595,8 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
 //MARK: - HomeVCDelegate
 extension SpeechProcessingViewController: HomeVCDelegate{
     func startRecord() {
-        self.spinnerView.isHidden = true
+        PrintUtility.printLog(tag: TAG, text: "Start Recording")
+        ActivityIndicator.sharedInstance.hide()
         isFinalProvided = false
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
@@ -601,7 +621,10 @@ extension SpeechProcessingViewController: HomeVCDelegate{
     }
     
     func stopRecord() {
-        self.spinnerView.isHidden = false
+        PrintUtility.printLog(tag: TAG, text: "Stop Recording")
+        if !self.isFinalProvided {
+            ActivityIndicator.sharedInstance.show(hasBackground: false)
+        }
         service?.stopRecord()
         service?.timerInvalidate()
         if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{

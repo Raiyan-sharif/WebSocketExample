@@ -130,6 +130,11 @@ extension UIColor {
         return UIColor.init(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.8)
     }
 
+    // Loader background
+    class func _loaderBackgroundColor() -> UIColor {
+        return UIColor.init(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.5)
+    }
+
     // Official Apple placeholder gray
     static var officialApplePlaceholderGray: UIColor {
         return UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)

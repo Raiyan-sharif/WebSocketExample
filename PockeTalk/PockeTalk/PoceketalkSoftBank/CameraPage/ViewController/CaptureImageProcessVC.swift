@@ -20,7 +20,6 @@ class CaptureImageProcessVC: BaseViewController {
     
     private let iTTServerViewModel = ITTServerViewModel()
     private let cameraHistoryViewModel = CameraHistoryViewModel()
-    private let activity = ActivityIndicator()
     var socketManager = SocketManager.sharedInstance
     
     var imageView = UIImageView()
@@ -133,11 +132,11 @@ class CaptureImageProcessVC: BaseViewController {
         
         if ((modeSwitchState == false) &&  (isTransLateSuccessful == false)) {
             if isLoading == false {} else {
-                activity.hideLoading()
+                ActivityIndicator.sharedInstance.hide()
                 startConfirmController()
             }
         } else if ((modeSwitchState == true) && (isTransLateSuccessful == false))  {
-            activity.hideLoading()
+            ActivityIndicator.sharedInstance.hide()
             //            let id = try? CameraHistoryDBModel().getMaxId()
             //            if !fromHistoryVC {
             //                self.iTTServerViewModel.historyID = Int64(id!)
@@ -843,7 +842,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
     
     func showLoader() {
         DispatchQueue.main.async { [self] in
-            activity.showLoading(view: self.view)
+            ActivityIndicator.sharedInstance.show()
             isClickable = false
             isLoading = true
             backButton.isUserInteractionEnabled = false
@@ -852,7 +851,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
     
     func hideLoader() {
         socketManager.disconnect()
-        activity.hideLoading()
+        ActivityIndicator.sharedInstance.hide()
         isClickable = true
         isLoading = false
         backButton.isUserInteractionEnabled = true

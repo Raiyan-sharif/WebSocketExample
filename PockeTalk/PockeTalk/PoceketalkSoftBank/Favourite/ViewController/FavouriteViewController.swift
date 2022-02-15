@@ -20,7 +20,6 @@ class FavouriteViewController: BaseViewController {
     let transionDuration : CGFloat = 0.8
     let transformation : CGFloat = 0.6
     let buttonWidth : CGFloat = 100
-    private var spinnerView : SpinnerView!
     var timer: Timer? = nil
     var timeInterval: TimeInterval = 30
 
@@ -80,8 +79,6 @@ class FavouriteViewController: BaseViewController {
     
     private func setUpCollectionView(){
         self.view.addSubview(collectionView)
-        addSpinner()
-
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
@@ -106,17 +103,6 @@ class FavouriteViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             self?.collectionView.alpha = 1.0
         }
-    }
-    
-    private func addSpinner(){
-        spinnerView = SpinnerView();
-        self.view.addSubview(spinnerView)
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.isHidden = true
     }
     
     //MARK: - Bind Data
@@ -158,7 +144,8 @@ class FavouriteViewController: BaseViewController {
                 let row = self.favouriteViewModel.saveChatItem(chatItem: chatEntity)
                 chatEntity.id = row
                 self.selectedChatItemModel?.chatItem = chatEntity
-                self.spinnerView.isHidden = true
+
+                ActivityIndicator.sharedInstance.hide()
                 self.showTTSScreen( chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
             }
         }
@@ -166,9 +153,7 @@ class FavouriteViewController: BaseViewController {
     
     //MARK: - IBActions
     @objc private func actionBack() {
-        if self.spinnerView.isHidden == false {
-            self.spinnerView.isHidden = true
-        }
+        ActivityIndicator.sharedInstance.hide()
         dismissFavourite(byBackBtnPress: true)
     }
 
@@ -360,7 +345,7 @@ extension FavouriteViewController:FavouriteLayoutDelegate{
 extension FavouriteViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
-            spinnerView.isHidden = false
+            ActivityIndicator.sharedInstance.show()
             let chatItem = selectedChatItemModel?.chatItem!
             self.isReverse = false
             let nativeText = chatItem!.textNative
@@ -418,10 +403,8 @@ extension FavouriteViewController : AlertReusableDelegate {
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?) {
-        addSpinner()
-        self.spinnerView.isHidden = false
+        ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
-            spinnerView.isHidden = false
             selectedChatItemModel = chatItemModel
             self.isReverse = true
             let nativeText = selectedChatItemModel?.chatItem?.textTranslated
@@ -435,8 +418,8 @@ extension FavouriteViewController : AlertReusableDelegate {
                 self?.startCountdown()
             }
         }else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.spinnerView.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                ActivityIndicator.sharedInstance.hide()
                 GlobalMethod.showNoInternetAlert()
             }
         }
@@ -447,10 +430,10 @@ extension FavouriteViewController : AlertReusableDelegate {
             self?.timeInterval -= 1
             if self?.timeInterval == 0 {
                 timer.invalidate()
-                self?.spinnerView.isHidden = true
+                ActivityIndicator.sharedInstance.hide()
                 self?.timeInterval = 30
             } else if let seconds = self?.timeInterval {
-                //PrintUtility.printLog(tag: "Timer On Favorite : ", text: "\(seconds)")
+                PrintUtility.printLog(tag: self?.TAG ?? "", text: "Timer on Favourite: \(seconds)")
             }
         }
     }

@@ -20,6 +20,7 @@ class HistoryCardViewController: BaseViewController {
     var historyViewModel: HistoryViewModel!
     var selectedChatItemModel : HistoryChatItemModel?
     private var speechProcessingVM : SpeechProcessingViewModeling!
+    
     var animationDelay = 0.2
     var timer: Timer? = nil
     var timeInterval: TimeInterval = 30
@@ -27,7 +28,6 @@ class HistoryCardViewController: BaseViewController {
     let buttonWidth : CGFloat = 100
     var deletedCellHeight = CGFloat()
     
-    private var spinnerView : SpinnerView!
     weak var delegate: HistoryCardViewControllerDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
     
@@ -87,7 +87,6 @@ class HistoryCardViewController: BaseViewController {
     //MARK:- Initial setup
     private func setUpUIView(){
         self.view.addSubview(collectionView)
-        addSpinner()
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -106,18 +105,6 @@ class HistoryCardViewController: BaseViewController {
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 5).isActive = true
         imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: HomeViewController.homeVCBottomViewHeight + 5).isActive = true
-    }
-    
-    private func addSpinner(){
-        spinnerView = SpinnerView();
-        self.view.addSubview(spinnerView)
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.isHidden = true
-        
     }
     
     private func showCollectionView(){
@@ -177,7 +164,7 @@ class HistoryCardViewController: BaseViewController {
                 chatEntity.id = row
                 self.selectedChatItemModel?.chatItem = chatEntity
                 
-                self.spinnerView.isHidden = true
+                ActivityIndicator.sharedInstance.hide()
                 self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatEntity, idxPath: nil), hideMenuButton: true, hideBottmSection: true, saveDataToDB: false, fromHistory: true, ttsAlertControllerDelegate: self, isRecreation: false)
                 self.historyViewModel.addItem(chatEntity)
                 self.collectionView.reloadData()
@@ -251,18 +238,14 @@ class HistoryCardViewController: BaseViewController {
         delegate?.dissmissHistory(shouldUpdateViewAlpha: shouldUpdateViewAlpha, isFromHistoryScene: true)
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         NotificationCenter.default.post(name: .bottmViewGestureNotification, object: nil)
-        if self.spinnerView.isHidden == false {
-            self.spinnerView.isHidden = true
-        }
+        ActivityIndicator.sharedInstance.hide()
     }
     
     //MARK: - IBActions
     @objc private func actionBack() {
         UIView.animate(withDuration: kFadeAnimationTransitionTime, delay: animationDelay, options: .curveEaseOut) {
             self.view.alpha = viewsAlphaValue
-            if self.spinnerView.isHidden == false {
-                self.spinnerView.isHidden = true
-            }
+            ActivityIndicator.sharedInstance.hide()
         } completion: { _ in
             self.dismissHistory(shouldUpdateViewAlpha: true)
         }
@@ -316,7 +299,6 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
         cell.toLabel.text = item.textNative
         cell.deleteLabel.text = "delete_from_fv".localiz()
         cell.favouriteLabel.text = "Favorite".localiz()
-        //let historyModel = historyViewModel.items.value[indexPath.item] as! ChatEntity
         
         if(indexPath.row == historyViewModel.items.value.count - 1){
             cell.bottomStackViewOfLabel.constant = 25
@@ -444,7 +426,7 @@ extension HistoryCardViewController: HistoryLayoutDelegate {
 extension HistoryCardViewController : RetranslationDelegate{
     func showRetranslation(selectedLanguage: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose) {
         if Reachability.isConnectedToNetwork() {
-            spinnerView.isHidden = false
+            ActivityIndicator.sharedInstance.show()
             let chatItem = selectedChatItemModel?.chatItem!
             self.isReverse = false
             SocketManager.sharedInstance.socketManagerDelegate = self
@@ -519,8 +501,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
     }
     
     func transitionFromReverse(chatItemModel: HistoryChatItemModel?){
-        addSpinner()
-        self.spinnerView.isHidden = false
+        ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
             SocketManager.sharedInstance.socketManagerDelegate = self
             SocketManager.sharedInstance.connect()
@@ -537,8 +518,8 @@ extension HistoryCardViewController : AlertReusableDelegate{
                 self?.startCountdown()
             }
         }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.spinnerView.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                ActivityIndicator.sharedInstance.hide()
                 GlobalMethod.showNoInternetAlert()
             }
         }
@@ -549,10 +530,10 @@ extension HistoryCardViewController : AlertReusableDelegate{
             self?.timeInterval -= 1
             if self?.timeInterval == 0 {
                 timer.invalidate()
-                self?.spinnerView.isHidden = true
+                ActivityIndicator.sharedInstance.hide()
                 self?.timeInterval = 30
             } else if let seconds = self?.timeInterval {
-                //PrintUtility.printLog(tag: "Timer On Favorite : ", text: "\(seconds)")
+                PrintUtility.printLog(tag: self?.TAG ?? "", text: "Timer on History: \(seconds)")
             }
         }
     }
