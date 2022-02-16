@@ -16,7 +16,7 @@ public class LanguageSelectionManager{
     private let TAG = "\(LanguageSelectionManager.self)"
     var languageItems = [LanguageItem]()
     private let mDefaultLanguageFile = "default_languages"
-    
+
     public var bottomLanguage: String {
       get {
         guard let langCode = UserDefaults.standard.string(forKey: nativeLanguageCode) else {
@@ -77,6 +77,15 @@ public class LanguageSelectionManager{
       }
     }
 
+    public var directionisUp: Bool {
+      get {
+        return UserDefaults.standard.bool(forKey: directionIsUp)
+      }
+      set {
+        UserDefaults.standard.set(newValue, forKey: directionIsUp)
+      }
+    }
+
     func  getLanguageInfoByCode(langCode: String) -> LanguageItem? {
         for item in languageItems{
             if(langCode == item.code){
@@ -98,16 +107,16 @@ public class LanguageSelectionManager{
     public func loadLanguageListData(){
         let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         let convertedSystemlangCode = GlobalMethod.getAlternativeSystemLanguageCode(of: sysLangCode)
-        
+
         let mLanguageFile = "\(languageConversationFileNamePrefix)\(convertedSystemlangCode)"
         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) getdata for \(mLanguageFile)")
-        
+
         if let path = Bundle.main.path(forResource: mLanguageFile, ofType: "xml") {
             do {
                 let contents = try String(contentsOfFile: path)
                 let xml =  try XML.parse(contents)
                 languageItems.removeAll()
-                
+
                 for item in xml["language", "item"] {
                     let attributes = item.attributes
                     languageItems.append(LanguageItem(name: attributes["name"] ?? "",
@@ -129,27 +138,27 @@ public class LanguageSelectionManager{
         _ = insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: nativeLangItem?.code, cameraOrVoice: LanguageType.voice.rawValue))
         _ = insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: targetLangItem?.code, cameraOrVoice: LanguageType.voice.rawValue))
     }
-    
+
     public func setDefaultLanguageSettings(systemLanguageCode: String){
         PrintUtility.printLog(tag: TAG, text: "setDefaultLanguageSettings for \(mDefaultLanguageFile)  systemlang \(systemLanguageCode)")
         if let path = Bundle.main.path(forResource: mDefaultLanguageFile, ofType: "xml") {
             do {
                 let contents = try String(contentsOfFile: path)
                 let xml =  try XML.parse(contents)
-                
+
                 for item in xml["language", "item"] {
                     let attributes = item.attributes
                     PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(attributes.description)")
                     if systemLanguageCode == attributes["code"]{
                         PrintUtility.printLog(tag: TAG,text: "\(LanguageSelectionManager.self) lang default data \(String(describing: attributes["native"])) \(attributes["translate"] ?? "")")
-                        
+
                         if LanguageSelectionManager.shared.isBottomLanguageChanged == false {
                             LanguageSelectionManager.shared.bottomLanguage = attributes["native"]!
                         }
                         if LanguageSelectionManager.shared.isTopLanguageChanged == false {
                             LanguageSelectionManager.shared.topLanguage = attributes["translate"]!
                         }
-                        
+
                         insertDefaultDataToDb(attributes)
                         return
                     }
@@ -164,7 +173,7 @@ public class LanguageSelectionManager{
     func setLanguageAccordingToSystemLanguage(){
         let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
         PrintUtility.printLog(tag: TAG,text: "\(LanguageManager.self) sysLangCode \(sysLangCode)")
-        
+
         let convertedSystemlangCode = GlobalMethod.getAlternativeSystemLanguageCode(of: sysLangCode)
         LanguageSelectionManager.shared.setDefaultLanguageSettings(systemLanguageCode: convertedSystemlangCode)
     }
@@ -198,14 +207,14 @@ public class LanguageSelectionManager{
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
         var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        
+
         if systemLanguage == SystemLanguageCode.ru.rawValue{
             stringFromSpeech = stringFromSpeech.capitalizingFirstLetter()
         }
-        
+
         let codeFromLanguageMap = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: systemLanguage, text: stringFromSpeech) as? LanguageMapEntity
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates stringFromSpeech \(stringFromSpeech) codeFromLanguageMap = \(String(describing: codeFromLanguageMap?.textCodeTr))")
-        
+
         if let langCode = codeFromLanguageMap?.textCodeTr{
             let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
             if langItem != nil {
