@@ -46,7 +46,7 @@ class SocketManager: NSObject {
 
         //request.setValue("false", forHTTPHeaderField: "X-Auto-Detect")
         //request.setValue("permessage-deflate", forHTTPHeaderField: "Sec-WebSocket-Extensions")
-        request.addValue(AUDIO_STREAM_URL_ORIGIN, forHTTPHeaderField: origin)
+        request.addValue(base_url, forHTTPHeaderField: origin)
         socket = WebSocket(request: request)
         socket.delegate = self
         //socket.connect()

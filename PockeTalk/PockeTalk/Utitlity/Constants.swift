@@ -174,8 +174,9 @@ let DEFAULT_FONT_MULTIPLYER: CGFloat = 0.1
 let FONT_SIZE_KEY: String = "FontSize"
 
 // Socket url connection
-let AUDIO_STREAM_URL = "wss://test.pt-v.com/handsfree/ws/pub/stream"
-let AUDIO_STREAM_URL_ORIGIN = "https://test.pt-v.com"
+let AUDIO_STREAM_URL =  getAudioStremUrl("AudioStremBaseUrl") + "/handsfree/ws/pub/stream"
+//"wss://test.pt-v.com/handsfree/ws/pub/stream"
+//let AUDIO_STREAM_URL_ORIGIN = "https://test.pt-v.com"
 let STREAM_ID_ISSURANCE_URL = "https://test.pt-v.com/handsfree/api/pub/create"
 let access_token_key = "X-Access-Key"
 let origin = "Origin"
@@ -187,14 +188,15 @@ let access_key = "access_key"
 let authentication_key = "authentication_key"
 let license_token = "license_token"
 let response_ok = "OK"
-let base_url = "https://test.pt-v.com"
-let base_url2 = "https://test2.pt-v.com"
+let base_url_languageChange = "https://test.pt-v.com"
+//let base_url2 = "https://test2.pt-v.com"
+let base_url = infoForKey("BaseUrl")
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
 let tts_url = "/handsfree/api/pub/tts"
 let liscense_token_url = "/handsfree/api/pub/token"
-let image_annotate_url = "https://test2.pt-v.com/handsfree/api/pub/images_annotate"
-let detect_lang_url = "https://test2.pt-v.com/handsfree/api/pub/detect_lang"
+let image_annotate_url = "/handsfree/api/pub/images_annotate"
+let detect_lang_url = "/handsfree/api/pub/detect_lang"
 
 
 
@@ -210,6 +212,7 @@ let KEngineSeparator = ","
 let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
 let imeiCode = "862793051345020"
+let imeiNumber = getIMEINumber("ImeiNumber")
 
 //View Tag
 let floatingMikeButtonTag = 1101
@@ -237,3 +240,21 @@ let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
 let ERR_API_FAILED = "ERR_API_FAILED"
 let BURMESE_LANG_CODE = "my"
+
+///Set base url depending of different build configuration
+func infoForKey(_ key: String) -> String {
+    return (Bundle.main.infoDictionary?[key] as? String)?
+        .replacingOccurrences(of: "\\", with: "") ?? "https://test.pt-v.com"
+}
+
+///Set IMEI number based on different build configuration
+func getIMEINumber(_ key: String) -> String {
+    return (Bundle.main.infoDictionary?[key] as? String)
+        ??  imeiCode
+}
+
+///get Audio Stream Url based on different build configuration
+func getAudioStremUrl(_ key: String) -> String {
+    return (Bundle.main.infoDictionary?[key] as? String)?
+        .replacingOccurrences(of: "\\", with: "") ?? "wss://test.pt-v.com"
+}

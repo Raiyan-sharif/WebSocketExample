@@ -17,6 +17,14 @@ class GlobalMethod {
     // Fonts
     static let mainFont: UIFont = UIFont.systemFont(ofSize: 15.0 * GlobalMethod.displayScale)
 
+    static var isAppInProduction:Bool {
+        #if TOKOYOSERVER_PRODUCTION || MULTISERVER_PRODUCTION
+        return true
+        #else
+        return false
+        #endif
+
+    }
     // Get top padding
     static func getTopPadding() -> CGFloat {
         var topPadding: CGFloat = 20.0
@@ -95,8 +103,7 @@ class GlobalMethod {
 
     static func getCurrentTimeStamp(with offset:Int) -> Int {
         let time = Date().timeIntervalSince1970
-        print("Time : \(Int(time))")
-
+        PrintUtility.printLog(tag: "Time", text: "\(Int(time))")
         return Int(time)
 
     }

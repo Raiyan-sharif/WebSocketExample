@@ -93,7 +93,7 @@ class MAAudioService {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker,.interruptSpokenAudioAndMixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print(error)
+            PrintUtility.printLog(tag: "AUDIO_ERROR", text: error.localizedDescription)
         }
         startingPacketCount = 0
         maxPacketCount = (48000 * seconds)
@@ -272,10 +272,10 @@ class MAAudioService {
 
     func setTimer(){
         var runCount = 0
-        timer =  Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-            print("Timer fired!")
+        timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            guard let `self` = self else { return }
             runCount += 1
-        self.setDecibel()
+            self.setDecibel()
             if runCount == 30 {
                 timer.invalidate()
             }

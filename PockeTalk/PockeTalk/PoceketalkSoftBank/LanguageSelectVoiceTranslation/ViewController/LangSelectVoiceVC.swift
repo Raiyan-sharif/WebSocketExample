@@ -127,7 +127,7 @@ class LangSelectVoiceVC: BaseViewController {
     @objc func updatePointLanguageSelection(notification: Notification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let point = dict["point"] as? CGPoint{
-                print(point)
+                PrintUtility.printLog(tag: "Point", text: "\(point)")
                 if(ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice){
                     let gap = SIZE_HEIGHT - langugeListVC.langListTableView.bounds.height
                     let newPoint = CGPoint(x: point.x,y: point.y - gap + langugeListVC.langListTableView.contentOffset.y)

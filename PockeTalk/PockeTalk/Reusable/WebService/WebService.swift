@@ -52,17 +52,15 @@ class WebService {
             if let statusCode = reponse?.getStatusCode(){
                 
                 if let status = HTTPStatusCodes.init(rawValue: statusCode){
-                    print("statusCode of \(resource.url):",statusCode)
-//                    print("resource.authorization : \(resource.authorization)")
+                    PrintUtility.printLog(tag: "Status", text: status.localizedDescription)
                     do {
                         
 //                        if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-//                            print("json data: \(json)")
+//
 //                        }
                     }
                     catch let error {
-                        print("error in catch block")
-                        print(error)
+                        PrintUtility.printLog(tag: "ERROR", text: error.localizedDescription)
                     }
                     
                     completion(.success(data, status))

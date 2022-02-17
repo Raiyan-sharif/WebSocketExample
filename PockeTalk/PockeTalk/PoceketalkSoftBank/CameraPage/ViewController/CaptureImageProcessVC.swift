@@ -722,7 +722,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         self.iTTServerViewModel.historyID = fromHistoryVC ? historyID : Int64(id!)
         
         let translatedData = fromHistoryVC ? CameraHistoryDBModel().getTranslatedData(id: historyID) : CameraHistoryDBModel().getTranslatedData(id: Int64(id!))
-        print("TranslatedData.line count: \(translatedData.line!.translatedText.count), translatedData.block count: \(translatedData.block!.translatedText.count)")
+        PrintUtility.printLog(tag: "TranslatedData.line count", text: "\(translatedData.block!.translatedText.count)")
         let modeSwitchTypes = UserDefaults.standard.string(forKey: modeSwitchType)
         PrintUtility.printLog(tag: "translated data : -", text: "\(String(describing: translatedData))")
         if modeSwitchTypes == blockMode {

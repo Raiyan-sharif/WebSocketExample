@@ -59,7 +59,6 @@ extension MenuViewController: UICollectionViewDataSource {
 extension MenuViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let menuType = MenuItemType(rawValue: indexPath.item) else {
-            print("There isn't a menuItem at position \(indexPath.item)")
             return
         }
         switch menuType {
@@ -76,7 +75,7 @@ extension MenuViewController: UICollectionViewDelegate {
                 self.navigationController?.pushViewController(cameraViewController, animated: true)
             }
         case .favorite:
-            print("\(indexPath.item)")
+            PrintUtility.printLog(tag: "INDEXPATH", text:"\(indexPath.item)")
         default:
             break
         }

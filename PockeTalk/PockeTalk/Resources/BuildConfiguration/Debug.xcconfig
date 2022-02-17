@@ -1,0 +1,15 @@
+//
+//  Debug.xcconfig
+//  PockeTalk
+//
+//  Created by Morshed Alam on 1/26/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Base.xcconfig"
+
+PRODUCT_NAME = $(inherited) Debug
+IS_APP_ICON = $(inherited)Debug
+BASE_URL = https:\/\/test.pt-v.com
+PRODUCT_BUNDLE_IDENTIFIER = $(inherited).staging

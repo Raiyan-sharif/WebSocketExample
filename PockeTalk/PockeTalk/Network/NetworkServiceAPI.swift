@@ -14,17 +14,12 @@ enum NetworkServiceAPI {
     
 }
 extension NetworkServiceAPI:TargetType{
-    
     var baseURL: URL {
         switch self {
-        case .liscense:
-            return URL(string:base_url2)!
         case .changeLanguage:
+            return URL(string:base_url_languageChange)!
+        default:
             return URL(string:base_url)!
-        case .authkey:
-            return URL(string:base_url2)!
-        case .tts:
-            return URL(string:base_url2)!
         }
     }
     

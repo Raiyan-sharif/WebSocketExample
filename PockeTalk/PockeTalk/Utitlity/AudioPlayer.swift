@@ -31,7 +31,7 @@ class AudioPlayer: NSObject {
             player.play()
 
         } catch let error {
-            print(error.localizedDescription)
+            PrintUtility.printLog(tag: "PLAYER_ERROR", text: error.localizedDescription)
         }
     }
 
@@ -144,7 +144,6 @@ class AudioPlayer: NSObject {
         let position = data.subdata(in: 8..<12)
         let wave = String(bytes: position, encoding: .utf8) ?? "NoName"
         guard wave == "WAVE" else {
-            print("File is \(wave) not WAVE")
             return false
         }
         return true

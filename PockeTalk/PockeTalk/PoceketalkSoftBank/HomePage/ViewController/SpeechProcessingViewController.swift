@@ -237,7 +237,7 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             PrintUtility.printLog(tag: "Frequency : ", text: "\(avgVal)")
             let frequency = (avgVal >= 0.4) ? 0.9 : 0.5
-            self.speechProcessingVM.setFrequency(frequency)
+            self.speechProcessingVM.setFrequency(CGFloat(frequency))
         }
         
         service?.recordDidStop = { [weak self]  in

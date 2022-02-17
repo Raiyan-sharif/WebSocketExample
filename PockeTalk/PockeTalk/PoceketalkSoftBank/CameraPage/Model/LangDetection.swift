@@ -12,7 +12,7 @@ import Alamofire
 class LanguageDetection {
     
     private var apiURL: URL {
-        return URL(string: detect_lang_url)!
+        return URL(string:base_url + detect_lang_url)!
     }
     private var okResultCode = "OK"
     
@@ -79,9 +79,25 @@ class LanguageDetection {
             } else {
                 completion(nil)
             }
-        }
+        }.responseDebugPrint()
         
     }
 
     
 }
+
+extension Alamofire.DataRequest {
+    func responseDebugPrint() {
+        response { res in
+            PrintUtility.printLog(tag: "Endpoint_Path", text:res.request?.url?.absoluteString ?? "")
+            PrintUtility.printLog(tag: "Endpoint_base_url", text:base_url)
+            PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
+            PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
+            PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
+            PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
+        }
+    }
+}
+
+
+

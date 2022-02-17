@@ -15,6 +15,17 @@ protocol Network {
     func ttsApi(params:[String:String],completion:@escaping (Data?)->Void)
 }
 
+let endpointClosure = { (target: NetworkServiceAPI) -> Endpoint in
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+          PrintUtility.printLog(tag: "Endpoint_Path", text: target.baseURL.absoluteString+target.path)
+          PrintUtility.printLog(tag: "Endpoint_base_url", text:target.baseURL.absoluteString)
+          PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
+          PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
+          PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
+          PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
+        return defaultEndpoint
+}
+
 
 struct NetworkManager:Network {
     let TAG = "\(NetworkManager.self)"
@@ -22,9 +33,9 @@ struct NetworkManager:Network {
     let serialQueue = DispatchQueue(label: "swiftlee.serial.queue")
 
     static let shareInstance = NetworkManager()
-    
-    let provider =  MoyaProvider<NetworkServiceAPI>(plugins: [NetworkLoggerPlugin(configuration:.init(logOptions: .verbose))])
-    
+
+    let provider =  MoyaProvider<NetworkServiceAPI>(endpointClosure:endpointClosure, plugins: GlobalMethod.isAppInProduction ? [] : [ NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
+
     func getAuthkey(completion: @escaping (Data?) -> Void) {
         let format = "PCM";
         let samplingRate = "44100";
@@ -254,7 +265,7 @@ struct NetworkManager:Network {
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
         
         let params:[String:String]  = [
-            "imei": imeiCode,
+            "imei": imeiNumber,
         ]
         
         provider.request(.liscense(params: params)){ result in

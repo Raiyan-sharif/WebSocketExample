@@ -84,7 +84,6 @@ class TempoControlSelectionAlertController: BaseViewController {
     }
     
     @objc func actionSelectStandard(sender:UITapGestureRecognizer) {
-        print("actionSelectStandard")
         self.selectStandard()
         self.delegate?.onStandardSelection()
         self.dismiss(animated: true)
@@ -99,7 +98,6 @@ class TempoControlSelectionAlertController: BaseViewController {
         UserDefaultsProperty<String>(kTempoControlSpeed).value = TempoControlSpeedType.standard.rawValue
     }
     @objc func actionSelectSlow(sender:UITapGestureRecognizer) {
-        print("actionSelectSlow")
         self.selectSlow()
         self.delegate?.onSlowSelection()
         self.dismiss(animated: true)
@@ -114,7 +112,6 @@ class TempoControlSelectionAlertController: BaseViewController {
         UserDefaultsProperty<String>(kTempoControlSpeed).value = TempoControlSpeedType.slow.rawValue
     }
     @objc func actionSelectVerySlow(sender:UITapGestureRecognizer) {
-        print("actionSelectVerySlow")
         self.selectVerySlow()
         self.delegate?.onVerySlowSelection()
         self.dismiss(animated: true)

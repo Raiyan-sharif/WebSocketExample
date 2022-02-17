@@ -12,7 +12,7 @@ class ITTSN { //TODO GoogleCloudOCR will be changed later
     private let TAG = "\(ITTSN.self)"
     private let apiKey = googleOCRKey
     private var apiURL: URL {
-        return URL(string: image_annotate_url)!
+        return URL(string: base_url + image_annotate_url)!
         
     }
     
@@ -84,7 +84,7 @@ class ITTSN { //TODO GoogleCloudOCR will be changed later
                 }
                 
                 
-            }
+            }.responseDebugPrint()
         
     }
     private func base64EncodeImage(_ image: UIImage) -> String? {

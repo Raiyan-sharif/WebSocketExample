@@ -57,7 +57,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         cell.titleLabel.type = .continuous
         cell.titleLabel.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
         cell.titleLabel.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
-        print(ResetItemType.resetItems[indexPath.row].localiz())
+        PrintUtility.printLog(tag: "IndexPath", text: ResetItemType.resetItems[indexPath.row].localiz())
         cell.backgroundColor = .black
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor._skyBlueColor()
