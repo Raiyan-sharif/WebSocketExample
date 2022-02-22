@@ -30,6 +30,8 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var isSpeaking : Bool = false
     var isFromHistoryTTS = false
     var tempo:String = "normal"
+    var multipartAudioPlayer: MultipartAudioPlayer?
+    var urlStrings:[String] = []
     
     @IBAction func actionBack(_ sender: Any) {
         stopTTS()
@@ -90,6 +92,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
             
         }
         bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
+        multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -109,6 +112,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.pronuntiationResultNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
     @objc func willResignActive(_ notification: Notification) {
@@ -199,6 +203,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     func checkTTSValueAndPlay(){
         if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:languageCode){
             if(!isSpeaking){
+                urlStrings = []
                 playTTS()
             }
         }else{
@@ -225,9 +230,20 @@ class PronunciationPracticeResultViewController: BaseViewController {
     }
     func stopTTS(){
         ttsResponsiveView.stopTTS()
+        multipartAudioPlayer?.stop()
     }
 }
 extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
+    func onMultipartUrlReceived(url: String) {
+        if(!url.isEmpty){
+            urlStrings.append(url)
+        }
+    }
+    
+    func onMultipartUrlEnd() {
+        multipartAudioPlayer?.playMultipartAudio(urls: urlStrings)
+    }
+    
     func speakingStatusChanged(isSpeaking: Bool) {
         self.isSpeaking = isSpeaking
     }
@@ -265,3 +281,17 @@ extension PronunciationPracticeResultViewController :AudioPlayerDelegate{
 
     }
 }
+extension PronunciationPracticeResultViewController : MultipartAudioPlayerProtocol{
+    func onSpeakStart() {
+        self.isSpeaking = true
+    }
+    func onSpeakFinish() {
+        self.isSpeaking = false
+    }
+    func onError() {
+        self.isSpeaking = false
+    }
+}
+
+
+

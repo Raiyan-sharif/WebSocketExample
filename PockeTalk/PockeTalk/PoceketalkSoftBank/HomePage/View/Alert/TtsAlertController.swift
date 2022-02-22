@@ -45,6 +45,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak private var placeholderContainerView: UIView!
     @IBOutlet weak private var ttsResultTV: UITableView!
     @IBOutlet weak private var bottomViewBottomLayoutConstrain: NSLayoutConstraint!
+    var urlStrings:[String] = []
     
     
     var ttsVM : TtsAlertViewModel!
@@ -97,6 +98,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private var isTextFittedInCell = true
     private var sttText = [String](repeating: "", count: 3)
     private var leftRightPadding: CGFloat = 150
+    var multipartAudioPlayer: MultipartAudioPlayer?
     
     
     override func viewDidLoad() {
@@ -113,6 +115,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         
         self.view.backgroundColor = .black
         registerNotification()
+        multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
         checkTTSValueAndPlay()
     }
     
@@ -170,6 +173,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)!.code
         if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:targetLanguageItem){
             if(!isSpeaking){
+                urlStrings = []
                 playTTS()
             }
         }else{
@@ -189,6 +193,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.ttsNotofication, object: nil)
         NotificationCenter.default.removeObserver(self, name:UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -491,6 +496,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     
     func stopTTS(){
         ttsResponsiveView.stopTTS()
+        multipartAudioPlayer?.stop()
         stopAnimation()
     }
     
@@ -672,7 +678,18 @@ extension TtsAlertController : AlertReusableDelegate {
 
 //MARK: - TTSResponsiveViewDelegate
 extension TtsAlertController : TTSResponsiveViewDelegate {
+    func onMultipartUrlReceived(url: String) {
+        PrintUtility.printLog(tag: TAG, text: "TtsAlertController>>> multipartUrlListener>>> URL: \(url)" )
+        if(!url.isEmpty){
+            urlStrings.append(url)
+        }
+    }
     
+    func onMultipartUrlEnd() {
+        PrintUtility.printLog(tag: TAG, text: "TtsAlertController>>> multipartUrlListener>>> END")
+        multipartAudioPlayer?.playMultipartAudio(urls: urlStrings)
+        self.startAnimation()
+    }
     func onVoiceEnd() {
         stopAnimation ()
     }
@@ -771,6 +788,21 @@ extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
         } else {
             return UITableView.automaticDimension
         }
+    }
+}
+
+extension TtsAlertController : MultipartAudioPlayerProtocol{
+    func onSpeakStart() {
+        self.isSpeaking = true
+        self.startAnimation()
+    }
+    func onSpeakFinish() {
+        self.isSpeaking = false
+        self.stopAnimation()
+    }
+    func onError() {
+        self.isSpeaking = false
+        self.stopAnimation()
     }
 }
 

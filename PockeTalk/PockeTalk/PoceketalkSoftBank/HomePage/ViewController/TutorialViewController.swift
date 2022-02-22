@@ -47,9 +47,11 @@ class TutorialViewController: BaseViewController {
     
     weak var speechProDismissDelegateFromTutorial : SpeechProcessingDismissDelegate?
     weak var delegate : SpeechControllerDismissDelegate?
-    weak var dismissTutorialDelegate: DismissTutorialDelegate?
+    var dismissTutorialDelegate: DismissTutorialDelegate?
     var isShwoingTutorialForTheFirstTime = false
     weak var navController: UINavigationController?
+    var urlStrings:[String] = []
+    var multipartAudioPlayer: MultipartAudioPlayer?
 
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -60,11 +62,13 @@ class TutorialViewController: BaseViewController {
         setUpUI()
         setupTTSView()
         registerForNotification()
+        multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
     }
 
     deinit {
         stopTTS()
         PrintUtility.printLog(tag: TAG, text: "Tutorial deinit Got Called")
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
     //MARK: - Initial Setup
@@ -168,6 +172,7 @@ class TutorialViewController: BaseViewController {
         if(languageManager.hasTtsSupport(languageCode: selectedLanguageCode)){
             PrintUtility.printLog(tag: TAG,text: "checkTtsSupport has TTS support \(selectedLanguageCode)")
             if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:selectedLanguageCode){
+                urlStrings = []
                 proceedAndPlayTTS()
             }else{
                 AudioPlayer.sharedInstance.delegate = self
@@ -186,6 +191,7 @@ class TutorialViewController: BaseViewController {
 
     private func stopTTS(){
         ttsResponsiveView.stopTTS()
+        multipartAudioPlayer?.stop()
         AudioPlayer.sharedInstance.stop()
     }
     
@@ -210,6 +216,16 @@ extension TutorialViewController : SpeechProcessingDismissDelegate {
 
 //MARK: - TTSResponsiveViewDelegate
 extension TutorialViewController: TTSResponsiveViewDelegate{
+    func onMultipartUrlReceived(url: String) {
+        if(!url.isEmpty){
+            urlStrings.append(url)
+        }
+    }
+    
+    func onMultipartUrlEnd() {
+        multipartAudioPlayer?.playMultipartAudio(urls: urlStrings)
+    }
+    
     func speakingStatusChanged(isSpeaking: Bool) {}
     func onReady() {}
     func onVoiceEnd() {}
@@ -223,4 +239,9 @@ extension TutorialViewController :AudioPlayerDelegate{
     func didStopAudioPlayer(flag: Bool) {
 
     }
+}
+extension TutorialViewController : MultipartAudioPlayerProtocol{
+    func onSpeakStart() {}
+    func onSpeakFinish() {}
+    func onError() {}
 }

@@ -90,6 +90,8 @@ class CaptureImageProcessVC: BaseViewController {
     var maxCropFrameWidth = CGFloat()
     var callObserver = CXCallObserver()
     //var image = UIImage(named: "vv")
+    var urlStrings:[String] = []
+    var multipartAudioPlayer: MultipartAudioPlayer?
     
     
     override func viewDidLoad() {
@@ -123,6 +125,7 @@ class CaptureImageProcessVC: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationDidBecomeActive),
                                                name: UIApplication.didBecomeActiveNotification,            object: nil)
+        multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
     }
     
     @objc func applicationDidBecomeActive() {
@@ -265,6 +268,9 @@ class CaptureImageProcessVC: BaseViewController {
         
         showHistoryData(historyID: historyID)
     }
+    deinit{
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+    }
     
     func showHistoryData(historyID: Int64) {
         let translatedData: TranslatedTextJSONModel? = CameraHistoryDBModel().getTranslatedData(id: historyID)
@@ -387,6 +393,7 @@ class CaptureImageProcessVC: BaseViewController {
             
             if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:lang){
                 if(!isSpeaking){
+                    urlStrings = []
                     getTtsValue(langCode: lang)
                     ttsResponsiveView.checkSpeakingStatus()
                     ttsResponsiveView.setRate(rate: rate)
@@ -410,6 +417,7 @@ class CaptureImageProcessVC: BaseViewController {
     
     func stopTTS(){
         ttsResponsiveView.stopTTS()
+        multipartAudioPlayer?.stop()
         AudioPlayer.sharedInstance.stop()
     }
     
@@ -938,6 +946,16 @@ extension UIImage {
 }
 
 extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
+    func onMultipartUrlReceived(url: String) {
+        if(!url.isEmpty){
+            urlStrings.append(url)
+        }
+    }
+    
+    func onMultipartUrlEnd() {
+        multipartAudioPlayer?.playMultipartAudio(urls: urlStrings)
+    }
+    
     func speakingStatusChanged(isSpeaking: Bool) {
         self.isSpeaking = isSpeaking
         PrintUtility.printLog(tag: TAG, text: " speaking: \(isSpeaking)")
@@ -996,3 +1014,20 @@ extension CaptureImageProcessVC :AudioPlayerDelegate{
         
     }
 }
+
+extension CaptureImageProcessVC : MultipartAudioPlayerProtocol{
+    func onSpeakStart() {
+        self.isSpeaking = true
+    }
+    
+    func onSpeakFinish() {
+        self.isSpeaking = false
+    }
+    
+    func onError() {
+        self.isSpeaking = false
+    }
+}
+
+
+

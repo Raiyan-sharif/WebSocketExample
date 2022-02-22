@@ -209,6 +209,7 @@ let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
 let iosListener = "iosListener"
 let speakingListener = "speakingListener"
+let multipartUrlListener = "multipartUrlListener"
 let KEngineSeparator = ","
 
 // api key
@@ -222,6 +223,7 @@ let imeiNumber = getIMEINumber("ImeiNumber")
 let floatingMikeButtonTag = 1101
 let ttsAlertViewTag = 11223
 let activityIndictorViewTag = 1201
+let multipartPlayerViewTag = 1102
 
 // TTS API
 let licenseToken = "license_token"

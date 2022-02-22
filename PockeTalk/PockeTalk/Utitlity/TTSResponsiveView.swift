@@ -10,6 +10,8 @@ protocol TTSResponsiveViewDelegate : class {
     func speakingStatusChanged(isSpeaking: Bool)
     func onVoiceEnd()
     func onReady()
+    func onMultipartUrlReceived(url: String)
+    func onMultipartUrlEnd()
 }
 
 class TTSResponsiveView : UIView {
@@ -28,6 +30,10 @@ class TTSResponsiveView : UIView {
         contentController.add(
             self as WKScriptMessageHandler,
             name: speakingListener
+        )
+        contentController.add(
+            self as WKScriptMessageHandler,
+            name: multipartUrlListener
         )
         
         let config = WKWebViewConfiguration()
@@ -124,6 +130,18 @@ extension TTSResponsiveView: WKScriptMessageHandler, WKNavigationDelegate {
             }else{
                 self.ttsResponsiveViewDelegate?.speakingStatusChanged(isSpeaking: true)
                 PrintUtility.printLog(tag: TAG, text: "iosListener speaking: \("not playing")")
+            }
+        case multipartUrlListener:
+            let body = message.body as! String
+            if(body.contains("URL")){
+                let url: String? = body.substring(from: 3, length: (body.count - 3))
+                PrintUtility.printLog(tag: TAG, text: "multipartUrlListener>>> URL: \(url ?? "")")
+                if(url != nil && !url!.isEmpty){
+                    self.ttsResponsiveViewDelegate?.onMultipartUrlReceived(url: url!)
+                }
+            }else{
+                PrintUtility.printLog(tag: TAG, text: "multipartUrlListener>>> END")
+                self.ttsResponsiveViewDelegate?.onMultipartUrlEnd()
             }
             default:
                 break;
