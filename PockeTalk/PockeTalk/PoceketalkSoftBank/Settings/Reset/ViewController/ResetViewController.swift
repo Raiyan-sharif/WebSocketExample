@@ -104,6 +104,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Favourite Data")
         case ResetItemType.deleteAllData.rawValue:
+            ResponseLogger.shareInstance.clean()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_all_data_reset".localiz(), buttonTitle: "delete_all_data".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")

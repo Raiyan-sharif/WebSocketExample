@@ -118,6 +118,10 @@
 		79CA3BBB2706FC7D00884682 /* ITTSN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBA2706FC7D00884682 /* ITTSN.swift */; };
 		79CA3BBD270D539D00884682 /* TranslatedTextJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */; };
 		8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8705289026F0ACF100555AF6 /* TextSizeViewController.swift */; };
+		87108A4027BCAAE70007AA9F /* ResponseLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87108A3F27BCAAE60007AA9F /* ResponseLogger.swift */; };
+		87108A4527BCE1A50007AA9F /* NetworkLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87108A4427BCE1A50007AA9F /* NetworkLoggerViewController.swift */; };
+		87108A4C27BCE6530007AA9F /* NeworkLoggerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87108A4A27BCE6530007AA9F /* NeworkLoggerCell.swift */; };
+		87108A4D27BCE6530007AA9F /* NeworkLoggerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87108A4B27BCE6530007AA9F /* NeworkLoggerCell.xib */; };
 		87194F36277475700005B16C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87194F38277475700005B16C /* InfoPlist.strings */; };
 		8726EB8C26E0D424002FEAE2 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */; };
 		872AA4E626E0EEEA003BE874 /* system_languages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 872AA4E526E0EEEA003BE874 /* system_languages.xml */; };
@@ -428,6 +432,10 @@
 		79CA3BBA2706FC7D00884682 /* ITTSN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITTSN.swift; sourceTree = "<group>"; };
 		79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedTextJSONModel.swift; sourceTree = "<group>"; };
 		8705289026F0ACF100555AF6 /* TextSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeViewController.swift; sourceTree = "<group>"; };
+		87108A3F27BCAAE60007AA9F /* ResponseLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLogger.swift; sourceTree = "<group>"; };
+		87108A4427BCE1A50007AA9F /* NetworkLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerViewController.swift; sourceTree = "<group>"; };
+		87108A4A27BCE6530007AA9F /* NeworkLoggerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeworkLoggerCell.swift; sourceTree = "<group>"; };
+		87108A4B27BCE6530007AA9F /* NeworkLoggerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NeworkLoggerCell.xib; sourceTree = "<group>"; };
 		87194F37277475700005B16C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87194F39277475880005B16C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8726EB8B26E0D424002FEAE2 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -837,6 +845,7 @@
 				89C70BCC27A925A7005DA505 /* AppRater.swift */,
 				3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */,
 				899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */,
+				87108A3F27BCAAE60007AA9F /* ResponseLogger.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -844,6 +853,7 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				87108A4327BCE1740007AA9F /* NetworkLogger */,
 				89DEA1F427830F8800DB0801 /* WelcomeAndPayment */,
 				8915C1DD26F9D7740091BF8B /* Favourite */,
 				503AEEB126EB0D6F00B03978 /* LanguageSelectCameraTranslation */,
@@ -1320,6 +1330,16 @@
 				691FC66226E9D32A00259407 /* TableViewCell */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		87108A4327BCE1740007AA9F /* NetworkLogger */ = {
+			isa = PBXGroup;
+			children = (
+				87108A4427BCE1A50007AA9F /* NetworkLoggerViewController.swift */,
+				87108A4A27BCE6530007AA9F /* NeworkLoggerCell.swift */,
+				87108A4B27BCE6530007AA9F /* NeworkLoggerCell.xib */,
+			);
+			path = NetworkLogger;
 			sourceTree = "<group>";
 		};
 		87282AF127A12C7C0055B293 /* BuildConfiguration */ = {
@@ -2155,6 +2175,7 @@
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				89E6B2E7279E8FBE00024A70 /* conversation_languages_zh.xml in Resources */,
+				87108A4D27BCE6530007AA9F /* NeworkLoggerCell.xib in Resources */,
 				89E6B2E1279E8DE200024A70 /* country_selection_list_es.json in Resources */,
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
@@ -2307,8 +2328,13 @@
 				3BF2A22A27031C3A0025353F /* SpinnerView.swift in Sources */,
 				89C0F7D626F1CE08000CD5FC /* NotificationNames.swift in Sources */,
 				89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */,
+				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
+				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				4AE97AE226E8E294007344FC /* LanguageMapDBModel.swift in Sources */,
+				87108A4027BCAAE70007AA9F /* ResponseLogger.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
 				4AF2609326E08CC1009C616E /* MenuViewController.swift in Sources */,
+				87108A4C27BCE6530007AA9F /* NeworkLoggerCell.swift in Sources */,
 				89C0F7E226F1EA8C000CD5FC /* CameraHistoryViewModel.swift in Sources */,
 				8732CAD726FC282200843BFE /* NetworkServiceAPI.swift in Sources */,
 				50193E0B26E8880C0052F170 /* CountryListItem.swift in Sources */,
@@ -2374,6 +2400,7 @@
 				4AEF501326DFA0670052B6EB /* Extension+AttibutedString.swift in Sources */,
 				50193E0226E861D20052F170 /* CountryListViewController.swift in Sources */,
 				89A4F03327C63EE700A718FA /* WelcomesViewController.swift in Sources */,
+				87108A4527BCE1A50007AA9F /* NetworkLoggerViewController.swift in Sources */,
 				89495B3C26F0AA2600CEA19D /* CustomLoaderProgressView.swift in Sources */,
 				69349AAD26E5EC67008D9AF4 /* TutorialViewModel.swift in Sources */,
 				89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */,
@@ -2686,7 +2713,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2711,7 +2738,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -2846,7 +2873,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_STAGE;
@@ -2960,7 +2987,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_PRODUCTION;
@@ -3074,7 +3101,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_STAGE;
@@ -3188,7 +3215,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_PRODUCTION;

@@ -89,6 +89,7 @@ class LanguageDetection {
 extension Alamofire.DataRequest {
     func responseDebugPrint() {
         response { res in
+            ResponseLogger.shareInstance.insertData(response:res)
             PrintUtility.printLog(tag: "Endpoint_Path", text:res.request?.url?.absoluteString ?? "")
             PrintUtility.printLog(tag: "Endpoint_base_url", text:base_url)
             PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import Moya
 
 class FileDownloader {
 
@@ -75,6 +76,12 @@ class FileDownloader {
         request.httpMethod = HttpMethod.get.rawValue
 
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
+            // Data saved in Response logger
+            if let httpRes = response as? HTTPURLResponse ,let  data = data {
+                let res = Response(statusCode: httpRes.statusCode , data: data, request: request, response: httpRes)
+                ResponseLogger.shareInstance.insertData(response: res)
+            }
+
             guard error == nil else {
                 PrintUtility.printLog(tag: TAG, text: "Error is not nil : \(String(describing: error?.localizedDescription))")
                 completion(nil, error)

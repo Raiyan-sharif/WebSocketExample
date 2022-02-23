@@ -18,11 +18,11 @@ struct GoogleCloudOCRResponse: Codable {
 
 // MARK: - OcrResponse
 struct Ocr_Response: Codable {
-    let responses: [Response]
+    let responses: [Google_OCR_Response]
 }
 
 // MARK: - Response
-struct Response: Codable {
+struct Google_OCR_Response: Codable {
     let full_text_annotation: Full_Text_Annotation?
     let text_annotations: [Text_Annotation]?
 }

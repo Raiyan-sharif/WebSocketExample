@@ -26,6 +26,17 @@ let endpointClosure = { (target: NetworkServiceAPI) -> Endpoint in
         return defaultEndpoint
 }
 
+struct LoggerPlugIn:PluginType{
+    func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
+
+        switch result {
+        case .success(let respose):
+            ResponseLogger.shareInstance.insertData(response: respose)
+        case .failure(let error):
+            ResponseLogger.shareInstance.insertData(response: error.response)
+        }
+    }
+}
 
 struct NetworkManager:Network {
     let TAG = "\(NetworkManager.self)"
@@ -34,7 +45,7 @@ struct NetworkManager:Network {
 
     static let shareInstance = NetworkManager()
 
-    let provider =  MoyaProvider<NetworkServiceAPI>(endpointClosure:endpointClosure, plugins: GlobalMethod.isAppInProduction ? [] : [ NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
+    let provider =  MoyaProvider<NetworkServiceAPI>(endpointClosure:endpointClosure, plugins: GlobalMethod.isAppInProduction ? [LoggerPlugIn()] : [ NetworkLoggerPlugin(configuration: .init(logOptions: .verbose)), LoggerPlugIn()])
 
     func getAuthkey(completion: @escaping (Data?) -> Void) {
         let format = "PCM";

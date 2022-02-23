@@ -12,11 +12,16 @@ enum SettingsItemType: String, CaseIterable {
     case information = "information"
     case support = "Support"
     case reset = "Reset"
+    case response = "Network Response"
     //    case softBank = "SoftBank"
 
     static var settingsItems: [String] {
-        return SettingsItemType.allCases.map { $0.rawValue }
-      }
+        var allCases = SettingsItemType.allCases.map { $0.rawValue }
+        if ResponseLogger.shareInstance.dataArray.count == 0{
+            allCases.removeLast()
+        }
+        return allCases
+    }
 }
 
 enum InformationSettingsItemType: String, CaseIterable {

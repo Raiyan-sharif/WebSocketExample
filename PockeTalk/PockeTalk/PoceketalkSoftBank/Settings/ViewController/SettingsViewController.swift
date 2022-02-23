@@ -118,6 +118,8 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             let viewController = storyboard.instantiateViewController(withIdentifier: "ResetViewController") as! ResetViewController
             self.navigationController?.pushViewController(viewController, animated: true)
             PrintUtility.printLog(tag: "Reset: ", text: "Reset")
+        case SettingsItemType.response.rawValue:
+            self.navigationController?.pushViewController(NetworkLoggerViewController(), animated: true)
         default:
             break
         }
