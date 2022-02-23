@@ -8,7 +8,7 @@ import UIKit
 open class ActivityIndicator: NSObject{
     public static let sharedInstance = ActivityIndicator()
     private let container: UIView = UIView()
-    private let window = UIApplication.shared.keyWindow ?? UIWindow()
+    var window = UIApplication.shared.keyWindow ?? UIWindow()
 
     let activityIndicator: ActivityIndicatorView = {
         let progressView = ActivityIndicatorView(

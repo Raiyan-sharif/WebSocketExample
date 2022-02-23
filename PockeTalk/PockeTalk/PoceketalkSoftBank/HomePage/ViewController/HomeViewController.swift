@@ -138,7 +138,7 @@ class HomeViewController: BaseViewController {
         setupCardView()
         setupStatusBarView()
         setupGestureForBottomView()
-        setupFloatingMikeButton()
+        setupFloatingMikeButtonAndLoader()
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
     }
@@ -282,11 +282,12 @@ class HomeViewController: BaseViewController {
         addTalkButtonAnimationViews()
     }
     
-    ///setup mike button first time
-    private func setupFloatingMikeButton(){
+    ///setup mike button and loader for the first time
+    private func setupFloatingMikeButtonAndLoader(){
         FloatingMikeButton.sharedInstance.window = self.window
         FloatingMikeButton.sharedInstance.add()
         FloatingMikeButton.sharedInstance.isHidden(true)
+        ActivityIndicator.sharedInstance.window = self.window
     }
     
     private func setHistoryAndFavouriteView(){

@@ -126,6 +126,9 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                     FloatingMikeButton.sharedInstance.remove()
                 }
 
+                ///Removing loader if exist from window before reset data
+                ActivityIndicator.sharedInstance.hide()
+
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
 //                self.navigationController?.popToRootViewController(animated: false)
