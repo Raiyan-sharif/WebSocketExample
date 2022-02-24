@@ -57,21 +57,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         } else {
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "TermsAndConditionsViewController") as! TermsAndConditionsViewController
-            let navigationController = UINavigationController.init(rootViewController: viewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
+            let storyboard = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil)
+            if let viewController = storyboard.instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController {
+                let navigationController = UINavigationController.init(rootViewController: viewController)
+                self.window?.rootViewController = navigationController
+                self.window?.makeKeyAndVisible()
+            }
         }
     }
-    
+
     func setUpAppFirstLaunch(isUpdateArrow: Bool){
         PrintUtility.printLog(tag: TAG, text: "App first launch called.")
         setInitialLanguage()
         LanguageSelectionManager.shared.loadLanguageListData()
         LanguageMapViewModel.sharedInstance.storeLanguageMapDataToDB()
         LanguageSelectionManager.shared.isArrowUp = true
-        
+
         LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
         CameraLanguageSelectionViewModel.shared.setDefaultLanguage()
     }
