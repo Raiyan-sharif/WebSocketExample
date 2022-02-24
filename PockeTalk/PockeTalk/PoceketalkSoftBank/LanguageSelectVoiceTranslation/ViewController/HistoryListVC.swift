@@ -41,6 +41,7 @@ class HistoryListVC: BaseViewController {
     private func setupTableView(){
         historyListTableView.delegate = self
         historyListTableView.dataSource = self
+        historyListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         historyListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.historyListTableView.backgroundColor = UIColor.clear
