@@ -119,6 +119,7 @@ let KiDLangSelectCamera = "LanguageSelectCameraVC"
 
 // Storyboard Name
 let KStoryBoardCamera = "LanguageSelectCamera"
+let KStoryboardInitialFlow = "InitialFlow"
 
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"
@@ -126,7 +127,11 @@ let DIFF_STRING_NOT_MATCHED = "Not Matched"
 
 //TableView Cell identifier
 let KAlertTableViewCell = "AlertTableViewCell"
-let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell";
+let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell"
+let KPermissionTableViewCell = "PermissionTableViewCell"
+let KPlanTableViewCell = "PlanTableViewCell"
+let KInfoLabelTableViewCell = "InfoLabelTableViewCell"
+let KSingleButtonTableViewCell = "SingleButtonTableViewCell"
 
 //Nib name
 let KAlertReusable = "AlertReusableViewController"
