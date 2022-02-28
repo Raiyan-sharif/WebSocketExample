@@ -2686,8 +2686,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2712,8 +2711,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -2848,7 +2846,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_STAGE;
@@ -2962,7 +2960,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_PRODUCTION;
@@ -3076,7 +3074,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_STAGE;
@@ -3190,7 +3188,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.14;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.japan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_PRODUCTION;

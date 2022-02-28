@@ -13,6 +13,6 @@
 PRODUCT_NAME = $(inherited)
 IS_APP_ICON = AppIcon
 BASE_URL = https:\/\/multi-test.pt-v.com
-PRODUCT_BUNDLE_IDENTIFIER = $(inherited).staging
+PRODUCT_BUNDLE_IDENTIFIER = $(inherited)
 IMEI = 000001002496160
 AUDIO_STREAM_BASE_URL = wss:\/\/test.pt-v.com
