@@ -14,4 +14,4 @@ IS_APP_ICON = AppIcon
 BASE_URL = https:\/\/test2.pt-v.com
 PRODUCT_BUNDLE_IDENTIFIER = $(inherited).staging
 IMEI = 000001006154923
-AUDIO_STREAM_BASE_URL = wss:\/\/test.pt-v.com
+AUDIO_STREAM_BASE_URL = wss:\/\/test2.pt-v.com

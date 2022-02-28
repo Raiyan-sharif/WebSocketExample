@@ -15,12 +15,7 @@ enum NetworkServiceAPI {
 }
 extension NetworkServiceAPI:TargetType{
     var baseURL: URL {
-        switch self {
-        case .changeLanguage:
-            return URL(string:base_url_languageChange)!
-        default:
-            return URL(string:base_url)!
-        }
+        return URL(string:base_url)!
     }
     
     var path: String {

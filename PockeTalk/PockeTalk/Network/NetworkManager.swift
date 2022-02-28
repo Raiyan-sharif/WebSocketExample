@@ -126,7 +126,7 @@ struct NetworkManager:Network {
             licenseToken = token
         }
         let params:[String:String]  = [
-            license_token: licenseToken,
+            language_token: licenseToken,
             access_key:accesKey,
             srclang : srcLang,
             destlang : desLang
