@@ -333,7 +333,9 @@ extension IAPManager {
 //MARK: - IAPManager Prepare alert cell
 extension IAPManager {
     func IAPResponseCheck(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
-        if receiptValidationAllow == true {
+        PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
+        PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(receiptValidationAllow)")
+        if receiptValidationAllow  == true {
             if iapReceiptValidationFrom == .purchaseButton || iapReceiptValidationFrom == .restoreButton {
                 receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
                     if let err = error {
@@ -341,7 +343,7 @@ extension IAPManager {
                     } else {
                         self.onBuyProductHandler?(.success(isPurchaseSchemeActive))
                     }
-                    self.hideActivityIndicator()
+//                    self.hideActivityIndicator()
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                 if Reachability.isConnectedToNetwork() {
@@ -365,7 +367,7 @@ extension IAPManager {
                                 }
                             }
                         }
-                        self.hideActivityIndicator()
+//                        self.hideActivityIndicator()
                         self.receiptValidationAllow = false
                     }
                 } else {
@@ -383,8 +385,8 @@ extension IAPManager {
                                     UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
                                 }
                             }
+                            self.receiptValidationAllow = false
                         }
-                        self.receiptValidationAllow = false
                     }
                 } else {
                     self.showNoInternetAlertOnVisibleViewController()
@@ -409,13 +411,14 @@ extension IAPManager {
             var storeRequest = URLRequest(url: storeURL)
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
-            storeRequest.timeoutInterval = IAPTimeoutInterval
+//            storeRequest.timeoutInterval = IAPTimeoutInterval
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
                     if let error = error {
                         if (error as? URLError)?.code == .timedOut {
-                            if iapReceiptValidationFrom == .applicationWillEnterForeground {
+                            self?.receiptValidationAllow = true
+                            if iapReceiptValidationFrom == .applicationWillEnterForeground || iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                                 self?.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationFrom)
                             } else {
                                 self?.showAlertForRetryIAP(iapReceiptValidationFrom: iapReceiptValidationFrom)
@@ -642,6 +645,7 @@ extension IAPManager {
             alertVC.view.tintColor = UIColor.black
             let okAction = UIAlertAction(title: "kTryAgain".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
                 self.showActivityIndicator()
+                self.receiptValidationAllow = true
                 self.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationFrom)
             }
             alertVC.addAction(okAction)
