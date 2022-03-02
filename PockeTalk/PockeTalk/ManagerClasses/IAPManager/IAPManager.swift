@@ -350,8 +350,14 @@ extension IAPManager {
                             self.showAlertFromAppDelegates(error: err)
                         } else {
                             if isPurchaseSchemeActive == true {
-                                DispatchQueue.main.async {
-                                    GlobalMethod.appdelegate().navigateToHomeViewController()
+                                if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
+                                    DispatchQueue.main.async {
+                                        GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
+                                    }
+                                } else {
+                                    DispatchQueue.main.async {
+                                        GlobalMethod.appdelegate().navigateToHomeViewController()
+                                    }
                                 }
                             } else {
                                 DispatchQueue.main.async {
