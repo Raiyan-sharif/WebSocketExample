@@ -11,9 +11,9 @@
 "SoftBank" = "SoftBank";
 "Support" = "サポート";
 "User Manual" = "ユーザーマニュアル";
-"information" = "Information";
-"manual" = "Manual";
-"application_version" = "Application Version";
+"information" = "情報";
+"manual" = "マニュアル";
+"application_version" = "アプリバージョン";
 "Pocketalk Promotion" = "Pocketalkプロモーション";
 "Camera" = "カメラ";
 "Favorite" = "お気に入り";
@@ -56,7 +56,7 @@
 "clear" = "削除";
 "delete" = "履歴から削除";
 "delete_from_fv" = "消去";
-"Socket_fail_message" = "Socket Connected Failed";
+"Socket_fail_message" = "インターネット接続がありません";
 "OK" = "わかっ";
 "no_stt_msg" = "言語はサポートされていません";
 "open" = "開ける";
@@ -70,38 +70,38 @@
 "country_selection_voice_msg" = "地域名を言ってください。\n例：\ 「ドイツ\」";
 "low_battery" = "ローバッテリー";
 "charge_the_device" = "デバイスを充電してください";
-"camera_flash_unavailable" = "バッテリー残量が不足しているため、カメラのフラッシュは使用できません。";
+"camera_flash_unavailable" = "バッテリー残量が不足しているため、フラッシュは使用できません";
 "can_not_translate" = "翻訳できません。";
 "Country Speech Guideline" = "ボタンを押したまま、検索したい地域を言ってください。";
-"kActionAllowAccess" = "アクセスを許可します";
+"kActionAllowAccess" = "許可";
 "kActionCancel" = "キャンセル";
-"kMicrophoneUsageTitle" = "\"PockeTalk\" マイクにアクセスしたい";
+"kMicrophoneUsageTitle" = "\”PockeTalk\”がマイクへのアクセスを求めています";
 "kMicrophoneUsageMessage" = "PockeTalkにはマイクを使用するための許可が必要です";
-"kPhotosUsageTitle" = "写真は使えません";
-"kPhotosUsageMessage" = "PockeTalkには、フォトライブラリにアクセスするための許可が必要です";
-"kCameraUsageTitle" = "\"PockeTalk\" カメラにアクセスしたい";
-"kCameraUsageMessage" = "PockeTalkはカメラを使用するための許可が必要です";
+"kPhotosUsageTitle" = "写真が利用できません";
+"kPhotosUsageMessage" = "\”PockeTalk\”が写真へのアクセスを求めています";
+"kCameraUsageTitle" = "\”PockeTalk\”がカメラへのアクセスを求めています";
+"kCameraUsageMessage" = "PockeTalkにはカメラを使用するための許可が必要です";
 "kTitleOk" = "わかっ";
 "kNotAllow" = "許可しない";
 "kNextButtonTitle" = "次へ";
 //TermsAndConditionsVC
-"kTermsAndConditionsVCTitle" = "販売台数世界一の AI翻訳機ポケトーク のアプリ版です";
+"kTermsAndConditionsVCTitle" = "販売台数世界一のAI翻訳機ポケトークのアプリ版です";
 "kTermsAndConditionsVCBulletPointOneTitle" = "瞬間音声翻訳";
 "kTermsAndConditionsVCBulletPointTwoTitle" = "115言語対応";
 "kTermsAndConditionsVCCheckTermsButtonTitle" = "利用規約を確認する";
-"kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "規約に同意して はじめる";
+"kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "利用規約に同意してはじめる";
 //InitialPermissionSettingsVC
-"kInitialPermissionSettingsVCTitle" = "音声入力やカメラ翻訳、通知のため 次の機能を許可して 下さい";
+"kInitialPermissionSettingsVCTitle" = "次の機能を許可してください";
 "kInitialPermissionSettingsVCMicrophoneLabel" = "マイク";
 "kInitialPermissionSettingsVCCameraLabel" = "カメラ";
 "kInitialPermissionSettingsVCNotificationLabel" = "通知";
 //PaidPlanViewController
-"kPaidPlanVCTitleLabel" = "ポケトークアプリの 利用には有料プランが 必要です";
-"kPaidPlanVCBulletPointOneLabel" = "週間以内の解約で料金は発生しません";
-"kPaidPlanVCBulletPointTwoLabel" = "無料期間最終日の翌日より上記料金が継続的に課金されます。";
-"kPaidPlanVCPurchaseButtonTitle" = "一週間無料で 利用開始";
+"kPaidPlanVCTitleLabel" = "ポケトークアプリの利用には有料プランが必要です";
+"kPaidPlanVCBulletPointOneLabel" = "・一週間以内の解約で料金は発生しません";
+"kPaidPlanVCBulletPointTwoLabel" = "・無料期間最終日の翌日より上記料金が継続的に課金されます";
+"kPaidPlanVCPurchaseButtonTitle" = "一週間無料で利用開始";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "購入履歴を復元する";
-"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを 選択してください";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを選択してください";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490円/月1週間の無料利用";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000円/年 1週間の無料利用";
 "kPockeTalk" = "ポケトークへ";
@@ -132,3 +132,14 @@
 "kTimeOut" = "Time Out!";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
 "kTryAgain" = "Try again";
+
+//IAP Alert
+"kIAPError" = "In-App Purchase Error!";
+"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
+"kIAPNoProductsFound" = "No In-App Purchases were found.";
+"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
+"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
+"kfreeUse" = " free use";
+"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
+"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
+"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";

@@ -3,6 +3,6 @@
   PockeTalk
 */
 
-"NSCameraUsageDescription" = "PockeTalk needs permission to use the camera";
-"NSMicrophoneUsageDescription" = "PockeTalk needs permission to use the microphone";
+"NSCameraUsageDescription" = "POCKETALK ต้องได้รับอนุญาตเพื่อใช้กล้อง";
+"NSMicrophoneUsageDescription" = "POCKETALK ต้องได้รับอนุญาตเพื่อใช้ไมโครโฟน";
 "NSPhotoLibraryUsageDescription" = "Add photo to image";

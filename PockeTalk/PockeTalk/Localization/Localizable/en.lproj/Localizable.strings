@@ -12,7 +12,7 @@
 "Support" = "Support";
 "User Manual" = "User Manual";
 "information" = "Information";
-"manual" = "Manual";
+"manual" = "User\'s manual";
 "application_version" = "Application Version";
 "Pocketalk Promotion" = "Pocketalk Promotion";
 "Camera" = "Camera";
@@ -58,7 +58,7 @@
 "clear" = "Clear";
 "delete" = "Delete from History";
 "delete_from_fv" = "Delete";
-"Socket_fail_message" = "Socket Connected Failed";
+"Socket_fail_message" = "No internet connection";
 "OK" = "OK";
 "no_stt_msg" = "Language is not supported";
 "open" = "Open";
@@ -72,38 +72,38 @@
 "country_selection_voice_msg" = "Please say the country name.\nEx: \"Germany\"";
 "low_battery" = "Low Battery";
 "charge_the_device" = "Please charge the device";
-"camera_flash_unavailable" = "Camera Flash is not available as battery level is not sufficient.";
+"camera_flash_unavailable" = "Camera Flash disabled due to low battery";
 "can_not_translate" = "Can not translate";
 
 "kActionAllowAccess" = "Allow access";
 "kActionCancel" = "Cancel";
-"kMicrophoneUsageTitle" = "\"PockeTalk\" Would Like to Access the Microphone";
-"kMicrophoneUsageMessage" = "PockeTalk needs permission to use the microphone";
-"kPhotosUsageTitle" = "Can't use photos";
-"kPhotosUsageMessage" = "PockeTalk needs permission to access the photo library";
-"kCameraUsageTitle" = "\"PockeTalk\" Would Like to Access the Camera";
-"kCameraUsageMessage" = "PockeTalk needs permission to use the camera";
+"kMicrophoneUsageTitle" = "POCKETALK requests access to your microphone";
+"kMicrophoneUsageMessage" = "POCKETALK requests your permission to use the microphone";
+"kPhotosUsageTitle" = "Photos unavailable";
+"kPhotosUsageMessage" = "POCKETALK requests access to your photo library ";
+"kCameraUsageTitle" = "POCKETALK requests access to the camera";
+"kCameraUsageMessage" = "POCKETALK needs your permission to use the camera";
 "kTitleOk" = "OK";
 "kNotAllow" = "Don't Allow";
 "kNextButtonTitle" = "Next";
 //TermsAndConditionsVC
-"kTermsAndConditionsVCTitle" = "It is an App of the AI translator POCKETALK with the highest cell in the world.";
-"kTermsAndConditionsVCBulletPointOneTitle" = "Instant speech translation";
-"kTermsAndConditionsVCBulletPointTwoTitle" = "Support 115 Languages";
+"kTermsAndConditionsVCTitle" = "The mobile app version of POCKETALK -- the most sold AI translator in the world";
+"kTermsAndConditionsVCBulletPointOneTitle" = "Instant voice translator";
+"kTermsAndConditionsVCBulletPointTwoTitle" = "Supported Languages:  115";
 "kTermsAndConditionsVCCheckTermsButtonTitle" = "Check the terms of use";
 "kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "Accept the terms and start";
 //InitialPermissionSettingsVC
-"kInitialPermissionSettingsVCTitle" = "Please allow access to the following functions for voice input, camera  translation and notification";
+"kInitialPermissionSettingsVCTitle" = "You need to allow access to the following functions for voice input, camera translation and notification.";
 "kInitialPermissionSettingsVCMicrophoneLabel" = "Microphone";
 "kInitialPermissionSettingsVCCameraLabel" = "Camera";
 "kInitialPermissionSettingsVCNotificationLabel" = "Notifications";
 //PaidPlanViewController
-"kPaidPlanVCTitleLabel" = "A paid plan is required to use POCKETALK App";
-"kPaidPlanVCBulletPointOneLabel" = "No charges will be incurred if cancel within one week.";
-"kPaidPlanVCBulletPointTwoLabel" = "The above charges will continue to be charged from the day after the last day of the free period.";
-"kPaidPlanVCPurchaseButtonTitle" = "Start using with free for one week";
-"kPaidPlanVCRestorePurchaseHistoryButton" = "Restore the purchase history";
-"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Please select a usage plan";
+"kPaidPlanVCTitleLabel" = "The POCKETALK App is a paid subscription service.";
+"kPaidPlanVCBulletPointOneLabel" = "Register now for a 7-day Free Trial.  No charge if you cancel before the trial ends.  ";
+"kPaidPlanVCBulletPointTwoLabel" = "After the free trial period expires, your account will automatically be charged the weekly or monthly or annual subscription fee.";
+"kPaidPlanVCPurchaseButtonTitle" = "Start a 7-Day Free Trial";
+"kPaidPlanVCRestorePurchaseHistoryButton" = "Restore your in-app purchase history";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Select a subscription plan";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
 "kPockeTalk" = "PockeTalk";
@@ -122,7 +122,7 @@
 //WelcomeViewController
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
-"kWelcomeVCStartUsingButtonTitle" = "Start using";
+"kWelcomeVCStartUsingButtonTitle" = "Start to use";
 
 //Purchase alert scheme text
 "Day" = "Day";
