@@ -1163,9 +1163,20 @@ if (typeof responsiveVoice === "undefined") {
                                             "undefined" == typeof rvApiKey && a.is_wordpress && (f += "&key=HY7lTyiS");
                                             void 0 !== g.collectionvoice.gender && (f += "&gender=" + g.collectionvoice.gender);
                                             D && (f += "&extraParams=" + JSON.stringify(D));
-                                            a.fallbackChunks.push({ text: k[e], url: f, audio: null });
+                                            if(a.iOS11 || a.iOS12 || a.iOS13){
+                                                a.fallbackChunks.push({ text: k[e], url: f, audio: null });
+                                            }else{
+                                                a.msgparameters.onMultipart("URL"+f);
+                                            }
                                         }
-                                    a.fallbackMode && a.getServiceEnabled(a.services.FALLBACK_AUDIO) && ((a.fallbackChunkIndex = 0), a.fallback_startPart());
+                                    if(a.fallbackMode && a.getServiceEnabled(a.services.FALLBACK_AUDIO)){
+                                        if(a.iOS11 || a.iOS12 || a.iOS13){
+                                            a.fallbackChunkIndex = 0;
+                                            a.fallback_startPart();
+                                        }else{
+                                            a.msgparameters.onMultipart("END");
+                                        }
+                                    }
                                     a.log("Service used: " + h);
                                 } else a.scheduledSpeak = { text: b, voicename: c, parameters: d };
                             } else console.error("Selected voice does not exist: " + c), a.Dispatch("OnMissingVoiceError", { voice: c });

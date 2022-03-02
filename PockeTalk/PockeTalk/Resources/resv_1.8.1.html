@@ -6,7 +6,7 @@
     <body>
         <h1>Hello</h1>
     </body>
-    <script src="resv_src.js"></script>
+    <script src="responsivevoice_1.8.1.js"></script>
     <script type="text/javascript">
         function voiceStartCallback() {
             //interface.start()
@@ -24,7 +24,8 @@
             onstart: voiceStartCallback,
             onend: voiceEndCallback,
             rate:"1.0",
-            volume:"1"
+            volume:"1",
+            onMultipart: multipartUrlReceived
         }
         
         function onLogReceived(l){
@@ -40,12 +41,6 @@
         }
         
         function play(voice,text){
-            responsiveVoice.setLogger({
-                onlog: onLogReceived
-            });
-            responsiveVoice.setMultiPartListener({
-                onUrlReceived: multipartUrlReceived
-            });
             responsiveVoice.clickEvent();
            // responsiveVoice.setDefaultVoice(voice);
            // responsiveVoice.speak(text);
