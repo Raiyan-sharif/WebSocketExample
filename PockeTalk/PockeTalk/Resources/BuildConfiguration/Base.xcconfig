@@ -11,4 +11,4 @@
 PRODUCT_NAME = PockeTalk
 IS_APP_ICON = AppIcon
 BASE_URL = https:\/\/pt-v.com
-PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.ios.stg
+PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg
