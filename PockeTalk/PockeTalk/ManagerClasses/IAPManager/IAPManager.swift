@@ -378,7 +378,6 @@ extension IAPManager {
                                 }
                             }
                         }
-                        self.hideActivityIndicator()
                         self.receiptValidationAllow = false
                     }
                 } else {
@@ -410,7 +409,11 @@ extension IAPManager {
                 do {
                     if let error = error {
                         if (error as? URLError)?.code == .timedOut {
-                            self?.showAlertForRetryIAP(iapReceiptValidationFrom: iapReceiptValidationFrom)
+                            if iapReceiptValidationFrom == .applicationWillEnterForeground {
+                                self?.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationFrom)
+                            } else {
+                                self?.showAlertForRetryIAP(iapReceiptValidationFrom: iapReceiptValidationFrom)
+                            }
                         }
                     } else {
                         if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {

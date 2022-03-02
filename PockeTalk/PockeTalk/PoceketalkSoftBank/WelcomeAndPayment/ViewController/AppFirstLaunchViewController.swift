@@ -37,8 +37,10 @@ class AppFirstLaunchViewController: UIViewController {
         termAndConditionButton.setAttributedTitle(InitialFlowHelper().getTermAndConditionBtnAttributedString(), for: .normal)
         termAndConditionButton.backgroundColor = UIColor._royalBlueColor()
         termAndConditionButton.layer.cornerRadius = InitialFlowHelper().nextButtonCornerRadius
+        termAndConditionButton.titleLabel?.textAlignment = .center
 
         acceptAndStartButton.setAttributedTitle(InitialFlowHelper().getAcceptAndStartBtnAttributedString(), for: .normal)
+        acceptAndStartButton.titleLabel?.textAlignment = .center
         acceptAndStartButton.addRightIcon(
             image: UIImage(named: "icon_arrow_right") ?? UIImage(),
             edgeInsetRight: 10,
@@ -70,14 +72,39 @@ class AppFirstLaunchViewController: UIViewController {
         }
     }
 
+    private func showNoInternetAlert() {
+        self.popupAlert(title: "internet_connection_error".localiz(), message: "", actionTitles: ["connect_via_wifi".localiz(), "Cancel".localiz()], actionStyle: [.default, .cancel], action: [
+            { connectViaWifi in
+                DispatchQueue.main.async {
+                    if let url = URL(string:UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
+                }
+            },{ cancel in
+                PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
+            }
+        ])
+    }
+
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
-        PrintUtility.printLog(tag: "initalFlow", text: "Tap on term and condition Btn")
-        let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
-        UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+        if Reachability.isConnectedToNetwork() {
+            PrintUtility.printLog(tag: "initalFlow", text: "Tap on term and condition Btn")
+            let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
+            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+        } else {
+            showNoInternetAlert()
+        }
+
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
-        goTOPurchaseScene()
+        if Reachability.isConnectedToNetwork(){
+            goTOPurchaseScene()
+        } else {
+            showNoInternetAlert()
+        }
     }
 }

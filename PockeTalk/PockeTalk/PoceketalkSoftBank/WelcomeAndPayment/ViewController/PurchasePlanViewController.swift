@@ -19,10 +19,6 @@ class PurchasePlanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         purchasePlanVM.resetData()
         getProductList()
     }
@@ -60,45 +56,56 @@ class PurchasePlanViewController: UIViewController {
     //MARK: - Load data
     private func getProductList() {
         setActivityIndicator(shouldStart: true)
-        purchasePlanVM.getProduct { [weak self] success, error in
-            if let productFetchError = error{
-                DispatchQueue.main.async {
-                    self?.showProductFetchErrorAlert(message: productFetchError)
-                    self?.setActivityIndicator(shouldStart: false)
-                    return
+        if Reachability.isConnectedToNetwork() {
+            purchasePlanVM.getProduct { [weak self] success, error in
+                if let productFetchError = error{
+                    DispatchQueue.main.async {
+                        self?.showProductFetchErrorAlert(message: productFetchError)
+                        self?.setActivityIndicator(shouldStart: false)
+                        return
+                    }
                 }
-            }
 
-            DispatchQueue.main.async {
-                if success {
-                    self?.purchasePlanTV.reloadData()
+                DispatchQueue.main.async {
+                    if success {
+                        self?.purchasePlanTV.reloadData()
+                    }
+                    self?.setActivityIndicator(shouldStart: false)
                 }
-                self?.setActivityIndicator(shouldStart: false)
             }
+        } else {
+            setActivityIndicator(shouldStart: false)
+            showNoInternetAlert()
         }
+
     }
 
     //MARK: - API Calls
     private func restorePurchases() {
         setActivityIndicator(shouldStart: true)
-        self.purchasePlanVM.updateReceiptValidationAllow()
-        purchasePlanVM.restorePurchase { [weak self] success, error in
-            guard let self = `self` else {return}
+        if Reachability.isConnectedToNetwork(){
+            self.purchasePlanVM.updateReceiptValidationAllow()
+            purchasePlanVM.restorePurchase { [weak self] success, error in
+                guard let self = `self` else {return}
 
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.showIAPRelatedError(error)
-                    self.setActivityIndicator(shouldStart: false)
-                    return
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.showIAPRelatedError(error)
+                        self.setActivityIndicator(shouldStart: false)
+                        return
+                    }
                 }
-            }
 
-            if success{
-                self.goToPermissionVC()
-            } else {
-                self.didFinishRestoringPurchasesWithZeroProducts()
+                if success{
+                    self.goToPermissionVC()
+                } else {
+                    self.didFinishRestoringPurchasesWithZeroProducts()
+                }
+                self.setActivityIndicator(shouldStart: false)
             }
-            self.setActivityIndicator(shouldStart: false)
+        } else {
+            setActivityIndicator(shouldStart: false)
+            showNoInternetAlert()
         }
     }
 
@@ -124,7 +131,7 @@ class PurchasePlanViewController: UIViewController {
                 }
             } else {
                 setActivityIndicator(shouldStart: false)
-                GlobalMethod.showNoInternetAlert()
+                showNoInternetAlert()
             }
         }
         return true
@@ -137,7 +144,7 @@ class PurchasePlanViewController: UIViewController {
         }
 
         if purchasePlanVM.rowType[indexPath.row] == .restorePurchase {
-            Reachability.isConnectedToNetwork() ? (restorePurchases()) : (GlobalMethod.showNoInternetAlert())
+            Reachability.isConnectedToNetwork() ? (restorePurchases()) : (showNoInternetAlert())
         }
     }
 
@@ -211,6 +218,22 @@ class PurchasePlanViewController: UIViewController {
 
     private func showIAPRelatedError(_ error: String) {
         showSingleAlert(withMessage: error)
+    }
+
+    private func showNoInternetAlert() {
+        self.popupAlert(title: "internet_connection_error".localiz(), message: "", actionTitles: ["connect_via_wifi".localiz(), "Cancel".localiz()], actionStyle: [.default, .cancel], action: [
+            { connectViaWifi in
+                DispatchQueue.main.async {
+                    if let url = URL(string:UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
+                }
+            },{ cancel in
+                PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
+            }
+        ])
     }
 }
 
