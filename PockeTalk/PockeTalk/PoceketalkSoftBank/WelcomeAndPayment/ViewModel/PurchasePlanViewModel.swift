@@ -54,6 +54,7 @@ class PurchasePlanViewModel{
 
     func getProduct(onCompletion: @escaping CompletionCallBack) {
         isDataLoading = true
+        resetData()
         IAPManager.shared.getProducts { [weak self] (result) in
             guard let self = `self` else {return}
             switch result {
