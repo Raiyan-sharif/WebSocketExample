@@ -137,3 +137,8 @@
 "kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
 "kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
 "kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"Daily Plan" = "Daily Plan";
+"Weekly Plan" = "Weekly Plan";
+"Monthly Plan" = "Monthly Plan";
+"Yearly Plan" = "Yearly Plan";
+"Free for" = "Free for";
