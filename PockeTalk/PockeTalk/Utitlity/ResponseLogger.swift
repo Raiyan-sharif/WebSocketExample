@@ -44,8 +44,10 @@ class ResponseLogger {
                     params = String(data: httpBody, encoding: .utf8) ?? ""
                 }
             }
-            let res = String(data: response.data, encoding: .utf8) ?? ""
-
+            var res = ""
+            if !url.contains(tts_url){
+                res = String(data: response.data, encoding: .utf8) ?? ""
+            }
             dataArray.append(LoggerModel(date: Date(), url: url, params: params, response: res))
         }
     }
@@ -59,7 +61,10 @@ class ResponseLogger {
                     params = String(data: httpBody, encoding: .utf8) ?? ""
                 }
             }
-            let res = String(data: data, encoding: .utf8) ?? ""
+            var res = ""
+            if !url.contains(image_annotate_url){
+                res = String(data: data, encoding: .utf8) ?? ""
+            }
             dataArray.append(LoggerModel(date: Date(), url: url, params: params, response: res))
         }
     }
