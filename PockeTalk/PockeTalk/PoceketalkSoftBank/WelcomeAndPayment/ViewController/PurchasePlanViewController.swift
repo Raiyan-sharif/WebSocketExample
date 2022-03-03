@@ -14,12 +14,11 @@ class PurchasePlanViewController: UIViewController {
 
     private let TAG = "\(PurchasePlanViewController.self)"
     private let purchasePlanVM = PurchasePlanViewModel()
-    
+
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        purchasePlanVM.resetData()
         getProductList()
     }
 

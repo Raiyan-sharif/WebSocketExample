@@ -34,7 +34,7 @@ class PurchasePlanViewModel{
         IAPManager.shared.receiptValidationAllow = true
     }
 
-    func resetData(){
+    private func resetData(){
         row.removeAll()
         products.removeAll()
         productDetails.removeAll()
@@ -54,12 +54,12 @@ class PurchasePlanViewModel{
 
     func getProduct(onCompletion: @escaping CompletionCallBack) {
         isDataLoading = true
-        resetData()
         IAPManager.shared.getProducts { [weak self] (result) in
             guard let self = `self` else {return}
             switch result {
             case .success(let products):
                 if products.count > 0 {
+                    self.resetData()
                     self.products = products
                     self.setProductDetails()
                     self.setupTVRowData()
