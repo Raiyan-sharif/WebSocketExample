@@ -120,10 +120,6 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if(!isRecreation){
-            self.startAnimation()
-        }
-        
         defaultTextLabelCellHeight = ((placeholderContainerView.frame.size.height * 45) / 100)
         setupTTSTableViewProperty()
         setupTTSTableView()
