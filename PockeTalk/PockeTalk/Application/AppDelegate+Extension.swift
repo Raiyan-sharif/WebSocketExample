@@ -29,8 +29,13 @@ extension AppDelegate{
             if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
                 let navigationController = UINavigationController.init(rootViewController: viewController)
 
+
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+
                 self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
+
+                self.window?.layer.add(transition, forKey: nil)
             }
         }
     }

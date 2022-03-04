@@ -8,6 +8,7 @@
 import Foundation
 import StoreKit
 import Kronos
+import SwiftKeychainWrapper
 
 enum IAPReceiptValidationFrom: String {
     case purchaseButton = "purchaseButton"
@@ -30,7 +31,6 @@ class IAPManager: NSObject {
         var cancellationDate: Date? = nil
     }
 
-    var receiptValidationAllow: Bool = false
     var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
     var totalRestoredPurchases = 0
@@ -143,7 +143,7 @@ extension IAPManager: SKPaymentTransactionObserver {
             switch transaction.transactionState {
             case .purchased:
                 self.IAPResponseCheck(iapReceiptValidationFrom: .purchaseButton)
-                self.receiptValidationAllow = false
+                KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             case .restored:
@@ -170,7 +170,7 @@ extension IAPManager: SKPaymentTransactionObserver {
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if totalRestoredPurchases != 0 {
             self.IAPResponseCheck(iapReceiptValidationFrom: .restoreButton)
-            self.receiptValidationAllow = false
+            KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
         } else {
             PrintUtility.printLog(tag: String(describing: type(of: self)), text: "IAP: No purchases to restore!")
             onBuyProductHandler?(.success(false))
@@ -334,9 +334,18 @@ extension IAPManager {
 extension IAPManager {
     func IAPResponseCheck(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
-        PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(receiptValidationAllow)")
-        if receiptValidationAllow  == true {
-            if iapReceiptValidationFrom == .purchaseButton || iapReceiptValidationFrom == .restoreButton {
+        PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(String(describing: KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!))")
+        if KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!  == true {
+            if iapReceiptValidationFrom == .purchaseButton {
+                receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
+                    if let err = error {
+                        self.onBuyProductHandler?(.failure(err))
+                    } else {
+                        self.onBuyProductHandler?(.success(isPurchaseSchemeActive))
+                    }
+//                    self.hideActivityIndicator()
+                }
+            } else if iapReceiptValidationFrom == .restoreButton {
                 receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
                     if let err = error {
                         self.onBuyProductHandler?(.failure(err))
@@ -368,7 +377,7 @@ extension IAPManager {
                             }
                         }
 //                        self.hideActivityIndicator()
-                        self.receiptValidationAllow = false
+                        KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
                     }
                 } else {
                     self.showNoInternetAlertOnVisibleViewController()
@@ -385,8 +394,8 @@ extension IAPManager {
                                     UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
                                 }
                             }
-                            self.receiptValidationAllow = false
                         }
+                        //self.receiptValidationAllow = false
                     }
                 } else {
                     self.showNoInternetAlertOnVisibleViewController()
@@ -411,29 +420,17 @@ extension IAPManager {
             var storeRequest = URLRequest(url: storeURL)
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
-//            storeRequest.timeoutInterval = IAPTimeoutInterval
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
-                    if let error = error {
-                        if (error as? URLError)?.code == .timedOut {
-                            self?.receiptValidationAllow = true
-                            if iapReceiptValidationFrom == .applicationWillEnterForeground || iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
-                                self?.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationFrom)
-                            } else {
-                                self?.showAlertForRetryIAP(iapReceiptValidationFrom: iapReceiptValidationFrom)
-                            }
-                        }
-                    } else {
-                        if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                            if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
-                                Clock.sync(completion:  { date, offset in
-                                    if let getResDate = date {
-                                        let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
-                                        completion(purchaseStatus!, nil)
-                                    }
-                                })
-                            }
+                    if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
+                            Clock.sync(completion:  { date, offset in
+                                if let getResDate = date {
+                                    let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
+                                    completion(purchaseStatus!, nil)
+                                }
+                            })
                         }
                     }
                 } catch let parseError {
@@ -645,7 +642,7 @@ extension IAPManager {
             alertVC.view.tintColor = UIColor.black
             let okAction = UIAlertAction(title: "kTryAgain".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
                 self.showActivityIndicator()
-                self.receiptValidationAllow = true
+                KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
                 self.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationFrom)
             }
             alertVC.addAction(okAction)

@@ -5,6 +5,7 @@
 
 import Foundation
 import StoreKit
+import SwiftKeychainWrapper
 
 class PurchasePlanViewModel{
     private var products = [SKProduct]()
@@ -31,7 +32,7 @@ class PurchasePlanViewModel{
     }
 
     func updateReceiptValidationAllow() {
-        IAPManager.shared.receiptValidationAllow = true
+        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
     }
 
     private func resetData(){

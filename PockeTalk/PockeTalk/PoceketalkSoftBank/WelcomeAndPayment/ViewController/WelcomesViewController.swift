@@ -35,7 +35,6 @@ class WelcomesViewController: UIViewController {
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
         UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
-        UserDefaultsUtility.setBoolValue(false, forKey: kIsClearedDataAll)
         PrintUtility.printLog(tag: "initalFlow", text: "Tap on next Btn")
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)

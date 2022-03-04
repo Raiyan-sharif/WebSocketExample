@@ -16,6 +16,7 @@ class PermissionViewController: UIViewController {
         setupUI()
         initializeData()
         checkPermissions()
+        UserDefaultsUtility.setBoolValue(false, forKey: kIsClearedDataAll)
     }
 
     //MARK: - Initial setup

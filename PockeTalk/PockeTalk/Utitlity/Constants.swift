@@ -298,3 +298,4 @@ let kApple_dot_com = "https://www.apple.com"
 let kDate = "Date"
 let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
+let receiptValidationAllow = "receiptValidationAllow"

@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIDevice.current.isBatteryMonitoringEnabled = true
         setUpInitialLaunch()
         IAPManager.shared.startObserving()
-        IAPManager.shared.receiptValidationAllow = true
+        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
         return true
     }
@@ -83,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SocketManager.sharedInstance.connect()
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
 
-        IAPManager.shared.receiptValidationAllow = true
+        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
     }
 
