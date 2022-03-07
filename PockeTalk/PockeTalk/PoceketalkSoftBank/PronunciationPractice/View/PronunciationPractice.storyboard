@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -365,6 +365,7 @@
                         <outlet property="labelFailedOriginalText" destination="hfV-Az-9Fe" id="SWs-fx-Tuu"/>
                         <outlet property="labelFailedPronuncedText" destination="18d-2h-jC5" id="g7F-SL-yfd"/>
                         <outlet property="labelSuccessText" destination="eQT-5s-zyp" id="nGZ-nD-PZh"/>
+                        <outlet property="tempoControlButton" destination="5YX-Wq-RRm" id="c5b-fu-W0F"/>
                         <outlet property="viewContainer" destination="5Ro-b4-WGQ" id="nXw-78-htQ"/>
                         <outlet property="viewFailureContainer" destination="cuz-il-rj9" id="qPK-6Y-Q5R"/>
                         <outlet property="viewRoot" destination="4nX-ob-okL" id="Cdm-Ja-Mb9"/>
