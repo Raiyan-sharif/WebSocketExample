@@ -35,50 +35,84 @@ class AudioPlayer: NSObject {
         }
     }
 
+    func playLocalAudioFile(filePath: String) {
+        do {
+            if(AVCaptureDevice.authorizationStatus(for: .audio) != .authorized){
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+            }
+            guard let fileUrl = URL(string: filePath) else { return }
+
+            delegate?.didStartAudioPlayer()
+            self.isPlaying = true
+            player = try AVAudioPlayer(contentsOf: fileUrl)
+            guard let player = player else { return }
+            player.prepareToPlay()
+            player.delegate = self
+            player.play()
+
+        } catch let error {
+            PrintUtility.printLog(tag: "PLAYER_ERROR", text: error.localizedDescription)
+        }
+    }
+
     func stop() {
         isPlaying = false
         player?.stop()
         player = nil
     }
 
-    func getTTSDataAndPlay(translateText:String,targetLanguageItem:String, tempo:String){
+    func getTTSDataAndPlay(translateText:String,targetLanguageItem:String, tempo:String, fileName: String? = nil) {
 
         guard let item = LanguageEngineParser.shared.getTTTSSupportEngine(langCode: targetLanguageItem) else {
             return
         }
         PrintUtility.printLog(tag: "Engine Name", text: item)
-        var licenseToken = ""
-        if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
-            licenseToken = token
-        }
-        let params:[String:String]  = [
-            license_token: licenseToken,
-            language : targetLanguageItem,
-            text : translateText,
-            tempo: item == engineName ? normal : tempo
-        ]
-        if Reachability.isConnectedToNetwork() {
-            NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
-                guard let data = data, let self = self else { return }
-                do {
-                    let result = try JSONDecoder().decode(TTSModel.self, from: data)
-                    if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
-                        if let delegate = self.delegate {
-                            delegate.didStartAudioPlayer()
-                            self.isPlaying = true
-                            if self.isHeaderExist(data: ttsData){
-                                self.play(data: ttsData)
-                            }else{
-                                let sampleRate = self.codecValue(value: result.codec!)
-                                let headerData = self.createWaveHeader(sampleRate: (sampleRate as NSString).integerValue, data: ttsData)
-                                let playData = headerData + ttsData
-                                self.play(data: playData)
-                            }
-                        }
-                        
 
+        if let fileName = fileName, let filePath = FileUtility.getTtsAudioFilePath(fileName) {
+            PrintUtility.printLog(tag: "TTS player", text: "Play TTS from local saved file")
+            self.playLocalAudioFile(filePath: filePath)
+        }
+        else {
+            var licenseToken = ""
+            if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
+                licenseToken = token
+            }
+            let params:[String:String]  = [
+                license_token: licenseToken,
+                language : targetLanguageItem,
+                text : translateText,
+                tempo: item == engineName ? normal : tempo
+            ]
+            if Reachability.isConnectedToNetwork() {
+                NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
+                    guard let data = data, let self = self else { return }
+                    do {
+                        let result = try JSONDecoder().decode(TTSModel.self, from: data)
+                        if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
+                            if let delegate = self.delegate {
+                                delegate.didStartAudioPlayer()
+                                self.isPlaying = true
+                                if self.isHeaderExist(data: ttsData){
+                                    self.play(data: ttsData)
+                                    if fileName != nil {
+                                        FileUtility.saveTtsAudioData(data: ttsData, fileName: fileName!)
+                                    }
+                                }else{
+                                    let sampleRate = self.codecValue(value: result.codec!)
+                                    let headerData = self.createWaveHeader(sampleRate: (sampleRate as NSString).integerValue, data: ttsData)
+                                    let playData = headerData + ttsData
+                                    self.play(data: playData)
+                                    if fileName != nil {
+                                        FileUtility.saveTtsAudioData(data: playData, fileName: fileName!)
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }catch{
                     }
-                }catch{
                 }
             }
         }

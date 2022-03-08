@@ -243,6 +243,7 @@
 		89B65D8527C4F592009FD2E1 /* LanguageEngineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */; };
 		89B744432721303500E1748D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B744422721303500E1748D /* Extension+UIApplication.swift */; };
 		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
+		89BC919E27D75E1900965D03 /* FileUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC919D27D75E1900965D03 /* FileUtility.swift */; };
 		89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587727AB91B8005B46A4 /* IAPManager.swift */; };
 		89BE587A27AB91F3005B46A4 /* IAP_ProductIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */; };
 		89BE587D27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */; };
@@ -589,6 +590,7 @@
 		89B65D8427C4F592009FD2E1 /* LanguageEngineDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageEngineDownloader.swift; sourceTree = "<group>"; };
 		89B744422721303500E1748D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
 		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
+		89BC919D27D75E1900965D03 /* FileUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtility.swift; sourceTree = "<group>"; };
 		89BE587727AB91B8005B46A4 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IAP_ProductIDs.plist; sourceTree = "<group>"; };
 		89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPStatusCheckDummyLoadingViewController.swift; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 				3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */,
 				899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */,
 				87108A3F27BCAAE60007AA9F /* ResponseLogger.swift */,
+				89BC919D27D75E1900965D03 /* FileUtility.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -2361,6 +2364,7 @@
 				89A4F02527C5F83E00A718FA /* PermissionTVCellInfo.swift in Sources */,
 				89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
+				89BC919E27D75E1900965D03 /* FileUtility.swift in Sources */,
 				8940A3B127ABC835005CB401 /* InformationSettingViewController.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
 				4A40AC9526F89BC800019A5B /* BaseViewController.swift in Sources */,

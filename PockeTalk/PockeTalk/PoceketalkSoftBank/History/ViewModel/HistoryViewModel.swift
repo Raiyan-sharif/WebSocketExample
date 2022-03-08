@@ -39,6 +39,11 @@ class HistoryViewModel:BaseModel, HistoryViewModeling {
         }
         do{
             try ChatDBModel().updateDeleteValue(isDelete: IsDeleted.delete, idToCompare: item.id!)
+            if ChatDBModel().getLikeStatus(id: item.id!) == .noLike {
+                if let entity = try ChatDBModel().find(idToFind: item.id!) as? ChatEntity {
+                    FileUtility.deleteTtsAudioFile(chatEntity: entity)
+                }
+            }
         } catch {}
         self.items.value = self.items.value.filter{$0.id != item.id}
     }

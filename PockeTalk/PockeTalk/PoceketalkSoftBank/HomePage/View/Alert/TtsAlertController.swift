@@ -165,6 +165,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     
     func checkTTSValueAndPlay(){
         let translateText = chatItemModel?.chatItem?.textTranslated
+        let fileName = chatItemModel?.chatItem?.textFileName
         let languageManager = LanguageSelectionManager.shared
         let targetLanguageItem = languageManager.getLanguageCodeByName(langName: chatItemModel!.chatItem!.textTranslatedLanguage!)!.code
         if let _ = LanguageEngineParser.shared.getTtsValueByCode(code:targetLanguageItem){
@@ -175,7 +176,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         }else{
             AudioPlayer.sharedInstance.delegate = self
             if !AudioPlayer.sharedInstance.isPlaying{
-                AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText: translateText!, targetLanguageItem: targetLanguageItem, tempo: "normal")
+                AudioPlayer.sharedInstance.getTTSDataAndPlay(translateText: translateText!, targetLanguageItem: targetLanguageItem, tempo: "normal", fileName: fileName)
             }
         }
     }

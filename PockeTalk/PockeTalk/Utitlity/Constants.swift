@@ -301,3 +301,7 @@ let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
+
+//FileUtility
+let kTTSAudioFolderName = "TtsAudioFiles"
+let kTTSAudioFileNameExtenstion = ".wav"

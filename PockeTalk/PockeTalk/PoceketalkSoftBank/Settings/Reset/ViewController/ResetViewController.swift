@@ -71,6 +71,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                FileUtility.deleteAllHistoryTTSAudioFiles()
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
                 self.showSuccessAlert(title: "history_cleared".localiz())
             }
@@ -95,6 +96,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
+                FileUtility.deleteAllFavoriteTTSAudioFiles()
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
                 // Favorite limit flag update
                 UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = false
@@ -120,6 +122,8 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 } catch _ {
 
                 }
+                ///Delete all TTS audio files
+                FileUtility.deleteTTSAudioDirectory()
                 
                 /// Clear UserDefautlts
                 UserDefaultsUtility.resetDefaults()
