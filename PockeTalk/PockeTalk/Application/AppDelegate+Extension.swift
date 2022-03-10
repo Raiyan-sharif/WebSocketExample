@@ -85,17 +85,19 @@ extension AppDelegate{
         ///Remove "-" and country code. Ex: es-BD to es
         let deviceLanguageCodeWithoutPunctuations = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
 
-        var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
-
-        if deviceLanguageCode.contains(Languages.zhHans.rawValue) {
-            languageCode = Languages.zhHans
-        } else if deviceLanguageCode.contains(Languages.zhHant.rawValue) {
-            languageCode = Languages.zhHant
-        } else if deviceLanguageCode == Languages.ptPT.rawValue {
-            languageCode = Languages.ptPT
+        //var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
+        
+        if let langCode = Languages(rawValue: (SystemLanguageCode(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en) .rawValue) {
+            var languageCode = langCode
+            if deviceLanguageCode.contains(SystemLanguageCode.zhHans.rawValue) {
+                languageCode = Languages.zhHans
+            } else if deviceLanguageCode.contains(SystemLanguageCode.zhHant.rawValue) {
+                languageCode = Languages.zhHant
+            } else if deviceLanguageCode == SystemLanguageCode.ptPT.rawValue {
+                languageCode = Languages.ptPT
+            }
+            LanguageManager.shared.setLanguage(language: languageCode)
         }
-
-        LanguageManager.shared.setLanguage(language: languageCode)
     }
 
     //MARK: - AccessKey and Licence token functionalities
