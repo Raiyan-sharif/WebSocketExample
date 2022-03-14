@@ -260,6 +260,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
+        self.cameraHistoryViewModel.cameraHistoryImages.removeAll()
         self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true

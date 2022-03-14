@@ -66,6 +66,7 @@ extension ITTServerViewModel: SocketManagerDelegate {
             self?.timeInterval -= 1
             if self?.timeInterval == 0 {
                 timer.invalidate()
+                self?.timer = nil
                 self?.loaderdelegate?.hideLoader()
                 self?.delegate?.showNetworkError()
             } else if let seconds = self?.timeInterval {
@@ -73,7 +74,6 @@ extension ITTServerViewModel: SocketManagerDelegate {
                     self?.timer?.invalidate()
                     self?.timer = nil
                 }
-                //PrintUtility.printLog(tag: "TTTSN", text: "time: \(seconds)")
             }
         }
     }
