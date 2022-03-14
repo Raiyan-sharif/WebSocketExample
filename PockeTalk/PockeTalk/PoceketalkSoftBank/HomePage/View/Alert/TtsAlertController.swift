@@ -596,6 +596,13 @@ extension TtsAlertController : AlertReusableDelegate {
     }
     
     func updateFavourite(chatItemModel: HistoryChatItemModel) {
+        // Favorite limit dailog show
+        let favoriteLimitFlag = UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value ?? false
+        if favoriteLimitFlag {
+            let showAlert = CustomAlertViewModel()
+            let dialog = showAlert.alertDialogWithoutTitleWithOkButton(message: "msg_liked_item_limit_exits".localiz())
+            self.present(dialog, animated: true, completion: nil)
+        }
         ttsAlertControllerDelegate?.updatedFavourite(chatItemModel)
     }
     

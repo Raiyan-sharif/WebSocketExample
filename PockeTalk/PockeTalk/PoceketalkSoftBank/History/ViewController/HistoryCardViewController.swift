@@ -366,10 +366,31 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             guard let `self`  = self else {
                 return
             }
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
-            self.historyViewModel.makeFavourite(indexpath.item)
-            self.collectionView.reloadItems(at: [indexpath])
+            // Favorite limit check and dailog show
+            if item.chatIsLiked == IsLiked.noLike.rawValue {
+                var favoriteItemCount: Int = 0
+                do{
+                    favoriteItemCount =  try ChatDBModel().getRowCount(isFavorite: true)
+                } catch{}
+                if favoriteItemCount >= FAVORITE_MAX_LIMIT {
+                    UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = true
+                    let showAlert = CustomAlertViewModel()
+                    let dialog = showAlert.alertDialogWithoutTitleWithOkButton(message: "msg_liked_item_limit_exits".localiz())
+                    self.present(dialog, animated: true, completion: nil)
+                } else {
+                    let cellPoint =  collectionView.convert(point, from:collectionView)
+                    let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+                    self.historyViewModel.makeFavourite(indexpath.item)
+                    self.collectionView.reloadItems(at: [indexpath])
+                }
+            } else {
+                let cellPoint =  collectionView.convert(point, from:collectionView)
+                let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+                self.historyViewModel.makeFavourite(indexpath.item)
+                self.collectionView.reloadItems(at: [indexpath])
+            }
+            
+            
         }
         
         cell.tappedItem = { [weak self] point in
@@ -464,6 +485,13 @@ extension HistoryCardViewController : AlertReusableDelegate{
     }
     
     func updateFavourite(chatItemModel: HistoryChatItemModel){
+        // Favorite limit dailog show
+        let favoriteLimitFlag = UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value ?? false
+        if favoriteLimitFlag {
+            let showAlert = CustomAlertViewModel()
+            let dialog = showAlert.alertDialogWithoutTitleWithOkButton(message: "msg_liked_item_limit_exits".localiz())
+            self.present(dialog, animated: true, completion: nil)
+        }
         self.historyViewModel.items.value[chatItemModel.idxPath!.row] = chatItemModel.chatItem!
         self.collectionView.reloadItems(at: [chatItemModel.idxPath!])
     }

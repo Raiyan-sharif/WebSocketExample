@@ -96,6 +96,8 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
+                // Favorite limit flag update
+                UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = false
                 self.showSuccessAlert(title: "favorite_history_cleared".localiz())
             }
             present(alert, animated: true, completion: nil)

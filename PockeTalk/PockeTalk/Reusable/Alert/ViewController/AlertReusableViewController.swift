@@ -77,13 +77,28 @@ class AlertReusableViewController: BaseViewController {
         let cell = self.alertTableView.cellForRow(at: index) as! AlertTableViewCell
         
         if(chatItemModel?.chatItem != nil){
-            alertViewModel.swapLikeValue(chatItemModel!.chatItem!)
             if chatItemModel!.chatItem?.chatIsLiked == IsLiked.like.rawValue{
+                // Favorite limit flag update
+                UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = false
+                alertViewModel.swapLikeValue(chatItemModel!.chatItem!)
                 cell.imgView.image = UIImage(named:"icon_favorite_popup.png")
                 chatItemModel!.chatItem?.chatIsLiked = IsLiked.noLike.rawValue
             }else{
-                cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
-                chatItemModel!.chatItem?.chatIsLiked = IsLiked.like.rawValue
+                // Favorite limit check
+                var favoriteItemCount:Int = 0
+                do{
+                    favoriteItemCount =  try ChatDBModel().getRowCount(isFavorite: true)
+                } catch{}
+                if favoriteItemCount >= FAVORITE_MAX_LIMIT {
+                    // Favorite limit flag update
+                    UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = true
+                } else {
+                    // Favorite limit flag update
+                    UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = false
+                    alertViewModel.swapLikeValue(chatItemModel!.chatItem!)
+                    cell.imgView.image = UIImage(named:"icon_favorite_select_popup.png")
+                    chatItemModel!.chatItem?.chatIsLiked = IsLiked.like.rawValue
+                }
             }
             self.delegate?.updateFavourite(chatItemModel: chatItemModel!)
         }else{

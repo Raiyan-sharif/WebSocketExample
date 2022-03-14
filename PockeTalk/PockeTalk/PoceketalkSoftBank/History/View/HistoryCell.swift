@@ -117,7 +117,11 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
             
             if translationX > childView.bounds.width/2 {
                 if panViewMinX > 0  {
-                    favImagView.tintColor = .yellow
+                    ///Favorite limit check, Favorite icon check on swipe action
+                    let favoriteLimitFlag = UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value ?? false
+                    if !favoriteLimitFlag {
+                        favImagView.tintColor = .yellow
+                    }
                     favView.backgroundColor = .orange
                     target!.center = CGPoint(x:self.bounds.maxX*2, y: viewCenter!.y)
                     self.favouriteItem?(self.center)
