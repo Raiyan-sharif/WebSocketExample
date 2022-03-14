@@ -9,9 +9,6 @@ import StoreKit
 
 class PurchasePlanViewController: UIViewController {
     @IBOutlet weak private var purchasePlanTV: UITableView!
-    @IBOutlet weak private var purchaseInfoLabel: UILabel!
-    @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
-
     private let TAG = "\(PurchasePlanViewController.self)"
     private let purchasePlanVM = PurchasePlanViewModel()
 
@@ -26,7 +23,6 @@ class PurchasePlanViewController: UIViewController {
     private func setupUI() {
         setupView()
         setupTableView()
-        setupBottomLabel()
     }
 
     private func setupView() {
@@ -39,49 +35,51 @@ class PurchasePlanViewController: UIViewController {
         purchasePlanTV.dataSource = self
         purchasePlanTV.separatorStyle = .none
         purchasePlanTV.backgroundColor = .white
-        purchasePlanTV.isScrollEnabled = false
 
         purchasePlanTV.register(UINib(nibName: KInfoLabelTableViewCell, bundle: nil), forCellReuseIdentifier: KInfoLabelTableViewCell)
         purchasePlanTV.register(UINib(nibName: KPlanTableViewCell, bundle: nil), forCellReuseIdentifier: KPlanTableViewCell)
+
+        purchasePlanTV.register(UINib(nibName: KFreePlanTableViewCell, bundle: nil), forCellReuseIdentifier: KFreePlanTableViewCell)
         purchasePlanTV.register(UINib(nibName: KSingleButtonTableViewCell, bundle: nil), forCellReuseIdentifier: KSingleButtonTableViewCell)
 
         purchasePlanTV.reloadData()
     }
 
-    private func setupBottomLabel() {
-        purchaseInfoLabel.text = "kPaidPlanVCBulletPointOneLabel".localiz() + " " + "kPaidPlanVCBulletPointTwoLabel".localiz()
-    }
-
     //MARK: - Load data
     private func getProductList() {
-        setActivityIndicator(shouldStart: true)
-        if Reachability.isConnectedToNetwork() {
+        //ActivityIndicator.sharedInstance.show()
+        //if Reachability.isConnectedToNetwork() {
+
             purchasePlanVM.getProduct { [weak self] success, error in
+
                 if let productFetchError = error{
+                    /*
                     DispatchQueue.main.async {
                         self?.showProductFetchErrorAlert(message: productFetchError)
-                        self?.setActivityIndicator(shouldStart: false)
+                        ActivityIndicator.sharedInstance.hide()
                         return
-                    }
+                    }*/
+                    PrintUtility.printLog(tag: "IAP", text: "Product can't fetch, error: \(productFetchError)")
                 }
 
                 DispatchQueue.main.async {
                     if success {
+                        PrintUtility.printLog(tag: "IAP", text: "Product fetch status \(success)")
                         self?.purchasePlanTV.reloadData()
                     }
-                    self?.setActivityIndicator(shouldStart: false)
+                    //ActivityIndicator.sharedInstance.hide()
                 }
             }
+        /*
         } else {
-            setActivityIndicator(shouldStart: false)
-            showNoInternetAlert()
-        }
-
+            ActivityIndicator.sharedInstance.hide()
+            InitialFlowHelper().showNoInternetAlert(on: self)
+        }*/
     }
 
     //MARK: - API Calls
     private func restorePurchases() {
-        setActivityIndicator(shouldStart: true)
+        ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork(){
             self.purchasePlanVM.updateReceiptValidationAllow()
             purchasePlanVM.restorePurchase { [weak self] success, error in
@@ -90,7 +88,7 @@ class PurchasePlanViewController: UIViewController {
                 if let error = error {
                     DispatchQueue.main.async {
                         self.showIAPRelatedError(error)
-                        self.setActivityIndicator(shouldStart: false)
+                        ActivityIndicator.sharedInstance.hide()
                         return
                     }
                 }
@@ -100,11 +98,11 @@ class PurchasePlanViewController: UIViewController {
                 } else {
                     self.didFinishRestoringPurchasesWithZeroProducts()
                 }
-                self.setActivityIndicator(shouldStart: false)
+                ActivityIndicator.sharedInstance.hide()
             }
         } else {
-            setActivityIndicator(shouldStart: false)
-            showNoInternetAlert()
+            ActivityIndicator.sharedInstance.hide()
+            InitialFlowHelper().showNoInternetAlert(on: self)
         }
     }
 
@@ -113,7 +111,7 @@ class PurchasePlanViewController: UIViewController {
             return false
         } else {
             if Reachability.isConnectedToNetwork() {
-                setActivityIndicator(shouldStart: true)
+                ActivityIndicator.sharedInstance.show()
                 self.purchasePlanVM.updateReceiptValidationAllow()
                 self.purchasePlanVM.purchaseProduct(product: product){ [weak self] success, error in
                     guard let self = `self` else {return}
@@ -121,16 +119,17 @@ class PurchasePlanViewController: UIViewController {
                     if let productPurchaseError = error{
                         DispatchQueue.main.async {
                             self.showIAPRelatedError(productPurchaseError)
-                            self.setActivityIndicator(shouldStart: false)
+                            ActivityIndicator.sharedInstance.hide()
                             return
                         }
                     }
 
                     success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: "initialFlow", text: "Din't successfully buy the product"))
+                    ActivityIndicator.sharedInstance.hide()
                 }
             } else {
-                setActivityIndicator(shouldStart: false)
-                showNoInternetAlert()
+                ActivityIndicator.sharedInstance.hide()
+                InitialFlowHelper().showNoInternetAlert(on: self)
             }
         }
         return true
@@ -138,12 +137,8 @@ class PurchasePlanViewController: UIViewController {
 
     //MARK: - IBActions
     private func tapOnCell(indexPath: IndexPath) {
-        if purchasePlanVM.rowType[indexPath.row] == .cancle {
-            goToTermAndConditionVC()
-        }
-
         if purchasePlanVM.rowType[indexPath.row] == .restorePurchase {
-            Reachability.isConnectedToNetwork() ? (restorePurchases()) : (showNoInternetAlert())
+            Reachability.isConnectedToNetwork() ? (restorePurchases()) : (InitialFlowHelper().showNoInternetAlert(on: self))
         }
     }
 
@@ -172,18 +167,6 @@ class PurchasePlanViewController: UIViewController {
     }
 
     //MARK: - Utils
-    private func setActivityIndicator(shouldStart: Bool) {
-        DispatchQueue.main.async {
-            if shouldStart == true {
-                self.activityIndicator.startAnimating()
-                self.view.isUserInteractionEnabled = false
-            } else {
-                self.activityIndicator.stopAnimating()
-                self.view.isUserInteractionEnabled = true
-            }
-        }
-    }
-
     private func getProductForPurchase(for type: PurchasePlanTVCellInfo){
         if let productDetails = purchasePlanVM.getProductDetailsData(using: type){
             if !self.requestForPurchaseProduct(product: productDetails.product){
@@ -218,22 +201,6 @@ class PurchasePlanViewController: UIViewController {
     private func showIAPRelatedError(_ error: String) {
         showSingleAlert(withMessage: error)
     }
-
-    private func showNoInternetAlert() {
-        self.popupAlert(title: "internet_connection_error".localiz(), message: "", actionTitles: ["connect_via_wifi".localiz(), "Cancel".localiz()], actionStyle: [.default, .cancel], action: [
-            { connectViaWifi in
-                DispatchQueue.main.async {
-                    if let url = URL(string:UIApplication.openSettingsURLString) {
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
-                }
-            },{ cancel in
-                PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
-            }
-        ])
-    }
 }
 
 //MARK: - UITableViewDataSource
@@ -251,13 +218,18 @@ extension PurchasePlanViewController: UITableViewDataSource{
             cell.configCell(text: rowType.title)
             cell.selectionStyle = .none
             return cell
+        case .freeUses:
+            let cell = tableView.dequeueReusableCell(withIdentifier: KFreePlanTableViewCell,for: indexPath) as! FreePlanTableViewCell
+            cell.configCell(indexPath: indexPath, freeDaysDetailsInfoText: rowType.title, freeDaysUsesInfo: purchasePlanVM.getFreeDaysUsesInfo())
+            cell.selectionStyle = .none
+            return cell
         case .weeklyPlan, .monthlyPlan,.annualPlan, .dailyPlan:
             let cell = tableView.dequeueReusableCell(withIdentifier: KPlanTableViewCell,for: indexPath) as! PlanTableViewCell
             cell.selectionStyle = .none
             let productData = purchasePlanVM.getProductDetailsData(using: rowType)
-            cell.configCell(indexPath: indexPath, cellType: rowType, productData: productData)
+            cell.configCell(indexPath: indexPath, cellType: rowType, productData: productData, isSuggestionTextAvailable: productData?.suggestionText == nil ? (false): (true), isShowDummyImage: true)
             return cell
-        case .cancle, .restorePurchase:
+        case .restorePurchase:
             let cell = tableView.dequeueReusableCell(withIdentifier: KSingleButtonTableViewCell,for: indexPath) as! SingleButtonTableViewCell
             cell.configure(indexPath: indexPath, buttonTitle: rowType.title) { [weak self] cellIndexPath in
                 self?.tapOnCell(indexPath: cellIndexPath)
@@ -274,7 +246,7 @@ extension PurchasePlanViewController: UITableViewDelegate{
         let rowType = purchasePlanVM.rowType[indexPath.row]
 
         switch rowType{
-        case .selectPlan, .weeklyPlan, .monthlyPlan, .annualPlan, .cancle, .restorePurchase, .dailyPlan:
+        case .selectPlan, .freeUses, .weeklyPlan, .monthlyPlan, .annualPlan, .restorePurchase, .dailyPlan:
             return rowType.height
         }
     }
@@ -283,10 +255,12 @@ extension PurchasePlanViewController: UITableViewDelegate{
         let rowType = purchasePlanVM.rowType[indexPath.row]
 
         switch rowType{
-        case .selectPlan, .cancle, .restorePurchase:
+        case .selectPlan, .freeUses, .restorePurchase:
             return
         case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
-            getProductForPurchase(for: rowType)
+            if !purchasePlanVM.isDataLoading {
+                getProductForPurchase(for: rowType)
+            }
         }
     }
 }

@@ -11,6 +11,22 @@ class InitialFlowHelper{
         return 8.0
     }
 
+    var planTypeLabelTopLayoutConstrain: CGFloat {
+        return 16.0
+    }
+
+    var weeklyProductImage: String {
+        return "plan_week"
+    }
+
+    var monthlyProductImage: String {
+        return "plan_month"
+    }
+
+    var annualProductImage: String {
+        return "plan_year_withlabel"
+    }
+
     func getTermAndConditionBtnAttributedString() -> NSMutableAttributedString {
         let termAndConditionBtnTextAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 18),
@@ -40,6 +56,21 @@ class InitialFlowHelper{
         alertController.view.tintColor = UIColor.black
         alertController.addAction(UIAlertAction(title: "OK".localiz(), style: .default, handler: nil))
         return alertController
+    }
 
+    func showNoInternetAlert(on vc: UIViewController) {
+        vc.popupAlert(title: "internet_connection_error".localiz(), message: "", actionTitles: ["connect_via_wifi".localiz(), "Cancel".localiz()], actionStyle: [.default, .cancel], action: [
+            { connectViaWifi in
+                DispatchQueue.main.async {
+                    if let url = URL(string:UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
+                }
+            },{ cancel in
+                PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
+            }
+        ])
     }
 }

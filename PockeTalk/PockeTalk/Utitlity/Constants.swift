@@ -133,6 +133,7 @@ let KPermissionTableViewCell = "PermissionTableViewCell"
 let KPlanTableViewCell = "PlanTableViewCell"
 let KInfoLabelTableViewCell = "InfoLabelTableViewCell"
 let KSingleButtonTableViewCell = "SingleButtonTableViewCell"
+let KFreePlanTableViewCell = "FreePlanTableViewCell"
 
 //Nib name
 let KAlertReusable = "AlertReusableViewController"
@@ -299,3 +300,5 @@ let kDate = "Date"
 let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
+let kInAppPurchaseStatus = "inAppPurchaseStatus"
+let KIsAppLaunchedForFirstTime = "KIsAppLaunchedForFirstTime"

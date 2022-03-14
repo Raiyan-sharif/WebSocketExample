@@ -163,6 +163,8 @@
 		8915C20F26F9DFED0091BF8B /* FavouriteLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C20E26F9DFED0091BF8B /* FavouriteLayout.swift */; };
 		8915C21226F9E0D50091BF8B /* FavouriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C21026F9E0D50091BF8B /* FavouriteCell.swift */; };
 		8915C21326F9E0D50091BF8B /* FavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8915C21126F9E0D50091BF8B /* FavouriteCell.xib */; };
+		8919D91927D615E4009FC198 /* FreePlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8919D91727D615E4009FC198 /* FreePlanTableViewCell.swift */; };
+		8919D91A27D615E4009FC198 /* FreePlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8919D91827D615E4009FC198 /* FreePlanTableViewCell.xib */; };
 		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
 		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		8928E59327C7480600638F6E /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8928E59227C7480600638F6E /* Extension+UIButton.swift */; };
@@ -172,6 +174,7 @@
 		8928E59D27C7B5D800638F6E /* InitialFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8928E59C27C7B5D800638F6E /* InitialFlow.storyboard */; };
 		8929D12E27B0F19400750537 /* resv_src.js in Resources */ = {isa = PBXBuildFile; fileRef = 8929D12D27B0F19400750537 /* resv_src.js */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
+		892FE47227D8DF34001F560C /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FE47127D8DF34001F560C /* Extension+Double.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
 		8935A16826E61F8300AC3CA1 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A16726E61F8300AC3CA1 /* CameraViewController.swift */; };
 		8937B13A26E8C9AD0041739F /* PronunciationPracticeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */; };
@@ -492,6 +495,8 @@
 		8915C20E26F9DFED0091BF8B /* FavouriteLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteLayout.swift; sourceTree = "<group>"; };
 		8915C21026F9E0D50091BF8B /* FavouriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
 		8915C21126F9E0D50091BF8B /* FavouriteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
+		8919D91727D615E4009FC198 /* FreePlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlanTableViewCell.swift; sourceTree = "<group>"; };
+		8919D91827D615E4009FC198 /* FreePlanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FreePlanTableViewCell.xib; sourceTree = "<group>"; };
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		8928E59227C7480600638F6E /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
@@ -501,6 +506,7 @@
 		8928E59C27C7B5D800638F6E /* InitialFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InitialFlow.storyboard; sourceTree = "<group>"; };
 		8929D12D27B0F19400750537 /* resv_src.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = resv_src.js; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
+		892FE47127D8DF34001F560C /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
 		8935A16726E61F8300AC3CA1 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8937B13926E8C9AD0041739F /* PronunciationPracticeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeResultViewController.swift; sourceTree = "<group>"; };
@@ -1030,6 +1036,7 @@
 				89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */,
 				89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */,
 				8928E59227C7480600638F6E /* Extension+UIButton.swift */,
+				892FE47127D8DF34001F560C /* Extension+Double.swift */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -1625,6 +1632,8 @@
 				89A4F02727C5FF5500A718FA /* InfoLabelTableViewCell.xib */,
 				8928E59427C7510900638F6E /* SingleButtonTableViewCell.swift */,
 				8928E59527C7510900638F6E /* SingleButtonTableViewCell.xib */,
+				8919D91727D615E4009FC198 /* FreePlanTableViewCell.swift */,
+				8919D91827D615E4009FC198 /* FreePlanTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -1731,6 +1740,7 @@
 				89A4F03027C62B1200A718FA /* PurchasePlanViewController.swift */,
 				89A4F02127C5F6D800A718FA /* PermissionViewController.swift */,
 				89A4F03227C63EE700A718FA /* WelcomesViewController.swift */,
+				89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1882,14 +1892,6 @@
 			path = IAPManager;
 			sourceTree = "<group>";
 		};
-		89BE587B27AB959F005B46A4 /* IAPStatusCheckDummyLoadingViewController */ = {
-			isa = PBXGroup;
-			children = (
-				89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */,
-			);
-			path = IAPStatusCheckDummyLoadingViewController;
-			sourceTree = "<group>";
-		};
 		89C0F7E026F1EA3F000CD5FC /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1935,7 +1937,6 @@
 				89A4F01C27C5E4B200A718FA /* ViewController */,
 				89B4D1EE27BE594500D1C7D2 /* View */,
 				8928E59927C767CC00638F6E /* Helper */,
-				89BE587B27AB959F005B46A4 /* IAPStatusCheckDummyLoadingViewController */,
 				89B159392784131400636574 /* TermsAndConditionsViewController */,
 				896C3D0727831BD6007C3560 /* InitialPermissionSettingsViewController */,
 				8946FA7227845B5B00DC6B39 /* PaidPlanViewController */,
@@ -2227,6 +2228,7 @@
 				89E6B2E7279E8FBE00024A70 /* conversation_languages_zh.xml in Resources */,
 				87108A4D27BCE6530007AA9F /* NeworkLoggerCell.xib in Resources */,
 				89E6B2E1279E8DE200024A70 /* country_selection_list_es.json in Resources */,
+				8919D91A27D615E4009FC198 /* FreePlanTableViewCell.xib in Resources */,
 				69C99F1726E744EA00D853AB /* hello_mapping_new.xml in Resources */,
 				5028D55B26E2A0D0002A5250 /* LanguageSelectVoice.storyboard in Resources */,
 				8940A3B527ABDB14005CB401 /* text-license.html in Resources */,
@@ -2428,6 +2430,7 @@
 				8928E59627C7510900638F6E /* SingleButtonTableViewCell.swift in Sources */,
 				89495B4926F0AAA500CEA19D /* WebService.swift in Sources */,
 				695AB962270C1D2600E9E4F9 /* LangueEngineModel.swift in Sources */,
+				8919D91927D615E4009FC198 /* FreePlanTableViewCell.swift in Sources */,
 				4AE97AEC26E8E365007344FC /* DataBaseConstant.swift in Sources */,
 				89A7B65A26E5CC2000087537 /* CustomShapeButton.swift in Sources */,
 				87EC9F4F26F22DA1008B28E7 /* HighLight.swift in Sources */,
@@ -2470,6 +2473,7 @@
 				89E6B2F5279EB9F800024A70 /* SystemlanguageCodes.swift in Sources */,
 				502939A22717F2B8004EB8C0 /* ResetListTableViewCell.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
+				892FE47227D8DF34001F560C /* Extension+Double.swift in Sources */,
 				87F832BC2759DC4A007329BA /* AudioPlayer.swift in Sources */,
 				50C8871026E666F500A6D10E /* LanguageSelectionManager.swift in Sources */,
 				897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */,

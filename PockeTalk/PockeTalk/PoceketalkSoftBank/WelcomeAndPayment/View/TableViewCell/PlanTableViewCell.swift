@@ -8,9 +8,12 @@ import UIKit
 class PlanTableViewCell: UITableViewCell {
     @IBOutlet weak private var planTypeLabel: UILabel!
     @IBOutlet weak private var planDetailsLabel: UILabel!
-    @IBOutlet weak private var rightView: UIView!
     @IBOutlet weak private var containerView: UIView!
-    @IBOutlet weak private var freeFroThreeDaysLabel: UILabel!
+    @IBOutlet weak private var planSuggestionLabel: UILabel!
+    @IBOutlet weak private var planTypeLabelTopLayoutConstrain: NSLayoutConstraint!
+    @IBOutlet weak private var planSuggestionLabelTopLayoutConstrain: NSLayoutConstraint!
+    @IBOutlet weak private var dummyImageContainerView: UIView!
+    @IBOutlet weak private var dummyImageView: UIImageView!
 
     //MARK: - Lifecycle methods
     override func awakeFromNib() {
@@ -28,27 +31,49 @@ class PlanTableViewCell: UITableViewCell {
         containerView.layer.borderWidth = 1.0
         containerView.backgroundColor = UIColor._lightBlueColor()
         containerView.layer.borderColor = UIColor._royalBlueColor().cgColor
+
         planTypeLabel.textColor = UIColor._royalBlueColor()
         planDetailsLabel.textColor = UIColor.black
-        rightView.layer.cornerRadius = rightView.frame.size.width / 2
+        planSuggestionLabel.textColor = UIColor.black
     }
 
     //MARK: - ConfigCell
-    func configCell(indexPath: IndexPath, cellType: PurchasePlanTVCellInfo, productData: ProductDetails?){
-        planTypeLabel.text = cellType.planTitleText
+    func configCell(indexPath: IndexPath, cellType: PurchasePlanTVCellInfo, productData: ProductDetails?, isSuggestionTextAvailable: Bool, isShowDummyImage: Bool){
 
-        if productData?.planPerUnitText == nil {
-            planDetailsLabel.text = "Loading..."
+        if isShowDummyImage {
+            dummyImageContainerView.isHidden = false
+            containerView.isHidden = true
+
+            if cellType == .weeklyPlan {
+                dummyImageView.image = UIImage(named: InitialFlowHelper().weeklyProductImage)
+            } else if cellType == .monthlyPlan {
+                dummyImageView.image = UIImage(named: InitialFlowHelper().monthlyProductImage)
+            } else if cellType == .annualPlan {
+                dummyImageView.image = UIImage(named: InitialFlowHelper().annualProductImage)
+            }
+
         } else {
-            planDetailsLabel.text = productData?.planPerUnitText
+            dummyImageContainerView.isHidden = true
+            containerView.isHidden = false
+
+            setUIConstrain(isSuggestionTextAvailable: isSuggestionTextAvailable)
+
+            if productData != nil {
+                planTypeLabel.text = cellType.planTitleText
+                planDetailsLabel.text = productData!.planPerUnitText
+
+                if let suggestionText = productData?.suggestionText {
+                    planSuggestionLabel.text = suggestionText
+                } else {
+                    planSuggestionLabel.text = ""
+                }
+            }
         }
+    }
 
-        if productData?.freeUsesDetailsText != nil {
-            rightView.isHidden = false
-            freeFroThreeDaysLabel.text = productData?.freeUsesDetailsText
-        } else {
-            rightView.isHidden = true
-            freeFroThreeDaysLabel.text = ""
+    private func setUIConstrain(isSuggestionTextAvailable: Bool){
+        if !isSuggestionTextAvailable {
+            planTypeLabelTopLayoutConstrain.constant = InitialFlowHelper().planTypeLabelTopLayoutConstrain
         }
     }
 }
