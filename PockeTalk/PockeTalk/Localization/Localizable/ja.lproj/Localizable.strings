@@ -148,3 +148,10 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
+//Boarding Screen
+"Back" = "戻る";
+"Close" = "閉じる";
+"KBoardingTalkButtonTitle" = "押しながら話して翻訳";
+"KBoardingTransLationLan"  = "翻訳言語の変更";
+"KBoardingLanChange" = "翻訳方向の変更";

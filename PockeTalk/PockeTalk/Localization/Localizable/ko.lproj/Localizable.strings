@@ -142,3 +142,10 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
+//Boarding Screen
+"Back" = "뒤로 가기";
+"Close" = "닫기";
+"KBoardingTalkButtonTitle"  = "누른 상태로 말하며 번역";
+"KBoardingTransLationLan"  = "번역 언어 변경";
+"KBoardingLanChange"  = "번역 방향 변경";

@@ -129,6 +129,8 @@
 		8732CADD26FC285400843BFE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732CADC26FC285400843BFE /* NetworkManager.swift */; };
 		873F8C4926F0760A00CD5F9B /* FontSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873F8C4726F0760A00CD5F9B /* FontSelectionCell.swift */; };
 		873F8C4A26F0760A00CD5F9B /* FontSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 873F8C4826F0760A00CD5F9B /* FontSelectionCell.xib */; };
+		87490D7A27D8861E009B272D /* Boarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87490D7927D8861E009B272D /* Boarding.storyboard */; };
+		87490D7F27D8899D009B272D /* WalkThroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87490D7E27D8899D009B272D /* WalkThroughViewController.swift */; };
 		8782DEDD26E08D10003A1681 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8782DEDF26E08D10003A1681 /* Localizable.strings */; };
 		8782DEEF26E09468003A1681 /* SystemLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */; };
 		8782DEF726E098DE003A1681 /* SystemLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782DEF526E098DE003A1681 /* SystemLanguageCell.swift */; };
@@ -457,6 +459,8 @@
 		8732CADC26FC285400843BFE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		873F8C4726F0760A00CD5F9B /* FontSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionCell.swift; sourceTree = "<group>"; };
 		873F8C4826F0760A00CD5F9B /* FontSelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FontSelectionCell.xib; sourceTree = "<group>"; };
+		87490D7927D8861E009B272D /* Boarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Boarding.storyboard; sourceTree = "<group>"; };
+		87490D7E27D8899D009B272D /* WalkThroughViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkThroughViewController.swift; sourceTree = "<group>"; };
 		8782DEDE26E08D10003A1681 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8782DEE826E08EC1003A1681 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8782DEEE26E09468003A1681 /* SystemLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLanguageViewController.swift; sourceTree = "<group>"; };
@@ -866,6 +870,7 @@
 		4A66139E26DDECA8004A925D /* PoceketalkSoftBank */ = {
 			isa = PBXGroup;
 			children = (
+				87490D7127D885E7009B272D /* Boarding */,
 				87108A4327BCE1740007AA9F /* NetworkLogger */,
 				89DEA1F427830F8800DB0801 /* WelcomeAndPayment */,
 				8915C1DD26F9D7740091BF8B /* Favourite */,
@@ -1388,6 +1393,31 @@
 				89B4066C274386F00031CB65 /* HistoryCardViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		87490D7127D885E7009B272D /* Boarding */ = {
+			isa = PBXGroup;
+			children = (
+				87490D7D27D88979009B272D /* VC */,
+				87490D7427D885FF009B272D /* View */,
+			);
+			path = Boarding;
+			sourceTree = "<group>";
+		};
+		87490D7427D885FF009B272D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				87490D7927D8861E009B272D /* Boarding.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87490D7D27D88979009B272D /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				87490D7E27D8899D009B272D /* WalkThroughViewController.swift */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 		8782DECF26E08BEE003A1681 /* Localization */ = {
@@ -2223,6 +2253,7 @@
 				4AF2609126E08BA1009C616E /* Menu.storyboard in Resources */,
 				89E6B2F1279E8FDA00024A70 /* conversation_languages_pt.xml in Resources */,
 				4AF2608526E072D1009C616E /* Camera.storyboard in Resources */,
+				87490D7A27D8861E009B272D /* Boarding.storyboard in Resources */,
 				4AEF500E26DF9E9A0052B6EB /* Main.storyboard in Resources */,
 				89E6B2E7279E8FBE00024A70 /* conversation_languages_zh.xml in Resources */,
 				87108A4D27BCE6530007AA9F /* NeworkLoggerCell.xib in Resources */,
@@ -2342,6 +2373,7 @@
 				89C0F7D426F1CE08000CD5FC /* UserDefaultsUtility.swift in Sources */,
 				89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */,
 				89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */,
+				87490D7F27D8899D009B272D /* WalkThroughViewController.swift in Sources */,
 				89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */,
 				87C78F0B27212DA3004BC276 /* HomeViewController+Extension.swift in Sources */,
 				963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */,

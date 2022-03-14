@@ -142,3 +142,12 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
+//Boarding Screen
+"Back" = "Précédent";
+"Close" = "Fermer";
+"KBoardingTalkButtonTitle"  = "Parler en appuyant le bouton et traduire";
+"KBoardingTransLationLan" = "Changer la langue de traduction";
+"KBoardingLanChange" = "Changer la langue source/cible dans la traduction";
+
+

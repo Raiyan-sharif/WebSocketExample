@@ -141,3 +141,11 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
+//Boarding Screen
+"Back" = "kembali";
+"Close" = "dekat";
+"KBoardingTalkButtonTitle"  = "Tekan dan bercakap untuk penterjemahan";
+"KBoardingTransLationLan"  = "Tukar bahasa terjemahan";
+"KBoardingLanChange"  = "Tukar arahan terjemahan";
+
