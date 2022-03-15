@@ -9,6 +9,7 @@ class PermissionViewController: UIViewController {
     @IBOutlet weak private var permissionTV: UITableView!
     @IBOutlet weak private var nextBtn: UIButton!
     private var row = [PermissionTVCellInfo]()
+    private var isAllPermissionShown = false
 
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -23,7 +24,8 @@ class PermissionViewController: UIViewController {
     private func setupUI() {
         setupView()
         setupTableView()
-        setupButtonProperty()
+        setupButtonProperty(isButtonActive: false)
+        hideTalkButtonIfExist()
     }
 
     private func setupView() {
@@ -41,11 +43,12 @@ class PermissionViewController: UIViewController {
         permissionTV.register(UINib(nibName: KPermissionTableViewCell, bundle: nil), forCellReuseIdentifier: KPermissionTableViewCell)
     }
 
-    private func setupButtonProperty() {
-        nextBtn.setButtonAttributes(
+    private func setupButtonProperty(isButtonActive: Bool) {
+        nextBtn.setButtonAttributes (
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
             title: "kNextButtonTitle".localiz(),
-            backgroundColor:  UIColor._royalBlueColor())
+            backgroundColor: isButtonActive ? UIColor._royalBlueColor() : UIColor._semiDarkGrayColor())
+        nextBtn.setTitleColor( isButtonActive ? .white : .black, for: .normal)
     }
 
     private func initializeData() {
@@ -79,21 +82,42 @@ class PermissionViewController: UIViewController {
 
     //MARK: - Utils
     private func setGrantPermissionStatusAndReloadTV(for cellType: PermissionTVCellType, status permissionStatus: Bool ) {
-        for item in 0..<row.count{
-            if row[item].cellType == cellType{
+        for item in 0..<row.count {
+            if row[item].cellType == cellType {
                 row[item].isPermissionGranted = permissionStatus
+
+                if cellType == .cameraPermission {
+                    isAllPermissionShown = true
+                    resetButtonProperty()
+                }
             }
         }
         permissionTV.reloadData()
     }
 
+    private func resetButtonProperty(){
+        DispatchQueue.main.async {
+            self.setupButtonProperty(isButtonActive: true)
+        }
+    }
+
+    private func hideTalkButtonIfExist() {
+        let window = UIApplication.shared.keyWindow ?? UIWindow()
+        let talkButtonImageView = window.viewWithTag(109) as? UIImageView
+
+        if talkButtonImageView != nil {
+            talkButtonImageView?.removeFromSuperview()
+        }
+    }
+
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
-        PrintUtility.printLog(tag: "initalFlow", text: "Tap on next Btn")
-        if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController{
-            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-            self.navigationController?.view.layer.add(transition, forKey: nil)
-            self.navigationController?.pushViewController(viewController, animated: false)
+        if isAllPermissionShown {
+            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
         }
     }
 }

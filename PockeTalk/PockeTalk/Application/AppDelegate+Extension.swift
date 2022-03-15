@@ -7,69 +7,32 @@ import UIKit
 import Kronos
 
 extension AppDelegate{
-    func navigateToHomeViewController() {
+    func navigateToViewController(_ type: ViewControllerType) {
+        var viewController = UIViewController()
+
         DispatchQueue.main.async {
             self.window?.rootViewController = nil
             self.window = UIWindow(frame: UIScreen.main.bounds)
 
-            if let viewController = UIStoryboard.init(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-                self.setActivityIndicatorWindow()
+            switch type {
+            case .home:
+                if let homeVC = UIStoryboard.init(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
+                    viewController = homeVC
+                }
+            case .termAndCondition:
+                if let termAndConditionVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController {
+                    viewController = termAndConditionVC
+                }
+            case .purchasePlan:
+                if let purchasePlanVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
+                    viewController = purchasePlanVC
+                }
             }
-        }
-    }
 
-    func goTopermissionVC(){
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-
-                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-
-                self.window?.layer.add(transition, forKey: nil)
-                self.setActivityIndicatorWindow()
-            }
-        }
-    }
-
-    func navigateToTermsAndConditionsViewController() {
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController{
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-                self.setActivityIndicatorWindow()
-
-            }
-        }
-    }
-
-    func navigateToPaidPlanViewController() {
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController{
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-                self.setActivityIndicatorWindow()
-            }
+            let navigationController = UINavigationController.init(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+            self.setActivityIndicatorWindow()
         }
     }
 

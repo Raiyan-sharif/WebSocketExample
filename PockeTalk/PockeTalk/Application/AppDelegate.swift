@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func relaunchApplication() {
         //isAppRelaunch = true
         UserDefaultsUtility.setBoolValue(true, forKey: kIsClearedDataAll)
-        self.navigateToTermsAndConditionsViewController()
+        self.navigateToViewController(.termAndCondition)
         setUpInitialLaunch()
     }
 
