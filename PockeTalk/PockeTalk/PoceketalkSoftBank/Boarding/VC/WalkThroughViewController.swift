@@ -121,14 +121,19 @@ class WalkThroughViewController: BaseViewController {
             arrowBackgroundView.isHidden = true
             titleLabel.text = "KBoardingTalkButtonTitle".localiz()
         case 4:
-            self.navigationController?.popViewController(animated: true)
-
+            goToPurchasePlan()
         default:
             break
         }
     }
 
-
+    private func goToPurchasePlan() {
+        if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+    }
 
     private func updateLanguageNames() {
         let languageManager = LanguageSelectionManager.shared
