@@ -43,6 +43,7 @@ class IAPManager: NSObject {
     var isIntroductoryOfferActive: Bool?
     var IAPTimeoutInterval: Double = kIAPTimeoutInterval
     var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+    let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
 
     // MARK: - Custom Types
     enum IAPManagerError: Error {
@@ -54,7 +55,9 @@ class IAPManager: NSObject {
     
     // MARK: - General Methods
     fileprivate func getProductIDs() -> [String]? {
-        guard let url = Bundle.main.url(forResource: IAP_ProductIDs, withExtension: "plist") else { return nil }
+        var resourceURL: String = ""
+        resourceURL = (schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? BJIT_IAP_ProductIDs : IAP_ProductIDs
+        guard let url = Bundle.main.url(forResource: resourceURL, withExtension: "plist") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let productIDs = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: nil) as? [String] ?? []
@@ -434,7 +437,7 @@ extension IAPManager {
             return
         }
         let recieptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : appSpecificSharedSecret as AnyObject]
+        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : ((schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? bjitAppSpecificSharedSecret : appSpecificSharedSecret) as AnyObject]
         
         do {
             let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)

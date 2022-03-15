@@ -77,5 +77,7 @@
 	<string>$(IMEI)</string>
     <key>AudioStremBaseUrl</key>
     <string>$(AUDIO_STREAM_BASE_URL)</string>
+    <key>CURRENT_SCHEME_NAME</key>
+    <string>$(CURRENT_SCHEME_NAME)</string>
 </dict>
 </plist>
