@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 enum MenuItemType: Int {
     case settings
@@ -136,6 +137,9 @@ let KInfoLabelTableViewCell = "InfoLabelTableViewCell"
 let KSingleButtonTableViewCell = "SingleButtonTableViewCell"
 let KFreePlanTableViewCell = "FreePlanTableViewCell"
 
+//Keychain for udid
+let kUniqueUdidKey = "com.sourcenext.pocketalk.ios.udid"
+
 //Nib name
 let KAlertReusable = "AlertReusableViewController"
 
@@ -206,8 +210,6 @@ let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
 let isTermAndConditionTap = "isTermAndConditionTap"
 
-
-
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
@@ -222,6 +224,8 @@ let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
 let imeiCode = "862793051345020"
 let imeiNumber = getIMEINumber("ImeiNumber")
+let client_info="Pocketalk_app_ios"
+let udid = getUUID()  //"Abfaa4d5-a045-4784-9208-088ac8ec0192"
 
 //View Tag
 let floatingMikeButtonTag = 1101
@@ -278,6 +282,21 @@ func getAudioStremUrl(_ key: String) -> String {
     return (Bundle.main.infoDictionary?[key] as? String)?
         .replacingOccurrences(of: "\\", with: "") ?? "wss://test.pt-v.com"
 }
+
+func getUUID() -> String? {
+
+    if let uuid = KeychainWrapper.standard.string(forKey: kUniqueUdidKey) {
+        return uuid
+    }
+
+    guard let newId = UIDevice.current.identifierForVendor?.uuidString else {
+        return nil
+    }
+    KeychainWrapper.standard.set(newId, forKey: kUniqueUdidKey)
+
+    return newId
+}
+
 
 //IAP
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
