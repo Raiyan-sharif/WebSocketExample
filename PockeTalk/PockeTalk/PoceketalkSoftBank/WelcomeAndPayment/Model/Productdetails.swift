@@ -8,10 +8,12 @@ import StoreKit
 
 struct ProductDetails{
     let product: SKProduct
+    let currency: String
+    let price: Double
     let periodUnitType: PeriodUnitType
     let planPerUnitText: String
     let freeUsesDetailsText: String?
-    let freeUsesDetailsTextInSingleLine: String?
+    var suggestionText: String?
 }
 
 enum PeriodUnitType: String{

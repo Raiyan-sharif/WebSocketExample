@@ -12,12 +12,12 @@ class PurchasePlanViewModel{
     private var productDetails = [ProductDetails]()
     private var row = [PurchasePlanTVCellInfo]()
     typealias CompletionCallBack = (_ success: Bool, _ error: String?) -> Void
-    private let dummyTVRow: [PurchasePlanTVCellInfo] = [.selectPlan, .dailyPlan, .weeklyPlan, .annualPlan, .cancle, .restorePurchase]
-    private var isDataLoading = true
+    let dummyRow: [PurchasePlanTVCellInfo] = [.selectPlan, .weeklyPlan, .monthlyPlan, .annualPlan, .restorePurchase]
+    var isDataLoading = true
 
     var numbeOfRow: Int {
         if isDataLoading {
-            return dummyTVRow.count
+            return dummyRow.count
         } else {
             return row.count
         }
@@ -25,38 +25,17 @@ class PurchasePlanViewModel{
 
     var rowType: [PurchasePlanTVCellInfo]{
         if isDataLoading {
-            return dummyTVRow
+            return self.dummyRow
         } else {
             return self.row
         }
     }
 
-    func updateReceiptValidationAllow() {
-        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-    }
-
-    private func resetData(){
-        row.removeAll()
-        products.removeAll()
-        productDetails.removeAll()
-    }
-
-    func restorePurchase(onCompletion: @escaping CompletionCallBack){
-        IAPManager.shared.restorePurchases { (result) in
-            switch result {
-            case .success(let success):
-                onCompletion(success, nil)
-            case .failure(let error):
-                PrintUtility.printLog(tag: "IAP", text: "\(error.localizedDescription)")
-                onCompletion(false, error.localizedDescription)
-            }
-        }
-    }
-
+    //MARK: - API Calls
     func getProduct(onCompletion: @escaping CompletionCallBack) {
-        isDataLoading = true
         IAPManager.shared.getProducts { [weak self] (result) in
             guard let self = `self` else {return}
+            self.isDataLoading = true
             switch result {
             case .success(let products):
                 if products.count > 0 {
@@ -77,22 +56,16 @@ class PurchasePlanViewModel{
         }
     }
 
-    func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails? {
-        for product in self.productDetails{
-            if cellType.unitType == product.periodUnitType.rawValue{
-                return product
+    func restorePurchase(onCompletion: @escaping CompletionCallBack){
+        IAPManager.shared.restorePurchases { (result) in
+            switch result {
+            case .success(let success):
+                onCompletion(success, nil)
+            case .failure(let error):
+                PrintUtility.printLog(tag: "IAP", text: "\(error.localizedDescription)")
+                onCompletion(false, error.localizedDescription)
             }
         }
-        return nil
-    }
-
-    func getProductDetails(using cellType: PurchasePlanTVCellInfo) -> ProductDetails? {
-        for product in self.productDetails{
-            if cellType.unitType == product.periodUnitType.rawValue{
-                return product
-            }
-        }
-        return nil
     }
 
     func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack){
@@ -107,17 +80,50 @@ class PurchasePlanViewModel{
         }
     }
 
-    private func setProductDetails(){
-        for product in self.products{
+    //MARK: - Setable methods
+    private func setProductDetails() {
+        for product in self.products {
             let productDetail = IAPManager.shared.getProductDetails(from: product)
             self.productDetails.append(productDetail)
+        }
+        setSuggestionTextAndSortProduct()
+    }
+
+    private func setSuggestionTextAndSortProduct() {
+        //Sort product details depend on price
+        productDetails = productDetails.sorted { $0.price < $1.price}
+
+        //Get weekly item price
+        let weeklyPrice = (productDetails.filter { $0.periodUnitType == .week
+        }).first?.price ?? 0.0
+
+        //Set suggestion text
+        for item in 0..<productDetails.count {
+            if productDetails[item].periodUnitType == .month {
+                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 4) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+            }
+
+            if productDetails[item].periodUnitType == .year {
+                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 52) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+            }
         }
     }
 
     private func setupTVRowData(){
         row.append(.selectPlan)
 
-        for item in productDetails{
+        var isFreeOfferAvailable = false
+        for item in productDetails {
+            if item.freeUsesDetailsText != nil {
+                isFreeOfferAvailable = true
+            }
+        }
+
+        if isFreeOfferAvailable {
+            row.append(.freeUses)
+        }
+
+        for item in productDetails {
             if item.periodUnitType == .day {
                 row.append(.dailyPlan)
             } else if item.periodUnitType == .week {
@@ -129,7 +135,36 @@ class PurchasePlanViewModel{
             }
         }
 
-        row.append(.cancle)
         row.append(.restorePurchase)
+    }
+
+    //MARK: - Getable methods
+    func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails? {
+        for product in self.productDetails{
+            if cellType.unitType == product.periodUnitType.rawValue{
+                return product
+            }
+        }
+        return nil
+    }
+
+    func getFreeDaysUsesInfo(using cellType: PurchasePlanTVCellInfo = .monthlyPlan) -> String? {
+        for product in self.productDetails{
+            if cellType.unitType == product.periodUnitType.rawValue{
+                return product.freeUsesDetailsText ?? ""
+            }
+        }
+        return nil
+    }
+
+    //MARK: - Utils
+    private func resetData(){
+        row.removeAll()
+        products.removeAll()
+        productDetails.removeAll()
+    }
+
+    func updateReceiptValidationAllow() {
+        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
     }
 }

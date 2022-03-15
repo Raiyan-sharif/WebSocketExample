@@ -50,7 +50,7 @@ extension UIView {
             width: self.frame.width + 10,
             height: HomeViewController.homeVCBottomViewHeight + 5
         )
-        
+
         switch usingState {
             case .gradient:
                 imageView.image = UIImage(named: "bottomBackgroudImage")
@@ -60,6 +60,5 @@ extension UIView {
                 imageView.image = UIImage()
         }
         self.addSubview(imageView)
-        
     }
 }

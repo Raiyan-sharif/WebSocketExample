@@ -142,5 +142,10 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "O número de favoritos atingiu o seu limite";
+
+"kFreePlanText" = "All plans are free for the first";
+"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+

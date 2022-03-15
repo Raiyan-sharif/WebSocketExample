@@ -7,17 +7,17 @@ import UIKit
 
 enum PurchasePlanTVCellInfo: Int {
     case selectPlan
+    case freeUses
     case dailyPlan
     case weeklyPlan
     case monthlyPlan
     case annualPlan
-    case cancle
     case restorePurchase
 
     var unitType: String {
         get {
             switch self {
-            case .selectPlan, .cancle, .restorePurchase: return ""
+            case .selectPlan, .freeUses, .restorePurchase: return ""
             case .dailyPlan:
                 return PeriodUnitType.day.rawValue
             case .weeklyPlan:
@@ -33,7 +33,7 @@ enum PurchasePlanTVCellInfo: Int {
     var planTitleText: String{
         get {
             switch self {
-            case .selectPlan, .cancle, .restorePurchase: return ""
+            case .selectPlan, .freeUses, .restorePurchase: return ""
             case .dailyPlan:
                 return "Daily Plan".localiz()
             case .weeklyPlan:
@@ -41,7 +41,7 @@ enum PurchasePlanTVCellInfo: Int {
             case .monthlyPlan:
                 return "Monthly Plan".localiz()
             case .annualPlan:
-                return "Yearly Plan".localiz()
+                return "Annual Plan".localiz()
             }
         }
     }
@@ -51,8 +51,8 @@ enum PurchasePlanTVCellInfo: Int {
             switch self {
             case .selectPlan: return "kPaidPlanVCRestorePurchaseButtonAlertTitle".localiz()
             case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan: return ""
-            case .cancle: return "cancel".localiz()
             case .restorePurchase: return "kPaidPlanVCRestorePurchaseHistoryButton".localiz()
+            case .freeUses: return "kFreePlanDetailText".localiz()
             }
         }
     }
@@ -61,11 +61,15 @@ enum PurchasePlanTVCellInfo: Int {
         get {
             switch self {
             case .selectPlan:
-                return 80
-            case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
-                return 90
-            case .cancle, .restorePurchase:
-                return 50
+                return 70
+            case .freeUses:
+                return UITableView.automaticDimension
+            case .monthlyPlan, .annualPlan:
+                return 120
+            case .dailyPlan, .weeklyPlan:
+                return 110
+            case .restorePurchase:
+                return 100
             }
         }
     }

@@ -17,6 +17,7 @@ extension AppDelegate{
 
                 self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
+                self.setActivityIndicatorWindow()
             }
         }
     }
@@ -36,6 +37,7 @@ extension AppDelegate{
                 self.window?.makeKeyAndVisible()
 
                 self.window?.layer.add(transition, forKey: nil)
+                self.setActivityIndicatorWindow()
             }
         }
     }
@@ -50,6 +52,8 @@ extension AppDelegate{
 
                 self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
+                self.setActivityIndicatorWindow()
+
             }
         }
     }
@@ -64,8 +68,13 @@ extension AppDelegate{
 
                 self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
+                self.setActivityIndicatorWindow()
             }
         }
+    }
+
+    private func setActivityIndicatorWindow() {
+        ActivityIndicator.sharedInstance.window = self.window ?? UIWindow()
     }
 
     //MARK: -  Set device language as default language

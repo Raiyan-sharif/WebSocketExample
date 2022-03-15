@@ -49,11 +49,10 @@ class PermissionViewController: UIViewController {
     }
 
     private func initializeData() {
-        row.append(PermissionTVCellInfo(cellType: .allowAccess, isPermissionGranted: false))
-        row.append(PermissionTVCellInfo(cellType: .microphonePermission, isPermissionGranted: false))
-        row.append(PermissionTVCellInfo(cellType: .cameraPermission, isPermissionGranted: false))
-        //row.append(PermissionTVCellInfo(cellType: .notificationPermission, isPermissionGranted: false))
-    }
+           row.append(PermissionTVCellInfo(cellType: .allowAccess, isPermissionGranted: false))
+           row.append(PermissionTVCellInfo(cellType: .microphonePermission, isPermissionGranted: false))
+           row.append(PermissionTVCellInfo(cellType: .cameraPermission, isPermissionGranted: false))
+       }
 
     private func checkPermissions() {
         let semaphore = DispatchSemaphore(value: 0)
@@ -75,21 +74,6 @@ class PermissionViewController: UIViewController {
                 semaphore.signal()
             }
             semaphore.wait()
-
-            //TODO: Partially removing the notification permission alert
-            /*
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { isPermissionOn in
-                DispatchQueue.main.async {
-                    if isPermissionOn == true {
-                        //self.notificationIconImageView.image = UIImage(named: "check-markIcon")
-                    } else {
-                        //self.notificationIconImageView.image = UIImage(named: "questionIcon")
-                    }
-                }
-                semaphore.signal()
-            }
-            semaphore.wait()
-             */
         }
     }
 

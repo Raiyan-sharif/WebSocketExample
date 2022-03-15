@@ -130,6 +130,11 @@ extension UIColor {
         return UIColor.init(red:  244 / 255, green: 174 / 255, blue: 61 / 255, alpha: 1.0)
     }
 
+    //Dixie Yellow Color
+    class func _dixieYellowColor() -> UIColor {
+        return UIColor.init(red:  230 / 255, green: 143 / 255, blue: 27 / 255, alpha: 1.0)
+    }
+
     //Royal blue Color
     class func _royalBlueColor() -> UIColor {
         return UIColor.init(red:  63 / 255, green: 140 / 255, blue: 224 / 255, alpha: 1.0)
@@ -137,7 +142,12 @@ extension UIColor {
 
     //light blue Color
     class func _lightBlueColor() -> UIColor {
-        return UIColor.init(red:  234 / 255, green: 245 / 255, blue: 248 / 255, alpha: 1.0)
+        return UIColor.init(red:  234 / 255, green: 244 / 255, blue: 248 / 255, alpha: 1.0)
+    }
+
+    //semi dark blue Color
+    class func _semiDarkBlueColor() -> UIColor {
+        return UIColor.init(red:  179 / 255, green: 213 / 255, blue: 239 / 255, alpha: 1.0)
     }
 
     //White Color

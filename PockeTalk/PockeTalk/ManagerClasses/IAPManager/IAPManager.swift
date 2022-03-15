@@ -2,8 +2,6 @@
 //  IAPManager.swift
 //  PockeTalk
 //
-//  Created by BJIT on 3/2/22.
-//
 
 import Foundation
 import StoreKit
@@ -15,7 +13,14 @@ enum IAPReceiptValidationFrom: String {
     case restoreButton = "restoreButton"
     case didFinishLaunchingWithOptions = "didFinishLaunchingWithOptions"
     case applicationWillEnterForeground = "applicationWillEnterForeground"
-    case none = "none"
+    case purchaseAndRestoreButton = "purchaseAndRestoreButton"
+}
+
+enum ViewControllerType {
+    case home
+    case permission
+    case termAndCondition
+    case plan
 }
 
 class IAPManager: NSObject {
@@ -34,6 +39,7 @@ class IAPManager: NSObject {
     var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
     var totalRestoredPurchases = 0
+    var totalPurchaseOrRestoreFailed = 0
     var isIntroductoryOfferActive: Bool?
     var IAPTimeoutInterval: Double = kIAPTimeoutInterval
     var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
@@ -142,35 +148,25 @@ extension IAPManager: SKPaymentTransactionObserver {
         transactions.forEach { (transaction) in
             switch transaction.transactionState {
             case .purchased:
-                self.IAPResponseCheck(iapReceiptValidationFrom: .purchaseButton)
-                KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
                 SKPaymentQueue.default().finishTransaction(transaction)
-                
+
             case .restored:
                 totalRestoredPurchases += 1
                 SKPaymentQueue.default().finishTransaction(transaction)
-                
+
             case .failed:
-                if let error = transaction.error as? SKError {
-                    if error.code != .paymentCancelled {
-                        onBuyProductHandler?(.failure(error))
-                    } else {
-                        onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
-                    }
-                    PrintUtility.printLog(tag: String(describing: type(of: self)), text: "IAPError: \(error.localizedDescription)")
-                }
+                totalPurchaseOrRestoreFailed += 1
                 SKPaymentQueue.default().finishTransaction(transaction)
-                
+
             case .deferred, .purchasing: break
             @unknown default: break
             }
         }
     }
-    
+
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if totalRestoredPurchases != 0 {
-            self.IAPResponseCheck(iapReceiptValidationFrom: .restoreButton)
-            KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
+            PrintUtility.printLog(tag: String(describing: type(of: self)), text: "IAP: Purchases is there to restore!")
         } else {
             PrintUtility.printLog(tag: String(describing: type(of: self)), text: "IAP: No purchases to restore!")
             onBuyProductHandler?(.success(false))
@@ -186,6 +182,43 @@ extension IAPManager: SKPaymentTransactionObserver {
                 onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
             }
         }
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        PrintUtility.printLog(tag: TAG, text: "Removed transactions: \(transactions.count)")
+        PrintUtility.printLog(tag: TAG, text: "Unfinished transaction: \(queue.transactions.count)")
+
+        //This will be called after finishing all transactions
+        if queue.transactions.count == 0 {
+            if totalPurchaseOrRestoreFailed != 0 {
+                transactions.forEach { (transaction) in
+                    switch transaction.transactionState {
+                    case .purchased:break
+                    case .restored: break
+                    case .failed:
+                        if let error = transaction.error as? SKError {
+                            if error.code != .paymentCancelled {
+                                onBuyProductHandler?(.failure(error))
+                            } else {
+                                onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
+                            }
+                            PrintUtility.printLog(tag: TAG, text: "IAP Error: \(error.localizedDescription)")
+                            totalPurchaseOrRestoreFailed = 0
+                        }
+
+                    case .deferred, .purchasing: break
+                    @unknown default: break
+                    }
+                }
+            } else {
+                self.IAPResponseCheck(iapReceiptValidationFrom: .purchaseAndRestoreButton)
+                KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
+            }
+        }
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
+        PrintUtility.printLog(tag: String(describing: type(of: self)), text: "updatedDownloads method cals")
     }
 }
 
@@ -208,10 +241,24 @@ extension IAPManager {
         numberFormatter.numberStyle = .currency
         numberFormatter.locale = product.priceLocale
         let formattedString = numberFormatter.string(from: product.price)
-        
+
         return formattedString!
     }
-    
+
+    private func getLocalCurrencyAndPrice(from product: SKProduct) -> (currency: String, price: Double) {
+        //Get the currency
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale.current
+
+        let priceString = numberFormatter.string(from: 0)
+        let currencyString = (priceString?.replacingOccurrences(of: "0", with: ""))?.replacingOccurrences(of: ".", with: "")
+
+        //Get the price
+        let price = (product.price.doubleValue).roundToDecimal(2)
+        return (currency: currencyString ?? "", price: price)
+    }
+
     func getSubscriptionDurationPeriod(product: SKProduct) -> String {
         let numberOfUnits = product.subscriptionPeriod?.numberOfUnits
         let unitValue = product.subscriptionPeriod?.unit
@@ -229,7 +276,7 @@ extension IAPManager {
         
         return "\(String(describing: numberOfUnits!)) \(durationUnitType)"
     }
-    
+
     private func unitName(unitRawValue: UInt, numberOfUnits: Int) -> String {
         switch unitRawValue {
         case 0: return numberOfUnits == 1 ? "day".localiz() : "days".localiz()
@@ -300,31 +347,30 @@ extension IAPManager {
     }
 
     func getProductDetails(from product: SKProduct) -> ProductDetails {
-        let currency = getFormattedCurrency(product: product)
-        let _ = product.subscriptionPeriod?.numberOfUnits ?? 0
+        let currency = getLocalCurrencyAndPrice(from: product).currency
+        let price = getLocalCurrencyAndPrice(from: product).price
         let unitType = getPeriodUnitType(product: product)
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
-        let planPerUnitText = "\(currency) / \(unitType.rawValue.localiz())."
+        let planPerUnitText = "\(currency)\(price) / \(unitType.rawValue.localiz())."
         var freeUsesDetailsText: String?
-        var freeUsesDetailsTextInSingleLine: String?
 
         if freeUsesInfo.isFreeTrialAvailable {
-            freeUsesDetailsText = "\("Free for".localiz()) \n \(freeUsesInfo.freeTrialDuration) \("days".localiz())"
-            freeUsesDetailsTextInSingleLine = "\("Free for".localiz()) \(freeUsesInfo.freeTrialDuration) \("days".localiz())"
+            freeUsesDetailsText = "\("kFreePlanText".localiz()) \(freeUsesInfo.freeTrialDuration) \("days".localiz())"
 
         } else {
             freeUsesDetailsText = nil
-            freeUsesDetailsTextInSingleLine = nil
         }
 
         return (
             ProductDetails(
                 product: product,
+                currency: currency,
+                price: price,
                 periodUnitType: unitType,
                 planPerUnitText: planPerUnitText,
                 freeUsesDetailsText: freeUsesDetailsText,
-                freeUsesDetailsTextInSingleLine: freeUsesDetailsTextInSingleLine
+                suggestionText: nil
             )
         )
     }
@@ -336,49 +382,26 @@ extension IAPManager {
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
         PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(String(describing: KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!))")
         if KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!  == true {
-            if iapReceiptValidationFrom == .purchaseButton {
+            if iapReceiptValidationFrom == .purchaseAndRestoreButton {
                 receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
                     if let err = error {
                         self.onBuyProductHandler?(.failure(err))
                     } else {
                         self.onBuyProductHandler?(.success(isPurchaseSchemeActive))
                     }
-//                    self.hideActivityIndicator()
-                }
-            } else if iapReceiptValidationFrom == .restoreButton {
-                receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
-                    if let err = error {
-                        self.onBuyProductHandler?(.failure(err))
-                    } else {
-                        self.onBuyProductHandler?(.success(isPurchaseSchemeActive))
-                    }
-//                    self.hideActivityIndicator()
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                 if Reachability.isConnectedToNetwork() {
-                    receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
-                        if let err = error {
-                            self.showAlertFromAppDelegates(error: err)
+                    if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
+                        if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
+                            GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
                         } else {
-                            if isPurchaseSchemeActive == true {
-                                if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
-                                    DispatchQueue.main.async {
-                                        GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
-                                    }
-                                } else {
-                                    DispatchQueue.main.async {
-                                        GlobalMethod.appdelegate().navigateToHomeViewController()
-                                    }
-                                }
-                            } else {
-                                DispatchQueue.main.async {
-                                    GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
-                                }
-                            }
+                            GlobalMethod.appdelegate().navigateToHomeViewController()
                         }
-//                        self.hideActivityIndicator()
-                        KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
+                    } else {
+                        GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
                     }
+                    KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
                 } else {
                     self.showNoInternetAlertOnVisibleViewController()
                 }
@@ -395,7 +418,6 @@ extension IAPManager {
                                 }
                             }
                         }
-                        //self.receiptValidationAllow = false
                     }
                 } else {
                     self.showNoInternetAlertOnVisibleViewController()
@@ -428,6 +450,9 @@ extension IAPManager {
                             Clock.sync(completion:  { date, offset in
                                 if let getResDate = date {
                                     let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
+                                    if let purchaseStatus = purchaseStatus {
+                                        KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
+                                    }
                                     completion(purchaseStatus!, nil)
                                 }
                             })
@@ -534,6 +559,7 @@ extension IAPManager {
                 isSubsActive = true
             } else {
                 isSubsActive = false
+                // Check purchase > cancel > small product
             }
         }
         return isSubsActive
