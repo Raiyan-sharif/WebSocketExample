@@ -121,6 +121,7 @@ let KiDLangSelectCamera = "LanguageSelectCameraVC"
 let KStoryBoardCamera = "LanguageSelectCamera"
 let KStoryboardInitialFlow = "InitialFlow"
 let KStoryboardMain = "Main"
+let KBoarding = "Boarding"
 
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"

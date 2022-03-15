@@ -142,7 +142,17 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "즐겨찾기 수가 한계에 도달하였습니다";
 "kFreePlanText" = "All plans are free for the first";
 "kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+
+
+//Boarding Screen
+"Back" = "뒤로 가기";
+"Close" = "닫기";
+"KBoardingTalkButtonTitle"  = "누른 상태로 말하며 번역";
+"KBoardingTransLationLan"  = "번역 언어 변경";
+"KBoardingLanChange"  = "번역 방향 변경";
+

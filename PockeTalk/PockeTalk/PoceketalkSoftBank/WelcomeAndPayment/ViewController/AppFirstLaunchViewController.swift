@@ -61,6 +61,19 @@ class AppFirstLaunchViewController: UIViewController {
         }
     }
 
+    //MARK: - View Transactions
+    private func goTOWalkThroughScreen() {
+        DispatchQueue.main.async {
+            PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
+            if let viewController = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                //viewController.purchasePlanVM = self.purchasePlanVM
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
+        }
+    }
+
     //MARK: - Utils
     private func showSingleAlert(withMessage message: String) {
         DispatchQueue.main.async {
@@ -85,7 +98,8 @@ class AppFirstLaunchViewController: UIViewController {
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
         if Reachability.isConnectedToNetwork(){
-            goTOPurchaseScene()
+            //goTOPurchaseScene()
+           goTOWalkThroughScreen()
         } else {
             InitialFlowHelper().showNoInternetAlert(on: self)
         }
