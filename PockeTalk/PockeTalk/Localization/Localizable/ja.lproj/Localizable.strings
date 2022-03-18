@@ -104,50 +104,55 @@
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを選択してください";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490円/月1週間の無料利用";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000円/年 1週間の無料利用";
-"kPockeTalk" = "ポケトークへ";
+"kPockeTalk" = "ポケトーク";
+
+"kIAPFreeDaysDescription" = "全プラン、初回3日間無料";
+"kIAPFreePeriodCancellationDescription" = "無料期間内の解約で料金は発生しません。";
+"kIAPFreePeriodSubscriptionDescription" = "無料期間最終日の翌日より料金が継続的に課金されます。";
+
 //WelcomeViewController
 "kWelcomeVCTitleLabelTop" = "ようこそ";
 "kWelcomeVCTitleLabelBottom" = "ポケトークへ";
 "kWelcomeVCStartUsingButtonTitle" = "利用開始";
 
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "日";
+"Days" = "日";
+"Week" = "週";
+"Weeks" = "週";
+"Month" = "月";
+"Months" = "月";
+"Year" = "年";
+"Years" = "年";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "日";
+"days" = "日";
+"week" = "週";
+"weeks" = "週";
+"month" = "月";
+"months" = "月";
+"year" = "年";
+"years" = "年";
 
-"kTimeOut" = "Time Out!";
-"kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTimeOut" = "タイムアウトしました。";
+"kAppleServerBusy" = "Appleサーバーはビジーのようです。もう一度やり直してください";
+"kTryAgain" = "もう一度やり直してください。";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
-"Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
-"Free for" = "Free for";
+"kIAPError" = "アプリ内購入エラー";
+"kIAPNoProductIDsFound" = "アプリ内購入のアイテムIDがありません";
+"kIAPNoProductsFound" = "アプリ内購入がありません";
+"kIAPProductRequestFailed" = "現在、利用可能なアプリ内購入アイテムを取得できません";
+"kIAPPaymentWasCancelled" = "アプリ内購入はキャンセルされました";
+"kfreeUse" = "無料で利用";
+"kIAPNoPurchasedItemToRestore" = "復元するアプリ内購入アイテムはありません";
+"kIAPALLPreviousIAPRestored" = "アプリ内購入をすべて復元しました";
+"kIAPEnablePaymentFromSettings" = "このデバイスではアプリ内購入は許可されていません。有効にするには、[設定]> [利用時間]> [コンテンツとプライバシーの制限]> [iTunesとAppStoreでの購入]> [アプリ内購入]> [許可]で設定してください";
+"Daily Plan" = "日額プラン";
+"Weekly Plan" = "週額プラン";
+"Monthly Plan" = "月額プラン";
+"Yearly Plan" = "年額プラン";
+"Free for" = "無料";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "お気に入りの数が上限です";
