@@ -25,12 +25,24 @@ class LanguageListCameraVC: BaseViewController {
         setupTableView()
         registerNotification()
     }
-    
+
+    /*
+     TableView Scroll to the point of Selected Item
+     flag -> true if reload tableview data required
+     */
+    private func updateTableView(_ flag: Bool){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+            [weak self] in
+            self?.selectedIndexPath = IndexPath(row: (self?.getSelectedItemPosition())!, section: 0)
+            self?.langListTableView.scrollToRow(at: (self?.selectedIndexPath)!, at: .top, animated: false)
+        })
+        if(flag){
+            self.langListTableView.reloadData()
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
-        let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG , text: " position \(String(describing: selectedItemPosition))")
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        updateTableView(false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,6 +76,7 @@ class LanguageListCameraVC: BaseViewController {
     private func setupTableView(){
         langListTableView.dataSource = self
         langListTableView.delegate = self
+        langListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
@@ -90,9 +103,7 @@ class LanguageListCameraVC: BaseViewController {
     }
     
     @objc func updateCameralanguageSelection (notification:Notification) {
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        self.langListTableView.reloadData()
+        updateTableView(true)
     }
 }
 

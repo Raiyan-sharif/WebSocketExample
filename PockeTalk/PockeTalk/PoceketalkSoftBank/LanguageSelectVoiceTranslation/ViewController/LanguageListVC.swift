@@ -29,7 +29,7 @@ class LanguageListVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         setupLanguageProperty()
         UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
-        updateTableView()
+        updateTableView(false)
     }
     
     deinit {
@@ -53,16 +53,25 @@ class LanguageListVC: BaseViewController {
     private func setupTableView(){
         langListTableView.delegate = self
         langListTableView.dataSource = self
+        langListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
     }
     
-    private func updateTableView(){
-        let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG, text:" position \(String(describing: selectedItemPosition))")
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+    /*
+     TableView Scroll to the point of Selected Item
+     flag -> true if reload tableview data required
+     */
+    private func updateTableView(_ flag: Bool){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+            [weak self] in
+            self?.selectedIndexPath = IndexPath(row: (self?.getSelectedItemPosition())!, section: 0)
+            self?.langListTableView.scrollToRow(at: (self?.selectedIndexPath)!, at: .top, animated: false)
+        })
+        if(flag){
+            self.langListTableView.reloadData()
+        }
     }
     
     private func registerNotification(){
@@ -75,9 +84,7 @@ class LanguageListVC: BaseViewController {
     }
 
     @objc private func updateLanguageSelection(notification: Notification) {
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        self.langListTableView.reloadData()
+        updateTableView(true)
     }
     
     private func getSelectedItemPosition() -> Int{

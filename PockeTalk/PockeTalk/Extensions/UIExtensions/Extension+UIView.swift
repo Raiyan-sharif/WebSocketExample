@@ -61,4 +61,9 @@ extension UIView {
         }
         self.addSubview(imageView)
     }
+
+    //Adding Edge Intect of tableView in LanguageListVC, LanguageHistoryListVC, CameraLanguageListVC, HistoryCameraLanguageListVC
+    func getCustomViewEdgetInsect() -> UIEdgeInsets{
+        return UIEdgeInsets(top: 0, left: 0, bottom: self.bounds.height/4, right: 0)
+    }
 }
