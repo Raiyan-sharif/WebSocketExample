@@ -26,7 +26,7 @@ enum PermissionTVCellType: Int {
         get {
             switch self {
             case .allowAccess: return 130
-            case .microphonePermission, .cameraPermission, .notificationPermission: return 80
+            case .microphonePermission, .cameraPermission, .notificationPermission: return 70
             }
         }
     }

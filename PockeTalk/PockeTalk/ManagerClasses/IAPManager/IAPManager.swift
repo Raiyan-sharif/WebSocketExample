@@ -14,13 +14,13 @@ enum IAPReceiptValidationFrom: String {
     case didFinishLaunchingWithOptions = "didFinishLaunchingWithOptions"
     case applicationWillEnterForeground = "applicationWillEnterForeground"
     case purchaseAndRestoreButton = "purchaseAndRestoreButton"
+    case none = "none"
 }
 
 enum ViewControllerType {
     case home
-    case permission
     case termAndCondition
-    case plan
+    case purchasePlan
 }
 
 class IAPManager: NSObject {
@@ -397,16 +397,16 @@ extension IAPManager {
                 if Reachability.isConnectedToNetwork() {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
                         if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
-                            GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
+                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                         } else {
-                            GlobalMethod.appdelegate().navigateToHomeViewController()
+                            GlobalMethod.appdelegate().navigateToViewController(.home)
                         }
                     } else {
-                        GlobalMethod.appdelegate().navigateToTermsAndConditionsViewController()
+                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
                 } else {
-                    self.showNoInternetAlertOnVisibleViewController()
+                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
                 }
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {
                 if Reachability.isConnectedToNetwork() {
@@ -416,14 +416,14 @@ extension IAPManager {
                         } else {
                             if isPurchaseSchemeActive == false {
                                 if UserDefaultsUtility.getBoolValue(forKey: isTermAndConditionTap) == false {
-                                    GlobalMethod.appdelegate().navigateToPaidPlanViewController()
+                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                                     UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
                                 }
                             }
                         }
                     }
                 } else {
-                    self.showNoInternetAlertOnVisibleViewController()
+                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .none)
                 }
             }
         }
@@ -632,7 +632,7 @@ extension IAPManager {
         }
     }
 
-    func showNoInternetAlertOnVisibleViewController() {
+    func showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: "internet_connection_error".localiz() , message: "", preferredStyle: UIAlertController.Style.alert)
             alertVC.view.tintColor = UIColor.black
@@ -645,9 +645,17 @@ extension IAPManager {
                     }
                 }
             }
+
             let cancelAction = UIAlertAction(title: "Cancel".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
-                //exit(0)
+                if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
+                    if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
+                        GlobalMethod.appdelegate().navigateToViewController(.home)
+                    } else {
+                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                    }
+                }
             }
+
             alertVC.addAction(connectViaWifiAction)
             alertVC.addAction(cancelAction)
 

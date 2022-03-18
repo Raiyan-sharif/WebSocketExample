@@ -7,35 +7,56 @@ import Foundation
 import StoreKit
 import SwiftKeychainWrapper
 
-class PurchasePlanViewModel{
+protocol PurchasePlanViewModeling {
+    typealias CompletionCallBack = (_ success: Bool, _ error: String?) -> Void
+    var numberOfRow: Int { get }
+    var rowType: [PurchasePlanTVCellInfo] { get }
+    var hasInAppPurchaseProduct: Bool { get }
+    var productFetchError: String? { get }
+    var isAPICallOngoing: Bool { get }
+    func getProduct(onCompletion: @escaping CompletionCallBack)
+    func restorePurchase(onCompletion: @escaping CompletionCallBack)
+    func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack)
+    func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails?
+    func getFreeDaysUsesInfo() -> String?
+    func updateReceiptValidationAllow()
+}
+
+class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var products = [SKProduct]()
     private var productDetails = [ProductDetails]()
     private var row = [PurchasePlanTVCellInfo]()
-    typealias CompletionCallBack = (_ success: Bool, _ error: String?) -> Void
-    let dummyRow: [PurchasePlanTVCellInfo] = [.selectPlan, .weeklyPlan, .monthlyPlan, .annualPlan, .restorePurchase]
-    var isDataLoading = true
 
-    var numbeOfRow: Int {
-        if isDataLoading {
-            return dummyRow.count
-        } else {
-            return row.count
-        }
+    private let dummyRow: [PurchasePlanTVCellInfo] = [.selectPlan, .weeklyPlan, .monthlyPlan, .annualPlan, .restorePurchase]
+    private var _isAPICallOngoing: Bool = true
+    private var _hasInAppPurchaseProduct = false
+    private var _productFetchError: String?
+
+    var numberOfRow: Int {
+        return _hasInAppPurchaseProduct ? (row.count) : (dummyRow.count)
     }
 
     var rowType: [PurchasePlanTVCellInfo]{
-        if isDataLoading {
-            return self.dummyRow
-        } else {
-            return self.row
-        }
+        return _hasInAppPurchaseProduct ? (self.row) : (self.dummyRow)
+    }
+
+    var hasInAppPurchaseProduct: Bool {
+        return _hasInAppPurchaseProduct
+    }
+
+    var isAPICallOngoing: Bool {
+        return _isAPICallOngoing
+    }
+
+    var productFetchError: String? {
+        return _productFetchError
     }
 
     //MARK: - API Calls
     func getProduct(onCompletion: @escaping CompletionCallBack) {
+        _hasInAppPurchaseProduct = false
         IAPManager.shared.getProducts { [weak self] (result) in
             guard let self = `self` else {return}
-            self.isDataLoading = true
             switch result {
             case .success(let products):
                 if products.count > 0 {
@@ -43,44 +64,52 @@ class PurchasePlanViewModel{
                     self.products = products
                     self.setProductDetails()
                     self.setupTVRowData()
+                    self._hasInAppPurchaseProduct = true
                     onCompletion(true, nil)
                 } else {
+                    self._hasInAppPurchaseProduct = true
                     onCompletion(false, "Can't found products")
                 }
-                self.isDataLoading = false
             case .failure(let error):
                 PrintUtility.printLog(tag: "IAP", text: "\(error.localizedDescription)")
+                self._productFetchError = error.localizedDescription
                 onCompletion(false, error.localizedDescription)
-                self.isDataLoading = false
             }
         }
     }
 
-    func restorePurchase(onCompletion: @escaping CompletionCallBack){
-        IAPManager.shared.restorePurchases { (result) in
+    func restorePurchase(onCompletion: @escaping CompletionCallBack) {
+        self._isAPICallOngoing = true
+        IAPManager.shared.restorePurchases { [weak self] (result) in
+            guard let self = `self` else {return}
             switch result {
             case .success(let success):
+                self._isAPICallOngoing = false
                 onCompletion(success, nil)
             case .failure(let error):
                 PrintUtility.printLog(tag: "IAP", text: "\(error.localizedDescription)")
+                self._isAPICallOngoing = false
                 onCompletion(false, error.localizedDescription)
             }
         }
     }
 
-    func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack){
+    func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack) {
+        self._isAPICallOngoing = true
         IAPManager.shared.purchaseProduct(product: product) { [weak self] result in
-            guard let _ = `self` else {return}
+            guard let self = `self` else {return}
             switch result {
             case .success(let isPurchasedActive):
+                self._isAPICallOngoing = false
                 onCompletion(isPurchasedActive, nil)
             case .failure(let error):
+                self._isAPICallOngoing = false
                 onCompletion(false, error.localizedDescription)
             }
         }
     }
 
-    //MARK: - Setable methods
+    //MARK: - Settable methods
     private func setProductDetails() {
         for product in self.products {
             let productDetail = IAPManager.shared.getProductDetails(from: product)
@@ -109,7 +138,7 @@ class PurchasePlanViewModel{
         }
     }
 
-    private func setupTVRowData(){
+    private func setupTVRowData() {
         row.append(.selectPlan)
 
         var isFreeOfferAvailable = false
@@ -148,8 +177,10 @@ class PurchasePlanViewModel{
         return nil
     }
 
-    func getFreeDaysUsesInfo(using cellType: PurchasePlanTVCellInfo = .monthlyPlan) -> String? {
-        for product in self.productDetails{
+    func getFreeDaysUsesInfo() -> String? {
+        let cellType: PurchasePlanTVCellInfo = .monthlyPlan
+
+        for product in self.productDetails {
             if cellType.unitType == product.periodUnitType.rawValue{
                 return product.freeUsesDetailsText ?? ""
             }
@@ -158,7 +189,7 @@ class PurchasePlanViewModel{
     }
 
     //MARK: - Utils
-    private func resetData(){
+    private func resetData() {
         row.removeAll()
         products.removeAll()
         productDetails.removeAll()

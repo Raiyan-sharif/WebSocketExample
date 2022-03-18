@@ -63,6 +63,10 @@ extension UIColor {
         return UIColor.init(red: 248.0 / 255.0, green: 248.0 / 255.0, blue: 248.0 / 255.0, alpha: 1.0)
     }
 
+    class func _semiDarkGrayColor() -> UIColor {
+        return UIColor.init(red: 157 / 255.0, green: 156 / 255.0, blue: 156 / 255.0, alpha: 1.0)
+    }
+
     // greyishBrown color.
     class func _greyishBrown() -> UIColor {
         return UIColor.init(hex: "#444444")!

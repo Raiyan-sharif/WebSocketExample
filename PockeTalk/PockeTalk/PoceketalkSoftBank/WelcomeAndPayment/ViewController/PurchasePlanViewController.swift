@@ -10,12 +10,14 @@ import StoreKit
 class PurchasePlanViewController: UIViewController {
     @IBOutlet weak private var purchasePlanTV: UITableView!
     private let TAG = "\(PurchasePlanViewController.self)"
-    private let purchasePlanVM = PurchasePlanViewModel()
+    private var purchasePlanVM: PurchasePlanViewModel!
 
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        purchasePlanVM = PurchasePlanViewModel()
         setupUI()
+        registerForNotification()
         getProductList()
     }
 
@@ -47,18 +49,15 @@ class PurchasePlanViewController: UIViewController {
 
     //MARK: - Load data
     private func getProductList() {
-        //ActivityIndicator.sharedInstance.show()
-        //if Reachability.isConnectedToNetwork() {
-
-            purchasePlanVM.getProduct { [weak self] success, error in
+        ActivityIndicator.sharedInstance.show()
+        if Reachability.isConnectedToNetwork() {
+            self.purchasePlanVM.getProduct { [weak self] success, error in
 
                 if let productFetchError = error{
-                    /*
                     DispatchQueue.main.async {
-                        self?.showProductFetchErrorAlert(message: productFetchError)
                         ActivityIndicator.sharedInstance.hide()
                         return
-                    }*/
+                    }
                     PrintUtility.printLog(tag: "IAP", text: "Product can't fetch, error: \(productFetchError)")
                 }
 
@@ -67,14 +66,13 @@ class PurchasePlanViewController: UIViewController {
                         PrintUtility.printLog(tag: "IAP", text: "Product fetch status \(success)")
                         self?.purchasePlanTV.reloadData()
                     }
-                    //ActivityIndicator.sharedInstance.hide()
+                    ActivityIndicator.sharedInstance.hide()
                 }
             }
-        /*
         } else {
             ActivityIndicator.sharedInstance.hide()
             InitialFlowHelper().showNoInternetAlert(on: self)
-        }*/
+        }
     }
 
     //MARK: - API Calls
@@ -137,15 +135,17 @@ class PurchasePlanViewController: UIViewController {
 
     //MARK: - IBActions
     private func tapOnCell(indexPath: IndexPath) {
-        if purchasePlanVM.rowType[indexPath.row] == .restorePurchase {
-            Reachability.isConnectedToNetwork() ? (restorePurchases()) : (InitialFlowHelper().showNoInternetAlert(on: self))
-        }
+        Reachability.isConnectedToNetwork() ? (restorePurchases()) : (InitialFlowHelper().showNoInternetAlert(on: self))
     }
 
     //MARK: - View Transactions
     private func goToPermissionVC() {
         DispatchQueue.main.async {
-            GlobalMethod.appdelegate().goTopermissionVC()
+            if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
         }
     }
 
@@ -167,6 +167,18 @@ class PurchasePlanViewController: UIViewController {
     }
 
     //MARK: - Utils
+    private func registerForNotification() {
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+    }
+
+    @objc private func appWillEnterForeground() {
+        purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
+    }
+
     private func getProductForPurchase(for type: PurchasePlanTVCellInfo){
         if let productDetails = purchasePlanVM.getProductDetailsData(using: type){
             if !self.requestForPurchaseProduct(product: productDetails.product){
@@ -206,7 +218,7 @@ class PurchasePlanViewController: UIViewController {
 //MARK: - UITableViewDataSource
 extension PurchasePlanViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return purchasePlanVM.numbeOfRow
+        return purchasePlanVM.numberOfRow
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -252,14 +264,18 @@ extension PurchasePlanViewController: UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rowType = purchasePlanVM.rowType[indexPath.row]
+        if purchasePlanVM.hasInAppPurchaseProduct {
+            let rowType = purchasePlanVM.rowType[indexPath.row]
 
-        switch rowType{
-        case .selectPlan, .freeUses, .restorePurchase:
-            return
-        case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
-            if !purchasePlanVM.isDataLoading {
+            switch rowType{
+            case .selectPlan, .freeUses, .restorePurchase:
+                return
+            case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
                 getProductForPurchase(for: rowType)
+            }
+        } else {
+            if let error = purchasePlanVM.productFetchError {
+                showIAPRelatedError(error)
             }
         }
     }
