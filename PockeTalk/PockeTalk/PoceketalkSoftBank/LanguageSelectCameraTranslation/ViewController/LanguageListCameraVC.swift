@@ -21,6 +21,7 @@ class LanguageListCameraVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLanguageProperty()
+        UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
         setupTableView()
         registerNotification()
     }
@@ -74,7 +75,7 @@ class LanguageListCameraVC: BaseViewController {
     
     //MARK: - Utils
     private func getSelectedItemPosition() -> Int{
-        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
+        let selectedLangCode = UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value
         for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
@@ -112,7 +113,7 @@ extension LanguageListCameraVC: UITableViewDataSource{
         
         PrintUtility.printLog(tag: TAG , text: " value \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value)) languageItem.code \(languageItem.code)")
         
-        if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
+        if UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value == languageItem.code{
             let languageManager = LanguageSelectionManager.shared
             if(languageManager.hasTtsSupport(languageCode: languageItem.code)){
                 cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
@@ -150,7 +151,7 @@ extension LanguageListCameraVC: UITableViewDataSource{
 extension LanguageListCameraVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languageItems[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageCamera).value = languageItem.code
+        UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = languageItem.code
         self.langListTableView.reloadData()
     }
     

@@ -161,13 +161,14 @@ class CameraLanguageSelectionViewModel:BaseModel{
             //let lang = item as! LanguageSelectionTable
             PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb cameraOrVocie \(String(describing: item.cameraOrVoice))")
             let code = item.textLanguageCode
-            let langItem: LanguageItem?
+            var langItem: LanguageItem?
             if code == getFromLanguageLanguageList()[0].code{
                 langItem = getFromLanguageLanguageList()[0]
             }else{
                 langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: code!)
             }
             PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb code \(String(describing: code)) langItem = \(String(describing: langItem?.name))")
+            langItem?.id = item.id!
             langList.append(langItem!)
 
         }
@@ -186,7 +187,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
     }
 
 
-    func findLanugageCodeAndSelect(_ text: String) {
+    func findLanugageCodeAndSelect(_ text: String, screen: SpeechProcessingScreenOpeningPurpose) {
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
         var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -201,7 +202,11 @@ class CameraLanguageSelectionViewModel:BaseModel{
         if let langCode = codeFromLanguageMap?.textCodeTr{
             let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
             if langItem != nil {
-                UserDefaultsProperty<String>(KSelectedLanguageCamera).value = langItem?.code
+                if screen == .LanguageSelectionCamera {
+                    UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = langItem?.code
+                } else {
+                    UserDefaultsProperty<String>(KSelectedLanguageCamera).value = langItem?.code
+                }
             }
         }
     }

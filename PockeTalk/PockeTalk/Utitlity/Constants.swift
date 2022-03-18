@@ -335,3 +335,8 @@ let KIsAppLaunchedForFirstTime = "KIsAppLaunchedForFirstTime"
 
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"
+//Language History List
+let kSelectedHistoryLanguageVoice: String = "kSelectedHistoryLanguageVoice"
+let kTempSelectedLanguageVoice: String = "kTempSelectedLanguageVoice"
+let kSelectedHistoryLanguageCamera: String = "kSelectedHistoryLanguageCamera"
+let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"

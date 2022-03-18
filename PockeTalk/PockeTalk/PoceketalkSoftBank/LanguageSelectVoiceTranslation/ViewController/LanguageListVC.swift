@@ -28,6 +28,7 @@ class LanguageListVC: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         setupLanguageProperty()
+        UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
         updateTableView()
     }
     
@@ -80,7 +81,7 @@ class LanguageListVC: BaseViewController {
     }
     
     private func getSelectedItemPosition() -> Int{
-        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
+        let selectedLangCode = UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value
         for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
@@ -136,7 +137,7 @@ extension LanguageListVC: UITableViewDataSource {
         cell.langNameUnSelecteLabel.adjustsFontSizeToFitWidth = false
         cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
         
-        if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
+        if UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value == languageItem.code{
             setSelectedCellProperty(using: cell, and: languageItem.code)
         }else{
             setDeselectedCellProperty(using: cell)
@@ -149,7 +150,7 @@ extension LanguageListVC: UITableViewDataSource {
 extension LanguageListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languageItems[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
+        UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = languageItem.code
         self.langListTableView.reloadData()
     }
     

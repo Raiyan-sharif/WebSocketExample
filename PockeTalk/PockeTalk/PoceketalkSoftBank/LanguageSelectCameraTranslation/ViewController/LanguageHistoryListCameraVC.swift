@@ -31,6 +31,8 @@ class LanguageHistoryListCameraVC: BaseViewController {
     //MARK: - Initial setup
     private func setupLanguageProperty(){
         languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
+        UserDefaultsProperty<String>(kSelectedHistoryLanguageCamera).value = languages.last?.code
+        languages = languages.reversed()
         guard let selectedLanguageVoice =  UserDefaultsProperty<String>(KSelectedLanguageCamera).value else {return}
         
         for item in 0..<languages.count {
@@ -107,19 +109,10 @@ extension LanguageHistoryListCameraVC: UITableViewDataSource{
         cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
         
         PrintUtility.printLog(tag: TAG, text: "value \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value)) languageItem.code \(languageItem.code)")
-        
-        if isSlecetedItemExist {
-            if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
-                setSelectedCellProperty(using: cell, and: languageItem.code)
-            }else{
-                setDeselectedCellProperty(using: cell)
-            }
-        } else {
-            if indexPath.row == 0 {
-                setSelectedCellProperty(using: cell, and: languageItem.code)
-            } else {
-                setDeselectedCellProperty(using: cell)
-            }
+        if UserDefaultsProperty<String>(kSelectedHistoryLanguageCamera).value == languageItem.code{
+            setSelectedCellProperty(using: cell, and: languageItem.code)
+        }else{
+            setDeselectedCellProperty(using: cell)
         }
         return cell
     }
@@ -129,7 +122,7 @@ extension LanguageHistoryListCameraVC: UITableViewDataSource{
 extension LanguageHistoryListCameraVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languages[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageCamera).value = languageItem.code
+        UserDefaultsProperty<String>(kSelectedHistoryLanguageCamera).value = languageItem.code
         self.historyListTableView.reloadData()
     }
 }
