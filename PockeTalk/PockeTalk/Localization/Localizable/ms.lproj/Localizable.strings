@@ -142,6 +142,9 @@
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
 
+"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
+"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
+"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Bilangan Kegemaran telah mencapai hadnya";

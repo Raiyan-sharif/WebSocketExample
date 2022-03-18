@@ -119,6 +119,10 @@
 "kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
 "kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
 
+"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
+"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
+"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
+
 //WelcomeViewController
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";

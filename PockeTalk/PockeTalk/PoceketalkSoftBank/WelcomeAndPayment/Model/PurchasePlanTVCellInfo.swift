@@ -52,7 +52,7 @@ enum PurchasePlanTVCellInfo: Int {
             case .selectPlan: return "kPaidPlanVCRestorePurchaseButtonAlertTitle".localiz()
             case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan: return ""
             case .restorePurchase: return "kPaidPlanVCRestorePurchaseHistoryButton".localiz()
-            case .freeUses: return "kFreePlanDetailText".localiz()
+            case .freeUses: return "kIAPFreePeriodCancellationDescription".localiz() + "kIAPFreePeriodSubscriptionDescription".localiz()
             }
         }
     }

@@ -232,7 +232,7 @@ extension PurchasePlanViewController: UITableViewDataSource{
             return cell
         case .freeUses:
             let cell = tableView.dequeueReusableCell(withIdentifier: KFreePlanTableViewCell,for: indexPath) as! FreePlanTableViewCell
-            cell.configCell(indexPath: indexPath, freeDaysDetailsInfoText: rowType.title, freeDaysUsesInfo: purchasePlanVM.getFreeDaysUsesInfo())
+            cell.configCell(indexPath: indexPath, freeDaysDetailsInfoText: rowType.title, freeDaysUsesInfo: "kIAPFreeDaysDescription".localiz())
             cell.selectionStyle = .none
             return cell
         case .weeklyPlan, .monthlyPlan,.annualPlan, .dailyPlan:
