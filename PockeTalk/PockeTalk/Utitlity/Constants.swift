@@ -140,9 +140,6 @@ let KFreePlanTableViewCell = "FreePlanTableViewCell"
 //Keychain for udid
 let kUniqueUdidKey = "com.sourcenext.pocketalk.ios.udid"
 
-//Keychain for udid
-let kUniqueUdidKey = "com.sourcenext.pocketalk.ios.udid"
-
 //Nib name
 let KAlertReusable = "AlertReusableViewController"
 
