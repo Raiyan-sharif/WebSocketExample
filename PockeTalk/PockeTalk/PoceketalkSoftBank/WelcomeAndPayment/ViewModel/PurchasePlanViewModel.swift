@@ -28,7 +28,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var row = [PurchasePlanTVCellInfo]()
 
     private let dummyRow: [PurchasePlanTVCellInfo] = [.selectPlan, .weeklyPlan, .monthlyPlan, .annualPlan, .restorePurchase]
-    private var _isAPICallOngoing: Bool = true
+    private var _isAPICallOngoing: Bool = false
     private var _hasInAppPurchaseProduct = false
     private var _productFetchError: String?
 
@@ -197,5 +197,6 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     func updateReceiptValidationAllow() {
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+        KeychainWrapper.standard.set(true, forKey: receiptValidationAllowFromPurchase)
     }
 }
