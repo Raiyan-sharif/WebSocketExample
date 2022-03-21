@@ -155,11 +155,11 @@
 		87F832BC2759DC4A007329BA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F832BB2759DC4A007329BA /* AudioPlayer.swift */; };
 		890A744E273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */; };
 		890CA45F27571A5E00A4B226 /* FooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */; };
+		89100D5E27BCE96E00E3895B /* TagUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89100D5D27BCE96E00E3895B /* TagUtility.swift */; };
 		8913EDE127C4BD34003452C2 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE027C4BD34003452C2 /* ActivityIndicatorView.swift */; };
 		8913EDE327C4BD5E003452C2 /* ActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE227C4BD5E003452C2 /* ActivityIndicatorShape.swift */; };
 		8913EDE527C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE427C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift */; };
 		8913EDE727C4BDB9003452C2 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8913EDE627C4BDB9003452C2 /* ActivityIndicator.swift */; };
-		89100D5E27BCE96E00E3895B /* TagUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89100D5D27BCE96E00E3895B /* TagUtility.swift */; };
 		8915C1E726F9D95A0091BF8B /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */; };
 		8915C1E926F9D9D00091BF8B /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */; };
 		8915C20D26F9DFCE0091BF8B /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */; };
@@ -495,11 +495,11 @@
 		87F832BB2759DC4A007329BA /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		890A744D273B973900F29746 /* LnaguageSettingsTutorialCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LnaguageSettingsTutorialCameraVC.swift; sourceTree = "<group>"; };
 		890CA45E27571A5E00A4B226 /* FooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		89100D5D27BCE96E00E3895B /* TagUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUtility.swift; sourceTree = "<group>"; };
 		8913EDE027C4BD34003452C2 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		8913EDE227C4BD5E003452C2 /* ActivityIndicatorShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorShape.swift; sourceTree = "<group>"; };
 		8913EDE427C4BD8F003452C2 /* ActivityIndicatorAnimationCircleStrokeSpin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorAnimationCircleStrokeSpin.swift; sourceTree = "<group>"; };
 		8913EDE627C4BDB9003452C2 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		89100D5D27BCE96E00E3895B /* TagUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUtility.swift; sourceTree = "<group>"; };
 		8915C1E626F9D95A0091BF8B /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		8915C1E826F9D9D00091BF8B /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		8915C20C26F9DFCE0091BF8B /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
@@ -2823,7 +2823,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2848,7 +2848,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2984,7 +2984,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3099,7 +3099,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3214,7 +3214,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3329,7 +3329,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3444,7 +3444,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3452,7 +3452,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.20;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.bjit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_STAGE;

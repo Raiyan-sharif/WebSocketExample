@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string>com.pocketalk.ios.pt.translation.bjit.subgroupone.weekly</string>
-	<string>com.pocketalk.ios.pt.translation.bjit.subgroupone.monthly</string>
-	<string>com.pocketalk.ios.pt.translation.bjit.subgroupone.yearly</string>
+	<string>com.sourcenext.pocketalk.ios.staging.subgroupone.weekly</string>
+	<string>com.sourcenext.pocketalk.ios.staging.subgroupone.monthly</string>
+	<string>com.sourcenext.pocketalk.ios.staging.subgroupone.yearly</string>
 </array>
 </plist>

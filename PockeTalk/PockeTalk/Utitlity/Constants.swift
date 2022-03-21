@@ -302,7 +302,7 @@ func getUUID() -> String? {
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
 let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
-let bjitAppSpecificSharedSecret = "0801b20bad1e4e7e97ddd7b7b882385f"
+let bjitAppSpecificSharedSecret = "b2d823dea3424a6d801ad88fcef72648"
 let IAP_ProductIDs = "IAP_ProductIDs"
 let BJIT_IAP_ProductIDs = "BJIT_IAP_ProductIDs"
 
