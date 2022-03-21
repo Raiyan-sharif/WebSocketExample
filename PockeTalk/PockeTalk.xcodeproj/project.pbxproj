@@ -2823,6 +2823,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2830,7 +2831,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -2848,6 +2849,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2855,7 +2857,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2984,6 +2986,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -2991,7 +2994,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3099,6 +3102,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3106,7 +3110,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3214,6 +3218,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3221,7 +3226,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3329,6 +3334,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3336,7 +3342,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3444,6 +3450,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = U8GSKB5S38;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3451,7 +3458,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.20;
+				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
