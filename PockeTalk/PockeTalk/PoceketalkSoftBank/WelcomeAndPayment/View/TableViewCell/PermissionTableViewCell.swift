@@ -47,7 +47,7 @@ class PermissionTableViewCell: UITableViewCell {
     //MARK: - Utils
     private func setupContainerView(isPermissionGranted: Bool){
         containerView.layer.borderWidth = 2.0
-        containerView.layer.cornerRadius = 35.0
+        containerView.layer.cornerRadius = 30.0
 
         if isPermissionGranted {
             containerView.layer.borderColor = UIColor._royalBlueColor().cgColor

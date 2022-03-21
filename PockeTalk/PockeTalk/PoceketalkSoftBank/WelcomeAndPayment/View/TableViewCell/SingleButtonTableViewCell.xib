@@ -20,7 +20,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCM-Uc-TQX">
                         <rect key="frame" x="16" y="8" width="338" height="65"/>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button">
+                            <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                        </buttonConfiguration>
                         <connections>
                             <action selector="btnTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eFT-eO-6VG"/>
                         </connections>

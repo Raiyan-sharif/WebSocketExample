@@ -7,65 +7,37 @@ import UIKit
 import Kronos
 
 extension AppDelegate{
-    func navigateToHomeViewController() {
+    func navigateToViewController(_ type: ViewControllerType) {
+        var viewController = UIViewController()
+
         DispatchQueue.main.async {
             self.window?.rootViewController = nil
             self.window = UIWindow(frame: UIScreen.main.bounds)
 
-            if let viewController = UIStoryboard.init(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
+            switch type {
+            case .home:
+                if let homeVC = UIStoryboard.init(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
+                    viewController = homeVC
+                }
+            case .termAndCondition:
+                if let termAndConditionVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController {
+                    viewController = termAndConditionVC
+                }
+            case .purchasePlan:
+                if let purchasePlanVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
+                    viewController = purchasePlanVC
+                }
             }
+
+            let navigationController = UINavigationController.init(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+            self.setActivityIndicatorWindow()
         }
     }
 
-    func goTopermissionVC(){
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-
-                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-
-                self.window?.layer.add(transition, forKey: nil)
-            }
-        }
-    }
-
-    func navigateToTermsAndConditionsViewController() {
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController{
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            }
-        }
-    }
-
-    func navigateToPaidPlanViewController() {
-        DispatchQueue.main.async {
-            self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-
-            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController{
-                let navigationController = UINavigationController.init(rootViewController: viewController)
-
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            }
-        }
+    private func setActivityIndicatorWindow() {
+        ActivityIndicator.sharedInstance.window = self.window ?? UIWindow()
     }
 
     //MARK: -  Set device language as default language
@@ -76,17 +48,19 @@ extension AppDelegate{
         ///Remove "-" and country code. Ex: es-BD to es
         let deviceLanguageCodeWithoutPunctuations = NSLocale.preferredLanguages[0].contains("-") ? NSLocale.preferredLanguages[0].components(separatedBy: "-")[0] : NSLocale.preferredLanguages[0]
 
-        var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
-
-        if deviceLanguageCode.contains(Languages.zhHans.rawValue) {
-            languageCode = Languages.zhHans
-        } else if deviceLanguageCode.contains(Languages.zhHant.rawValue) {
-            languageCode = Languages.zhHant
-        } else if deviceLanguageCode == Languages.ptPT.rawValue {
-            languageCode = Languages.ptPT
+        //var languageCode = Languages(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en
+        
+        if let langCode = Languages(rawValue: (SystemLanguageCode(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en) .rawValue) {
+            var languageCode = langCode
+            if deviceLanguageCode.contains(SystemLanguageCode.zhHans.rawValue) {
+                languageCode = Languages.zhHans
+            } else if deviceLanguageCode.contains(SystemLanguageCode.zhHant.rawValue) {
+                languageCode = Languages.zhHant
+            } else if deviceLanguageCode == SystemLanguageCode.ptPT.rawValue {
+                languageCode = Languages.ptPT
+            }
+            LanguageManager.shared.setLanguage(language: languageCode)
         }
-
-        LanguageManager.shared.setLanguage(language: languageCode)
     }
 
     //MARK: - AccessKey and Licence token functionalities

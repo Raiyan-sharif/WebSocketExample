@@ -81,7 +81,8 @@ extension PaidPlanViewController {
                             if isPurchasedActive == true {
                                 self.navigateToWelcomeViewController()
                             } else {
-                                GlobalMethod.appdelegate().navigateToPaidPlanViewController()
+                                //GlobalMethod.appdelegate().navigateToPaidPlanViewController()
+                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                             }
                         case .failure(let error):
                             self.showIAPRelatedError(error)

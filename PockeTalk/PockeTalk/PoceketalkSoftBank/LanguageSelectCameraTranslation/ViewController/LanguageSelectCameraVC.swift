@@ -57,6 +57,11 @@ class LanguageSelectCameraVC: BaseViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+    }
+    
     deinit {
         unregisterNotification()
         talkButtonImageView.isHidden = true
@@ -112,6 +117,19 @@ class LanguageSelectCameraVC: BaseViewController {
     
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
+        //Reset selected item lnaguage history index if it is in lnaguage history list
+        let selectedItem = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
+        let languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.camera.rawValue)
+        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+            for item in languages {
+                if item.code == selectedItem {
+                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
+                    }
+                }
+            }
+        }
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera
@@ -119,7 +137,13 @@ class LanguageSelectCameraVC: BaseViewController {
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
         CameraViewController().turnOnCameraFlash()
-        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
+        //Update language based on language list or lnaguage history list
+        if currentIndex == 0 {
+            selectedLanguageCode = UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value!
+        } else {
+            selectedLanguageCode = UserDefaultsProperty<String>(kSelectedHistoryLanguageCamera).value!
+        }
+        UserDefaultsProperty<String>(KSelectedLanguageCamera).value = selectedLanguageCode
         let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
         PrintUtility.printLog(tag: TAG , text: " isnativeval \(String(describing: langSelectFor))")
         if langSelectFor! {
@@ -132,11 +156,23 @@ class LanguageSelectCameraVC: BaseViewController {
         }
         
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
+        //Update lnaguage history list database
+        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+            let languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
+            for item in languages {
+                if item.code == selectedLanguageCode {
+                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                    }
+                }
+            }
+        }
         CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
         microphoneIcon(isHidden: true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "Pop from \(ScreenTracker.sharedInstance.screenPurpose) To \(SpeechProcessingScreenOpeningPurpose.CameraScreen)")
+        ScreenTracker.sharedInstance.screenPurpose = .CameraScreen
     }
     
     //MARK: - View Transactions

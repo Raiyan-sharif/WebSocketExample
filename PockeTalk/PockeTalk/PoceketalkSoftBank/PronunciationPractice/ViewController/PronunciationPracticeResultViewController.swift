@@ -17,6 +17,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     @IBOutlet weak var viewSuccessContainer: UIView!
     @IBOutlet weak var labelSuccessText: UILabel!
     @IBOutlet weak private var bottomViewBottomLayoutConstrain: NSLayoutConstraint!
+    @IBOutlet weak var tempoControlButton: UIButton!
     
     let width : CGFloat = 100
     var practiceText : String = ""
@@ -127,6 +128,11 @@ class PronunciationPracticeResultViewController: BaseViewController {
     func setUpUI() {
         self.viewContainer.layer.cornerRadius = 20
         self.viewContainer.layer.masksToBounds = true
+        // Hide Tempo control menu for TTS unsupported language
+        let languageManager = LanguageSelectionManager.shared
+        if !(languageManager.hasTtsSupport(languageCode: languageCode)) {
+            self.tempoControlButton.isHidden = true
+        }
 
         self.viewContainer.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
         showResultView()

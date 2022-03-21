@@ -17,6 +17,7 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageHistorySelectionCamera
     case LanguageSettingsSelectionCamera
     
+    case CameraScreen
     case PronunciationPractice
     case HistoryScrren
     case HistroyPronunctiation

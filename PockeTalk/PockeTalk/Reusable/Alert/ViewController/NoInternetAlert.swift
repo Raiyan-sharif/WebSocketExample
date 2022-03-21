@@ -27,10 +27,10 @@ class NoInternetAlert: BaseViewController {
         talkButtonImageView = window.viewWithTag(109) as? UIImageView
         
         flagTalkButton = talkButtonImageView.isHidden
+        FloatingMikeButton.sharedInstance.isHidden(true)
         if(!flagTalkButton){
             talkButtonImageView.isHidden = true
             HomeViewController.dummyTalkBtnImgView.isHidden = false
-            FloatingMikeButton.sharedInstance.isHidden(true)
         }
 
         self.tableViewHeightConstraint.constant = cellHeight * CGFloat(4)

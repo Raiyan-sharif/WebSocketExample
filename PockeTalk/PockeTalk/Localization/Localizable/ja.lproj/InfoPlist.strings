@@ -5,4 +5,4 @@
 
 "NSCameraUsageDescription" = "PockeTalkにはカメラを使用するための許可が必要です";
 "NSMicrophoneUsageDescription" = "PockeTalkにはマイクを使用するための許可が必要です";
-"NSPhotoLibraryUsageDescription" = "画像に写真を追加";
+"NSPhotoLibraryUsageDescription" = "イメージに写真を追加";

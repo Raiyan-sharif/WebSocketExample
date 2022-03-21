@@ -63,14 +63,14 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="cs" stt_engine="" tts_engine=""/>
     <item code="my" stt_engine="" tts_engine=""/>
     <item code="zh-CN" stt_engine="" tts_engine="" tts_value="Chinese Female"/>
-    <item code="am" stt_engine=""/>
+    <item code="am" stt_engine="" tts_engine=""/>
     <item code="az" stt_engine=""/>
     <item code="bn" stt_engine="" tts_engine="" tts_value="Bangla Bangladesh Female"/>
     <item code="bg" stt_engine=""/>
-    <item code="gl" stt_engine=""/>
+    <item code="gl" stt_engine="" tts_engine=""/>
     <item code="ka" stt_engine=""/>
     <item code="gu" stt_engine=""/>
-    <item code="jw" stt_engine=""/>
+    <item code="jw" stt_engine="" tts_engine=""/>
     <item code="kn" stt_engine="" tts_engine="google"/>
     <item code="lo" stt_engine=""/>
     <item code="lt" stt_engine=""/>
@@ -81,15 +81,15 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="fa" stt_engine=""/>
     <item code="si" stt_engine="" tts_engine="" tts_value="Sinhala"/>
     <item code="sl" stt_engine=""/>
-    <item code="su" stt_engine=""/>
+    <item code="su" stt_engine="" tts_engine=""/>
     <item code="te" stt_engine="" tts_engine="google"/>
     <item code="uk" stt_engine="" tts_engine="" tts_value="Ukrainian Female"/>
-    <item code="ur" stt_engine=""/>
-    <item code="zu" stt_engine=""/>
+    <item code="ur" stt_engine="" tts_engine=""/>
+    <item code="zu" stt_engine="" tts_engine=""/>
     <item code="tl" stt_engine="" tts_engine="" tts_value="Filipino Female"/>
-    <item code="km" stt_engine=""/>
+    <item code="km" stt_engine="" tts_engine=""/>
     <item code="et" stt_engine=""/>
     <item code="mn" stt_engine=""/>
     <item code="pa" stt_engine=""/>
-    <item code="uz" stt_engine=""/>
+    <item code="uz" stt_engine="" tts_engine=""/>
 </engine>

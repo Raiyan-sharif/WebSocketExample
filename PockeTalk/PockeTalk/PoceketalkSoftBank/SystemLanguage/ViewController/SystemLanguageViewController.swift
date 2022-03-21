@@ -55,6 +55,7 @@ class SystemLanguageViewController: BaseViewController {
         setUpUI()
         currentSelectedLanguage = LanguageManager.shared.currentLanguage.rawValue
         selectedLanguage = currentSelectedLanguage
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
     

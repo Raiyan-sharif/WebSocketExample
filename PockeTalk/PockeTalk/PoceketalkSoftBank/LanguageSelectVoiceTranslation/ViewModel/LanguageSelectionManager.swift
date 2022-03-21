@@ -195,15 +195,16 @@ public class LanguageSelectionManager{
         for item in langListFromDb {
             PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb cameraOrVocie \(String(describing: item.cameraOrVoice))")
             if let code = item.textLanguageCode{
-                let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: code)
+                var langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: code)
                     PrintUtility.printLog(tag: TAG,text: "LanguageListFromDb code \(String(describing: code)) langItem = \(String(describing: langItem?.name))")
-                    langList.append(langItem!)
+                langItem?.id = item.id!
+                langList.append(langItem!)
             }
         }
         return langList
     }
 
-    func findLanugageCodeAndSelect(_ text: String) {
+    func findLanugageCodeAndSelect(_ text: String, screen: SpeechProcessingScreenOpeningPurpose) {
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
         var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -218,7 +219,11 @@ public class LanguageSelectionManager{
         if let langCode = codeFromLanguageMap?.textCodeTr{
             let langItem = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
             if langItem != nil {
-                UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
+                if screen == .LanguageSelectionVoice {
+                    UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = langItem?.code
+                } else {
+                    UserDefaultsProperty<String>(KSelectedLanguageVoice).value = langItem?.code
+                }
             }
         }
     }

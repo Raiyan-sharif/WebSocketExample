@@ -71,6 +71,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
@@ -78,6 +79,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
+        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
     
     func openCameraLanguageListScreen(){
@@ -258,6 +260,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         self.updateHomeContainer?(true)
+        self.cameraHistoryViewModel.cameraHistoryImages.removeAll()
         self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
         if cameraHistoryViewModel.cameraHistoryImages.count == 0 {
             cameraHistoryImageView.isHidden = true
@@ -298,7 +301,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageHistoryEvent(sender: )))
         self.cameraHistoryImageView.addGestureRecognizer(tap)
         captureButton.isExclusiveTouch = true
-        
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {

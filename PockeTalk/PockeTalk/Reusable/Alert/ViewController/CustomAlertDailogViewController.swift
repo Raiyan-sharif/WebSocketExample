@@ -37,11 +37,11 @@ class CustomAlertDailogViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
+        FloatingMikeButton.sharedInstance.isHidden(true)
         flagTalkButton = talkButtonImageView.isHidden
         if(!flagTalkButton){
             talkButtonImageView.isHidden = true
             HomeViewController.dummyTalkBtnImgView.isHidden = false
-            FloatingMikeButton.sharedInstance.isHidden(true)
         }
     }
     override func viewWillDisappear(_ animated: Bool) {

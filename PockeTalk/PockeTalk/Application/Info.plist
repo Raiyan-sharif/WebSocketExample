@@ -77,5 +77,13 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>BaseUrl</key>
+	<string>$(BASE_URL)</string>
+	<key>ImeiNumber</key>
+	<string>$(IMEI)</string>
+    <key>AudioStremBaseUrl</key>
+    <string>$(AUDIO_STREAM_BASE_URL)</string>
+    <key>CURRENT_SCHEME_NAME</key>
+    <string>$(CURRENT_SCHEME_NAME)</string>
 </dict>
 </plist>

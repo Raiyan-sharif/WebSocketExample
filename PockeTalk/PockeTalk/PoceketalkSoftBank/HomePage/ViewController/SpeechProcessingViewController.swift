@@ -349,7 +349,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             self.titleLabel.text = "country_selection_voice_msg".localiz()
             break
-        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen: break
+        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .CameraScreen: break
         }
     }
     
@@ -399,38 +399,38 @@ class SpeechProcessingViewController: BaseViewController{
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSelectionVoice:
-                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: SpeechProcessingScreenOpeningPurpose.LanguageSelectionVoice)
                         NotificationCenter.default.post(name: .languageListNotofication, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case  .LanguageHistorySelectionVoice:
-                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: SpeechProcessingScreenOpeningPurpose.LanguageHistorySelectionVoice)
                         NotificationCenter.default.post(name: .languageHistoryListNotification, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSettingsSelectionVoice:
-                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        LanguageSelectionManager.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: SpeechProcessingScreenOpeningPurpose.LanguageSettingsSelectionVoice)
                         NotificationCenter.default.post(name: .languageSettingsListNotification, object: nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSelectionCamera:
-                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: .LanguageSelectionCamera)
                         NotificationCenter.default.post(name: .cameraSelectionLanguage, object: nil, userInfo:nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageSettingsSelectionCamera:
-                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: .LanguageSettingsSelectionCamera)
                         
                         NotificationCenter.default.post(name: .cameraLanguageSettingsListNotification, object: nil, userInfo:nil)
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .LanguageHistorySelectionCamera:
-                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value)
+                        CameraLanguageSelectionViewModel.shared.findLanugageCodeAndSelect(self.speechProcessingVM.getSST_Text.value, screen: .LanguageHistorySelectionCamera)
                         NotificationCenter.default.post(name: .cameraHistorySelectionLanguage, object: nil, userInfo:nil)
                         
                         self.homeVC?.hideSpeechView()

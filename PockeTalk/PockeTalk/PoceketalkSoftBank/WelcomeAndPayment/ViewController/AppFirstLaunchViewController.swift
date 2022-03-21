@@ -55,6 +55,18 @@ class AppFirstLaunchViewController: UIViewController {
             PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
             if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController{
                 let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
+        }
+    }
+
+    //MARK: - View Transactions
+    private func goTOWalkThroughScreen() {
+        DispatchQueue.main.async {
+            PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
+            if let viewController = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
                 //viewController.purchasePlanVM = self.purchasePlanVM
                 self.navigationController?.view.layer.add(transition, forKey: nil)
                 self.navigationController?.pushViewController(viewController, animated: false)
@@ -72,22 +84,6 @@ class AppFirstLaunchViewController: UIViewController {
         }
     }
 
-    private func showNoInternetAlert() {
-        self.popupAlert(title: "internet_connection_error".localiz(), message: "", actionTitles: ["connect_via_wifi".localiz(), "Cancel".localiz()], actionStyle: [.default, .cancel], action: [
-            { connectViaWifi in
-                DispatchQueue.main.async {
-                    if let url = URL(string:UIApplication.openSettingsURLString) {
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
-                }
-            },{ cancel in
-                PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
-            }
-        ])
-    }
-
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
         if Reachability.isConnectedToNetwork() {
@@ -95,16 +91,17 @@ class AppFirstLaunchViewController: UIViewController {
             let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         } else {
-            showNoInternetAlert()
+            InitialFlowHelper().showNoInternetAlert(on: self)
         }
 
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
         if Reachability.isConnectedToNetwork(){
-            goTOPurchaseScene()
+            //goTOPurchaseScene()
+           goTOWalkThroughScreen()
         } else {
-            showNoInternetAlert()
+            InitialFlowHelper().showNoInternetAlert(on: self)
         }
     }
 }

@@ -60,7 +60,7 @@ extension HomeViewController{
             PrintUtility.printLog(tag: historyCardTAG, text: "Card pan for Hisotry ImageView, fractionComplete \(fractionComplete)")
             fractionComplete = cardVisible ? -fractionComplete : fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
-        case .ended:
+        case .ended, .failed, .cancelled, .possible:
             continueInteractiveTransition()
             ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren
             self.enableorDisableGesture(notification:nil)

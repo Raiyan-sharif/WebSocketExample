@@ -139,7 +139,7 @@ class HomeViewController: BaseViewController {
         setupCardView()
         setupStatusBarView()
         setupGestureForBottomView()
-        setupFloatingMikeButtonAndLoader()
+        setupFloatingMikeButton()
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
     }
@@ -305,12 +305,11 @@ class HomeViewController: BaseViewController {
         addTalkButtonAnimationViews()
     }
 
-    ///setup mike button and loader for the first time
-    private func setupFloatingMikeButtonAndLoader(){
+    ///setup mike button for the first time
+    private func setupFloatingMikeButton(){
         FloatingMikeButton.sharedInstance.window = self.window
         FloatingMikeButton.sharedInstance.add()
         FloatingMikeButton.sharedInstance.isHidden(true)
-        ActivityIndicator.sharedInstance.window = self.window
     }
 
     private func setHistoryAndFavouriteView(){
@@ -456,7 +455,7 @@ class HomeViewController: BaseViewController {
                             }
                             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                             self.add(asChildViewController:cameraViewController, containerView: self.homeContainerView, animation: transition)
-                            ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+                            ScreenTracker.sharedInstance.screenPurpose = .CameraScreen
                             self.hideSpeechView()
                             self.isFromCameraPreview = true
                         }

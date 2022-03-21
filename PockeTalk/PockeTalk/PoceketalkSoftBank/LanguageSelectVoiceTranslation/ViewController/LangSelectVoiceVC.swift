@@ -156,6 +156,19 @@ class LangSelectVoiceVC: BaseViewController {
 
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
+        //Reset selected item lnaguage history index if it is in lnaguage history list
+        let selectedItem = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
+        let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.voice.rawValue)
+        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+            for item in languages {
+                if item.code == selectedItem {
+                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+                    }
+                }
+            }
+        }
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
@@ -168,7 +181,15 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
-        selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
+        //Update language based on language list or lnaguage history list or country language list
+        if currentIndex == 0 {
+            selectedLanguageCode = UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value!
+        } else if currentIndex == 1 {
+            selectedLanguageCode = UserDefaultsProperty<String>(kSelectedHistoryLanguageVoice).value!
+        } else {
+            selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
+        }
+        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = selectedLanguageCode
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if !fromRetranslation {
             if isNative == LanguageName.bottomLang.rawValue{
@@ -185,12 +206,32 @@ class LangSelectVoiceVC: BaseViewController {
                 }
             }
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            //Update lnaguage history list database
+            if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+                let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+                for item in languages {
+                    if item.code == selectedLanguageCode {
+                        if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        }
+                    }
+                }
+            }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         }
 
         if fromRetranslation == true {
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.voice.rawValue)
+            //Update lnaguage history list database
+            if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+                let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+                for item in languages {
+                    if item.code == selectedLanguageCode {
+                        if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        }
+                    }
+                }
+            }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             
             self.retranslationDelegate?.showRetranslation(

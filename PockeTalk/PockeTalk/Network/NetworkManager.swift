@@ -274,7 +274,6 @@ struct NetworkManager:Network {
     }
     
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
-        
         let params:[String:String]  = [
             "imei": imeiNumber,
             "client_info": client_info,

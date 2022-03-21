@@ -15,7 +15,7 @@ class HistoryListVC: BaseViewController {
     var selectedIndexPath: IndexPath?
     var isSlecetedItemExist: Bool = false
     private let languageManager = LanguageSelectionManager.shared
-    
+
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class HistoryListVC: BaseViewController {
     //MARK: - Initial setup
     private func setupLanguageProperty(){
         languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+        UserDefaultsProperty<String>(kSelectedHistoryLanguageVoice).value = languages.last?.code
+        languages = languages.reversed()
         
         guard let selectedLanguageVoice =  UserDefaultsProperty<String>(KSelectedLanguageVoice).value else {return}
         
@@ -39,6 +41,7 @@ class HistoryListVC: BaseViewController {
     private func setupTableView(){
         historyListTableView.delegate = self
         historyListTableView.dataSource = self
+        historyListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         historyListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.historyListTableView.backgroundColor = UIColor.clear
@@ -91,21 +94,12 @@ extension HistoryListVC: UITableViewDataSource{
         cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
         
         PrintUtility.printLog(tag: TAG, text: " value \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageVoice).value)) languageItem.code \(languageItem.code)")
-        
-        if isSlecetedItemExist {
-            if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
-                setSelectedCellProperty(using: cell, and: languageItem.code)
-            }else{
-                setDeselectedCellProperty(using: cell)
-            }
-        } else {
-            if indexPath.row == 0 {
-                setSelectedCellProperty(using: cell, and: languageItem.code)
-            } else {
-                setDeselectedCellProperty(using: cell)
-            }
+        if UserDefaultsProperty<String>(kSelectedHistoryLanguageVoice).value == languageItem.code{
+            setSelectedCellProperty(using: cell, and: languageItem.code)
+        }else{
+            setDeselectedCellProperty(using: cell)
         }
-        
+
         return cell
     }
 }
@@ -114,7 +108,7 @@ extension HistoryListVC: UITableViewDataSource{
 extension HistoryListVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languages[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
+        UserDefaultsProperty<String>(kSelectedHistoryLanguageVoice).value = languageItem.code
         self.historyListTableView.reloadData()
     }
     

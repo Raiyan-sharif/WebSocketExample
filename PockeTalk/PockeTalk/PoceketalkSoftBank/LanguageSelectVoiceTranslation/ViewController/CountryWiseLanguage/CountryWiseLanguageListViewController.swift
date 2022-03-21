@@ -29,6 +29,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
         talkButtonImageView.isHidden = true
         super.viewDidLoad()
+        UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
         setupUI()
         configureCollectionView()
         getLanugageList()
@@ -99,6 +100,16 @@ class CountryWiseLanguageListViewController: BaseViewController {
         
         if isFromTranslation{
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            //Update lnaguage history list database
+            if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+                let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+                for item in languages {
+                    if item.code == selectedLanguageCode {
+                        if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        }
+                    }
+                }
+            }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             NotificationCenter.default.post(name: .updateTranlationNotification, object: nil)
         }else{
@@ -108,6 +119,16 @@ class CountryWiseLanguageListViewController: BaseViewController {
                 LanguageSelectionManager.shared.topLanguage = selectedLanguageCode
             }
             let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: 0)
+            //Update lnaguage history list database
+            if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+                let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+                for item in languages {
+                    if item.code == selectedLanguageCode {
+                        if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        }
+                    }
+                }
+            }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
             
             NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)

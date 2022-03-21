@@ -50,7 +50,7 @@ extension UIView {
             width: self.frame.width + 10,
             height: HomeViewController.homeVCBottomViewHeight + 5
         )
-        
+
         switch usingState {
             case .gradient:
                 imageView.image = UIImage(named: "bottomBackgroudImage")
@@ -60,6 +60,10 @@ extension UIView {
                 imageView.image = UIImage()
         }
         self.addSubview(imageView)
-        
+    }
+
+    //Adding Edge Intect of tableView in LanguageListVC, LanguageHistoryListVC, CameraLanguageListVC, HistoryCameraLanguageListVC
+    func getCustomViewEdgetInsect() -> UIEdgeInsets{
+        return UIEdgeInsets(top: 0, left: 0, bottom: self.bounds.height/4, right: 0)
     }
 }

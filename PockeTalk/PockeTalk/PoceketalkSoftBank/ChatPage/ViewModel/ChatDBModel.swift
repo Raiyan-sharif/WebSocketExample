@@ -34,11 +34,13 @@ class ChatDBModel: BaseDBModel {
 
     //MARK: - Properties
 
+    private let TAG = "ChatDBModel"
     let TABLE_NAME = "ChatTable"
     let textNative: Expression<String>
     let textTranslated: Expression<String>
     let textTranslatedLanguage: Expression<String>
     let textNativeLanguage: Expression<String>
+    let textFileName: Expression<String>
     let chatIsLiked: Expression<Int64>
     let chatIsTop: Expression<Int64>
     let chatIsDelete: Expression<Int64>
@@ -58,6 +60,7 @@ class ChatDBModel: BaseDBModel {
         self.textTranslated = Expression<String>("txt_translated")
         self.textTranslatedLanguage = Expression<String>("txt_translated_language")
         self.textNativeLanguage = Expression<String>("txt_native_language")
+        self.textFileName = Expression<String>("txt_file_name")
         self.chatIsLiked = Expression<Int64>("int_is_liked")
         self.chatIsTop = Expression<Int64>("int_is_top")
         self.chatIsDelete = Expression<Int64>("int_is_delete")
@@ -75,6 +78,7 @@ class ChatDBModel: BaseDBModel {
                 t.column(textTranslated)
                 t.column(textTranslatedLanguage)
                 t.column(textNativeLanguage)
+                t.column(textFileName)
                 t.column(chatIsLiked)
                 t.column(chatIsTop)
                 t.column(chatIsDelete)
@@ -97,7 +101,7 @@ class ChatDBModel: BaseDBModel {
                 _ = try? delete(idToDelte: Int64(minId))
             }
             
-            let insertStatement = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
+            let insertStatement = table.insert(textNative <- chatTableModel.textNative!, textTranslated <- chatTableModel.textTranslated!, textTranslatedLanguage <- chatTableModel.textTranslatedLanguage!, textNativeLanguage <- chatTableModel.textNativeLanguage!, textFileName <- chatTableModel.textFileName!, chatIsLiked <- chatTableModel.chatIsLiked!, chatIsTop <- chatTableModel.chatIsTop!, chatIsDelete <- chatTableModel.chatIsDelete!, chatIsFavorite <- chatTableModel.chatIsFavorite! )
 
             guard let rowId = try? insert(queryString: insertStatement) else { return -1 }
             return rowId
@@ -119,7 +123,7 @@ class ChatDBModel: BaseDBModel {
         var retArray = [BaseEntity]()
         let items = try findAll()
         for item in items {
-            retArray.append(ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite]))
+            retArray.append(ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], textFileName: item[textFileName], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite]))
         }
 
         return retArray
@@ -128,7 +132,7 @@ class ChatDBModel: BaseDBModel {
     func find(idToFind: Int64) throws -> BaseEntity? {
         let items = try find(findId: idToFind)
         for item in  items {
-            return ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite])
+            return ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], textFileName: item[textFileName], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite])
         }
 
         return nil
@@ -173,7 +177,7 @@ class ChatDBModel: BaseDBModel {
         var retArray = [BaseEntity]()
         let items = try DB.prepare(query)
         for item in items {
-            retArray.append(ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite]))
+            retArray.append(ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], textFileName: item[textFileName], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite]))
         }
 
         return retArray
@@ -306,6 +310,7 @@ class ChatDBModel: BaseDBModel {
         do {
             try DB.run(deleteQuery.delete())
             try DB.run(table.update(chatIsDelete <- IsDeleted.delete.rawValue))
+            PrintUtility.printLog(tag: TAG, text: "History items deleted from DB")
         } catch _ {
 
         }
@@ -320,8 +325,43 @@ class ChatDBModel: BaseDBModel {
         do {
             try DB.run(deleteQuery.delete())
             try DB.run(table.update(chatIsLiked <- IsLiked.noLike.rawValue))
+            PrintUtility.printLog(tag: TAG, text: "Favorite items deleted from DB")
         } catch _ {
 
         }
+    }
+
+    func getAllHistoryItemsToDelete() throws -> [ChatEntity] {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            PrintUtility.printLog(tag: TAG, text: "getAllHistoryItemsToDelete - DB connection error")
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        let query = table.filter(chatIsLiked == IsLiked.noLike.rawValue)
+        let items = try DB.prepare(query)
+
+        var chatEntities = [ChatEntity]()
+        for item in items {
+            let entity = ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], textFileName: item[textFileName], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite])
+            chatEntities.append(entity)
+        }
+        PrintUtility.printLog(tag: TAG, text: "Total history entity found - \(chatEntities.count)")
+        return chatEntities
+    }
+
+    func getAllFavoriteItemsToDelete() throws -> [ChatEntity] {
+        guard let DB = SQLiteDataStore.sharedInstance.dataBaseConnection else {
+            PrintUtility.printLog(tag: TAG, text: "getAllFavoriteItemsToDelete - DB connection error")
+            throw DataAccessError.Datastore_Connection_Error
+        }
+        let query = table.filter(chatIsDelete == IsDeleted.delete.rawValue)
+        let items = try DB.prepare(query)
+
+        var chatEntities = [ChatEntity]()
+        for item in items {
+            let entity = ChatEntity.init(id: item[id], textNative: item[textNative], textTranslated: item[textTranslated], textTranslatedLanguage: item[textTranslatedLanguage], textNativeLanguage: item[textNativeLanguage], textFileName: item[textFileName], chatIsLiked: item[chatIsLiked], chatIsTop: item[chatIsTop], chatIsDelete: item[chatIsDelete], chatIsFavorite: item[chatIsFavorite])
+            chatEntities.append(entity)
+        }
+        PrintUtility.printLog(tag: TAG, text: "Total favorite entity found - \(chatEntities.count)")
+        return chatEntities
     }
 }

@@ -142,3 +142,22 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+
+"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
+"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
+"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
+
+//Favorite Limit dailog
+"msg_liked_item_limit_exits" = "可收藏数量已超过上限。";
+
+"kFreePlanText" = "All plans are free for the first";
+"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+
+
+//Boarding Screen
+"Back" = "返回";
+"Close" = "关闭";
+"KBoardingTalkButtonTitle" = "按住说话后翻译";
+"KBoardingTransLationLan"  = "更改翻译语言";
+"KBoardingLanChange"  = "更改翻译方向";
+

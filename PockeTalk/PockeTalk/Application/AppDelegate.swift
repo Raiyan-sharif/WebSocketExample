@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIDevice.current.isBatteryMonitoringEnabled = true
         setUpInitialLaunch()
         IAPManager.shared.startObserving()
+        if UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value == nil {
+            UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value = true
+            KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
+        }
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
         return true
@@ -71,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func relaunchApplication() {
         //isAppRelaunch = true
         UserDefaultsUtility.setBoolValue(true, forKey: kIsClearedDataAll)
-        self.navigateToTermsAndConditionsViewController()
+        self.navigateToViewController(.termAndCondition)
         setUpInitialLaunch()
     }
 

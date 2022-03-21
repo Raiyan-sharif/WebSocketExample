@@ -12,8 +12,7 @@ public class PrintUtility {
     
     public static func printLog(tag : String, text : String) {
         if isPrintingOn && !GlobalMethod.isAppInProduction{
-            
-            print(tag + " " + text)
+            print(tag + ": " + text)
         }
     }
     

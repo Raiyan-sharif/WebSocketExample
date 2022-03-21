@@ -122,6 +122,7 @@ let KiDLangSelectCamera = "LanguageSelectCameraVC"
 let KStoryBoardCamera = "LanguageSelectCamera"
 let KStoryboardInitialFlow = "InitialFlow"
 let KStoryboardMain = "Main"
+let KBoarding = "Boarding"
 
 // Pronunciation Practice
 let DIFF_STRING_MATCHED = "Matched"
@@ -134,6 +135,10 @@ let KPermissionTableViewCell = "PermissionTableViewCell"
 let KPlanTableViewCell = "PlanTableViewCell"
 let KInfoLabelTableViewCell = "InfoLabelTableViewCell"
 let KSingleButtonTableViewCell = "SingleButtonTableViewCell"
+let KFreePlanTableViewCell = "FreePlanTableViewCell"
+
+//Keychain for udid
+let kUniqueUdidKey = "com.sourcenext.pocketalk.ios.udid"
 
 //Keychain for udid
 let kUniqueUdidKey = "com.sourcenext.pocketalk.ios.udid"
@@ -207,8 +212,6 @@ let liscense_token_url = "/handsfree/api/pub/token"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
 let isTermAndConditionTap = "isTermAndConditionTap"
-
-
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
@@ -301,7 +304,9 @@ func getUUID() -> String? {
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
 let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
+let bjitAppSpecificSharedSecret = "b2d823dea3424a6d801ad88fcef72648"
 let IAP_ProductIDs = "IAP_ProductIDs"
+let BJIT_IAP_ProductIDs = "BJIT_IAP_ProductIDs"
 
 //IAP JSON Parsing
 let IAPreceiptData = "receipt-data"
@@ -319,3 +324,22 @@ let kDate = "Date"
 let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
+let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
+
+let FAVORITE_MAX_LIMIT: Int = 500
+let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
+
+//FileUtility
+let kTTSAudioFolderName = "TtsAudioFiles"
+let kTTSAudioFileNameExtenstion = ".wav"
+
+let kInAppPurchaseStatus = "inAppPurchaseStatus"
+let KIsAppLaunchedForFirstTime = "KIsAppLaunchedForFirstTime"
+
+// SCHEME
+let currentSelectedSceme = "CURRENT_SCHEME_NAME"
+//Language History List
+let kSelectedHistoryLanguageVoice: String = "kSelectedHistoryLanguageVoice"
+let kTempSelectedLanguageVoice: String = "kTempSelectedLanguageVoice"
+let kSelectedHistoryLanguageCamera: String = "kSelectedHistoryLanguageCamera"
+let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"

@@ -21,15 +21,33 @@ class LanguageListCameraVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLanguageProperty()
+        UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
         setupTableView()
         registerNotification()
     }
-    
+
+    /*
+     TableView Scroll to the point of Selected Item
+     flag -> true if reload tableview data required
+     */
+    private func updateTableView(_ flag: Bool){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+            [weak self] in
+            self?.selectedIndexPath = IndexPath(row: (self?.getSelectedItemPosition())!, section: 0)
+            self?.langListTableView.scrollToRow(at: (self?.selectedIndexPath)!, at: .top, animated: false)
+        })
+        if(flag){
+            self.langListTableView.reloadData()
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
-        let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG , text: " position \(String(describing: selectedItemPosition))")
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+        updateTableView(false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "\(ScreenTracker.sharedInstance.screenPurpose)")
     }
     
     deinit {
@@ -58,6 +76,7 @@ class LanguageListCameraVC: BaseViewController {
     private func setupTableView(){
         langListTableView.dataSource = self
         langListTableView.delegate = self
+        langListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
@@ -69,7 +88,7 @@ class LanguageListCameraVC: BaseViewController {
     
     //MARK: - Utils
     private func getSelectedItemPosition() -> Int{
-        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
+        let selectedLangCode = UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value
         for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
@@ -84,9 +103,7 @@ class LanguageListCameraVC: BaseViewController {
     }
     
     @objc func updateCameralanguageSelection (notification:Notification) {
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        self.langListTableView.reloadData()
+        updateTableView(true)
     }
 }
 
@@ -107,7 +124,7 @@ extension LanguageListCameraVC: UITableViewDataSource{
         
         PrintUtility.printLog(tag: TAG , text: " value \(String(describing: UserDefaultsProperty<String>(KSelectedLanguageCamera).value)) languageItem.code \(languageItem.code)")
         
-        if UserDefaultsProperty<String>(KSelectedLanguageCamera).value == languageItem.code{
+        if UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value == languageItem.code{
             let languageManager = LanguageSelectionManager.shared
             if(languageManager.hasTtsSupport(languageCode: languageItem.code)){
                 cell.unselectedLabelTrailingConstraint.constant = kTtsNotAvailableTrailingConstant
@@ -145,7 +162,7 @@ extension LanguageListCameraVC: UITableViewDataSource{
 extension LanguageListCameraVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languageItems[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageCamera).value = languageItem.code
+        UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = languageItem.code
         self.langListTableView.reloadData()
     }
     

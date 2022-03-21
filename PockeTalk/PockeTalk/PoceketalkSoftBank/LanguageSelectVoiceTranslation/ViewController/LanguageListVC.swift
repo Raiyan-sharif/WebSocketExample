@@ -28,7 +28,8 @@ class LanguageListVC: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         setupLanguageProperty()
-        updateTableView()
+        UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
+        updateTableView(false)
     }
     
     deinit {
@@ -52,16 +53,25 @@ class LanguageListVC: BaseViewController {
     private func setupTableView(){
         langListTableView.delegate = self
         langListTableView.dataSource = self
+        langListTableView.contentInset = view.getCustomViewEdgetInsect()
         let nib = UINib(nibName: "LangListCell", bundle: nil)
         langListTableView.register(nib, forCellReuseIdentifier: "LangListCell")
         self.langListTableView.backgroundColor = UIColor.clear
     }
     
-    private func updateTableView(){
-        let selectedItemPosition = getSelectedItemPosition
-        PrintUtility.printLog(tag: TAG, text:" position \(String(describing: selectedItemPosition))")
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
+    /*
+     TableView Scroll to the point of Selected Item
+     flag -> true if reload tableview data required
+     */
+    private func updateTableView(_ flag: Bool){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+            [weak self] in
+            self?.selectedIndexPath = IndexPath(row: (self?.getSelectedItemPosition())!, section: 0)
+            self?.langListTableView.scrollToRow(at: (self?.selectedIndexPath)!, at: .top, animated: false)
+        })
+        if(flag){
+            self.langListTableView.reloadData()
+        }
     }
     
     private func registerNotification(){
@@ -74,13 +84,11 @@ class LanguageListVC: BaseViewController {
     }
 
     @objc private func updateLanguageSelection(notification: Notification) {
-        selectedIndexPath = IndexPath(row: getSelectedItemPosition(), section: 0)
-        self.langListTableView.scrollToRow(at: selectedIndexPath!, at: .middle, animated: true)
-        self.langListTableView.reloadData()
+        updateTableView(true)
     }
     
     private func getSelectedItemPosition() -> Int{
-        let selectedLangCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
+        let selectedLangCode = UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value
         for i in 0...languageItems.count - 1{
             let item = languageItems[i]
             if  selectedLangCode == item.code{
@@ -136,7 +144,7 @@ extension LanguageListVC: UITableViewDataSource {
         cell.langNameUnSelecteLabel.adjustsFontSizeToFitWidth = false
         cell.langNameUnSelecteLabel.lineBreakMode = .byTruncatingTail
         
-        if UserDefaultsProperty<String>(KSelectedLanguageVoice).value == languageItem.code{
+        if UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value == languageItem.code{
             setSelectedCellProperty(using: cell, and: languageItem.code)
         }else{
             setDeselectedCellProperty(using: cell)
@@ -149,7 +157,7 @@ extension LanguageListVC: UITableViewDataSource {
 extension LanguageListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let languageItem = languageItems[indexPath.row]
-        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languageItem.code
+        UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = languageItem.code
         self.langListTableView.reloadData()
     }
     
