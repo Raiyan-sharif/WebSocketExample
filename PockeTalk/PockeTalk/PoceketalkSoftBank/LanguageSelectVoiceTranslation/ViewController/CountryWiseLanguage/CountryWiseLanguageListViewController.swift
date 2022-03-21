@@ -29,6 +29,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
         talkButtonImageView.isHidden = true
         super.viewDidLoad()
+        UserDefaultsProperty<String>(KSelectedCountryLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
         setupUI()
         configureCollectionView()
         getLanugageList()
