@@ -322,6 +322,7 @@ let kDate = "Date"
 let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
+let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
 
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"

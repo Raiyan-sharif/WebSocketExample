@@ -6,6 +6,7 @@
 import UIKit
 import SwiftRichString
 import StoreKit
+import SwiftKeychainWrapper
 
 class PurchasePlanViewController: UIViewController {
     @IBOutlet weak private var purchasePlanTV: UITableView!
@@ -78,25 +79,27 @@ class PurchasePlanViewController: UIViewController {
     //MARK: - API Calls
     private func restorePurchases() {
         ActivityIndicator.sharedInstance.show()
-        if Reachability.isConnectedToNetwork(){
+        if Reachability.isConnectedToNetwork() {
             self.purchasePlanVM.updateReceiptValidationAllow()
             purchasePlanVM.restorePurchase { [weak self] success, error in
-                guard let self = `self` else {return}
-
-                if let error = error {
-                    DispatchQueue.main.async {
-                        self.showIAPRelatedError(error)
-                        ActivityIndicator.sharedInstance.hide()
-                        return
+                if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
+                    guard let self = `self` else {return}
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            self.showIAPRelatedError(error)
+                            ActivityIndicator.sharedInstance.hide()
+                            return
+                        }
                     }
-                }
 
-                if success{
-                    self.goToPermissionVC()
-                } else {
-                    self.didFinishRestoringPurchasesWithZeroProducts()
+                    if success{
+                        self.goToPermissionVC()
+                    } else {
+                        self.didFinishRestoringPurchasesWithZeroProducts()
+                    }
+                    ActivityIndicator.sharedInstance.hide()
+                    KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                 }
-                ActivityIndicator.sharedInstance.hide()
             }
         } else {
             ActivityIndicator.sharedInstance.hide()
@@ -112,18 +115,21 @@ class PurchasePlanViewController: UIViewController {
                 ActivityIndicator.sharedInstance.show()
                 self.purchasePlanVM.updateReceiptValidationAllow()
                 self.purchasePlanVM.purchaseProduct(product: product){ [weak self] success, error in
-                    guard let self = `self` else {return}
+                    if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
+                        guard let self = `self` else {return}
 
-                    if let productPurchaseError = error{
-                        DispatchQueue.main.async {
-                            self.showIAPRelatedError(productPurchaseError)
-                            ActivityIndicator.sharedInstance.hide()
-                            return
+                        if let productPurchaseError = error{
+                            DispatchQueue.main.async {
+                                self.showIAPRelatedError(productPurchaseError)
+                                ActivityIndicator.sharedInstance.hide()
+                                return
+                            }
                         }
-                    }
 
-                    success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: "initialFlow", text: "Din't successfully buy the product"))
-                    ActivityIndicator.sharedInstance.hide()
+                        success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: "initialFlow", text: "Din't successfully buy the product"))
+                        ActivityIndicator.sharedInstance.hide()
+                        KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
+                    }
                 }
             } else {
                 ActivityIndicator.sharedInstance.hide()
