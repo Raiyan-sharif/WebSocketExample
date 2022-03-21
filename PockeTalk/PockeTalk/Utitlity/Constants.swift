@@ -352,7 +352,7 @@ let kTTSAudioFolderName = "TtsAudioFiles"
 let kTTSAudioFileNameExtenstion = ".wav"
 
 let kInAppPurchaseStatus = "inAppPurchaseStatus"
-let KIsAppLaunchedForFirstTime = "KIsAppLaunchedForFirstTime"
+let KIsAppAlreadyLaunchedOnce = "isAppAlreadyLaunchedOnce"
 
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"

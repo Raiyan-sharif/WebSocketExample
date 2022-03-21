@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         if savedCoupon.isEmpty {
             IAPManager.shared.startObserving()
-            if UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value == nil {
-                UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value = true
+            if UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value == nil {
+                UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value = true
                 KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
             }
             KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
@@ -99,6 +99,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func relaunchApplication() {
         //isAppRelaunch = true
         IAPManager.shared.startObserving()
+        UserDefaultsUtility.setBoolValue(true, forKey: KIsAppAlreadyLaunchedOnce)
+        KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
         UserDefaultsUtility.setBoolValue(true, forKey: kIsClearedDataAll)
         self.navigateToViewController(.termAndCondition)
         setUpInitialLaunch()
