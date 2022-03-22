@@ -87,7 +87,7 @@ extension AppDelegate{
 
         if tokenCreationTime != nil {
 
-            let tokenExpiryTime = tokenCreationTime! + 84600000   //(30*1000)  for 30 sec delay
+            let tokenExpiryTime = tokenCreationTime! + 1500000 // 25 min   //(30*1000)  for 30 sec delay
 
             Clock.sync(completion:  { date, offset in
                 if let getResDate = date {
