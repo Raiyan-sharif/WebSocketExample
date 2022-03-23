@@ -74,7 +74,7 @@ extension AppDelegate{
                     SocketManager.sharedInstance.updateRequestKey()
 
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
-                    AppDelegate().executeLicenseTokenRefreshFunctionality()
+                    AppDelegate.executeLicenseTokenRefreshFunctionality()
                 }
             }catch{
                 PrintUtility.printLog(tag: "AppDelegate", text: "Didn't get auth key")
@@ -82,7 +82,7 @@ extension AppDelegate{
         }
     }
 
-    func executeLicenseTokenRefreshFunctionality() {
+    class func executeLicenseTokenRefreshFunctionality() {
         let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
 
         if tokenCreationTime != nil {

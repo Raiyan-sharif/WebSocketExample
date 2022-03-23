@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// Initial launch setup
     func setUpInitialLaunch() {
-        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        //LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil {
@@ -46,18 +46,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FontUtility.setInitialFontSize()
         }
 
-        NetworkManager.shareInstance.handleLicenseToken { result in
-            if result {
-                AppDelegate.generateAccessKey()
-            }
-        }
-        self.connectivity.startMonitoring { [weak self] connection, reachable in
-            guard let self = self else { return }
-            PrintUtility.printLog(tag: self.TAG, text:" \(connection) Is reachable: \(reachable)")
-            if UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes {
-                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
-            }
-        }
+//        NetworkManager.shareInstance.handleLicenseToken { result in
+//            if result {
+//                AppDelegate.generateAccessKey()
+//            }
+//        }
+//        self.connectivity.startMonitoring { [weak self] connection, reachable in
+//            guard let self = self else { return }
+//            PrintUtility.printLog(tag: self.TAG, text:" \(connection) Is reachable: \(reachable)")
+//            if UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes {
+//                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+//            }
+//        }
     }
 
     func setUpAppFirstLaunch(isUpdateArrow: Bool){
@@ -81,12 +81,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        executeLicenseTokenRefreshFunctionality()
+        //executeLicenseTokenRefreshFunctionality()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        SocketManager.sharedInstance.connect()
-        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        //SocketManager.sharedInstance.connect()
+        //LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
 
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)

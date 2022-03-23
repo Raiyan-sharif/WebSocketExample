@@ -104,6 +104,7 @@ class SpeechProcessingViewController: BaseViewController{
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
                 let accessKey = UserDefaultsProperty<String>(authentication_key).value
                 if accessKey == nil {
                     SocketManager.sharedInstance.disconnect()
@@ -123,6 +124,7 @@ class SpeechProcessingViewController: BaseViewController{
         connectivity.cancel()
         NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
@@ -176,7 +178,13 @@ class SpeechProcessingViewController: BaseViewController{
     
     private func registerForNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
+
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
         } else {
@@ -541,12 +549,18 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appBecomeActive() {
+        AppDelegate.executeLicenseTokenRefreshFunctionality()
         PrintUtility.printLog(tag: TAG, text: "Become Active")
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
         self.loaderInvisible()
     }
-    
+
+    @objc private func appWillEnterForeground() {
+        SocketManager.sharedInstance.connect()
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+    }
+
     func showPronunciationPracticeResult (stt:String) {
         let pronumtiationValue = PronuntiationValue(practiceText: stt, orginalText: pronunciationText, languageCcode: pronunciationLanguageCode)
         NotificationCenter.default.post(name: .pronuntiationNotification, object: nil, userInfo: ["value":pronumtiationValue])

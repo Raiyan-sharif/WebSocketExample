@@ -18,6 +18,7 @@ class PermissionViewController: UIViewController {
         initializeData()
         checkPermissions()
         UserDefaultsUtility.setBoolValue(false, forKey: kIsClearedDataAll)
+        initialCallCall()
     }
 
     //MARK: - Initial setup
@@ -81,6 +82,15 @@ class PermissionViewController: UIViewController {
     }
 
     //MARK: - Utils
+    func initialCallCall() {
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        NetworkManager.shareInstance.handleLicenseToken { result in
+            if result {
+                AppDelegate.generateAccessKey()
+            }
+        }
+    }
+
     private func setGrantPermissionStatusAndReloadTV(for cellType: PermissionTVCellType, status permissionStatus: Bool ) {
         for item in 0..<row.count {
             if row[item].cellType == cellType {

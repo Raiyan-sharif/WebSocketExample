@@ -142,6 +142,7 @@ class HomeViewController: BaseViewController {
         setupFloatingMikeButton()
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
+        self.speechVC.languageHasUpdated = true
     }
 
     override func loadView() {
