@@ -169,3 +169,11 @@
 "KBoardingTransLationLan" = "Change the language of translation";
 "KBoardingLanChange" = "Change source/target language in translation";
 
+//Softbank Authentication
+"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
+"KErrorMessage" = "The authentication was failed. Please retry.";
+"KErrorCode1Message" = "Error_Code1";
+"KErrorCode2Message" = "Error_Code2";
+"KErrorCode4Message" = "Error_Code4";
+"KErrorCode5Message" = "Error_Code5";
+"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";

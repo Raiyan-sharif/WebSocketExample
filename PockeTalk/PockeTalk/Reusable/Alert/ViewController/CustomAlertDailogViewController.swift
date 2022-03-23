@@ -16,6 +16,9 @@ class CustomAlertDailogViewController: BaseViewController {
     @IBOutlet var bottomDevider: UIView!
     @IBOutlet var horizontalDevicer: UIView!
     @IBOutlet var baseView: UIView!
+    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var errorLable: UILabel!
+    @IBOutlet weak var emptyLable: UILabel!
     var alertTitle = String()
     var alertMessage = String()
     var alertButton = String()
@@ -27,10 +30,18 @@ class CustomAlertDailogViewController: BaseViewController {
     let window = UIApplication.shared.keyWindow!
     var talkButtonImageView: UIImageView!
     var flagTalkButton = false
+    var softbankAlert = false
+    var softbankShowError = false
+    var okButtonAction:(() -> Void)?
+    var errorMessage = String()
+    let emptyString = " "
 
     override func viewDidLoad() {
         super.viewDidLoad()
         baseView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.okButton.isHidden = true
+        self.errorLable.isHidden = true
+        self.emptyLable.isHidden = true
         setupUI()
     }
 
@@ -84,6 +95,25 @@ class CustomAlertDailogViewController: BaseViewController {
             self.horizontalDevicer.isHidden = true
             self.bottomDevider.isHidden = true
         }
+
+        // Softbank error dialog
+        if softbankAlert {
+            alertView.layer.cornerRadius = 25
+            self.titleLable.text = emptyString
+            self.cancelButton.isHidden = true
+            self.bottomDevider.isHidden = true
+            self.actionButton.isHidden = true
+            self.emptyLable.isHidden = false
+            self.emptyLable.text = emptyString
+            self.okButton.isHidden = false
+            self.okButton.setTitle("OK".localiz(), for: .normal)
+            self.okButton.setTitleColor(UIColor.systemBlue, for: .normal)
+            if softbankShowError {
+                self.errorLable.isHidden = false
+                self.errorLable.text = errorMessage
+                self.errorLable.font = UIFont.systemFont(ofSize: FontUtility.getErrorFontSize())
+            }
+        }
     }
 
     @IBAction func onCancel(_ sender: Any) {
@@ -93,6 +123,11 @@ class CustomAlertDailogViewController: BaseViewController {
     @IBAction func onAction(_ sender: Any) {
         dismiss(animated: true)
         buttonAction?()
+    }
+
+    @IBAction func onOk(_ sender: Any) {
+        dismiss(animated: true)
+        okButtonAction?()
     }
 }
 

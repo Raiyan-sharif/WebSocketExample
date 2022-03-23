@@ -40,6 +40,10 @@ class FontUtility {
         return DEFAULT_FONTSIZE * FONTSIZE[1]
     }
 
+    static func getErrorFontSize () -> CGFloat {
+        return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex()] - 2 * DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER
+    }
+
     static func setFontSize (selectedFont:String) {
         UserDefaultsProperty<String>(KFontSelection).value = selectedFont
         switch selectedFont {

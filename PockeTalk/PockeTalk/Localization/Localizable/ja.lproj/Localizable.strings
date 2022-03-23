@@ -168,3 +168,11 @@
 "KBoardingTransLationLan"  = "翻訳言語の変更";
 "KBoardingLanChange" = "翻訳方向の変更";
 
+//Softbank Authentication
+"KInfoExpiredLiscnseErrorMessage" = "クーポンの有効期限が切れました。";
+"KErrorMessage" = "認証に失敗しました　やり直してください";
+"KErrorCode1Message" = "Error_Code1";
+"KErrorCode2Message" = "Error_Code2";
+"KErrorCode4Message" = "Error_Code4";
+"KErrorCode5Message" = "Error_Code5";
+"KSubscriptionErrorMessage" = "サブスクリプション契約されているため\nクーポンコードが利用できませんでした";

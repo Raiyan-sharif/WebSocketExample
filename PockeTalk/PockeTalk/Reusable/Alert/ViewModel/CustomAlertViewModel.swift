@@ -94,5 +94,31 @@ class CustomAlertViewModel:BaseModel {
         return alertVC
     }
 
+    func alertDialogSoftbank(message:String, completion: @escaping() -> Void) -> CustomAlertDailogViewController {
+        let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
+        let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
+        alertVC.alertMessage = message
+        alertVC.alertButton = "OK".localiz()
+        alertVC.softbankAlert = true
+        alertVC.noActionButton = false
+        alertVC.softbankShowError = false
+        alertVC.okButtonAction = completion
+
+        return alertVC
+    }
+
+    func alertDialogSoftbankWithError(message:String, errorMessage:String, completion:@escaping () -> Void) -> CustomAlertDailogViewController {
+        let storyboard = UIStoryboard(name: "CustomAlertDialog", bundle: .main)
+        let alertVC = storyboard.instantiateViewController(withIdentifier: "CustomAlertVC") as! CustomAlertDailogViewController
+        alertVC.alertMessage = message
+        alertVC.alertButton = "OK".localiz()
+        alertVC.softbankAlert = true
+        alertVC.noActionButton = false
+        alertVC.softbankShowError = true
+        alertVC.errorMessage = errorMessage
+        alertVC.okButtonAction = completion
+
+        return alertVC
+    }
 
 }

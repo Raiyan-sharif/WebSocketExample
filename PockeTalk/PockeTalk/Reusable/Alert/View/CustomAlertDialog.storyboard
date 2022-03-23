@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-CT-PDE">
-                                <rect key="frame" x="57" y="390" width="300" height="116"/>
+                                <rect key="frame" x="57" y="375.5" width="300" height="145"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9ep-X6-FWO">
-                                        <rect key="frame" x="10" y="14" width="280" height="41"/>
+                                        <rect key="frame" x="10" y="14" width="280" height="82"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lMe-U9-wIc">
                                                 <rect key="frame" x="118.5" y="0.0" width="43.5" height="20.5"/>
@@ -35,45 +35,72 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="empty Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPl-oY-gzd">
+                                                <rect key="frame" x="93" y="41" width="94" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQQ-Ek-BUi">
+                                                <rect key="frame" x="0.0" y="61.5" width="280" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="tQQ-Ek-BUi" secondAttribute="trailing" id="hpZ-yO-Y0Y"/>
+                                            <constraint firstItem="tQQ-Ek-BUi" firstAttribute="leading" secondItem="9ep-X6-FWO" secondAttribute="leading" id="svd-bM-Ndy"/>
+                                        </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="s4v-wf-294" customClass="CustomSizeButton" customModule="PockeTalk" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="78" width="139.5" height="30"/>
+                                        <rect key="frame" x="5" y="119" width="139.5" height="18"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
                                             <action selector="onCancel:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="M6J-yJ-27h"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJc-Y3-XXb">
-                                        <rect key="frame" x="0.0" y="69" width="300" height="1"/>
+                                        <rect key="frame" x="0.0" y="110" width="300" height="1"/>
                                         <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Tii-JK-tzE"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnK-ky-w74">
-                                        <rect key="frame" x="149.5" y="69" width="1" height="47"/>
+                                        <rect key="frame" x="149.5" y="110" width="1" height="35"/>
                                         <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="q2E-hD-KKx"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="L1I-kK-mf1" customClass="CustomSizeButton" customModule="PockeTalk" customModuleProvider="target">
-                                        <rect key="frame" x="155.5" y="78" width="139.5" height="30"/>
+                                        <rect key="frame" x="155.5" y="119" width="139.5" height="18"/>
                                         <state key="normal" title="Action"/>
                                         <connections>
                                             <action selector="onAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="NBr-5F-KEb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="j71-bg-ZKY" customClass="CustomSizeButton" customModule="PockeTalk" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="119" width="280" height="21"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onOk:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="yto-Cz-KrH"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="L1I-kK-mf1" secondAttribute="bottom" constant="8" id="0Wq-5n-nPR"/>
+                                    <constraint firstItem="j71-bg-ZKY" firstAttribute="centerX" secondItem="Ynb-CT-PDE" secondAttribute="centerX" id="1oU-Fs-H0L"/>
                                     <constraint firstAttribute="trailing" secondItem="9ep-X6-FWO" secondAttribute="trailing" constant="10" id="3q9-o1-wNF"/>
                                     <constraint firstItem="rnK-ky-w74" firstAttribute="leading" secondItem="s4v-wf-294" secondAttribute="trailing" constant="5" id="Bkf-WI-Bjv"/>
                                     <constraint firstItem="rnK-ky-w74" firstAttribute="top" secondItem="EJc-Y3-XXb" secondAttribute="top" id="FIK-PX-ZK1"/>
                                     <constraint firstItem="EJc-Y3-XXb" firstAttribute="leading" secondItem="Ynb-CT-PDE" secondAttribute="leading" id="HTx-Cn-Io9"/>
+                                    <constraint firstItem="j71-bg-ZKY" firstAttribute="top" secondItem="EJc-Y3-XXb" secondAttribute="bottom" constant="8" id="LIW-nk-gYz"/>
                                     <constraint firstItem="s4v-wf-294" firstAttribute="top" secondItem="EJc-Y3-XXb" secondAttribute="bottom" constant="8" id="Mfp-LD-mve"/>
+                                    <constraint firstAttribute="bottom" secondItem="j71-bg-ZKY" secondAttribute="bottom" constant="5" id="OwC-GK-ml2"/>
                                     <constraint firstItem="rnK-ky-w74" firstAttribute="centerX" secondItem="Ynb-CT-PDE" secondAttribute="centerX" id="QFk-Eg-H8g"/>
                                     <constraint firstAttribute="bottom" secondItem="s4v-wf-294" secondAttribute="bottom" constant="8" id="WC2-xP-Q87"/>
                                     <constraint firstItem="9ep-X6-FWO" firstAttribute="leading" secondItem="Ynb-CT-PDE" secondAttribute="leading" constant="10" id="XXG-fW-GaL"/>
@@ -84,8 +111,10 @@
                                     <constraint firstAttribute="width" constant="300" id="evE-bo-YGc"/>
                                     <constraint firstItem="L1I-kK-mf1" firstAttribute="leading" secondItem="rnK-ky-w74" secondAttribute="trailing" constant="5" id="gCT-QY-XD8"/>
                                     <constraint firstItem="L1I-kK-mf1" firstAttribute="top" secondItem="EJc-Y3-XXb" secondAttribute="bottom" constant="8" id="gph-Ft-lXh"/>
+                                    <constraint firstAttribute="trailing" secondItem="j71-bg-ZKY" secondAttribute="trailing" constant="10" id="h6g-Mh-gLL"/>
                                     <constraint firstItem="EJc-Y3-XXb" firstAttribute="top" secondItem="9ep-X6-FWO" secondAttribute="bottom" constant="14" id="oJw-Dt-LhV"/>
                                     <constraint firstAttribute="trailing" secondItem="EJc-Y3-XXb" secondAttribute="trailing" id="pzI-F4-quS"/>
+                                    <constraint firstItem="j71-bg-ZKY" firstAttribute="leading" secondItem="Ynb-CT-PDE" secondAttribute="leading" constant="10" id="rRL-ia-TeX"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -102,8 +131,11 @@
                         <outlet property="baseView" destination="5EZ-qb-Rvc" id="9fX-kI-LYO"/>
                         <outlet property="bottomDevider" destination="rnK-ky-w74" id="pvS-g8-fwd"/>
                         <outlet property="cancelButton" destination="s4v-wf-294" id="AP2-F9-JhM"/>
+                        <outlet property="emptyLable" destination="qPl-oY-gzd" id="62F-SU-ajP"/>
+                        <outlet property="errorLable" destination="tQQ-Ek-BUi" id="gcQ-i3-vPt"/>
                         <outlet property="horizontalDevicer" destination="EJc-Y3-XXb" id="nFB-IQ-JAB"/>
                         <outlet property="messageLable" destination="CS9-Qj-E0G" id="EM6-I5-Zu1"/>
+                        <outlet property="okButton" destination="j71-bg-ZKY" id="KFs-ul-fMv"/>
                         <outlet property="titleLable" destination="lMe-U9-wIc" id="if8-dP-J0o"/>
                         <outlet property="view" destination="5EZ-qb-Rvc" id="1bC-va-bay"/>
                     </connections>
@@ -115,10 +147,13 @@
     </scenes>
     <designables>
         <designable name="L1I-kK-mf1">
-            <size key="intrinsicContentSize" width="44" height="30"/>
+            <size key="intrinsicContentSize" width="44" height="18"/>
+        </designable>
+        <designable name="j71-bg-ZKY">
+            <size key="intrinsicContentSize" width="21" height="18"/>
         </designable>
         <designable name="s4v-wf-294">
-            <size key="intrinsicContentSize" width="48" height="30"/>
+            <size key="intrinsicContentSize" width="47.5" height="18"/>
         </designable>
     </designables>
     <resources>
