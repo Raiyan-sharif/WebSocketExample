@@ -22,7 +22,7 @@ class ResponseLogger {
 
     private var isResponeLoggerAvailable: Bool {
         let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
-        if schemeName == BuildVarientScheme.NETWORK_API_LOGGER.rawValue {
+        if schemeName == BuildVarientScheme.SERVER_API_LOG.rawValue {
             return true
         }
       return false

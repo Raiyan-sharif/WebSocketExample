@@ -98,10 +98,10 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
         case SettingsItemType.support.rawValue:
             PrintUtility.printLog(tag: "support: ", text: "support")
-            GlobalMethod.openUrlInBrowser(url: SUPPORT_URL)
+            GlobalMethod.openUrlInBrowser(url: GlobalMethod.getURLString().supportURL)
         case SettingsItemType.userManual.rawValue:
             PrintUtility.printLog(tag: "userManual: ", text: "userManual")
-            GlobalMethod.openUrlInBrowser(url: USER_MANUAL_URL)
+            GlobalMethod.openUrlInBrowser(url: GlobalMethod.getURLString().userManuelURL)
         case SettingsItemType.information.rawValue:
             PrintUtility.printLog(tag: "information: ", text: "Information 2nd depth")
             let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
@@ -118,6 +118,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             break
         }
     }
+
 }
 
 protocol fontSizeChanged : AnyObject {

@@ -88,7 +88,7 @@ class AppFirstLaunchViewController: UIViewController {
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
         if Reachability.isConnectedToNetwork() {
             PrintUtility.printLog(tag: "initalFlow", text: "Tap on term and condition Btn")
-            let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
+            let settingsUrl = NSURL(string: GlobalMethod.getURLString().termsAndConditionsURL)! as URL
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         } else {
             InitialFlowHelper().showNoInternetAlert(on: self)

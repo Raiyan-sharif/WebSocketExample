@@ -41,7 +41,7 @@ class TermsAndConditionsViewController: UIViewController {
     }
     
     @IBAction func checkTermsButtonAction(_ sender: Any) {
-        let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
+        let settingsUrl = NSURL(string: GlobalMethod.getURLString().termsAndConditionsURL)! as URL
         UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
     }
     

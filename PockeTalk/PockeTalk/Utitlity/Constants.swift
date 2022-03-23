@@ -33,10 +33,19 @@ let languageMappingTotalRowCount = 1495
 
 
 //MARK: - Link
-let SUPPORT_URL = "https://rd.snxt.jp/PA002"
+//let SUPPORT_URL = "https://rd.snxt.jp/PA002"
 let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
-let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
-let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+//let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
+//let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+
+let PRODUCTION_SUPPORT_URL = "https://rd.snxt.jp/PA002"
+let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+let PRODUCTION_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+let STAGING_SUPPORT_URL = "https://rd.snxt.jp/PA002"
+let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+
+
 
 
 //MARK: - Notification Name
@@ -81,8 +90,6 @@ let kCameraUsageTitle = "kCameraUsageTitle"
 let kCameraUsageMessage = "kCameraUsageMessage"
 let kTitleOk = "kTitleOk"
 let kNotAllow = "kNotAllow"
-
-
 
 
 // Language selection voice
@@ -303,8 +310,12 @@ func getUUID() -> String? {
 let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
 let bjitAppSpecificSharedSecret = "b2d823dea3424a6d801ad88fcef72648"
+let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
+let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"
 let IAP_ProductIDs = "IAP_ProductIDs"
 let BJIT_IAP_ProductIDs = "BJIT_IAP_ProductIDs"
+let productionIAPProduts = "Production_IAP_Products"
+let stagingIAPProduts = "Staging_IAP_Products"
 
 //IAP JSON Parsing
 let IAPreceiptData = "receipt-data"
@@ -341,3 +352,6 @@ let kSelectedHistoryLanguageVoice: String = "kSelectedHistoryLanguageVoice"
 let kTempSelectedLanguageVoice: String = "kTempSelectedLanguageVoice"
 let kSelectedHistoryLanguageCamera: String = "kSelectedHistoryLanguageCamera"
 let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"
+
+
+

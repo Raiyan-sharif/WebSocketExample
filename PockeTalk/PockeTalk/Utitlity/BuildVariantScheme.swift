@@ -13,7 +13,7 @@ enum BuildVarientScheme: String {
     case MULTISERVER_PRODUCTION
     case MULTISERVER_STAGE
     case RELEASE
-    case TOKYOSERVER_PRODUCTION
-    case TOKYOSERVER_STAGE
-    case NETWORK_API_LOGGER
+    case PRODUCTION
+    case STAGING
+    case SERVER_API_LOG
 }

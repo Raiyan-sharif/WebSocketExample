@@ -52,11 +52,25 @@ class IAPManager: NSObject {
         case paymentWasCancelled
         case productRequestFailed
     }
+
+    // get IAP products based on build varients
+    func getProductsBasedOnBuildVarient() -> (product: String, iAPPassword: String) {
+        switch (schemeName) {
+        case BuildVarientScheme.PRODUCTION.rawValue:
+            return (productionIAPProduts, productionIAPSharedSecret)
+        case BuildVarientScheme.STAGING.rawValue:
+            return (stagingIAPProduts, stagingIAPSharedSecret)
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            return (BJIT_IAP_ProductIDs, bjitAppSpecificSharedSecret)
+        default:
+            return ("", "")
+        }
+    }
     
     // MARK: - General Methods
     fileprivate func getProductIDs() -> [String]? {
         var resourceURL: String = ""
-        resourceURL = (schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? BJIT_IAP_ProductIDs : IAP_ProductIDs
+        resourceURL = getProductsBasedOnBuildVarient().product
         guard let url = Bundle.main.url(forResource: resourceURL, withExtension: "plist") else { return nil }
         do {
             let data = try Data(contentsOf: url)
@@ -123,7 +137,6 @@ extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         // Get the available products contained in the response.
         let products = response.products
-
         // Check if there are any products available.
         if products.count > 0 {
             // Call the following handler passing the received products.
@@ -437,7 +450,8 @@ extension IAPManager {
             return
         }
         let recieptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : ((schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? bjitAppSpecificSharedSecret : appSpecificSharedSecret) as AnyObject]
+        let iAPPassword = getProductsBasedOnBuildVarient().iAPPassword
+        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : iAPPassword as AnyObject]
         
         do {
             let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
