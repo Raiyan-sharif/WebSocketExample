@@ -21,6 +21,14 @@ public class LanguageEngineParser{
     let errorTitle = "Error :"
     let errorDescription = "Parse Error"
 
+    private var isLangAssetAvailable: Bool {
+        let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
+        if schemeName == BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue {
+            return true
+        }
+      return false
+    }
+
     private init() {
         self.getData()
     }
@@ -29,13 +37,20 @@ public class LanguageEngineParser{
     func getData () {
         do {
             var filePath = ""
-            if let path = FileDownloader.getFilePath(fileName: LanguageEngineFileName) {
-                PrintUtility.printLog(tag: TAG, text: "File found in document directory")
-                filePath = path
-            }
-            else if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
-                PrintUtility.printLog(tag: TAG, text: "File found in app resource directory")
-                filePath = path
+            if isLangAssetAvailable == false {
+                if let path = FileDownloader.getFilePath(fileName: LanguageEngineFileName) {
+                    PrintUtility.printLog(tag: TAG, text: "File found in document directory")
+                    filePath = path
+                }
+                else if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
+                    PrintUtility.printLog(tag: TAG, text: "File found in app resource directory")
+                    filePath = path
+                }
+            } else {
+                if let path = Bundle.main.path(forResource: fileName, ofType: fileType) {
+                    PrintUtility.printLog(tag: TAG, text: "File found in app resource directory")
+                    filePath = path
+                }
             }
             let contents = try String(contentsOfFile: filePath)
             let xml =  try XML.parse(contents)
