@@ -47,21 +47,26 @@ class CustomAlertDailogViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        talkButtonImageView = window.viewWithTag(109) as! UIImageView
-        FloatingMikeButton.sharedInstance.isHidden(true)
-        flagTalkButton = talkButtonImageView.isHidden
-        if(!flagTalkButton){
-            talkButtonImageView.isHidden = true
-            HomeViewController.dummyTalkBtnImgView.isHidden = false
+        if !softbankAlert {
+            talkButtonImageView = window.viewWithTag(109) as! UIImageView
+            FloatingMikeButton.sharedInstance.isHidden(true)
+            flagTalkButton = talkButtonImageView.isHidden
+            if(!flagTalkButton){
+                talkButtonImageView.isHidden = true
+                HomeViewController.dummyTalkBtnImgView.isHidden = false
+            }
         }
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if(!flagTalkButton){
-            talkButtonImageView.isHidden = false
-            HomeViewController.dummyTalkBtnImgView.isHidden = true
+        if !softbankAlert {
+            if(!flagTalkButton){
+                talkButtonImageView.isHidden = false
+                HomeViewController.dummyTalkBtnImgView.isHidden = true
+            }
+            FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
         }
-        FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
     }
 
     func setupUI() {

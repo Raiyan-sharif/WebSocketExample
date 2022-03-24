@@ -28,7 +28,20 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private func checkInAppPurchaseStatus() {
         if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
-            //Show dialog and redirect to home
+            showAlertAndRedirectToHomeVC()
+        } else {
+            //TODO: Call licence confirmation API from here
+            ///Call api from here and start processing
         }
+    }
+
+    private func showAlertAndRedirectToHomeVC(){
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "showAlertAndRedirectToHomeVC [+]")
+
+        let alertService = CustomAlertViewModel()
+        let alert = alertService.alertDialogSoftbank(message: "KSubscriptionErrorMessage".localiz()) {
+            GlobalMethod.appdelegate().navigateToViewController(.home)
+        }
+        present(alert, animated: true, completion: nil)
     }
 }
