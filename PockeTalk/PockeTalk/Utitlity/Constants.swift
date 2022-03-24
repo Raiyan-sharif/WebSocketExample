@@ -355,5 +355,6 @@ let kTempSelectedLanguageVoice: String = "kTempSelectedLanguageVoice"
 let kSelectedHistoryLanguageCamera: String = "kSelectedHistoryLanguageCamera"
 let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"
 
-
-
+let ENGLISH_SLOW_LANG_CODE: String = "en-SO"
+let ENGLISH_SLOW_DEFAULT_PITCH_RATE: String = "0.7"
+let TEMPO_STANDARD: String = "normal"
