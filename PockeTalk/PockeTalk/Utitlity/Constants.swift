@@ -312,10 +312,12 @@ let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
 let bjitAppSpecificSharedSecret = "b2d823dea3424a6d801ad88fcef72648"
 let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
 let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"
+let snIAPSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
 let IAP_ProductIDs = "IAP_ProductIDs"
 let BJIT_IAP_ProductIDs = "BJIT_IAP_ProductIDs"
 let productionIAPProduts = "Production_IAP_Products"
 let stagingIAPProduts = "Staging_IAP_Products"
+let sNIAPProducts = "SN_IAP_Products"
 
 //IAP JSON Parsing
 let IAPreceiptData = "receipt-data"

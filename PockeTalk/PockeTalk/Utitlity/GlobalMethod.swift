@@ -426,7 +426,7 @@ class GlobalMethod {
             return (PRODUCTION_SUPPORT_URL, PRODUCTION_USER_MANUEL_URL, PRODUCTION_TERMS_AND_CONDITIONS_URL)
         case BuildVarientScheme.STAGING.rawValue:
             return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
-        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue, BuildVarientScheme.APP_STORE_SN.rawValue:
             return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
         default:
             return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
