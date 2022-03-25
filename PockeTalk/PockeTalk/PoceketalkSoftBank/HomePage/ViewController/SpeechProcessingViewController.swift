@@ -622,7 +622,7 @@ extension SpeechProcessingViewController: HomeVCDelegate{
     
     func stopRecord() {
         PrintUtility.printLog(tag: TAG, text: "Stop Recording")
-        if !self.isFinalProvided {
+        if !self.isFinalProvided  && !isMinimumLimitExceed{
             ActivityIndicator.sharedInstance.show(hasBackground: false)
         }
         service?.stopRecord()
