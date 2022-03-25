@@ -90,13 +90,13 @@
 "kInitialPermissionSettingsVCCameraLabel" = "相機";
 "kInitialPermissionSettingsVCNotificationLabel" = "通知";
 "kPaidPlanVCTitleLabel" = "使用POCKETALK App需要付費";
-"kPaidPlanVCBulletPointOneLabel" = "・一週內取消不會產生任何費用";
+"kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "・上述費用將從試用期最後一天的次日起連續收取";
-"kPaidPlanVCPurchaseButtonTitle" = "開始免費使用一週";
+"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "恢復購買記錄";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "請選擇使用方案";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "開始使用";
