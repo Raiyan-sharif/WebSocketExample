@@ -90,13 +90,13 @@
 "kInitialPermissionSettingsVCCameraLabel" = "กล้อง";
 "kInitialPermissionSettingsVCNotificationLabel" = "การแจ้งเตือน";
 "kPaidPlanVCTitleLabel" = "ท่านต้องซื้อแพ็กเกจเพื่อใช้งานแอปพลิเคชันของ POCKETALK";
-"kPaidPlanVCBulletPointOneLabel" = "ไม่เสียค่าใช้จ่ายหากยกเลิกภายในหนึ่งสัปดาห์";
+"kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "ค่าบริการข้างต้นจะถูกเรียกเก็บอย่างต่อเนื่องหากเลยวันสุดท้ายของการใช้งานฟรี";
-"kPaidPlanVCPurchaseButtonTitle" = "เริ่มใช้งานฟรี 1 สัปดาห์";
+"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "กู้คืนประวัติการซื้อ";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "กรุณาเลือกแพ็กเกจการใช้งาน";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "เริ่มใช้งาน";

@@ -91,13 +91,13 @@
 "kInitialPermissionSettingsVCCameraLabel" = "카메라";
 "kInitialPermissionSettingsVCNotificationLabel" = "알림";
 "kPaidPlanVCTitleLabel" = "포켓토크 앱 이용에는 유료 요금제가 필요합니다";
-"kPaidPlanVCBulletPointOneLabel" = "•1주일 이내에 해지해지하시면 요금이 부가되지 않습니다";
+"kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "•무료 기간 마지막 날의 익일부터 상기 요금이 계속 과금됩니다";
-"kPaidPlanVCPurchaseButtonTitle" = "1주일간 무료로 이용 시작";
+"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "구매 내역을 복원하기";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "이용 요금제를 선택해 주세요";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "이용 시작";
