@@ -247,4 +247,8 @@ public class LanguageSelectionManager{
         }
         return true
     }
+    
+    func isNeedToHideTempoControll(languageCode:String) -> Bool {
+            return languageListFromTTSServer.contains(languageCode)
+        }
 }

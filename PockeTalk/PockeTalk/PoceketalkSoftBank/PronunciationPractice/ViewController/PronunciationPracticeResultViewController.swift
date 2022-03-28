@@ -130,7 +130,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         self.viewContainer.layer.masksToBounds = true
         // Hide Tempo control menu for TTS unsupported language
         let languageManager = LanguageSelectionManager.shared
-        if !(languageManager.hasTtsSupport(languageCode: languageCode)) {
+        if !(languageManager.hasTtsSupport(languageCode: languageCode)) || languageManager.isNeedToHideTempoControll(languageCode: languageCode) {
             self.tempoControlButton.isHidden = true
         }
 

@@ -358,3 +358,4 @@ let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"
 let ENGLISH_SLOW_LANG_CODE: String = "en-SO"
 let ENGLISH_SLOW_DEFAULT_PITCH_RATE: String = "0.7"
 let TEMPO_STANDARD: String = "normal"
+let languageListFromTTSServer:[String]=["af","ar","th","fr","zh-CN","zh-TW", "yue", "ca", "ja", "hr", "hi", "ta", "iw", "cs", "my", "am", "gl", "jw", "kn", "ms", "su", "ur", "zu", "km", "uz", "ml", "te"]
