@@ -33,11 +33,11 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _productFetchError: String?
 
     var numberOfRow: Int {
-        return _hasInAppPurchaseProduct ? (row.count) : (dummyRow.count)
+        return row.count
     }
 
-    var rowType: [PurchasePlanTVCellInfo]{
-        return _hasInAppPurchaseProduct ? (self.row) : (self.dummyRow)
+    var rowType: [PurchasePlanTVCellInfo] {
+        return self.row
     }
 
     var hasInAppPurchaseProduct: Bool {
@@ -129,11 +129,11 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         //Set suggestion text
         for item in 0..<productDetails.count {
             if productDetails[item].periodUnitType == .month {
-                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 4) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(((weeklyPrice * 4) - productDetails[item].price).roundToDecimal(2)) " + "kYen".localiz()
             }
 
             if productDetails[item].periodUnitType == .year {
-                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 52) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(((weeklyPrice * 52) - productDetails[item].price).roundToDecimal(2)) " + "kYen".localiz()
             }
         }
     }

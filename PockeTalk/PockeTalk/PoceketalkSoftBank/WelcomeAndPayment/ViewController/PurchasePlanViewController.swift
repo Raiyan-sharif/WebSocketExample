@@ -53,19 +53,20 @@ class PurchasePlanViewController: UIViewController {
         ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
             self.purchasePlanVM.getProduct { [weak self] success, error in
+                guard let self = `self` else {return}
 
-                if let productFetchError = error{
+                if let productFetchError = error {
                     DispatchQueue.main.async {
                         ActivityIndicator.sharedInstance.hide()
                         return
                     }
-                    PrintUtility.printLog(tag: "IAP", text: "Product can't fetch, error: \(productFetchError)")
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product can't fetch, error: \(productFetchError)")
                 }
 
                 DispatchQueue.main.async {
                     if success {
-                        PrintUtility.printLog(tag: "IAP", text: "Product fetch status \(success)")
-                        self?.purchasePlanTV.reloadData()
+                        PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product fetch status \(success)")
+                        self.purchasePlanTV.reloadData()
                     }
                     ActivityIndicator.sharedInstance.hide()
                 }
@@ -84,6 +85,7 @@ class PurchasePlanViewController: UIViewController {
             purchasePlanVM.restorePurchase { [weak self] success, error in
                 if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
                     guard let self = `self` else {return}
+
                     if let error = error {
                         DispatchQueue.main.async {
                             self.showIAPRelatedError(error)
@@ -92,11 +94,8 @@ class PurchasePlanViewController: UIViewController {
                         }
                     }
 
-                    if success{
-                        self.goToPermissionVC()
-                    } else {
-                        self.didFinishRestoringPurchasesWithZeroProducts()
-                    }
+                    success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
+
                     ActivityIndicator.sharedInstance.hide()
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                 }
@@ -115,10 +114,11 @@ class PurchasePlanViewController: UIViewController {
                 ActivityIndicator.sharedInstance.show()
                 self.purchasePlanVM.updateReceiptValidationAllow()
                 self.purchasePlanVM.purchaseProduct(product: product){ [weak self] success, error in
+
                     if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
                         guard let self = `self` else {return}
 
-                        if let productPurchaseError = error{
+                        if let productPurchaseError = error {
                             DispatchQueue.main.async {
                                 self.showIAPRelatedError(productPurchaseError)
                                 ActivityIndicator.sharedInstance.hide()
@@ -126,7 +126,8 @@ class PurchasePlanViewController: UIViewController {
                             }
                         }
 
-                        success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: "initialFlow", text: "Din't successfully buy the product"))
+                        success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
+
                         ActivityIndicator.sharedInstance.hide()
                         KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                     }
@@ -238,18 +239,25 @@ extension PurchasePlanViewController: UITableViewDataSource{
             return cell
         case .freeUses:
             let cell = tableView.dequeueReusableCell(withIdentifier: KFreePlanTableViewCell,for: indexPath) as! FreePlanTableViewCell
-            cell.configCell(indexPath: indexPath, freeDaysDetailsInfoText: rowType.title, freeDaysUsesInfo: "kIAPFreeDaysDescription".localiz())
+            cell.configCell (
+                indexPath: indexPath,
+                freeDaysDetailsInfoText: rowType.title,
+                freeDaysUsesInfo: "kIAPFreeDaysDescription".localiz())
             cell.selectionStyle = .none
             return cell
         case .weeklyPlan, .monthlyPlan,.annualPlan, .dailyPlan:
             let cell = tableView.dequeueReusableCell(withIdentifier: KPlanTableViewCell,for: indexPath) as! PlanTableViewCell
             cell.selectionStyle = .none
             let productData = purchasePlanVM.getProductDetailsData(using: rowType)
-            cell.configCell(indexPath: indexPath, cellType: rowType, productData: productData, isSuggestionTextAvailable: productData?.suggestionText == nil ? (false): (true), isShowDummyImage: true)
+            cell.configCell (
+                indexPath: indexPath,
+                cellType: rowType,
+                productData: productData,
+                isSuggestionTextAvailable: productData?.suggestionText == nil ? (false): (true))
             return cell
         case .restorePurchase:
             let cell = tableView.dequeueReusableCell(withIdentifier: KSingleButtonTableViewCell,for: indexPath) as! SingleButtonTableViewCell
-            cell.configure(indexPath: indexPath, buttonTitle: rowType.title) { [weak self] cellIndexPath in
+            cell.configure (indexPath: indexPath, buttonTitle: rowType.title) { [weak self] cellIndexPath in
                 self?.tapOnCell(indexPath: cellIndexPath)
             }
             cell.selectionStyle = .none
@@ -278,10 +286,6 @@ extension PurchasePlanViewController: UITableViewDelegate{
                 return
             case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
                 getProductForPurchase(for: rowType)
-            }
-        } else {
-            if let error = purchasePlanVM.productFetchError {
-                showIAPRelatedError(error)
             }
         }
     }

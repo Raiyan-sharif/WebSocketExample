@@ -12,8 +12,8 @@ class PlanTableViewCell: UITableViewCell {
     @IBOutlet weak private var planSuggestionLabel: UILabel!
     @IBOutlet weak private var planTypeLabelTopLayoutConstrain: NSLayoutConstraint!
     @IBOutlet weak private var planSuggestionLabelTopLayoutConstrain: NSLayoutConstraint!
-    @IBOutlet weak private var dummyImageContainerView: UIView!
-    @IBOutlet weak private var dummyImageView: UIImageView!
+    @IBOutlet weak private var ribbonImageView: UIImageView!
+    @IBOutlet weak private var recommendationLabel: UILabel!
 
     //MARK: - Lifecycle methods
     override func awakeFromNib() {
@@ -31,6 +31,8 @@ class PlanTableViewCell: UITableViewCell {
         containerView.layer.borderWidth = 1.0
         containerView.backgroundColor = UIColor._lightBlueColor()
         containerView.layer.borderColor = UIColor._royalBlueColor().cgColor
+        ribbonImageView.layer.cornerRadius = 10.0
+        ribbonImageView.layer.maskedCorners = [.layerMaxXMinYCorner]
 
         planTypeLabel.textColor = UIColor._royalBlueColor()
         planDetailsLabel.textColor = UIColor.black
@@ -38,37 +40,37 @@ class PlanTableViewCell: UITableViewCell {
     }
 
     //MARK: - ConfigCell
-    func configCell(indexPath: IndexPath, cellType: PurchasePlanTVCellInfo, productData: ProductDetails?, isSuggestionTextAvailable: Bool, isShowDummyImage: Bool){
+    func configCell(indexPath: IndexPath, cellType: PurchasePlanTVCellInfo, productData: ProductDetails?, isSuggestionTextAvailable: Bool){
+        setUIConstrain(isSuggestionTextAvailable: isSuggestionTextAvailable)
 
-        if isShowDummyImage {
-            dummyImageContainerView.isHidden = false
-            containerView.isHidden = true
+        if productData != nil {
+            planTypeLabel.text = cellType.planTitleText
+            planDetailsLabel.text = productData!.planPerUnitText
 
-            if cellType == .weeklyPlan {
-                dummyImageView.image = UIImage(named: InitialFlowHelper().weeklyProductImage)
-            } else if cellType == .monthlyPlan {
-                dummyImageView.image = UIImage(named: InitialFlowHelper().monthlyProductImage)
-            } else if cellType == .annualPlan {
-                dummyImageView.image = UIImage(named: InitialFlowHelper().annualProductImage)
+            ///set suggestion text
+            if let suggestionText = productData?.suggestionText {
+                planSuggestionLabel.text = suggestionText
+            } else {
+                planSuggestionLabel.text = ""
             }
 
-        } else {
-            dummyImageContainerView.isHidden = true
-            containerView.isHidden = false
+            ///set recommendation data
+            if productData?.periodUnitType == .year {
+                ribbonImageView.isHidden = false
+                ribbonImageView.image = UIImage(named: "plan_label")
 
-            setUIConstrain(isSuggestionTextAvailable: isSuggestionTextAvailable)
-
-            if productData != nil {
-                planTypeLabel.text = cellType.planTitleText
-                planDetailsLabel.text = productData!.planPerUnitText
-
-                if let suggestionText = productData?.suggestionText {
-                    planSuggestionLabel.text = suggestionText
-                } else {
-                    planSuggestionLabel.text = ""
-                }
+                recommendationLabel.isHidden = false
+                setRecommendationLabel()
+            } else {
+                ribbonImageView.isHidden = true
+                recommendationLabel.isHidden = true
             }
         }
+    }
+
+    private func setRecommendationLabel() {
+        recommendationLabel.text = "kBestPrice".localiz()
+        recommendationLabel.transform = CGAffineTransform(rotationAngle: CGFloat((Double.pi / 4.0)))
     }
 
     private func setUIConstrain(isSuggestionTextAvailable: Bool){

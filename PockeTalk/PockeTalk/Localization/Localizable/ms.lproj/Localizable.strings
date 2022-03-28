@@ -141,6 +141,14 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+"kBestPrice" = "Best price";
+"kSaveAbout" = "Save about";
+"kYen" = "yen";
+
+"kYenPerWeek" = "yen/week";
+"kYenPerMonth" = "yen/month";
+"kYenPerYear" = "yen/year";
+"kStartPocketalkApp" = "Start POCKETALK App";
 
 "kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
 "kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";

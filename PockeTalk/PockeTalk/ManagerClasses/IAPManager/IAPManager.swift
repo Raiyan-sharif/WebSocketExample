@@ -379,9 +379,21 @@ extension IAPManager {
         let unitType = getPeriodUnitType(product: product)
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
-        let planPerUnitText = "\(currency)\(price) / \(unitType.rawValue.localiz())."
-        var freeUsesDetailsText: String?
+        /// set planPerUnit text
+        var planPerUnitText = ""
+        switch unitType {
+        case .week:
+            planPerUnitText = "\(price) \("kYenPerWeek".localiz())"
+        case .month:
+            planPerUnitText = "\(price) \("kYenPerMonth".localiz())"
+        case .year:
+            planPerUnitText = "\(price) \("kYenPerYear".localiz())"
+        default:
+            break
+        }
 
+        /// set free uses details text
+        var freeUsesDetailsText: String?
         if freeUsesInfo.isFreeTrialAvailable {
             freeUsesDetailsText = "\("kFreePlanText".localiz()) \(freeUsesInfo.freeTrialDuration) \("days".localiz())"
 

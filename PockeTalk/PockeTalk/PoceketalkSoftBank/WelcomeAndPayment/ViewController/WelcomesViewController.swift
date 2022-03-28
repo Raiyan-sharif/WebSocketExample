@@ -28,7 +28,7 @@ class WelcomesViewController: UIViewController {
     private func setupButtonProperty() {
         nextBtn.setButtonAttributes(
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
-            title: "kWelcomeVCStartUsingButtonTitle".localiz(),
+            title: "kStartPocketalkApp".localiz(),
             backgroundColor:  UIColor._royalBlueColor())
     }
 

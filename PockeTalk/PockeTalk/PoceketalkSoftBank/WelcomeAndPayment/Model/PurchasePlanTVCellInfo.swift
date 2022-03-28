@@ -41,7 +41,7 @@ enum PurchasePlanTVCellInfo: Int {
             case .monthlyPlan:
                 return "Monthly Plan".localiz()
             case .annualPlan:
-                return "Annual Plan".localiz()
+                return "Yearly Plan".localiz()
             }
         }
     }

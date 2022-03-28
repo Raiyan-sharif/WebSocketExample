@@ -155,7 +155,14 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+"kBestPrice" = "Best price";
+"kSaveAbout" = "Save about";
+"kYen" = "yen";
 
+"kYenPerWeek" = "yen/week";
+"kYenPerMonth" = "yen/month";
+"kYenPerYear" = "yen/year";
+"kStartPocketalkApp" = "Start POCKETALK App";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Number of Favorites has reached its limits";

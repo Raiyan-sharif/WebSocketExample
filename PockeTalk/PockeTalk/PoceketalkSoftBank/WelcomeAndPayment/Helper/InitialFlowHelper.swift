@@ -34,7 +34,7 @@ class InitialFlowHelper{
         ]
 
         return NSMutableAttributedString(
-            string: "kTermsAndConditionsVCCheckTermsButtonTitle".localiz(),
+            string: "kTermsAndConditionsVCAcceptTermsButtonButtonTitle".localiz(),
             attributes: termAndConditionBtnTextAttributes
         )
     }
@@ -46,7 +46,7 @@ class InitialFlowHelper{
         ]
 
         return NSMutableAttributedString(
-            string: "kTermsAndConditionsVCAcceptTermsButtonButtonTitle".localiz(),
+            string: "kTermsAndConditionsVCCheckTermsButtonTitle".localiz(),
             attributes: acceptBtnTextAttributes
         )
     }

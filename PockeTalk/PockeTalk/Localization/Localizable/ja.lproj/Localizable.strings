@@ -92,7 +92,7 @@
 "kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "利用規約に同意してはじめる";
 //InitialPermissionSettingsVC
 "kInitialPermissionSettingsVCTitle" = "次の機能を許可してください";
-"kInitialPermissionSettingsVCMicrophoneLabel" = "マイク";
+"kInitialPermissionSettingsVCMicrophoneLabel" = "音声";
 "kInitialPermissionSettingsVCCameraLabel" = "カメラ";
 "kInitialPermissionSettingsVCNotificationLabel" = "通知";
 //PaidPlanViewController
@@ -100,8 +100,8 @@
 "kPaidPlanVCBulletPointOneLabel" = "·3日以内の解約で料金は発生しません";
 "kPaidPlanVCBulletPointTwoLabel" = "・無料期間最終日の翌日より上記料金が継続的に課金されます";
 "kPaidPlanVCPurchaseButtonTitle" = "3日間無料で利用開始";
-"kPaidPlanVCRestorePurchaseHistoryButton" = "購入履歴を復元する";
-"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを選択してください";
+"kPaidPlanVCRestorePurchaseHistoryButton" = "購入状態を復元";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "プランを選択してください";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360円/月3日間の無料利用";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600円/年 3日間のの無料利用";
 "kPockeTalk" = "ポケトーク";
@@ -137,6 +137,14 @@
 "kTimeOut" = "タイムアウトしました。";
 "kAppleServerBusy" = "Appleサーバーがビジー状態です。もう一度やり直してください";
 "kTryAgain" = "もう一度やり直してください。";
+"kBestPrice" = "おすすめ";
+"kSaveAbout" = "週額よりも約";
+"kYen" = "円お得";
+
+"kYenPerWeek" = "円/週";
+"kYenPerMonth" = "円/月";
+"kYenPerYear" = "円/年";
+"kStartPocketalkApp" = "ポケトークをはじめる";
 
 //IAP Alert
 "kIAPError" = "アプリ内購入エラー";
