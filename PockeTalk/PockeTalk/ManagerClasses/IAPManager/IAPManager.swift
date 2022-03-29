@@ -56,7 +56,7 @@ class IAPManager: NSObject {
     // get IAP products based on build varients
     func getProductsBasedOnBuildVarient() -> (product: String, iAPPassword: String) {
         switch (schemeName) {
-        case BuildVarientScheme.PRODUCTION.rawValue:
+        case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
             return (productionIAPProduts, productionIAPSharedSecret)
         case BuildVarientScheme.STAGING.rawValue:
             return (stagingIAPProduts, stagingIAPSharedSecret)

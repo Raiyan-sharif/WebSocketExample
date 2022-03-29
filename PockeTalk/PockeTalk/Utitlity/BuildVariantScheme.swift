@@ -17,4 +17,5 @@ enum BuildVarientScheme: String {
     case STAGING
     case SERVER_API_LOG
     case APP_STORE_SN
+    case PRODUCTION_WITH_STAGE_URL
 }
