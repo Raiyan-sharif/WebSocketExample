@@ -18,7 +18,7 @@ class GlobalMethod {
     static let mainFont: UIFont = UIFont.systemFont(ofSize: 15.0 * GlobalMethod.displayScale)
 
     static var isAppInProduction:Bool {
-        #if PRODUCTION || MULTISERVER_PRODUCTION
+        #if PRODUCTION || MULTISERVER_PRODUCTION || PRODUCTION_WITH_STAGE_URL
         return true
         #else
         return false
@@ -422,7 +422,7 @@ class GlobalMethod {
     static func getURLString() -> (supportURL: String, userManuelURL: String, termsAndConditionsURL: String) {
         let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
         switch (schemeName) {
-        case BuildVarientScheme.PRODUCTION.rawValue:
+        case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
             return (PRODUCTION_SUPPORT_URL, PRODUCTION_USER_MANUEL_URL, PRODUCTION_TERMS_AND_CONDITIONS_URL)
         case BuildVarientScheme.STAGING.rawValue:
             return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
