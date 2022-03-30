@@ -13,4 +13,5 @@ public class TagUtility: NSObject{
     }
     
     let cameraScreenPurpose = "cameraScreenPurpose"
+    let sbAuthTag = "sbAuthTag"
 }

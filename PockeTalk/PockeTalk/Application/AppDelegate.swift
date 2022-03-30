@@ -101,6 +101,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         IAPManager.shared.stopObserving()
     }
+
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
+    {
+        // Get URL components from the incoming user activity.
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL,
+              let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+                  PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Wrong URL/component received")
+                  return false
+              }
+
+        // Check for specific URL components that you need.
+        guard let params = components.queryItems else {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "No params received")
+                  return false
+              }
+
+
+
+        if let couponCode = params.first(where: { $0.name == couponCodeParamName } )?.value {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon Code = \(couponCode)")
+            GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: couponCode)
+            return true
+        } else {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon code missing missing")
+            return false
+        }
+    }
 }
 
 

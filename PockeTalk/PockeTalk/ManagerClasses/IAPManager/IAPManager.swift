@@ -21,6 +21,7 @@ enum ViewControllerType {
     case home
     case termAndCondition
     case purchasePlan
+    case statusCheck
 }
 
 class IAPManager: NSObject {

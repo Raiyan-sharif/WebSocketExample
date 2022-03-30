@@ -7,7 +7,7 @@ import UIKit
 import Kronos
 
 extension AppDelegate{
-    func navigateToViewController(_ type: ViewControllerType) {
+    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "") {
         var viewController = UIViewController()
 
         DispatchQueue.main.async {
@@ -26,6 +26,11 @@ extension AppDelegate{
             case .purchasePlan:
                 if let purchasePlanVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
                     viewController = purchasePlanVC
+                }
+            case .statusCheck:
+                if let statusCheckVC = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: IAPStatusCheckDummyLoadingViewController.self)) as? IAPStatusCheckDummyLoadingViewController {
+                    statusCheckVC.couponCode = couponCode
+                    viewController = statusCheckVC
                 }
             }
 
