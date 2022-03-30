@@ -19,7 +19,7 @@ class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
     var player: AVPlayer?
     var urlToPlay:[String] = []
     var avplayerController: AVPlayerViewController = AVPlayerViewController()
-    var delegate: MultipartAudioPlayerProtocol?
+    weak var delegate: MultipartAudioPlayerProtocol?
     var playerItemContext = 0
 
     init(controller: UIViewController, delegate: MultipartAudioPlayerProtocol?){

@@ -11,7 +11,7 @@ import SwiftKeychainWrapper
 class PurchasePlanViewController: UIViewController {
     @IBOutlet weak private var purchasePlanTV: UITableView!
     private let TAG = "\(PurchasePlanViewController.self)"
-    private var purchasePlanVM: PurchasePlanViewModel!
+    private var purchasePlanVM: PurchasePlanViewModeling!
 
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -52,23 +52,24 @@ class PurchasePlanViewController: UIViewController {
     private func getProductList() {
         ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
+            self.purchasePlanVM.setProductFetchStatus(true)
             self.purchasePlanVM.getProduct { [weak self] success, error in
                 guard let self = `self` else {return}
 
-                if let productFetchError = error {
-                    DispatchQueue.main.async {
-                        ActivityIndicator.sharedInstance.hide()
-                        return
+                if self.purchasePlanVM.isProductFetchOngoing {
+                    if let productFetchError = error {
+                        DispatchQueue.main.async {
+                            ActivityIndicator.sharedInstance.hide()
+                            return
+                        }
+                        PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product can't fetch, error: \(productFetchError)")
                     }
-                    PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product can't fetch, error: \(productFetchError)")
-                }
 
-                DispatchQueue.main.async {
-                    if success {
-                        PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product fetch status \(success)")
-                        self.purchasePlanTV.reloadData()
+                    DispatchQueue.main.async {
+                        success ? (self.purchasePlanTV.reloadData()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Can't successfully fetch the product, status: \(success)"))
+                        ActivityIndicator.sharedInstance.hide()
+                        self.purchasePlanVM.setProductFetchStatus(false)
                     }
-                    ActivityIndicator.sharedInstance.hide()
                 }
             }
         } else {
