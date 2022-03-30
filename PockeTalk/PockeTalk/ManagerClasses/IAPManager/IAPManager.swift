@@ -37,6 +37,7 @@ class IAPManager: NSObject {
         var isTrialPeriod: Bool?
         var cancellationDate: Date? = nil
         var purchaseDate: Date? = nil
+        var originalTransactionID: String?
     }
 
     var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
@@ -516,6 +517,10 @@ extension IAPManager {
     }
 
     func getLatestInfoReceiptObjects(jsonResponse: NSDictionary) -> [LatestReceiptInfo]? {
+        if let ios_receipt = jsonResponse[latest_receipt] as? String {
+            UserDefaults.standard.set(ios_receipt, forKey: kiOSReceipt)
+        }
+
         if let receiptInfo: NSArray = jsonResponse[latest_receipt_info] as? NSArray {
             let formatter = DateFormatter()
             formatter.dateFormat = IAPDateFormat
@@ -575,6 +580,13 @@ extension IAPManager {
                     purchaseDate = nil
                 }
 
+                if let transactionID = recInf["original_transaction_id"] as? String {
+                    //PrintUtility.printLog(tag: "originalTrasactionId", text: "\(transactionID)")
+                    UserDefaults.standard.set(transactionID, forKey: kiOSOriginalTransactionID)
+                } else {
+                    UserDefaults.standard.set("", forKey: kiOSOriginalTransactionID)
+                }
+
                 latestReceiptInfoArray.append(LatestReceiptInfo(productId: productId, expiresDate: expiresDate, isInIntroOffer_period: isInIntroOfferPeriod, isTrialPeriod: isTrialPeriod, cancellationDate: cancelDate, purchaseDate: purchaseDate))
             }
             return latestReceiptInfoArray
@@ -616,7 +628,7 @@ extension IAPManager {
 
                 PrintUtility.printLog(tag: TAG, text: "**cancel param exist on receipt info**")
                 PrintUtility.printLog(tag: TAG, text: "expireDate after cancelling IAP scheme \(String(describing: (latestReceiptInfoForHighestPurchaseDate?.expiresDate)!))")
-                
+
                 if currentDate!.compare((latestReceiptInfoForHighestPurchaseDate?.expiresDate)!) == .orderedAscending {
                     isSubsActive = true
                 } else if currentDate!.compare((latestReceiptInfoForHighestPurchaseDate?.expiresDate)!) == .orderedDescending {

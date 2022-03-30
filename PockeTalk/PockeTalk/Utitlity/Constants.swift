@@ -235,7 +235,6 @@ let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
 let imeiCode = "862793051345020"
 let imeiNumber = getIMEINumber("ImeiNumber")
-let client_info="Pocketalk_app_ios"
 let udid = getUUID()  //"Abfaa4d5-a045-4784-9208-088ac8ec0192"
 
 //View Tag
@@ -331,6 +330,7 @@ let IAPreceiptData = "receipt-data"
 let IAPPassword = "password"
 let expires_date = "expires_date"
 let latest_receipt_info = "latest_receipt_info"
+let latest_receipt = "latest_receipt"
 let cancellation_date = "cancellation_date"
 let product_id = "product_id"
 let is_in_intro_offer_period = "is_in_intro_offer_period"
@@ -343,6 +343,8 @@ let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
 let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
+let kiOSReceipt = "ios_receipt"
+let kiOSOriginalTransactionID = "ios_original_transaction_id"
 
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
@@ -368,4 +370,15 @@ let TEMPO_STANDARD: String = "normal"
 let languageListFromTTSServer:[String]=["af","ar","th","fr","zh-CN","zh-TW", "yue", "ca", "ja", "hr", "hi", "ta", "iw", "cs", "my", "am", "gl", "jw", "kn", "ms", "su", "ur", "zu", "km", "uz", "ml", "te"]
 // SB Authentication
 let couponCodeParamName = "coupon_code"
+
+// License Token Paramer with Coupon & Purchase Parameter
+let kPocketalk_app_ios = "Pocketalk_app_ios"
+let kClientInfo = "client_info"
+let kAppUdid = "udid"
+let kIosReceipt = "ios_receipt"
+let kOriginalTransactionID = "ios_original_transaction_id"
+let kImei = "imei"
+
+
+
 

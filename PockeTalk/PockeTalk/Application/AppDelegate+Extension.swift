@@ -75,7 +75,7 @@ extension AppDelegate{
             do {
                 let result = try JSONDecoder().decode(ResultModel.self, from: data)
                 if result.resultCode == response_ok{
-                    UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                    UserDefaultsProperty<String>(authentication_key).value = result.access_key
                     SocketManager.sharedInstance.updateRequestKey()
 
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
