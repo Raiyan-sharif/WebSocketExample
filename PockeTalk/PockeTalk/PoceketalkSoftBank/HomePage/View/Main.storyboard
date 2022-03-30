@@ -1358,10 +1358,25 @@
                     <view key="view" contentMode="scaleToFill" id="5Wr-xk-Hok">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5XD-RL-HGK">
+                                <rect key="frame" x="186" y="379.66666666666669" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="HYJ-UG-7en"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5XD-RL-HGK" firstAttribute="centerY" secondItem="HYJ-UG-7en" secondAttribute="centerY" id="Ciy-i6-gMG"/>
+                            <constraint firstItem="5XD-RL-HGK" firstAttribute="centerX" secondItem="HYJ-UG-7en" secondAttribute="centerX" id="Km8-Kl-8Ck"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Z2N-3g-gmV"/>
+                    <connections>
+                        <outlet property="noInternetLabel" destination="5XD-RL-HGK" id="g9b-LM-OiE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mdx-Go-sbF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

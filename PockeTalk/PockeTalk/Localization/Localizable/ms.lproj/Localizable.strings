@@ -167,3 +167,5 @@
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
 "KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
+"kCouponActivatedMesage" = "Coupon has been activated";
+"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";

@@ -19,13 +19,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Initial UI setup
         UIDevice.current.isBatteryMonitoringEnabled = true
         setUpInitialLaunch()
-        IAPManager.shared.startObserving()
-        if UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value == nil {
-            UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value = true
-            KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
+
+        var savedCoupon = ""
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+            savedCoupon = coupon
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> Coupon found: \(coupon)")
         }
-        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-        IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
+        if savedCoupon.isEmpty {
+            IAPManager.shared.startObserving()
+            if UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value == nil {
+                UserDefaultsProperty<Bool>(KIsAppLaunchedForFirstTime).value = true
+                KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
+            }
+            KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+            IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
+        }else{
+            if shouldCallLicenseConfirmationApi() == true{
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
+                UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
+                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon)
+            }else{
+                var couponInitialFlowCompleted = false
+                if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
+                    couponInitialFlowCompleted = flowCompleted
+                }
+                if couponInitialFlowCompleted == true{
+                    GlobalMethod.appdelegate().navigateToViewController(.home)
+                }else{
+                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                }
+            }
+        }
         return true
     }
 
@@ -74,6 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
         //isAppRelaunch = true
+        IAPManager.shared.startObserving()
         UserDefaultsUtility.setBoolValue(true, forKey: kIsClearedDataAll)
         self.navigateToViewController(.termAndCondition)
         setUpInitialLaunch()
@@ -85,11 +110,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        //SocketManager.sharedInstance.connect()
-        //LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "applicationWillEnterForeground")
+        SocketManager.sharedInstance.connect()
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
 
-        KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-        IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+        var savedCoupon = ""
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+            savedCoupon = coupon
+            PrintUtility.printLog(tag: "App Delegate", text: "applicationWillEnterForeground>> Coupon found: \(coupon)")
+        }
+        if savedCoupon.isEmpty {
+            KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+            IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -111,12 +144,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               let incomingURL = userActivity.webpageURL,
               let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
                   PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Wrong URL/component received")
+                  showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
                   return false
               }
 
         // Check for specific URL components that you need.
         guard let params = components.queryItems else {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "No params received")
+            showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
                   return false
               }
 
@@ -124,12 +159,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if let couponCode = params.first(where: { $0.name == couponCodeParamName } )?.value {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon Code = \(couponCode)")
+            if couponCode.isEmpty{
+                showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
+                return false
+            }
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "calling api")
+            UserDefaults.standard.set(true, forKey: kIsFromUniverslaLink)
             GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: couponCode)
             return true
         } else {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon code missing missing")
             return false
         }
+    }
+
+    func showAlertFromAppDelegates(msg: String) {
+            DispatchQueue.main.async {
+                let alert = CustomAlertViewModel().alertDialogSoftbank(message: msg){}
+                DispatchQueue.main.async {
+                    self.getTopVisibleViewController { topViewController in
+                        if let viewController = topViewController {
+                            var presentVC = viewController
+                            while let next = presentVC.presentedViewController {
+                                presentVC = next
+                            }
+                            presentVC.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
+
+    func getTopVisibleViewController(complition: @escaping(_ topViewController: UIViewController?) -> ()) {
+            DispatchQueue.main.async {
+                if let window = UIApplication.shared.delegate?.window {
+                    if var viewController = window?.rootViewController {
+                        if(viewController is UINavigationController) {
+                            viewController = (viewController as! UINavigationController).visibleViewController!
+                            complition(viewController)
+                        }
+                    }
+                }
+            }
+        }
+
+    func shouldCallLicenseConfirmationApi() -> Bool{
+        var lastCalledDate = UserDefaults.standard.object(forKey: kLicenseConfirmationCalledTime) as? Date
+        if lastCalledDate == nil{
+            return true
+        }else{
+            if !Calendar.current.isDateInToday(lastCalledDate!) {
+                return true
+            }
+        }
+        return false
     }
 }
 

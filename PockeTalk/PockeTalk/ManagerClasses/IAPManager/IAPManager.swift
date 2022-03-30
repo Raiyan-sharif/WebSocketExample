@@ -27,6 +27,7 @@ enum ViewControllerType {
 class IAPManager: NSObject {
     private let TAG: String = "IAPTAG"
     static let shared = IAPManager()
+    private var isObserving = false
     private override init() { super.init() }
 
     struct LatestReceiptInfo {
@@ -112,10 +113,17 @@ class IAPManager: NSObject {
     }
     
     func startObserving() {
-        SKPaymentQueue.default().add(self)
+        PrintUtility.printLog(tag: TAG, text: "before check startObserving")
+        if isObserving == false {
+            isObserving = true
+            PrintUtility.printLog(tag: TAG, text: "startObserving")
+            SKPaymentQueue.default().add(self)
+        }
     }
 
     func stopObserving() {
+        PrintUtility.printLog(tag: TAG, text: "stopObserving")
+        isObserving = false
         SKPaymentQueue.default().remove(self)
     }
     
@@ -432,8 +440,14 @@ extension IAPManager {
                         } else {
                             if isPurchaseSchemeActive == false {
                                 if UserDefaultsUtility.getBoolValue(forKey: isTermAndConditionTap) == false {
-                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                    UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
+                                    var savedCoupon = ""
+                                    if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                                        savedCoupon = coupon
+                                    }
+                                    if savedCoupon.isEmpty{
+                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                        UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
+                                    }
                                 }
                             }
                         }

@@ -68,7 +68,10 @@ let kUserDefaultIsSpeechProcessingDisplayedFirstTime = "kUserDefaultIsSpeechProc
 let kUserDefaultIsUserPurchasedThePlan = "kUserDefaultIsUserPurchasedThePlan"
 let licenseTokenUserDefaultKey = "licenseToken"
 let tokenCreationTime = "tokenCreationTime"
-
+let kCouponCode = "kCouponCode"
+let kLicenseConfirmationCalledTime = "kLicenseConfirmationCalledTime"
+let kInitialFlowCompletedForCoupon = "kInitialFlowCompletedForCoupon"
+let kIsFromUniverslaLink = "kIsFromUniverslaLink"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -213,6 +216,7 @@ let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
 let tts_url = "/handsfree/api/pub/tts"
 let liscense_token_url = "/handsfree/api/pub/token"
+let license_confirmation_url = "/handsfree/api/pub/license"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
 let isTermAndConditionTap = "isTermAndConditionTap"
@@ -260,6 +264,9 @@ let ERR_SETTING_FAILED = "ERR_SETTING_FAILED"
 let WARN_INVALID_AUTH = "WARN_INVALID_AUTH"
 let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
+let INFO_INVALID_LICENSE = "INFO_INVALID_LICENSE"
+let INFO_EXPIRED_LICENSE = "INFO_EXPIRED_LICENSE"
+let WARN_FAILED_CALL = "WARN_FAILED_CALL"
 let ERR_API_FAILED = "ERR_API_FAILED"
 let BURMESE_LANG_CODE = "my"
 let LanguageEngineFileName = "language_engine.xml"
@@ -360,5 +367,5 @@ let ENGLISH_SLOW_DEFAULT_PITCH_RATE: String = "0.7"
 let TEMPO_STANDARD: String = "normal"
 let languageListFromTTSServer:[String]=["af","ar","th","fr","zh-CN","zh-TW", "yue", "ca", "ja", "hr", "hi", "ta", "iw", "cs", "my", "am", "gl", "jw", "kn", "ms", "su", "ur", "zu", "km", "uz", "ml", "te"]
 // SB Authentication
-let couponCodeParamName = "coupon"
+let couponCodeParamName = "coupon_code"
 

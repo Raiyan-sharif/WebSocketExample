@@ -252,9 +252,20 @@ struct NetworkManager:Network {
             completion(nil)
         }
     }
-    
-    
-    
+
+    func requestLicenseConfirmationCompletion(target:NetworkServiceAPI,result:Result<Moya.Response, MoyaError>,completion:@escaping (Data?)->Void){
+        switch result {
+        case let .success(response):
+            do{
+                let successResponse = try response.filterSuccessfulStatusCodes()
+                completion(successResponse.data)
+            } catch let err {
+            }
+        case let .failure(error):
+            completion(nil)
+        }
+    }
+
     func makeRequestForToken(completion : @escaping (Bool)->Void){
         self.getAuthkey { data in
             guard let data = data else {
@@ -322,6 +333,16 @@ struct NetworkManager:Network {
         }
     }
     
+    func getLicenseConfirmation(coupon: String, completion: @escaping (Data?) -> Void) {
+        let params:[String:String]  = [
+            "coupon_code": coupon
+        ]
+        provider.request(.licenseConfirmation(params: params)){ result in
+            self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
+                completion(data)
+            }
+        }
+    }
 }
 
 
@@ -370,4 +391,11 @@ struct TTSModel : Codable {
 struct LiscenseTokenModel: Codable {
     let token: String?
     let result_code: String?
+}
+
+struct LicenseConfirmationModel: Codable {
+    let result_code: String?
+    let license_exp: String?
+    let license_str: String?
+
 }

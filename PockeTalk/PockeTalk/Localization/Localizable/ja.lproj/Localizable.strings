@@ -176,3 +176,5 @@
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
 "KSubscriptionErrorMessage" = "サブスクリプション契約されているため\nクーポンコードが利用できませんでした";
+"kCouponActivatedMesage" = "クーポンが有効になりました";
+"kCouponCodeParseError" = "クーポンコード認証エラー\n再度お試しください";
