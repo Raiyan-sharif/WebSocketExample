@@ -120,6 +120,12 @@ class SpeechProcessingViewController: BaseViewController{
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.isMinimumLimitExceed = true
+        stopRecord()
+    }
+    
     deinit {
         connectivity.cancel()
         NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
