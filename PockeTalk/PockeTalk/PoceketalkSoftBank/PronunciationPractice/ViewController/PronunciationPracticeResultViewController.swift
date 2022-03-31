@@ -71,6 +71,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     //TODO: need to replace with valid action
     @IBAction func actionReplay(_ sender: Any) {
+        stopTTS()
         let vc = TempoControlSelectionAlertController.init()
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
