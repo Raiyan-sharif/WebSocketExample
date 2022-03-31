@@ -82,7 +82,7 @@ class AudioPlayer: NSObject {
                 license_token: licenseToken,
                 language : targetLanguageItem,
                 text : translateText,
-                tempo: item == engineName ? normal : tempo
+                kTempo_param: item == engineName ? normal : tempo
             ]
             if Reachability.isConnectedToNetwork() {
                 NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
