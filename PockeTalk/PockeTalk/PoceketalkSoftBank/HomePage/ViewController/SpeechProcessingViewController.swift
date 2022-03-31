@@ -36,7 +36,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var pronunciationLable: UILabel!
     var talkButtonImageView = UIImageView()
     var isTapOnMenu = false
-    
+
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
     weak var pronunciationDelegate : DismissPronunciationFromHistory?
@@ -119,6 +119,7 @@ class SpeechProcessingViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
+        self.isMinimumLimitExceed = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
