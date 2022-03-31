@@ -572,6 +572,9 @@
 		8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineValueParser.swift; sourceTree = "<group>"; };
 		895B2945272A86F60032C40C /* TutorialContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContainerViewController.swift; sourceTree = "<group>"; };
 		896537F127F4D668006B3C19 /* PockeTalkProductionWithStageURL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkProductionWithStageURL.entitlements; sourceTree = "<group>"; };
+		896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkLoadEngineFromAsset.entitlements; sourceTree = "<group>"; };
+		896C2B8927F5ECBC00D7DE60 /* PockeTalkProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkProduction.entitlements; sourceTree = "<group>"; };
+		896C2B8A27F5ECD000D7DE60 /* PockeTalkStage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkStage.entitlements; sourceTree = "<group>"; };
 		896C3D0827831BFA007C3560 /* InitialPermissionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialPermissionSettingsViewController.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
@@ -842,6 +845,9 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				896C2B8A27F5ECD000D7DE60 /* PockeTalkStage.entitlements */,
+				896C2B8927F5ECBC00D7DE60 /* PockeTalkProduction.entitlements */,
+				896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */,
 				896537F127F4D668006B3C19 /* PockeTalkProductionWithStageURL.entitlements */,
 				8941D88627EAFEF700016F46 /* PockeTalkAppStoreBJIT.entitlements */,
 				8732CAD526FC27CE00843BFE /* Network */,
@@ -3010,6 +3016,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkStage.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -3127,6 +3134,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkProduction.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -3244,6 +3252,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkLoadEngineFromAsset.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
