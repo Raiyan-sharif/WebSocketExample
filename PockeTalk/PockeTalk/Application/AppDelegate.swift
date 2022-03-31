@@ -107,7 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         if savedCoupon.isEmpty {
             PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
-            if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
+            if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
+                ScreenTracker.sharedInstance.screenPurpose != .InitialFlow {
                 KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
                 IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
             }
