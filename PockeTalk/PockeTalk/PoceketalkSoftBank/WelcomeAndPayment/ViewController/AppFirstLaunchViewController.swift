@@ -18,7 +18,6 @@ class AppFirstLaunchViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        UserDefaultsUtility.setBoolValue(true, forKey: isTermAndConditionTap)
     }
 
     //MARK: - Initial setup
