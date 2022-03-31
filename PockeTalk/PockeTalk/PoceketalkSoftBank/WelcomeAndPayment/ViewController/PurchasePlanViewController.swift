@@ -20,6 +20,7 @@ class PurchasePlanViewController: UIViewController {
         setupUI()
         registerNotification()
         getProductList()
+        ScreenTracker.sharedInstance.screenPurpose = .PurchasePlanScreen
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,6 +65,7 @@ class PurchasePlanViewController: UIViewController {
                 if self.purchasePlanVM.isProductFetchOngoing {
                     if let productFetchError = error {
                         DispatchQueue.main.async {
+                            self.showProductFetchErrorAlert(message: productFetchError)
                             ActivityIndicator.sharedInstance.hide()
                             return
                         }
@@ -89,7 +91,7 @@ class PurchasePlanViewController: UIViewController {
         if Reachability.isConnectedToNetwork() {
             self.purchasePlanVM.updateReceiptValidationAllow()
             purchasePlanVM.restorePurchase { [weak self] success, error in
-                if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
+                if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)! == true {
                     guard let self = `self` else {return}
 
                     if let error = error {
@@ -162,23 +164,6 @@ class PurchasePlanViewController: UIViewController {
         }
     }
 
-    private func goToTermAndConditionVC() {
-        DispatchQueue.main.async { [self] in
-            if UserDefaultsUtility.getBoolValue(forKey: isTermAndConditionTap) == false {
-                let initialStoryBoard = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil)
-                if let vc = initialStoryBoard.instantiateViewController(withIdentifier: String(describing: AppFirstLaunchViewController.self)) as? AppFirstLaunchViewController {
-                    if var vcs: [UIViewController] = navigationController?.viewControllers {
-                        vcs.insert(vc, at: 0)
-                        navigationController?.viewControllers = vcs
-                        navigationController?.popViewController(animated: true )
-                    }
-                }
-            } else {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
-    }
-
     //MARK: - Utils
     private func unregisterNotification() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
@@ -221,7 +206,7 @@ class PurchasePlanViewController: UIViewController {
             { ok in
                 self.getProductList()
             },{ cancle in
-                self.goToTermAndConditionVC()
+                exit(0)
             }
         ])
     }

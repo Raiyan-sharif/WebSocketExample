@@ -219,7 +219,6 @@ let liscense_token_url = "/handsfree/api/pub/token"
 let license_confirmation_url = "/handsfree/api/pub/license"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
-let isTermAndConditionTap = "isTermAndConditionTap"
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
@@ -355,6 +354,7 @@ let kTTSAudioFileNameExtenstion = ".wav"
 
 let kInAppPurchaseStatus = "inAppPurchaseStatus"
 let KIsAppAlreadyLaunchedOnce = "isAppAlreadyLaunchedOnce"
+let kInAppPurchaseStatusForCouponCheck = "inAppPurchaseStatusForCouponCheck"
 
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"

@@ -453,15 +453,12 @@ extension IAPManager {
                             self.showAlertFromAppDelegates(error: err)
                         } else {
                             if isPurchaseSchemeActive == false {
-                                if UserDefaultsUtility.getBoolValue(forKey: isTermAndConditionTap) == false {
-                                    var savedCoupon = ""
-                                    if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
-                                        savedCoupon = coupon
-                                    }
-                                    if savedCoupon.isEmpty{
-                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                        UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
-                                    }
+                                var savedCoupon = ""
+                                if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                                    savedCoupon = coupon
+                                }
+                                if savedCoupon.isEmpty{
+                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                                 }
                             }
                         }
@@ -500,6 +497,7 @@ extension IAPManager {
                                     let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
                                     if let purchaseStatus = purchaseStatus {
                                         KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
+                                        KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatusForCouponCheck)
                                     }
                                     completion(purchaseStatus!, nil)
                                 }

@@ -106,8 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PrintUtility.printLog(tag: "App Delegate", text: "applicationWillEnterForeground>> Coupon found: \(coupon)")
         }
         if savedCoupon.isEmpty {
-            KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-            IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+            PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+            if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
+                KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+                IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+            }
         }
     }
 

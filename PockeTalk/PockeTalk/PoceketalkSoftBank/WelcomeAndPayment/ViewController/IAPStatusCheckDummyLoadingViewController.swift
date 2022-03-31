@@ -52,7 +52,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     }
 
     private func checkInAppPurchaseStatus(coupon: String) {
-        if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
+        if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatusForCouponCheck) == true {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
             showAlertAndRedirectToHomeVC()
         } else {
