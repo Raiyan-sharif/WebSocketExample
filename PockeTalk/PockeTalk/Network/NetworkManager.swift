@@ -64,10 +64,10 @@ struct NetworkManager:Network {
             srclang : LanguageSelectionManager.shared.bottomLanguage,
             destlang : LanguageSelectionManager.shared.topLanguage
         ]
-        
+
         PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(LanguageSelectionManager.shared.bottomLanguage) desLang \(LanguageSelectionManager.shared.topLanguage)")
         provider.request(.authkey(params: params)){ result in
-            
+
             switch result  {
             case let .success(response):
                 do {
@@ -76,11 +76,10 @@ struct NetworkManager:Network {
                     if let result_code = result.resultCode {
                         if result_code == response_ok {
                             completion(successResponse.data)
-                            
+
                         } else if result_code == WARN_INPUT_PARAM {
-                            
                             startTokenRefreshProcedure()
-                            
+
                         } else if result_code == WARN_NO_DEVICE {
                             PrintUtility.printLog(tag: "GET AUTH KEY", text: "Cannot find the specified terminal")
                             completion(nil)
@@ -95,7 +94,7 @@ struct NetworkManager:Network {
                             completion(nil)
                         }
                     }
-                    
+
                 } catch let err {
                     completion(nil)
                 }
@@ -104,7 +103,7 @@ struct NetworkManager:Network {
             }
         }
     }
-    
+
     func changeLanguageSettingApi(completion: @escaping (Data?) -> Void) {
         var srcLang = ""
         var desLang = ""
@@ -115,7 +114,7 @@ struct NetworkManager:Network {
             srcLang = LanguageSelectionManager.shared.topLanguage
             desLang = LanguageSelectionManager.shared.bottomLanguage
         }
-        
+
         if let src = LanguageSelectionManager.shared.tempSourceLanguage {
             if src == SystemLanguageCode.zhHans.rawValue{
                 srcLang = AlternativeSystemLanguageCode.zhCN.rawValue
@@ -127,7 +126,7 @@ struct NetworkManager:Network {
                 srcLang = src
             }
         }
-        
+
         guard let accesKey = UserDefaultsProperty<String>(authentication_key).value, accesKey.count > 0 else {
             completion(nil)
             return
@@ -142,10 +141,10 @@ struct NetworkManager:Network {
             srclang : srcLang,
             destlang : desLang
         ]
-        
+
         PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang) key \(access_key)")
         provider.request(.changeLanguage(params: params)){ result in
-            
+
             switch result  {
             case let .success(response):
                 do {
@@ -154,12 +153,12 @@ struct NetworkManager:Network {
                     if let result_code = result.resultCode {
                         if result_code == response_ok {
                             completion(successResponse.data)
-                            
+
                         } else if result_code == WARN_INVALID_KEY {
-                            
+
                             serialQueue.async { startTokenRefreshProcedure() }
                             serialQueue.async {}
-                            
+
                         } else if result_code == WARN_INPUT_PARAM {
                             PrintUtility.printLog(tag: "Language Setting API", text: "Input parameter error")
                             completion(nil)
@@ -177,7 +176,7 @@ struct NetworkManager:Network {
                             completion(nil)
                         }
                     }
-                    
+
                 } catch let err {
                     completion(nil)
                 }
@@ -186,7 +185,7 @@ struct NetworkManager:Network {
             }
         }
     }
-    
+
     func ttsApi(params:[String:String],completion:@escaping (Data?)->Void){
         provider.request(.tts(params: params)){ result in
             switch result  {
@@ -197,7 +196,7 @@ struct NetworkManager:Network {
                     if let result_code = result.resultCode {
                         if result_code == response_ok {
                             completion(successResponse.data)
-                            
+
                         } else if result_code == WARN_INVALID_AUTH {
                             serialQueue.async {
                                 startTokenRefreshProcedure()
@@ -219,7 +218,7 @@ struct NetworkManager:Network {
                             completion(nil)
                         }
                     }
-                    
+
                 } catch let err {
                     completion(nil)
                 }
@@ -228,23 +227,40 @@ struct NetworkManager:Network {
             }
         }
     }
-    
+
     func requestCompletion(target:NetworkServiceAPI,result:Result<Moya.Response, MoyaError>,completion:@escaping (Data?)->Void){
         switch result {
         case let .success(response):
             do {
-                
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
                         completion(successResponse.data)
+                    } else if result_code == WARN_INVALID_AUTH {
+
+                        if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
+                            UserDefaults.standard.removeObject(forKey: kCouponCode)
+                        }
+                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+
+                        PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")
+                        completion(nil)
+                    } else if result_code == WARN_INPUT_PARAM {
+                        PrintUtility.printLog(tag: "License Token API", text: "Input parameter error")
+                        completion(nil)
+                    } else if result_code == ERR_CREATE_FAILED {
+                        PrintUtility.printLog(tag: "License Token API", text: "License token issuance error")
+                        completion(nil)
+                    } else if result_code == ERR_UNKNOWN {
+                        PrintUtility.printLog(tag: "License Token API", text: "Unknown error")
+                        completion(nil)
                     } else {
                         PrintUtility.printLog(tag: "License Token API", text: "License Token API Failed")
                         completion(nil)
                     }
                 }
-                
+
             } catch let err {
                 completion(nil)
             }
@@ -275,7 +291,7 @@ struct NetworkManager:Network {
             do {
                 let result = try JSONDecoder().decode(ResultModel.self, from: data)
                 if result.resultCode == response_ok{
-                    UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                    UserDefaultsProperty<String>(authentication_key).value = result.token
                     completion(true)
                 }
             }catch{
@@ -283,24 +299,68 @@ struct NetworkManager:Network {
             }
         }
     }
-    
+
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
-        let params:[String:String]  = [
-            "imei": imeiNumber,
-            "client_info": client_info,
-            "udid": udid!
-        ]
-        
+
+        let params = getLicenseTokenParam()
         provider.request(.liscense(params: params)){ result in
             self.requestCompletion(target: .liscense(params: params), result: result) { data in
                 completion(data)
             }
         }
-        
     }
-    
+
+    func getLicenseTokenParam() -> [String: String]{
+        var params = [String: String]()
+        let defaultParam = [kImei: imeiNumber, kClientInfo: kClientInfo, kAppUdid: udid ?? ""]
+        if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
+            params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                couponCodeParamName: couponCode
+            ]
+        } else {
+            let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
+            let iosReceipt = UserDefaults.standard.string(forKey: kiOSReceipt)
+            let iosOriginalTransactionID = UserDefaults.standard.string(forKey: kiOSOriginalTransactionID)
+
+            switch (schemeName) {
+            case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
+                params = [
+                    kAppUdid: getUUID() ?? "",
+                    kClientInfo: kPocketalk_app_ios,
+                    kIosReceipt: iosReceipt ?? "",
+                    kOriginalTransactionID: iosOriginalTransactionID ?? ""
+                ]
+                return params
+
+            case BuildVarientScheme.STAGING.rawValue :
+
+                if iosReceipt != "" && iosOriginalTransactionID != "" {
+                    params = [
+                        kAppUdid: getUUID() ?? "",
+                        kClientInfo: kPocketalk_app_ios,
+                        kIosReceipt: iosReceipt ?? "",
+                        kOriginalTransactionID: iosOriginalTransactionID ?? ""
+                    ]
+                    return params
+                }
+            case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.APP_STORE_SN.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+                params = [
+                    kImei: imeiNumber,
+                    kClientInfo: kClientInfo,
+                    kAppUdid: udid ?? ""
+                ]
+                return params
+            default:
+                return defaultParam
+            }
+        }
+        return defaultParam
+    }
+
     func handleLicenseToken(completion : @escaping (Bool)->Void) {
-        
+
         getLicenseToken { data in
             guard let data = data else {return}
             do {
@@ -309,7 +369,7 @@ struct NetworkManager:Network {
                     if let liscense_token = data.token {
                         PrintUtility.printLog(tag: "Liscense key", text: "\(liscense_token)")
                         UserDefaults.standard.set(liscense_token, forKey: licenseTokenUserDefaultKey)
-                        
+
                         Clock.sync(completion:  { date, offset in
                             if let getResDate = date {
                                 PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
@@ -318,13 +378,12 @@ struct NetworkManager:Network {
                                 completion(true)
                             }
                         })
-                        
                     }
                 }
             } catch{}
         }
     }
-    
+
     func startTokenRefreshProcedure() {
         handleLicenseToken { result in
             if result {
@@ -332,7 +391,7 @@ struct NetworkManager:Network {
             }
         }
     }
-    
+
     func getLicenseConfirmation(coupon: String, completion: @escaping (Data?) -> Void) {
         let params:[String:String]  = [
             "coupon_code": coupon
@@ -345,39 +404,40 @@ struct NetworkManager:Network {
     }
 }
 
-
 struct ResultModel : Codable {
-    
-    let accessKey : String?
+    let access_key: String?
+    let token : String?
     let resultCode : String?
-    
+
     enum CodingKeys: String, CodingKey {
-        case accessKey = "access_key"
+        case access_key = "access_key"
+        case token = "token"
         case resultCode = "result_code"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        accessKey = try values.decodeIfPresent(String.self, forKey: .accessKey)
+        access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
+        token = try values.decodeIfPresent(String.self, forKey: .token)
         resultCode = try values.decodeIfPresent(String.self, forKey: .resultCode)
     }
-    
+
 }
 
 struct TTSModel : Codable {
-    
+
     let tts : String?
     let codec : String?
     let tempo : String?
     let resultCode : String?
-    
+
     enum CodingKeys: String, CodingKey {
         case tts = "tts"
         case codec = "codec"
         case tempo = "tempo"
         case resultCode = "result_code"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         tts = try values.decodeIfPresent(String.self, forKey: .tts)
@@ -385,7 +445,7 @@ struct TTSModel : Codable {
         tempo = try values.decodeIfPresent(String.self, forKey: .tempo)
         resultCode = try values.decodeIfPresent(String.self, forKey: .resultCode)
     }
-    
+
 }
 
 struct LiscenseTokenModel: Codable {
@@ -397,5 +457,4 @@ struct LicenseConfirmationModel: Codable {
     let result_code: String?
     let license_exp: String?
     let license_str: String?
-
 }
