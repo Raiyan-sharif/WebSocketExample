@@ -241,6 +241,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     func stopTTS(){
         ttsResponsiveView.stopTTS()
         multipartAudioPlayer?.stop()
+        AudioPlayer.sharedInstance.stop()
     }
 }
 extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
