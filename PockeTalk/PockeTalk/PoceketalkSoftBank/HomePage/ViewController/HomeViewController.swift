@@ -382,6 +382,7 @@ class HomeViewController: BaseViewController {
             self.navigationController?.view.layer.add(transition, forKey: nil)
             shouldCheckAppReviewGuide = true
             self.navigationController?.pushViewController(settinsViewController, animated: false)
+            self.speechVC.isTapOnMenu = true
         }
     }
 

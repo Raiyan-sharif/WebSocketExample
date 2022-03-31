@@ -35,6 +35,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var pronunciationView: UIView!
     @IBOutlet weak private var pronunciationLable: UILabel!
     var talkButtonImageView = UIImageView()
+    var isTapOnMenu = false
     
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
@@ -124,6 +125,7 @@ class SpeechProcessingViewController: BaseViewController{
         super.viewWillDisappear(animated)
         self.isMinimumLimitExceed = true
         stopRecord()
+        isTapOnMenu = false
     }
     
     deinit {
@@ -654,7 +656,7 @@ extension SpeechProcessingViewController: HomeVCDelegate{
                 self.descriptionLabel.text = ""
             }
             hideOrOpenExampleText(isHidden: true)
-            if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable {
+            if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable && !isTapOnMenu {
                 self.showTutorial()
             }
         }
