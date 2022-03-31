@@ -83,7 +83,6 @@ class PermissionViewController: UIViewController {
 
     //MARK: - Utils
     func initialCallCall() {
-        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         NetworkManager.shareInstance.handleLicenseToken { result in
             if result {
                 AppDelegate.generateAccessKey()

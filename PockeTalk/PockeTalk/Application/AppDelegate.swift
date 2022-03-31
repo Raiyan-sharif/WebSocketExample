@@ -55,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     /// Initial launch setup
     func setUpInitialLaunch() {
-        //LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         // Set initial language of the application
         // Dont change bellow code without discussing with PM/AR
         if UserDefaultsProperty<Bool>(KIsAppLaunchedPreviously).value == nil {
@@ -69,19 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaultsProperty<String>(KFontSelection).value = "Medium"
             FontUtility.setInitialFontSize()
         }
-
-//        NetworkManager.shareInstance.handleLicenseToken { result in
-//            if result {
-//                AppDelegate.generateAccessKey()
-//            }
-//        }
-//        self.connectivity.startMonitoring { [weak self] connection, reachable in
-//            guard let self = self else { return }
-//            PrintUtility.printLog(tag: self.TAG, text:" \(connection) Is reachable: \(reachable)")
-//            if UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes {
-//                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
-//            }
-//        }
     }
 
     func setUpAppFirstLaunch(isUpdateArrow: Bool){
@@ -113,8 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "applicationWillEnterForeground")
-        SocketManager.sharedInstance.connect()
-        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
 
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {

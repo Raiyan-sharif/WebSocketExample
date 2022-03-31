@@ -102,6 +102,8 @@ class SpeechProcessingViewController: BaseViewController{
         registerForNotification()
         bindData()
         setupAudio()
+        AppDelegate.executeLicenseTokenRefreshFunctionality()
+        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
@@ -133,8 +135,16 @@ class SpeechProcessingViewController: BaseViewController{
         connectivity.cancel()
         NotificationCenter.default.removeObserver(self, name: .pronumTiationTextUpdate, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.removeObserver(self, name: UIScene.willEnterForegroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.removeObserver(self, name: UIScene.didEnterBackgroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        }
     }
 
     private weak var homeVC:HomeViewController?  {
