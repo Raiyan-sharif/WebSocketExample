@@ -18,8 +18,13 @@ class PurchasePlanViewController: UIViewController {
         super.viewDidLoad()
         purchasePlanVM = PurchasePlanViewModel()
         setupUI()
-        registerForNotification()
+        registerNotification()
         getProductList()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unregisterNotification()
     }
 
     //MARK: - Initial setup
@@ -175,15 +180,31 @@ class PurchasePlanViewController: UIViewController {
     }
 
     //MARK: - Utils
-    private func registerForNotification() {
+    private func unregisterNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    private func registerNotification() {
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     @objc private func appWillEnterForeground() {
+        purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
+    }
+
+    @objc func applicationWillResignActive(notification: Notification) {
+        ActivityIndicator.sharedInstance.hide()
+    }
+
+    @objc func applicationDidBecomeActive(notification: Notification) {
         purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
     }
 
