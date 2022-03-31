@@ -126,6 +126,7 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         view.backgroundColor = .clear
         bottomView.isUserInteractionEnabled = true
         bottomImageView.isUserInteractionEnabled = false
