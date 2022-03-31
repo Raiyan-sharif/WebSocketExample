@@ -477,6 +477,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
             let itemCount = self.collectionView.numberOfItems(inSection: 0)
             if(itemCount > 0){
                 self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
+                self.collectionView.reloadItems(at: [IndexPath(item: chatItemModel!.idxPath!.row - 1, section: 0)])
                 if(itemCount  == 1){
                   self.dismissHistory(shouldUpdateViewAlpha: false)
                 }

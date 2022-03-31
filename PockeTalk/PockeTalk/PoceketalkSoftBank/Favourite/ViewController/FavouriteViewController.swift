@@ -374,6 +374,7 @@ extension FavouriteViewController : AlertReusableDelegate {
         self.favouriteViewModel.deleteFavourite((chatItemModel?.idxPath!.item)!)
         self.collectionView.performBatchUpdates{
             self.collectionView.deleteItems(at: [chatItemModel!.idxPath!])
+            self.collectionView.reloadItems(at: [IndexPath(item: chatItemModel!.idxPath!.row - 1, section: 0)])
             if self.favouriteViewModel.items.value.count <= 0{
                 self.dismissFavourite(byBackBtnPress: false)
             }
