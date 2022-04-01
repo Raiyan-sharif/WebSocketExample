@@ -341,6 +341,7 @@ let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
 let kiOSReceipt = "ios_receipt"
 let kiOSOriginalTransactionID = "ios_original_transaction_id"
 let kUserPassedSubscription = "kUserPassedSubscription"
+let kFetchProductOnece = "fetchProductOnece"
 
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
