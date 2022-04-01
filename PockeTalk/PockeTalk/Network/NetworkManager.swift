@@ -345,7 +345,7 @@ struct NetworkManager:Network {
                     ]
                     return params
                 }
-            case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.APP_STORE_SN.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
                 params = [
                     kImei: imeiNumber,
                     kClientInfo: kClientInfo,

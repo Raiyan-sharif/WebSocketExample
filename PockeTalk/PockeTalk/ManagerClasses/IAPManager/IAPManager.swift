@@ -64,10 +64,8 @@ class IAPManager: NSObject {
             return (productionIAPProduts, productionIAPSharedSecret)
         case BuildVarientScheme.STAGING.rawValue:
             return (stagingIAPProduts, stagingIAPSharedSecret)
-        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.APP_STORE_BJIT.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
-            return (BJIT_IAP_ProductIDs, bjitAppSpecificSharedSecret)
-        case BuildVarientScheme.APP_STORE_SN.rawValue:
-            return(sNIAPProducts, snIAPSharedSecret)
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            return (productionIAPProduts, productionIAPSharedSecret)
         default:
             return ("", "")
         }
