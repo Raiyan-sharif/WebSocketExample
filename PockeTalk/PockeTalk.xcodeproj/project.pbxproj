@@ -671,6 +671,8 @@
 		89E6B2D9279E71F400024A70 /* conversation_languages_ms.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ms.xml; sourceTree = "<group>"; };
 		89E6B2DB279E741F00024A70 /* conversation_languages_pt.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_pt.xml; sourceTree = "<group>"; };
 		89E6B2F4279EB9F800024A70 /* SystemlanguageCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemlanguageCodes.swift; sourceTree = "<group>"; };
+		89FC1A8927F6E657001AFC18 /* PockeTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalk.entitlements; sourceTree = "<group>"; };
+		89FC1A8A27F6E677001AFC18 /* PockeTalkServerAPILog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkServerAPILog.entitlements; sourceTree = "<group>"; };
 		90671CA97A26F53CDCAA16A8 /* Pods-PockeTalk.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.production.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.production.xcconfig"; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		963D8EA926F4A3E700E32162 /* FontUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtility.swift; sourceTree = "<group>"; };
@@ -832,6 +834,8 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				89FC1A8A27F6E677001AFC18 /* PockeTalkServerAPILog.entitlements */,
+				89FC1A8927F6E657001AFC18 /* PockeTalk.entitlements */,
 				896C2B8A27F5ECD000D7DE60 /* PockeTalkStage.entitlements */,
 				896C2B8927F5ECBC00D7DE60 /* PockeTalkProduction.entitlements */,
 				896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */,
@@ -2827,6 +2831,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -2853,6 +2858,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -2995,7 +3001,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				CURRENT_SCHEME_NAME = STAGING;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3113,7 +3119,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				CURRENT_SCHEME_NAME = PRODUCTION;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3230,7 +3236,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3342,11 +3348,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkServerAPILog.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				CURRENT_SCHEME_NAME = SERVER_API_LOG;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3464,7 +3471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				CURRENT_SCHEME_NAME = PRODUCTION_WITH_STAGE_URL;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
