@@ -495,7 +495,6 @@ extension IAPManager {
                                     let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
                                     if let purchaseStatus = purchaseStatus {
                                         KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
-                                        KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatusForCouponCheck)
                                     }
                                     completion(purchaseStatus!, nil)
                                 }
@@ -737,7 +736,9 @@ extension IAPManager {
                         while let next = presentVC.presentedViewController {
                             presentVC = next
                         }
-                        presentVC.present(alertVC, animated: true, completion: nil)
+                        if presentVC is IAPStatusCheckDummyLoadingViewController == false{
+                            presentVC.present(alertVC, animated: true, completion: nil)
+                        }
                     }
                 }
             }

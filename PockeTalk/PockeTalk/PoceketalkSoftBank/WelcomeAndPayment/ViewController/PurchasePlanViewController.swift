@@ -155,6 +155,7 @@ class PurchasePlanViewController: UIViewController {
 
     //MARK: - View Transactions
     private func goToPermissionVC() {
+        UserDefaults.standard.set(true, forKey: kUserPassedSubscription)
         DispatchQueue.main.async {
             if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
                 let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)

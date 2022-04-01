@@ -12,13 +12,14 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     @IBOutlet weak var noInternetLabel: UILabel!
     private var connectivity = Connectivity()
     private var shouldCallApi = false
+    private var shouldCallIapApi = false
     private var alert: UIAlertController?
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkCouponStatus()
         self.navigationController?.navigationBar.isHidden = true
         noInternetLabel.isHidden = true
         noInternetLabel.text = "internet_connection_error".localiz()
+        checkCouponStatus()
         self.connectivity.startMonitoring { [weak self] connection, reachable in
             guard let self = self else { return }
             PrintUtility.printLog(tag: "SB_AUTH", text:" \(connection) Is reachable: \(reachable)")
@@ -28,8 +29,13 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                     self.hideNoInternetAlert()
                     if(self.shouldCallApi){
                         if let couponCode = self.couponCode {
-                            self.callLicenseConfirmationApi(coupon: couponCode)
+                            if self.shouldCallIapApi == true{
+                                self.checkInAppPurchaseStatus(coupon: couponCode)
+                            }else{
+                                self.callLicenseConfirmationApi(coupon: couponCode)
+                            }
                         }
+                        
                     }
                 }
             }
@@ -47,21 +53,58 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private func checkCouponStatus() {
         if let couponCode = self.couponCode {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkCouponStatus [+], CouponCode: \(couponCode)")
-            checkInAppPurchaseStatus(coupon: couponCode)
+            if let isFromUniversalLink = UserDefaults.standard.bool(forKey: kIsFromUniverslaLink) as? Bool {
+                if isFromUniversalLink == true {
+                    checkInAppPurchaseStatus(coupon: couponCode)
+                } else {
+                    self.callLicenseConfirmationApi(coupon: couponCode)
+                }
+            }
+        }
+    }
+
+    private func iAPStatusCheckAlert(message: String, coupon: String) {
+        let alertService = CustomAlertViewModel()
+        DispatchQueue.main.async {
+            let alert = alertService.alertDialogSoftbank(message: message) {
+                self.checkInAppPurchaseStatus(coupon: coupon)
+            }
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
     private func checkInAppPurchaseStatus(coupon: String) {
-        if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatusForCouponCheck) == true {
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
-            showAlertAndRedirectToHomeVC()
-        } else {
-           callLicenseConfirmationApi(coupon: coupon)
+        if Reachability.isConnectedToNetwork() == true{
+            self.noInternetLabel.isHidden = true
+            shouldCallApi = false
+            shouldCallIapApi = false
+            ActivityIndicator.sharedInstance.show()
+            IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
+                DispatchQueue.main.async {
+                    ActivityIndicator.sharedInstance.hide()
+                }
+                if let err = error {
+                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
+                } else {
+                    if isPurchaseSchemeActive == true {
+                        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
+                        self.showAlertAndRedirectToHomeVC()
+                    } else {
+                        self.callLicenseConfirmationApi(coupon: coupon)
+                    }
+                }
+            }
+        }else{
+            ActivityIndicator.sharedInstance.hide()
+            shouldCallApi = true
+            shouldCallIapApi = true
+            showNoInternetAlert()
         }
     }
 
     private func callLicenseConfirmationApi(coupon: String){
         IAPManager.shared.stopObserving()
+        shouldCallIapApi = false
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"callLicenseConfirmationApi")
         if Reachability.isConnectedToNetwork() == true{
             shouldCallApi = false
@@ -208,15 +251,16 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
 
     private func showAlertAndRedirectToHomeVC(){
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "showAlertAndRedirectToHomeVC [+]")
-
-        let alertService = CustomAlertViewModel()
-        let alert = alertService.alertDialogSoftbank(message: "KSubscriptionErrorMessage".localiz()) {
-            if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
-                GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-            } else {
-                GlobalMethod.appdelegate().navigateToViewController(.home)
+        DispatchQueue.main.async {
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogSoftbank(message: "KSubscriptionErrorMessage".localiz()) {
+                if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
+                    GlobalMethod.appdelegate().navigateToViewController(.home)
+                } else {
+                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                }
             }
+            self.present(alert, animated: true, completion: nil)
         }
-        present(alert, animated: true, completion: nil)
     }
 }
