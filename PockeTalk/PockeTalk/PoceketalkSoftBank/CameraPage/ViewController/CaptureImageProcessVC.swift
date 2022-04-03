@@ -918,6 +918,7 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     }
 
     func cameraTTSDialogShowContextMenu() {
+        stopTTS()
         self.view.addSubview(cameraTTSContextMenu)
     }
     func shareTranslation(){
