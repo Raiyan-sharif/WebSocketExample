@@ -12,6 +12,7 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSettingsSelectionVoice
     case CountrySelectionByVoice
     case CountrySettingsSelectionByVoice
+    case countryWiseLanguageList
     
     case LanguageSelectionCamera
     case LanguageHistorySelectionCamera

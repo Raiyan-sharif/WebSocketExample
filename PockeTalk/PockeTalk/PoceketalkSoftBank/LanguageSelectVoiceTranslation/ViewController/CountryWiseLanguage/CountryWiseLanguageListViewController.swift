@@ -26,6 +26,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
+        ScreenTracker.sharedInstance.screenPurpose = .countryWiseLanguageList
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
         talkButtonImageView.isHidden = true
         super.viewDidLoad()

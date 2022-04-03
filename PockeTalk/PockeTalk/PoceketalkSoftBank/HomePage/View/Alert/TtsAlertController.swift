@@ -400,18 +400,20 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "share".localiz(), imageName: "", menuType: .sendMail))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
-    
+
     // This method get called when cross button is tapped
     @IBAction func crossActiioin(_ sender: UIButton) {
+        self.crossButton.isHidden = true
         self.zoomOutDismissAnimation()
     }
+
     //Dismiss view on back button press
     @IBAction func dismissView(_ sender: UIButton) {
         self.backButton.isHidden = true
         self.bottomView.isHidden = true
         self.zoomOutDismissAnimation()
     }
-    
+
     private func zoomOutDismissAnimation() {
         self.view.backgroundColor = .clear
         UIView.animate(withDuration: 0.5, animations: {

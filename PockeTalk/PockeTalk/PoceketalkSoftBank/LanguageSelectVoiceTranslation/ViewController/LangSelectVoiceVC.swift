@@ -245,18 +245,20 @@ class LangSelectVoiceVC: BaseViewController {
                 }
             }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            
+
             self.retranslationDelegate?.showRetranslation(
                 selectedLanguage: selectedLanguageCode,
                 fromScreenPurpose: fromScreenPurpose)
-            
+
+            ///update the screenPurpose as fromScreenPurpose. If not then it will show mike button if no internet dialog appear.
+            ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             self.remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         }
         microphoneIcon(isHidden: true)
     }
-    
+
     //MARK: - View Transactions
     func showViewController(_ index: Int) -> UIViewController? {
         currentIndex = index
