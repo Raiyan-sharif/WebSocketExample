@@ -277,6 +277,7 @@
                         <outlet property="bottomLangSysLangNameButton" destination="uAQ-Ui-qmc" id="2rM-tW-Qcz"/>
                         <outlet property="bottomView" destination="4we-IE-5Qe" id="3Nc-LV-0jS"/>
                         <outlet property="buttonFav" destination="YGf-dW-PHE" id="ytW-cJ-bhW"/>
+                        <outlet property="cameraBtn" destination="oYg-He-7j5" id="gwk-c8-LhE"/>
                         <outlet property="directionButtonContainerView" destination="TVU-sf-bf0" id="4FZ-Af-DF3"/>
                         <outlet property="historyImageView" destination="ezf-zO-Z1Y" id="hPL-zI-vDl"/>
                         <outlet property="languageChangedDirectionButton" destination="azA-jg-J50" id="lRd-nF-Lta"/>
