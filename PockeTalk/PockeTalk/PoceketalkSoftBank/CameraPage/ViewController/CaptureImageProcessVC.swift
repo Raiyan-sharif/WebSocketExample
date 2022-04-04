@@ -402,9 +402,11 @@ class CaptureImageProcessVC: BaseViewController {
         if(playNative){
             lang = nativeLang
             text = nativeText
+            text = text.replacingOccurrences(of: "\"", with: "")
         }else{
             lang = targetLang
             text = targetText
+            text = text.replacingOccurrences(of: "\"", with: "")
         }
 
         let languageManager = LanguageSelectionManager.shared
