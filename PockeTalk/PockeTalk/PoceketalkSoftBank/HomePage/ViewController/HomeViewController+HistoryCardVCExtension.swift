@@ -130,7 +130,7 @@ extension HomeViewController{
         }
     }
     
-    private func animateTransitionIfNeeded (state:CardState, shouldUpdateCardViewAlpha: Bool) {
+    func animateTransitionIfNeeded (state:CardState, shouldUpdateCardViewAlpha: Bool) {
         if runningAnimations.isEmpty {
             
             if !shouldUpdateCardViewAlpha {
