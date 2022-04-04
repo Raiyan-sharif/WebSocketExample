@@ -97,11 +97,10 @@ class PurchasePlanViewController: UIViewController {
                         DispatchQueue.main.async {
                             self.showIAPRelatedError(error)
                             ActivityIndicator.sharedInstance.hide()
-                            return
                         }
+                    } else {
+                        success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
                     }
-
-                    success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
 
                     ActivityIndicator.sharedInstance.hide()
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
@@ -122,18 +121,17 @@ class PurchasePlanViewController: UIViewController {
                 self.purchasePlanVM.updateReceiptValidationAllow()
                 self.purchasePlanVM.purchaseProduct(product: product){ [weak self] success, error in
 
-                    if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)!  == true {
+                    if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)! == true {
                         guard let self = `self` else {return}
 
                         if let productPurchaseError = error {
                             DispatchQueue.main.async {
                                 self.showIAPRelatedError(productPurchaseError)
                                 ActivityIndicator.sharedInstance.hide()
-                                return
                             }
+                        } else {
+                            success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
                         }
-
-                        success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
 
                         ActivityIndicator.sharedInstance.hide()
                         KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
