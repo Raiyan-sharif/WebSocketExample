@@ -276,6 +276,7 @@ struct NetworkManager:Network {
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 completion(successResponse.data)
             } catch let err {
+                completion(nil)
             }
         case let .failure(error):
             completion(nil)

@@ -155,6 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "calling api")
             UserDefaults.standard.set(true, forKey: kIsFromUniverslaLink)
+            IAPManager.shared.shouldBypassPurchasePlan = true
             GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: couponCode)
             return true
         } else {

@@ -14,11 +14,13 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private var shouldCallApi = false
     private var shouldCallIapApi = false
     private var alert: UIAlertController?
+    private var shouldShowLoader = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         noInternetLabel.isHidden = true
         noInternetLabel.text = "internet_connection_error".localiz()
+        registerNotification()
         checkCouponStatus()
         self.connectivity.startMonitoring { [weak self] connection, reachable in
             guard let self = self else { return }
@@ -41,9 +43,33 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             }
         }
     }
+    private func unregisterNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
 
-    deinit{
+    private func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc func applicationWillResignActive(notification: Notification) {
+        ActivityIndicator.sharedInstance.hide()
+    }
+
+    @objc func applicationDidBecomeActive(notification: Notification) {
+        if shouldShowLoader == true {
+            ActivityIndicator.sharedInstance.show()
+        }else{
+            ActivityIndicator.sharedInstance.hide()
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.connectivity.cancel()
+        IAPManager.shared.shouldBypassPurchasePlan = false
+        unregisterNotification()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -79,9 +105,11 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             shouldCallApi = false
             shouldCallIapApi = false
             ActivityIndicator.sharedInstance.show()
+            self.shouldShowLoader = true
             IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
                 DispatchQueue.main.async {
                     ActivityIndicator.sharedInstance.hide()
+                    self.shouldShowLoader = false
                 }
                 if let err = error {
                     self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
@@ -96,6 +124,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             }
         }else{
             ActivityIndicator.sharedInstance.hide()
+            self.shouldShowLoader = false
             shouldCallApi = true
             shouldCallIapApi = true
             showNoInternetAlert()
@@ -109,7 +138,11 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         if Reachability.isConnectedToNetwork() == true{
             shouldCallApi = false
             NetworkManager.shareInstance.getLicenseConfirmation(coupon: coupon) { [weak self] data  in
-                guard let data = data, let self = self else { return }
+                guard let data = data, let self = self else {
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"Unknown Error")
+                    self?.showUnknownErrorDialog()
+                    return
+                }
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"callLicenseConfirmationApi>>> response")
                 do {
                     let result = try JSONDecoder().decode(LicenseConfirmationModel.self, from: data)
@@ -201,7 +234,10 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
-                } catch let err {}
+                } catch let err {
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"Unknown Error: \(err.localizedDescription)")
+                    self.showUnknownErrorDialog()
+                }
             }
         }else{
             showNoInternetAlert()
@@ -259,6 +295,16 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 } else {
                     GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                 }
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    private func showUnknownErrorDialog(){
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            let alertService = CustomAlertViewModel()
+            let alert = alertService.alertDialogSoftbank(message: ERR_UNKNOWN) {
+                exit(0)
             }
             self.present(alert, animated: true, completion: nil)
         }

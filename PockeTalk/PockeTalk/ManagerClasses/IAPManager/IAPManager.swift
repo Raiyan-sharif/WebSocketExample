@@ -29,6 +29,7 @@ class IAPManager: NSObject {
     static let shared = IAPManager()
     private var isObserving = false
     private override init() { super.init() }
+    var shouldBypassPurchasePlan = false
 
     struct LatestReceiptInfo {
         var productId: String?
@@ -432,7 +433,6 @@ extension IAPManager {
                     }
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
-                if Reachability.isConnectedToNetwork() {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
                         if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
                             GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
@@ -443,14 +443,14 @@ extension IAPManager {
                         GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
-                } else {
-                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
-                }
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {
                 if Reachability.isConnectedToNetwork() {
                     receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
+                        if self.shouldBypassPurchasePlan == true {
+                            return
+                        }
                         if let err = error {
-                            self.showAlertFromAppDelegates(error: err)
+                            //self.showAlertFromAppDelegates(error: err)
                         } else {
                             if isPurchaseSchemeActive == false {
                                 var savedCoupon = ""
@@ -465,8 +465,6 @@ extension IAPManager {
                             }
                         }
                     }
-                } else {
-                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .none)
                 }
             }
         }
@@ -504,6 +502,8 @@ extension IAPManager {
                                 }
                             })
                         }
+                    }else{
+                        completion(false, error)
                     }
                 } catch let parseError {
                     completion(false, parseError)

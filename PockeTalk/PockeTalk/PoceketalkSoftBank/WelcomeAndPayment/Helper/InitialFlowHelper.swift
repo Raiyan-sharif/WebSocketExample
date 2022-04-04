@@ -70,6 +70,7 @@ class InitialFlowHelper{
                 }
             },{ cancel in
                 PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
+                exit(0)
             }
         ])
     }
