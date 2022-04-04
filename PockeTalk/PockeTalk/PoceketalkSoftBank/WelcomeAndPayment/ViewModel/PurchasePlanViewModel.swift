@@ -12,7 +12,6 @@ protocol PurchasePlanViewModeling {
     var numberOfRow: Int { get }
     var rowType: [PurchasePlanTVCellInfo] { get }
     var hasInAppPurchaseProduct: Bool { get }
-    var isProductFetchOngoing: Bool { get }
     var productFetchError: String? { get }
     var isAPICallOngoing: Bool { get }
     func getProduct(onCompletion: @escaping CompletionCallBack)
@@ -21,7 +20,8 @@ protocol PurchasePlanViewModeling {
     func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails?
     func getFreeDaysUsesInfo() -> String?
     func updateReceiptValidationAllow()
-    func setProductFetchStatus(_ status: Bool)
+    func fetchProductOnece()
+    func updateIsAPICallOngoing(_ status: Bool)
 }
 
 class PurchasePlanViewModel: PurchasePlanViewModeling {
@@ -33,7 +33,6 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _isAPICallOngoing: Bool = false
     private var _hasInAppPurchaseProduct = false
     private var _productFetchError: String?
-    private var _isProductFetchOngoing: Bool = false
 
     var numberOfRow: Int {
         return row.count
@@ -53,10 +52,6 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     var productFetchError: String? {
         return _productFetchError
-    }
-
-    var isProductFetchOngoing: Bool {
-        return _isProductFetchOngoing
     }
 
     //MARK: - API Calls
@@ -207,7 +202,11 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllowFromPurchase)
     }
 
-    func setProductFetchStatus(_ status: Bool) {
-        self._isProductFetchOngoing = status
+    func fetchProductOnece() {
+        KeychainWrapper.standard.set(true, forKey: kFetchProductOnece)
+    }
+
+    func updateIsAPICallOngoing(_ status: Bool) {
+        self._isAPICallOngoing = status
     }
 }

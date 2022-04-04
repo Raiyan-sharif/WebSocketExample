@@ -58,11 +58,10 @@ class PurchasePlanViewController: UIViewController {
     private func getProductList() {
         ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
-            self.purchasePlanVM.setProductFetchStatus(true)
+            self.purchasePlanVM.fetchProductOnece()
             self.purchasePlanVM.getProduct { [weak self] success, error in
                 guard let self = `self` else {return}
-
-                if self.purchasePlanVM.isProductFetchOngoing {
+                if KeychainWrapper.standard.bool(forKey: kFetchProductOnece)! == true {
                     if let productFetchError = error {
                         DispatchQueue.main.async {
                             self.showProductFetchErrorAlert(message: productFetchError)
@@ -75,7 +74,7 @@ class PurchasePlanViewController: UIViewController {
                     DispatchQueue.main.async {
                         success ? (self.purchasePlanTV.reloadData()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Can't successfully fetch the product, status: \(success)"))
                         ActivityIndicator.sharedInstance.hide()
-                        self.purchasePlanVM.setProductFetchStatus(false)
+                        KeychainWrapper.standard.set(false, forKey: kFetchProductOnece)
                     }
                 }
             }
@@ -169,21 +168,11 @@ class PurchasePlanViewController: UIViewController {
     private func unregisterNotification() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     private func registerNotification() {
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc private func appWillEnterForeground() {
-        purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
     }
 
     @objc func applicationWillResignActive(notification: Notification) {
@@ -191,7 +180,12 @@ class PurchasePlanViewController: UIViewController {
     }
 
     @objc func applicationDidBecomeActive(notification: Notification) {
-        purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
+        if Reachability.isConnectedToNetwork() {
+            purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
+        } else {
+            InitialFlowHelper().showNoInternetAlert(on: self)
+            purchasePlanVM.updateIsAPICallOngoing(false)
+        }
     }
 
     private func getProductForPurchase(for type: PurchasePlanTVCellInfo){

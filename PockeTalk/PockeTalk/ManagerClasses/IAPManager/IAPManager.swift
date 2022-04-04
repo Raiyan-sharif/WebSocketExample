@@ -230,9 +230,8 @@ extension IAPManager: SKPaymentTransactionObserver {
                                 onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
                             }
                             PrintUtility.printLog(tag: TAG, text: "IAP Error: \(error.localizedDescription)")
-                            totalPurchaseOrRestoreFailed = 0
                         }
-
+                        totalPurchaseOrRestoreFailed = 0
                     case .deferred, .purchasing: break
                     @unknown default: break
                     }
