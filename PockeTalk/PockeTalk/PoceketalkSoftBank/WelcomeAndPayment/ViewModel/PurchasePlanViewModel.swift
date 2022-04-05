@@ -131,13 +131,31 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         //Set suggestion text
         for item in 0..<productDetails.count {
             if productDetails[item].periodUnitType == .month {
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(((weeklyPrice * 4) - productDetails[item].price).roundToDecimal(2)) " + "kYen".localiz()
+                let savingPrice = calculateSavings(
+                    weeklyPrice: weeklyPrice,
+                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    numberOfWeek: 4)
+
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
             }
 
             if productDetails[item].periodUnitType == .year {
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(((weeklyPrice * 52) - productDetails[item].price).roundToDecimal(2)) " + "kYen".localiz()
+                let savingPrice = calculateSavings(
+                    weeklyPrice: weeklyPrice,
+                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    numberOfWeek: 52)
+
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
             }
         }
+    }
+
+    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Int {
+        let savingPrice = Int((weeklyPrice * Double(numberOfWeek)) - productPrice)
+        let digitCount = String(savingPrice).count
+        let mod = digitCount > 3 ? 100 : 10
+        let nearestFloorSavingPrice = savingPrice - (savingPrice % mod)
+        return nearestFloorSavingPrice
     }
 
     private func setupTVRowData() {
