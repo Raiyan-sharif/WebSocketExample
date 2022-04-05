@@ -147,10 +147,12 @@ class IAPManager: NSObject {
 extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         // Get the available products contained in the response.
+        PrintUtility.printLog(tag: "IAPTAG", text: "didReceive -> SKProductsResponse() [+]")
         let products = response.products
         // Check if there are any products available.
         if products.count > 0 {
             // Call the following handler passing the received products.
+            PrintUtility.printLog(tag: "IAPTAG", text: "didReceive -> SKProductsResponse() -> Success")
             onReceiveProductsHandler?(.success(products))
         } else {
             // No products were found.
@@ -417,6 +419,7 @@ extension IAPManager {
 //MARK: - IAPManager Prepare alert cell
 extension IAPManager {
     func IAPResponseCheck(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
+        PrintUtility.printLog(tag: TAG, text: "\n")
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
         PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(String(describing: KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!))")
         if KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!  == true {
@@ -454,8 +457,10 @@ extension IAPManager {
                                 if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
                                     savedCoupon = coupon
                                 }
-                                if savedCoupon.isEmpty{
-                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                if savedCoupon.isEmpty {
+                                    if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
+                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                    }
                                 }
                             }
                         }

@@ -58,10 +58,11 @@ class PurchasePlanViewController: UIViewController {
     private func getProductList() {
         ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
-            self.purchasePlanVM.fetchProductOnece()
+            self.purchasePlanVM.setProductFetchStatus(true)
             self.purchasePlanVM.getProduct { [weak self] success, error in
                 guard let self = `self` else {return}
-                if KeychainWrapper.standard.bool(forKey: kFetchProductOnece)! == true {
+
+                if self.purchasePlanVM.isProductFetchOngoing {
                     if let productFetchError = error {
                         DispatchQueue.main.async {
                             self.showProductFetchErrorAlert(message: productFetchError)
@@ -74,13 +75,15 @@ class PurchasePlanViewController: UIViewController {
                     DispatchQueue.main.async {
                         success ? (self.purchasePlanTV.reloadData()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Can't successfully fetch the product, status: \(success)"))
                         ActivityIndicator.sharedInstance.hide()
-                        KeychainWrapper.standard.set(false, forKey: kFetchProductOnece)
+                        self.purchasePlanVM.setProductFetchStatus(false)
                     }
                 }
             }
         } else {
-            ActivityIndicator.sharedInstance.hide()
-            InitialFlowHelper().showNoInternetAlert(on: self)
+            DispatchQueue.main.async {
+                ActivityIndicator.sharedInstance.hide()
+                InitialFlowHelper().showNoInternetAlert(on: self)
+            }
         }
     }
 
@@ -99,16 +102,19 @@ class PurchasePlanViewController: UIViewController {
                             ActivityIndicator.sharedInstance.hide()
                         }
                     } else {
-                        success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
+                        DispatchQueue.main.async {
+                            success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
+                            ActivityIndicator.sharedInstance.hide()
+                            KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
+                        }
                     }
-
-                    ActivityIndicator.sharedInstance.hide()
-                    KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                 }
             }
         } else {
-            ActivityIndicator.sharedInstance.hide()
-            InitialFlowHelper().showNoInternetAlert(on: self)
+            DispatchQueue.main.async {
+                ActivityIndicator.sharedInstance.hide()
+                InitialFlowHelper().showNoInternetAlert(on: self)
+            }
         }
     }
 
@@ -130,16 +136,19 @@ class PurchasePlanViewController: UIViewController {
                                 ActivityIndicator.sharedInstance.hide()
                             }
                         } else {
-                            success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
+                            DispatchQueue.main.async {
+                                success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
+                                ActivityIndicator.sharedInstance.hide()
+                                KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
+                            }
                         }
-
-                        ActivityIndicator.sharedInstance.hide()
-                        KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                     }
                 }
             } else {
-                ActivityIndicator.sharedInstance.hide()
-                InitialFlowHelper().showNoInternetAlert(on: self)
+                DispatchQueue.main.async {
+                    ActivityIndicator.sharedInstance.hide()
+                    InitialFlowHelper().showNoInternetAlert(on: self)
+                }
             }
         }
         return true
@@ -153,12 +162,10 @@ class PurchasePlanViewController: UIViewController {
     //MARK: - View Transactions
     private func goToPermissionVC() {
         UserDefaults.standard.set(true, forKey: kUserPassedSubscription)
-        DispatchQueue.main.async {
-            if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
-                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-                self.navigationController?.view.layer.add(transition, forKey: nil)
-                self.navigationController?.pushViewController(viewController, animated: false)
-            }
+        if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.pushViewController(viewController, animated: false)
         }
     }
 

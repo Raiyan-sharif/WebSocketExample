@@ -146,7 +146,7 @@
 "kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
 "kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
 "kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
-"kBestPrice" = "Best price";
+"kBestPrice" = "Best Price";
 "kSaveAbout" = "Save about";
 "kYen" = "yen";
 
