@@ -24,6 +24,22 @@ enum ViewControllerType {
     case statusCheck
 }
 
+public enum IAPError: Error {
+    case parseErrorToGetLatestInfoReceiptObjects
+    case parseErrorForCurrentUTCFormatDate
+}
+
+extension IAPError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .parseErrorToGetLatestInfoReceiptObjects:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
+        case .parseErrorForCurrentUTCFormatDate:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
+        }
+    }
+}
+
 class IAPManager: NSObject {
     private let TAG: String = "IAPTAG"
     static let shared = IAPManager()
@@ -487,6 +503,7 @@ extension IAPManager {
             var storeRequest = URLRequest(url: storeURL)
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
+            storeRequest.timeoutInterval = IAPTimeoutInterval
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
@@ -499,10 +516,14 @@ extension IAPManager {
                                         KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
                                     }
                                     completion(purchaseStatus!, nil)
+                                } else {
+                                    completion(false, IAPError.parseErrorForCurrentUTCFormatDate)
                                 }
                             })
+                        } else {
+                            completion(false, IAPError.parseErrorToGetLatestInfoReceiptObjects)
                         }
-                    }else{
+                    } else {
                         completion(false, error)
                     }
                 } catch let parseError {
