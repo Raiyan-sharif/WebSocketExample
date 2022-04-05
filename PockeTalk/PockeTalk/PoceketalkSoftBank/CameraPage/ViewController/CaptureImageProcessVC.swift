@@ -719,6 +719,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                                                   name: UIApplication.didBecomeActiveNotification,
                                                   object: nil)
         AudioPlayer.sharedInstance.stop()
+        stopTTS()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
