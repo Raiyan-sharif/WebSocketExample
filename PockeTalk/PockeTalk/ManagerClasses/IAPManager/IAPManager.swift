@@ -382,11 +382,11 @@ extension IAPManager {
         var planPerUnitText = ""
         switch unitType {
         case .week:
-            planPerUnitText = "\(price) \("kYenPerWeek".localiz())"
+            planPerUnitText = "\(Int(price)) \("kYenPerWeek".localiz())"
         case .month:
-            planPerUnitText = "\(price) \("kYenPerMonth".localiz())"
+            planPerUnitText = "\(Int(price)) \("kYenPerMonth".localiz())"
         case .year:
-            planPerUnitText = "\(price) \("kYenPerYear".localiz())"
+            planPerUnitText = "\(Int(price)) \("kYenPerYear".localiz())"
         default:
             break
         }
