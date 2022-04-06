@@ -139,6 +139,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
     }
     
     @IBAction private func onBackButtonPressed(_ sender: Any) {
+        ScreenTracker.sharedInstance.screenPurpose = .CountrySelectionByVoice
         self.navigationController?.popViewController(animated: true)
     }
     
