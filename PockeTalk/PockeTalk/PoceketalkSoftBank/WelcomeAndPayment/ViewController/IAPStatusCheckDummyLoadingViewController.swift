@@ -101,21 +101,18 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
 
     private func checkInAppPurchaseStatus(coupon: String) {
         if Reachability.isConnectedToNetwork() == true{
+            self.showLoader()
             self.noInternetLabel.isHidden = true
             shouldCallApi = false
             shouldCallIapApi = false
-            ActivityIndicator.sharedInstance.show()
-            self.shouldShowLoader = true
             IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
-                DispatchQueue.main.async {
-                    ActivityIndicator.sharedInstance.hide()
-                    self.shouldShowLoader = false
-                }
                 if let err = error {
+                    self.hideLoader()
                     self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
                 } else {
                     if isPurchaseSchemeActive == true {
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
+                        self.hideLoader()
                         self.showAlertAndRedirectToHomeVC()
                     } else {
                         self.callLicenseConfirmationApi(coupon: coupon)
@@ -123,8 +120,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 }
             }
         }else{
-            ActivityIndicator.sharedInstance.hide()
-            self.shouldShowLoader = false
+            self.hideLoader()
             shouldCallApi = true
             shouldCallIapApi = true
             showNoInternetAlert()
@@ -136,10 +132,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         shouldCallIapApi = false
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"callLicenseConfirmationApi")
         if Reachability.isConnectedToNetwork() == true{
+            self.showLoader()
             shouldCallApi = false
             NetworkManager.shareInstance.getLicenseConfirmation(coupon: coupon) { [weak self] data  in
                 guard let data = data, let self = self else {
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"Unknown Error")
+                    self?.hideLoader()
                     self?.showUnknownErrorDialog()
                     return
                 }
@@ -147,6 +145,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 do {
                     let result = try JSONDecoder().decode(LicenseConfirmationModel.self, from: data)
                     UserDefaults.standard.set(Date(), forKey: kLicenseConfirmationCalledTime)
+                    self.hideLoader()
                     let alertService = CustomAlertViewModel()
                     if let result_code = result.result_code {
                         if result_code == response_ok {
@@ -236,10 +235,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                     }
                 } catch let err {
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text:"Unknown Error: \(err.localizedDescription)")
+                    self.hideLoader()
                     self.showUnknownErrorDialog()
                 }
             }
         }else{
+            self.hideLoader()
             showNoInternetAlert()
             shouldCallApi = true
         }
@@ -307,6 +308,20 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 exit(0)
             }
             self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    private func showLoader(){
+        DispatchQueue.main.async {
+            ActivityIndicator.sharedInstance.show()
+            self.shouldShowLoader = true
+        }
+    }
+
+    private func hideLoader(){
+        DispatchQueue.main.async {
+            ActivityIndicator.sharedInstance.hide()
+            self.shouldShowLoader = false
         }
     }
 }

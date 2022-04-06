@@ -29,17 +29,6 @@ public enum IAPError: Error {
     case parseErrorForCurrentUTCFormatDate
 }
 
-extension IAPError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .parseErrorToGetLatestInfoReceiptObjects:
-            return NSLocalizedString(ERR_UNKNOWN, comment: "")
-        case .parseErrorForCurrentUTCFormatDate:
-            return NSLocalizedString(ERR_UNKNOWN, comment: "")
-        }
-    }
-}
-
 class IAPManager: NSObject {
     private let TAG: String = "IAPTAG"
     static let shared = IAPManager()
@@ -503,7 +492,7 @@ extension IAPManager {
             var storeRequest = URLRequest(url: storeURL)
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
-            storeRequest.timeoutInterval = IAPTimeoutInterval
+//            storeRequest.timeoutInterval = IAPTimeoutInterval
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
@@ -792,6 +781,17 @@ extension IAPManager {
                     }
                 }
             }
+        }
+    }
+}
+
+extension IAPError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .parseErrorToGetLatestInfoReceiptObjects:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
+        case .parseErrorForCurrentUTCFormatDate:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
         }
     }
 }
