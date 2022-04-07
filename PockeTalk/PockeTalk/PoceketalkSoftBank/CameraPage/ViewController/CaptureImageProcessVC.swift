@@ -293,6 +293,7 @@ class CaptureImageProcessVC: BaseViewController {
     }
     deinit{
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        ttsResponsiveView.removeObserver()
     }
 
     func showHistoryData(historyID: Int64) {

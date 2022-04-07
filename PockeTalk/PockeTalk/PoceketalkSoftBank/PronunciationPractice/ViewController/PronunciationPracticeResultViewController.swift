@@ -227,6 +227,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     deinit {
         unregisterNotification()
+        ttsResponsiveView.removeObserver()
     }
 
     func playTTS(){
