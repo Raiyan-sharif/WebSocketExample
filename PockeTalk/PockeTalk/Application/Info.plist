@@ -2,14 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>pron_w3.otf</string>
-	</array>
+	<key>AudioStremBaseUrl</key>
+	<string>$(AUDIO_STREAM_BASE_URL)</string>
+	<key>BaseUrl</key>
+	<string>$(BASE_URL)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>PockeTalk-iOS</string>
+	<string>ポケトーク</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,8 +24,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CURRENT_SCHEME_NAME</key>
+	<string>$(CURRENT_SCHEME_NAME)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>ImeiNumber</key>
+	<string>$(IMEI)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,6 +43,10 @@
 	<string>PockeTalk needs permission to use the microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Add photo to image</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>pron_w3.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -71,13 +79,5 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>BaseUrl</key>
-	<string>$(BASE_URL)</string>
-	<key>ImeiNumber</key>
-	<string>$(IMEI)</string>
-    <key>AudioStremBaseUrl</key>
-    <string>$(AUDIO_STREAM_BASE_URL)</string>
-    <key>CURRENT_SCHEME_NAME</key>
-    <string>$(CURRENT_SCHEME_NAME)</string>
 </dict>
 </plist>
