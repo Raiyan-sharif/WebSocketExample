@@ -3,6 +3,6 @@
   PockeTalk
 */
 
-"NSCameraUsageDescription" = "PockeTalkにはカメラを使用するための許可が必要です";
-"NSMicrophoneUsageDescription" = "PockeTalkにはマイクを使用するための許可が必要です";
+"NSCameraUsageDescription" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"NSMicrophoneUsageDescription" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "NSPhotoLibraryUsageDescription" = "イメージに写真を追加";
