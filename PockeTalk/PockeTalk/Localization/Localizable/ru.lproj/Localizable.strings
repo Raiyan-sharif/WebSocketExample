@@ -72,12 +72,12 @@
 "can_not_translate" = "Невозможно перевести.";
 "kActionAllowAccess" = "Разрешить доступ";
 "kActionCancel" = "Отмена";
-"kMicrophoneUsageTitle" = "POCKETALK запрашивает доступ к вашему микрофону";
-"kMicrophoneUsageMessage" = "POCKETALK запрашивает ваше разрешение на использование микрофона";
+"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
+"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "kPhotosUsageTitle" = "Фотографии недоступны";
 "kPhotosUsageMessage" = "POCKETALK запрашивает доступ к вашей библиотеке фотографий ";
-"kCameraUsageTitle" = "POCKETALK запрашивает доступ к вашей камере";
-"kCameraUsageMessage" = "POCKETALK требуется ваше разрешение на использование камеры";
+"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
+"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
 "kTitleOk" = "ОК";
 "kNotAllow" = "Не разрешать";
 "kNextButtonTitle" = "Далее";

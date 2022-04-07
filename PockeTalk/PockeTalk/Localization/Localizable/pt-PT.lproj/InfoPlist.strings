@@ -3,7 +3,7 @@
   PockeTalk
 */
 
-"NSCameraUsageDescription" = "O POCKETALK necessita da sua autorização para utilizar a câmara";
-"NSMicrophoneUsageDescription" = "O POCKETALK necessita da sua autorização para utilizar o microfone";
+"NSCameraUsageDescription" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"NSMicrophoneUsageDescription" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "NSPhotoLibraryUsageDescription" = "Add photo to image";
 

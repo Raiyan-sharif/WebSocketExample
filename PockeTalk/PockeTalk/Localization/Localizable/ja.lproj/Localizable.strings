@@ -75,12 +75,12 @@
 "Country Speech Guideline" = "ボタンを押したまま、検索したい地域を言ってください。";
 "kActionAllowAccess" = "許可";
 "kActionCancel" = "キャンセル";
-"kMicrophoneUsageTitle" = "\”PockeTalk\”がマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "PockeTalkにはマイクを使用するための許可が必要です";
+"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
+"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "kPhotosUsageTitle" = "写真が利用できません";
 "kPhotosUsageMessage" = "\”PockeTalk\”が写真へのアクセスを求めています";
-"kCameraUsageTitle" = "\”PockeTalk\”がカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "PockeTalkにはカメラを使用するための許可が必要です";
+"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
+"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
 "kTitleOk" = "OK";
 "kNotAllow" = "許可しない";
 "kNextButtonTitle" = "次へ";

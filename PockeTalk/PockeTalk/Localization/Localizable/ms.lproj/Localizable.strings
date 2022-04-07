@@ -71,12 +71,12 @@
 "can_not_translate" = "Tidak boleh terjemah.";
 "kActionAllowAccess" = "kebenaran";
 "kActionCancel" = "Batal";
-"kMicrophoneUsageTitle" = "\"POCKETALK\" meminta akses kepada mikrofon";
-"kMicrophoneUsageMessage" = "POCKETALK memerlukan kebenaran untuk menggunakan mikrofon";
+"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
+"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "kPhotosUsageTitle" = "Foto tidak disediakan";
 "kPhotosUsageMessage" = "\"POCKETALK\" meminta akses kepada foto";
-"kCameraUsageTitle" = "\"POCKETALK\" meminta akses kepada kamera";
-"kCameraUsageMessage" = "POCKETALK memerlukan kebenaran untuk menggunakan kamera";
+"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
+"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
 "kTitleOk" = "OK";
 "kNotAllow" = "tidak dibenarkan";
 "kNextButtonTitle" = "Seterusnya";

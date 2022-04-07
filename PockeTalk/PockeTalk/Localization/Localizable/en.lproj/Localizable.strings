@@ -77,12 +77,12 @@
 
 "kActionAllowAccess" = "Allow access";
 "kActionCancel" = "Cancel";
-"kMicrophoneUsageTitle" = "POCKETALK requests access to your microphone";
-"kMicrophoneUsageMessage" = "POCKETALK requests your permission to use the microphone";
+"kMicrophoneUsageTitle" = "\”ポケトーク\" App requests to access your Microphone";
+"kMicrophoneUsageMessage" = "This app requires the access to Microphone to convert speech to text for translation";
 "kPhotosUsageTitle" = "Photos unavailable";
 "kPhotosUsageMessage" = "POCKETALK requests access to your photo library ";
-"kCameraUsageTitle" = "POCKETALK requests access to the camera";
-"kCameraUsageMessage" = "POCKETALK needs your permission to use the camera";
+"kCameraUsageTitle" = "\"ポケトーク\" App requests access to your camera";
+"kCameraUsageMessage" = "This app requires the access to camera to get the text from image for translation";
 "kTitleOk" = "OK";
 "kNotAllow" = "Don't Allow";
 "kNextButtonTitle" = "Next";

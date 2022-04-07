@@ -71,12 +71,12 @@
 "can_not_translate" = "無法翻譯。";
 "kActionAllowAccess" = "允許";
 "kActionCancel" = "取消";
-"kMicrophoneUsageTitle" = "\“POCKETALK\”請求訪問麥克風";
-"kMicrophoneUsageMessage" = "POCKETALK需要麥克風使用權限";
+"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
+"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
 "kPhotosUsageTitle" = "無法使用照片";
 "kPhotosUsageMessage" = "\“POCKETALK\”請求訪問相簿";
-"kCameraUsageTitle" = "\“POCKETALK\”請求訪問相機";
-"kCameraUsageMessage" = "POCKETALK需要相機使用權限";
+"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
+"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
 "kTitleOk" = "OK";
 "kNotAllow" = "拒絕";
 "kNextButtonTitle" = "下一步";
