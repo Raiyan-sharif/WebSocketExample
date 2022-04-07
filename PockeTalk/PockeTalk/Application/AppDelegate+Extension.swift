@@ -7,7 +7,7 @@ import UIKit
 import Kronos
 
 extension AppDelegate{
-    func navigateToViewController(_ type: ViewControllerType) {
+    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "") {
         var viewController = UIViewController()
 
         DispatchQueue.main.async {
@@ -26,6 +26,11 @@ extension AppDelegate{
             case .purchasePlan:
                 if let purchasePlanVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
                     viewController = purchasePlanVC
+                }
+            case .statusCheck:
+                if let statusCheckVC = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: IAPStatusCheckDummyLoadingViewController.self)) as? IAPStatusCheckDummyLoadingViewController {
+                    statusCheckVC.couponCode = couponCode
+                    viewController = statusCheckVC
                 }
             }
 
@@ -70,11 +75,11 @@ extension AppDelegate{
             do {
                 let result = try JSONDecoder().decode(ResultModel.self, from: data)
                 if result.resultCode == response_ok{
-                    UserDefaultsProperty<String>(authentication_key).value = result.accessKey
+                    UserDefaultsProperty<String>(authentication_key).value = result.access_key
                     SocketManager.sharedInstance.updateRequestKey()
 
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
-                    AppDelegate().executeLicenseTokenRefreshFunctionality()
+                    AppDelegate.executeLicenseTokenRefreshFunctionality()
                 }
             }catch{
                 PrintUtility.printLog(tag: "AppDelegate", text: "Didn't get auth key")
@@ -82,12 +87,12 @@ extension AppDelegate{
         }
     }
 
-    func executeLicenseTokenRefreshFunctionality() {
+    class func executeLicenseTokenRefreshFunctionality() {
         let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
 
         if tokenCreationTime != nil {
 
-            let tokenExpiryTime = tokenCreationTime! + 84600000   //(30*1000)  for 30 sec delay
+            let tokenExpiryTime = tokenCreationTime! + 1500000 // 25 min   //(30*1000)  for 30 sec delay
 
             Clock.sync(completion:  { date, offset in
                 if let getResDate = date {

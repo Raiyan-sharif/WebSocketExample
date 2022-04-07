@@ -21,12 +21,20 @@ enum ViewControllerType {
     case home
     case termAndCondition
     case purchasePlan
+    case statusCheck
+}
+
+public enum IAPError: Error {
+    case parseErrorToGetLatestInfoReceiptObjects
+    case parseErrorForCurrentUTCFormatDate
 }
 
 class IAPManager: NSObject {
     private let TAG: String = "IAPTAG"
     static let shared = IAPManager()
+    private var isObserving = false
     private override init() { super.init() }
+    var shouldBypassPurchasePlan = false
 
     struct LatestReceiptInfo {
         var productId: String?
@@ -34,6 +42,8 @@ class IAPManager: NSObject {
         var isInIntroOffer_period: Bool?
         var isTrialPeriod: Bool?
         var cancellationDate: Date? = nil
+        var purchaseDate: Date? = nil
+        var originalTransactionID: String?
     }
 
     var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
@@ -52,11 +62,25 @@ class IAPManager: NSObject {
         case paymentWasCancelled
         case productRequestFailed
     }
+
+    // get IAP products based on build varients
+    func getProductsBasedOnBuildVarient() -> (product: String, iAPPassword: String) {
+        switch (schemeName) {
+        case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
+            return (productionIAPProduts, productionIAPSharedSecret)
+        case BuildVarientScheme.STAGING.rawValue:
+            return (stagingIAPProduts, stagingIAPSharedSecret)
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            return (productionIAPProduts, productionIAPSharedSecret)
+        default:
+            return ("", "")
+        }
+    }
     
     // MARK: - General Methods
     fileprivate func getProductIDs() -> [String]? {
         var resourceURL: String = ""
-        resourceURL = (schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? BJIT_IAP_ProductIDs : IAP_ProductIDs
+        resourceURL = getProductsBasedOnBuildVarient().product
         guard let url = Bundle.main.url(forResource: resourceURL, withExtension: "plist") else { return nil }
         do {
             let data = try Data(contentsOf: url)
@@ -95,10 +119,17 @@ class IAPManager: NSObject {
     }
     
     func startObserving() {
-        SKPaymentQueue.default().add(self)
+        PrintUtility.printLog(tag: TAG, text: "before check startObserving")
+        if isObserving == false {
+            isObserving = true
+            PrintUtility.printLog(tag: TAG, text: "startObserving")
+            SKPaymentQueue.default().add(self)
+        }
     }
 
     func stopObserving() {
+        PrintUtility.printLog(tag: TAG, text: "stopObserving")
+        isObserving = false
         SKPaymentQueue.default().remove(self)
     }
     
@@ -122,11 +153,12 @@ class IAPManager: NSObject {
 extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         // Get the available products contained in the response.
+        PrintUtility.printLog(tag: "IAPTAG", text: "didReceive -> SKProductsResponse() [+]")
         let products = response.products
-
         // Check if there are any products available.
         if products.count > 0 {
             // Call the following handler passing the received products.
+            PrintUtility.printLog(tag: "IAPTAG", text: "didReceive -> SKProductsResponse() -> Success")
             onReceiveProductsHandler?(.success(products))
         } else {
             // No products were found.
@@ -206,9 +238,8 @@ extension IAPManager: SKPaymentTransactionObserver {
                                 onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
                             }
                             PrintUtility.printLog(tag: TAG, text: "IAP Error: \(error.localizedDescription)")
-                            totalPurchaseOrRestoreFailed = 0
                         }
-
+                        totalPurchaseOrRestoreFailed = 0
                     case .deferred, .purchasing: break
                     @unknown default: break
                     }
@@ -355,9 +386,21 @@ extension IAPManager {
         let unitType = getPeriodUnitType(product: product)
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
-        let planPerUnitText = "\(currency)\(price) / \(unitType.rawValue.localiz())."
-        var freeUsesDetailsText: String?
+        /// set planPerUnit text
+        var planPerUnitText = ""
+        switch unitType {
+        case .week:
+            planPerUnitText = "\(Int(price)) \("kYenPerWeek".localiz())"
+        case .month:
+            planPerUnitText = "\(Int(price)) \("kYenPerMonth".localiz())"
+        case .year:
+            planPerUnitText = "\(Int(price)) \("kYenPerYear".localiz())"
+        default:
+            break
+        }
 
+        /// set free uses details text
+        var freeUsesDetailsText: String?
         if freeUsesInfo.isFreeTrialAvailable {
             freeUsesDetailsText = "\("kFreePlanText".localiz()) \(freeUsesInfo.freeTrialDuration) \("days".localiz())"
 
@@ -382,6 +425,7 @@ extension IAPManager {
 //MARK: - IAPManager Prepare alert cell
 extension IAPManager {
     func IAPResponseCheck(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
+        PrintUtility.printLog(tag: TAG, text: "\n")
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
         PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(String(describing: KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!))")
         if KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!  == true {
@@ -394,7 +438,6 @@ extension IAPManager {
                     }
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
-                if Reachability.isConnectedToNetwork() {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
                         if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
                             GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
@@ -405,25 +448,28 @@ extension IAPManager {
                         GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
-                } else {
-                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
-                }
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {
                 if Reachability.isConnectedToNetwork() {
                     receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
+                        if self.shouldBypassPurchasePlan == true {
+                            return
+                        }
                         if let err = error {
-                            self.showAlertFromAppDelegates(error: err)
+                            //self.showAlertFromAppDelegates(error: err)
                         } else {
                             if isPurchaseSchemeActive == false {
-                                if UserDefaultsUtility.getBoolValue(forKey: isTermAndConditionTap) == false {
-                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                    UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
+                                var savedCoupon = ""
+                                if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                                    savedCoupon = coupon
+                                }
+                                if savedCoupon.isEmpty {
+                                    if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
+                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                    }
                                 }
                             }
                         }
                     }
-                } else {
-                    self.showNoInternetAlertOnVisibleViewController(iapReceiptValidationFrom: .none)
                 }
             }
         }
@@ -437,7 +483,8 @@ extension IAPManager {
             return
         }
         let recieptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : ((schemeName == BuildVarientScheme.APP_STORE_BJIT.rawValue) ? bjitAppSpecificSharedSecret : appSpecificSharedSecret) as AnyObject]
+        let iAPPassword = getProductsBasedOnBuildVarient().iAPPassword
+        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : iAPPassword as AnyObject]
         
         do {
             let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
@@ -445,6 +492,7 @@ extension IAPManager {
             var storeRequest = URLRequest(url: storeURL)
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
+//            storeRequest.timeoutInterval = IAPTimeoutInterval
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
@@ -457,9 +505,15 @@ extension IAPManager {
                                         KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
                                     }
                                     completion(purchaseStatus!, nil)
+                                } else {
+                                    completion(false, IAPError.parseErrorForCurrentUTCFormatDate)
                                 }
                             })
+                        } else {
+                            completion(false, IAPError.parseErrorToGetLatestInfoReceiptObjects)
                         }
+                    } else {
+                        completion(false, error)
                     }
                 } catch let parseError {
                     completion(false, parseError)
@@ -472,6 +526,10 @@ extension IAPManager {
     }
 
     func getLatestInfoReceiptObjects(jsonResponse: NSDictionary) -> [LatestReceiptInfo]? {
+        if let ios_receipt = jsonResponse[latest_receipt] as? String {
+            UserDefaults.standard.set(ios_receipt, forKey: kiOSReceipt)
+        }
+
         if let receiptInfo: NSArray = jsonResponse[latest_receipt_info] as? NSArray {
             let formatter = DateFormatter()
             formatter.dateFormat = IAPDateFormat
@@ -524,7 +582,21 @@ extension IAPManager {
                     cancelDate = nil
                 }
 
-                latestReceiptInfoArray.append(LatestReceiptInfo(productId: productId, expiresDate: expiresDate, isInIntroOffer_period: isInIntroOfferPeriod, isTrialPeriod: isTrialPeriod, cancellationDate: cancelDate))
+                var purchaseDate: Date? = nil
+                if let purchase_date = recInf["purchase_date"] as? String {
+                    purchaseDate = formatter.date(from: purchase_date)!
+                } else {
+                    purchaseDate = nil
+                }
+
+                if let transactionID = recInf["original_transaction_id"] as? String {
+                    //PrintUtility.printLog(tag: "originalTrasactionId", text: "\(transactionID)")
+                    UserDefaults.standard.set(transactionID, forKey: kiOSOriginalTransactionID)
+                } else {
+                    UserDefaults.standard.set("", forKey: kiOSOriginalTransactionID)
+                }
+
+                latestReceiptInfoArray.append(LatestReceiptInfo(productId: productId, expiresDate: expiresDate, isInIntroOffer_period: isInIntroOfferPeriod, isTrialPeriod: isTrialPeriod, cancellationDate: cancelDate, purchaseDate: purchaseDate))
             }
             return latestReceiptInfoArray
         } else {
@@ -558,11 +630,23 @@ extension IAPManager {
         }
 
         if isSubsActive == true {
-            if latestReceiptInfoForHighestExpireDate?.cancellationDate == nil {
-                isSubsActive = true
+            if let latestReceiptInfoForHighestCancellationDate = latestReceiptInfoForHighestExpireDate?.cancellationDate {
+                let latestReceiptInfoForHighestPurchaseDate = latestReceiptInfoArray
+                    .filter { $0.purchaseDate != nil }
+                    .max { $0.purchaseDate! < $1.purchaseDate! }
+
+                PrintUtility.printLog(tag: TAG, text: "**cancel param exist on receipt info**")
+                PrintUtility.printLog(tag: TAG, text: "expireDate after cancelling IAP scheme \(String(describing: (latestReceiptInfoForHighestPurchaseDate?.expiresDate)!))")
+
+                if currentDate!.compare((latestReceiptInfoForHighestPurchaseDate?.expiresDate)!) == .orderedAscending {
+                    isSubsActive = true
+                } else if currentDate!.compare((latestReceiptInfoForHighestPurchaseDate?.expiresDate)!) == .orderedDescending {
+                    isSubsActive = false
+                } else if currentDate!.compare((latestReceiptInfoForHighestPurchaseDate?.expiresDate)!) == .orderedSame {
+                    isSubsActive = true
+                }
             } else {
-                isSubsActive = false
-                // Check purchase > cancel > small product
+                isSubsActive = true
             }
         }
         return isSubsActive
@@ -666,7 +750,9 @@ extension IAPManager {
                         while let next = presentVC.presentedViewController {
                             presentVC = next
                         }
-                        presentVC.present(alertVC, animated: true, completion: nil)
+                        if presentVC is IAPStatusCheckDummyLoadingViewController == false{
+                            presentVC.present(alertVC, animated: true, completion: nil)
+                        }
                     }
                 }
             }
@@ -695,6 +781,17 @@ extension IAPManager {
                     }
                 }
             }
+        }
+    }
+}
+
+extension IAPError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .parseErrorToGetLatestInfoReceiptObjects:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
+        case .parseErrorForCurrentUTCFormatDate:
+            return NSLocalizedString(ERR_UNKNOWN, comment: "")
         }
     }
 }

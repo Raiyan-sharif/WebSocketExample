@@ -14,11 +14,7 @@ class AppFirstLaunchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        UserDefaultsUtility.setBoolValue(true, forKey: isTermAndConditionTap)
+        ScreenTracker.sharedInstance.screenPurpose = .InitialFlow
     }
 
     //MARK: - Initial setup
@@ -62,7 +58,7 @@ class AppFirstLaunchViewController: UIViewController {
     }
 
     //MARK: - View Transactions
-    private func goTOWalkThroughScreen() {
+    private func goToWalkThroughScreen() {
         DispatchQueue.main.async {
             PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
             if let viewController = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
@@ -86,20 +82,17 @@ class AppFirstLaunchViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
-        if Reachability.isConnectedToNetwork() {
-            PrintUtility.printLog(tag: "initalFlow", text: "Tap on term and condition Btn")
-            let settingsUrl = NSURL(string:TERMS_AND_CONDITIONS_URL)! as URL
-            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+        if Reachability.isConnectedToNetwork(){
+            goToWalkThroughScreen()
         } else {
             InitialFlowHelper().showNoInternetAlert(on: self)
         }
-
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
-        if Reachability.isConnectedToNetwork(){
-            //goTOPurchaseScene()
-           goTOWalkThroughScreen()
+        if Reachability.isConnectedToNetwork() {
+            let settingsUrl = NSURL(string: GlobalMethod.getURLString().termsAndConditionsURL)! as URL
+            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         } else {
             InitialFlowHelper().showNoInternetAlert(on: self)
         }

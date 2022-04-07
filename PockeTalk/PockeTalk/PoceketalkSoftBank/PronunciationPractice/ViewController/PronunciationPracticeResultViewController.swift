@@ -71,6 +71,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     //TODO: need to replace with valid action
     @IBAction func actionReplay(_ sender: Any) {
+        stopTTS()
         let vc = TempoControlSelectionAlertController.init()
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -130,7 +131,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         self.viewContainer.layer.masksToBounds = true
         // Hide Tempo control menu for TTS unsupported language
         let languageManager = LanguageSelectionManager.shared
-        if !(languageManager.hasTtsSupport(languageCode: languageCode)) {
+        if !(languageManager.hasTtsSupport(languageCode: languageCode)) || languageManager.isNeedToHideTempoControll(languageCode: languageCode) {
             self.tempoControlButton.isHidden = true
         }
 
@@ -230,6 +231,9 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     func playTTS(){
         ttsResponsiveView.checkSpeakingStatus()
+        if languageCode == ENGLISH_SLOW_LANG_CODE && tempo == TEMPO_STANDARD {
+            rate = ENGLISH_SLOW_DEFAULT_PITCH_RATE
+        }
         ttsResponsiveView.setRate(rate: rate)
         PrintUtility.printLog(tag: "Translate ", text: orginalText )
         ttsResponsiveView.TTSPlay(voice: voice,text: orginalText )
@@ -237,6 +241,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
     func stopTTS(){
         ttsResponsiveView.stopTTS()
         multipartAudioPlayer?.stop()
+        AudioPlayer.sharedInstance.stop()
     }
 }
 extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {

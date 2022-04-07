@@ -55,12 +55,12 @@
 "cancel" = "キャンセル";
 "clear" = "削除";
 "delete" = "履歴から削除";
-"delete_from_fv" = "消去";
+"delete_from_fv" = "削除";
 "Socket_fail_message" = "インターネット接続がありません";
-"OK" = "わかっ";
+"OK" = "OK";
 "no_stt_msg" = "言語はサポートされていません";
-"open" = "開ける";
-"delete_from_Camera_History" = "消去";
+"open" = "開く";
+"delete_from_Camera_History" = "削除";
 "history_cleared" = "削除しました";
 "camera_history_cleared" = "カメラ翻訳の履歴を削除しました。";
 "favorite_history_cleared" = "削除しました。";
@@ -81,7 +81,7 @@
 "kPhotosUsageMessage" = "\”PockeTalk\”が写真へのアクセスを求めています";
 "kCameraUsageTitle" = "\”PockeTalk\”がカメラへのアクセスを求めています";
 "kCameraUsageMessage" = "PockeTalkにはカメラを使用するための許可が必要です";
-"kTitleOk" = "わかっ";
+"kTitleOk" = "OK";
 "kNotAllow" = "許可しない";
 "kNextButtonTitle" = "次へ";
 //TermsAndConditionsVC
@@ -92,18 +92,18 @@
 "kTermsAndConditionsVCAcceptTermsButtonButtonTitle" = "利用規約に同意してはじめる";
 //InitialPermissionSettingsVC
 "kInitialPermissionSettingsVCTitle" = "次の機能を許可してください";
-"kInitialPermissionSettingsVCMicrophoneLabel" = "マイク";
+"kInitialPermissionSettingsVCMicrophoneLabel" = "音声";
 "kInitialPermissionSettingsVCCameraLabel" = "カメラ";
 "kInitialPermissionSettingsVCNotificationLabel" = "通知";
 //PaidPlanViewController
 "kPaidPlanVCTitleLabel" = "ポケトークアプリの利用には有料プランが必要です";
-"kPaidPlanVCBulletPointOneLabel" = "・一週間以内の解約で料金は発生しません";
+"kPaidPlanVCBulletPointOneLabel" = "·3日以内の解約で料金は発生しません";
 "kPaidPlanVCBulletPointTwoLabel" = "・無料期間最終日の翌日より上記料金が継続的に課金されます";
-"kPaidPlanVCPurchaseButtonTitle" = "一週間無料で利用開始";
-"kPaidPlanVCRestorePurchaseHistoryButton" = "購入履歴を復元する";
-"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "利用プランを選択してください";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490円/月1週間の無料利用";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000円/年 1週間の無料利用";
+"kPaidPlanVCPurchaseButtonTitle" = "3日間無料で利用開始";
+"kPaidPlanVCRestorePurchaseHistoryButton" = "購入状態を復元";
+"kPaidPlanVCRestorePurchaseButtonAlertTitle" = "プランを選択してください";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360円/月3日間の無料利用";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600円/年 3日間のの無料利用";
 "kPockeTalk" = "ポケトーク";
 
 "kIAPFreeDaysDescription" = "全プラン、初回3日間無料";
@@ -135,8 +135,16 @@
 "years" = "年";
 
 "kTimeOut" = "タイムアウトしました。";
-"kAppleServerBusy" = "Appleサーバーはビジーのようです。もう一度やり直してください";
+"kAppleServerBusy" = "Appleサーバーがビジー状態です。もう一度やり直してください";
 "kTryAgain" = "もう一度やり直してください。";
+"kBestPrice" = "おすすめ";
+"kSaveAbout" = "週額よりも約";
+"kYen" = "円お得";
+
+"kYenPerWeek" = "円/週";
+"kYenPerMonth" = "円/月";
+"kYenPerYear" = "円/年";
+"kStartPocketalkApp" = "ポケトークをはじめる";
 
 //IAP Alert
 "kIAPError" = "アプリ内購入エラー";
@@ -164,7 +172,17 @@
 //Boarding Screen
 "Back" = "戻る";
 "Close" = "閉じる";
-"KBoardingTalkButtonTitle" = "押しながら話して翻訳";
+"KBoardingTalkButtonTitle" = "ボタンを押したまま話してください。";
 "KBoardingTransLationLan"  = "翻訳言語の変更";
 "KBoardingLanChange" = "翻訳方向の変更";
 
+//Softbank Authentication
+"KInfoExpiredLiscnseErrorMessage" = "クーポンの有効期限が切れました。";
+"KErrorMessage" = "認証に失敗しました　やり直してください";
+"KErrorCode1Message" = "Error_Code1";
+"KErrorCode2Message" = "Error_Code2";
+"KErrorCode4Message" = "Error_Code4";
+"KErrorCode5Message" = "Error_Code5";
+"KSubscriptionErrorMessage" = "サブスクリプション契約されているため\nクーポンコードが利用できませんでした";
+"kCouponActivatedMesage" = "クーポンが有効になりました";
+"kCouponCodeParseError" = "クーポンコード認証エラー\n再度お試しください";

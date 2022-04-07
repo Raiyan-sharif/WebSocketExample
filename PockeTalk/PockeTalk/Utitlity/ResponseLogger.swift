@@ -21,13 +21,13 @@ class ResponseLogger {
     private (set) var dataArray = [LoggerModel]()
 
     private var isResponeLoggerAvailable: Bool {
-        let environment = ProcessInfo.processInfo.environment
-            if let isEnable = environment["IS_SERVERLOG_ENABLE"] {
-                return isEnable == "true"
-            }
+        let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
+        if schemeName == BuildVarientScheme.SERVER_API_LOG.rawValue {
+            return true
+        }
       return false
     }
-
+    
     func clean(){
         dataArray.removeAll()
     }

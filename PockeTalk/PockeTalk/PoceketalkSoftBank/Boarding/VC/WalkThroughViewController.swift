@@ -121,9 +121,28 @@ class WalkThroughViewController: BaseViewController {
             arrowBackgroundView.isHidden = true
             titleLabel.text = "KBoardingTalkButtonTitle".localiz()
         case 4:
-            goToPurchasePlan()
+            UserDefaults.standard.set(true, forKey: kInitialFlowCompletedForCoupon)
+            var savedCoupon = ""
+            if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                savedCoupon = coupon
+                PrintUtility.printLog(tag: "In WalkThrough", text: "Coupon found: \(coupon)")
+            }
+            if savedCoupon.isEmpty {
+                goToPurchasePlan()
+            }else{
+                goToPermissionVC()
+            }
         default:
             break
+        }
+    }
+    private func goToPermissionVC() {
+        DispatchQueue.main.async {
+            if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                self.navigationController?.view.layer.add(transition, forKey: nil)
+                self.navigationController?.pushViewController(viewController, animated: false)
+            }
         }
     }
 

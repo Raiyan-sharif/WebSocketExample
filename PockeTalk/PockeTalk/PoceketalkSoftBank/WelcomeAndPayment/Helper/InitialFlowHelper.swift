@@ -34,7 +34,7 @@ class InitialFlowHelper{
         ]
 
         return NSMutableAttributedString(
-            string: "kTermsAndConditionsVCCheckTermsButtonTitle".localiz(),
+            string: "kTermsAndConditionsVCAcceptTermsButtonButtonTitle".localiz(),
             attributes: termAndConditionBtnTextAttributes
         )
     }
@@ -46,7 +46,7 @@ class InitialFlowHelper{
         ]
 
         return NSMutableAttributedString(
-            string: "kTermsAndConditionsVCAcceptTermsButtonButtonTitle".localiz(),
+            string: "kTermsAndConditionsVCCheckTermsButtonTitle".localiz(),
             attributes: acceptBtnTextAttributes
         )
     }
@@ -70,6 +70,7 @@ class InitialFlowHelper{
                 }
             },{ cancel in
                 PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
+                exit(0)
             }
         ])
     }

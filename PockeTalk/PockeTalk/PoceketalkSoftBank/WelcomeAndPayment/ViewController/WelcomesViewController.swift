@@ -28,13 +28,12 @@ class WelcomesViewController: UIViewController {
     private func setupButtonProperty() {
         nextBtn.setButtonAttributes(
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
-            title: "kWelcomeVCStartUsingButtonTitle".localiz(),
+            title: "kStartPocketalkApp".localiz(),
             backgroundColor:  UIColor._royalBlueColor())
     }
 
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
-        UserDefaultsUtility.setBoolValue(false, forKey: isTermAndConditionTap)
         if let viewController = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
             self.navigationController?.view.layer.add(transition, forKey: nil)

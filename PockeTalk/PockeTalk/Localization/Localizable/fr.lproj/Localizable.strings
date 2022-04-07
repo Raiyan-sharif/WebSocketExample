@@ -91,13 +91,13 @@
 "kInitialPermissionSettingsVCCameraLabel" = "La caméra";
 "kInitialPermissionSettingsVCNotificationLabel" = "Les notifications";
 "kPaidPlanVCTitleLabel" = "L\'application POCKETALK est un service d\'abonnement payant";
-"kPaidPlanVCBulletPointOneLabel" = "Enregistrez l\'essai gratuit pendant 7 jours. Le frais ne se produit pas si vous résiliez dans 7 jours.";
+"kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "Après que la période d'essai gratuit expire, le frais ci-dessus continuera à être chargé automatiquement.";
-"kPaidPlanVCPurchaseButtonTitle" = "Commencer à utiliser l\'essai gratuit pendant 7 jours";
+"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "Restaurer votre histoire d\'achat";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Sélectionnez un plan d\'abonnement";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "490 yen/month \n 1 week free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "2000 yen/year \n 1 week free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
 "kWelcomeVCTitleLabelTop" = "Welcome to";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Commencer à utiliser";
@@ -142,6 +142,14 @@
 "Monthly Plan" = "Monthly Plan";
 "Yearly Plan" = "Yearly Plan";
 "Free for" = "Free for";
+"kBestPrice" = "Best Price";
+"kSaveAbout" = "Save about";
+"kYen" = "yen";
+
+"kYenPerWeek" = "yen/week";
+"kYenPerMonth" = "yen/month";
+"kYenPerYear" = "yen/year";
+"kStartPocketalkApp" = "Start POCKETALK App";
 
 "kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
 "kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
@@ -160,5 +168,13 @@
 "KBoardingTransLationLan" = "Changer la langue de traduction";
 "KBoardingLanChange" = "Changer la langue source/cible dans la traduction";
 
-
-
+//Softbank Authentication
+"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
+"KErrorMessage" = "The authentication was failed. Please retry.";
+"KErrorCode1Message" = "Error_Code1";
+"KErrorCode2Message" = "Error_Code2";
+"KErrorCode4Message" = "Error_Code4";
+"KErrorCode5Message" = "Error_Code5";
+"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
+"kCouponActivatedMesage" = "Coupon has been activated";
+"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";

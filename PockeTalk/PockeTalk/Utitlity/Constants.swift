@@ -33,10 +33,19 @@ let languageMappingTotalRowCount = 1495
 
 
 //MARK: - Link
-let SUPPORT_URL = "https://rd.snxt.jp/PA002"
+//let SUPPORT_URL = "https://rd.snxt.jp/PA002"
 let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
-let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
-let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+//let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
+//let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+
+let PRODUCTION_SUPPORT_URL = "https://rd.snxt.jp/PA002"
+let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+let PRODUCTION_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+let STAGING_SUPPORT_URL = "https://rd.snxt.jp/PA002"
+let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+
+
 
 
 //MARK: - Notification Name
@@ -59,7 +68,10 @@ let kUserDefaultIsSpeechProcessingDisplayedFirstTime = "kUserDefaultIsSpeechProc
 let kUserDefaultIsUserPurchasedThePlan = "kUserDefaultIsUserPurchasedThePlan"
 let licenseTokenUserDefaultKey = "licenseToken"
 let tokenCreationTime = "tokenCreationTime"
-
+let kCouponCode = "kCouponCode"
+let kLicenseConfirmationCalledTime = "kLicenseConfirmationCalledTime"
+let kInitialFlowCompletedForCoupon = "kInitialFlowCompletedForCoupon"
+let kIsFromUniverslaLink = "kIsFromUniverslaLink"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -81,8 +93,6 @@ let kCameraUsageTitle = "kCameraUsageTitle"
 let kCameraUsageMessage = "kCameraUsageMessage"
 let kTitleOk = "kTitleOk"
 let kNotAllow = "kNotAllow"
-
-
 
 
 // Language selection voice
@@ -206,9 +216,9 @@ let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
 let tts_url = "/handsfree/api/pub/tts"
 let liscense_token_url = "/handsfree/api/pub/token"
+let license_confirmation_url = "/handsfree/api/pub/license"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
-let isTermAndConditionTap = "isTermAndConditionTap"
 
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
@@ -224,7 +234,6 @@ let queryItemApiKey = "AIzaSyDkcqaRwuQ_fy0_Vr8kHoBjKHRkemuw6Ho"
 let googleOCRKey = "AIzaSyD6B2VKm2eZbQgT_bwSNiYpEUHujadh_FE"
 let imeiCode = "862793051345020"
 let imeiNumber = getIMEINumber("ImeiNumber")
-let client_info="Pocketalk_app_ios"
 let udid = getUUID()  //"Abfaa4d5-a045-4784-9208-088ac8ec0192"
 
 //View Tag
@@ -253,6 +262,9 @@ let ERR_SETTING_FAILED = "ERR_SETTING_FAILED"
 let WARN_INVALID_AUTH = "WARN_INVALID_AUTH"
 let ERR_TTS_FAILED = "ERR_TTS_FAILED"
 let INFO_INVALID_AUTH = "INFO_INVALID_AUTH"
+let INFO_INVALID_LICENSE = "INFO_INVALID_LICENSE"
+let INFO_EXPIRED_LICENSE = "INFO_EXPIRED_LICENSE"
+let WARN_FAILED_CALL = "WARN_FAILED_CALL"
 let ERR_API_FAILED = "ERR_API_FAILED"
 let BURMESE_LANG_CODE = "my"
 let LanguageEngineFileName = "language_engine.xml"
@@ -301,15 +313,18 @@ func getUUID() -> String? {
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
 let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
-let bjitAppSpecificSharedSecret = "b2d823dea3424a6d801ad88fcef72648"
+let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
+let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"
 let IAP_ProductIDs = "IAP_ProductIDs"
-let BJIT_IAP_ProductIDs = "BJIT_IAP_ProductIDs"
+let productionIAPProduts = "Production_IAP_Products"
+let stagingIAPProduts = "Staging_IAP_Products"
 
 //IAP JSON Parsing
 let IAPreceiptData = "receipt-data"
 let IAPPassword = "password"
 let expires_date = "expires_date"
 let latest_receipt_info = "latest_receipt_info"
+let latest_receipt = "latest_receipt"
 let cancellation_date = "cancellation_date"
 let product_id = "product_id"
 let is_in_intro_offer_period = "is_in_intro_offer_period"
@@ -322,6 +337,9 @@ let kServerTimeDateFormatter = "EEE, dd MMM yyyy HH:mm:ss z"
 let kIAPTimeoutInterval = 60.0
 let receiptValidationAllow = "receiptValidationAllow"
 let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
+let kiOSReceipt = "ios_receipt"
+let kiOSOriginalTransactionID = "ios_original_transaction_id"
+let kUserPassedSubscription = "kUserPassedSubscription"
 
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
@@ -331,8 +349,7 @@ let kTTSAudioFolderName = "TtsAudioFiles"
 let kTTSAudioFileNameExtenstion = ".wav"
 
 let kInAppPurchaseStatus = "inAppPurchaseStatus"
-let KIsAppLaunchedForFirstTime = "KIsAppLaunchedForFirstTime"
-
+let KIsAppAlreadyLaunchedOnce = "isAppAlreadyLaunchedOnce"
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"
 //Language History List
@@ -340,3 +357,24 @@ let kSelectedHistoryLanguageVoice: String = "kSelectedHistoryLanguageVoice"
 let kTempSelectedLanguageVoice: String = "kTempSelectedLanguageVoice"
 let kSelectedHistoryLanguageCamera: String = "kSelectedHistoryLanguageCamera"
 let kTempSelectedLanguageCamrea: String = "kTempSelectedLanguageCamrea"
+
+let ENGLISH_SLOW_LANG_CODE: String = "en-SO"
+let ENGLISH_SLOW_DEFAULT_PITCH_RATE: String = "0.7"
+let TEMPO_STANDARD: String = "normal"
+let languageListFromTTSServer:[String]=["af","ar","th","fr","zh-CN","zh-TW", "yue","am", "kn", "ml", "te"]
+
+// SB Authentication
+let couponCodeParamName = "coupon_code"
+
+// License Token Paramer with Coupon & Purchase Parameter
+let kPocketalk_app_ios = "Pocketalk_app_ios"
+let kClientInfo = "client_info"
+let kAppUdid = "udid"
+let kIosReceipt = "ios_receipt"
+let kOriginalTransactionID = "ios_original_transaction_id"
+let kImei = "imei"
+let kTempo_param = "tempo"
+
+
+
+

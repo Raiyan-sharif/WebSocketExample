@@ -121,6 +121,18 @@ class LangSelectVoiceVC: BaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateLanguageSelection(notification:)), name: .languageHistoryListNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updatePointLanguageSelection(notification:)), name: .talkButtonContainerSelectionPoint, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(back(notification:)), name: .countryListBackNotification, object: nil)
+    }
+
+    @objc func back(notification: Notification) {
+        if currentIndex == 1 {
+            tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingTutorialUI: false)
+            tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
+        } else {
+            UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
+            NotificationCenter.default.post(name: .languageListNotofication, object: nil)
+        }
+
     }
     
     //MARK: - LanguageListVC Notification for Point
@@ -233,18 +245,20 @@ class LangSelectVoiceVC: BaseViewController {
                 }
             }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-            
+
             self.retranslationDelegate?.showRetranslation(
                 selectedLanguage: selectedLanguageCode,
                 fromScreenPurpose: fromScreenPurpose)
-            
+
+            ///update the screenPurpose as fromScreenPurpose. If not then it will show mike button if no internet dialog appear.
+            ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
             self.remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         }
         microphoneIcon(isHidden: true)
     }
-    
+
     //MARK: - View Transactions
     func showViewController(_ index: Int) -> UIViewController? {
         currentIndex = index
@@ -316,6 +330,7 @@ class LangSelectVoiceVC: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .updateTranlationNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageListNotofication, object: nil)
         NotificationCenter.default.removeObserver(self, name: .talkButtonContainerSelectionPoint, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .countryListBackNotification, object: nil)
     }
     
     @objc private func removeChild(notification: Notification) {

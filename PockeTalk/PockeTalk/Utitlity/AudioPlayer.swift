@@ -17,13 +17,14 @@ class AudioPlayer: NSObject {
     private var player: AVAudioPlayer?
     weak var delegate:AudioPlayerDelegate?
     var isPlaying = false
+    var serverCall = false
     func play(data:Data) {
         do {
             if(AVCaptureDevice.authorizationStatus(for: .audio) != .authorized){
                 try AVAudioSession.sharedInstance().setCategory(.playback)
                 try AVAudioSession.sharedInstance().setActive(true)
             }
-
+            isPlaying = true
             player = try AVAudioPlayer(data: data, fileTypeHint: AVFileType.wav.rawValue)
             guard let player = player else { return }
             player.prepareToPlay()
@@ -57,6 +58,7 @@ class AudioPlayer: NSObject {
     }
 
     func stop() {
+        serverCall = false
         isPlaying = false
         player?.stop()
         player = nil
@@ -82,19 +84,24 @@ class AudioPlayer: NSObject {
                 license_token: licenseToken,
                 language : targetLanguageItem,
                 text : translateText,
-                tempo: item == engineName ? normal : tempo
+                kTempo_param: item == engineName ? normal : tempo
             ]
             if Reachability.isConnectedToNetwork() {
+                serverCall = true
                 NetworkManager.shareInstance.ttsApi(params: params) { [weak self] data  in
                     guard let data = data, let self = self else { return }
                     do {
                         let result = try JSONDecoder().decode(TTSModel.self, from: data)
                         if result.resultCode == response_ok, let ttsValue = result.tts, let ttsData = Data(base64Encoded: ttsValue){
                             if let delegate = self.delegate {
-                                delegate.didStartAudioPlayer()
-                                self.isPlaying = true
                                 if self.isHeaderExist(data: ttsData){
-                                    self.play(data: ttsData)
+                                    if self.serverCall {
+                                        delegate.didStartAudioPlayer()
+                                        if !self.isPlaying {
+                                            self.play(data: ttsData)
+                                        }
+                                    }
+
                                     if fileName != nil {
                                         FileUtility.saveTtsAudioData(data: ttsData, fileName: fileName!)
                                     }
@@ -102,7 +109,12 @@ class AudioPlayer: NSObject {
                                     let sampleRate = self.codecValue(value: result.codec!)
                                     let headerData = self.createWaveHeader(sampleRate: (sampleRate as NSString).integerValue, data: ttsData)
                                     let playData = headerData + ttsData
-                                    self.play(data: playData)
+                                    if self.serverCall {
+                                        delegate.didStartAudioPlayer()
+                                        if !self.isPlaying {
+                                            self.play(data: playData)
+                                        }
+                                    }
                                     if fileName != nil {
                                         FileUtility.saveTtsAudioData(data: playData, fileName: fileName!)
                                     }

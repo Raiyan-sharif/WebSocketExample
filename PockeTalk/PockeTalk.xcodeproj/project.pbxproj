@@ -168,6 +168,8 @@
 		8915C21326F9E0D50091BF8B /* FavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8915C21126F9E0D50091BF8B /* FavouriteCell.xib */; };
 		8919D91927D615E4009FC198 /* FreePlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8919D91727D615E4009FC198 /* FreePlanTableViewCell.swift */; };
 		8919D91A27D615E4009FC198 /* FreePlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8919D91827D615E4009FC198 /* FreePlanTableViewCell.xib */; };
+		891D450C27EAE5B200B4BD8B /* Production_IAP_Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 891D450B27EAE5B200B4BD8B /* Production_IAP_Products.plist */; };
+		891D450E27EAE5CE00B4BD8B /* Staging_IAP_Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 891D450D27EAE5CE00B4BD8B /* Staging_IAP_Products.plist */; };
 		8920067626E73620005A23F0 /* PronunciationPractice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8920067526E73620005A23F0 /* PronunciationPractice.storyboard */; };
 		8920067A26E76490005A23F0 /* PronunciationPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */; };
 		8928E59327C7480600638F6E /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8928E59227C7480600638F6E /* Extension+UIButton.swift */; };
@@ -251,7 +253,6 @@
 		89BC6EC526E22E270072BB0A /* Extension+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */; };
 		89BC919E27D75E1900965D03 /* FileUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC919D27D75E1900965D03 /* FileUtility.swift */; };
 		89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587727AB91B8005B46A4 /* IAPManager.swift */; };
-		89BE587A27AB91F3005B46A4 /* IAP_ProductIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */; };
 		89BE587D27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */; };
 		89C0F7C526F1CDC1000CD5FC /* MAAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C426F1CDC1000CD5FC /* MAAudioService.swift */; };
 		89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */; };
@@ -285,7 +286,6 @@
 		89E0F2AE277AD5430031782D /* LangDetectionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */; };
 		89E0F2AF277AD5430031782D /* LangDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AD277AD5430031782D /* LangDetection.swift */; };
 		89E3736527E0B59E0092F786 /* BuildVariantScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E3736427E0B59E0092F786 /* BuildVariantScheme.swift */; };
-		89E3736727E0BA260092F786 /* BJIT_IAP_ProductIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89E3736627E0BA260092F786 /* BJIT_IAP_ProductIDs.plist */; };
 		89E6B2DC279E8DD200024A70 /* country_selection_list_zh.json in Resources */ = {isa = PBXBuildFile; fileRef = 894A1CB1279E66B000D1AAAB /* country_selection_list_zh.json */; };
 		89E6B2DD279E8DD600024A70 /* country_selection_list_ko.json in Resources */ = {isa = PBXBuildFile; fileRef = 894A1CB3279E67BD00D1AAAB /* country_selection_list_ko.json */; };
 		89E6B2DE279E8DD900024A70 /* country_selection_list_de.json in Resources */ = {isa = PBXBuildFile; fileRef = 894A1CB4279E680900D1AAAB /* country_selection_list_de.json */; };
@@ -328,9 +328,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		19890EB86A5D27E88AFD5139 /* Pods-PockeTalkTests.appstorebjit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.appstorebjit.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.appstorebjit.xcconfig"; sourceTree = "<group>"; };
+		02FADAF560CEF3BCDF689720 /* Pods-PockeTalk.loadenginefromasset.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.loadenginefromasset.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.loadenginefromasset.xcconfig"; sourceTree = "<group>"; };
 		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
-		34EF9A0C4767791C7D21FD0E /* Pods-PockeTalk.tokoyoserver_production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.tokoyoserver_production.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.tokoyoserver_production.xcconfig"; sourceTree = "<group>"; };
 		3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDownloader.swift; sourceTree = "<group>"; };
 		3B86A5C526F0631600175073 /* Reset.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reset.storyboard; sourceTree = "<group>"; };
 		3B86A5CF26F0650900175073 /* ResetItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetItems.swift; sourceTree = "<group>"; };
@@ -415,10 +414,8 @@
 		50675D6026EB377F00A775E5 /* language_detection_codes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = language_detection_codes.json; sourceTree = "<group>"; };
 		506B93C226E74E530085BDDF /* default_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default_languages.xml; sourceTree = "<group>"; };
 		5098C14C26EA0ADF00AD948A /* LanguageSettingsTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsTutorialVC.swift; sourceTree = "<group>"; };
-		50BA9E6C6924167812198204 /* Pods-PockeTalkTests.multiserver_production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.multiserver_production.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.multiserver_production.xcconfig"; sourceTree = "<group>"; };
 		50C8870F26E666F500A6D10E /* LanguageSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionManager.swift; sourceTree = "<group>"; };
 		50C99946271569EA000CFE56 /* language_engine.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = language_engine.xml; sourceTree = "<group>"; };
-		5ED037194415A82743A6C052 /* Pods-PockeTalk.multiserver_production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.multiserver_production.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.multiserver_production.xcconfig"; sourceTree = "<group>"; };
 		691FC66326E9D37C00259407 /* AlertTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		691FC66426E9D37C00259407 /* AlertTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertTableViewCell.xib; sourceTree = "<group>"; };
 		691FC66D26E9DCB800259407 /* AlertReusableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertReusableModel.swift; sourceTree = "<group>"; };
@@ -444,7 +441,6 @@
 		69C99F0E26E7449C00D853AB /* SpeechProcessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingViewModel.swift; sourceTree = "<group>"; };
 		69C99F1226E744CB00D853AB /* SpeechProcessingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechProcessingModel.swift; sourceTree = "<group>"; };
 		69C99F1626E744EA00D853AB /* hello_mapping_new.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = hello_mapping_new.xml; sourceTree = "<group>"; };
-		6B48E8ECF30D53CA75D8CC5E /* Pods-PockeTalk.appstorebjit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.appstorebjit.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.appstorebjit.xcconfig"; sourceTree = "<group>"; };
 		798A9D3226F1CD8200353D6B /* ParseTextDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTextDetection.swift; sourceTree = "<group>"; };
 		79CA3BBA2706FC7D00884682 /* ITTSN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITTSN.swift; sourceTree = "<group>"; };
 		79CA3BBC270D539D00884682 /* TranslatedTextJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedTextJSONModel.swift; sourceTree = "<group>"; };
@@ -459,10 +455,8 @@
 		87282AF227A12D300055B293 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		87282AF327A12D490055B293 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		87282AF427A12D620055B293 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		87282AFC27A1300D0055B293 /* MultiServer_Stage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MultiServer_Stage.xcconfig; sourceTree = "<group>"; };
-		87282B0627A1333A0055B293 /* MultiServer_Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MultiServer_Production.xcconfig; sourceTree = "<group>"; };
-		87282B0727A133750055B293 /* TokoyoServer_Stage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TokoyoServer_Stage.xcconfig; sourceTree = "<group>"; };
-		87282B0827A1339B0055B293 /* TokoyoServer_Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TokoyoServer_Production.xcconfig; sourceTree = "<group>"; };
+		87282B0727A133750055B293 /* Stage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Stage.xcconfig; sourceTree = "<group>"; };
+		87282B0827A1339B0055B293 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		872AA4E526E0EEEA003BE874 /* system_languages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_languages.xml; sourceTree = "<group>"; };
 		8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceAPI.swift; sourceTree = "<group>"; };
 		8732CADC26FC285400843BFE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -508,6 +502,10 @@
 		8915C21126F9E0D50091BF8B /* FavouriteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
 		8919D91727D615E4009FC198 /* FreePlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreePlanTableViewCell.swift; sourceTree = "<group>"; };
 		8919D91827D615E4009FC198 /* FreePlanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FreePlanTableViewCell.xib; sourceTree = "<group>"; };
+		891D450727E9A37400B4BD8B /* LoadEngineFromAsset.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = LoadEngineFromAsset.xcconfig; path = PockeTalk/Resources/BuildConfiguration/LoadEngineFromAsset.xcconfig; sourceTree = SOURCE_ROOT; };
+		891D450B27EAE5B200B4BD8B /* Production_IAP_Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Production_IAP_Products.plist; sourceTree = "<group>"; };
+		891D450D27EAE5CE00B4BD8B /* Staging_IAP_Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Staging_IAP_Products.plist; sourceTree = "<group>"; };
+		891E7F7727F2D42F00BCC68A /* ProductionWithStageURL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionWithStageURL.xcconfig; sourceTree = "<group>"; };
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
 		8928E59227C7480600638F6E /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
@@ -566,6 +564,10 @@
 		89519668271EC6F900151DC8 /* TempoEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineModel.swift; sourceTree = "<group>"; };
 		8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineValueParser.swift; sourceTree = "<group>"; };
 		895B2945272A86F60032C40C /* TutorialContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContainerViewController.swift; sourceTree = "<group>"; };
+		896537F127F4D668006B3C19 /* PockeTalkProductionWithStageURL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkProductionWithStageURL.entitlements; sourceTree = "<group>"; };
+		896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkLoadEngineFromAsset.entitlements; sourceTree = "<group>"; };
+		896C2B8927F5ECBC00D7DE60 /* PockeTalkProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkProduction.entitlements; sourceTree = "<group>"; };
+		896C2B8A27F5ECD000D7DE60 /* PockeTalkStage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkStage.entitlements; sourceTree = "<group>"; };
 		896C3D0827831BFA007C3560 /* InitialPermissionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialPermissionSettingsViewController.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
@@ -608,7 +610,6 @@
 		89BC6EC426E22E270072BB0A /* Extension+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UINavigationController.swift"; sourceTree = "<group>"; };
 		89BC919D27D75E1900965D03 /* FileUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtility.swift; sourceTree = "<group>"; };
 		89BE587727AB91B8005B46A4 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
-		89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IAP_ProductIDs.plist; sourceTree = "<group>"; };
 		89BE587C27AB966C005B46A4 /* IAPStatusCheckDummyLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPStatusCheckDummyLoadingViewController.swift; sourceTree = "<group>"; };
 		89BFC32C279A826000CE73F2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		89BFC32D279A826000CE73F2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -658,8 +659,6 @@
 		89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetectionResponseModel.swift; sourceTree = "<group>"; };
 		89E0F2AD277AD5430031782D /* LangDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetection.swift; sourceTree = "<group>"; };
 		89E3736427E0B59E0092F786 /* BuildVariantScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildVariantScheme.swift; sourceTree = "<group>"; };
-		89E3736627E0BA260092F786 /* BJIT_IAP_ProductIDs.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BJIT_IAP_ProductIDs.plist; sourceTree = "<group>"; };
-		89E3736827E192930092F786 /* AppStoreBJIT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreBJIT.xcconfig; sourceTree = "<group>"; };
 		89E6B2CF279E716A00024A70 /* conversation_languages_zh.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_zh.xml; sourceTree = "<group>"; };
 		89E6B2D0279E718200024A70 /* conversation_languages_ko.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ko.xml; sourceTree = "<group>"; };
 		89E6B2D1279E718E00024A70 /* conversation_languages_de.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_de.xml; sourceTree = "<group>"; };
@@ -672,7 +671,9 @@
 		89E6B2D9279E71F400024A70 /* conversation_languages_ms.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_ms.xml; sourceTree = "<group>"; };
 		89E6B2DB279E741F00024A70 /* conversation_languages_pt.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = conversation_languages_pt.xml; sourceTree = "<group>"; };
 		89E6B2F4279EB9F800024A70 /* SystemlanguageCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemlanguageCodes.swift; sourceTree = "<group>"; };
-		8F282FDA3AD74995332EEFAD /* Pods-PockeTalk.tokoyoserver_stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.tokoyoserver_stage.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.tokoyoserver_stage.xcconfig"; sourceTree = "<group>"; };
+		89FC1A8927F6E657001AFC18 /* PockeTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalk.entitlements; sourceTree = "<group>"; };
+		89FC1A8A27F6E677001AFC18 /* PockeTalkServerAPILog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkServerAPILog.entitlements; sourceTree = "<group>"; };
+		90671CA97A26F53CDCAA16A8 /* Pods-PockeTalk.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.production.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.production.xcconfig"; sourceTree = "<group>"; };
 		960835B826E75549006DB9F9 /* PronunciationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationModel.swift; sourceTree = "<group>"; };
 		963D8EA926F4A3E700E32162 /* FontUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtility.swift; sourceTree = "<group>"; };
 		967B745F26FACB9F001B1985 /* CustomAlertDialog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertDialog.storyboard; sourceTree = "<group>"; };
@@ -680,12 +681,16 @@
 		967B746326FAE796001B1985 /* CustomAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewModel.swift; sourceTree = "<group>"; };
 		99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.release.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.release.xcconfig"; sourceTree = "<group>"; };
 		9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.release.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.release.xcconfig"; sourceTree = "<group>"; };
-		A2AB6F62F0CA2A05BC0BD90D /* Pods-PockeTalkTests.multiserver_stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.multiserver_stage.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.multiserver_stage.xcconfig"; sourceTree = "<group>"; };
+		A5E1889121572C5D815EB6A5 /* Pods-PockeTalk.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.stage.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.stage.xcconfig"; sourceTree = "<group>"; };
+		A978FF5B6FFB2C2AE812364C /* Pods-PockeTalk.productionwithstageurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.productionwithstageurl.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.productionwithstageurl.xcconfig"; sourceTree = "<group>"; };
+		B099060EE80850F8A795284F /* Pods-PockeTalk.serverapilog.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.serverapilog.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.serverapilog.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF189BAF8FB5FCE2857EB821 /* Pods-PockeTalk.multiserver_stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.multiserver_stage.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.multiserver_stage.xcconfig"; sourceTree = "<group>"; };
-		E37700B3A8A52C4220CCE808 /* Pods-PockeTalkTests.tokoyoserver_production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.tokoyoserver_production.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.tokoyoserver_production.xcconfig"; sourceTree = "<group>"; };
+		E5502C003E521F1F2F86FE96 /* Pods-PockeTalkTests.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.stage.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.stage.xcconfig"; sourceTree = "<group>"; };
+		E603D9534FD597A4F1396EAE /* Pods-PockeTalkTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.production.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.production.xcconfig"; sourceTree = "<group>"; };
+		F31F4393760AF0139A2FC4D0 /* Pods-PockeTalkTests.productionwithstageurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.productionwithstageurl.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.productionwithstageurl.xcconfig"; sourceTree = "<group>"; };
+		F34EE621009829BE28DD1FA6 /* Pods-PockeTalkTests.serverapilog.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.serverapilog.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.serverapilog.xcconfig"; sourceTree = "<group>"; };
+		F97BD63B36D258E155224573 /* Pods-PockeTalkTests.loadenginefromasset.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.loadenginefromasset.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.loadenginefromasset.xcconfig"; sourceTree = "<group>"; };
 		FBBE50FE0922DF903C71A75A /* Pods-PockeTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FE2BA3748149248CD64C579D /* Pods-PockeTalkTests.tokoyoserver_stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.tokoyoserver_stage.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.tokoyoserver_stage.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -829,6 +834,12 @@
 		4A66137826DDCF59004A925D /* PockeTalk */ = {
 			isa = PBXGroup;
 			children = (
+				89FC1A8A27F6E677001AFC18 /* PockeTalkServerAPILog.entitlements */,
+				89FC1A8927F6E657001AFC18 /* PockeTalk.entitlements */,
+				896C2B8A27F5ECD000D7DE60 /* PockeTalkStage.entitlements */,
+				896C2B8927F5ECBC00D7DE60 /* PockeTalkProduction.entitlements */,
+				896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */,
+				896537F127F4D668006B3C19 /* PockeTalkProductionWithStageURL.entitlements */,
 				8732CAD526FC27CE00843BFE /* Network */,
 				4AE97AEA26E8E30D007344FC /* Database */,
 				8782DEFD26E099A7003A1681 /* Reusable */,
@@ -1388,11 +1399,10 @@
 				87282AF227A12D300055B293 /* Base.xcconfig */,
 				87282AF327A12D490055B293 /* Debug.xcconfig */,
 				87282AF427A12D620055B293 /* Release.xcconfig */,
-				87282AFC27A1300D0055B293 /* MultiServer_Stage.xcconfig */,
-				87282B0627A1333A0055B293 /* MultiServer_Production.xcconfig */,
-				87282B0727A133750055B293 /* TokoyoServer_Stage.xcconfig */,
-				87282B0827A1339B0055B293 /* TokoyoServer_Production.xcconfig */,
-				89E3736827E192930092F786 /* AppStoreBJIT.xcconfig */,
+				87282B0727A133750055B293 /* Stage.xcconfig */,
+				87282B0827A1339B0055B293 /* Production.xcconfig */,
+				891D450727E9A37400B4BD8B /* LoadEngineFromAsset.xcconfig */,
+				891E7F7727F2D42F00BCC68A /* ProductionWithStageURL.xcconfig */,
 			);
 			path = BuildConfiguration;
 			sourceTree = "<group>";
@@ -1932,8 +1942,8 @@
 			isa = PBXGroup;
 			children = (
 				89BE587727AB91B8005B46A4 /* IAPManager.swift */,
-				89BE587927AB91F3005B46A4 /* IAP_ProductIDs.plist */,
-				89E3736627E0BA260092F786 /* BJIT_IAP_ProductIDs.plist */,
+				891D450B27EAE5B200B4BD8B /* Production_IAP_Products.plist */,
+				891D450D27EAE5CE00B4BD8B /* Staging_IAP_Products.plist */,
 			);
 			path = IAPManager;
 			sourceTree = "<group>";
@@ -2114,16 +2124,16 @@
 				99F88F596F3BEA32B6677391 /* Pods-PockeTalk.release.xcconfig */,
 				FBBE50FE0922DF903C71A75A /* Pods-PockeTalkTests.debug.xcconfig */,
 				9E7781900B72C6B1A8CAB58C /* Pods-PockeTalkTests.release.xcconfig */,
-				8F282FDA3AD74995332EEFAD /* Pods-PockeTalk.tokoyoserver_stage.xcconfig */,
-				34EF9A0C4767791C7D21FD0E /* Pods-PockeTalk.tokoyoserver_production.xcconfig */,
-				5ED037194415A82743A6C052 /* Pods-PockeTalk.multiserver_production.xcconfig */,
-				DF189BAF8FB5FCE2857EB821 /* Pods-PockeTalk.multiserver_stage.xcconfig */,
-				FE2BA3748149248CD64C579D /* Pods-PockeTalkTests.tokoyoserver_stage.xcconfig */,
-				E37700B3A8A52C4220CCE808 /* Pods-PockeTalkTests.tokoyoserver_production.xcconfig */,
-				50BA9E6C6924167812198204 /* Pods-PockeTalkTests.multiserver_production.xcconfig */,
-				A2AB6F62F0CA2A05BC0BD90D /* Pods-PockeTalkTests.multiserver_stage.xcconfig */,
-				6B48E8ECF30D53CA75D8CC5E /* Pods-PockeTalk.appstorebjit.xcconfig */,
-				19890EB86A5D27E88AFD5139 /* Pods-PockeTalkTests.appstorebjit.xcconfig */,
+				02FADAF560CEF3BCDF689720 /* Pods-PockeTalk.loadenginefromasset.xcconfig */,
+				F97BD63B36D258E155224573 /* Pods-PockeTalkTests.loadenginefromasset.xcconfig */,
+				B099060EE80850F8A795284F /* Pods-PockeTalk.serverapilog.xcconfig */,
+				90671CA97A26F53CDCAA16A8 /* Pods-PockeTalk.production.xcconfig */,
+				F34EE621009829BE28DD1FA6 /* Pods-PockeTalkTests.serverapilog.xcconfig */,
+				E603D9534FD597A4F1396EAE /* Pods-PockeTalkTests.production.xcconfig */,
+				A5E1889121572C5D815EB6A5 /* Pods-PockeTalk.stage.xcconfig */,
+				E5502C003E521F1F2F86FE96 /* Pods-PockeTalkTests.stage.xcconfig */,
+				A978FF5B6FFB2C2AE812364C /* Pods-PockeTalk.productionwithstageurl.xcconfig */,
+				F31F4393760AF0139A2FC4D0 /* Pods-PockeTalkTests.productionwithstageurl.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2238,7 +2248,6 @@
 				5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */,
 				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
 				89B4D1F627BE6C9A00D1C7D2 /* PlanTableViewCell.xib in Resources */,
-				89E3736727E0BA260092F786 /* BJIT_IAP_ProductIDs.plist in Resources */,
 				89E6B2DE279E8DD900024A70 /* country_selection_list_de.json in Resources */,
 				50193E0626E864570052F170 /* CountryListCollectionViewCell.xib in Resources */,
 				8915C21326F9E0D50091BF8B /* FavouriteCell.xib in Resources */,
@@ -2259,6 +2268,8 @@
 				89E6B2EF279E8FD400024A70 /* conversation_languages_th.xml in Resources */,
 				89E6B2E0279E8DDE00024A70 /* country_selection_list_it.json in Resources */,
 				8928E59D27C7B5D800638F6E /* InitialFlow.storyboard in Resources */,
+				891D450E27EAE5CE00B4BD8B /* Staging_IAP_Products.plist in Resources */,
+				891D450C27EAE5B200B4BD8B /* Production_IAP_Products.plist in Resources */,
 				500AAFC426E9B35900A3E4D9 /* langListCollectionViewCell.xib in Resources */,
 				89E6B2F0279E8FD700024A70 /* conversation_languages_ms.xml in Resources */,
 				89E6B2E3279E8DEA00024A70 /* country_selection_list_zh-TW.json in Resources */,
@@ -2305,7 +2316,6 @@
 				89513CCC27ABDB2F008C6F99 /* responsivevoice_1.8.1.js in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 				89E6B2DC279E8DD200024A70 /* country_selection_list_zh.json in Resources */,
-				89BE587A27AB91F3005B46A4 /* IAP_ProductIDs.plist in Resources */,
 				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,
 				89B2946626EB1D4F00747B61 /* TempoControlSelectionAlert.xib in Resources */,
 			);
@@ -2821,6 +2831,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
@@ -2835,6 +2846,7 @@
 				MARKETING_VERSION = 0.1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				MARKETING_VERSION = 0.1.21;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -2850,6 +2862,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
@@ -2864,6 +2877,7 @@
 				MARKETING_VERSION = 0.1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				MARKETING_VERSION = 0.1.21;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2918,247 +2932,9 @@
 			};
 			name = Release;
 		};
-		87282AFD27A130250055B293 /* MultiServer_Stage */ = {
+		87282B0C27A133D40055B293 /* Stage */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87282AFC27A1300D0055B293 /* MultiServer_Stage.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_SCHEME_NAME = MULTISERVER_STAGE;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q446ZQDPHN;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = MultiServer_Stage;
-		};
-		87282AFE27A130250055B293 /* MultiServer_Stage */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF189BAF8FB5FCE2857EB821 /* Pods-PockeTalk.multiserver_stage.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
-				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.19;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
-				MARKETING_VERSION = 0.1.21;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_STAGE;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = MultiServer_Stage;
-		};
-		87282AFF27A130250055B293 /* MultiServer_Stage */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2AB6F62F0CA2A05BC0BD90D /* Pods-PockeTalkTests.multiserver_stage.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PockeTalkTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
-			};
-			name = MultiServer_Stage;
-		};
-		87282B0927A133BE0055B293 /* MultiServer_Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87282B0627A1333A0055B293 /* MultiServer_Production.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_SCHEME_NAME = MULTISERVER_PRODUCTION;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q446ZQDPHN;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = MultiServer_Production;
-		};
-		87282B0A27A133BE0055B293 /* MultiServer_Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5ED037194415A82743A6C052 /* Pods-PockeTalk.multiserver_production.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2BL4KQW6R5;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
-				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.19;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
-				MARKETING_VERSION = 0.1.21;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MULTISERVER_PRODUCTION;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = MultiServer_Production;
-		};
-		87282B0B27A133BE0055B293 /* MultiServer_Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50BA9E6C6924167812198204 /* Pods-PockeTalkTests.multiserver_production.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PockeTalkTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
-			};
-			name = MultiServer_Production;
-		};
-		87282B0C27A133D40055B293 /* TokoyoServer_Stage */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87282B0727A133750055B293 /* TokoyoServer_Stage.xcconfig */;
+			baseConfigurationReference = 87282B0727A133750055B293 /* Stage.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3220,19 +2996,21 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = TokoyoServer_Stage;
+			name = Stage;
 		};
-		87282B0D27A133D40055B293 /* TokoyoServer_Stage */ = {
+		87282B0D27A133D40055B293 /* Stage */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F282FDA3AD74995332EEFAD /* Pods-PockeTalk.tokoyoserver_stage.xcconfig */;
+			baseConfigurationReference = A5E1889121572C5D815EB6A5 /* Pods-PockeTalk.stage.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkStage.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				CURRENT_SCHEME_NAME = STAGING;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3243,19 +3021,21 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				MARKETING_VERSION = 0.1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
+				MARKETING_VERSION = 1.0.00;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_STAGE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STAGING;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = TokoyoServer_Stage;
+			name = Stage;
 		};
-		87282B0E27A133D40055B293 /* TokoyoServer_Stage */ = {
+		87282B0E27A133D40055B293 /* Stage */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE2BA3748149248CD64C579D /* Pods-PockeTalkTests.tokoyoserver_stage.xcconfig */;
+			baseConfigurationReference = E5502C003E521F1F2F86FE96 /* Pods-PockeTalkTests.stage.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3273,11 +3053,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
 			};
-			name = TokoyoServer_Stage;
+			name = Stage;
 		};
-		87282B0F27A133E60055B293 /* TokoyoServer_Production */ = {
+		87282B0F27A133E60055B293 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87282B0827A1339B0055B293 /* TokoyoServer_Production.xcconfig */;
+			baseConfigurationReference = 87282B0827A1339B0055B293 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3339,19 +3119,21 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = TokoyoServer_Production;
+			name = Production;
 		};
-		87282B1027A133E60055B293 /* TokoyoServer_Production */ = {
+		87282B1027A133E60055B293 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34EF9A0C4767791C7D21FD0E /* Pods-PockeTalk.tokoyoserver_production.xcconfig */;
+			baseConfigurationReference = 90671CA97A26F53CDCAA16A8 /* Pods-PockeTalk.production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkProduction.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				CURRENT_SCHEME_NAME = PRODUCTION;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3361,20 +3143,21 @@
 				MARKETING_VERSION = 0.1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				MARKETING_VERSION = 0.1.21;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_PRODUCTION;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = TokoyoServer_Production;
+			name = Production;
 		};
-		87282B1127A133E60055B293 /* TokoyoServer_Production */ = {
+		87282B1127A133E60055B293 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E37700B3A8A52C4220CCE808 /* Pods-PockeTalkTests.tokoyoserver_production.xcconfig */;
+			baseConfigurationReference = E603D9534FD597A4F1396EAE /* Pods-PockeTalkTests.production.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3392,11 +3175,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
 			};
-			name = TokoyoServer_Production;
+			name = Production;
 		};
-		89E3736127E0A4200092F786 /* AppStoreBJIT */ = {
+		891D450427E9A1E900B4BD8B /* LoadEngineFromAsset */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89E3736827E192930092F786 /* AppStoreBJIT.xcconfig */;
+			baseConfigurationReference = 891D450727E9A37400B4BD8B /* LoadEngineFromAsset.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3431,7 +3214,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_SCHEME_NAME = APP_STORE_BJIT;
+				CURRENT_SCHEME_NAME = LOAD_ENGINE_FROM_ASSET;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3458,39 +3241,44 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = AppStoreBJIT;
+			name = LoadEngineFromAsset;
 		};
-		89E3736227E0A4200092F786 /* AppStoreBJIT */ = {
+		891D450527E9A1E900B4BD8B /* LoadEngineFromAsset */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B48E8ECF30D53CA75D8CC5E /* Pods-PockeTalk.appstorebjit.xcconfig */;
+			baseConfigurationReference = 02FADAF560CEF3BCDF689720 /* Pods-PockeTalk.loadenginefromasset.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkLoadEngineFromAsset.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.19;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
 				MARKETING_VERSION = 0.1.21;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.staging;
+				MARKETING_VERSION = 1.0.00;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TOKOYOSERVER_STAGE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = LOAD_ENGINE_FROM_ASSET;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = AppStoreBJIT;
+			name = LoadEngineFromAsset;
 		};
-		89E3736327E0A4200092F786 /* AppStoreBJIT */ = {
+		891D450627E9A1E900B4BD8B /* LoadEngineFromAsset */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19890EB86A5D27E88AFD5139 /* Pods-PockeTalkTests.appstorebjit.xcconfig */;
+			baseConfigurationReference = F97BD63B36D258E155224573 /* Pods-PockeTalkTests.loadenginefromasset.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3508,7 +3296,246 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
 			};
-			name = AppStoreBJIT;
+			name = LoadEngineFromAsset;
+		};
+		891D450827E9A97200B4BD8B /* ServerAPILog */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_SCHEME_NAME = TOKYOSERVER_STAGE;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q446ZQDPHN;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = ServerAPILog;
+		};
+		891D450927E9A97200B4BD8B /* ServerAPILog */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B099060EE80850F8A795284F /* Pods-PockeTalk.serverapilog.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkServerAPILog.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2BL4KQW6R5;
+				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_SCHEME_NAME = SERVER_API_LOG;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
+				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.19;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.ios.stg;
+				MARKETING_VERSION = 0.1.21;
+				MARKETING_VERSION = 1.0.00;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SERVER_API_LOG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = ServerAPILog;
+		};
+		891D450A27E9A97200B4BD8B /* ServerAPILog */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F34EE621009829BE28DD1FA6 /* Pods-PockeTalkTests.serverapilog.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
+			};
+			name = ServerAPILog;
+		};
+		891E7F7427F2D3DE00BCC68A /* ProductionWithStageURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 891E7F7727F2D42F00BCC68A /* ProductionWithStageURL.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_SCHEME_NAME = TOKYOSERVER_PRODUCTION;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q446ZQDPHN;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = ProductionWithStageURL;
+		};
+		891E7F7527F2D3DE00BCC68A /* ProductionWithStageURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A978FF5B6FFB2C2AE812364C /* Pods-PockeTalk.productionwithstageurl.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkProductionWithStageURL.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_SCHEME_NAME = PRODUCTION_WITH_STAGE_URL;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
+				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.00;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION_WITH_STAGE_URL;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = ProductionWithStageURL;
+		};
+		891E7F7627F2D3DE00BCC68A /* ProductionWithStageURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F31F4393760AF0139A2FC4D0 /* Pods-PockeTalkTests.productionwithstageurl.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
+			};
+			name = ProductionWithStageURL;
 		};
 /* End XCBuildConfiguration section */
 
@@ -3517,11 +3544,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A66139326DDCF5E004A925D /* Debug */,
-				87282B0C27A133D40055B293 /* TokoyoServer_Stage */,
-				89E3736127E0A4200092F786 /* AppStoreBJIT */,
-				87282B0F27A133E60055B293 /* TokoyoServer_Production */,
-				87282B0927A133BE0055B293 /* MultiServer_Production */,
-				87282AFD27A130250055B293 /* MultiServer_Stage */,
+				87282B0C27A133D40055B293 /* Stage */,
+				891D450827E9A97200B4BD8B /* ServerAPILog */,
+				891D450427E9A1E900B4BD8B /* LoadEngineFromAsset */,
+				87282B0F27A133E60055B293 /* Production */,
+				891E7F7427F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139426DDCF5E004A925D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3531,11 +3558,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A66139626DDCF5E004A925D /* Debug */,
-				87282B0D27A133D40055B293 /* TokoyoServer_Stage */,
-				89E3736227E0A4200092F786 /* AppStoreBJIT */,
-				87282B1027A133E60055B293 /* TokoyoServer_Production */,
-				87282B0A27A133BE0055B293 /* MultiServer_Production */,
-				87282AFE27A130250055B293 /* MultiServer_Stage */,
+				87282B0D27A133D40055B293 /* Stage */,
+				891D450927E9A97200B4BD8B /* ServerAPILog */,
+				891D450527E9A1E900B4BD8B /* LoadEngineFromAsset */,
+				87282B1027A133E60055B293 /* Production */,
+				891E7F7527F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139726DDCF5E004A925D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3545,11 +3572,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A66139926DDCF5E004A925D /* Debug */,
-				87282B0E27A133D40055B293 /* TokoyoServer_Stage */,
-				89E3736327E0A4200092F786 /* AppStoreBJIT */,
-				87282B1127A133E60055B293 /* TokoyoServer_Production */,
-				87282B0B27A133BE0055B293 /* MultiServer_Production */,
-				87282AFF27A130250055B293 /* MultiServer_Stage */,
+				87282B0E27A133D40055B293 /* Stage */,
+				891D450A27E9A97200B4BD8B /* ServerAPILog */,
+				891D450627E9A1E900B4BD8B /* LoadEngineFromAsset */,
+				87282B1127A133E60055B293 /* Production */,
+				891E7F7627F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139A26DDCF5E004A925D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

@@ -126,6 +126,7 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
         view.backgroundColor = .clear
         bottomView.isUserInteractionEnabled = true
         bottomImageView.isUserInteractionEnabled = false
@@ -142,6 +143,7 @@ class HomeViewController: BaseViewController {
         setupFloatingMikeButton()
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
+        self.speechVC.languageHasUpdated = true
     }
 
     override func loadView() {
@@ -381,6 +383,7 @@ class HomeViewController: BaseViewController {
             self.navigationController?.view.layer.add(transition, forKey: nil)
             shouldCheckAppReviewGuide = true
             self.navigationController?.pushViewController(settinsViewController, animated: false)
+            self.speechVC.isTapOnMenu = true
         }
     }
 

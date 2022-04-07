@@ -1,8 +1,8 @@
 //
-//  MultiServer_Stage.xcconfig
+//  ProductionWithStageURL.xcconfig
 //  PockeTalk
 //
-//  Created by Morshed Alam on 1/26/22.
+//  Created by BJIT on 29/3/22.
 //
 
 // Configuration settings file format documentation can be found at:
@@ -12,7 +12,7 @@
 
 PRODUCT_NAME = $(inherited)
 IS_APP_ICON = AppIcon
-BASE_URL = https:\/\/multi-test.pt-v.com
+BASE_URL = https:\/\/test2.pt-v.com
 PRODUCT_BUNDLE_IDENTIFIER = $(inherited)
-IMEI = 000001002496160
-AUDIO_STREAM_BASE_URL = wss:\/\/test.pt-v.com
+IMEI = 000001006154923
+AUDIO_STREAM_BASE_URL = wss:\/\/test2.pt-v.com

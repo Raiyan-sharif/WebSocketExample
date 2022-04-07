@@ -43,7 +43,14 @@ class HistoryCardViewController: BaseViewController {
         collectionView.register(cellType: HistoryCell.self)
         return collectionView
     }()
-    
+
+    lazy var blackView:UIView = {
+        let blackView = UIView()
+        blackView.backgroundColor = .black
+        blackView.translatesAutoresizingMaskIntoConstraints = false
+        return blackView
+    }()
+
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = false
@@ -51,7 +58,7 @@ class HistoryCardViewController: BaseViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     private lazy var backBtn:UIButton = {
         guard let window = UIApplication.shared.keyWindow else {return UIButton()}
         let topPadding = window.safeAreaInsets.top
@@ -60,13 +67,13 @@ class HistoryCardViewController: BaseViewController {
         backBtn.addTarget(self, action: #selector(actionBack), for: .touchUpInside)
         return backBtn
     }()
-    
+
     //MARK: - Lifecycle methods
     override func loadView() {
         view = UIView()
         view.backgroundColor = .clear
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUIView()
@@ -79,25 +86,26 @@ class HistoryCardViewController: BaseViewController {
         bindData()
         registerNotification()
     }
-    
+
     deinit {
         unregisterNotification()
     }
-    
+
     //MARK:- Initial setup
     private func setUpUIView(){
+        self.view.addSubview(blackView)
         self.view.addSubview(collectionView)
-        
+
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             .isActive = true
         widthConstraintOfCV = collectionView.widthAnchor.constraint(equalToConstant: SIZE_WIDTH)
         widthConstraintOfCV.isActive = true
         topConstraintOfCV =  collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0)
-        
+
         topConstraintOfCV.isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
-        
+
         self.view.addSubview(backBtn)
         self.view.addSubview(imageView)
 
@@ -105,14 +113,20 @@ class HistoryCardViewController: BaseViewController {
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 5).isActive = true
         imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: HomeViewController.homeVCBottomViewHeight + 5).isActive = true
+
+        blackView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor).isActive = true
+        blackView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor).isActive = true
+        blackView.topAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
+        blackView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -HomeViewController.homeVCBottomViewHeight).isActive = true
+        
     }
-    
+
     private func showCollectionView(){
         isCollectionViewVisible = true
         let contentSize = self.collectionView.contentSize
         let bottmInset = self.collectionView.bounds.size.height * 0.25
         historylayout.bottomInset = bottmInset
-        
+
         let bottomOffset = CGPoint(x: 0, y: contentSize.height + bottmInset  - self.collectionView.bounds.size.height)
         self.collectionView.setContentOffset(bottomOffset, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in

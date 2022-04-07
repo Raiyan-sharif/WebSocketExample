@@ -11,7 +11,7 @@ enum NetworkServiceAPI {
     case changeLanguage(params:[String:Any])
     case tts(params:[String:Any])
     case liscense(params:[String:Any])
-    
+    case licenseConfirmation(params:[String:Any])
 }
 extension NetworkServiceAPI:TargetType{
     var baseURL: URL {
@@ -28,12 +28,14 @@ extension NetworkServiceAPI:TargetType{
             return tts_url
         case .liscense:
             return liscense_token_url
+        case .licenseConfirmation:
+            return license_confirmation_url
         }
         
     }
     var method: Moya.Method {
         switch self {
-        case .authkey, .changeLanguage, .tts, .liscense:
+        case .authkey, .changeLanguage, .tts, .liscense, .licenseConfirmation:
             return .post
         }
     }
@@ -48,6 +50,8 @@ extension NetworkServiceAPI:TargetType{
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .liscense(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        case let .licenseConfirmation(params) :
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
     
@@ -60,6 +64,8 @@ extension NetworkServiceAPI:TargetType{
         case let .tts(value) :
             return "{\"description is \": \"\(value)\"}".utf8Encoded
         case let .liscense(value):
+            return "{\"description is \": \"\(value)\"}".utf8Encoded
+        case let .licenseConfirmation(value):
             return "{\"description is \": \"\(value)\"}".utf8Encoded
         }
     }

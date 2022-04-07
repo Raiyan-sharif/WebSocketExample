@@ -402,9 +402,11 @@ class CaptureImageProcessVC: BaseViewController {
         if(playNative){
             lang = nativeLang
             text = nativeText
+            text = text.replacingOccurrences(of: "\"", with: "")
         }else{
             lang = targetLang
             text = targetText
+            text = text.replacingOccurrences(of: "\"", with: "")
         }
 
         let languageManager = LanguageSelectionManager.shared
@@ -717,6 +719,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                                                   name: UIApplication.didBecomeActiveNotification,
                                                   object: nil)
         AudioPlayer.sharedInstance.stop()
+        stopTTS()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -918,6 +921,7 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     }
 
     func cameraTTSDialogShowContextMenu() {
+        stopTTS()
         self.view.addSubview(cameraTTSContextMenu)
     }
     func shareTranslation(){

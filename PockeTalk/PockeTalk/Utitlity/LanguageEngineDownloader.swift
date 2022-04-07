@@ -78,7 +78,7 @@ class LanguageEngineDownloader: NSObject {
     }
 
     private func getLanguageEngineURL() -> String {
-        #if TOKOYOSERVER_PRODUCTION || MULTISERVER_PRODUCTION
+        #if PRODUCTION || PRODUCTION_WITH_STAGE_URL
             return LanguageEngineUrlForProductionBuild
         #else
             return LanguageEngineUrlForStageBuild

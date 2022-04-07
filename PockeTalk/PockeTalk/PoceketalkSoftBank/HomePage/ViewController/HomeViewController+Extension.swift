@@ -158,10 +158,14 @@ extension HomeViewController{
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
                         HomeViewController.showOrHideTalkButtonImage(true)
-                        if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen{
+                        if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen {
                             ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                         }
-                        if (ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing && !hasSttSupport){
+                        if (ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing && !hasSttSupport) {
+                            if self.nextState == .collapsed {
+                                self.animateTransitionIfNeeded(state: self.nextState, shouldUpdateCardViewAlpha: true)
+                            }
+                            self.updateContainer(notification: Notification(name: .containerViewSelection))
                             let alertService = CustomAlertViewModel()
                             let alert = alertService.alertDialogWithoutTitleWithOkButton(message: "no_stt_msg".localiz())
                             self.present(alert, animated: true, completion: nil)
@@ -198,12 +202,12 @@ extension HomeViewController{
                     if Reachability.isConnectedToNetwork() {
                         if (ScreenTracker.sharedInstance.screenPurpose != .HomeSpeechProcessing || hasSttSupport){
                             imageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
+                            self.homeVCDelegate?.stopRecord()
                             if !self.speechVC.isMinimumLimitExceed {
                                 self.enableORDisableMicrophoneButton(isEnable: false)
                             }else{
                                 self.speechVC.isMinimumLimitExceed = false
                             }
-                            self.homeVCDelegate?.stopRecord()
                             TalkButtonAnimation.isTalkBtnAnimationExist = false
                             TalkButtonAnimation.stopAnimation(bottomView: self.bottomView, pulseGrayWave: self.pulseGrayWave, pulseLayer: self.pulseLayer, midCircleViewOfPulse: self.midCircleViewOfPulse, bottomImageView: self.bottomImageView)
                         }

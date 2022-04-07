@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>PockeTalk-iOS</string>
+	<string>ポケトーク</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +24,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CURRENT_SCHEME_NAME</key>
+	<string>$(CURRENT_SCHEME_NAME)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>ImeiNumber</key>
@@ -77,13 +79,5 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>BaseUrl</key>
-	<string>$(BASE_URL)</string>
-	<key>ImeiNumber</key>
-	<string>$(IMEI)</string>
-    <key>AudioStremBaseUrl</key>
-    <string>$(AUDIO_STREAM_BASE_URL)</string>
-    <key>CURRENT_SCHEME_NAME</key>
-    <string>$(CURRENT_SCHEME_NAME)</string>
 </dict>
 </plist>

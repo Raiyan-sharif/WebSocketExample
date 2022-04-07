@@ -92,6 +92,7 @@ class CountryListViewController: BaseViewController {
         remove(asChildViewController: self)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
+        NotificationCenter.default.post(name: .countryListBackNotification, object: nil)
     }
     
     @objc private func clickOnEnglishButton(_ sender:UITapGestureRecognizer){

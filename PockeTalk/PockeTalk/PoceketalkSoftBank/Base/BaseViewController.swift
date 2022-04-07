@@ -12,6 +12,7 @@ enum SpeechProcessingScreenOpeningPurpose{
     case LanguageSettingsSelectionVoice
     case CountrySelectionByVoice
     case CountrySettingsSelectionByVoice
+    case countryWiseLanguageList
     
     case LanguageSelectionCamera
     case LanguageHistorySelectionCamera
@@ -22,6 +23,8 @@ enum SpeechProcessingScreenOpeningPurpose{
     case HistoryScrren
     case HistroyPronunctiation
     case FavouriteScreen
+    case PurchasePlanScreen
+    case InitialFlow
 }
 
 class BaseViewController: UIViewController {

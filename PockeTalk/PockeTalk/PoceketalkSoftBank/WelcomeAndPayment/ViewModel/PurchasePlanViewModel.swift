@@ -14,12 +14,15 @@ protocol PurchasePlanViewModeling {
     var hasInAppPurchaseProduct: Bool { get }
     var productFetchError: String? { get }
     var isAPICallOngoing: Bool { get }
+    var isProductFetchOngoing: Bool { get }
     func getProduct(onCompletion: @escaping CompletionCallBack)
     func restorePurchase(onCompletion: @escaping CompletionCallBack)
     func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack)
     func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails?
     func getFreeDaysUsesInfo() -> String?
     func updateReceiptValidationAllow()
+    func updateIsAPICallOngoing(_ status: Bool)
+    func setProductFetchStatus(_ status: Bool)
 }
 
 class PurchasePlanViewModel: PurchasePlanViewModeling {
@@ -31,13 +34,14 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _isAPICallOngoing: Bool = false
     private var _hasInAppPurchaseProduct = false
     private var _productFetchError: String?
+    private var _isProductFetchOngoing: Bool = false
 
     var numberOfRow: Int {
-        return _hasInAppPurchaseProduct ? (row.count) : (dummyRow.count)
+        return row.count
     }
 
-    var rowType: [PurchasePlanTVCellInfo]{
-        return _hasInAppPurchaseProduct ? (self.row) : (self.dummyRow)
+    var rowType: [PurchasePlanTVCellInfo] {
+        return self.row
     }
 
     var hasInAppPurchaseProduct: Bool {
@@ -50,6 +54,10 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     var productFetchError: String? {
         return _productFetchError
+    }
+
+    var isProductFetchOngoing: Bool {
+        return _isProductFetchOngoing
     }
 
     //MARK: - API Calls
@@ -129,13 +137,31 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         //Set suggestion text
         for item in 0..<productDetails.count {
             if productDetails[item].periodUnitType == .month {
-                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 4) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+                let savingPrice = calculateSavings(
+                    weeklyPrice: weeklyPrice,
+                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    numberOfWeek: 4)
+
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
             }
 
             if productDetails[item].periodUnitType == .year {
-                productDetails[item].suggestionText = "Save about ".localiz() + productDetails[item].currency + "\(((weeklyPrice * 52) - productDetails[item].price).roundToDecimal(2)) " + "from weekly".localiz()
+                let savingPrice = calculateSavings(
+                    weeklyPrice: weeklyPrice,
+                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    numberOfWeek: 52)
+
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
             }
         }
+    }
+
+    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Int {
+        let savingPrice = Int((weeklyPrice * Double(numberOfWeek)) - productPrice)
+        let digitCount = String(savingPrice).count
+        let mod = digitCount > 3 ? 100 : 10
+        let nearestFloorSavingPrice = savingPrice - (savingPrice % mod)
+        return nearestFloorSavingPrice
     }
 
     private func setupTVRowData() {
@@ -198,5 +224,13 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     func updateReceiptValidationAllow() {
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllowFromPurchase)
+    }
+
+    func updateIsAPICallOngoing(_ status: Bool) {
+        self._isAPICallOngoing = status
+    }
+
+    func setProductFetchStatus(_ status: Bool) {
+        self._isProductFetchOngoing = status
     }
 }
