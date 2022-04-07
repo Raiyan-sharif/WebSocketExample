@@ -32,6 +32,7 @@ class CountryListViewController: BaseViewController {
         registerNotification()
         //setUpMicroPhoneIcon()
         FloatingMikeButton.sharedInstance.delegate = self
+        LanguageSelectionManager.shared.tempSourceLanguage = sysLangCode
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,7 @@ class CountryListViewController: BaseViewController {
     
     deinit {
         unregisterNotification()
+        LanguageSelectionManager.shared.tempSourceLanguage = nil
     }
     
     //MARK: - Initial setup
@@ -90,6 +92,7 @@ class CountryListViewController: BaseViewController {
     @IBAction private func onBackButtonPressed(_ sender: Any) {
         FloatingMikeButton.sharedInstance.remove()
         remove(asChildViewController: self)
+        LanguageSelectionManager.shared.tempSourceLanguage = nil
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
         NotificationCenter.default.post(name: .countryListBackNotification, object: nil)
@@ -97,8 +100,9 @@ class CountryListViewController: BaseViewController {
     
     @objc private func clickOnEnglishButton(_ sender:UITapGestureRecognizer){
         PrintUtility.printLog(tag: TAG, text: " Clickedn on english button")
-        if dataShowingAsEnlish{
+        if dataShowingAsEnlish {
             dataShowingLanguageCode = sysLangCode
+            LanguageSelectionManager.shared.tempSourceLanguage = sysLangCode
             countryList.removeAll()
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             countryNameLabel.textColor = UIColor.white.color
@@ -108,6 +112,7 @@ class CountryListViewController: BaseViewController {
             countryNameLabel.text = "Region".localiz()
         }else{
             dataShowingLanguageCode = systemLanguageCodeEN
+            LanguageSelectionManager.shared.tempSourceLanguage = systemLanguageCodeEN
             countryList.removeAll()
             countryList = CountryFlagListViewModel.shared.loadCountryDataFromJsonbyCode(countryCode: dataShowingLanguageCode)!.countryList
             dataShowingAsEnlish = true

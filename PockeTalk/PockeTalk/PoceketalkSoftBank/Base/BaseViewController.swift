@@ -35,6 +35,7 @@ class BaseViewController: UIViewController {
         if #available(iOS 13.0, *) {
             self.isModalInPresentation = true
         }
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         // Do any additional setup after loading the view.
     }
 
