@@ -374,7 +374,7 @@ class SpeechProcessingViewController: BaseViewController{
             descriptionLabel.textAlignment = .center
             break
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
-            self.titleLabel.text = "country_selection_voice_msg".localiz()
+            speechLangCode == systemLanguageCodeEN ? (self.titleLabel.text = countrySearchExampleText) : (self.titleLabel.text = "country_selection_voice_msg".localiz())
             break
         case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .PurchasePlanScreen, .CameraScreen, .InitialFlow, .countryWiseLanguageList: break
         }
@@ -416,11 +416,13 @@ class SpeechProcessingViewController: BaseViewController{
                     guard let `self` = self else { return }
                     switch ScreenTracker.sharedInstance.screenPurpose {
                     case .CountrySelectionByVoice:
+                        LanguageSelectionManager.shared.tempSourceLanguage = self.speechLangCode
                         NotificationCenter.default.post(name: .countySlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
                         
                         self.homeVC?.hideSpeechView()
                         break
                     case .CountrySettingsSelectionByVoice:
+                        LanguageSelectionManager.shared.tempSourceLanguage = self.speechLangCode
                         NotificationCenter.default.post(name: .countySettingsSlectionByVoiceNotofication, object: nil, userInfo: ["country":self.speechProcessingVM.getSST_Text.value])
                         
                         self.homeVC?.hideSpeechView()
@@ -735,13 +737,17 @@ extension SpeechProcessingViewController{
                 speechLangCode = languageManager.topLanguage
             }
             break
-        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera, .CountrySettingsSelectionByVoice:
+        case .LanguageSelectionVoice,.LanguageSelectionCamera, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera:
             if countrySearchspeechLangCode != "" {
                 speechLangCode = countrySearchspeechLangCode
             } else {
                 speechLangCode = LanguageManager.shared.currentLanguage.rawValue
             }
             languageManager.tempSourceLanguage = speechLangCode
+            languageHasUpdated = true
+            break
+        case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
+            speechLangCode = LanguageSelectionManager.shared.tempSourceLanguage ?? LanguageManager.shared.currentLanguage.rawValue
             languageHasUpdated = true
             break
         case .PronunciationPractice, .HistroyPronunctiation:

@@ -41,8 +41,13 @@ class LanguageSettingsTutorialVC: BaseViewController {
             toolbarTitleLabel.text = "Language Settings".localiz()
             guidelineTextLabel.text = "Speech Guideline".localiz()
         } else {
-            toolbarTitleLabel.text = "Language Settings".localiz()
-            guidelineTextLabel.text = "Country Speech Guideline".localiz()
+            if LanguageSelectionManager.shared.tempSourceLanguage == LanguageManager.shared.currentLanguage.rawValue {
+                toolbarTitleLabel.text = "Language Settings".localiz()
+                guidelineTextLabel.text = "Country Speech Guideline".localiz()
+            } else {
+                toolbarTitleLabel.text = countrySearchTutorialTitle
+                guidelineTextLabel.text = countrySearchTutorialDescription
+            }
         }
     }
     
