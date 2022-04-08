@@ -320,6 +320,7 @@ struct NetworkManager:Network {
                 kClientInfo: kPocketalk_app_ios,
                 couponCodeParamName: couponCode
             ]
+            return params
         } else {
             let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
             let iosReceipt = UserDefaults.standard.string(forKey: kiOSReceipt)
