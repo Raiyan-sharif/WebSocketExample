@@ -25,6 +25,7 @@ enum SpeechProcessingScreenOpeningPurpose{
     case FavouriteScreen
     case PurchasePlanScreen
     case InitialFlow
+    case WalkThroughViewController
 }
 
 class BaseViewController: UIViewController {

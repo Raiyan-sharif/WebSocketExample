@@ -421,7 +421,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             speechLangCode == systemLanguageCodeEN ? (self.titleLabel.text = countrySearchExampleText) : (self.titleLabel.text = "country_selection_voice_msg".localiz())
             break
-        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .PurchasePlanScreen, .CameraScreen, .InitialFlow, .countryWiseLanguageList: break
+        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .PurchasePlanScreen, .CameraScreen, .InitialFlow, .countryWiseLanguageList, .WalkThroughViewController: break
         }
     }
     

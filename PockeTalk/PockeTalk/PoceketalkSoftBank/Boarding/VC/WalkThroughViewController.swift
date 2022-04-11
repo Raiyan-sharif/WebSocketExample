@@ -46,6 +46,7 @@ class WalkThroughViewController: BaseViewController {
         super.viewDidLoad()
         updateLanguageNames()
         initialCase()
+        ScreenTracker.sharedInstance.screenPurpose = .WalkThroughViewController
     }
 
     func initialCase(){
@@ -127,11 +128,18 @@ class WalkThroughViewController: BaseViewController {
                 savedCoupon = coupon
                 PrintUtility.printLog(tag: "In WalkThrough", text: "Coupon found: \(coupon)")
             }
-            if savedCoupon.isEmpty {
-                goToPurchasePlan()
+            if Reachability.isConnectedToNetwork() {
+                if savedCoupon.isEmpty {
+                    goToPurchasePlan()
+                }else{
+                    goToPermissionVC()
+                }
             }else{
-                goToPermissionVC()
+                DispatchQueue.main.async {
+                    InitialFlowHelper().showNoInternetAlert(on: self)
+                }
             }
+
         default:
             break
         }

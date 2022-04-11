@@ -70,7 +70,9 @@ class InitialFlowHelper{
                 }
             },{ cancel in
                 PrintUtility.printLog(tag: "initialFlow", text: "Tap on no internet cancle")
-                exit(0)
+                if ScreenTracker.sharedInstance.screenPurpose != .WalkThroughViewController{
+                    exit(0)
+                }
             }
         ])
     }
