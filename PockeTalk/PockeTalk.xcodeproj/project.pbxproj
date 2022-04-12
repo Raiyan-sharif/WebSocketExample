@@ -228,7 +228,6 @@
 		898E6AA727841ABE00138035 /* AppsPermissionCheckingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
-		8994A7CE26F4A83600657608 /* img1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8994A7CD26F4A83600657608 /* img1.jpg */; };
 		89990F6F2783179600D39154 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89990F6E2783179600D39154 /* WelcomeViewController.swift */; };
 		899E12DE27B2388600151533 /* MultipartAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */; };
 		899FB08227A2B12C00B83366 /* Date+Reuseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FB08127A2B12C00B83366 /* Date+Reuseable.swift */; };
@@ -584,7 +583,6 @@
 		898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsPermissionCheckingManager.swift; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
-		8994A7CD26F4A83600657608 /* img1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img1.jpg; sourceTree = "<group>"; };
 		89990F6E2783179600D39154 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartAudioPlayer.swift; sourceTree = "<group>"; };
 		899FB08127A2B12C00B83366 /* Date+Reuseable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Reuseable.swift"; sourceTree = "<group>"; };
@@ -1845,7 +1843,6 @@
 				89C0F7DA26F1E4FC000CD5FC /* CameraHistoryViewController.swift */,
 				89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */,
 				8940E31926FC28EC0083E4FA /* IImageCroppingViewController.swift */,
-				8994A7CD26F4A83600657608 /* img1.jpg */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2981,6 +2978,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -3008,6 +3007,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3147,6 +3148,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3265,6 +3268,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3382,6 +3387,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3499,6 +3506,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.06;
+				MARKETING_VERSION = 1.0.02;
+				MARKETING_VERSION = 1.0.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

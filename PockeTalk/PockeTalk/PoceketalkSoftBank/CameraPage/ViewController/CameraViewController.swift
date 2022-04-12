@@ -40,6 +40,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var btnFromLanguage: RoundButtonWithBorder!
     @IBOutlet weak var flashButton: UIButton!
     @IBOutlet weak var btnTargetLanguage: RoundButtonWithBorder!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cameraHistoryImageView: UIImageView!
     private lazy var previewView = UIView()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: session)
@@ -83,6 +84,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     func openCameraLanguageListScreen(){
+        isViewInteractionEnable(false)
         let storyboard = UIStoryboard(name: KStoryBoardCamera, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: KiDLangSelectCamera)as! LanguageSelectCameraVC
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
@@ -107,16 +109,18 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         
         let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
         let targetLang = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
+
         if(fromLang?.code == CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()[0].code){
-            fromLangLabel.text = "\(fromLang!.sysLangName)"
+            fromLangLabel.text = "\(fromLang?.sysLangName ?? "")"
         }else{
-            fromLangLabel.text = "\(fromLang!.sysLangName) (\(fromLang!.name))"
+            fromLangLabel.text = "\(fromLang?.sysLangName ?? "") (\(fromLang?.name ?? ""))"
         }
-        toLangLabel.text = "\(targetLang!.sysLangName) (\(targetLang!.name))"
+        toLangLabel.text = "\(targetLang?.sysLangName ?? "") (\(targetLang?.name ?? ""))"
     }
     
     @objc func onCameraLanguageChanged(notification: Notification) {
         updateLanguageNames()
+        isViewInteractionEnable(true)
         let flashStatus = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool
         PrintUtility.printLog(tag: "flash status", text: "\(flashStatus)")
         if let flashStatus = flashStatus, flashStatus {
@@ -246,6 +250,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
+        isViewInteractionEnable(false)
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
@@ -259,6 +264,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 //        HomeViewController.setBlackGradientImageToBottomView(usingState: .hidden)
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
+        isViewInteractionEnable(true)
         self.updateHomeContainer?(true)
         self.cameraHistoryViewModel.cameraHistoryImages.removeAll()
         self.cameraHistoryViewModel.fetchCameraHistoryImages(size: 0)
@@ -430,6 +436,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
+        isViewInteractionEnable(false)
         self.updateHomeContainer?(false)
         HomeViewController.isCameraButtonClickable = true
         talkButtonImageView.isHidden = false
@@ -443,6 +450,7 @@ extension CameraViewController {
     @IBAction func captureButtonEventListener(_ sender: Any) {
         
         if isCaptureButtonClickable == true {
+            isViewInteractionEnable(false)
             isCaptureButtonClickable = false
             takePhoto { [self] photo in
                 
@@ -468,6 +476,14 @@ extension CameraViewController {
                 layoutCameraResult(uiImage: image!)
             }
         }
+    }
+
+    private func isViewInteractionEnable(_ status: Bool) {
+        btnFromLanguage.isUserInteractionEnabled = status
+        btnTargetLanguage.isUserInteractionEnabled = status
+        backButton.isUserInteractionEnabled = status
+        cameraHistoryImageView.isUserInteractionEnabled = status
+        captureButton.isUserInteractionEnabled = status
     }
     
     internal func layoutCameraResult(uiImage: UIImage) {

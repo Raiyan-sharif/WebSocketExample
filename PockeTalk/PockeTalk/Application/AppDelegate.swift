@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIDevice.current.isBatteryMonitoringEnabled = true
         setUpInitialLaunch()
 
+        ///Enable exclusive touch for all the buttons across the app
+        UIButton.appearance().isExclusiveTouch = true
+
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
