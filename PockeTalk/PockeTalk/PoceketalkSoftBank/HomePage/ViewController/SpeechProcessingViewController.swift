@@ -102,7 +102,8 @@ class SpeechProcessingViewController: BaseViewController{
         registerForNotification()
         bindData()
         setupAudio()
-        AppDelegate.executeLicenseTokenRefreshFunctionality()
+        //showLoaderDependentOnApiCall()
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
@@ -112,7 +113,11 @@ class SpeechProcessingViewController: BaseViewController{
                 if accessKey == nil {
                     SocketManager.sharedInstance.disconnect()
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = true
-                    AppDelegate.generateAccessKey()
+                    AppDelegate.generateAccessKey{ result in
+                        if result == true {
+                            SocketManager.sharedInstance.connect()
+                        }
+                    }
                 }
             }
         }
@@ -194,12 +199,27 @@ class SpeechProcessingViewController: BaseViewController{
         self.pronunciationView.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
         self.view.bottomImageView(usingState: .black)
     }
+
+    func showLoaderDependentOnApiCall() {
+        ActivityIndicator.sharedInstance.show()
+
+        if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                ActivityIndicator.sharedInstance.hide()
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+                ActivityIndicator.sharedInstance.hide()
+            }
+        }
+    }
     
     private func registerForNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+            
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         }
@@ -325,7 +345,7 @@ class SpeechProcessingViewController: BaseViewController{
         let second =  isFromTutorial ? 0.5 : 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
-            SocketManager.sharedInstance.disconnect()
+            //SocketManager.sharedInstance.disconnect()
             ActivityIndicator.sharedInstance.hide()
             PrintUtility.printLog(tag: self.TAG, text: "loaderInvisible")
             self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
@@ -570,7 +590,20 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appBecomeActive() {
-        AppDelegate.executeLicenseTokenRefreshFunctionality()
+        DispatchQueue.main.async {
+            ActivityIndicator.sharedInstance.show()
+        }
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
+                if result {                                         
+                    DispatchQueue.main.async {
+                        ActivityIndicator.sharedInstance.hide()
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                        ActivityIndicator.sharedInstance.hide()
+                    }
+                }
+        }
         PrintUtility.printLog(tag: TAG, text: "Become Active")
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""

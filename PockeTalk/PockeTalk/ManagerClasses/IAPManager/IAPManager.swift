@@ -35,6 +35,7 @@ class IAPManager: NSObject {
     private var isObserving = false
     private override init() { super.init() }
     var shouldBypassPurchasePlan = false
+    var alreadyAlertVisible = false
 
     struct LatestReceiptInfo {
         var productId: String?

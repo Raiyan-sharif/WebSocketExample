@@ -17,13 +17,13 @@ protocol Network {
 
 let endpointClosure = { (target: NetworkServiceAPI) -> Endpoint in
     let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
-          PrintUtility.printLog(tag: "Endpoint_Path", text: target.baseURL.absoluteString+target.path)
-          PrintUtility.printLog(tag: "Endpoint_base_url", text:target.baseURL.absoluteString)
-          PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
-          PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
-          PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
-          PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
-        return defaultEndpoint
+    PrintUtility.printLog(tag: "Endpoint_Path", text: target.baseURL.absoluteString+target.path)
+    PrintUtility.printLog(tag: "Endpoint_base_url", text:target.baseURL.absoluteString)
+    PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
+    PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
+    PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
+    PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
+    return defaultEndpoint
 }
 
 struct LoggerPlugIn:PluginType{
@@ -238,7 +238,6 @@ struct NetworkManager:Network {
                     if result_code == response_ok {
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
-
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
@@ -256,6 +255,32 @@ struct NetworkManager:Network {
                         PrintUtility.printLog(tag: "License Token API", text: "Unknown error")
                         completion(nil)
                     } else {
+                        PrintUtility.printLog(tag: "License Token API", text: "License info over")
+                            let alertVC = UIAlertController(title: "" , message: "kUnknownError".localiz(), preferredStyle: UIAlertController.Style.alert)
+                            alertVC.view.tintColor = UIColor.black
+                            let okAction = UIAlertAction(title: "OK".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
+                                // add ok action functionality
+                                IAPManager.shared.alreadyAlertVisible = false
+                                exit(0)
+                            }
+                            alertVC.addAction(okAction)
+                            DispatchQueue.main.async {
+                                IAPManager.shared.getTopVisibleViewController { topViewController in
+                                    if let viewController = topViewController {
+                                        var presentVC = viewController
+                                        while let next = presentVC.presentedViewController {
+                                            presentVC = next
+                                        }
+                                        if IAPManager.shared.alreadyAlertVisible == false {
+                                            ActivityIndicator.sharedInstance.hide()
+                                            presentVC.present(alertVC, animated: true, completion: nil)
+                                            IAPManager.shared.alreadyAlertVisible = true
+                                        }
+
+                                    }
+                                }
+                            completion(nil)
+                        }
                         PrintUtility.printLog(tag: "License Token API", text: "License Token API Failed")
                         completion(nil)
                     }
@@ -389,7 +414,11 @@ struct NetworkManager:Network {
     func startTokenRefreshProcedure() {
         handleLicenseToken { result in
             if result {
-                AppDelegate.generateAccessKey()
+                AppDelegate.generateAccessKey { result in
+                    if result == true {
+                        SocketManager.sharedInstance.connect()
+                    }
+                }
             }
         }
     }

@@ -69,7 +69,7 @@ extension AppDelegate{
     }
 
     //MARK: - AccessKey and Licence token functionalities
-    class func generateAccessKey(){
+    class func generateAccessKey(completion : @escaping (Bool)->Void){
         NetworkManager.shareInstance.getAuthkey { data  in
             guard let data = data else { return }
             do {
@@ -79,15 +79,17 @@ extension AppDelegate{
                     SocketManager.sharedInstance.updateRequestKey()
 
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
-                    AppDelegate.executeLicenseTokenRefreshFunctionality()
+                    AppDelegate.executeLicenseTokenRefreshFunctionality(){_ in}
+                    completion(true)
                 }
             }catch{
                 PrintUtility.printLog(tag: "AppDelegate", text: "Didn't get auth key")
+                completion(false)
             }
         }
     }
 
-    class func executeLicenseTokenRefreshFunctionality() {
+    class func executeLicenseTokenRefreshFunctionality(completion : @escaping (Bool)->Void) {
         let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
 
         if tokenCreationTime != nil {
@@ -107,8 +109,13 @@ extension AppDelegate{
                             PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
                             NetworkManager.shareInstance.handleLicenseToken { result in
                                 if result {
-                                    AppDelegate.generateAccessKey()
+                                    AppDelegate.generateAccessKey{ result in
+                                        if result == true {
+                                            SocketManager.sharedInstance.connect()
+                                        }
+                                    }
                                 }
+                                completion(result)
                             }
                         }
                     } else if  (currentTime > tokenExpiryTime) {
@@ -116,17 +123,44 @@ extension AppDelegate{
                         PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
                         NetworkManager.shareInstance.handleLicenseToken { result in
                             if result {
-                                AppDelegate.generateAccessKey()
+                                AppDelegate.generateAccessKey{ result in
+                                    if result == true {
+                                        SocketManager.sharedInstance.connect()
+                                    }
+                                }
                             }
+                            completion(result)
                         }
                     } else {
-                        NetworkManager.shareInstance.startTokenRefreshProcedure()
+                        NetworkManager.shareInstance.handleLicenseToken { result in
+                            if result {
+                                AppDelegate.generateAccessKey{ result in
+                                    if result == true {
+                                        SocketManager.sharedInstance.connect()
+                                    }
+                                }
+                            }
+                            completion(result)
+                        }
+                        //NetworkManager.shareInstance.startTokenRefreshProcedure()
                     }
+                } else {
+                    completion(false)
                 }
             })
 
         } else {
-            NetworkManager.shareInstance.startTokenRefreshProcedure()
+            //NetworkManager.shareInstance.startTokenRefreshProcedure()
+            NetworkManager.shareInstance.handleLicenseToken { result in
+                if result {
+                    AppDelegate.generateAccessKey{ result in
+                        if result == true {
+                            SocketManager.sharedInstance.connect()
+                        }
+                    }
+                }
+                completion(result)
+            }
         }
     }
 }
