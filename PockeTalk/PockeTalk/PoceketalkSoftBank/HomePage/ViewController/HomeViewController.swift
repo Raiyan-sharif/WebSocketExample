@@ -16,8 +16,9 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak private var menuButton: UIButton!
     @IBOutlet weak private var topClickView: UIView!
     @IBOutlet weak private var bottomClickView: UIView!
-    @IBOutlet weak  var bottomView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak private var buttonFav: UIButton!
+    @IBOutlet weak private var cameraBtn: UIButton!
     @IBOutlet weak var historyImageView: UIImageView!
     @IBOutlet weak private var topHighlightedView: UIImageView!
     @IBOutlet weak private var bottomHighlightedView: UIImageView!
@@ -135,6 +136,7 @@ class HomeViewController: BaseViewController {
         self.homeVM = HomeViewModel()
         self.setUpUI()
 
+        setExclusiveTouchForViews()
         setupUITalkButton()
         setupGestureForCardView()
         setupCardView()
@@ -312,6 +314,13 @@ class HomeViewController: BaseViewController {
         FloatingMikeButton.sharedInstance.window = self.window
         FloatingMikeButton.sharedInstance.add()
         FloatingMikeButton.sharedInstance.isHidden(true)
+    }
+
+    private func setExclusiveTouchForViews() {
+        menuButton.isExclusiveTouch = true
+        buttonFav.isExclusiveTouch = true
+        cameraBtn.isExclusiveTouch = true
+        historyImageView.isExclusiveTouch = true
     }
 
     private func setHistoryAndFavouriteView(){
