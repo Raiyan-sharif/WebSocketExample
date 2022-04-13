@@ -389,6 +389,8 @@ let kOriginalTransactionID = "ios_original_transaction_id"
 let kImei = "imei"
 let kTempo_param = "tempo"
 
+let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
+
 
 
 

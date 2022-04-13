@@ -105,7 +105,11 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     fileprivate func updateLanguageNames() {
         let languageManager = LanguageSelectionManager.shared
         let fromLangCode = CameraLanguageSelectionViewModel.shared.fromLanguage
-        let targetLangCode = CameraLanguageSelectionViewModel.shared.targetLanguage
+        var targetLangCode = CameraLanguageSelectionViewModel.shared.targetLanguage
+        if UserDefaultsProperty<String>(KCameraTempTargetLanguage).value != nil{
+            targetLangCode = UserDefaultsProperty<String>(KCameraTempTargetLanguage).value!
+            UserDefaultsProperty<String>(KCameraTargetLanguageCode).value = targetLangCode
+        }
         
         let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
         let targetLang = languageManager.getLanguageInfoByCode(langCode: targetLangCode)

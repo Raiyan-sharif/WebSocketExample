@@ -21,7 +21,13 @@ class LanguageListCameraVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLanguageProperty()
-        UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
+        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
+        if !langSelectFor && UserDefaultsProperty<String>(KCameraTempTargetLanguage).value != nil{
+            UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = UserDefaultsProperty<String>(KCameraTempTargetLanguage).value
+        } else {
+            UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = UserDefaultsProperty<String>(KSelectedLanguageCamera).value
+        }
+
         setupTableView()
         registerNotification()
     }

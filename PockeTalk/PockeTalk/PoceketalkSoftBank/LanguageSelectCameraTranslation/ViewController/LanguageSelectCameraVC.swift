@@ -118,7 +118,11 @@ class LanguageSelectCameraVC: BaseViewController {
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
         //Reset selected item lnaguage history index if it is in lnaguage history list
-        let selectedItem = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
+        var selectedItem = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
+        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
+        if !langSelectFor && UserDefaultsProperty<String>(KCameraTempTargetLanguage).value != nil {
+            selectedItem = UserDefaultsProperty<String>(KCameraTempTargetLanguage).value!
+        }
         let languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.camera.rawValue)
         if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
@@ -153,6 +157,7 @@ class LanguageSelectCameraVC: BaseViewController {
             }
         }else{
             CameraLanguageSelectionViewModel.shared.targetLanguage = selectedLanguageCode
+            UserDefaultsProperty<String>(KCameraTempTargetLanguage).value = selectedLanguageCode
         }
         
         let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedLanguageCode, cameraOrVoice: LanguageType.camera.rawValue)
