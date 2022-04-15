@@ -93,74 +93,98 @@ extension AppDelegate{
         let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
 
         if tokenCreationTime != nil {
-
             let tokenExpiryTime = tokenCreationTime! + 1500000 // 25 min   //(30*1000)  for 30 sec delay
+            let currentTime = Date().millisecondsSince1970
+            let scheduleRefreshTime = (tokenExpiryTime - currentTime)/1000
+            PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
+            if tokenExpiryTime > currentTime {
+                PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED CALLED AFTER \(scheduleRefreshTime) SEC")
 
-            Clock.sync(completion:  { date, offset in
-                if let getResDate = date {
-                    PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
-                    let currentTime = getResDate.millisecondsSince1970
+                if RunAsyncFunc.shared.isAlreadyScheduled == false {
+                    RunAsyncFunc.shared.executeScheduleCall(scheduleTime: TimeInterval(scheduleRefreshTime))
+                }
 
-                    let scheduleRefreshTime = (tokenExpiryTime - currentTime)/1000
-
-                    if tokenExpiryTime > currentTime {
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(scheduleRefreshTime)) {
-                            PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
-                            NetworkManager.shareInstance.handleLicenseToken { result in
-                                if result {
-                                    AppDelegate.generateAccessKey{ result in
-                                        if result == true {
-                                            SocketManager.sharedInstance.connect()
-                                        }
-                                    }
-                                }
-                                completion(result)
-                            }
-                        }
-                    } else if  (currentTime > tokenExpiryTime) {
-                        //expired
-                        PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
-                        NetworkManager.shareInstance.handleLicenseToken { result in
-                            if result {
-                                AppDelegate.generateAccessKey{ result in
-                                    if result == true {
-                                        SocketManager.sharedInstance.connect()
-                                    }
-                                }
+            } else if (currentTime > tokenExpiryTime) {
+                //expired
+                PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
+                //RunAsyncFunc.shared.addAsyncTask()
+                NetworkManager.shareInstance.handleLicenseToken { result in
+                    if result {
+                        AppDelegate.generateAccessKey{ result in
+                            if result == true {
+                                //SocketManager.sharedInstance.connect()
                             }
                             completion(result)
                         }
                     } else {
-                        NetworkManager.shareInstance.handleLicenseToken { result in
-                            if result {
-                                AppDelegate.generateAccessKey{ result in
-                                    if result == true {
-                                        SocketManager.sharedInstance.connect()
-                                    }
-                                }
+                        completion(false)
+                    }
+                }
+            } else {
+                NetworkManager.shareInstance.handleLicenseToken { result in
+                    if result {
+                        AppDelegate.generateAccessKey{ result in
+                            if result == true {
+                                //SocketManager.sharedInstance.connect()
                             }
                             completion(result)
                         }
-                        //NetworkManager.shareInstance.startTokenRefreshProcedure()
+                    } else {
+                        completion(false)
                     }
-                } else {
-                    completion(false)
                 }
-            })
-
+                //NetworkManager.shareInstance.startTokenRefreshProcedure()
+            }
         } else {
             //NetworkManager.shareInstance.startTokenRefreshProcedure()
             NetworkManager.shareInstance.handleLicenseToken { result in
                 if result {
                     AppDelegate.generateAccessKey{ result in
                         if result == true {
-                            SocketManager.sharedInstance.connect()
+                            //SocketManager.sharedInstance.connect()
                         }
+                        completion(result)
                     }
+                } else {
+                    completion(false)
                 }
-                completion(result)
             }
         }
     }
+
+
+}
+
+
+class RunAsyncFunc {
+
+    static let shared = RunAsyncFunc()
+    var isAlreadyScheduled = false
+
+    var queues = DispatchQueue(label: "com.dispatch.workItem")
+    //  Create a work item
+    var workItems = DispatchWorkItem { }
+    func executeScheduleCall(scheduleTime: TimeInterval) {
+        //isAlreadyScheduled = true
+        workItems = DispatchWorkItem() {
+            NetworkManager.shareInstance.handleLicenseToken { result in
+                if result {
+                    AppDelegate.generateAccessKey{ result in
+                        //
+                    }
+                }
+            }
+        }
+        queues.asyncAfter(deadline: .now() + Double(scheduleTime), execute: workItems)
+    }
+
+    func addAsyncTask() {
+        queues.async(execute: workItems)
+    }
+
+    func cancelRunningAsyncTask() {
+        isAlreadyScheduled = false
+        workItems.cancel()
+    }
+
 }

@@ -87,7 +87,7 @@ class PermissionViewController: UIViewController {
             if result {
                 AppDelegate.generateAccessKey{ result in
                     if result == true {
-                        SocketManager.sharedInstance.connect()
+                       // SocketManager.sharedInstance.connect()
                     }
                 }
             }

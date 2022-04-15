@@ -48,6 +48,8 @@ struct NetworkManager:Network {
     let provider =  MoyaProvider<NetworkServiceAPI>(endpointClosure:endpointClosure, plugins: GlobalMethod.isAppInProduction ? [LoggerPlugIn()] : [ NetworkLoggerPlugin(configuration: .init(logOptions: .verbose)), LoggerPlugIn()])
 
     func getAuthkey(completion: @escaping (Data?) -> Void) {
+        var srcLangCode = ""
+        var desLangCode = ""
         let format = "PCM";
         let samplingRate = "44100";
         let samplingSize = "16";
@@ -58,14 +60,21 @@ struct NetworkManager:Network {
         if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
             licenseToken = token
         }
+        if LanguageSelectionManager.shared.isArrowUp {
+            srcLangCode = LanguageSelectionManager.shared.bottomLanguage
+            desLangCode = LanguageSelectionManager.shared.topLanguage
+        }else{
+            srcLangCode = LanguageSelectionManager.shared.topLanguage
+            desLangCode = LanguageSelectionManager.shared.bottomLanguage
+        }
         let params = [
             "license_token": licenseToken,
             codec_param : codec,
-            srclang : LanguageSelectionManager.shared.bottomLanguage,
-            destlang : LanguageSelectionManager.shared.topLanguage
+            srclang : srcLangCode,
+            destlang : desLangCode
         ]
 
-        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(LanguageSelectionManager.shared.bottomLanguage) desLang \(LanguageSelectionManager.shared.topLanguage)")
+        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(srcLangCode) desLang \(desLangCode)")
         provider.request(.authkey(params: params)){ result in
 
             switch result  {
@@ -152,10 +161,11 @@ struct NetworkManager:Network {
                     let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                     if let result_code = result.resultCode {
                         if result_code == response_ok {
+                            PrintUtility.printLog(tag: "Language Setting API", text: "")
                             completion(successResponse.data)
 
                         } else if result_code == WARN_INVALID_KEY {
-
+                            PrintUtility.printLog(tag: "Language Setting API", text: "Warn Invalid Key")
                             serialQueue.async { startTokenRefreshProcedure() }
                             serialQueue.async {}
 
@@ -232,10 +242,12 @@ struct NetworkManager:Network {
         switch result {
         case let .success(response):
             do {
+                //IAPManager.shared.setScheduleExecution = 0
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
+                        PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
@@ -276,7 +288,6 @@ struct NetworkManager:Network {
                                             presentVC.present(alertVC, animated: true, completion: nil)
                                             IAPManager.shared.alreadyAlertVisible = true
                                         }
-
                                     }
                                 }
                             completion(nil)
@@ -287,9 +298,11 @@ struct NetworkManager:Network {
                 }
 
             } catch let err {
+                //IAPManager.shared.setScheduleExecution = 0
                 completion(nil)
             }
         case let .failure(error):
+            //IAPManager.shared.setScheduleExecution = 0
             completion(nil)
         }
     }
@@ -397,17 +410,25 @@ struct NetworkManager:Network {
                         PrintUtility.printLog(tag: "Liscense key", text: "\(liscense_token)")
                         UserDefaults.standard.set(liscense_token, forKey: licenseTokenUserDefaultKey)
 
-                        Clock.sync(completion:  { date, offset in
-                            if let getResDate = date {
-                                PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
-                                let tokenCreationTimeInMiliSecond = getResDate.millisecondsSince1970
-                                UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
-                                completion(true)
-                            }
-                        })
+                        let tokenCreationTimeInMiliSecond = Date().millisecondsSince1970
+                        UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
+                        completion(true)
+
+//                        Clock.sync(completion:  { date, offset in
+//                            if let getResDate = date {
+//                                PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
+//                                let tokenCreationTimeInMiliSecond = getResDate.millisecondsSince1970
+//                                UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
+//                                completion(true)
+//                            }
+//                        })
+                    } else {
+                        completion(false)
                     }
                 }
-            } catch{}
+            } catch{
+                completion(false)
+            }
         }
     }
 

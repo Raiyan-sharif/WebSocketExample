@@ -43,7 +43,7 @@ class SpeechProcessingViewController: BaseViewController{
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
     
     var isFromTutorial : Bool = false
-
+    var countDownTimer:Timer?
     var languageHasUpdated = false
     private var socketData = [Data]()
     private let selectedLanguageIndex : Int = 8
@@ -98,6 +98,7 @@ class SpeechProcessingViewController: BaseViewController{
         super.viewDidLoad()
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
+        checkSocketConnection()
         setupTriangeAnimationView()
         registerForNotification()
         bindData()
@@ -108,19 +109,15 @@ class SpeechProcessingViewController: BaseViewController{
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+               
                 LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
-                let accessKey = UserDefaultsProperty<String>(authentication_key).value
-                if accessKey == nil {
-                    SocketManager.sharedInstance.disconnect()
-                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = true
-                    AppDelegate.generateAccessKey{ result in
-                        if result == true {
-                            SocketManager.sharedInstance.connect()
-                        }
-                    }
-                }
+                AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+            } else if reachable == .no {
+                //SocketManager.sharedInstance.disconnect()
             }
         }
+        SocketManager.sharedInstance.socketManagerDelegate = self
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,7 +152,28 @@ class SpeechProcessingViewController: BaseViewController{
     private weak var homeVC:HomeViewController?  {
         return self.parent as? HomeViewController
     }
-    
+
+
+    func checkSocketConnection(){
+        ActivityIndicator.sharedInstance.show()
+        var runCount = 0
+         countDownTimer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            guard let `self` = self else { return }
+            runCount += 1
+            if SocketManager.sharedInstance.isConnected == true {
+                timer.invalidate()
+                ActivityIndicator.sharedInstance.hide()
+            }
+            if runCount == 5 {
+                timer.invalidate()
+                ActivityIndicator.sharedInstance.hide()
+                //SocketManager.sharedInstance.disconnect()
+                //self.showServerErrorAlert()
+            }
+        }
+    }
+
+
     private func setupTriangeAnimationView(){
         self.speechProcessingRightImgView.isHidden = true
         self.speechProcessingLeftImgView.isHidden = true
@@ -586,31 +604,24 @@ class SpeechProcessingViewController: BaseViewController{
         self.service?.timerInvalidate()
         self.removeAnimation()
          */
+
+        countDownTimer?.invalidate()
+        countDownTimer = nil
         ActivityIndicator.sharedInstance.hide()
     }
     
     @objc private func appBecomeActive() {
-        DispatchQueue.main.async {
-            ActivityIndicator.sharedInstance.show()
-        }
+        //self.loaderInvisible()
+        checkSocketConnection()
         AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
-                if result {                                         
-                    DispatchQueue.main.async {
-                        ActivityIndicator.sharedInstance.hide()
-                    }
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-                        ActivityIndicator.sharedInstance.hide()
-                    }
-                }
         }
         PrintUtility.printLog(tag: TAG, text: "Become Active")
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        self.loaderInvisible()
     }
 
     @objc private func appWillEnterForeground() {
+        PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
         SocketManager.sharedInstance.connect()
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
     }
@@ -649,7 +660,9 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 
 //MARK: - SocketManagerDelegate
 extension SpeechProcessingViewController : SocketManagerDelegate{
-    func socket(isConnected: Bool) {}
+    func socket(isConnected: Bool) {
+        //SocketManager.sharedInstance.connect()
+    }
 
     func getText(text: String) {
         speechProcessingVM.isGettingActualData = true

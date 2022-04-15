@@ -47,13 +47,13 @@ class AppRater: NSObject {
             PrintUtility.printLog(tag: TAG, text: "No network to save launch time")
             return
         }
-        Clock.sync(completion:  { [weak self] date, offset in
-            guard let self = self, let curDate = date else { return }
+        //Clock.sync(completion:  { [weak self] date, offset in
+            //guard let self = self, let curDate = date else { return }
 
-            let currentTimeInMilliSecond = Double(curDate.millisecondsSince1970)
+            let currentTimeInMilliSecond = Double(Date().millisecondsSince1970)
             PrintUtility.printLog(tag: self.TAG, text: "Save app launch time")
             KeychainWrapper.standard.set(currentTimeInMilliSecond, forKey: self.appLaunchTimeKey)
-        })
+       // })
     }
 
     public func incrementTranslationCount() {
@@ -88,17 +88,17 @@ class AppRater: NSObject {
             PrintUtility.printLog(tag: TAG, text: "No network to check threshold time")
             return completionHandler(false)
         }
-        Clock.sync(completion:  { [weak self] date, offset in
-            guard let self = self, let curDate = date else { return completionHandler(false)}
+       // Clock.sync(completion:  { [weak self] date, offset in
+            //guard let self = self, let curDate = date else { return completionHandler(false)}
 
             let savedDateTime = Date(timeIntervalSince1970: savedTimeInMilliSecond/1000)
             if let thresholdDate = Calendar.current.date(byAdding: .day, value: self.thresholdDayForAppRating, to: savedDateTime) {
-                let hasPassed = curDate > thresholdDate
+                let hasPassed = Date() > thresholdDate
                 PrintUtility.printLog(tag: self.TAG, text: "hasThresholdTimePassed - \(hasPassed)")
                 return completionHandler(hasPassed)
             }
             return completionHandler(false)
-        })
+      //  })
     }
 
     private func isTranslationCountMeetThresholdValue() -> Bool {

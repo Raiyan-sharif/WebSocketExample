@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //var isAppRelaunch = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
@@ -116,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        RunAsyncFunc.shared.cancelRunningAsyncTask()
         SocketManager.sharedInstance.disconnect()
         ActivityIndicator.sharedInstance.hide()
     }

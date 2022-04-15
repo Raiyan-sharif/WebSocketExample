@@ -64,6 +64,8 @@ class SocketManager: NSObject {
         if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
             socket.request.setValue(token, forHTTPHeaderField: "X-License-Token")
         }
+        PrintUtility.printLog(tag: TAG, text: "Socket update key")
+        //socket.connect()
     }
     
 }

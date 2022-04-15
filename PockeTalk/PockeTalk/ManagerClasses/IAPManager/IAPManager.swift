@@ -36,6 +36,7 @@ class IAPManager: NSObject {
     private override init() { super.init() }
     var shouldBypassPurchasePlan = false
     var alreadyAlertVisible = false
+    var setScheduleExecution = 0
 
     struct LatestReceiptInfo {
         var productId: String?
@@ -499,17 +500,17 @@ extension IAPManager {
                 do {
                     if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
                         if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
-                            Clock.sync(completion:  { date, offset in
-                                if let getResDate = date {
-                                    let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: getResDate, latestReceiptInfoArray: latestInfoReceiptObjects)
+                            //Clock.sync(completion:  { date, offset in
+                               // if let getResDate = date {
+                                    let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: Date(), latestReceiptInfoArray: latestInfoReceiptObjects)
                                     if let purchaseStatus = purchaseStatus {
                                         KeychainWrapper.standard.set(purchaseStatus, forKey: kInAppPurchaseStatus)
                                     }
                                     completion(purchaseStatus!, nil)
-                                } else {
-                                    completion(false, IAPError.parseErrorForCurrentUTCFormatDate)
-                                }
-                            })
+                                //} else {
+                                    //completion(false, IAPError.parseErrorForCurrentUTCFormatDate)
+                                //}
+                           // })
                         } else {
                             completion(false, IAPError.parseErrorToGetLatestInfoReceiptObjects)
                         }
