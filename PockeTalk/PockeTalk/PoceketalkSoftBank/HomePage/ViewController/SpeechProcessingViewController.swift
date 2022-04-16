@@ -310,6 +310,8 @@ class SpeechProcessingViewController: BaseViewController{
         
         service?.recordDidStop = { [weak self]  in
             guard let `self` = self else { return }
+            self.timer?.invalidate()
+            self.timer = nil
             if self.speechLangCode == BURMESE_LANG_CODE {
                 SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
                 DispatchQueue.main.async  { [weak self] in
@@ -328,27 +330,37 @@ class SpeechProcessingViewController: BaseViewController{
                         }
                     }
                 }
-            } else if self.speechProcessingVM.isGettingActualData{
+            } else if self.speechProcessingVM.isGettingActualData {
                 self.speechProcessingVM.isGettingActualData = false
+                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Go with Actual data")
                 SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
-                DispatchQueue.main.async  { [weak self] in
-                    guard let `self` = self else { return }
+                //DispatchQueue.main.async  { [weak self] in
                     var runCount = 0
+                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Call for timer")
                     self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] innerTimer in
+                        PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Inner timer")
                         guard let `self` = self else { return }
                         runCount += 1
-                        if runCount == self.waitngISFinalSecond {
-                            innerTimer.invalidate()
-                            if !self.isFinalProvided {
-                                PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
-                                self.loaderInvisible()
-                                self.removeAnimation()
-                                //Show microphone button when get STT text from server
-                                self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
+                        PrintUtility.printLog(tag: "Service.recorderDidStop", text: "run count executes :\(runCount), \(self.waitngISFinalSecond)")
+                            if runCount == self.waitngISFinalSecond {
+                                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "\(self.waitngISFinalSecond)")
+                                innerTimer.invalidate()
+                                DispatchQueue.main.async { [weak self] in
+                                    guard let `self` = self else { return }
+                                    if !self.isFinalProvided {
+                                        PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
+                                        self.loaderInvisible()
+                                        self.removeAnimation()
+                                        //Show microphone button when get STT text from server
+                                        self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
+                                    } else {
+                                        PrintUtility.printLog(tag: "loader invisible ", text: "in else block")
+                                        self.loaderInvisible()
+                                    }
+                                }
                             }
-                        }
                     }
-                }
+               // }
             }else{
                 PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop Didnot GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
                 self.loaderInvisible()
@@ -363,7 +375,7 @@ class SpeechProcessingViewController: BaseViewController{
         let second =  isFromTutorial ? 0.5 : 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
-            //SocketManager.sharedInstance.disconnect()
+            SocketManager.sharedInstance.disconnect()
             ActivityIndicator.sharedInstance.hide()
             PrintUtility.printLog(tag: self.TAG, text: "loaderInvisible")
             self.homeVC?.enableORDisableMicrophoneButton(isEnable: true)
@@ -598,6 +610,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appDidEnterBackground() {
+        self.loaderInvisible()
         PrintUtility.printLog(tag: TAG, text: "Did enter background")
         //TODO: Comment out this code because it has some impact on the STT process in background
         /*
@@ -611,7 +624,6 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appBecomeActive() {
-        //self.loaderInvisible()
         checkSocketConnection()
         AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
         }
