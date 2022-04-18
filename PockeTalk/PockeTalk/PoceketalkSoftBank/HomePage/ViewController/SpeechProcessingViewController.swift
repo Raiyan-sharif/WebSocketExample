@@ -190,8 +190,6 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func setupUI () {
-        addSpinner()
-        
         PrintUtility.printLog(tag: TAG, text: "Speech language code \(speechLangCode)")
         self.titleLabel.text = self.speechProcessingVM.getSpeechLanguageInfoByCode(langCode: speechLangCode)?.initText
         
@@ -250,18 +248,7 @@ class SpeechProcessingViewController: BaseViewController{
         
         NotificationCenter.default.addObserver(self, selector: #selector(pronunciationTextUpdate(notification:)), name:.pronumTiationTextUpdate, object: nil)
     }
-    
-    private func addSpinner(){
-        spinnerView = SpinnerView();
-        self.view.addSubview(spinnerView)
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        spinnerView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        spinnerView.isHidden = true
-    }
-    
+
     private func updateAnimation () {
         self.speechProcessingRightImgView.isHidden = false
         self.speechProcessingLeftImgView.isHidden = false
@@ -372,6 +359,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     private func loaderInvisible(isFromTutorial:Bool = false){
+        self.timer?.invalidate()
         let second =  isFromTutorial ? 0.5 : 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
@@ -710,7 +698,6 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         service?.startRecord()
         SpeechProcessingViewModel.isLoading = false
         updateAnimation()
-        addSpinner()
     }
     
     func stopRecord() {
