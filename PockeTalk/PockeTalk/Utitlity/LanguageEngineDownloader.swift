@@ -17,11 +17,12 @@ class LanguageEngineDownloader: NSObject {
     }
 
     public func checkTimeAndDownloadLanguageEngineFile() {
-        Clock.sync(completion:  { [weak self] date, _ in
-            guard let self = self, let curDate = date else {
-                PrintUtility.printLog(tag: "LANGUAGE ENGINE", text: "Failed to get current time")
-                return
-            }
+       // Clock.sync(completion:  { [weak self] date, _ in
+          
+//            guard let self = self, let curDate = date else {
+//                PrintUtility.printLog(tag: "LANGUAGE ENGINE", text: "Failed to get current time")
+//                return
+//            }
             let savedTimeInMilliSecond = UserDefaults.standard.double(forKey: KLanguageEngineFileCreationTime)
             if (savedTimeInMilliSecond == 0) {
                 PrintUtility.printLog(tag: self.TAG, text: "Saved time is nil, downloading file from server")
@@ -29,7 +30,7 @@ class LanguageEngineDownloader: NSObject {
                 return
             }
             let expiryTime = savedTimeInMilliSecond + self.thresholdTimeInMilliSecondForFileDownload
-            let curTimeInMilliSecond = Double(curDate.millisecondsSince1970)
+            let curTimeInMilliSecond = Double(Date().millisecondsSince1970)
             if (curTimeInMilliSecond >= expiryTime) {
                 PrintUtility.printLog(tag: self.TAG, text: "Threshold time passed, downloading file from server")
                 self.downloadFileFromServer()
@@ -38,7 +39,7 @@ class LanguageEngineDownloader: NSObject {
                 let remainingTimeInSecond = (expiryTime - curTimeInMilliSecond)/1000
                 self.setFileDownloadTimer(interval: remainingTimeInSecond)
             }
-        })
+       // })
     }
 
     private func setFileDownloadTimer(interval: Double) {
@@ -72,7 +73,7 @@ class LanguageEngineDownloader: NSObject {
                 return
             }
             PrintUtility.printLog(tag: self.TAG, text: "File downloaded to directory - \(path)")
-            let currentTimeInMilliSecond = Double(Clock.now?.millisecondsSince1970 ?? 0)
+            let currentTimeInMilliSecond = Double(Date().millisecondsSince1970 ?? 0)
             UserDefaults.standard.set(currentTimeInMilliSecond, forKey: KLanguageEngineFileCreationTime)
         }
     }

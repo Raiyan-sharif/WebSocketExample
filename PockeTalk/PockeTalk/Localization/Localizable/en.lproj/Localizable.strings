@@ -186,3 +186,7 @@
 "KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
 "kCouponActivatedMesage" = "Coupon has been activated";
 "kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+
+// License token failure alert
+"kUnknownError" = "Server Error.\nTry again";
+

@@ -17,13 +17,13 @@ protocol Network {
 
 let endpointClosure = { (target: NetworkServiceAPI) -> Endpoint in
     let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
-          PrintUtility.printLog(tag: "Endpoint_Path", text: target.baseURL.absoluteString+target.path)
-          PrintUtility.printLog(tag: "Endpoint_base_url", text:target.baseURL.absoluteString)
-          PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
-          PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
-          PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
-          PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
-        return defaultEndpoint
+    PrintUtility.printLog(tag: "Endpoint_Path", text: target.baseURL.absoluteString+target.path)
+    PrintUtility.printLog(tag: "Endpoint_base_url", text:target.baseURL.absoluteString)
+    PrintUtility.printLog(tag: "Endpoint_imeiNumber", text:imeiNumber)
+    PrintUtility.printLog(tag: "Endpoint_bundle", text: Bundle.main.bundleIdentifier ?? "")
+    PrintUtility.printLog(tag: "Endpoint_Audio_Stream_Url", text: AUDIO_STREAM_URL)
+    PrintUtility.printLog(tag: "Endpoint_Close", text: "**************************")
+    return defaultEndpoint
 }
 
 struct LoggerPlugIn:PluginType{
@@ -48,6 +48,8 @@ struct NetworkManager:Network {
     let provider =  MoyaProvider<NetworkServiceAPI>(endpointClosure:endpointClosure, plugins: GlobalMethod.isAppInProduction ? [LoggerPlugIn()] : [ NetworkLoggerPlugin(configuration: .init(logOptions: .verbose)), LoggerPlugIn()])
 
     func getAuthkey(completion: @escaping (Data?) -> Void) {
+        var srcLangCode = ""
+        var desLangCode = ""
         let format = "PCM";
         let samplingRate = "44100";
         let samplingSize = "16";
@@ -58,14 +60,21 @@ struct NetworkManager:Network {
         if let token =  UserDefaults.standard.string(forKey: licenseTokenUserDefaultKey) {
             licenseToken = token
         }
+        if LanguageSelectionManager.shared.isArrowUp {
+            srcLangCode = LanguageSelectionManager.shared.bottomLanguage
+            desLangCode = LanguageSelectionManager.shared.topLanguage
+        }else{
+            srcLangCode = LanguageSelectionManager.shared.topLanguage
+            desLangCode = LanguageSelectionManager.shared.bottomLanguage
+        }
         let params = [
             "license_token": licenseToken,
             codec_param : codec,
-            srclang : LanguageSelectionManager.shared.bottomLanguage,
-            destlang : LanguageSelectionManager.shared.topLanguage
+            srclang : srcLangCode,
+            destlang : desLangCode
         ]
 
-        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(LanguageSelectionManager.shared.bottomLanguage) desLang \(LanguageSelectionManager.shared.topLanguage)")
+        PrintUtility.printLog(tag: TAG, text:" AuthKey srclang \(srcLangCode) desLang \(desLangCode)")
         provider.request(.authkey(params: params)){ result in
 
             switch result  {
@@ -152,10 +161,11 @@ struct NetworkManager:Network {
                     let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                     if let result_code = result.resultCode {
                         if result_code == response_ok {
+                            PrintUtility.printLog(tag: "Language Setting API", text: "")
                             completion(successResponse.data)
 
                         } else if result_code == WARN_INVALID_KEY {
-
+                            PrintUtility.printLog(tag: "Language Setting API", text: "Warn Invalid Key")
                             serialQueue.async { startTokenRefreshProcedure() }
                             serialQueue.async {}
 
@@ -232,13 +242,14 @@ struct NetworkManager:Network {
         switch result {
         case let .success(response):
             do {
+                //IAPManager.shared.setScheduleExecution = 0
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
+                        PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
-
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
@@ -256,15 +267,42 @@ struct NetworkManager:Network {
                         PrintUtility.printLog(tag: "License Token API", text: "Unknown error")
                         completion(nil)
                     } else {
+                        PrintUtility.printLog(tag: "License Token API", text: "License info over")
+                            let alertVC = UIAlertController(title: "" , message: "kUnknownError".localiz(), preferredStyle: UIAlertController.Style.alert)
+                            alertVC.view.tintColor = UIColor.black
+                            let okAction = UIAlertAction(title: "OK".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
+                                // add ok action functionality
+                                IAPManager.shared.alreadyAlertVisible = false
+                                exit(0)
+                            }
+                            alertVC.addAction(okAction)
+                            DispatchQueue.main.async {
+                                IAPManager.shared.getTopVisibleViewController { topViewController in
+                                    if let viewController = topViewController {
+                                        var presentVC = viewController
+                                        while let next = presentVC.presentedViewController {
+                                            presentVC = next
+                                        }
+                                        if IAPManager.shared.alreadyAlertVisible == false {
+                                            ActivityIndicator.sharedInstance.hide()
+                                            presentVC.present(alertVC, animated: true, completion: nil)
+                                            IAPManager.shared.alreadyAlertVisible = true
+                                        }
+                                    }
+                                }
+                            completion(nil)
+                        }
                         PrintUtility.printLog(tag: "License Token API", text: "License Token API Failed")
                         completion(nil)
                     }
                 }
 
             } catch let err {
+                //IAPManager.shared.setScheduleExecution = 0
                 completion(nil)
             }
         case let .failure(error):
+            //IAPManager.shared.setScheduleExecution = 0
             completion(nil)
         }
     }
@@ -372,24 +410,36 @@ struct NetworkManager:Network {
                         PrintUtility.printLog(tag: "Liscense key", text: "\(liscense_token)")
                         UserDefaults.standard.set(liscense_token, forKey: licenseTokenUserDefaultKey)
 
-                        Clock.sync(completion:  { date, offset in
-                            if let getResDate = date {
-                                PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
-                                let tokenCreationTimeInMiliSecond = getResDate.millisecondsSince1970
-                                UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
-                                completion(true)
-                            }
-                        })
+                        let tokenCreationTimeInMiliSecond = Date().millisecondsSince1970
+                        UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
+                        completion(true)
+
+//                        Clock.sync(completion:  { date, offset in
+//                            if let getResDate = date {
+//                                PrintUtility.printLog(tag: "get Response Date", text: "\(getResDate)")
+//                                let tokenCreationTimeInMiliSecond = getResDate.millisecondsSince1970
+//                                UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
+//                                completion(true)
+//                            }
+//                        })
+                    } else {
+                        completion(false)
                     }
                 }
-            } catch{}
+            } catch{
+                completion(false)
+            }
         }
     }
 
     func startTokenRefreshProcedure() {
         handleLicenseToken { result in
             if result {
-                AppDelegate.generateAccessKey()
+                AppDelegate.generateAccessKey { result in
+                    if result == true {
+                        SocketManager.sharedInstance.connect()
+                    }
+                }
             }
         }
     }

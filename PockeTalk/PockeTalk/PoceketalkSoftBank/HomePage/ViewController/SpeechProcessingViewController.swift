@@ -43,7 +43,7 @@ class SpeechProcessingViewController: BaseViewController{
     static let didPressMicroBtn = Notification.Name("didPressMicroBtn")
     
     var isFromTutorial : Bool = false
-
+    var countDownTimer:Timer?
     var languageHasUpdated = false
     private var socketData = [Data]()
     private let selectedLanguageIndex : Int = 8
@@ -98,24 +98,26 @@ class SpeechProcessingViewController: BaseViewController{
         super.viewDidLoad()
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
+        checkSocketConnection()
         setupTriangeAnimationView()
         registerForNotification()
         bindData()
         setupAudio()
-        AppDelegate.executeLicenseTokenRefreshFunctionality()
+        //showLoaderDependentOnApiCall()
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+               
                 LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
-                let accessKey = UserDefaultsProperty<String>(authentication_key).value
-                if accessKey == nil {
-                    SocketManager.sharedInstance.disconnect()
-                    UserDefaultsProperty<Bool>(isNetworkAvailable).value = true
-                    AppDelegate.generateAccessKey()
-                }
+                AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+            } else if reachable == .no {
+                //SocketManager.sharedInstance.disconnect()
             }
         }
+        SocketManager.sharedInstance.socketManagerDelegate = self
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,7 +152,28 @@ class SpeechProcessingViewController: BaseViewController{
     private weak var homeVC:HomeViewController?  {
         return self.parent as? HomeViewController
     }
-    
+
+
+    func checkSocketConnection(){
+        ActivityIndicator.sharedInstance.show()
+        var runCount = 0
+         countDownTimer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            guard let `self` = self else { return }
+            runCount += 1
+            if SocketManager.sharedInstance.isConnected == true {
+                timer.invalidate()
+                ActivityIndicator.sharedInstance.hide()
+            }
+            if runCount == 5 {
+                timer.invalidate()
+                ActivityIndicator.sharedInstance.hide()
+                //SocketManager.sharedInstance.disconnect()
+                //self.showServerErrorAlert()
+            }
+        }
+    }
+
+
     private func setupTriangeAnimationView(){
         self.speechProcessingRightImgView.isHidden = true
         self.speechProcessingLeftImgView.isHidden = true
@@ -194,12 +217,27 @@ class SpeechProcessingViewController: BaseViewController{
         self.pronunciationView.backgroundColor = UIColor(patternImage: UIImage(named: "slider_back_texture_white.png")!)
         self.view.bottomImageView(usingState: .black)
     }
+
+    func showLoaderDependentOnApiCall() {
+        ActivityIndicator.sharedInstance.show()
+
+        if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                ActivityIndicator.sharedInstance.hide()
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+                ActivityIndicator.sharedInstance.hide()
+            }
+        }
+    }
     
     private func registerForNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+            
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         }
@@ -272,6 +310,8 @@ class SpeechProcessingViewController: BaseViewController{
         
         service?.recordDidStop = { [weak self]  in
             guard let `self` = self else { return }
+            self.timer?.invalidate()
+            self.timer = nil
             if self.speechLangCode == BURMESE_LANG_CODE {
                 SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
                 DispatchQueue.main.async  { [weak self] in
@@ -290,27 +330,37 @@ class SpeechProcessingViewController: BaseViewController{
                         }
                     }
                 }
-            } else if self.speechProcessingVM.isGettingActualData{
+            } else if self.speechProcessingVM.isGettingActualData {
                 self.speechProcessingVM.isGettingActualData = false
+                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Go with Actual data")
                 SocketManager.sharedInstance.sendTextData(text: self.speechProcessingVM.getTextFrame(),completion:nil)
-                DispatchQueue.main.async  { [weak self] in
-                    guard let `self` = self else { return }
+                //DispatchQueue.main.async  { [weak self] in
                     var runCount = 0
+                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Call for timer")
                     self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] innerTimer in
+                        PrintUtility.printLog(tag: "Service.recorderDidStop", text: "Inner timer")
                         guard let `self` = self else { return }
                         runCount += 1
-                        if runCount == self.waitngISFinalSecond {
-                            innerTimer.invalidate()
-                            if !self.isFinalProvided {
-                                PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
-                                self.loaderInvisible()
-                                self.removeAnimation()
-                                //Show microphone button when get STT text from server
-                                self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
+                        PrintUtility.printLog(tag: "Service.recorderDidStop", text: "run count executes :\(runCount), \(self.waitngISFinalSecond)")
+                            if runCount == self.waitngISFinalSecond {
+                                PrintUtility.printLog(tag: "Service.recorderDidStop", text: "\(self.waitngISFinalSecond)")
+                                innerTimer.invalidate()
+                                DispatchQueue.main.async { [weak self] in
+                                    guard let `self` = self else { return }
+                                    if !self.isFinalProvided {
+                                        PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
+                                        self.loaderInvisible()
+                                        self.removeAnimation()
+                                        //Show microphone button when get STT text from server
+                                        self.showMicrophoneBtnInLanguageScene(delayTime: 1.0)
+                                    } else {
+                                        PrintUtility.printLog(tag: "loader invisible ", text: "in else block")
+                                        self.loaderInvisible()
+                                    }
+                                }
                             }
-                        }
                     }
-                }
+               // }
             }else{
                 PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop Didnot GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
                 self.loaderInvisible()
@@ -560,24 +610,30 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appDidEnterBackground() {
+        self.loaderInvisible()
         PrintUtility.printLog(tag: TAG, text: "Did enter background")
         //TODO: Comment out this code because it has some impact on the STT process in background
         /*
         self.service?.timerInvalidate()
         self.removeAnimation()
          */
+
+        countDownTimer?.invalidate()
+        countDownTimer = nil
         ActivityIndicator.sharedInstance.hide()
     }
     
     @objc private func appBecomeActive() {
-        AppDelegate.executeLicenseTokenRefreshFunctionality()
+        checkSocketConnection()
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
+        }
         PrintUtility.printLog(tag: TAG, text: "Become Active")
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
-        self.loaderInvisible()
     }
 
     @objc private func appWillEnterForeground() {
+        PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
         SocketManager.sharedInstance.connect()
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
     }
@@ -616,7 +672,9 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 
 //MARK: - SocketManagerDelegate
 extension SpeechProcessingViewController : SocketManagerDelegate{
-    func socket(isConnected: Bool) {}
+    func socket(isConnected: Bool) {
+        //SocketManager.sharedInstance.connect()
+    }
 
     func getText(text: String) {
         speechProcessingVM.isGettingActualData = true

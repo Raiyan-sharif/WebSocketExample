@@ -186,3 +186,6 @@
 "KSubscriptionErrorMessage" = "サブスクリプション契約されているため\nクーポンコードが利用できませんでした";
 "kCouponActivatedMesage" = "クーポンが有効になりました";
 "kCouponCodeParseError" = "クーポンコード認証エラー\n再度お試しください";
+
+// License token failure alert
+"kUnknownError" = "サーバエラー。\nもう一度やり直してください。";
