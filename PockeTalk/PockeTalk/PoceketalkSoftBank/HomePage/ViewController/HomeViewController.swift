@@ -377,6 +377,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.onArrowChanged(notification:)), name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.languageChangedFromSettings(notification:)), name: .languageChangeFromSettingsNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onSttError(notification:)), name: .sttInputError, object: nil)
     }
 
     //MARK: - IBActions
@@ -524,6 +525,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .languageSelectionArrowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageChangeFromSettingsNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .sttInputError, object: nil)
     }
 
     private func openLanguageSelectionScreen(isNative: Int){
@@ -583,6 +585,12 @@ class HomeViewController: BaseViewController {
             if (languageInfo["isLanguageChanged"] ?? false) == true {
                 speechVC.languageHasUpdated = true
             }
+        }
+    }
+    @objc private func onSttError(notification: Notification) {
+        DispatchQueue.main.async {
+            guard let url = Bundle.main.url(forResource: "record_failed", withExtension: "wav") else { return }
+            AudioPlayer.sharedInstance.playSTTSound(url: url)
         }
     }
 

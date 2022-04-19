@@ -35,4 +35,5 @@ extension Notification.Name {
     static let bottmViewGestureNotification = Notification.Name("BottmViewGestureNotification")
     static let languageChangeFromSettingsNotification = Notification.Name("languageChangeFromSettingsNotification")
     static let countryListBackNotification = Notification.Name("countryListBackNotification")
+    static let sttInputError = Notification.Name("sttInputErrorNotification")
 }
