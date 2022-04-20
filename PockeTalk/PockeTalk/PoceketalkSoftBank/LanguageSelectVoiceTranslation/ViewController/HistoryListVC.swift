@@ -27,6 +27,7 @@ class HistoryListVC: BaseViewController {
     private func setupLanguageProperty(){
         languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
         UserDefaultsProperty<String>(kSelectedHistoryLanguageVoice).value = languages.last?.code
+        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = languages.last?.code
         languages = languages.reversed()
         
         guard let selectedLanguageVoice =  UserDefaultsProperty<String>(KSelectedLanguageVoice).value else {return}

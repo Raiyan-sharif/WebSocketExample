@@ -16,7 +16,7 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak private var btnLangList: UIButton!
     @IBOutlet weak private var btnBack: UIButton!
     @IBOutlet weak private var toolbarTitleLabel: UILabel!
-    
+
     let TAG = "\(LangSelectVoiceVC.self)"
     var languageHasUpdated:(()->())?
     var updateHomeContainer:((_ isfullScreen:Bool)->())?
@@ -37,7 +37,8 @@ class LangSelectVoiceVC: BaseViewController {
     var selectedLanguageCode = ""
     var langugeListVC: LanguageListVC!
     var languageHistoryListVC: HistoryListVC!
-    
+
+    private var languageSelectionIndex = 0
     var isNative: Int = 0
     let trailing : CGFloat = -20
     let width : CGFloat = 100
@@ -52,10 +53,11 @@ class LangSelectVoiceVC: BaseViewController {
     var isFirstTimeLoad = true
     var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose = .HomeSpeechProcessing
     private var floatingMicrophoneButton: UIButton!
-    
+
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.languageSelectionIndex = getLangSelectionindex()
         setupUI()
         setupPageViewController()
         registerNotification()
@@ -84,7 +86,7 @@ class LangSelectVoiceVC: BaseViewController {
         setButtonTopCornerRadius(btnHistoryList)
         toolbarTitleLabel.text = "Language".localiz()
         toolbarTitleLabel.textColor = UIColor.white
-        updateButton(index:0)
+        updateButton(index:languageSelectionIndex)
     }
     
     private func setButtonTopCornerRadius(_ button: UIButton){
@@ -102,7 +104,7 @@ class LangSelectVoiceVC: BaseViewController {
 
       pageController.delegate = self
       pageController.dataSource = self
-      pageController.setViewControllers([showViewController(0)!], direction: .forward, animated: true, completion: nil)
+      pageController.setViewControllers([showViewController(languageSelectionIndex)!], direction: .forward, animated: true, completion: nil)
 
       self.pageController.view.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([
@@ -170,17 +172,7 @@ class LangSelectVoiceVC: BaseViewController {
         isFirstTimeLoad = false
         //Reset selected item lnaguage history index if it is in lnaguage history list
         let selectedItem = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
-        let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
-        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.voice.rawValue)
-        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
-            for item in languages {
-                if item.code == selectedItem {
-                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
-                        _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
-                    }
-                }
-            }
-        }
+        self.saveSelectedItemIntoDB(selectedItem: selectedItem)
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
@@ -191,7 +183,7 @@ class LangSelectVoiceVC: BaseViewController {
             navigateToCountryScene()
         }
     }
-    
+
     @IBAction func onBackButtonPressed(_ sender: Any) {
         //Update language based on language list or lnaguage history list or country language list
         if currentIndex == 0 {
@@ -204,6 +196,7 @@ class LangSelectVoiceVC: BaseViewController {
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = selectedLanguageCode
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if !fromRetranslation {
+            saveLangSelectionindex()
             if isNative == LanguageName.bottomLang.rawValue{
                 if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
                     LanguageSelectionManager.shared.isBottomLanguageChanged = true
@@ -257,6 +250,46 @@ class LangSelectVoiceVC: BaseViewController {
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)
         }
         microphoneIcon(isHidden: true)
+    }
+
+    func getLangSelectionindex() -> Int {
+        var index : Int?
+        if isNative == LanguageName.bottomLang.rawValue{
+            index = UserDefaultsProperty<Int>(kBottomLanguageSelectionIndex).value
+            if index == 1{
+                self.saveSelectedItemIntoDB(selectedItem: LanguageSelectionManager.shared.bottomLanguage)
+            }
+        }
+        else{
+            index = UserDefaultsProperty<Int>(kTopLanguageSelectionIndex).value
+            if index == 1{
+                self.saveSelectedItemIntoDB(selectedItem: LanguageSelectionManager.shared.topLanguage)
+            }
+        }
+        return index ?? 0
+    }
+
+    func saveLangSelectionindex() {
+        if isNative == LanguageName.bottomLang.rawValue{
+             UserDefaultsProperty<Int>(kBottomLanguageSelectionIndex).value = currentIndex
+        }
+        else{
+             UserDefaultsProperty<Int>(kTopLanguageSelectionIndex).value = currentIndex
+       }
+    }
+
+    private func saveSelectedItemIntoDB(selectedItem: String){
+        let languages = LanguageSelectionManager.shared.getSelectedLanguageListFromDb(cameraOrVoice: LanguageType.voice.rawValue)
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.voice.rawValue)
+        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+            for item in languages {
+                if item.code == selectedItem {
+                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+                    }
+                }
+            }
+        }
     }
 
     //MARK: - View Transactions
