@@ -530,7 +530,7 @@ class HomeViewController: BaseViewController {
 
     private func openLanguageSelectionScreen(isNative: Int){
         PrintUtility.printLog(tag: TAG, text: "\(HomeViewController.self) isNative \(isNative)")
-
+        SocketManager.sharedInstance.disconnect()
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
 

@@ -114,7 +114,8 @@ class SpeechProcessingViewController: BaseViewController{
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
-               
+                // Will be Socket connected if Network is connected showing but data is not availabe
+                //SocketManager.sharedInstance.connect()
                 LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
             } else if reachable == .no {
@@ -390,11 +391,13 @@ class SpeechProcessingViewController: BaseViewController{
         self.descriptionLabel.isHidden = isHidden
     }
     
-    func updateLanguageInRemote(){
-        //DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
-        self.speechProcessingVM.updateLanguage()
-        //}
-    }
+    func updateLanguageInRemote(completion:@escaping (()->())){
+            //DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
+            self.speechProcessingVM.updateLanguage { isOk in
+                completion()
+            }
+            //}
+        }
     
     private func showExampleText() {
         switch ScreenTracker.sharedInstance.screenPurpose {
@@ -642,9 +645,26 @@ class SpeechProcessingViewController: BaseViewController{
 
     @objc private func appWillEnterForeground() {
         PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
-        SocketManager.sharedInstance.connect()
-        LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        switch ScreenTracker.sharedInstance.screenPurpose {
+        case .HomeSpeechProcessing:
+            if Reachability.isConnectedToNetwork() {
+                if self.languageHasUpdated{
+                    self.speechProcessingVM.updateLanguage { isOk in
+                        if isOk{
+                            SocketManager.sharedInstance.connect()
+                        }
+                    }
+                }else{
+                    SocketManager.sharedInstance.connect()
+                }
+                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+            }
+            break
+        default:
+            break
+        }
     }
+    
 
     func showPronunciationPracticeResult (stt:String) {
         let pronumtiationValue = PronuntiationValue(practiceText: stt, orginalText: pronunciationText, languageCcode: pronunciationLanguageCode)

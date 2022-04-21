@@ -173,6 +173,7 @@ class LanguageSelectCameraVC: BaseViewController {
         }
         CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
         NotificationCenter.default.post(name: .languageSelectionCameraNotification, object: nil)
+        NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
         let transation = GlobalMethod.addMoveOutTransitionAnimatation(duration: kFadeAnimationTransitionTime, animationStyle: .fromRight)
         remove(asChildViewController: self, animation: transation)
         microphoneIcon(isHidden: true)

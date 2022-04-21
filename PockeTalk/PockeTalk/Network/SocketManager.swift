@@ -56,6 +56,7 @@ class SocketManager: NSObject {
         socket.write(data: data)
     }
     func sendTextData(text:String,completion: (() -> ())?){
+        PrintUtility.printLog(tag: "Socket Response body", text: "\(socket.request.allHTTPHeaderFields)")
         socket.write(string: text, completion: completion)
     }
     func updateRequestKey(){

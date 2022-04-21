@@ -17,7 +17,7 @@ protocol SpeechProcessingViewModeling {
     func setTextFromScoket(value:String)
     var isUpdatedAPI:Bindable<Bool>{ get}
     var isGettingActualData:Bool {set get}
-    func updateLanguage()
+    func updateLanguage(completion:((_ isOk:Bool)->())?)->Void
     func animateLeftImage (leftImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func animateRightImage (leftImage: UIImageView, rightImage : UIImageView, yPos : CGFloat, xPos : CGFloat)
     func setFrequency(_ frequency: CGFloat)
@@ -128,16 +128,20 @@ class SpeechProcessingViewModel: SpeechProcessingViewModeling {
         }
     }
 
-    func updateLanguage() {
-        NetworkManager.shareInstance.changeLanguageSettingApi{ [weak self ]data in
+    func updateLanguage(completion:((_ isOk:Bool)->())?)->Void {
+        NetworkManager.shareInstance.changeLanguageSettingApi{ [weak self ] data in
             if let data = data {
                 do {
                     let result = try JSONDecoder().decode(ResultModel.self, from: data)
                     self?.isUpdatedAPI.value = result.resultCode == "OK"
                     PrintUtility.printLog(tag: "SpeechViewController", text: "result.resultCode \(result.resultCode)")
+                    completion?(result.resultCode == "OK")
                 }catch{
                     self?.isUpdatedAPI.value = false
+                    completion?(false)
                 }
+            }else{
+                completion?(false)
             }
         }
     }

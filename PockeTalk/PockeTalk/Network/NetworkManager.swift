@@ -151,7 +151,7 @@ struct NetworkManager:Network {
             destlang : desLang
         ]
 
-        PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang) key \(access_key)")
+        PrintUtility.printLog(tag: TAG, text:" langChangeApi srclang \(srcLang) desLang \(desLang) key \(accesKey)")
         provider.request(.changeLanguage(params: params)){ result in
 
             switch result  {
