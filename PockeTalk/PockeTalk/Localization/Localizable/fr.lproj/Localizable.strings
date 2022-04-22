@@ -70,6 +70,9 @@
 "charge_the_device" = "Veuillez charger la batterie";
 "camera_flash_unavailable" = "Le flash ne peut pas être utilisé parce que le niveau de batterie est faible";
 "can_not_translate" = "Impossible de traduire.";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "Permettre l\'accès";
 "kActionCancel" = "Annuler";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

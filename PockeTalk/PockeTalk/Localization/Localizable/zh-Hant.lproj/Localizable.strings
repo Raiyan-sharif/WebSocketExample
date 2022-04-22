@@ -69,6 +69,9 @@
 "charge_the_device" = "請充電";
 "camera_flash_unavailable" = "電量不足，無法使用閃光燈";
 "can_not_translate" = "無法翻譯。";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "允許";
 "kActionCancel" = "取消";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

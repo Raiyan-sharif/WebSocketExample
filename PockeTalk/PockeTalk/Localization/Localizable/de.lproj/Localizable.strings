@@ -70,6 +70,9 @@
 "charge_the_device" = "Laden Sie das Gerät bitte auf";
 "camera_flash_unavailable" = "Der Blitz kann nicht verwendet werden, da der Batteriestand zu niedrig ist";
 "can_not_translate" = "Keine Übersetzung möglich.";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "Erlauben";
 "kActionCancel" = "Abbrechen";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

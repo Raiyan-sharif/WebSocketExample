@@ -72,6 +72,9 @@
 "charge_the_device" = "デバイスを充電してください";
 "camera_flash_unavailable" = "バッテリー残量が不足しているため、フラッシュは使用できません";
 "can_not_translate" = "翻訳できません。";
+"user_satisfaction_message" = "アプリにご満足いただけていますか？";
+"yes" = "はい";
+"no" = "いいえ";
 "Country Speech Guideline" = "ボタンを押したまま、検索したい地域を言ってください。";
 "kActionAllowAccess" = "許可";
 "kActionCancel" = "キャンセル";
