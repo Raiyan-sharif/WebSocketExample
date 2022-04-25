@@ -68,7 +68,7 @@ class IAPManager: NSObject {
     // get IAP products based on build varients
     func getProductsBasedOnBuildVarient() -> (product: String, iAPPassword: String) {
         switch (schemeName) {
-        case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
+        case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue,BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
             return (productionIAPProduts, productionIAPSharedSecret)
         case BuildVarientScheme.STAGING.rawValue:
             return (stagingIAPProduts, stagingIAPSharedSecret)
@@ -495,6 +495,7 @@ extension IAPManager {
             storeRequest.httpMethod = "POST"
             storeRequest.httpBody = requestData
 //            storeRequest.timeoutInterval = IAPTimeoutInterval
+            PrintUtility.printLog(tag: "StoreRequestUrl", text: storeRequest.url?.path ?? "")
             let session = URLSession(configuration: URLSessionConfiguration.default)
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {

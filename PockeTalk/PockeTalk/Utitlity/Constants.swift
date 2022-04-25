@@ -315,7 +315,15 @@ func getUUID() -> String? {
 
 //IAP
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
-let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
+//let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
+var verifyReceiptURL: String{
+    #if PRODUCTION_WITH_LIVE_URL
+    return "https://buy.itunes.apple.com/verifyReceipt"
+    #else
+    return "https://sandbox.itunes.apple.com/verifyReceipt"
+    #endif
+}
+
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
 let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
 let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"

@@ -329,8 +329,10 @@
 
 /* Begin PBXFileReference section */
 		02FADAF560CEF3BCDF689720 /* Pods-PockeTalk.loadenginefromasset.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.loadenginefromasset.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.loadenginefromasset.xcconfig"; sourceTree = "<group>"; };
+		1C2D0CD7829356EEE1CE78BE /* Pods-PockeTalk.productionwithproductionurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.productionwithproductionurl.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.productionwithproductionurl.xcconfig"; sourceTree = "<group>"; };
 		1C3982CA7F9FA3619840FBBD /* Pods-PockeTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.debug.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		3B4C1F18274DF84200FA2E3B /* FileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDownloader.swift; sourceTree = "<group>"; };
+		3B617255AFCEA45B772DADF9 /* Pods-PockeTalkTests.productionwithliveurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.productionwithliveurl.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.productionwithliveurl.xcconfig"; sourceTree = "<group>"; };
 		3B86A5C526F0631600175073 /* Reset.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reset.storyboard; sourceTree = "<group>"; };
 		3B86A5CF26F0650900175073 /* ResetItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetItems.swift; sourceTree = "<group>"; };
 		3B86A5D126F0675200175073 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
@@ -684,6 +686,8 @@
 		A5E1889121572C5D815EB6A5 /* Pods-PockeTalk.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.stage.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.stage.xcconfig"; sourceTree = "<group>"; };
 		A978FF5B6FFB2C2AE812364C /* Pods-PockeTalk.productionwithstageurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.productionwithstageurl.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.productionwithstageurl.xcconfig"; sourceTree = "<group>"; };
 		B099060EE80850F8A795284F /* Pods-PockeTalk.serverapilog.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.serverapilog.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.serverapilog.xcconfig"; sourceTree = "<group>"; };
+		B1705D9DB46CF25654AFD14F /* Pods-PockeTalk.productionwithliveurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalk.productionwithliveurl.xcconfig"; path = "Target Support Files/Pods-PockeTalk/Pods-PockeTalk.productionwithliveurl.xcconfig"; sourceTree = "<group>"; };
+		B995C8EE339619013A5464D0 /* Pods-PockeTalkTests.productionwithproductionurl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.productionwithproductionurl.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.productionwithproductionurl.xcconfig"; sourceTree = "<group>"; };
 		D360DCBF1E5397C15689E88A /* Pods_PockeTalkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PockeTalkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5502C003E521F1F2F86FE96 /* Pods-PockeTalkTests.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.stage.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.stage.xcconfig"; sourceTree = "<group>"; };
 		E603D9534FD597A4F1396EAE /* Pods-PockeTalkTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PockeTalkTests.production.xcconfig"; path = "Target Support Files/Pods-PockeTalkTests/Pods-PockeTalkTests.production.xcconfig"; sourceTree = "<group>"; };
@@ -2134,6 +2138,10 @@
 				E5502C003E521F1F2F86FE96 /* Pods-PockeTalkTests.stage.xcconfig */,
 				A978FF5B6FFB2C2AE812364C /* Pods-PockeTalk.productionwithstageurl.xcconfig */,
 				F31F4393760AF0139A2FC4D0 /* Pods-PockeTalkTests.productionwithstageurl.xcconfig */,
+				1C2D0CD7829356EEE1CE78BE /* Pods-PockeTalk.productionwithproductionurl.xcconfig */,
+				B1705D9DB46CF25654AFD14F /* Pods-PockeTalk.productionwithliveurl.xcconfig */,
+				B995C8EE339619013A5464D0 /* Pods-PockeTalkTests.productionwithproductionurl.xcconfig */,
+				3B617255AFCEA45B772DADF9 /* Pods-PockeTalkTests.productionwithliveurl.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2697,6 +2705,124 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		03AC18D62816544700B64268 /* ProductionWithLiveURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87282B0827A1339B0055B293 /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_SCHEME_NAME = TOKYOSERVER_PRODUCTION;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q446ZQDPHN;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = ProductionWithLiveURL;
+		};
+		03AC18D72816544700B64268 /* ProductionWithLiveURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1705D9DB46CF25654AFD14F /* Pods-PockeTalk.productionwithliveurl.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PockeTalk/PockeTalkProduction.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_SCHEME_NAME = PRODUCTION_WITH_LIVE_URL;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
+				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.02;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION_WITH_LIVE_URL;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = ProductionWithLiveURL;
+		};
+		03AC18D82816544700B64268 /* ProductionWithLiveURL */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B617255AFCEA45B772DADF9 /* Pods-PockeTalkTests.productionwithliveurl.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PockeTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcenext.pocketalk.smartphone.PockeTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
+			};
+			name = ProductionWithLiveURL;
+		};
 		4A66139326DDCF5E004A925D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87282AF327A12D490055B293 /* Debug.xcconfig */;
@@ -3042,7 +3168,7 @@
 			};
 			name = Stage;
 		};
-		87282B0F27A133E60055B293 /* Production */ = {
+		87282B0F27A133E60055B293 /* ProductionWithProductionURL */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87282B0827A1339B0055B293 /* Production.xcconfig */;
 			buildSettings = {
@@ -3106,11 +3232,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Production;
+			name = ProductionWithProductionURL;
 		};
-		87282B1027A133E60055B293 /* Production */ = {
+		87282B1027A133E60055B293 /* ProductionWithProductionURL */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90671CA97A26F53CDCAA16A8 /* Pods-PockeTalk.production.xcconfig */;
+			baseConfigurationReference = 1C2D0CD7829356EEE1CE78BE /* Pods-PockeTalk.productionwithproductionurl.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3118,7 +3244,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				CURRENT_SCHEME_NAME = PRODUCTION;
+				CURRENT_SCHEME_NAME = PRODUCTION_WITH_PRODUCTION_URL;
 				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3130,17 +3256,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION_WITH_PRODUCTION_URL;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Production;
+			name = ProductionWithProductionURL;
 		};
-		87282B1127A133E60055B293 /* Production */ = {
+		87282B1127A133E60055B293 /* ProductionWithProductionURL */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E603D9534FD597A4F1396EAE /* Pods-PockeTalkTests.production.xcconfig */;
+			baseConfigurationReference = B995C8EE339619013A5464D0 /* Pods-PockeTalkTests.productionwithproductionurl.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3158,7 +3284,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PockeTalk.app/PockeTalk";
 			};
-			name = Production;
+			name = ProductionWithProductionURL;
 		};
 		891D450427E9A1E900B4BD8B /* LoadEngineFromAsset */ = {
 			isa = XCBuildConfiguration;
@@ -3522,7 +3648,8 @@
 				87282B0C27A133D40055B293 /* Stage */,
 				891D450827E9A97200B4BD8B /* ServerAPILog */,
 				891D450427E9A1E900B4BD8B /* LoadEngineFromAsset */,
-				87282B0F27A133E60055B293 /* Production */,
+				87282B0F27A133E60055B293 /* ProductionWithProductionURL */,
+				03AC18D62816544700B64268 /* ProductionWithLiveURL */,
 				891E7F7427F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139426DDCF5E004A925D /* Release */,
 			);
@@ -3536,7 +3663,8 @@
 				87282B0D27A133D40055B293 /* Stage */,
 				891D450927E9A97200B4BD8B /* ServerAPILog */,
 				891D450527E9A1E900B4BD8B /* LoadEngineFromAsset */,
-				87282B1027A133E60055B293 /* Production */,
+				87282B1027A133E60055B293 /* ProductionWithProductionURL */,
+				03AC18D72816544700B64268 /* ProductionWithLiveURL */,
 				891E7F7527F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139726DDCF5E004A925D /* Release */,
 			);
@@ -3550,7 +3678,8 @@
 				87282B0E27A133D40055B293 /* Stage */,
 				891D450A27E9A97200B4BD8B /* ServerAPILog */,
 				891D450627E9A1E900B4BD8B /* LoadEngineFromAsset */,
-				87282B1127A133E60055B293 /* Production */,
+				87282B1127A133E60055B293 /* ProductionWithProductionURL */,
+				03AC18D82816544700B64268 /* ProductionWithLiveURL */,
 				891E7F7627F2D3DE00BCC68A /* ProductionWithStageURL */,
 				4A66139A26DDCF5E004A925D /* Release */,
 			);

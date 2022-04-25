@@ -365,7 +365,7 @@ struct NetworkManager:Network {
             let iosOriginalTransactionID = UserDefaults.standard.string(forKey: kiOSOriginalTransactionID)
 
             switch (schemeName) {
-            case BuildVarientScheme.PRODUCTION.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue:
+            case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue,BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
                 params = [
                     kAppUdid: getUUID() ?? "",
                     kClientInfo: kPocketalk_app_ios,
