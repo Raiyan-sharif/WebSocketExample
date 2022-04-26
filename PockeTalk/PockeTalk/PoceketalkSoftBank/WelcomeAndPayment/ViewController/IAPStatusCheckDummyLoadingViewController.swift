@@ -106,10 +106,10 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             shouldCallApi = false
             shouldCallIapApi = false
             IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
-                if let err = error {
-                    self.hideLoader()
-                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
-                } else {
+//                if let err = error {
+//                    self.hideLoader()
+//                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
+//                } else {
                     if isPurchaseSchemeActive == true {
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
                         self.hideLoader()
@@ -117,7 +117,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                     } else {
                         self.callLicenseConfirmationApi(coupon: coupon)
                     }
-                }
+//                }
             }
         }else{
             self.hideLoader()
