@@ -41,7 +41,7 @@ class FontUtility {
     }
 
     static func getErrorFontSize () -> CGFloat {
-        return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex()] - 2 * DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER
+        return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex()] - 3 * DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER
     }
 
     static func setFontSize (selectedFont:String) {

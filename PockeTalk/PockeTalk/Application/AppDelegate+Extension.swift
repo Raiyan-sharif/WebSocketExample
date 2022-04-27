@@ -24,6 +24,7 @@ extension AppDelegate{
                     viewController = termAndConditionVC
                 }
             case .purchasePlan:
+                IAPManager.shared.startObserving()
                 if let purchasePlanVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PurchasePlanViewController.self)) as? PurchasePlanViewController {
                     viewController = purchasePlanVC
                 }

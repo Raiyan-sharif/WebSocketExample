@@ -27,6 +27,7 @@ enum ViewControllerType {
 public enum IAPError: Error {
     case parseErrorToGetLatestInfoReceiptObjects
     case parseErrorForCurrentUTCFormatDate
+    case emptyResponseError
 }
 
 class IAPManager: NSObject {
@@ -50,6 +51,7 @@ class IAPManager: NSObject {
 
     var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
+    var statusBlock:((Bool, Error?, Int?)-> Void)?
     var totalRestoredPurchases = 0
     var totalPurchaseOrRestoreFailed = 0
     var isIntroductoryOfferActive: Bool?
@@ -426,6 +428,65 @@ extension IAPManager {
 
 //MARK: - IAPManager Prepare alert cell
 extension IAPManager {
+
+    func receiptValidationForCouponCode() {
+        let receiptFileURL = Bundle.main.appStoreReceiptURL
+        guard let receiptData = try? Data(contentsOf: receiptFileURL!) else {
+            //This is the First launch app VC pointer call
+            self.statusBlock?(false, IAPError.emptyResponseError, nil)
+            return
+        }
+        let recieptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        let iAPPassword = getProductsBasedOnBuildVarient().iAPPassword
+        let jsonDict: [String: AnyObject] = [IAPreceiptData : recieptString as AnyObject, IAPPassword : iAPPassword as AnyObject]
+
+        do {
+            let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let storeURL = URL(string: verifyReceiptURL)!
+            var storeRequest = URLRequest(url: storeURL)
+            storeRequest.httpMethod = "POST"
+            storeRequest.httpBody = requestData
+//            storeRequest.timeoutInterval = IAPTimeoutInterval
+            let session = URLSession(configuration: URLSessionConfiguration.default)
+            let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
+                do {
+                    if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                        let statusCode = self?.getIAPJsonResponseStatusCode(jsonResponse: jsonResponse)
+
+                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
+                            let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: Date(), latestReceiptInfoArray: latestInfoReceiptObjects)
+
+                            if let updatedPurchaseStatus = purchaseStatus {
+                                //KeychainWrapper.standard.set(updatedPurchaseStatus, forKey: kInAppPurchaseStatus)
+                                self?.statusBlock?(updatedPurchaseStatus, nil, statusCode)
+                            } else {
+                                self?.statusBlock?(false, nil, statusCode)
+                            }
+                        } else {
+                            self?.statusBlock?(false, IAPError.parseErrorToGetLatestInfoReceiptObjects, statusCode)
+                        }
+                    } else {
+                        self?.statusBlock?(false, error, response?.getStatusCode())
+                    }
+                } catch let parseError {
+                    self?.statusBlock?(false, parseError, response?.getStatusCode())
+                }
+            })
+            task.resume()
+        } catch let parseError as NSError {
+            statusBlock?(false, parseError, parseError.code)
+        }
+    }
+
+    private func getIAPJsonResponseStatusCode(jsonResponse: NSDictionary) -> Int? {
+        if let iAP_json_response_status = jsonResponse[IAPJsonResponseStatus] as? Int {
+            PrintUtility.printLog(tag: TAG, text: "iAP_json_response_status \(iAP_json_response_status)")
+            return iAP_json_response_status
+        } else {
+            return nil
+        }
+    }
+
     func IAPResponseCheck(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
         PrintUtility.printLog(tag: TAG, text: "\n")
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
@@ -535,6 +596,7 @@ extension IAPManager {
 
         if let receiptInfo: NSArray = jsonResponse[latest_receipt_info] as? NSArray {
             let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: IAPLocaleIdentifier)
             formatter.dateFormat = IAPDateFormat
 
             var latestReceiptInfoArray = [LatestReceiptInfo]()
@@ -551,9 +613,9 @@ extension IAPManager {
 
                 var expiresDate: Date? = nil
                 if let expires_date = recInf[expires_date] as? String {
-                    expiresDate = formatter.date(from: expires_date)!
+                    expiresDate = formatter.date(from: expires_date) ?? Date()
                 } else {
-                    expiresDate = nil
+                    expiresDate = Date()
                 }
 
                 var isInIntroOfferPeriod: Bool? = nil
@@ -795,6 +857,8 @@ extension IAPError: LocalizedError {
             return NSLocalizedString(ERR_UNKNOWN, comment: "")
         case .parseErrorForCurrentUTCFormatDate:
             return NSLocalizedString(ERR_UNKNOWN, comment: "")
+        case .emptyResponseError:
+            return NSLocalizedString(EMPTY_RESPONSE, comment: "")
         }
     }
 }

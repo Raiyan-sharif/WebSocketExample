@@ -114,8 +114,12 @@ class CustomAlertViewModel:BaseModel {
         alertVC.alertButton = "OK".localiz()
         alertVC.softbankAlert = true
         alertVC.noActionButton = false
-        alertVC.softbankShowError = true
-        alertVC.errorMessage = errorMessage
+        if errorMessage.isEmpty{
+            alertVC.softbankShowError = false
+        }else{
+            alertVC.softbankShowError = true
+            alertVC.errorMessage = errorMessage
+        }
         alertVC.okButtonAction = completion
 
         return alertVC
