@@ -88,7 +88,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             } else {
                 if let errorMsg = error{
                     if errorMsg.localizedDescription == EMPTY_RESPONSE{
-                        self.statusCodeText = errorMsg.localizedDescription
+                        self.statusCodeText = "[\(errorMsg.localizedDescription)]"
                     }
                 }
             }
