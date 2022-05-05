@@ -15,12 +15,14 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private var shouldCallIapApi = false
     private var alert: UIAlertController?
     private var shouldShowLoader = false
+    private var statusCodeText = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         noInternetLabel.isHidden = true
         noInternetLabel.text = "internet_connection_error".localiz()
         registerNotification()
+        registerInAppPurchaseStatusCheck()
         checkCouponStatus()
         self.connectivity.startMonitoring { [weak self] connection, reachable in
             guard let self = self else { return }
@@ -43,6 +45,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             }
         }
     }
+
     private func unregisterNotification() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -76,6 +79,32 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         super.viewDidDisappear(animated)
     }
 
+    private func registerInAppPurchaseStatusCheck() {
+        IAPManager.shared.statusBlock = { [weak self] (success, error, statusCode) in
+            guard let `self` = self else {return}
+
+            if let statusCode = statusCode, statusCode != 0 {
+                self.statusCodeText = "[\(statusCode)]"
+            } else {
+                if let errorMsg = error{
+                    if errorMsg.localizedDescription == EMPTY_RESPONSE{
+                        self.statusCodeText = "[\(errorMsg.localizedDescription)]"
+                    }
+                }
+            }
+
+            if let couponCode = self.couponCode {
+                if success {
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
+                    self.hideLoader()
+                    self.showAlertAndRedirectToHomeVC()
+                } else {
+                    self.callLicenseConfirmationApi(coupon: couponCode)
+                }
+            }
+        }
+    }
+
     private func checkCouponStatus() {
         if let couponCode = self.couponCode {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkCouponStatus [+], CouponCode: \(couponCode)")
@@ -89,15 +118,15 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         }
     }
 
-    private func iAPStatusCheckAlert(message: String, coupon: String) {
-        let alertService = CustomAlertViewModel()
-        DispatchQueue.main.async {
-            let alert = alertService.alertDialogSoftbank(message: message) {
-                self.checkInAppPurchaseStatus(coupon: coupon)
-            }
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
+//    private func iAPStatusCheckAlert(message: String, coupon: String) {
+//        let alertService = CustomAlertViewModel()
+//        DispatchQueue.main.async {
+//            let alert = alertService.alertDialogSoftbank(message: message) {
+//                self.checkInAppPurchaseStatus(coupon: coupon)
+//            }
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//    }
 
     private func checkInAppPurchaseStatus(coupon: String) {
         if Reachability.isConnectedToNetwork() == true{
@@ -105,20 +134,21 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             self.noInternetLabel.isHidden = true
             shouldCallApi = false
             shouldCallIapApi = false
-            IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
-                if let err = error {
-                    self.hideLoader()
-                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
-                } else {
-                    if isPurchaseSchemeActive == true {
-                        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
-                        self.hideLoader()
-                        self.showAlertAndRedirectToHomeVC()
-                    } else {
-                        self.callLicenseConfirmationApi(coupon: coupon)
-                    }
-                }
-            }
+            IAPManager.shared.receiptValidationForCouponCode()
+//            IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
+////                if let err = error {
+////                    self.hideLoader()
+////                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
+////                } else {
+//                    if isPurchaseSchemeActive == true {
+//                        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
+//                        self.hideLoader()
+//                        self.showAlertAndRedirectToHomeVC()
+//                    } else {
+//                        self.callLicenseConfirmationApi(coupon: coupon)
+//                    }
+////                }
+//            }
         }else{
             self.hideLoader()
             shouldCallApi = true
@@ -157,18 +187,20 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                     UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
                                     UserDefaults.standard.set(coupon, forKey: kCouponCode)
                                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
-                                    let alert = alertService.alertDialogSoftbank(message: "kCouponActivatedMesage".localiz()) {
-                                        var couponInitialFlowCompleted = false
-                                        if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                            couponInitialFlowCompleted = flowCompleted
+                                    DispatchQueue.main.async {
+                                        let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {
+                                            var couponInitialFlowCompleted = false
+                                            if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
+                                                couponInitialFlowCompleted = flowCompleted
+                                            }
+                                            if couponInitialFlowCompleted == true{
+                                                GlobalMethod.appdelegate().navigateToViewController(.home)
+                                            }else{
+                                                GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                                            }
                                         }
-                                        if couponInitialFlowCompleted == true{
-                                            GlobalMethod.appdelegate().navigateToViewController(.home)
-                                        }else{
-                                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                        }
+                                        self.present(alert, animated: true, completion: nil)
                                     }
-                                    self.present(alert, animated: true, completion: nil)
                                 }else{
                                     var couponInitialFlowCompleted = false
                                     if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
@@ -189,48 +221,62 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 savedCoupon = coupon
                             }
                             if savedCoupon.isEmpty {
-                                let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                                DispatchQueue.main.async {
+                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
+                                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                                    }
+                                    self.present(alert, animated: true, completion: nil)
                                 }
-                                self.present(alert, animated: true, completion: nil)
                             } else {
                                 UserDefaults.standard.removeObject(forKey: kCouponCode)
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon removed: \(savedCoupon)")
-                                let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                DispatchQueue.main.async {
+                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
+                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                    }
+                                    self.present(alert, animated: true, completion: nil)
                                 }
-                                self.present(alert, animated: true, completion: nil)
                             }
                         } else if result_code == INFO_INVALID_LICENSE {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "INFO_INVALID_LICENSE")
-                            let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz() , errorMessage: "KErrorCode2Message".localiz()) {
-                                self.callLicenseConfirmationApi(coupon: coupon)
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz(), errorMessage: "KErrorCode2Message".localiz()) {
+                                    self.callLicenseConfirmationApi(coupon: coupon)
+                                }
+                                self.present(alert, animated: true, completion: nil)
                             }
-                            self.present(alert, animated: true, completion: nil)
                         } else if result_code == WARN_INPUT_PARAM {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "WARN_INPUT_PARAM")
-                            let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz() , errorMessage: "KErrorCode1Message".localiz()) {
-                                self.callLicenseConfirmationApi(coupon: coupon)
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz(), errorMessage: "KErrorCode1Message".localiz()) {
+                                    self.callLicenseConfirmationApi(coupon: coupon)
+                                }
+                                self.present(alert, animated: true, completion: nil)
                             }
-                            self.present(alert, animated: true, completion: nil)
                         } else if result_code == WARN_FAILED_CALL {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "WARN_FAILED_CALL")
-                            let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz() , errorMessage: "KErrorCode4Message".localiz()) {
-                                self.callLicenseConfirmationApi(coupon: coupon)
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz(), errorMessage: "KErrorCode4Message".localiz()) {
+                                    self.callLicenseConfirmationApi(coupon: coupon)
+                                }
+                                self.present(alert, animated: true, completion: nil)
                             }
-                            self.present(alert, animated: true, completion: nil)
                         } else if result_code == ERR_UNKNOWN {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "ERR_UNKNOWN")
-                            let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz() , errorMessage: "KErrorCode5Message".localiz()) {
-                                self.callLicenseConfirmationApi(coupon: coupon)
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz(), errorMessage: "KErrorCode5Message".localiz()) {
+                                    self.callLicenseConfirmationApi(coupon: coupon)
+                                }
+                                self.present(alert, animated: true, completion: nil)
                             }
-                            self.present(alert, animated: true, completion: nil)
                         }else {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Other cases")
-                            let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz() , errorMessage: "KErrorCode5Message".localiz()) {
-                                self.callLicenseConfirmationApi(coupon: coupon)
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbankWithError(message: "KErrorMessage".localiz(), errorMessage: "KErrorCode5Message".localiz()) {
+                                    self.callLicenseConfirmationApi(coupon: coupon)
+                                }
+                                self.present(alert, animated: true, completion: nil)
                             }
-                            self.present(alert, animated: true, completion: nil)
                         }
                     }
                 } catch let err {

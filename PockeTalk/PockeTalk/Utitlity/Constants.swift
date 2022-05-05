@@ -259,6 +259,7 @@ let WARN_INPUT_PARAM = "WARN_INPUT_PARAM"
 let WARN_NO_DEVICE = "WARN_NO_DEVICE"
 let ERR_CREATE_FAILED = "ERR_CREATE_FAILED"
 let ERR_UNKNOWN = "ERR_UNKNOWN"
+let EMPTY_RESPONSE = "00000"
 let WARN_INVALID_KEY = "WARN_INVALID_KEY"
 let WARN_INVALID_LANG = "WARN_INVALID_LANG"
 let ERR_SETTING_FAILED = "ERR_SETTING_FAILED"
@@ -315,7 +316,15 @@ func getUUID() -> String? {
 
 //IAP
 //TODO: Need to update with https://buy.itunes.apple.com/verifyReceipt before submitting to App Store
-let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
+//let verifyReceiptURL = "https://sandbox.itunes.apple.com/verifyReceipt"
+var verifyReceiptURL: String{
+    #if PRODUCTION_WITH_LIVE_URL
+    return "https://buy.itunes.apple.com/verifyReceipt"
+    #else
+    return "https://sandbox.itunes.apple.com/verifyReceipt"
+    #endif
+}
+
 let appSpecificSharedSecret = "7c24e4a7aed04857a2213c6f99c1104d"
 let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
 let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"
@@ -332,6 +341,7 @@ let latest_receipt = "latest_receipt"
 let cancellation_date = "cancellation_date"
 let product_id = "product_id"
 let is_in_intro_offer_period = "is_in_intro_offer_period"
+let IAPLocaleIdentifier = "en_US_POSIX"
 let is_trial_period = "is_trial_period"
 let IAPDateFormat = "yyyy-MM-dd HH:mm:ss VV"
 let kIsClearedDataAll = "kIsClearedDataAll"
@@ -344,6 +354,7 @@ let receiptValidationAllowFromPurchase = "receiptValidationAllowFromPurchase"
 let kiOSReceipt = "ios_receipt"
 let kiOSOriginalTransactionID = "ios_original_transaction_id"
 let kUserPassedSubscription = "kUserPassedSubscription"
+let IAPJsonResponseStatus = "status"
 
 let FAVORITE_MAX_LIMIT: Int = 500
 let FAVORITE_LIMIT_FLAG_KEY: String = "FAVORITE_LIMIT_FLAG_KEY"
