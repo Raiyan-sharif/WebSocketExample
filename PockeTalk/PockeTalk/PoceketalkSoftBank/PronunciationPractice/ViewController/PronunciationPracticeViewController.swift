@@ -237,6 +237,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
 
     deinit {
         unregisterNotification()
+        ttsResponsiveView.removeObserver()
     }
 }
 

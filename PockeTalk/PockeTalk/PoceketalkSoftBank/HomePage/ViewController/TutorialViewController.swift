@@ -69,6 +69,7 @@ class TutorialViewController: BaseViewController {
         stopTTS()
         PrintUtility.printLog(tag: TAG, text: "Tutorial deinit Got Called")
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        ttsResponsiveView.removeObserver()
     }
 
     //MARK: - Initial Setup

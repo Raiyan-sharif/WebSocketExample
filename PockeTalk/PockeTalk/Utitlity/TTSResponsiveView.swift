@@ -17,12 +17,12 @@ protocol TTSResponsiveViewDelegate : class {
 class TTSResponsiveView : UIView {
     var wkView:WKWebView!
     weak var ttsResponsiveViewDelegate : TTSResponsiveViewDelegate?
+    let contentController = WKUserContentController()
     private let TAG:String = "TTSResponsiveView"
     public let engineName = "Responsive"
 
     init(){
         super.init(frame: .zero)
-        let contentController = WKUserContentController()
         contentController.add(
             self as WKScriptMessageHandler,
             name: iosListener
@@ -94,6 +94,12 @@ class TTSResponsiveView : UIView {
     
     func stopTTS(){
         stopEngineProcess()
+    }
+    
+    func removeObserver(){
+        contentController.removeScriptMessageHandler(forName: iosListener)
+        contentController.removeScriptMessageHandler(forName: speakingListener)
+        contentController.removeScriptMessageHandler(forName: multipartUrlListener)
     }
     
     func checkSpeakingStatus() {

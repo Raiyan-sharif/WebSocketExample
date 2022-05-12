@@ -491,6 +491,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         AudioPlayer.sharedInstance.stop()
         stopTTS()
         unregisterNotification()
+        ttsResponsiveView.removeObserver()
     }
     
     func stopTTS(){

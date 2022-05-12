@@ -15,27 +15,13 @@ protocol MultipartAudioPlayerProtocol: AnyObject{
     func onError()
 }
 
-class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
+class MultipartAudioPlayer: NSObject {
     var player: AVPlayer?
     var urlToPlay:[String] = []
-    var avplayerController: AVPlayerViewController = AVPlayerViewController()
-    weak var delegate: MultipartAudioPlayerProtocol?
-    var playerItemContext = 0
+    private weak var delegate: MultipartAudioPlayerProtocol?
 
     init(controller: UIViewController, delegate: MultipartAudioPlayerProtocol?){
-        super.init(frame: .zero)
-            //try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            avplayerController.player = player
-            avplayerController.showsPlaybackControls = false
-            controller.addChild(avplayerController)
-            let screenSize = UIScreen.main.bounds.size
-            let videoFrame = CGRect(x: 0, y: 130, width: screenSize.width, height: (screenSize.height - 130) / 2)
-            avplayerController.view.frame = videoFrame
-            avplayerController.view.isHidden = true
-            avplayerController.view.tag = multipartPlayerViewTag
-            controller.view.addSubview(avplayerController.view)
-            self.delegate = delegate
-
+        self.delegate = controller as? MultipartAudioPlayerProtocol
     }
     
     required init?(coder: NSCoder) {
@@ -59,25 +45,16 @@ class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
         item.addObserver(self,
                          forKeyPath: #keyPath(AVPlayerItem.status),
                          options: [.old, .new],
-                         context: &playerItemContext)
+                         context: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         
         player = AVPlayer(playerItem: item)
-        avplayerController.player = player
         player?.play()
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        // Only handle observations for the playerItemContext
-           guard context == &playerItemContext else {
-               super.observeValue(forKeyPath: keyPath,
-                                  of: object,
-                                  change: change,
-                                  context: context)
-               return
-           }
-
+           
            if keyPath == #keyPath(AVPlayerItem.status) {
                let status: AVPlayerItem.Status
                if let statusNumber = change?[.newKey] as? NSNumber {
@@ -105,12 +82,16 @@ class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
                    PrintUtility.printLog(tag: "multipartUrlListener", text: "unknown")
                    break
                    // Player item is not yet ready.
+               @unknown default:
+                   fatalError()
                }
                
            }
     }
     
     @objc func playerDidFinishPlaying(sender: Notification) {
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .medium
         PrintUtility.printLog(tag: "multipartUrlListener", text: "GotThe time is: \(dateFormatter.string(from: Date() as Date))")
@@ -126,6 +107,8 @@ class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
     }
     
     func stop() {
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+        player?.currentItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), context: nil)
         if let play = player {
             play.pause()
             player = nil
@@ -133,4 +116,5 @@ class MultipartAudioPlayer: UIView, AVAudioPlayerDelegate {
         urlToPlay = []
         self.delegate?.onSpeakFinish()
     }
+    
 }

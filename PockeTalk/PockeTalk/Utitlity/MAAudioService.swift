@@ -20,9 +20,10 @@ func AQAudioQueueInputCallback(inUserData: UnsafeMutableRawPointer?,
         let data = Data(bytes: inBuffer.pointee.mAudioData, count: Int(datalength))
         audioService.setAudioData(data: data)
         //audioService.setDecibel()
-    }else{
-        audioService.recordHasStop()
     }
+//    else{
+//        audioService.recordHasStop()
+//    }
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, nil);
     PrintUtility.printLog(tag: "MAAudioService", text: "startingPacketCount: \(audioService.startingPacketCount), maxPacketCount: \(audioService.maxPacketCount)")
     if (audioService.maxPacketCount <= audioService.startingPacketCount) {
@@ -138,7 +139,9 @@ class MAAudioService {
                AudioQueueStop(audioQueue, true)
                AudioQueueDispose(audioQueue, true)
                audioQueueObject = nil
-
+               DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
+                   self?.recordDidStop?()
+               })
            }
        }
 
