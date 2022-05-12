@@ -178,6 +178,9 @@
 		8928E59B27C767EC00638F6E /* InitialFlowHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8928E59A27C767EC00638F6E /* InitialFlowHelper.swift */; };
 		8928E59D27C7B5D800638F6E /* InitialFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8928E59C27C7B5D800638F6E /* InitialFlow.storyboard */; };
 		8929D12E27B0F19400750537 /* resv_src.js in Resources */ = {isa = PBXBuildFile; fileRef = 8929D12D27B0F19400750537 /* resv_src.js */; };
+		892BC9442754DAF5002730F9 /* record_success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 892BC9432754DAF4002730F9 /* record_success.wav */; };
+		892BC9462754DB00002730F9 /* record_failed.wav in Resources */ = {isa = PBXBuildFile; fileRef = 892BC9452754DB00002730F9 /* record_failed.wav */; };
+		892BC9482754DB3F002730F9 /* start_record.wav in Resources */ = {isa = PBXBuildFile; fileRef = 892BC9472754DB3F002730F9 /* start_record.wav */; };
 		892EB97F26E6201600E44E7E /* SettingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EB97E26E6201600E44E7E /* SettingItems.swift */; };
 		892FE47227D8DF34001F560C /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FE47127D8DF34001F560C /* Extension+Double.swift */; };
 		8935A12A26E5E0B800AC3CA1 /* CaptureImageProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */; };
@@ -516,6 +519,9 @@
 		8928E59A27C767EC00638F6E /* InitialFlowHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialFlowHelper.swift; sourceTree = "<group>"; };
 		8928E59C27C7B5D800638F6E /* InitialFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InitialFlow.storyboard; sourceTree = "<group>"; };
 		8929D12D27B0F19400750537 /* resv_src.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = resv_src.js; sourceTree = "<group>"; };
+		892BC9432754DAF4002730F9 /* record_success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = record_success.wav; sourceTree = "<group>"; };
+		892BC9452754DB00002730F9 /* record_failed.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = record_failed.wav; sourceTree = "<group>"; };
+		892BC9472754DB3F002730F9 /* start_record.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start_record.wav; sourceTree = "<group>"; };
 		892EB97E26E6201600E44E7E /* SettingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItems.swift; sourceTree = "<group>"; };
 		892FE47127D8DF34001F560C /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
 		8935A12926E5E0B800AC3CA1 /* CaptureImageProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageProcessVC.swift; sourceTree = "<group>"; };
@@ -945,6 +951,9 @@
 				87282AF127A12C7C0055B293 /* BuildConfiguration */,
 				8929D12D27B0F19400750537 /* resv_src.js */,
 				89513CCB27ABDB2F008C6F99 /* responsivevoice_1.8.1.js */,
+				892BC9472754DB3F002730F9 /* start_record.wav */,
+				892BC9452754DB00002730F9 /* record_failed.wav */,
+				892BC9432754DAF4002730F9 /* record_success.wav */,
 				8988B7972721763000FBBA40 /* engine-tempo-value.json */,
 				3BA8E132270B18D20095D036 /* resv_1.8.1.html */,
 				69349AA826E5DB90008D9AF4 /* tutorial.mp4 */,
@@ -2243,6 +2252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				892BC9462754DB00002730F9 /* record_failed.wav in Resources */,
 				501A58FE26FC427600369836 /* language_mapping_by_voice.xml in Resources */,
 				69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */,
 				89E6B2E4279E8DED00024A70 /* country_selection_list_th.json in Resources */,
@@ -2284,6 +2294,7 @@
 				3BA8E134270B18D20095D036 /* resv_1.8.1.html in Resources */,
 				89E6B2DD279E8DD600024A70 /* country_selection_list_ko.json in Resources */,
 				4A6E08BB26FB2EB600147BAC /* CameraTTSDialog.xib in Resources */,
+				892BC9482754DB3F002730F9 /* start_record.wav in Resources */,
 				8994A7CE26F4A83600657608 /* img1.jpg in Resources */,
 				89E6B2DF279E8DDC00024A70 /* country_selection_list_fr.json in Resources */,
 				502939A32717F2B8004EB8C0 /* ResetListTableViewCell.xib in Resources */,
@@ -2322,6 +2333,7 @@
 				8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */,
 				8929D12E27B0F19400750537 /* resv_src.js in Resources */,
 				89513CCC27ABDB2F008C6F99 /* responsivevoice_1.8.1.js in Resources */,
+				892BC9442754DAF5002730F9 /* record_success.wav in Resources */,
 				5064D19B26E2A9A4006E6197 /* conversation_languages_en.xml in Resources */,
 				89E6B2DC279E8DD200024A70 /* country_selection_list_zh.json in Resources */,
 				967B746026FACB9F001B1985 /* CustomAlertDialog.storyboard in Resources */,

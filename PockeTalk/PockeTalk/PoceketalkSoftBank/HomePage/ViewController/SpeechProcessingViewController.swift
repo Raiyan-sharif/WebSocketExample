@@ -92,6 +92,10 @@ class SpeechProcessingViewController: BaseViewController{
     private let burmeseWaitngISFinalSecond:Int = 10
     var isMinimumLimitExceed = false
     private var connectivity = Connectivity()
+    private var inputText: String = ""
+    private var screenOff = false
+    private var burmeseTutorial = false
+
 
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -313,6 +317,9 @@ class SpeechProcessingViewController: BaseViewController{
                             if !self.isFinalProvided {
                                 self.loaderInvisible()
                                 self.removeAnimation()
+                                if !self.burmeseTutorial {
+                                    NotificationCenter.default.post(name: .sttInputError, object: nil)
+                                }
                             }
                         }
                     }
@@ -442,6 +449,10 @@ class SpeechProcessingViewController: BaseViewController{
             guard let `self` = self else { return }
             if isFinal{
                 self.isFinalProvided = true
+                DispatchQueue.main.async {
+                    guard let url = Bundle.main.url(forResource: "record_success", withExtension: "wav") else { return }
+                    AudioPlayer.sharedInstance.playSTTSound(url: url)
+                }
                 self.timer?.invalidate()
                 ActivityIndicator.sharedInstance.hide()
                 PrintUtility.printLog(tag: self.TAG, text: "isFinal: \(self.isFinalProvided)")
@@ -524,6 +535,7 @@ class SpeechProcessingViewController: BaseViewController{
             if sstText.count > 0{
                 self.isSSTavailable = true
                 self.titleLabel.text = sstText
+                self.inputText = sstText
                 self.hideOrOpenExampleText(isHidden: true)
             }else{
                 self.isSSTavailable = false
@@ -605,9 +617,10 @@ class SpeechProcessingViewController: BaseViewController{
         self.service?.timerInvalidate()
         self.removeAnimation()
          */
-
         countDownTimer?.invalidate()
         countDownTimer = nil
+        screenOff = true
+        self.timer?.invalidate()
         ActivityIndicator.sharedInstance.hide()
     }
     
@@ -616,6 +629,7 @@ class SpeechProcessingViewController: BaseViewController{
         AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
         }
         PrintUtility.printLog(tag: TAG, text: "Become Active")
+        screenOff = false
         self.exampleLabel.text = ""
         self.descriptionLabel.text = ""
     }
@@ -677,8 +691,10 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
 extension SpeechProcessingViewController: HomeVCDelegate{
     func startRecord() {
         PrintUtility.printLog(tag: TAG, text: "Start Recording")
+        self.timer?.invalidate()
         ActivityIndicator.sharedInstance.hide()
         isFinalProvided = false
+        inputText = ""
         if self.homeVC!.isFromPronuntiationPractice(){
             NotificationCenter.default.post(name: .pronuntiationResultNotification, object: nil, userInfo:nil)
             NotificationCenter.default.post(name: .pronuntiationTTSStopNotification, object: nil, userInfo:nil)
@@ -707,7 +723,9 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         }
         service?.stopRecord()
         service?.timerInvalidate()
-        if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing{
+        burmeseTutorial = false
+        switch ScreenTracker.sharedInstance.screenPurpose {
+        case .HomeSpeechProcessing:
             if self.speechLangCode == BURMESE_LANG_CODE {
                 self.titleLabel.text = ""
                 self.exampleLabel.text = ""
@@ -715,8 +733,29 @@ extension SpeechProcessingViewController: HomeVCDelegate{
             }
             hideOrOpenExampleText(isHidden: true)
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable && !isTapOnMenu {
+                if !screenOff {
+                    NotificationCenter.default.post(name: .sttInputError, object: nil)
+                }
+                burmeseTutorial = true
                 self.showTutorial()
+            } else {
+                if self.inputText.count <= 0 && !isTapOnMenu && self.speechLangCode != BURMESE_LANG_CODE && !screenOff {
+                    NotificationCenter.default.post(name: .sttInputError, object: nil)
+                }
             }
+            break
+        case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera, .CountrySettingsSelectionByVoice:
+            if self.inputText.count <= 0 && !isTapOnMenu && !screenOff {
+                NotificationCenter.default.post(name: .sttInputError, object: nil)
+            }
+            break
+        case .PronunciationPractice, .HistroyPronunctiation:
+            if self.inputText.count <= 0 && self.speechLangCode != BURMESE_LANG_CODE && !isTapOnMenu && !screenOff{
+                NotificationCenter.default.post(name: .sttInputError, object: nil)
+            }
+            break
+        default:
+            break
         }
         SpeechProcessingViewModel.isLoading = true
         removeAnimation()

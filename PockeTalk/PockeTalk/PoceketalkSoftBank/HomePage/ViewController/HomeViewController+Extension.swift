@@ -172,6 +172,10 @@ extension HomeViewController{
 //                            GlobalMethod.showAlert("no_stt_msg".localiz(), in: self, completion: nil)
                         }else{
                             //self.setBlackGradientImageToBottomView(usingState: .black)
+                            DispatchQueue.main.async {
+                                guard let url = Bundle.main.url(forResource: "start_record", withExtension: "wav") else { return }
+                                AudioPlayer.sharedInstance.playSTTSound(url: url)
+                            }
                             SocketManager.sharedInstance.connect()
                             SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                             self.speechVC.updateLanguageType()
