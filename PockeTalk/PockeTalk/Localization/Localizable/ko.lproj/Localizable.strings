@@ -70,6 +70,9 @@
 "charge_the_device" = "충전하십시오";
 "camera_flash_unavailable" = "배터리 잔량이 부족하기 때문에 플래시는 사용할 수 없습니다";
 "can_not_translate" = "번역할 수 없습니다.";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "허용";
 "kActionCancel" = "취소";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

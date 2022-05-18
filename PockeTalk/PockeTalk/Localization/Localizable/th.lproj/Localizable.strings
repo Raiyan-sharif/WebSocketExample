@@ -69,6 +69,9 @@
 "charge_the_device" = "กรุณาชาร์จอุปกรณ์";
 "camera_flash_unavailable" = "ท่านไม่สามารถใช้แฟลชได้เนื่องจากแบตเตอรี่มีไม่เพียงพอ";
 "can_not_translate" = "ไม่สามารถแปลได้";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "อนุญาต";
 "kActionCancel" = "ยกเลิก";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

@@ -33,10 +33,7 @@ let languageMappingTotalRowCount = 1495
 
 
 //MARK: - Link
-//let SUPPORT_URL = "https://rd.snxt.jp/PA002"
-let PROMOTION_URL = "https://www.sourcenext.com/" // TODO: Need to change
-//let USER_MANUAL_URL = "https://rd.snxt.jp/PA003"
-//let TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
+let REVIEW_SUPPORT_URL = "https://rd.snxt.jp/PA010"
 
 let PRODUCTION_SUPPORT_URL = "https://rd.snxt.jp/PA002"
 let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"

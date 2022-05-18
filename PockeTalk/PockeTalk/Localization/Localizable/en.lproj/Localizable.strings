@@ -74,6 +74,9 @@
 "charge_the_device" = "Please charge the device";
 "camera_flash_unavailable" = "Camera Flash disabled due to low battery";
 "can_not_translate" = "Can not translate";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 
 "kActionAllowAccess" = "Allow access";
 "kActionCancel" = "Cancel";

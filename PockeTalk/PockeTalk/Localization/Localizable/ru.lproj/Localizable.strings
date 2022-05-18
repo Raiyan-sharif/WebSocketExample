@@ -70,6 +70,9 @@
 "charge_the_device" = "Пожалуйста, зарядите устройство";
 "camera_flash_unavailable" = "Вспышка камеры отключена из-за низкого заряда батареи";
 "can_not_translate" = "Невозможно перевести.";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "Разрешить доступ";
 "kActionCancel" = "Отмена";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

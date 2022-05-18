@@ -69,6 +69,9 @@
 "charge_the_device" = "Sila caskan peranti";
 "camera_flash_unavailable" = "Denyar tidak boleh digunakan kerana bateri lemah.";
 "can_not_translate" = "Tidak boleh terjemah.";
+"user_satisfaction_message" = "Are you satisfied with the app?";
+"yes" = "Yes";
+"no" = "No";
 "kActionAllowAccess" = "kebenaran";
 "kActionCancel" = "Batal";
 "kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";

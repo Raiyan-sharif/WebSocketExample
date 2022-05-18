@@ -5,7 +5,6 @@
 
 import Foundation
 import StoreKit
-import Kronos
 import SwiftKeychainWrapper
 
 class AppRater: NSObject {
@@ -23,16 +22,40 @@ class AppRater: NSObject {
     }
 
     public func rateApp() -> Bool {
+        guard Reachability.isConnectedToNetwork() else {
+            PrintUtility.printLog(tag: self.TAG, text: "No internet connection to review app")
+            return false
+        }
         guard !isAppReviewDone() else {
             return false
         }
         guard isTranslationCountMeetThresholdValue() else {
             return false
         }
-        PrintUtility.printLog(tag: TAG, text: "Request for app review")
-        SKStoreReviewController.requestReview()
-        KeychainWrapper.standard.set(true, forKey: appReviewDoneKey)
+        PrintUtility.printLog(tag: TAG, text: "Show review confirmation dialog")
+        self.showReviewConfirmationDialog()
         return true
+    }
+
+    private func showReviewConfirmationDialog() {
+        let alert = UIAlertController(title: nil, message: "user_satisfaction_message".localiz(), preferredStyle: .alert)
+        alert.view.tintColor = UIColor.black
+        let okAction = UIAlertAction(title: "yes".localiz(), style: .default) { _ in
+            PrintUtility.printLog(tag: self.TAG, text: "User satisfied. Request for app review")
+            SKStoreReviewController.requestReview()
+        }
+        alert.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "no".localiz(), style: .default) { _ in
+            PrintUtility.printLog(tag: self.TAG, text: "User disatisfied. Open support url")
+            GlobalMethod.openUrlInBrowser(url: REVIEW_SUPPORT_URL)
+        }
+        alert.addAction(cancelAction)
+        if let topVC = UIApplication.getTopViewController() {
+            topVC.present(alert, animated: true) {
+                PrintUtility.printLog(tag: self.TAG, text: "Save app review done state")
+                KeychainWrapper.standard.set(true, forKey: self.appReviewDoneKey)
+            }
+        }
     }
 
     public func saveAppLaunchTimeOnce() {
@@ -43,17 +66,9 @@ class AppRater: NSObject {
             PrintUtility.printLog(tag: TAG, text: "app launch time once saved.")
             return
         }
-        guard Reachability.isConnectedToNetwork() else {
-            PrintUtility.printLog(tag: TAG, text: "No network to save launch time")
-            return
-        }
-        //Clock.sync(completion:  { [weak self] date, offset in
-            //guard let self = self, let curDate = date else { return }
-
-            let currentTimeInMilliSecond = Double(Date().millisecondsSince1970)
-            PrintUtility.printLog(tag: self.TAG, text: "Save app launch time")
-            KeychainWrapper.standard.set(currentTimeInMilliSecond, forKey: self.appLaunchTimeKey)
-       // })
+        let currentTimeInMilliSecond = Double(Date().millisecondsSince1970)
+        PrintUtility.printLog(tag: self.TAG, text: "Save app launch time")
+        KeychainWrapper.standard.set(currentTimeInMilliSecond, forKey: self.appLaunchTimeKey)
     }
 
     public func incrementTranslationCount() {
@@ -84,21 +99,13 @@ class AppRater: NSObject {
             PrintUtility.printLog(tag: TAG, text: "app launch time yet to save")
             return completionHandler(false)
         }
-        guard Reachability.isConnectedToNetwork() else {
-            PrintUtility.printLog(tag: TAG, text: "No network to check threshold time")
-            return completionHandler(false)
+        let savedDateTime = Date(timeIntervalSince1970: savedTimeInMilliSecond/1000)
+        if let thresholdDate = Calendar.current.date(byAdding: .day, value: self.thresholdDayForAppRating, to: savedDateTime) {
+            let hasPassed = Date() > thresholdDate
+            PrintUtility.printLog(tag: self.TAG, text: "hasThresholdTimePassed - \(hasPassed)")
+            return completionHandler(hasPassed)
         }
-       // Clock.sync(completion:  { [weak self] date, offset in
-            //guard let self = self, let curDate = date else { return completionHandler(false)}
-
-            let savedDateTime = Date(timeIntervalSince1970: savedTimeInMilliSecond/1000)
-            if let thresholdDate = Calendar.current.date(byAdding: .day, value: self.thresholdDayForAppRating, to: savedDateTime) {
-                let hasPassed = Date() > thresholdDate
-                PrintUtility.printLog(tag: self.TAG, text: "hasThresholdTimePassed - \(hasPassed)")
-                return completionHandler(hasPassed)
-            }
-            return completionHandler(false)
-      //  })
+        return completionHandler(false)
     }
 
     private func isTranslationCountMeetThresholdValue() -> Bool {
