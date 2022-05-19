@@ -198,9 +198,13 @@ class CaptureImageProcessVC: BaseViewController {
         let widthInPoints1 = image.size.width
         PrintUtility.printLog(tag: "Compressed Image heightInPoints: \(heightInPoints1)", text: ", widthInPoints: \(widthInPoints1)")
 
+        let window = UIApplication.shared.keyWindow
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let bottomPadding = window?.safeAreaInsets.bottom ?? 0
+
         let screenRect = UIScreen.main.bounds
         let screenWidth = screenRect.size.width
-        let screenHeight = screenRect.size.height
+        let screenHeight = screenRect.size.height - CGFloat(topPadding + bottomPadding)
 
         PrintUtility.printLog(tag: TAG, text: "screen Width: \(screenWidth), \(screenHeight)")
 
