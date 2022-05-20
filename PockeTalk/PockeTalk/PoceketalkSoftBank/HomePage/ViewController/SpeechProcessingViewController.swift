@@ -343,6 +343,9 @@ class SpeechProcessingViewController: BaseViewController{
                                     guard let `self` = self else { return }
                                     if !self.isFinalProvided {
                                         PrintUtility.printLog(tag: self.TAG, text: "Service.recorderDidStop GetActualData, isGettingActualData: \(self.speechProcessingVM.isGettingActualData), isFinal: \(self.isFinalProvided)")
+                                        if !self.screenOff {
+                                            NotificationCenter.default.post(name: .sttInputError, object: nil)
+                                        }
                                         self.loaderInvisible()
                                         self.removeAnimation()
                                         //Show microphone button when get STT text from server
