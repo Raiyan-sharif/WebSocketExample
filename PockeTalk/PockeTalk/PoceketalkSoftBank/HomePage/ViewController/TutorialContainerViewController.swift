@@ -13,6 +13,7 @@ class TutorialContainerViewController: BaseViewController{
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         self.view.backgroundColor = UIColor.white
         setupVideoPlayer()
         player?.play()
@@ -46,4 +47,9 @@ class TutorialContainerViewController: BaseViewController{
         player?.play()
         playVideoCallback?()
     }
+
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        player?.seek(to: CMTimeMakeWithSeconds(100, preferredTimescale: 1))
+    }
+    
 }
