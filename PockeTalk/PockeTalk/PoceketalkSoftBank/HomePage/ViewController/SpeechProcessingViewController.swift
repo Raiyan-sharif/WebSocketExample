@@ -95,6 +95,7 @@ class SpeechProcessingViewController: BaseViewController{
     private var inputText: String = ""
     private var screenOff = false
     private var burmeseTutorial = false
+    private var playSttSound = true
 
 
     //MARK: - Lifecycle Methods
@@ -133,6 +134,7 @@ class SpeechProcessingViewController: BaseViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.isMinimumLimitExceed = true
+        self.playSttSound = false
         stopRecord()
         isTapOnMenu = false
     }
@@ -736,24 +738,24 @@ extension SpeechProcessingViewController: HomeVCDelegate{
             }
             hideOrOpenExampleText(isHidden: true)
             if speechProcessingVM.getTimeDifference(endTime: Date()) < 1  && !isSSTavailable && !isTapOnMenu {
-                if !screenOff {
+                if !screenOff && playSttSound {
                     NotificationCenter.default.post(name: .sttInputError, object: nil)
                 }
                 burmeseTutorial = true
                 self.showTutorial()
             } else {
-                if self.inputText.count <= 0 && !isTapOnMenu && self.speechLangCode != BURMESE_LANG_CODE && !screenOff {
+                if self.inputText.count <= 0 && !isTapOnMenu && self.speechLangCode != BURMESE_LANG_CODE && !screenOff && playSttSound {
                     NotificationCenter.default.post(name: .sttInputError, object: nil)
                 }
             }
             break
         case .LanguageSelectionVoice,.LanguageSelectionCamera,.CountrySelectionByVoice, .LanguageHistorySelectionVoice, .LanguageHistorySelectionCamera, .LanguageSettingsSelectionVoice, .LanguageSettingsSelectionCamera, .CountrySettingsSelectionByVoice:
-            if self.inputText.count <= 0 && !isTapOnMenu && !screenOff {
+            if self.inputText.count <= 0 && !isTapOnMenu && !screenOff && playSttSound {
                 NotificationCenter.default.post(name: .sttInputError, object: nil)
             }
             break
         case .PronunciationPractice, .HistroyPronunctiation:
-            if self.inputText.count <= 0 && self.speechLangCode != BURMESE_LANG_CODE && !isTapOnMenu && !screenOff{
+            if self.inputText.count <= 0 && self.speechLangCode != BURMESE_LANG_CODE && !isTapOnMenu && !screenOff && playSttSound {
                 NotificationCenter.default.post(name: .sttInputError, object: nil)
             }
             break
