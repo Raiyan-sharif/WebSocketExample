@@ -556,7 +556,17 @@ class HomeViewController: BaseViewController {
         //Add as child and other UI property
         add(asChildViewController: controller, containerView:homeContainerView, animation: transition)
         hideSpeechView()
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
+        setLanguageScreenTracker(isNative: isNative)
+    }
+
+    private func setLanguageScreenTracker(isNative : Int) {
+        if isNative == LanguageName.bottomLang.rawValue {
+            let index = UserDefaultsProperty<Int>(kBottomLanguageSelectionIndex).value
+            index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice)
+        } else {
+            let index = UserDefaultsProperty<Int>(kTopLanguageSelectionIndex).value
+            index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice)
+        }
     }
 
     @objc func onVoiceLanguageChanged(notification: Notification) {

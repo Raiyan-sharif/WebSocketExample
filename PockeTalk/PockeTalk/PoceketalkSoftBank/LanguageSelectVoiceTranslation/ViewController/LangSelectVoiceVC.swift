@@ -166,6 +166,7 @@ class LangSelectVoiceVC: BaseViewController {
         updateButton(index: 0)
         tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+        saveLangSelectionindex()
     }
 
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
@@ -176,6 +177,7 @@ class LangSelectVoiceVC: BaseViewController {
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
+        saveLangSelectionindex()
     }
 
     @IBAction func onCountryButtonTapped(_ sender: Any) {
@@ -196,7 +198,6 @@ class LangSelectVoiceVC: BaseViewController {
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = selectedLanguageCode
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         if !fromRetranslation {
-            saveLangSelectionindex()
             if isNative == LanguageName.bottomLang.rawValue{
                 if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
                     LanguageSelectionManager.shared.isBottomLanguageChanged = true
@@ -342,15 +343,15 @@ class LangSelectVoiceVC: BaseViewController {
         FloatingMikeButton.sharedInstance.add()
         FloatingMikeButton.sharedInstance.delegate = self
     }
-    
+
     @objc func updateLanguageSelection(notification: Notification) {
         updateUI()
     }
-    
+
     private func microphoneIcon(isHidden: Bool){
         FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
-    
+
     private func updateUI(isProvideSTTFromLanguageSettingTutorialUI: Bool = false){
         self.isFirstTimeLoad = false
         updateButton(index: 0)
