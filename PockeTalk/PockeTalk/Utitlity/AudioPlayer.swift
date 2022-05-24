@@ -208,8 +208,6 @@ class AudioPlayer: NSObject {
 
     func playSTTSound(url: URL) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.multiRoute, options: .duckOthers)
-            try AVAudioSession.sharedInstance().setActive(true)
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             guard let player = player else { return }
             player.play()
