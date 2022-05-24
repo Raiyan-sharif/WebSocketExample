@@ -109,6 +109,8 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         if UserDefaultsProperty<String>(KCameraTempTargetLanguage).value != nil{
             targetLangCode = UserDefaultsProperty<String>(KCameraTempTargetLanguage).value!
             UserDefaultsProperty<String>(KCameraTargetLanguageCode).value = targetLangCode
+        } else {
+            UserDefaultsProperty<String>(KCameraTempTargetLanguage).value = targetLangCode
         }
         
         let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
