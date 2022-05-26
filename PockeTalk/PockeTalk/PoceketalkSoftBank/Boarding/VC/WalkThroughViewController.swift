@@ -6,6 +6,20 @@
 
 import UIKit
 
+private enum ButtonTag: Int {
+    case firstPageNext
+    case secondPageBack
+    case secondPageNext
+    case thirdPageBack
+    case thirdPageClose
+}
+
+private enum PageTag {
+    case firstPage
+    case secondPage
+    case thirdPage
+}
+
 class WalkThroughViewController: BaseViewController {
 
     @IBOutlet weak private var bottomLangNativeNameLabel: UILabel!
@@ -41,9 +55,14 @@ class WalkThroughViewController: BaseViewController {
     @IBOutlet weak var languageView: UIView!
 
     @IBOutlet weak var arrowBackgroundView: UIView!
+
+    let TAG = "\(WalkThroughViewController.self)"
+    private var curPage: PageTag = .firstPage
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        PrintUtility.printLog(tag: self.TAG, text: "viewDidLoad[+]")
+
         updateLanguageNames()
         initialCase()
         ScreenTracker.sharedInstance.screenPurpose = .WalkThroughViewController
@@ -64,7 +83,19 @@ class WalkThroughViewController: BaseViewController {
         close.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
 
         titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize())
+        curPage = .firstPage
 
+        //Next / Tap Gesture
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.nextSwipeGesture(_:)))
+        backGround_blackView.addGestureRecognizer(tap)
+        //Next / right to left swipe gesture
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(nextSwipeGesture(_:)))
+        leftSwipeGestureRecognizer.direction = .left
+        backGround_blackView.addGestureRecognizer(leftSwipeGestureRecognizer)
+        //Back / left to right swipe gesture
+        let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(backSwipeGesture(_:)))
+        rightSwipeGestureRecognizer.direction = .right
+        backGround_blackView.addGestureRecognizer(rightSwipeGestureRecognizer)
 
         middleStackView.isHidden = true
         lastStackView.isHidden = true
@@ -95,47 +126,62 @@ class WalkThroughViewController: BaseViewController {
 
 
     @IBAction func actionBackorNext(_ sender: UIButton) {
-        switch sender.tag {
-        case 0:
+        self.changeView(withTag: sender.tag)
+    }
+
+    private func changeView(withTag tag: Int) {
+        PrintUtility.printLog(tag: self.TAG, text: "Change view with tag - \(tag)")
+        switch tag {
+        case ButtonTag.firstPageNext.rawValue:
             firstNextBtn.isHidden = true
             middleStackView.isHidden = false
             languageView.isHidden = false
             bottomView.isHidden = true
             titleLabel.text = "KBoardingTransLationLan".localiz()
+            curPage = .secondPage
 
-        case 1:
+        case ButtonTag.secondPageBack.rawValue:
             bottomView.isHidden = false
             languageView.isHidden = true
             firstNextBtn.isHidden = false
             middleStackView.isHidden = true
             titleLabel.text = "KBoardingTalkButtonTitle".localiz()
-        case 2:
+            curPage = .firstPage
+
+        case ButtonTag.secondPageNext.rawValue:
             middleStackView.isHidden = true
             languageView.isHidden = true
             lastStackView.isHidden = false
             arrowBackgroundView.isHidden = false
             titleLabel.text = "KBoardingLanChange".localiz()
-        case 3:
+            curPage = .thirdPage
+
+        case ButtonTag.thirdPageBack.rawValue:
             middleStackView.isHidden = false
             languageView.isHidden = false
             lastStackView.isHidden = true
             arrowBackgroundView.isHidden = true
-            titleLabel.text = "KBoardingTalkButtonTitle".localiz()
-        case 4:
+            titleLabel.text = "KBoardingTransLationLan".localiz()
+            curPage = .secondPage
+
+        case ButtonTag.thirdPageClose.rawValue:
             UserDefaults.standard.set(true, forKey: kInitialFlowCompletedForCoupon)
             var savedCoupon = ""
             if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
                 savedCoupon = coupon
-                PrintUtility.printLog(tag: "In WalkThrough", text: "Coupon found: \(coupon)")
+                PrintUtility.printLog(tag: self.TAG, text: "Coupon found: \(coupon)")
             }
             if Reachability.isConnectedToNetwork() {
                 if savedCoupon.isEmpty {
+                    PrintUtility.printLog(tag: self.TAG, text: "No coupon found, go to purchase plan view")
                     goToPurchasePlan()
                 }else{
+                    PrintUtility.printLog(tag: self.TAG, text: "Coupon found, go to permission view")
                     goToPermissionVC()
                 }
             }else{
                 DispatchQueue.main.async {
+                    PrintUtility.printLog(tag: self.TAG, text: "No internet connection")
                     InitialFlowHelper().showNoInternetAlert(on: self)
                 }
             }
@@ -144,6 +190,31 @@ class WalkThroughViewController: BaseViewController {
             break
         }
     }
+
+    @objc private func nextSwipeGesture(_ sender: UIGestureRecognizer) {
+        PrintUtility.printLog(tag: self.TAG, text: "Next/left swipe from \(curPage)")
+        switch curPage {
+        case .firstPage:
+            changeView(withTag: ButtonTag.firstPageNext.rawValue)
+        case .secondPage:
+            changeView(withTag: ButtonTag.secondPageNext.rawValue)
+        case .thirdPage:
+            changeView(withTag: ButtonTag.thirdPageClose.rawValue)
+        }
+    }
+
+    @objc private func backSwipeGesture(_ sender: UISwipeGestureRecognizer) {
+        PrintUtility.printLog(tag: self.TAG, text: "Back/right swipe from \(curPage)")
+        switch curPage {
+        case .firstPage:
+            PrintUtility.printLog(tag: self.TAG, text: "No action")
+        case .secondPage:
+            changeView(withTag: ButtonTag.secondPageBack.rawValue)
+        case .thirdPage:
+            changeView(withTag: ButtonTag.thirdPageBack.rawValue)
+        }
+    }
+
     private func goToPermissionVC() {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
