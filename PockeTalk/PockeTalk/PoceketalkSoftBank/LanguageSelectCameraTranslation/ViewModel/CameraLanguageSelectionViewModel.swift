@@ -206,6 +206,13 @@ class CameraLanguageSelectionViewModel:BaseModel{
                     UserDefaultsProperty<String>(kTempSelectedLanguageCamrea).value = langItem?.code
                 } else {
                     UserDefaultsProperty<String>(KSelectedLanguageCamera).value = langItem?.code
+
+                    if UserDefaultsProperty<Bool>(KCameraLanguageFrom).value == true {
+                         UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value = 0
+                    }
+                    else{
+                         UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value = 0
+                   }
                     let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
                     if !langSelectFor {
                         UserDefaultsProperty<String>(KCameraTempTargetLanguage).value = langItem?.code

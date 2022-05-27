@@ -72,7 +72,8 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        let index = UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value
+        setCameraLanguageScreenTracker(index: index ?? 0)
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
@@ -80,7 +81,12 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        let index = UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value
+        setCameraLanguageScreenTracker(index: index ?? 1)
+    }
+
+    private func setCameraLanguageScreenTracker(index : Int) {
+        index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera)
     }
     
     func openCameraLanguageListScreen(){
