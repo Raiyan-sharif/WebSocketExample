@@ -14,6 +14,7 @@ extension Notification.Name {
     static let pronuntiationNotification = Notification.Name("PronuntiationNotification")
     static let pronuntiationResultNotification = Notification.Name("pronuntiationResultNotification")
     static let historyNotofication = Notification.Name("HistoryNotofication")
+    static let resetChatHistoryNotification = Notification.Name("ResetChatHistoryNotification")
     static let languageListNotofication = Notification.Name("languageListNotofication")
     static let languageHistoryListNotification = Notification.Name("languageHistoryListNotification")
     static let languageSettingsListNotification = Notification.Name("languageSettingsListNotification")

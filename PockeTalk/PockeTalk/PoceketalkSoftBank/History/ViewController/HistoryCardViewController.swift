@@ -74,6 +74,11 @@ class HistoryCardViewController: BaseViewController {
         view.backgroundColor = .clear
     }
 
+    @objc func resetDataSource(notification: NSNotification){
+        self.historyViewModel.items.value = []
+        self.collectionView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUIView()
@@ -136,12 +141,14 @@ class HistoryCardViewController: BaseViewController {
     
     private func registerNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(removeChild(notification:)), name:.historyNotofication, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetDataSource(notification:)), name: .resetChatHistoryNotification, object: nil)
     }
     
     //MARK: - Load Data
     private func bindData(){
         historyViewModel.items.bindAndFire { [weak self] items in
             guard let `self` = self else { return }
+            PrintUtility.printLog(tag: "HistoryCardViewController limit", text: "\(items.count)")
             if items.count > 0{
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                     guard let `self` = self else { return }
@@ -227,6 +234,7 @@ class HistoryCardViewController: BaseViewController {
     //MARK: - Utils
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name:.historyNotofication, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .resetChatHistoryNotification, object: nil)
     }
     
     @objc private func removeChild(notification: Notification) {

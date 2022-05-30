@@ -74,6 +74,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 FileUtility.deleteAllHistoryTTSAudioFiles()
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
                 self.showSuccessAlert(title: "history_cleared".localiz())
+                NotificationCenter.default.post(name: .resetChatHistoryNotification, object: nil)
             }
             present(alert, animated: true, completion: nil)
 //            let alert = AlertDialogUtility.showTranslationHistoryDialog()
