@@ -133,6 +133,7 @@ class WalkThroughViewController: BaseViewController {
         PrintUtility.printLog(tag: self.TAG, text: "Change view with tag - \(tag)")
         switch tag {
         case ButtonTag.firstPageNext.rawValue:
+            firstTutorialNextButtonLogEvent()
             firstNextBtn.isHidden = true
             middleStackView.isHidden = false
             languageView.isHidden = false
@@ -141,6 +142,7 @@ class WalkThroughViewController: BaseViewController {
             curPage = .secondPage
 
         case ButtonTag.secondPageBack.rawValue:
+            secondTutorialBackButtonLogEvent()
             bottomView.isHidden = false
             languageView.isHidden = true
             firstNextBtn.isHidden = false
@@ -149,6 +151,7 @@ class WalkThroughViewController: BaseViewController {
             curPage = .firstPage
 
         case ButtonTag.secondPageNext.rawValue:
+            secondTutorialNextButtonLogEvent()
             middleStackView.isHidden = true
             languageView.isHidden = true
             lastStackView.isHidden = false
@@ -157,6 +160,7 @@ class WalkThroughViewController: BaseViewController {
             curPage = .thirdPage
 
         case ButtonTag.thirdPageBack.rawValue:
+            thirdTutorialBackButtonLogEvent()
             middleStackView.isHidden = false
             languageView.isHidden = false
             lastStackView.isHidden = true
@@ -165,6 +169,7 @@ class WalkThroughViewController: BaseViewController {
             curPage = .secondPage
 
         case ButtonTag.thirdPageClose.rawValue:
+            thirdTutorialCloseButtonLogEvent()
             UserDefaults.standard.set(true, forKey: kInitialFlowCompletedForCoupon)
             var savedCoupon = ""
             if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
@@ -245,6 +250,33 @@ class WalkThroughViewController: BaseViewController {
         lanNameLabel.text = nativeLanguage?.name
         topLangNativeNameLabel.text = targetLanguage?.name
     }
+}
 
+//MARK: - Google analytics log events
+extension WalkThroughViewController {
+    private func firstTutorialNextButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstTutorialOne,
+                            buttonName: analytics.buttonNext)
+    }
+
+    private func secondTutorialBackButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstTutorialTwo,
+                            buttonName: analytics.buttonReturn)
+    }
+
+    private func secondTutorialNextButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstTutorialTwo,
+                            buttonName: analytics.buttonNext)
+    }
+
+    private func thirdTutorialBackButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstTutorialThree,
+                            buttonName: analytics.buttonReturn)
+    }
+
+    private func thirdTutorialCloseButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstTutorialThree,
+                            buttonName: analytics.buttonClose)
+    }
 }
 

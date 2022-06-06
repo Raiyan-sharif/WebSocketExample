@@ -5,7 +5,7 @@
 
 import UIKit
 
-class AppFirstLaunchViewController: UIViewController {
+class AppFirstLaunchViewController: BaseViewController {
     @IBOutlet weak private var topView: UIView!
     @IBOutlet weak private var termAndConditionButton: UIButton!
     @IBOutlet weak private var acceptAndStartButton: UIButton!
@@ -82,6 +82,7 @@ class AppFirstLaunchViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
+        termAndConditionButtonLogEvent()
         if Reachability.isConnectedToNetwork(){
             goToWalkThroughScreen()
         } else {
@@ -90,11 +91,25 @@ class AppFirstLaunchViewController: UIViewController {
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
+        acceptAndStartButtonLogEvent()
         if Reachability.isConnectedToNetwork() {
             let settingsUrl = NSURL(string: GlobalMethod.getURLString().termsAndConditionsURL)! as URL
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         } else {
             InitialFlowHelper().showNoInternetAlert(on: self)
         }
+    }
+}
+
+//MARK: - Google analytics log events
+extension AppFirstLaunchViewController {
+    private func termAndConditionButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstAgreement,
+                            buttonName: analytics.buttonConfirm)
+    }
+
+    private func acceptAndStartButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstAgreement,
+                            buttonName: analytics.buttonAgree)
     }
 }

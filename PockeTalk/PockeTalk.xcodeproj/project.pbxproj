@@ -225,6 +225,7 @@
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
 		897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */; };
 		89858F462727FD2000264686 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89858F452727FD2000264686 /* Connectivity.swift */; };
+		89887EBF286D6DFB00ADEC67 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89887EBE286D6DFB00ADEC67 /* GoogleAnalytics.swift */; };
 		8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */ = {isa = PBXBuildFile; fileRef = 8988B7972721763000FBBA40 /* engine-tempo-value.json */; };
 		898E6AA727841ABE00138035 /* AppsPermissionCheckingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */; };
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
@@ -275,6 +276,7 @@
 		89C0F7F026F20AA4000CD5FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */; };
 		89C0F7F226F33867000CD5FC /* CameraHistoryPopUPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */; };
 		89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */; };
+		89C275DC286D4B5D0069E57B /* Firebase in Resources */ = {isa = PBXBuildFile; fileRef = 89C275DB286D4B5D0069E57B /* Firebase */; };
 		89C526C527AA5E9C00942D24 /* FloatingMikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */; };
 		89C70BCD27A925A7005DA505 /* AppRater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C70BCC27A925A7005DA505 /* AppRater.swift */; };
 		89CC577227C8A9F0008341D9 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC577127C8A9F0008341D9 /* AppDelegate+Extension.swift */; };
@@ -581,6 +583,7 @@
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
 		89858F452727FD2000264686 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		89887EBE286D6DFB00ADEC67 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		8988B7972721763000FBBA40 /* engine-tempo-value.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "engine-tempo-value.json"; sourceTree = "<group>"; };
 		898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsPermissionCheckingManager.swift; sourceTree = "<group>"; };
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
@@ -653,6 +656,7 @@
 		89C0F7EF26F20AA4000CD5FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C0F7F126F33867000CD5FC /* CameraHistoryPopUPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHistoryPopUPViewController.swift; sourceTree = "<group>"; };
 		89C0F7F426F3421A000CD5FC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		89C275DB286D4B5D0069E57B /* Firebase */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Firebase; sourceTree = "<group>"; };
 		89C526C427AA5E9C00942D24 /* FloatingMikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMikeButton.swift; sourceTree = "<group>"; };
 		89C70BCC27A925A7005DA505 /* AppRater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRater.swift; sourceTree = "<group>"; };
 		89CC577127C8A9F0008341D9 /* AppDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extension.swift"; sourceTree = "<group>"; };
@@ -876,6 +880,7 @@
 		4A66139D26DDEC91004A925D /* Utitlity */ = {
 			isa = PBXGroup;
 			children = (
+				89887EBD286D6DE000ADEC67 /* GoogleAnalytics */,
 				87F832BB2759DC4A007329BA /* AudioPlayer.swift */,
 				89C0F7CA26F1CE08000CD5FC /* AlertMenuType.swift */,
 				89C0F7D026F1CE08000CD5FC /* Bindable.swift */,
@@ -947,6 +952,7 @@
 		4A6613AF26DE47E9004A925D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				89C275DB286D4B5D0069E57B /* Firebase */,
 				8940A3B827ABEBCB005CB401 /* pron_w3.otf */,
 				8940A3B427ABDB14005CB401 /* text-license.html */,
 				87282AF127A12C7C0055B293 /* BuildConfiguration */,
@@ -1802,6 +1808,14 @@
 			path = InitialPermissionSettingsViewController;
 			sourceTree = "<group>";
 		};
+		89887EBD286D6DE000ADEC67 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				89887EBE286D6DFB00ADEC67 /* GoogleAnalytics.swift */,
+			);
+			path = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
 		89A4F01C27C5E4B200A718FA /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2165,8 +2179,11 @@
 				9BB7920EC66862277B263086 /* [CP] Check Pods Manifest.lock */,
 				4A66137226DDCF59004A925D /* Sources */,
 				4A66137326DDCF59004A925D /* Frameworks */,
+				89378760284DFF3400E2936C /* Setup Firebase Environment GoogleService-Info.plist */,
 				4A66137426DDCF59004A925D /* Resources */,
 				00143D1F92986E3E2201C3E9 /* [CP] Embed Pods Frameworks */,
+				89378761284E1A8500E2936C /* Automatically upload dSYM files to Crashlytics */,
+				89887EBC286D524F00ADEC67 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2265,6 +2282,7 @@
 				89E6B2EB279E8FC900024A70 /* conversation_languages_it.xml in Resources */,
 				5064D19726E2A93E006E6197 /* conversation_languages_ja.xml in Resources */,
 				5028D54F26E29D57002A5250 /* LangListCell.xib in Resources */,
+				89C275DC286D4B5D0069E57B /* Firebase in Resources */,
 				89B4D1F627BE6C9A00D1C7D2 /* PlanTableViewCell.xib in Resources */,
 				89E6B2DE279E8DD900024A70 /* country_selection_list_de.json in Resources */,
 				50193E0626E864570052F170 /* CountryListCollectionViewCell.xib in Resources */,
@@ -2389,6 +2407,63 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		89378760284DFF3400E2936C /* Setup Firebase Environment GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase Environment GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_STG=${PROJECT_DIR}/${TARGET_NAME}/Resources/Firebase/stg/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_PROD=${PROJECT_DIR}/${TARGET_NAME}/Resources/Firebase/pro/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_STG}\"\nif [ ! -f $GOOGLESERVICE_INFO_STG ]\nthen\n    echo \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PROD}\"\nif [ ! -f $GOOGLESERVICE_INFO_PROD ]\nthen\n    echo \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"ProductionWithStageURL\" ]\nthen\n    echo \"--> Using ${GOOGLESERVICE_INFO_STG}\"\n    echo \"--> Config ${CONFIGURATION}\"\n    cp \"${GOOGLESERVICE_INFO_STG}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"--> Using ${GOOGLESERVICE_INFO_PROD}\"\n    echo \"--> Config ${CONFIGURATION}\"\n    cp \"${GOOGLESERVICE_INFO_PROD}\" \"${PLIST_DESTINATION}\"\nfi\n";
+		};
+		89378761284E1A8500E2936C /* Automatically upload dSYM files to Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Automatically upload dSYM files to Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		89887EBC286D524F00ADEC67 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		9BB7920EC66862277B263086 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2467,6 +2542,7 @@
 				89495B4A26F0AAA500CEA19D /* HTTPStatusCode.swift in Sources */,
 				4AE97AD126E8E0E6007344FC /* CameraHistoryDBModel.swift in Sources */,
 				960835B926E75549006DB9F9 /* PronunciationModel.swift in Sources */,
+				89887EBF286D6DFB00ADEC67 /* GoogleAnalytics.swift in Sources */,
 				4AE97AE226E8E294007344FC /* LanguageMapDBModel.swift in Sources */,
 				87108A4027BCAAE70007AA9F /* ResponseLogger.swift in Sources */,
 				8782DF0426E099BF003A1681 /* NibLoadable.swift in Sources */,
@@ -2755,7 +2831,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = TOKYOSERVER_PRODUCTION;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2874,7 +2950,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = DEBUG;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2973,7 +3049,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3000,7 +3076,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3100,7 +3176,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = TOKYOSERVER_STAGE;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3218,7 +3294,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = TOKYOSERVER_PRODUCTION;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3336,7 +3412,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = LOAD_ENGINE_FROM_ASSET;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3452,7 +3528,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = TOKYOSERVER_STAGE;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3570,7 +3646,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_SCHEME_NAME = TOKYOSERVER_PRODUCTION;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q446ZQDPHN;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
