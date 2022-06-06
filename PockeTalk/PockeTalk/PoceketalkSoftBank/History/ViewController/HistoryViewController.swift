@@ -77,6 +77,7 @@ class HistoryViewController: BaseViewController {
         //SocketManager.sharedInstance.connect()
 //        socketManager.socketManagerDelegate = self
         registerNotification()
+        PanGestureDetection.shareInstance.isEnabble = true
         
     }
     
