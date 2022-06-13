@@ -246,6 +246,7 @@ class LangSelectVoiceVC: BaseViewController {
 
             ///update the screenPurpose as fromScreenPurpose. If not then it will show mike button if no internet dialog appear.
             ScreenTracker.sharedInstance.screenPurpose = fromScreenPurpose
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
             self.remove(asChildViewController: self)
         }else{
             NotificationCenter.default.post(name: .containerViewSelection, object: nil)

@@ -112,6 +112,7 @@ class CountryWiseLanguageListViewController: BaseViewController {
                 }
             }
             _ = LanguageSelectionManager.shared.insertIntoDb(entity: entity)
+            NotificationCenter.default.post(name: .languageSelectionVoiceNotification, object: nil)
             NotificationCenter.default.post(name: .updateTranlationNotification, object: nil)
         }else{
             if isNative == LanguageName.bottomLang.rawValue{

@@ -181,7 +181,8 @@ extension HomeViewController{
                             self.speechVC.updateLanguageType()
                             
                             if self.speechVC.languageHasUpdated{
-                                self.speechVC.updateLanguageInRemote()
+                                self.speechVC.updateLanguageInRemote() {
+                                }
                             }
                             
                             self.speechVC.hideOrOpenExampleText(isHidden: true)
