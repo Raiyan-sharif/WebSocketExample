@@ -16,6 +16,8 @@
 "Favorite" = "รายการโปรด";
 "PronunciationGuideline" = "กรุณากดปุ่มแล้วออกเสียง";
 "Region" = "ภูมิภาค";
+"TtsToLanguage" = "Hola como estas";
+"TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "การตั้งค่าภาษา";
 "Speech Guideline" = "กรุณากดปุ่มแล้วบอกชื่อภาษาที่ต้องการค้นหา";
 "Country Language Settings" = "Country Settings";
@@ -74,12 +76,12 @@
 "no" = "No";
 "kActionAllowAccess" = "อนุญาต";
 "kActionCancel" = "ยกเลิก";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "แอปพลิเคชัน POCKETALK ต้องการเข้าถึงไมโครโฟนของคุณ";
+"kMicrophoneUsageMessage" = "แอปพลิเคชันนี้ต้องการเข้าถึงไมโครโฟนของคุณเพื่อแปลงเสียงเป็นข้อความและแปล";
 "kPhotosUsageTitle" = "ไม่สามารถใช้รูปภาพได้";
 "kPhotosUsageMessage" = "POCKETALK ต้องได้รับอนุญาตในการเข้าถึงรูปภาพ";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "แอปพลิเคชัน POCKETALK ต้องการเข้าถึงกล้องของคุณ";
+"kCameraUsageMessage" = "แอปพลิเคชันนี้ต้องการเข้าถึงกล้องของคุณเพื่อรับข้อความจากรูปภาพและแปล";
 "kTitleOk" = "OK";
 "kNotAllow" = "ไม่อนุญาต";
 "kNextButtonTitle" = "ถัดไป";
@@ -95,73 +97,74 @@
 "kPaidPlanVCTitleLabel" = "ท่านต้องซื้อแพ็กเกจเพื่อใช้งานแอปพลิเคชันของ POCKETALK";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "ค่าบริการข้างต้นจะถูกเรียกเก็บอย่างต่อเนื่องหากเลยวันสุดท้ายของการใช้งานฟรี";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "เริ่มทดลองใช้งานฟรี 3 วัน";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "กู้คืนประวัติการซื้อ";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "กรุณาเลือกแพ็กเกจการใช้งาน";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 เยน/เดือน ใช้งานฟรี 3 วัน";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 เยน/ปี ใช้งานฟรี 3 วัน";
+"kWelcomeVCTitleLabelTop" = "ยินดีต้อนรับสู่ POCKETALK";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "เริ่มใช้งาน";
 "information" = "ข้อมูล";
 "manual" = "คู่มือ";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "วัน";
+"Days" = "วันแรก";
+"Week" = "สัปดาห์";
+"Weeks" = "สัปดาห์";
+"Month" = "เดือน";
+"Months" = "เดือน";
+"Year" = "ปี";
+"Years" = "ปี";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "วัน";
+"days" = "วันแรก";
+"week" = "สัปดาห์";
+"weeks" = "สัปดาห์";
+"month" = "เดือน";
+"months" = "เดือน";
+"year" = "ปี";
+"years" = "ปี";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "หมดเวลา";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "กรุณาลองใหม่อีกครั้ง";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "การซื้อภายในแอปพลิเคชันเกิดข้อผิดพลาด";
+"kIAPNoProductIDsFound" = "ไม่มีรหัสรายการสำหรับการซื้อภายในแอปพลิเคชัน";
+"kIAPNoProductsFound" = "ไม่มีการซื้อภายในแอปพลิเคชัน";
+"kIAPProductRequestFailed" = "ไม่สามารถรับรายการซื้อภายในแอปพลิเคชันที่สามารถใช้ได้ในขณะนี้";
+"kIAPPaymentWasCancelled" = "การซื้อภายในแอปพลิเคชันถูกยกเลิกแล้ว";
+"kfreeUse" = "ใช้งานฟรี";
+"kIAPNoPurchasedItemToRestore" = "ไม่มีรายการซื้อภายในแอปพลิเคชันที่จะกู้คืน";
+"kIAPALLPreviousIAPRestored" = "การซื้อภายในแอปพลิเคชันได้รับการกู้คืนทั้งหมดแล้ว";
+"kIAPEnablePaymentFromSettings" = "ไม่อนุญาตให้ซื้อภายในแอปพลิเคชันผ่านในอุปกรณ์นี้ หากต้องการเปิดใช้งาน โปรดไปที่ [การตั้งค่า] > [เวลาหน้าจอ] > [การจำกัดเนื้อหาและความเป็นส่วนตัว] > [การซื้อใน iTunes และ App Store] > [การซื้อภายในแอปพลิเคชัน] > [อนุญาต]";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "แพ็กเกจรายสัปดาห์";
+"Monthly Plan" = "แพ็กเกจรายเดือน";
+"Yearly Plan" = "แพ็กเกจรายปี";
 "Free for" = "Free for";
-"kBestPrice" = "Best Price";
+"kBestPrice" = "รายการแนะนำ";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
+"kYen" = " ประหยัด XXเยน";
 
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
+"kYenPerWeek" = "เยน/สัปดาห์";
+"kYenPerMonth" = "เยน/เดือน";
+"kYenPerYear" = "เยน/ปี";
+"kStartPocketalkApp" = "เริ่มใช้งาน POCKETALK";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
+"kIAPFreeDaysDescription" = "ทุกแพ็กเกจ ใช้ฟรี 3 วันแรก";
+"kIAPFreePeriodCancellationDescription" = "ไม่มีค่าธรรมเนียมหากคุณยกเลิกระหว่างช่วงทดลองใช้งานฟรี ";
+"kIAPFreePeriodSubscriptionDescription" = "ค่าธรรมเนียมจะถูกเรียกเก็บทันทีในวันถัดไปหลังจากวันสุดท้ายของช่วงทดลองใช้งานฟรี";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "จำนวนรายการโปรดถึงขีดจำกัดที่กำหนดไว้แล้ว";
 
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "ทุกแพ็กเกจ ใช้ฟรี 3 วันแรก";
+"kFreePlanDetailText" = "ไม่มีค่าธรรมเนียมหากคุณยกเลิกระหว่างช่วงทดลองใช้งานฟรี ค่าธรรมเนียมจะถูกเรียกเก็บทันทีในวันถัดไปหลังจากวันสุดท้ายของช่วงทดลองใช้งานฟรี";
 
 
 //Boarding Screen
@@ -172,15 +175,15 @@
 "KBoardingLanChange"  = "เปลี่ยนทิศทางการแปล";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "คูปองนี้หมดอายุแล้ว";
+"KErrorMessage" = "การยืนยันตัวตนล้มเหลว กรุณาลองใหม่อีกครั้ง";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "ไม่สามารถใช้รหัสคูปองนี้ได้ เนื่องจากข้อตกลงในการสมัครเป็นสมาชิก";
+"kCouponActivatedMesage" = "เปิดใช้งานคูปองแล้ว";
+"kCouponCodeParseError" = "ข้อผิดพลาดในการตรวจสอบรหัสคูปอง \n โปรดลองอีกครั้ง";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";

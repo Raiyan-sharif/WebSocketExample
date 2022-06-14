@@ -3,6 +3,6 @@
   PockeTalk
 */
 
-"NSCameraUsageDescription" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
-"NSMicrophoneUsageDescription" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"NSCameraUsageDescription" = "This app requires the access to camera to get the text from image for translation";
+"NSMicrophoneUsageDescription" = "This app requires the access to Microphone to convert speech to text for translation";
 "NSPhotoLibraryUsageDescription" = "Add photo to image";
