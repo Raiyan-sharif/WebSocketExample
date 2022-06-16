@@ -5,14 +5,19 @@
 
 import UIKit
 import Kronos
+import SwiftKeychainWrapper
 
 extension AppDelegate{
-    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "") {
+    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "", initAppWindow: Bool = false) {
         var viewController = UIViewController()
 
         DispatchQueue.main.async {
             self.window?.rootViewController = nil
-            self.window = UIWindow(frame: UIScreen.main.bounds)
+
+            ///Set app window when app launch only
+            if initAppWindow {
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+            }
 
             switch type {
             case .home:
@@ -38,7 +43,7 @@ extension AppDelegate{
             let navigationController = UINavigationController.init(rootViewController: viewController)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
-            self.setActivityIndicatorWindow()
+            //self.setActivityIndicatorWindow()
         }
     }
 
@@ -156,6 +161,62 @@ extension AppDelegate{
 
 }
 
+//MARK: - UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    private func configureUserNotifications() {
+        UNUserNotificationCenter.current().delegate = self
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> didReceive()[+]")
+
+        if let urlString = response.notification.request.content.userInfo["URL"] {
+            if let expiryDate = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
+                UserDefaults.standard.set("\(urlString)/?coupon_timelimit=\(expiryDate)", forKey: kNotificationURL)
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "kNotificationURL key saved. URL: \(urlString)/?coupon_timelimit=\(expiryDate)")
+            }
+            let id = response.notification.request.identifier
+            UserDefaults.standard.set("\(id)", forKey: "NotificationID")
+        }
+
+        //Remove local notification view if exist
+        CustomLocalNotification().removeView()
+
+        DispatchQueue.main.async {
+            guard let _ = UserDefaults.standard.string(forKey: kNotificationURL) else{
+                return
+            }
+            if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
+                GlobalMethod.appdelegate().navigateToViewController(.home)
+                CustomLocalNotification().addView()
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon Exist. Navigating to HomeVC & adding local notification view")
+
+            } else {
+                CustomLocalNotification().addView()
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon didn't Exist. Showing local notification view on top of the existing view")
+            }
+        }
+
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+    }
+
+    func checkAndResetLocalNotification() {
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> checkAndResetLocalNotification()[+]")
+
+        if let _ = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
+            LocalNotificationManager.sharedInstance.setUpLocalNotification()
+        }
+
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> checkAndResetLocalNotification()[-]")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+    }
+}
 
 class RunAsyncFunc {
 

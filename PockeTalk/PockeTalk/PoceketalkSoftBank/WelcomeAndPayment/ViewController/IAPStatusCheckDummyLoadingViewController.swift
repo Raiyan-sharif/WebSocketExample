@@ -6,6 +6,7 @@
 import UIKit
 import SwiftKeychainWrapper
 import Kronos
+import UserNotifications
 
 class IAPStatusCheckDummyLoadingViewController: UIViewController {
     var couponCode: String?
@@ -16,6 +17,8 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private var alert: UIAlertController?
     private var shouldShowLoader = false
     private var statusCodeText = ""
+    let TAG: String = "SB_AUTH"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
@@ -179,39 +182,51 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                     let alertService = CustomAlertViewModel()
                     if let result_code = result.result_code {
                         if result_code == response_ok {
-                                var isFromUniversalLink = false
-                                if let isUniversalNav =  UserDefaults.standard.bool(forKey: kIsFromUniverslaLink) as? Bool {
-                                    isFromUniversalLink = isUniversalNav
+                            if let expiryDate = result.license_exp {
+                                PrintUtility.printLog(tag: self.TAG, text: "CouponExpiryDate: \(expiryDate)")
+                                let date = expiryDate.getISO_8601FormattedDateString(from: expiryDate)
+                                PrintUtility.printLog(tag: self.TAG, text: "Date coupon: \(date)")
+                                if let date = date {
+                                    UserDefaults.standard.set(date, forKey: kCouponExpiryDate)
+                                    PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification from callLicenseConfirmationApi()")
+                                    LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                                    NotificationCenter.default.post(name: .onGetCouponExpireyNotification, object: nil)
                                 }
-                                if isFromUniversalLink == true {
-                                    UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
-                                    UserDefaults.standard.set(coupon, forKey: kCouponCode)
-                                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
-                                    DispatchQueue.main.async {
-                                        let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {
-                                            var couponInitialFlowCompleted = false
-                                            if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                                couponInitialFlowCompleted = flowCompleted
-                                            }
-                                            if couponInitialFlowCompleted == true{
-                                                GlobalMethod.appdelegate().navigateToViewController(.home)
-                                            }else{
-                                                GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                            }
+                            }
+                            
+                            var isFromUniversalLink = false
+                            if let isUniversalNav =  UserDefaults.standard.bool(forKey: kIsFromUniverslaLink) as? Bool {
+                                isFromUniversalLink = isUniversalNav
+                            }
+                            if isFromUniversalLink == true {
+                                UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
+                                UserDefaults.standard.set(coupon, forKey: kCouponCode)
+                                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
+                                DispatchQueue.main.async {
+                                    let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {
+                                        var couponInitialFlowCompleted = false
+                                        if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
+                                            couponInitialFlowCompleted = flowCompleted
                                         }
-                                        self.present(alert, animated: true, completion: nil)
+                                        if couponInitialFlowCompleted == true{
+                                            GlobalMethod.appdelegate().navigateToViewController(.home)
+                                        }else{
+                                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                                        }
                                     }
-                                }else{
-                                    var couponInitialFlowCompleted = false
-                                    if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                        couponInitialFlowCompleted = flowCompleted
-                                    }
-                                    if couponInitialFlowCompleted == true{
-                                        GlobalMethod.appdelegate().navigateToViewController(.home)
-                                    }else{
-                                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                    }
+                                    self.present(alert, animated: true, completion: nil)
                                 }
+                            }else{
+                                var couponInitialFlowCompleted = false
+                                if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
+                                    couponInitialFlowCompleted = flowCompleted
+                                }
+                                if couponInitialFlowCompleted == true{
+                                    GlobalMethod.appdelegate().navigateToViewController(.home)
+                                }else{
+                                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                                }
+                            }
                             
                         } else if result_code == INFO_EXPIRED_LICENSE{
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "INFO_EXPIRED_LICENSE")

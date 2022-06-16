@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        UNUserNotificationCenter.current().delegate = self
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
@@ -41,16 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if shouldCallLicenseConfirmationApi() == true{
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
                 UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
-                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon)
+                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon, initAppWindow: true)
             }else{
                 var couponInitialFlowCompleted = false
                 if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
                     couponInitialFlowCompleted = flowCompleted
                 }
                 if couponInitialFlowCompleted == true{
-                    GlobalMethod.appdelegate().navigateToViewController(.home)
+                    GlobalMethod.appdelegate().navigateToViewController(.home, initAppWindow: true)
                 }else{
-                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition, initAppWindow: true)
                 }
             }
         }
@@ -117,6 +118,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
             }
         }
+
+        //Set local notification when user have coupon & didn't set any local notification yet
+        checkAndResetLocalNotification()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -127,6 +131,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        UserDefaults.standard.removeObject(forKey: kNotificationURL)
         IAPManager.shared.stopObserving()
     }
 
@@ -201,7 +206,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func shouldCallLicenseConfirmationApi() -> Bool{
         var lastCalledDate = UserDefaults.standard.object(forKey: kLicenseConfirmationCalledTime) as? Date
-        if lastCalledDate == nil{
+        var couponExpiryDate = UserDefaults.standard.string(forKey: kCouponExpiryDate)
+
+        if lastCalledDate == nil || couponExpiryDate == nil {
             return true
         }else{
             if !Calendar.current.isDateInToday(lastCalledDate!) {

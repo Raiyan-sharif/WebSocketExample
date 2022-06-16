@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import WebKit
 import SwiftRichString
 
 class HomeViewController: BaseViewController {
@@ -146,6 +147,7 @@ class HomeViewController: BaseViewController {
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
         self.speechVC.languageHasUpdated = true
+        setupCustomLocalNotification()
     }
 
     override func loadView() {
@@ -309,6 +311,21 @@ class HomeViewController: BaseViewController {
         addTalkButtonAnimationViews()
     }
 
+    private func setupCustomLocalNotification() {
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> setupCustomLocalNotification()[+]")
+
+        if let _ = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> New User" )
+            LocalNotificationManager.sharedInstance.setUpLocalNotification()
+        } else {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> Existing User")
+        }
+
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> setupCustomLocalNotification()[-]")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+    }
+
     ///setup mike button for the first time
     private func setupFloatingMikeButton(){
         FloatingMikeButton.sharedInstance.window = self.window
@@ -378,6 +395,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.languageChangedFromSettings(notification:)), name: .languageChangeFromSettingsNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSttError(notification:)), name: .sttInputError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedCouponExipreDate(notification:)), name: .onGetCouponExpireyNotification, object: nil)
     }
 
     //MARK: - IBActions
@@ -526,6 +544,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .bottmViewGestureNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .languageChangeFromSettingsNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .sttInputError, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .onGetCouponExpireyNotification, object: nil)
     }
 
     private func openLanguageSelectionScreen(isNative: Int){
@@ -577,6 +596,10 @@ class HomeViewController: BaseViewController {
     @objc func onArrowChanged(notification: Notification) {
         setLanguageDirection()
         setHistoryAndFavouriteView()
+    }
+
+    @objc private func onReceivedCouponExipreDate(notification: Notification) {
+        LocalNotificationManager.sharedInstance.setUpLocalNotification()
     }
 
     @objc func enableorDisableGesture(notification: Notification?) {

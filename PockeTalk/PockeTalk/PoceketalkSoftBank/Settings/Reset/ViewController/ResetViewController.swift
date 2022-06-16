@@ -136,6 +136,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 ///Removing loader if exist from window before reset data
                 ActivityIndicator.sharedInstance.hide()
 
+                ///Remove local notification manager schedule & view from window if exist
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification when delete all data")
+                LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                CustomLocalNotification().removeView()
+
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
 //                self.navigationController?.popToRootViewController(animated: false)

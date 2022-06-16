@@ -222,6 +222,14 @@ let license_confirmation_url = "/handsfree/api/pub/license"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
 
+// Notification URL
+
+let kNotificationURL1 = "https://rd.snxt.jp/PA011"
+let kNotificationURL2 = "https://rd.snxt.jp/PA012"
+let kNotificationURL3 = "https://rd.snxt.jp/PA013"
+let kCouponExpiryDate = "kCouponExpiryDate"
+let kNotificationURL = "NotificationURL"
+
 //TTS dialog
 let KMultipleTtsValueSeparator = "#"
 let KVoiceAndTempoSeparator = "_"
@@ -243,6 +251,7 @@ let floatingMikeButtonTag = 1101
 let ttsAlertViewTag = 11223
 let activityIndictorViewTag = 1201
 let multipartPlayerViewTag = 1102
+let customNotificationViewTag = 1202
 
 // TTS API
 let licenseToken = "license_token"
@@ -390,7 +399,7 @@ let kImei = "imei"
 let kTempo_param = "tempo"
 
 let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
-
+let kDateFormatterLocale = "en_US_POSIX"
 
 
 
