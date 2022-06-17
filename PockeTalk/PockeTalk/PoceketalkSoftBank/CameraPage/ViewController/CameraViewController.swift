@@ -128,7 +128,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         updateLanguageNames()
         isViewInteractionEnable(true)
         let flashStatus = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool
-        PrintUtility.printLog(tag: "flash status", text: "\(flashStatus)")
+        PrintUtility.printLog(tag: "flash status", text: "\(String(describing: flashStatus))")
         if let flashStatus = flashStatus, flashStatus {
             turnOnCameraFlash()
         }
@@ -217,12 +217,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             }
         }
     }
-    
-    
-    //    override var prefersStatusBarHidden: Bool {
-    //        return true
-    //    }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -251,7 +246,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
             statusBar?.backgroundColor = UIColor.red
         }
-        
     }
     
     
@@ -267,7 +261,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        HomeViewController.setBlackGradientImageToBottomView(usingState: .hidden)
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         isViewInteractionEnable(true)
