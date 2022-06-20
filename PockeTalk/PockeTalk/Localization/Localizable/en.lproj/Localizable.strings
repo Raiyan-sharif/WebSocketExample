@@ -109,7 +109,7 @@
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Select a subscription plan";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
 "kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kPockeTalk" = "PockeTalk";
+"kPockeTalk" = "ポケトーク";
 
 //IAP Alert
 "kIAPError" = "In-App Purchase Error!";
@@ -192,4 +192,8 @@
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+
+// Push NotificationContent
+"kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
+"kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
 

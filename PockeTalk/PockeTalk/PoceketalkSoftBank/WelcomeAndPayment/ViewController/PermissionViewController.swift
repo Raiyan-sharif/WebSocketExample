@@ -53,10 +53,11 @@ class PermissionViewController: UIViewController {
     }
 
     private func initializeData() {
-           row.append(PermissionTVCellInfo(cellType: .allowAccess, isPermissionGranted: false))
-           row.append(PermissionTVCellInfo(cellType: .microphonePermission, isPermissionGranted: false))
-           row.append(PermissionTVCellInfo(cellType: .cameraPermission, isPermissionGranted: false))
-       }
+        row.append(PermissionTVCellInfo(cellType: .allowAccess, isPermissionGranted: false))
+        row.append(PermissionTVCellInfo(cellType: .microphonePermission, isPermissionGranted: false))
+        row.append(PermissionTVCellInfo(cellType: .cameraPermission, isPermissionGranted: false))
+        row.append(PermissionTVCellInfo(cellType: .notificationPermission, isPermissionGranted: false))
+    }
 
     private func checkPermissions() {
         let semaphore = DispatchSemaphore(value: 0)
@@ -74,6 +75,14 @@ class PermissionViewController: UIViewController {
             AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { isPermissionOn in
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .cameraPermission, status: isPermissionOn)
+                }
+                semaphore.signal()
+            }
+            semaphore.wait()
+
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { isPermissionOn in
+                DispatchQueue.main.async {
+                    self.setGrantPermissionStatusAndReloadTV(for: .notificationPermission, status: isPermissionOn)
                 }
                 semaphore.signal()
             }
@@ -99,7 +108,7 @@ class PermissionViewController: UIViewController {
             if row[item].cellType == cellType {
                 row[item].isPermissionGranted = permissionStatus
 
-                if cellType == .cameraPermission {
+                if cellType == .notificationPermission {
                     isAllPermissionShown = true
                     resetButtonProperty()
                 }

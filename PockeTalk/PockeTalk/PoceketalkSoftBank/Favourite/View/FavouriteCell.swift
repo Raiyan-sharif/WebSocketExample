@@ -87,6 +87,12 @@ class FavouriteCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusa
         let velocity = pan.velocity(in: self)
         switch pan.state {
         case .began:
+            if !PanGestureDetection.shareInstance.isEnabble {
+                PanGestureDetection.shareInstance.isEnabble = true
+                pan.state = .cancelled
+            }else{
+                PanGestureDetection.shareInstance.isEnabble = false
+            }
             viewCenter = target?.center
             initialCenter = target?.center
             if velocity.x < 0 {
@@ -98,6 +104,11 @@ class FavouriteCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusa
             let translation = pan.translation(in: self)
             if(velocity.x < 0){
                 target!.center = CGPoint(x: viewCenter!.x + translation.x, y: viewCenter!.y)
+            }
+            else{
+                target?.center = self.initialCenter
+                PanGestureDetection.shareInstance.isEnabble = true
+                pan.state = .cancelled
             }
         case .ended:
             let translation = pan.translation(in: self)
@@ -113,6 +124,7 @@ class FavouriteCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusa
             }else{
                 target?.center = self.initialCenter
             }
+            PanGestureDetection.shareInstance.isEnabble = true
         default: break
         }
     }

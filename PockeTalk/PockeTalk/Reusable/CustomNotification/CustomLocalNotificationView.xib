@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomLocalNotificationView" customModule="PockeTalk" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="sIC-pI-DNC" id="kYO-Vw-bRF"/>
+                <outlet property="contentView" destination="dFQ-t4-Bwj" id="u0a-LZ-ldY"/>
+                <outlet property="dismissButton" destination="Fq7-O9-VbV" id="dPF-d6-R8A"/>
+                <outlet property="noInternetContainerView" destination="5cB-c3-rvt" id="fvc-vS-NxR"/>
+                <outlet property="noInternetTitleLabel" destination="51z-8G-0wJ" id="PBg-PV-btp"/>
+                <outlet property="retryButton" destination="OOP-Tj-Xf4" id="nT6-Re-N27"/>
+                <outlet property="webContainerview" destination="DVS-YE-cm1" id="ZRk-de-SZK"/>
+                <outlet property="webkitView" destination="AeN-ge-FHG" id="vsn-UV-OBs"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="dFQ-t4-Bwj">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cB-c3-rvt">
+                    <rect key="frame" x="29.333333333333343" y="152.66666666666669" width="331.33333333333326" height="548.66666666666652"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fq7-O9-VbV">
+                            <rect key="frame" x="311.33333333333337" y="-10" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="0qa-hv-IEi"/>
+                                <constraint firstAttribute="height" constant="30" id="Qnq-Y6-kPO"/>
+                            </constraints>
+                            <state key="normal" image="demo_mode_reboot_cancel_button"/>
+                            <connections>
+                                <action selector="dismissButtonEventListener:" destination="-1" eventType="touchUpInside" id="w8L-dH-L2U"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9OH-fb-kr5">
+                            <rect key="frame" x="165.33333333333331" y="498.66666666666674" width="1" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="6ez-oS-RPw"/>
+                                <constraint firstAttribute="width" constant="1" id="qmq-xS-AkF"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Internet is not available." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51z-8G-0wJ">
+                            <rect key="frame" x="16" y="263" width="299.33333333333331" height="23"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOP-Tj-Xf4">
+                            <rect key="frame" x="16" y="496.33333333333331" width="133.33333333333334" height="34.333333333333314"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Retry">
+                                <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                <color key="baseForegroundColor" systemColor="labelColor"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="retryButtonEventListener:" destination="-1" eventType="touchUpInside" id="wqX-UA-nrX"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIC-pI-DNC">
+                            <rect key="frame" x="182.33333333333331" y="496.33333333333331" width="133" height="34.333333333333314"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Cancel">
+                                <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                <color key="baseForegroundColor" systemColor="labelColor"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="cencelButtonEventListener:" destination="-1" eventType="touchUpInside" id="6k0-5f-daK"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVS-YE-cm1">
+                            <rect key="frame" x="8" y="24" width="315.33333333333331" height="516.66666666666663"/>
+                            <subviews>
+                                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeN-ge-FHG">
+                                    <rect key="frame" x="0.0" y="0.0" width="315.33333333333331" height="516.66666666666663"/>
+                                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <wkWebViewConfiguration key="configuration">
+                                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                        <wkPreferences key="preferences"/>
+                                    </wkWebViewConfiguration>
+                                </wkWebView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="AeN-ge-FHG" firstAttribute="leading" secondItem="DVS-YE-cm1" secondAttribute="leading" id="bmh-yG-zB5"/>
+                                <constraint firstAttribute="trailing" secondItem="AeN-ge-FHG" secondAttribute="trailing" id="h8H-zR-y4i"/>
+                                <constraint firstAttribute="bottom" secondItem="AeN-ge-FHG" secondAttribute="bottom" id="q5k-KK-Ntx"/>
+                                <constraint firstItem="AeN-ge-FHG" firstAttribute="top" secondItem="DVS-YE-cm1" secondAttribute="top" id="sbo-WP-3l8"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="DVS-YE-cm1" secondAttribute="bottom" constant="8" id="4bh-sy-sYy"/>
+                        <constraint firstItem="OOP-Tj-Xf4" firstAttribute="centerY" secondItem="9OH-fb-kr5" secondAttribute="centerY" id="5Mh-Hn-0dN"/>
+                        <constraint firstItem="9OH-fb-kr5" firstAttribute="leading" secondItem="OOP-Tj-Xf4" secondAttribute="trailing" constant="16" id="9Ld-yL-np2"/>
+                        <constraint firstItem="Fq7-O9-VbV" firstAttribute="top" secondItem="5cB-c3-rvt" secondAttribute="top" constant="-10" id="9dK-TE-10e"/>
+                        <constraint firstItem="51z-8G-0wJ" firstAttribute="centerX" secondItem="5cB-c3-rvt" secondAttribute="centerX" id="AKl-SR-e6g"/>
+                        <constraint firstAttribute="bottom" secondItem="9OH-fb-kr5" secondAttribute="bottom" constant="20" id="AyL-Pb-dJW"/>
+                        <constraint firstItem="sIC-pI-DNC" firstAttribute="leading" secondItem="9OH-fb-kr5" secondAttribute="trailing" constant="16" id="BfN-9p-Gy4"/>
+                        <constraint firstAttribute="trailing" secondItem="DVS-YE-cm1" secondAttribute="trailing" constant="8" id="Jak-ZM-Om0"/>
+                        <constraint firstItem="OOP-Tj-Xf4" firstAttribute="leading" secondItem="5cB-c3-rvt" secondAttribute="leading" constant="16" id="P3Q-yd-hCs"/>
+                        <constraint firstItem="9OH-fb-kr5" firstAttribute="centerX" secondItem="5cB-c3-rvt" secondAttribute="centerX" id="QqI-hc-dMu"/>
+                        <constraint firstAttribute="trailing" secondItem="51z-8G-0wJ" secondAttribute="trailing" constant="16" id="SJx-gO-EEu"/>
+                        <constraint firstAttribute="trailing" secondItem="Fq7-O9-VbV" secondAttribute="trailing" constant="-10" id="Xd7-MI-yMM"/>
+                        <constraint firstItem="DVS-YE-cm1" firstAttribute="top" secondItem="Fq7-O9-VbV" secondAttribute="bottom" constant="4" id="ZD6-0y-TvH"/>
+                        <constraint firstAttribute="trailing" secondItem="sIC-pI-DNC" secondAttribute="trailing" constant="16" id="az3-W9-Uxf"/>
+                        <constraint firstItem="sIC-pI-DNC" firstAttribute="centerY" secondItem="9OH-fb-kr5" secondAttribute="centerY" id="dpD-73-ag3"/>
+                        <constraint firstItem="51z-8G-0wJ" firstAttribute="leading" secondItem="5cB-c3-rvt" secondAttribute="leading" constant="16" id="sXL-cK-Ufz"/>
+                        <constraint firstItem="DVS-YE-cm1" firstAttribute="leading" secondItem="5cB-c3-rvt" secondAttribute="leading" constant="8" id="tRF-rX-HQh"/>
+                        <constraint firstItem="51z-8G-0wJ" firstAttribute="centerY" secondItem="5cB-c3-rvt" secondAttribute="centerY" id="uVz-ng-zSR"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="5YL-89-Bf0"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="5cB-c3-rvt" firstAttribute="centerY" secondItem="5YL-89-Bf0" secondAttribute="centerY" id="Ahj-Eg-Nby"/>
+                <constraint firstItem="5cB-c3-rvt" firstAttribute="width" secondItem="dFQ-t4-Bwj" secondAttribute="width" multiplier="0.85" id="MdC-GX-jGV"/>
+                <constraint firstItem="5cB-c3-rvt" firstAttribute="height" secondItem="dFQ-t4-Bwj" secondAttribute="height" multiplier="0.65" id="qfU-9c-MCk"/>
+                <constraint firstItem="5cB-c3-rvt" firstAttribute="centerX" secondItem="5YL-89-Bf0" secondAttribute="centerX" id="qzE-ld-iJq"/>
+            </constraints>
+            <point key="canvasLocation" x="281.53846153846155" y="-297.86729857819904"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="demo_mode_reboot_cancel_button" width="116" height="116"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

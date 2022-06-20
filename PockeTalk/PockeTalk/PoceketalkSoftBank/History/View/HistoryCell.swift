@@ -96,6 +96,12 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
             viewCenter = target?.center
             initialCenter = target?.center
             
+            if !PanGestureDetection.shareInstance.isEnabble {
+                PanGestureDetection.shareInstance.isEnabble = true
+                pan.state = .cancelled
+            }else{
+                PanGestureDetection.shareInstance.isEnabble = false
+            }
             if panViewMinX > 0 {
                 showHideStackView(isDeleteStackViewHidden: true, isFavouriteStackViewHidden: false)
             }else{
@@ -137,6 +143,7 @@ class HistoryCell: UICollectionViewCell, UIGestureRecognizerDelegate, NibReusabl
                 containerView.backgroundColor = initialColor
                 target?.center = self.initialCenter
             }
+            PanGestureDetection.shareInstance.isEnabble = true
         default: break
         }
     }

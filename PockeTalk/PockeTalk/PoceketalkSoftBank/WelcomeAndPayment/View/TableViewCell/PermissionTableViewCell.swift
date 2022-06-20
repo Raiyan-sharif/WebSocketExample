@@ -31,7 +31,7 @@ class PermissionTableViewCell: UITableViewCell {
         let isPermissionGranted = cellInfo.isPermissionGranted
 
         switch cellType {
-        case .allowAccess, .notificationPermission:
+        case .allowAccess:
             return
         case .microphonePermission:
             isPermissionGranted ? (permissionImageView.image = UIImage(named: "icon_mic_select")) : (permissionImageView.image = UIImage(named: "icon_mic_unselect"))
@@ -41,7 +41,13 @@ class PermissionTableViewCell: UITableViewCell {
             isPermissionGranted ? (permissionImageView.image = UIImage(named: "icon_camera_select")) : (permissionImageView.image = UIImage(named: "icon_camera_unselect"))
             permissionLabel.text = "kInitialPermissionSettingsVCCameraLabel".localiz()
             setupContainerView(isPermissionGranted: isPermissionGranted)
+
+        case .notificationPermission:
+            isPermissionGranted ? (permissionImageView.image = UIImage(named: "")) : (permissionImageView.image = UIImage(named: ""))
+            permissionLabel.text = "kInitialPermissionSettingsVCNotificationLabel".localiz()
+            setupContainerView(isPermissionGranted: isPermissionGranted)
         }
+
     }
 
     //MARK: - Utils

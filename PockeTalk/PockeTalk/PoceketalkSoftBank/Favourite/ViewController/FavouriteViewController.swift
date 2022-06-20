@@ -67,6 +67,7 @@ class FavouriteViewController: BaseViewController {
         populateData()
         self.speechProcessingVM = SpeechProcessingViewModel()
         bindData()
+        PanGestureDetection.shareInstance.isEnabble = true
     }
 
     //MARK: - Initial setup
