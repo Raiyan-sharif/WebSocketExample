@@ -30,10 +30,10 @@
                     <rect key="frame" x="29.333333333333343" y="152.66666666666669" width="331.33333333333326" height="548.66666666666652"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fq7-O9-VbV">
-                            <rect key="frame" x="311.33333333333337" y="-10" width="30" height="30"/>
+                            <rect key="frame" x="291.33333333333337" y="-5" width="45" height="45"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="0qa-hv-IEi"/>
-                                <constraint firstAttribute="height" constant="30" id="Qnq-Y6-kPO"/>
+                                <constraint firstAttribute="width" constant="45" id="0qa-hv-IEi"/>
+                                <constraint firstAttribute="height" constant="45" id="Qnq-Y6-kPO"/>
                             </constraints>
                             <state key="normal" image="demo_mode_reboot_cancel_button"/>
                             <connections>
@@ -77,10 +77,10 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVS-YE-cm1">
-                            <rect key="frame" x="8" y="24" width="315.33333333333331" height="516.66666666666663"/>
+                            <rect key="frame" x="8" y="44.000000000000028" width="315.33333333333331" height="496.66666666666674"/>
                             <subviews>
                                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeN-ge-FHG">
-                                    <rect key="frame" x="0.0" y="0.0" width="315.33333333333331" height="516.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="315.33333333333331" height="496.66666666666669"/>
                                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <wkWebViewConfiguration key="configuration">
                                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -102,7 +102,7 @@
                         <constraint firstAttribute="bottom" secondItem="DVS-YE-cm1" secondAttribute="bottom" constant="8" id="4bh-sy-sYy"/>
                         <constraint firstItem="OOP-Tj-Xf4" firstAttribute="centerY" secondItem="9OH-fb-kr5" secondAttribute="centerY" id="5Mh-Hn-0dN"/>
                         <constraint firstItem="9OH-fb-kr5" firstAttribute="leading" secondItem="OOP-Tj-Xf4" secondAttribute="trailing" constant="16" id="9Ld-yL-np2"/>
-                        <constraint firstItem="Fq7-O9-VbV" firstAttribute="top" secondItem="5cB-c3-rvt" secondAttribute="top" constant="-10" id="9dK-TE-10e"/>
+                        <constraint firstItem="Fq7-O9-VbV" firstAttribute="top" secondItem="5cB-c3-rvt" secondAttribute="top" constant="-5" id="9dK-TE-10e"/>
                         <constraint firstItem="51z-8G-0wJ" firstAttribute="centerX" secondItem="5cB-c3-rvt" secondAttribute="centerX" id="AKl-SR-e6g"/>
                         <constraint firstAttribute="bottom" secondItem="9OH-fb-kr5" secondAttribute="bottom" constant="20" id="AyL-Pb-dJW"/>
                         <constraint firstItem="sIC-pI-DNC" firstAttribute="leading" secondItem="9OH-fb-kr5" secondAttribute="trailing" constant="16" id="BfN-9p-Gy4"/>
@@ -110,7 +110,7 @@
                         <constraint firstItem="OOP-Tj-Xf4" firstAttribute="leading" secondItem="5cB-c3-rvt" secondAttribute="leading" constant="16" id="P3Q-yd-hCs"/>
                         <constraint firstItem="9OH-fb-kr5" firstAttribute="centerX" secondItem="5cB-c3-rvt" secondAttribute="centerX" id="QqI-hc-dMu"/>
                         <constraint firstAttribute="trailing" secondItem="51z-8G-0wJ" secondAttribute="trailing" constant="16" id="SJx-gO-EEu"/>
-                        <constraint firstAttribute="trailing" secondItem="Fq7-O9-VbV" secondAttribute="trailing" constant="-10" id="Xd7-MI-yMM"/>
+                        <constraint firstAttribute="trailing" secondItem="Fq7-O9-VbV" secondAttribute="trailing" constant="-5" id="Xd7-MI-yMM"/>
                         <constraint firstItem="DVS-YE-cm1" firstAttribute="top" secondItem="Fq7-O9-VbV" secondAttribute="bottom" constant="4" id="ZD6-0y-TvH"/>
                         <constraint firstAttribute="trailing" secondItem="sIC-pI-DNC" secondAttribute="trailing" constant="16" id="az3-W9-Uxf"/>
                         <constraint firstItem="sIC-pI-DNC" firstAttribute="centerY" secondItem="9OH-fb-kr5" secondAttribute="centerY" id="dpD-73-ag3"/>
