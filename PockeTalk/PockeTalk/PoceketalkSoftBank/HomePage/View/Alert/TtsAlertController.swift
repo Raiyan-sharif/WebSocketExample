@@ -217,15 +217,18 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         self.toTranslateLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textTranslatedLanguage : chatItemModel?.chatItem?.textNativeLanguage
         self.toTranslateLabel.textAlignment = .right
         self.toTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        self.toTranslateLabel.textColor = UIColor.gray
         
         self.fromTranslateLabel.text = chatItemModel?.chatItem?.chatIsTop == IsTop.noTop.rawValue ? chatItemModel?.chatItem?.textNativeLanguage : chatItemModel?.chatItem?.textTranslatedLanguage
         self.fromTranslateLabel.textAlignment = .left
         self.fromTranslateLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        self.fromTranslateLabel.textColor = UIColor._whiteColor()
         
         if(LanguageSelectionManager.shared.isArrowUp){
             changeTranslationButton.image(for: UIControl.State.normal)
+            self.toTranslateLabel.textColor = UIColor.gray
+            self.fromTranslateLabel.textColor = UIColor._whiteColor()
+        } else {
+            self.fromTranslateLabel.textColor = UIColor.gray
+            self.toTranslateLabel.textColor = UIColor._whiteColor()
         }
         
         setLanguageDirection()
@@ -238,6 +241,15 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         tapGesture.delegate = self
         self.containerView.isUserInteractionEnabled = true
         self.containerView.addGestureRecognizer(tapGesture)
+
+        let toLanguagetapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+        toLanguagetapGesture.delegate = self
+        self.toTranslateLabel.isUserInteractionEnabled = true
+        self.toTranslateLabel.addGestureRecognizer(toLanguagetapGesture)
+        let fromLanguagetapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+        fromLanguagetapGesture.delegate = self
+        self.fromTranslateLabel.isUserInteractionEnabled = true
+        self.fromTranslateLabel.addGestureRecognizer(fromLanguagetapGesture)
         
         if hideBottomView == true{
             self.bottomView.isHidden = true
@@ -274,7 +286,16 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
-        checkTTSValueAndPlay()
+        //Capture tap gesture
+        if let tap = recognizer.view as? UILabel {
+            if tap == self.toTranslateLabel {
+                openLanguageSelectionScreen(isNative: 0)
+            } else {
+                openLanguageSelectionScreen(isNative: 1)
+            }
+        } else {
+            checkTTSValueAndPlay()
+        }
     }
     
     func startAnimation () {
@@ -555,6 +576,41 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
                 self.ttsAlertControllerDelegate?.itemAdded(HistoryChatItemModel(chatItem: chatEntity, idxPath: nil))
                 
             }
+        }
+    }
+
+    private func openLanguageSelectionScreen(isNative: Int){
+        //Stop TTS play
+        AudioPlayer.sharedInstance.stop()
+        self.stopTTS()
+
+        let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
+
+        //Update language change status
+        self.languageHasUpdated = true
+        controller.isNative = isNative
+
+        //Add transition animation
+        var transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        if isNative != LanguageName.bottomLang.rawValue{
+            transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+        }
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+
+        //Add as child and other UI property
+        add(asChildViewController: controller, containerView:self.view, animation: transition)
+        //Update ScreenTracker
+        setLanguageScreenTracker(isNative: isNative)
+    }
+
+    private func setLanguageScreenTracker(isNative : Int) {
+        if isNative == LanguageName.bottomLang.rawValue {
+            let index = UserDefaultsProperty<Int>(kBottomLanguageSelectionIndex).value
+            index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice)
+        } else {
+            let index = UserDefaultsProperty<Int>(kTopLanguageSelectionIndex).value
+            index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice)
         }
     }
 }
