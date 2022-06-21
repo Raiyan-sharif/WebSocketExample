@@ -31,7 +31,7 @@ class HistoryLayout: UICollectionViewLayout {
         guard let limit = collectionView?.numberOfItems(inSection: 0) else {
             return
         }
-
+        PrintUtility.printLog(tag: "HistoryLayout limit", text: "\(limit)")
         for item in 0..<limit {
             let indexPath = IndexPath(item: item, section: 0)
             let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT)
