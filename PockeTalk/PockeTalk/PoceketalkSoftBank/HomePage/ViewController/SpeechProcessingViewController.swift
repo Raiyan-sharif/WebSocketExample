@@ -443,7 +443,7 @@ class SpeechProcessingViewController: BaseViewController{
         case .CountrySelectionByVoice, .CountrySettingsSelectionByVoice:
             speechLangCode == systemLanguageCodeEN ? (self.titleLabel.text = countrySearchExampleText) : (self.titleLabel.text = "country_selection_voice_msg".localiz())
             break
-        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .PurchasePlanScreen, .CameraScreen, .InitialFlow, .countryWiseLanguageList, .WalkThroughViewController: break
+        case .PronunciationPractice, .HistoryScrren,.HistroyPronunctiation, .FavouriteScreen, .PurchasePlanScreen, .CameraScreen, .InitialFlow, .countryWiseLanguageList, .WalkThroughViewController, .ResuableAlertDailog: break
         }
     }
     
@@ -658,6 +658,10 @@ class SpeechProcessingViewController: BaseViewController{
 
     @objc private func appWillEnterForeground() {
         PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
+        if ScreenTracker.sharedInstance.screenPurpose == .CameraScreen || ScreenTracker.sharedInstance.screenPurpose == .ResuableAlertDailog {
+            AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
+            }
+        }
         if Reachability.isConnectedToNetwork() {
             LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         }
