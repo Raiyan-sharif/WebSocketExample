@@ -31,9 +31,19 @@ class AlertReusableViewController: BaseViewController {
     var alertViewModel: AlertReusableViewModel!
     weak var delegate : AlertReusableDelegate?
     let toastDisplayTime : Double = 2.0
+    private var connectivity = Connectivity()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ScreenTracker.sharedInstance.screenPurpose = .ResuableAlertDailog
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+         connectivity.startMonitoring { connection, reachable in
+             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+             }
+
+         }
         // Do any additional setup after loading the view.
         alertViewModel = AlertReusableViewModel()
         self.setUpUI()
@@ -152,6 +162,10 @@ class AlertReusableViewController: BaseViewController {
             // Edit heightOfTableViewConstraint's constant to update height of table view
             self.tableViewHeightConstraint.constant = heightOfTableView
         }
+    }
+
+    deinit {
+        connectivity.cancel()
     }
 
 

@@ -66,6 +66,8 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
     var updateHomeContainer:((_ isTalkButtonVisible:Bool)->())?
+
+    private var connectivity = Connectivity()
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         self.updateHomeContainer?(false)
@@ -153,11 +155,20 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     deinit {
+        connectivity.cancel()
         unregisterNotification()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+         connectivity.startMonitoring { connection, reachable in
+             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+             }
+
+         }
         setUPViews()
         previewLayer.videoGravity = .resize
         previewView = cameraPreviewView

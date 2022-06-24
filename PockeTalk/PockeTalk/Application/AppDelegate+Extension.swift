@@ -104,6 +104,7 @@ extension AppDelegate{
                 if RunAsyncFunc.shared.isAlreadyScheduled == false {
                     RunAsyncFunc.shared.executeScheduleCall(scheduleTime: TimeInterval(scheduleRefreshTime))
                 }
+                completion(true)
 
             } else if (currentTime > tokenExpiryTime) {
                 //expired
