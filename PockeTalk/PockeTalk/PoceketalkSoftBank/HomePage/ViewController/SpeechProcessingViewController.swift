@@ -770,7 +770,7 @@ extension SpeechProcessingViewController: HomeVCDelegate{
     
     func stopRecord() {
         PrintUtility.printLog(tag: TAG, text: "Stop Recording")
-
+        self.socketData.removeAll()
         if !service!.isRecordStop{
             service?.isRecordStop = true
         }else{
@@ -780,7 +780,6 @@ extension SpeechProcessingViewController: HomeVCDelegate{
         if !self.isFinalProvided  && !isMinimumLimitExceed{
             ActivityIndicator.sharedInstance.show(hasBackground: false)
         }
-        self.socketData.removeAll()
         service?.stopRecord()
         service?.timerInvalidate()
         burmeseTutorial = false
