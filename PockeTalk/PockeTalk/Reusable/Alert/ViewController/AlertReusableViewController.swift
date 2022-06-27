@@ -35,7 +35,6 @@ class AlertReusableViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ScreenTracker.sharedInstance.screenPurpose = .ResuableAlertDailog
         AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
          connectivity.startMonitoring { connection, reachable in
              PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
@@ -47,6 +46,7 @@ class AlertReusableViewController: BaseViewController {
         // Do any additional setup after loading the view.
         alertViewModel = AlertReusableViewModel()
         self.setUpUI()
+        self.registerForNotification()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -164,10 +164,29 @@ class AlertReusableViewController: BaseViewController {
         }
     }
 
-    deinit {
-        connectivity.cancel()
+    private func registerForNotification() {
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
     }
 
+    deinit {
+        connectivity.cancel()
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.removeObserver(self, name: UIScene.willEnterForegroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+    }
+
+    @objc private func appWillEnterForeground() {
+        PrintUtility.printLog(tag: "AlertReusableViewController", text: "Will Enter foreground")
+        AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
+        }
+    }
 
 }
 
