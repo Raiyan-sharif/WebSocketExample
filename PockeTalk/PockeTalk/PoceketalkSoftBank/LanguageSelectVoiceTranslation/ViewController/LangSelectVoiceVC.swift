@@ -128,9 +128,10 @@ class LangSelectVoiceVC: BaseViewController {
 
     @objc func back(notification: Notification) {
         if currentIndex == 1 {
-            tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingTutorialUI: false)
+            ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionVoice
             tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingTutorialUI: false)
         } else {
+            ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
             UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
             NotificationCenter.default.post(name: .languageListNotofication, object: nil)
         }
@@ -197,6 +198,7 @@ class LangSelectVoiceVC: BaseViewController {
         }
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = selectedLanguageCode
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
+        saveLangSelectionindex()
         if !fromRetranslation {
             if isNative == LanguageName.bottomLang.rawValue{
                 if LanguageSelectionManager.shared.bottomLanguage != selectedLanguageCode{
