@@ -93,7 +93,7 @@ class CountryListViewController: BaseViewController {
         FloatingMikeButton.sharedInstance.remove()
         remove(asChildViewController: self)
         LanguageSelectionManager.shared.tempSourceLanguage = nil
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
+        //ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionVoice
         NotificationCenter.default.post(name: .popFromCountrySelectionVoice, object: nil)
         NotificationCenter.default.post(name: .countryListBackNotification, object: nil)
     }
