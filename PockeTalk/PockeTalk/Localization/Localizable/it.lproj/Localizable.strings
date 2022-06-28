@@ -74,12 +74,12 @@
 "no" = "No";
 "kActionAllowAccess" = "Consenti accesso";
 "kActionCancel" = "Annulla";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "L'App POCKETALK richiede l'accesso al tuo microfono.";
+"kMicrophoneUsageMessage" = "Questa app richiede l'accesso al microfono per poter convertire il parlato in testo per la traduzione";
 "kPhotosUsageTitle" = "Foto non disponibili";
 "kPhotosUsageMessage" = "POCKETALK richiede l\'accesso alla galleria di foto ";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "L'App POCKETALK richiede l'accesso alla tua fotocamera.";
+"kCameraUsageMessage" = "Questa app richiede l'accesso alla fotocamera per ottenere il testo dall'immagine per la traduzione";
 "kTitleOk" = "OK";
 "kNotAllow" = "Non consentire";
 "kNextButtonTitle" = "Avanti";
@@ -95,73 +95,74 @@
 "kPaidPlanVCTitleLabel" = "L\'app POCKETALK è un servizio di sottoscrizione a pagamento.";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "Al termine del periodo di prova gratuito, l\'account diventerà automaticamente a pagamento e si riceverà l\'addebito una volta alla settimana, al mese o all\'anno.";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "Inizia una prova gratuita di 3 giorni";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "Ripristina la cronologia di acquisto nell\'app";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Seleziona un piano di sottoscrizione";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen all'anno, 3 giorni di utilizzo gratuito";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen all'anno, 3 giorni di utilizzo gratuito";
+"kWelcomeVCTitleLabelTop" = "Benvenuto a POCKETALK";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Inizia a usare";
 "information" = "Informazioni";
 "manual" = "Manuale utente";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "Giorno";
+"Days" = "Giorno";
+"Week" = "Settimana";
+"Weeks" = "Settimane";
+"Month" = "Mese";
+"Months" = "Mesi";
+"Year" = "Anno";
+"Years" = "Anni";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "giorno";
+"days" = "giorno";
+"week" = "settimana";
+"weeks" = "settimane";
+"month" = "mese";
+"months" = "mesi";
+"year" = "anno";
+"years" = "anni";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "Tempo scaduto!";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "Si prega di riprovare";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "Errore di acquisto in-app!";
+"kIAPNoProductIDsFound" = "Nessun ID articolo trovato per gli acquisti in-app.";
+"kIAPNoProductsFound" = "Nessun acquisto in-app.";
+"kIAPProductRequestFailed" = "Impossibile ottenere articoli disponibili per acquisti in-app in questo momento.";
+"kIAPPaymentWasCancelled" = "Il tuo acquisto in-app è stato cancellato.";
+"kfreeUse" = "utilizzo gratuito";
+"kIAPNoPurchasedItemToRestore" = "Nessun articolo di acquisto in-app da ripristinare.";
+"kIAPALLPreviousIAPRestored" = "Tutti i precedenti acquisti in-app sono stati ripristinati!";
+"kIAPEnablePaymentFromSettings" = "Gli acquisti in-app non sono permessi su questo dispositivo. Per attivarli, vai a Impostazioni > Tempo di utilizzo > Restrizioni contenuti e privacy > Acquisti su iTunes e App Store > Acquisti in-app > Consenti";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "Piano settimanale";
+"Monthly Plan" = "Piano mensile";
+"Yearly Plan" = "Piano annuale";
 "Free for" = "Free for";
-"kBestPrice" = "Best Price";
+"kBestPrice" = "Miglior prezzo";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
+"kYen" = " risparmia XX yen";
 
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
+"kYenPerWeek" = "yen alla settimana";
+"kYenPerMonth" = "yen al mese";
+"kYenPerYear" = "yen all'anno";
+"kStartPocketalkApp" = "Inizia l'App POCKETALK";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
+"kIAPFreeDaysDescription" = "Tutti i piani sono gratuiti per i primi 3 giorni";
+"kIAPFreePeriodCancellationDescription" = "Nessun addebito se cancelli durante il periodo di prova gratuita. ";
+"kIAPFreePeriodSubscriptionDescription" = "La tariffa verrà addebitata in maniera continuativa dal giorno successivo all'ultimo giorno del periodo di prova gratuita.";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Il numero dei preferiti ha raggiunto il limite";
 
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "Tutti i piani sono gratuiti per i primi 3 giorni";
+"kFreePlanDetailText" = "Non ti verrà addebitato alcun costo durante il periodo di prova gratuita. La tariffa verrà addebitata in maniera continuativa dal giorno successivo all'ultimo giorno del periodo di prova gratuita.";
 
 
 //Boarding Screen
@@ -172,15 +173,18 @@
 "KBoardingLanChange"  = "Modifica lingua sorgente/destinazione nella traduzione";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "Questo coupon è scaduto.";
+"KErrorMessage" = "Autenticazione fallita. Si prega di riprovare.";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "Questo coupon non può essere utilizzato
+perché hai già sottoscritto un abbonamento.";
+"kCouponActivatedMesage" = "Il coupon è stato attivato.";
+"kCouponCodeParseError" = "Errore di autenticazione del codice coupon \n Si prega di riprovare";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+"TtsFromLanguage" = "Hello how are you?";
+"TtsToLanguage" = "Hola como estas";
