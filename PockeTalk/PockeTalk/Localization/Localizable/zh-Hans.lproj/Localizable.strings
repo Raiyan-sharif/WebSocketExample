@@ -17,6 +17,8 @@
 "Favorite" = "收藏夹";
 "PronunciationGuideline" = "请按住按钮进行发音";
 "Region" = "地区";
+"TtsToLanguage" = "Hola como estas";
+"TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "语言设置";
 "Speech Guideline" = "请边按住按钮边说要查找的语言名称";
 "Country Language Settings" = "Country Settings";
@@ -75,12 +77,12 @@
 "no" = "No";
 "kActionAllowAccess" = "允许";
 "kActionCancel" = "取消";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "POCKETALK应用程序要求访问麦克风";
+"kMicrophoneUsageMessage" = "该应用程序要求访问麦克风以将语音转换为文本并进行翻译";
 "kPhotosUsageTitle" = "无法使用照片";
 "kPhotosUsageMessage" = "\“POCKETALK\”请求访问相册";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "POCKETALK应用程序要求访问相机";
+"kCameraUsageMessage" = "该应用程序要求访问相机以从图像中获取文本并进行翻译";
 "kTitleOk" = "确认";
 "kNotAllow" = "拒绝";
 "kNextButtonTitle" = "下一步";
@@ -96,73 +98,74 @@
 "kPaidPlanVCTitleLabel" = "使用POCKETALK App需要付费";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "・上述费用将从试用期最后一天的次日起连续收取";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "开始利用且享受3天免费";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "恢复购买记录";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "请选择使用方案";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360日元/月　3天免费使用";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600日元/年 3天免费使用";
+"kWelcomeVCTitleLabelTop" = "欢迎使用POCKETALK";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "开始使用";
 "information" = "关于本机";
 "manual" = "使用说明";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "天";
+"Days" = "天";
+"Week" = "周";
+"Weeks" = "周";
+"Month" = "月";
+"Months" = "月";
+"Year" = "年";
+"Years" = "年";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "天";
+"days" = "天";
+"week" = "周";
+"weeks" = "周";
+"month" = "月";
+"months" = "月";
+"year" = "年";
+"years" = "年";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "已超时。";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "请重试。";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "应用内购买错误";
+"kIAPNoProductIDsFound" = "无应用内购买的项目ID";
+"kIAPNoProductsFound" = "无应用内购买";
+"kIAPProductRequestFailed" = "目前无法获取可用的应用内购买项目";
+"kIAPPaymentWasCancelled" = "应用内购买已取消";
+"kfreeUse" = "免费使用";
+"kIAPNoPurchasedItemToRestore" = "没有可以恢复的应用内购买项目";
+"kIAPALLPreviousIAPRestored" = "已恢复所有应用内购买";
+"kIAPEnablePaymentFromSettings" = "此设备不允许进行应用内购买。要启用该功能，请设置为[设置]> [屏幕使用时间]> [内容和隐私访问限制]> [iTunes与App Store购买]> [应用内购买]>[允许]";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "周方案";
+"Monthly Plan" = "月方案";
+"Yearly Plan" = "年方案";
 "Free for" = "Free for";
-"kBestPrice" = "Best Price";
+"kBestPrice" = "推荐购买";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
+"kYen" = " XX 日元优惠";
 
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
+"kYenPerWeek" = "日元/周";
+"kYenPerMonth" = "日元/月";
+"kYenPerYear" = "日元/年";
+"kStartPocketalkApp" = "开始使用POCKETALK";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
+"kIAPFreeDaysDescription" = "所有方案的首次利用均免费3天";
+"kIAPFreePeriodCancellationDescription" = "在免费期内解约将不收取任何费用。 ";
+"kIAPFreePeriodSubscriptionDescription" = "费用将从免费期结束日的次日起持续收取。";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "可收藏数量已超过上限。";
 
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "所有方案的首次利用均免费3天";
+"kFreePlanDetailText" = "在免费期内解约将不收取任何费用。 费用将从免费期结束日的次日起持续收取。";
 
 
 //Boarding Screen
@@ -173,15 +176,16 @@
 "KBoardingLanChange"  = "更改翻译方向";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "优惠券已过期。";
+"KErrorMessage" = "身份验证失败 请重试";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "存在订阅合同
+优惠券代码不可用";
+"kCouponActivatedMesage" = "优惠券已生效";
+"kCouponCodeParseError" = "优惠券代码验证错误\n请重试";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";

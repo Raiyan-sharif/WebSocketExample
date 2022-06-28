@@ -142,7 +142,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
                     productPrice: (productDetails[item].price).roundToDecimal(2),
                     numberOfWeek: 4)
 
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
             }
 
             if productDetails[item].periodUnitType == .year {
@@ -151,7 +151,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
                     productPrice: (productDetails[item].price).roundToDecimal(2),
                     numberOfWeek: 52)
 
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + " \(savingPrice) " + "kYen".localiz()
+                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
             }
         }
     }
