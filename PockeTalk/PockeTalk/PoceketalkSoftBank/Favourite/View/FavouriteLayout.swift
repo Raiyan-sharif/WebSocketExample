@@ -4,7 +4,7 @@
 //
 
 import UIKit
-protocol FavouriteLayoutDelegate {
+protocol FavouriteLayoutDelegate: AnyObject {
 
     func getHeightFrom(collectionView: UICollectionView, heightForRowIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat
 }
@@ -14,7 +14,7 @@ class FavouriteLayout: UICollectionViewLayout {
     var attributes  = Array<UICollectionViewLayoutAttributes>()
     var initialAttributes = Array<UICollectionViewLayoutAttributes>()
     var contentSize: CGSize = .zero
-    var delegate: FavouriteLayoutDelegate!
+    weak var delegate: FavouriteLayoutDelegate?
     var deletedCellHeight:CGFloat = 0
     var bottomInset :CGFloat = 0
 
@@ -34,7 +34,7 @@ class FavouriteLayout: UICollectionViewLayout {
 
         for item in 0..<limit {
             let indexPath = IndexPath(item: item, section: 0)
-            let height = delegate.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT)
+            let height = delegate?.getHeightFrom(collectionView:collectionView!, heightForRowIndexPath: indexPath, withWidth: SIZE_HEIGHT) ?? 0
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             let frame = CGRect(x: left, y: top, width: width!, height: height)
 

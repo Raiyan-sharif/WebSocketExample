@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-protocol ITTServerViewModelDelegates {
+protocol ITTServerViewModelDelegates: AnyObject {
     func updateView()
     func showErrorAlert()
     func showNetworkError()
@@ -25,9 +25,9 @@ class ITTServerViewModel: BaseModel {
     var mYFactor:Float = 1
     let cameraHistoryDBModel = CameraHistoryDBModel()
     
-    private(set) var loaderdelegate: LoaderDelegate?
+    private(set) weak var loaderdelegate: LoaderDelegate?
     private(set) var parseTextDetection = ParseTextDetection()
-    private(set) var delegate: ITTServerViewModelDelegates?
+    private(set) weak var delegate: ITTServerViewModelDelegates?
     
     func viewDidLoad<T>(_ vc: T) {
         self.loaderdelegate = vc.self as? LoaderDelegate

@@ -272,17 +272,19 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.childView.backgroundColor = UIColor._skyBlueColor()
         }
         cell.showAsFavourite()
+        let cellHeight = cell.frame.height
+
         cell.deleteItem = { [weak self] point in
             guard let `self`  = self else {
                 return
             }
             let bottomInset = self.collectionView.contentInset.bottom
             self.favouritelayout.bottomInset = bottomInset
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.favouriteViewModel.deleteFavourite(indexpath.item)
            
-            self.favouritelayout.deletedCellHeight = cell.frame.height
+            self.favouritelayout.deletedCellHeight = cellHeight
             self.collectionView.performBatchUpdates { [weak self]  in
                 guard let `self`  = self else {
                     return
@@ -305,8 +307,8 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             guard let `self`  = self else {
                 return
             }
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.openTTTResult(indexpath.item)
         }
         
@@ -314,8 +316,8 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
             guard let `self`  = self else {
                 return
             }
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.openTTTResultAlert(indexpath)
         }
         return cell

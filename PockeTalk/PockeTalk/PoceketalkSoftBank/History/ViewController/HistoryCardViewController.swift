@@ -26,7 +26,6 @@ class HistoryCardViewController: BaseViewController {
     var timeInterval: TimeInterval = 30
     
     let buttonWidth : CGFloat = 100
-    var deletedCellHeight = CGFloat()
     
     weak var delegate: HistoryCardViewControllerDelegate?
     var itemsToShowOnContextMenu : [AlertItems] = []
@@ -195,7 +194,6 @@ class HistoryCardViewController: BaseViewController {
     }
     
     func updateData(shouldCVScrollToBottom: Bool){
-        deletedCellHeight = 0
         historyViewModel.getData()
         if shouldCVScrollToBottom {
             collectionView.reloadData()
@@ -357,10 +355,9 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             }
             let bottomInset = self.collectionView.contentInset.bottom
             self.historylayout.bottomInset = bottomInset
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.historyViewModel.deleteHistory(indexpath.item)
-            self.deletedCellHeight = cell.frame.height
             
             self.collectionView.performBatchUpdates { [weak self]  in
                 guard let `self`  = self else {return}
@@ -400,14 +397,14 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
                     let dialog = showAlert.alertDialogWithoutTitleWithOkButton(message: "msg_liked_item_limit_exits".localiz())
                     self.present(dialog, animated: true, completion: nil)
                 } else {
-                    let cellPoint =  collectionView.convert(point, from:collectionView)
-                    let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+                    let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+                    let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
                     self.historyViewModel.makeFavourite(indexpath.item)
                     self.collectionView.reloadItems(at: [indexpath])
                 }
             } else {
-                let cellPoint =  collectionView.convert(point, from:collectionView)
-                let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+                let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+                let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
                 self.historyViewModel.makeFavourite(indexpath.item)
                 self.collectionView.reloadItems(at: [indexpath])
             }
@@ -419,8 +416,8 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             guard let `self`  = self else {
                 return
             }
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.openTTTResult(indexpath)
         }
         
@@ -428,8 +425,8 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             guard let `self`  = self else {
                 return
             }
-            let cellPoint =  collectionView.convert(point, from:collectionView)
-            let indexpath = collectionView.indexPathForItem(at: cellPoint)!
+            let cellPoint = self.collectionView.convert(point, from: self.collectionView)
+            let indexpath = self.collectionView.indexPathForItem(at: cellPoint)!
             self.openTTTResultAlert(indexpath)
         }
         return cell

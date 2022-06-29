@@ -5,7 +5,7 @@
 
 import UIKit
 
-protocol CameraHistoryPopUPDelegates {
+protocol CameraHistoryPopUPDelegates: AnyObject {
     func openImageFromHistoryPopUp(index: Int)
     func shareImageFromHistoryPopUp(id: Int64)
     func deleteImageFromFistoryPopUp(index: Int, id: Int64)
@@ -28,7 +28,7 @@ class CameraHistoryPopUPViewController: BaseViewController {
     let viewAlpha : CGFloat = 0.6
     
     let cameraHistoryDBModel = CameraHistoryDBModel()
-    var delegate: CameraHistoryPopUPDelegates?
+    weak var delegate: CameraHistoryPopUPDelegates?
     
     var id = Int64()
     var index = Int()
