@@ -518,6 +518,8 @@
 		891E7F7727F2D42F00BCC68A /* ProductionWithStageURL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionWithStageURL.xcconfig; sourceTree = "<group>"; };
 		8920067526E73620005A23F0 /* PronunciationPractice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PronunciationPractice.storyboard; sourceTree = "<group>"; };
 		8920067926E76490005A23F0 /* PronunciationPracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationPracticeViewController.swift; sourceTree = "<group>"; };
+		8924FA78286C32E90042EF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8924FA79286C32FA0042EF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8928E59227C7480600638F6E /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
 		8928E59427C7510900638F6E /* SingleButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonTableViewCell.swift; sourceTree = "<group>"; };
 		8928E59527C7510900638F6E /* SingleButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleButtonTableViewCell.xib; sourceTree = "<group>"; };
@@ -2722,6 +2724,7 @@
 				89A3127F279FBA08009A9931 /* zh-Hans */,
 				89A31281279FBA1A009A9931 /* zh-Hant */,
 				89A31283279FBA23009A9931 /* pt-PT */,
+				8924FA79286C32FA0042EF4A /* Base */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2742,6 +2745,7 @@
 				89A3127E279FBA08009A9931 /* zh-Hans */,
 				89A31280279FBA1A009A9931 /* zh-Hant */,
 				89A31282279FBA22009A9931 /* pt-PT */,
+				8924FA78286C32E90042EF4A /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -3007,7 +3011,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3036,7 +3040,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = U8GSKB5S38;
+				DEVELOPMENT_TEAM = L39D7LSFLU;
 				INFOPLIST_FILE = PockeTalk/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
