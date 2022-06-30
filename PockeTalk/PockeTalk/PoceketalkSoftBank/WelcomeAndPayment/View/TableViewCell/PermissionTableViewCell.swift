@@ -43,7 +43,7 @@ class PermissionTableViewCell: UITableViewCell {
             setupContainerView(isPermissionGranted: isPermissionGranted)
 
         case .notificationPermission:
-            isPermissionGranted ? (permissionImageView.image = UIImage(named: "")) : (permissionImageView.image = UIImage(named: ""))
+            isPermissionGranted ? (permissionImageView.image = UIImage(named: "icon_notification_select")) : (permissionImageView.image = UIImage(named: "icon_notification_unselect"))
             permissionLabel.text = "kInitialPermissionSettingsVCNotificationLabel".localiz()
             setupContainerView(isPermissionGranted: isPermissionGranted)
         }
