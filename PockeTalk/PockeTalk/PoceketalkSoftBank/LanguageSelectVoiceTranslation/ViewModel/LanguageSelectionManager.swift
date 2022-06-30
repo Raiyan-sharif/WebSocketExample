@@ -209,10 +209,6 @@ public class LanguageSelectionManager{
         let systemLanguage = LanguageManager.shared.currentLanguage.rawValue
         var stringFromSpeech = GlobalMethod.removePunctuation(of: text).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-        if systemLanguage == SystemLanguageCode.ru.rawValue{
-            stringFromSpeech = stringFromSpeech.capitalizingFirstLetter()
-        }
-
         let codeFromLanguageMap = LanguageMapViewModel.sharedInstance.findTextFromDb(languageCode: systemLanguage, text: stringFromSpeech) as? LanguageMapEntity
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates stringFromSpeech \(stringFromSpeech) codeFromLanguageMap = \(String(describing: codeFromLanguageMap?.textCodeTr))")
 

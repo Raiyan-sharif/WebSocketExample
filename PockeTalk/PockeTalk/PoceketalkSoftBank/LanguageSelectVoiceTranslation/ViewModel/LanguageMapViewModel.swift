@@ -114,12 +114,59 @@ public class LanguageMapViewModel{
         return -1
     }
 
+
+    /// Finds and returns selected language from Database
+    /// If app language is Russian, we do not perform in database search.
+    /// In-database search for russian text do not work for texts like: Французский Канада, Шотландский гаэльский and Гаитянский креольский язык
+    /// Due to some reason, the cyrillic alphabets are not lowercases during database search and needs to be done in memory
+    /// - Parameters:
+    ///   - languageCode: ISO language code (2 characters)
+    ///   - text: text retured from voice search
+    /// - Returns: language map item if text matches any language name
     func findTextFromDb(languageCode: String, text: String) -> BaseEntity?{
-        PrintUtility.printLog(tag: TAG, text: "Searching for languageCode \(String(describing: languageCode)) text \(String(describing: text))")
         let srcLanguageCode = GlobalMethod.getAlternativeSystemLanguageCode(of: languageCode)
-        let item = try? LanguageMapDBModel().find(languageCode: srcLanguageCode, text: text) as? LanguageMapEntity
-        PrintUtility.printLog(tag: TAG, text: "Found item.code \(String(describing: item?.textCode)) target \(String(describing: item?.textCodeTr))")
+        PrintUtility.printLog(tag: TAG, text: "findTextFromDb Searching for languageCode \(String(describing: srcLanguageCode)) text \(String(describing: text))")
+        var item : LanguageMapEntity?
+        if srcLanguageCode == SystemLanguageCode.ru.rawValue
+            || srcLanguageCode == SystemLanguageCode.ko.rawValue
+            || srcLanguageCode == AlternativeSystemLanguageCode.pt.rawValue {
+            let langaugeMapArray = try? LanguageMapDBModel().findAllEntities(languageCode: srcLanguageCode)
+            for langaugeMapRow in langaugeMapArray ?? [] {
+                guard let langaugeMapItem = langaugeMapRow as? LanguageMapEntity else {
+                    return item
+                }
+                if languageNameMatches(text, langaugeMapItem.textValueOne, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueTwo, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueThree, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueFour, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueFive, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueSix, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) ||
+                    languageNameMatches(text, langaugeMapItem.textValueSeven, removeSpaceInBetween:srcLanguageCode == SystemLanguageCode.ko.rawValue ? true  : false) {
+                    item = langaugeMapItem
+                    PrintUtility.printLog(tag: TAG, text: "findTextFromDb Found item.code \(String(describing: langaugeMapItem.textCode)) target \(String(describing: langaugeMapItem.textCodeTr))")
+                }
+            }
+        } else {
+
+            guard let languageItem = try? LanguageMapDBModel().find(languageCode: srcLanguageCode, text: text) as? LanguageMapEntity else {
+                return item
+            }
+            item = languageItem
+            PrintUtility.printLog(tag: TAG, text: "findTextFromDb Found item.code \(String(describing: item?.textCode)) target \(String(describing: item?.textCodeTr))")
+        }
         return item
+    }
+
+    /// Check if provided language name matches langauge name from mapping file
+    /// - Parameters:
+    ///   - text: test from STT language name input
+    ///   - langaugeMapValue: language name from mapping file
+    ///   - removeSpaceInBetween: if true, all whitespace will be removed from both strings before comparing, needed for Korean language
+    /// - Returns: true if strings match, false otherwise
+    func languageNameMatches( _ text: String,_ langaugeMapValue: String?, removeSpaceInBetween: Bool = false) -> Bool{
+        let langaugeNameFromMap = removeSpaceInBetween ? GlobalMethod.removeAllWhitespace(of: langaugeMapValue ?? "") : langaugeMapValue
+        let langaugeNameFromStt = removeSpaceInBetween ? GlobalMethod.removeAllWhitespace(of: text ) : text
+        return langaugeNameFromMap?.compare(langaugeNameFromStt, options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive]) == .orderedSame
     }
 }
 

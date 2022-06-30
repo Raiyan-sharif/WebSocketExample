@@ -262,7 +262,7 @@ extension CountryListViewController: SpeechProcessingVCDelegates{
         for item in countryList{
             PrintUtility.printLog(tag: TAG, text: "countryname \(item.countryName.en ?? "") search for \(stringFromSpeech)")
             let countryCodeName = GlobalMethod.getCountryCodeFrom(item, and: dataShowingLanguageCode)
-            if countryCodeName.lowercased() == stringFromSpeech{
+            if GlobalMethod.removePunctuation(of: countryCodeName).lowercased() == stringFromSpeech{
                 return item
             }
         }
