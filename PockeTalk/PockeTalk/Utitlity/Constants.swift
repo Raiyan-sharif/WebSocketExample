@@ -93,6 +93,8 @@ let kNotAllow = "kNotAllow"
 
 
 // Language selection voice
+let kCameraToLanguageSelectionIndex = "camera_to_language_selection_index"
+let kCameraFromLanguageSelectionIndex = "camera_from_language_selection_index"
 let kTopLanguageSelectionIndex = "top_language_selection_index"
 let kBottomLanguageSelectionIndex = "bottom_language_selection_index"
 let KSelectedLanguageVoice = "KSelectedLanguageVoice"

@@ -17,6 +17,8 @@
 "Favorite" = "즐겨찾기";
 "PronunciationGuideline" = "버튼을 누르고 발음해 주세요";
 "Region" = "지역";
+"TtsToLanguage" = "Hola como estas";
+"TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "언어 설정";
 "Speech Guideline" = "버튼을 누른 상태에서 검색할 언어명을 말씀하십시오.";
 "Country Language Settings" = "Country Settings";
@@ -75,12 +77,12 @@
 "no" = "No";
 "kActionAllowAccess" = "허용";
 "kActionCancel" = "취소";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "포켓토크 앱이 마이크에 대한 접근 권한을 요청합니다";
+"kMicrophoneUsageMessage" = "이 앱은 음성을 문자로 변환하여 번역하기 위하여 마이크에 대한 접근 권한이 필요합니다";
 "kPhotosUsageTitle" = "사진을 이용할 수 없습니다";
 "kPhotosUsageMessage" = "\"POCKETALK\"가 사진에 대한 액세스 허용을 요청합니다";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "포켓토크가 카메라에 대한 접근 권한을 요청합니다";
+"kCameraUsageMessage" = "이 앱은 이미지에서 문자를 인식하여 번역하기 위하여 카메라에 대한 접근 권한이 필요합니다";
 "kTitleOk" = "OK";
 "kNotAllow" = "허용하지 않음";
 "kNextButtonTitle" = "다음으로";
@@ -96,73 +98,72 @@
 "kPaidPlanVCTitleLabel" = "포켓토크 앱 이용에는 유료 요금제가 필요합니다";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "•무료 기간 마지막 날의 익일부터 상기 요금이 계속 과금됩니다";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "3일간 무료로 체험 시작";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "구매 내역을 복원하기";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "이용 요금제를 선택해 주세요";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360엔/월 3일간 무료 체험";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600엔/연 3일간 무료 체험";
+"kWelcomeVCTitleLabelTop" = "환영합니다";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "이용 시작";
 "information" = "정보";
 "manual" = "매뉴얼";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "일";
+"Days" = "일";
+"Week" = "주";
+"Weeks" = "주";
+"Month" = "월";
+"Months" = "월";
+"Year" = "연";
+"Years" = "연";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "일";
+"days" = "일";
+"week" = "주";
+"weeks" = "주";
+"month" = "월";
+"months" = "월";
+"year" = "연";
+"years" = "연";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "시간이 초과되었습니다";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "다시 한번 시도해 주십시오.";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "인앱 결제 오류";
+"kIAPNoProductIDsFound" = "인앱 결제의 아이템 ID가 없습니다";
+"kIAPNoProductsFound" = "인앱 결제가 없습니다";
+"kIAPProductRequestFailed" = "현재 이용 가능한 인앱 결제 아이템을 취득할 수 없습니다";
+"kIAPPaymentWasCancelled" = "인앱 결제가 취소되었습니다";
+"kfreeUse" = "무료로 이용";
+"kIAPNoPurchasedItemToRestore" = "복원할 인앱 결제 아이템이 없습니다";
+"kIAPALLPreviousIAPRestored" = "인앱 결제를 모두 복원했습니다";
+"kIAPEnablePaymentFromSettings" = "이 디바이스는 인앱 결제가 허용되어 있지 않습니다. 활성화하려면 [설정]> [이용 시간]> [콘텐츠와 개인 정보 제한]> [iTunes와 AppStore에서 구입]> [인앱 결제]> [허용]으로 설정해 주세요";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "주간 정액 요금제";
+"Monthly Plan" = "월간 정액 요금제";
+"Yearly Plan" = "연간 정액 요금제";
 "Free for" = "Free for";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
-"kBestPrice" = "Best Price";
+"kIAPFreeDaysDescription" = "모든 요금제, 첫 3일간 무료";
+"kIAPFreePeriodCancellationDescription" = "무료 기간 내에 해지하시면 요금이 부가되지 않습니다. ";
+"kIAPFreePeriodSubscriptionDescription" = "무료 기간 마지막 날의 익일부터 요금이 계속 부가됩니다.";
+"kBestPrice" = "추천";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
-
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
-"kPockeTalk" = "ポケトーク";
+"kYen" = " XX 엔 절약";
+"kYenPerWeek" = "엔/주";
+"kYenPerMonth" = "엔/월";
+"kYenPerYear" = "엔/연";
+"kStartPocketalkApp" = "포켓토크 시작하기";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "즐겨찾기 수가 한계에 도달하였습니다";
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "모든 요금제, 첫 3일간 무료";
+"kFreePlanDetailText" = "무료 기간 내에 해지하시면 요금이 부가되지 않습니다. 무료 기간 마지막 날의 익일부터 요금이 계속 부가됩니다.";
 
 
 //Boarding Screen
@@ -173,15 +174,16 @@
 "KBoardingLanChange"  = "번역 방향 변경";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "쿠폰의 유효 기간이 만료되었습니다.";
+"KErrorMessage" = "인증에 실패했습니다. 다시 시도해 주십시오";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "정기 구독 계약 중이므로
+쿠폰 코드를 이용할 수 없습니다";
+"kCouponActivatedMesage" = "쿠폰이 활성화되었습니다";
+"kCouponCodeParseError" = "쿠폰 코드 인증 오류 \n 다시 시도해 주세요";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";

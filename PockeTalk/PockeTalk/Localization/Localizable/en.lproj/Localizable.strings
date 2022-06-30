@@ -123,7 +123,7 @@
 "kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
 
 "kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
+"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period. ";
 "kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
 
 //WelcomeViewController
@@ -160,7 +160,7 @@
 "Free for" = "Free for";
 "kBestPrice" = "Best Price";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
+"kYen" = " save XX yen";
 
 "kYenPerWeek" = "yen/week";
 "kYenPerMonth" = "yen/month";
@@ -170,7 +170,7 @@
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Number of Favorites has reached its limits";
 "kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanDetailText" = "No charge if you cancel within the free period. The fee will be charged continuously from the day after the last day of the free period";
 
 //Boarding Screen
 "Back" = "Back";

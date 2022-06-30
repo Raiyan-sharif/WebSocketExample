@@ -16,7 +16,8 @@ class LanguageSelectCameraVC: BaseViewController {
     let TAG = "\(LanguageSelectCameraVC.self)"
     var currentIndex: Int = 0
     let tabsPageViewController = "TabsPageViewController"
-    
+
+    private var cameraLangSelectindex = 0
     let iconGlobalSelect = "icon_language_global_select.png"
     let iconGlobalUnSelect = "icon_language_global_unselect.png"
     let iconHistorySelect = "icon_language_history_select.png"
@@ -38,11 +39,12 @@ class LanguageSelectCameraVC: BaseViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.cameraLangSelectindex = getCameraLangSelectionindex()
         talkButtonImageView = window.viewWithTag(109) as? UIImageView
         setButtonTopCornerRadius(btnLangList)
         setButtonTopCornerRadius(btnHistoryList)
         navigationViewCustomization()
-        updateButton(index:0)
+        updateButton(index:cameraLangSelectindex)
         setupPageViewController()
         registerNotification()
         self.view.bottomImageView(usingState: .gradient)
@@ -91,7 +93,7 @@ class LanguageSelectCameraVC: BaseViewController {
         
         pageController.delegate = self
         pageController.dataSource = self
-        pageController.setViewControllers([showViewController(0)!], direction: .forward, animated: true, completion: nil)
+        pageController.setViewControllers([showViewController(cameraLangSelectindex)!], direction: .forward, animated: true, completion: nil)
         
         self.pageController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -110,33 +112,22 @@ class LanguageSelectCameraVC: BaseViewController {
     //MARK: - IBActions
     @IBAction func onLangSelectButton(_ sender: Any) {
         isFirstTimeLoad = false
+        cameraLangSelectindex = 0
         updateButton(index: 0)
         tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        saveCameraLangSelectionindex()
     }
     
     @IBAction func onHistoryButtonTapped(_ sender: Any) {
         isFirstTimeLoad = false
+        cameraLangSelectindex = 1
         //Reset selected item lnaguage history index if it is in lnaguage history list
-        var selectedItem = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
-        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
-        if !langSelectFor && UserDefaultsProperty<String>(KCameraTempTargetLanguage).value != nil {
-            selectedItem = UserDefaultsProperty<String>(KCameraTempTargetLanguage).value!
-        }
-        let languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
-        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.camera.rawValue)
-        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
-            for item in languages {
-                if item.code == selectedItem {
-                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
-                        CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
-                    }
-                }
-            }
-        }
+        saveCameraSelectedItemIntoDB()
         updateButton(index: 1)
         tabsViewDidSelectItemAt(position: 1, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera
+        saveCameraLangSelectionindex()
     }
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
@@ -150,6 +141,7 @@ class LanguageSelectCameraVC: BaseViewController {
         UserDefaultsProperty<String>(KSelectedLanguageCamera).value = selectedLanguageCode
         let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
         PrintUtility.printLog(tag: TAG , text: " isnativeval \(String(describing: langSelectFor))")
+        saveCameraLangSelectionindex()
         if langSelectFor! {
             if isLanguageSupportRecognition(code: selectedLanguageCode){
                 PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) has recognition support")
@@ -180,7 +172,52 @@ class LanguageSelectCameraVC: BaseViewController {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.cameraScreenPurpose, text: "Pop from \(ScreenTracker.sharedInstance.screenPurpose) To \(SpeechProcessingScreenOpeningPurpose.CameraScreen)")
         ScreenTracker.sharedInstance.screenPurpose = .CameraScreen
     }
-    
+
+    func getCameraLangSelectionindex() -> Int {
+        var index : Int?
+        if UserDefaultsProperty<Bool>(KCameraLanguageFrom).value == true {
+            index = UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value
+        }
+        else{
+            index = UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value
+        }
+        if index == 1 {
+            self.saveCameraSelectedItemIntoDB()
+        }
+        return index ?? 0
+    }
+
+    func saveCameraLangSelectionindex() {
+        if UserDefaultsProperty<Bool>(KCameraLanguageFrom).value == true {
+             UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value = currentIndex
+        }
+        else{
+             UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value = currentIndex
+       }
+    }
+
+    private func saveCameraSelectedItemIntoDB() {
+        var selectedItem = UserDefaultsProperty<String>(KSelectedLanguageCamera).value!
+        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value!
+        if langSelectFor {
+            selectedItem = CameraLanguageSelectionViewModel.shared.fromLanguage
+        }
+        else {
+            selectedItem = CameraLanguageSelectionViewModel.shared.targetLanguage
+        }
+        let languages = CameraLanguageSelectionViewModel.shared.getSelectedLanguageListFromDb()
+        let entity = LanguageSelectionEntity(id: 0, textLanguageCode: selectedItem, cameraOrVoice: LanguageType.camera.rawValue)
+        if let _ = try? LanguageSelectionDBModel().find(entity: entity) {
+            for item in languages {
+                if item.code == selectedItem {
+                    if let _ = try? LanguageSelectionDBModel().delete(idToDelte: item.id) {
+                        CameraLanguageSelectionViewModel.shared.insertIntoDb(entity: entity)
+                    }
+                }
+            }
+        }
+    }
+
     //MARK: - View Transactions
     private func navigateToLanguageScene(){
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromTop)
@@ -201,9 +238,10 @@ class LanguageSelectCameraVC: BaseViewController {
     
     private func updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: Bool = false){
         self.isFirstTimeLoad = false
-        updateButton(index: 0)
-        tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: isProvideSTTFromLanguageSettingCameraTutorialUI)
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        let index = cameraLangSelectindex
+        updateButton(index: index)
+        tabsViewDidSelectItemAt(position: index, isProvideSTTFromLanguageSettingCameraTutorialUI: isProvideSTTFromLanguageSettingCameraTutorialUI)
+        index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera)
     }
     
     private func unregisterNotification(){

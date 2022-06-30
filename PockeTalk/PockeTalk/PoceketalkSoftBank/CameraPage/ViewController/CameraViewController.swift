@@ -66,13 +66,16 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
     var updateHomeContainer:((_ isTalkButtonVisible:Bool)->())?
+
+    private var connectivity = Connectivity()
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
         self.updateHomeContainer?(false)
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
         openCameraLanguageListScreen()
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        let index = UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value
+        setCameraLanguageScreenTracker(index: index ?? 0)
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
@@ -80,7 +83,12 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
         openCameraLanguageListScreen()
-        ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
+        let index = UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value
+        setCameraLanguageScreenTracker(index: index ?? 1)
+    }
+
+    private func setCameraLanguageScreenTracker(index : Int) {
+        index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera)
     }
     
     func openCameraLanguageListScreen(){
@@ -128,7 +136,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         updateLanguageNames()
         isViewInteractionEnable(true)
         let flashStatus = UserDefaults.standard.value(forKey: isCameraFlashOn) as? Bool
-        PrintUtility.printLog(tag: "flash status", text: "\(flashStatus)")
+        PrintUtility.printLog(tag: "flash status", text: "\(String(describing: flashStatus))")
         if let flashStatus = flashStatus, flashStatus {
             turnOnCameraFlash()
         }
@@ -147,11 +155,20 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     deinit {
+        connectivity.cancel()
         unregisterNotification()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+         connectivity.startMonitoring { connection, reachable in
+             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+             }
+
+         }
         setUPViews()
         previewLayer.videoGravity = .resize
         previewView = cameraPreviewView
@@ -217,12 +234,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             }
         }
     }
-    
-    
-    //    override var prefersStatusBarHidden: Bool {
-    //        return true
-    //    }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -251,7 +263,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
             statusBar?.backgroundColor = UIColor.red
         }
-        
     }
     
     
@@ -267,7 +278,6 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        HomeViewController.setBlackGradientImageToBottomView(usingState: .hidden)
         talkButtonImageView.isHidden = true
         isCaptureButtonClickable = true
         isViewInteractionEnable(true)

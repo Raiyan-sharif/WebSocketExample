@@ -16,6 +16,8 @@
 "Favorite" = "Kegemaran";
 "PronunciationGuideline" = "Tekan butang dan sebutkannya";
 "Region" = "Rantau";
+"TtsToLanguage" = "Hola como estas";
+"TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "Tetapan Bahasa";
 "Speech Guideline" = "Tekan butang dan nyatakan bahasa yang anda ingin carikan.";
 "Country Language Settings" = "Country Settings";
@@ -74,12 +76,12 @@
 "no" = "No";
 "kActionAllowAccess" = "kebenaran";
 "kActionCancel" = "Batal";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "Aplikasi POCKETALK memerlukan akses ke mikrofon anda.";
+"kMicrophoneUsageMessage" = "Aplikasi ini memerlukan akses ke mikrofon untuk menukarkan pertuturan kepada teks untuk terjemahan";
 "kPhotosUsageTitle" = "Foto tidak disediakan";
 "kPhotosUsageMessage" = "\"POCKETALK\" meminta akses kepada foto";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "Aplikasi POCKETALK memerlukan akses ke kamera anda.";
+"kCameraUsageMessage" = "Aplikasi ini memerlukan akses ke kamera untuk mendapatkan teks daripada imej untuk terjemahan";
 "kTitleOk" = "OK";
 "kNotAllow" = "tidak dibenarkan";
 "kNextButtonTitle" = "Seterusnya";
@@ -95,74 +97,74 @@
 "kPaidPlanVCTitleLabel" = "Pelan bayaran diperlukan untuk menggunakan Aplikasi POCKETALK";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "・ Caj di atas akan diteruskan dari hari terakhir selepas tempoh percuma.";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "Mulakan Percubaan Percuma 3 Hari";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "Pulihkan sejarah pembelian";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Sila pilih pelan penggunaan";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/bulan penggunaan percuma 3 hari";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/tahun penggunaan percuma 3 hari";
+"kWelcomeVCTitleLabelTop" = "Selamat datang ke POCKETALK";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Mulakan penggunaan";
 "information" = "Maklumat";
 "manual" = "Manual";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "Hari";
+"Days" = "Hari";
+"Week" = "Minggu";
+"Weeks" = "Minggu";
+"Month" = "Bulan";
+"Months" = "Bulan";
+"Year" = "Tahun";
+"Years" = "Tahun";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "hari";
+"days" = "hari";
+"week" = "minggu";
+"weeks" = "minggu";
+"month" = "bulan";
+"months" = "bulan";
+"year" = "tahun";
+"years" = "tahun";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "Masa tamat!";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "Sila cuba lagi";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "Ralat Pembelian Dalam Aplikasi!";
+"kIAPNoProductIDsFound" = "Tiada ID item ditemui untuk Pembelian Dalam Aplikasi.";
+"kIAPNoProductsFound" = "Tiada Pembelian Dalam Aplikasi.";
+"kIAPProductRequestFailed" = "Gagal mendapatkan item Pembelian Dalam Aplikasi yang tersedia buat masa ini.";
+"kIAPPaymentWasCancelled" = "Pembelian Dalam Aplikasi anda telah dibatalkan.";
+"kfreeUse" = "penggunaan percuma";
+"kIAPNoPurchasedItemToRestore" = "Tiada item pembelian dalam aplikasi untuk dikembalikan semula.";
+"kIAPALLPreviousIAPRestored" = "Semua Pembelian Dalam Aplikasi yang terdahulu telah dikembalikan semula!";
+"kIAPEnablePaymentFromSettings" = "Pembelian Dalam Aplikasi tidak dibenarkan dalam peranti ini. Untuk membenarkannya, pergi ke Tetapan > Masa Skrin > Sekatan Kandungan dan Privasi > Pembelian iTunes & App Store > Pembelian Dalam Aplikasi > Benarkan";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "Pelan Mingguan";
+"Monthly Plan" = "Pelan Bulanan";
+"Yearly Plan" = "Pelan Tahunan";
 "Free for" = "Free for";
-"kBestPrice" = "Best Price";
+"kBestPrice" = "Harga Terbaik";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
+"kYen" = " jimat XX yen";
 
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
+"kYenPerWeek" = "yen/minggu";
+"kYenPerMonth" = "yen/bulan";
+"kYenPerYear" = "yen/tahun";
+"kStartPocketalkApp" = "Mulakan Aplikasi POCKETALK";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
-"kPockeTalk" = "ポケトーク";
+"kIAPFreeDaysDescription" = "Semua pelan adalah percuma untuk 3 hari pertama";
+"kIAPFreePeriodCancellationDescription" = "Bayaran tidak akan dikenakan jika anda membuat pembatalan semasa tempoh percuma. ";
+"kIAPFreePeriodSubscriptionDescription" = "Bayaran akan dikenakan secara berterusan bermula hari selepas hari terakhir tempoh percuma.";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Bilangan Kegemaran telah mencapai hadnya";
 
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "Semua pelan adalah percuma untuk 3 hari pertama";
+"kFreePlanDetailText" = "Bayaran tidak akan dikenakan jika anda membuat pembatalan semasa tempoh percuma. Bayaran akan dikenakan secara berterusan bermula hari selepas hari terakhir tempoh percuma";
 
 //Boarding Screen
 "Back" = "kembali";
@@ -172,15 +174,16 @@
 "KBoardingLanChange"  = "Tukar arahan terjemahan";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "Kupon telah luput.";
+"KErrorMessage" = "Pengesahan gagal. Sila cuba lagi.";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "Kod kupon ini tidak boleh digunakan
+kerana anda mempunyai perjanjian langganan.";
+"kCouponActivatedMesage" = "Kupon telah diaktifkan.";
+"kCouponCodeParseError" = "Ralat pengesahan kod kupon \n Sila cuba lagi";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";

@@ -176,12 +176,29 @@ extension HomeViewController{
                                 guard let url = Bundle.main.url(forResource: "start_record", withExtension: "wav") else { return }
                                 AudioPlayer.sharedInstance.playSTTSound(url: url)
                             }
-                            SocketManager.sharedInstance.connect()
+//                            SocketManager.sharedInstance.connect()
                             SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                             self.speechVC.updateLanguageType()
-                            
-                            if self.speechVC.languageHasUpdated{
-                                self.speechVC.updateLanguageInRemote() {
+
+                            AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
+                                if result {
+                                    if self.speechVC.languageHasUpdated{
+                                        self.speechVC.updateLanguageInRemote(completion: { isOk in
+                                            if isOk{
+                                                SocketManager.sharedInstance.connect()
+                                            } else {
+                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
+                                                    gesture.state = .ended
+                                                }
+                                            }
+                                        })
+                                    }else{
+                                        SocketManager.sharedInstance.connect()
+                                    }
+                                } else {
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
+                                        gesture.state = .ended
+                                    }
                                 }
                             }
                             

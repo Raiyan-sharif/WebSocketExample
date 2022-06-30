@@ -75,12 +75,12 @@
 "no" = "No";
 "kActionAllowAccess" = "Erlauben";
 "kActionCancel" = "Abbrechen";
-"kMicrophoneUsageTitle" = "ポケトークアプリがマイクへのアクセスを求めています";
-"kMicrophoneUsageMessage" = "このアプリは音声をテキストへ変換し翻訳するためにマイクへのアクセスを求めています";
+"kMicrophoneUsageTitle" = "POCKETALK-App erfordert den Zugriff auf Ihr Mikrofon";
+"kMicrophoneUsageMessage" = "Diese App erfordert den Zugriff auf Ihr Mikrofon, um Sprache in Text umzuwandeln und zu übersetzen";
 "kPhotosUsageTitle" = "Fotos können nicht verwendet werden";
 "kPhotosUsageMessage" = "\”POCKETALK\” fordert den Zugriff auf die Fotos an";
-"kCameraUsageTitle" = "ポケトークがカメラへのアクセスを求めています";
-"kCameraUsageMessage" = "このアプリは画像からテキスト取得し翻訳するためにカメラへのアクセスを求めています";
+"kCameraUsageTitle" = "POCKETALK erfordert den Zugriff auf Ihre Kamera";
+"kCameraUsageMessage" = "Diese App erfordert den Zugriff auf Ihre Kamera, um Text aus einem Bild abzurufen und zu übersetzen";
 "kTitleOk" = "OK";
 "kNotAllow" = "Verweigern";
 "kNextButtonTitle" = "Weiter";
@@ -96,74 +96,73 @@
 "kPaidPlanVCTitleLabel" = "Zur Nutzung der POCKETALK-App benötigen Sie einen kostenpflichtigen Plan";
 "kPaidPlanVCBulletPointOneLabel" = "Register now for a 3-day Free Trial.  No charge if you cancel before the trial ends.";
 "kPaidPlanVCBulletPointTwoLabel" = "･Ab dem Tag nach dem letzten Tag des Gratiszeitraums wird die oben genannte Gebühr fortlaufend berechnet";
-"kPaidPlanVCPurchaseButtonTitle" = "Start a 3-Day Free Trial";
+"kPaidPlanVCPurchaseButtonTitle" = "3 Tage lang kostenlos testen";
 "kPaidPlanVCRestorePurchaseHistoryButton" = "Ihre Bestellungen wiederherstellen";
 "kPaidPlanVCRestorePurchaseButtonAlertTitle" = "Wählen Sie einen Plan";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 yen/month \n 3 days free use";
-"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 yen/year \n 3 days free use";
-"kWelcomeVCTitleLabelTop" = "Welcome to";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonOneTitle" = "360 Yen/Monat  3 Tage kostenlose Nutzung";
+"kPaidPlanVCRestorePurchaseButtonAlertButtonTwoTitle" = "3600 Yen/Jahr  3 Tage kostenlose Nutzung";
+"kWelcomeVCTitleLabelTop" = "Willkommen";
 "kWelcomeVCTitleLabelBottom" = "POCKETALK";
 "kWelcomeVCStartUsingButtonTitle" = "Nutzung beginnen";
 "information" = "Information";
 "manual" = "Bedienungsanleitung";
 "application_version" = "Application Version";
 //Purchase alert scheme text
-"Day" = "Day";
-"Days" = "Days";
-"Week" = "Week";
-"Weeks" = "Weeks";
-"Month" = "Month";
-"Months" = "Months";
-"Year" = "Year";
-"Years" = "Years";
+"Day" = "Tag";
+"Days" = "Tage";
+"Week" = "Woche";
+"Weeks" = "Wochen";
+"Month" = "Monat";
+"Months" = "Monate";
+"Year" = "Jahr";
+"Years" = "Jahren";
 
-"day" = "day";
-"days" = "days";
-"week" = "week";
-"weeks" = "weeks";
-"month" = "month";
-"months" = "months";
-"year" = "year";
-"years" = "years";
+"day" = "tag";
+"days" = "tage";
+"week" = "woche";
+"weeks" = "wochen";
+"month" = "monat";
+"months" = "monate";
+"year" = "jahr";
+"years" = "jahren";
 
-"kTimeOut" = "Time Out!";
+"kTimeOut" = "Zeitüberschreitung!";
 "kAppleServerBusy" = "Apple server seems busy. Please try again.";
-"kTryAgain" = "Try again";
+"kTryAgain" = "Bitte versuchen Sie es erneut";
+"kPockeTalk" = "PockeTalk";
 
 //IAP Alert
-"kIAPError" = "In-App Purchase Error!";
-"kIAPNoProductIDsFound" = "No In-App Purchase product identifiers were found.";
-"kIAPNoProductsFound" = "No In-App Purchases were found.";
-"kIAPProductRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
-"kIAPPaymentWasCancelled" = "In-App Purchase process was cancelled.";
-"kfreeUse" = " free use";
-"kIAPNoPurchasedItemToRestore" = "There are no purchased items to restore.";
-"kIAPALLPreviousIAPRestored" = "All previous In-App Purchases have been restored!";
-"kIAPEnablePaymentFromSettings" = "In-App Purchases are not allowed in this device. To enable it, go to Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > In-app Purchases > Allow";
+"kIAPError" = "Fehler beim In-App-Kauf";
+"kIAPNoProductIDsFound" = "Es wurden keine In-App-Kauf-Produkt IDs gefunden";
+"kIAPNoProductsFound" = "Es wurden keine In-App-Käufe gefunden";
+"kIAPProductRequestFailed" = "Verfügbare In-App-Kauf-Produkte können zur Zeit nicht abgerufen werden";
+"kIAPPaymentWasCancelled" = "In-App-Kauf wurde abgebrochen";
+"kfreeUse" = "Kostenlos nutzen";
+"kIAPNoPurchasedItemToRestore" = "Es gibt keine In-App-Kauf-Produkte zum Wiederherstellen";
+"kIAPALLPreviousIAPRestored" = "Alle bisherigen In-App-Käufe wurden wiederhergestellt";
+"kIAPEnablePaymentFromSettings" = "In-App-Käufe sind auf diesem Gerät nicht erlaubt. Um es zu aktivieren, wählen Sie [Einstellungen]>[Bildschirmzeit]>[Beschränkungen]>[Käufe im iTunes & App Store]>[In-App-Käufe]>[Erlauben]";
 "Daily Plan" = "Daily Plan";
-"Weekly Plan" = "Weekly Plan";
-"Monthly Plan" = "Monthly Plan";
-"Yearly Plan" = "Yearly Plan";
+"Weekly Plan" = "Wochenplan";
+"Monthly Plan" = "Monatsplan";
+"Yearly Plan" = "Jahresplan";
 "Free for" = "Free for";
 
-"kIAPFreeDaysDescription" = "All plans are free for the first 3 days";
-"kIAPFreePeriodCancellationDescription" = "There will be no fee if the subscription is cancelled during the free period.";
-"kIAPFreePeriodSubscriptionDescription" = "The subscription fee will start being charged from the day after the last day of the free period.";
-"kBestPrice" = "Best Price";
+"kIAPFreeDaysDescription" = "Für alle Pläne, 3 Tage sind kostenlos für Neukunden";
+"kIAPFreePeriodCancellationDescription" = "Kündigen Sie während des Gratiszeitraums, werden Ihnen keine Kosten berechnet. ";
+"kIAPFreePeriodSubscriptionDescription" = "Ab dem Tag nach dem Ende des Gratiszeitraums wird die Gebühr fortlaufend berechnet.";
+"kBestPrice" = "Empfehlung";
 "kSaveAbout" = "Save about";
-"kYen" = "yen";
-
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
-"kStartPocketalkApp" = "Start POCKETALK App";
-"kPockeTalk" = "ポケトーク";
+"kYen" = " XX Yen sparen";
+"kYenPerWeek" = "Yen/Woche";
+"kYenPerMonth" = "Yen/Monat";
+"kYenPerYear" = "Yen/Jahr";
+"kStartPocketalkApp" = "POCKETALK starten";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Anzahl der Favoriten hat ihre Grenzen erreicht";
 
-"kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanText" = "Für alle Pläne, 3 Tage sind kostenlos für Neukunden";
+"kFreePlanDetailText" = "Kündigen Sie während des Gratiszeitraums, werden Ihnen keine Kosten berechnet. Ab dem Tag nach dem Ende des Gratiszeitraums wird die Gebühr fortlaufend berechnet.";
 
 //Boarding Screen
 "Back" = "Zurück";
@@ -173,15 +172,16 @@
 "KBoardingLanChange"  = "Änderung der Übersetzungsrichtung";
 
 //Softbank Authentication
-"KInfoExpiredLiscnseErrorMessage" = "The effective date was expired";
-"KErrorMessage" = "The authentication was failed. Please retry.";
+"KInfoExpiredLiscnseErrorMessage" = "Der Gutscheincode ist abgelaufen.";
+"KErrorMessage" = "Die Authentifizierung ist fehlgeschlagen  Bitte versuchen Sie es erneut";
 "KErrorCode1Message" = "Error_Code1";
 "KErrorCode2Message" = "Error_Code2";
 "KErrorCode4Message" = "Error_Code4";
 "KErrorCode5Message" = "Error_Code5";
-"KSubscriptionErrorMessage" = "Under subscription\nCoupon code was not activated";
-"kCouponActivatedMesage" = "Coupon has been activated";
-"kCouponCodeParseError" = "Coupon authentication error\nPlease try again";
+"KSubscriptionErrorMessage" = "Der Gutscheincode konnte nicht eingelöst werden,
+da es sich um einen Abonnementvertrag handelt.";
+"kCouponActivatedMesage" = "Der Gutschein wurde aktiviert";
+"kCouponCodeParseError" = "Gutscheincode-Authentifizierung fehlgeschlagen \n Bitte versuchen Sie es erneut";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
@@ -189,3 +189,6 @@
 // Push NotificationContent
 "kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
 "kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
+"TtsFromLanguage" = "Hello how are you?";
+"TtsToLanguage" = "Hola como estas";
+

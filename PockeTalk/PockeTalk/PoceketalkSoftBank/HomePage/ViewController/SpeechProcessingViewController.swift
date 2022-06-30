@@ -103,25 +103,31 @@ class SpeechProcessingViewController: BaseViewController{
         super.viewDidLoad()
         self.speechProcessingVM = SpeechProcessingViewModel()
         setupUI()
-        checkSocketConnection()
+//        checkSocketConnection()
         setupTriangeAnimationView()
         registerForNotification()
         bindData()
         setupAudio()
         //showLoaderDependentOnApiCall()
-        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+       // AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
-                // Will be Socket connected if Network is connected showing but data is not availabe
-                //SocketManager.sharedInstance.connect()
                 LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
-                AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
-            } else if reachable == .no {
-                //SocketManager.sharedInstance.disconnect()
             }
         }
+//        connectivity.startMonitoring { connection, reachable in
+//            PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+//            if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+//                // Will be Socket connected if Network is connected showing but data is not availabe
+//                //SocketManager.sharedInstance.connect()
+//                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+//                AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+//            } else if reachable == .no {
+//                //SocketManager.sharedInstance.disconnect()
+//            }
+//        }
         SocketManager.sharedInstance.socketManagerDelegate = self
 
     }
@@ -281,10 +287,10 @@ class SpeechProcessingViewController: BaseViewController{
         service?.getData = {[weak self] data in
             guard let `self` = self else { return }
             
-            if self.languageHasUpdated{
-                self.socketData.append(data)
-            }else if !self.languageHasUpdated  && self.socketData.count == 0 {
+            if !self.languageHasUpdated && SocketManager.sharedInstance.isConnected && self.socketData.count == 0{
                 SocketManager.sharedInstance.sendVoiceData(data: data)
+            }else{
+                self.socketData.append(data)
             }
         }
         service?.getTimer = { [weak self] count in
@@ -372,9 +378,16 @@ class SpeechProcessingViewController: BaseViewController{
         }
     }
     
-    private func loaderInvisible(isFromTutorial:Bool = false){
+    private func loaderInvisible(isFromTutorial:Bool = false, isDidEnterBackground:Bool = false){
         self.timer?.invalidate()
-        let second =  isFromTutorial ? 0.5 : 1.0
+        var second = 0.0
+        if isFromTutorial {
+            second = 0.5
+        } else if isDidEnterBackground {
+            second = 0.0
+        } else {
+            second = 1.0
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
             guard let `self` = self else { return }
             SocketManager.sharedInstance.disconnect()
@@ -391,13 +404,13 @@ class SpeechProcessingViewController: BaseViewController{
         self.descriptionLabel.isHidden = isHidden
     }
     
-    func updateLanguageInRemote(completion:@escaping (()->())){
-            //DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
-            self.speechProcessingVM.updateLanguage { isOk in
-                completion()
-            }
-            //}
+    func updateLanguageInRemote(completion:@escaping ((_ isOk:Bool)->())){
+        //DispatchQueue.main.asyncAfter(deadline:.now()+2.0) { [weak self] in
+        self.speechProcessingVM.updateLanguage { isOk in
+            completion(isOk)
         }
+        //}
+    }
     
     private func showExampleText() {
         switch ScreenTracker.sharedInstance.screenPurpose {
@@ -557,13 +570,13 @@ class SpeechProcessingViewController: BaseViewController{
         
         speechProcessingVM.isUpdatedAPI.bindAndFire { [weak self] isUpdated in
             guard let `self` = self else { return }
-            if isUpdated{
-                if self.socketData.count > 0{
-                    for data in self.socketData.reversed(){
-                        SocketManager.sharedInstance.sendVoiceData(data: data)
-                    }
-                    self.socketData.removeAll()
-                }
+            if isUpdated {
+//                if self.socketData.count > 0{
+//                    for data in self.socketData{
+//                        SocketManager.sharedInstance.sendVoiceData(data: data)
+//                    }
+//                    self.socketData.removeAll()
+//                }
                 self.languageHasUpdated = false
             }
         }
@@ -619,7 +632,7 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appDidEnterBackground() {
-        self.loaderInvisible()
+        self.loaderInvisible(isDidEnterBackground: true)
         PrintUtility.printLog(tag: TAG, text: "Did enter background")
         //TODO: Comment out this code because it has some impact on the STT process in background
         /*
@@ -634,9 +647,9 @@ class SpeechProcessingViewController: BaseViewController{
     }
     
     @objc private func appBecomeActive() {
-        checkSocketConnection()
-        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
-        }
+//        checkSocketConnection()
+//        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
+//        }
         PrintUtility.printLog(tag: TAG, text: "Become Active")
         screenOff = false
         self.exampleLabel.text = ""
@@ -645,24 +658,31 @@ class SpeechProcessingViewController: BaseViewController{
 
     @objc private func appWillEnterForeground() {
         PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
-        switch ScreenTracker.sharedInstance.screenPurpose {
-        case .HomeSpeechProcessing:
-            if Reachability.isConnectedToNetwork() {
-                if self.languageHasUpdated{
-                    self.speechProcessingVM.updateLanguage { isOk in
-                        if isOk{
-                            SocketManager.sharedInstance.connect()
-                        }
-                    }
-                }else{
-                    SocketManager.sharedInstance.connect()
-                }
-                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        if ScreenTracker.sharedInstance.screenPurpose == .CameraScreen{
+            AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
             }
-            break
-        default:
-            break
         }
+        if Reachability.isConnectedToNetwork() {
+            LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+        }
+//        switch ScreenTracker.sharedInstance.screenPurpose {
+//        case .HomeSpeechProcessing:
+//            if Reachability.isConnectedToNetwork() {
+//                if self.languageHasUpdated{
+//                    self.speechProcessingVM.updateLanguage { isOk in
+//                        if isOk{
+//                            SocketManager.sharedInstance.connect()
+//                        }
+//                    }
+//                }else{
+//                    SocketManager.sharedInstance.connect()
+//                }
+//                LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+//            }
+//            break
+//        default:
+//            break
+//        }
     }
     
 
@@ -702,6 +722,12 @@ extension SpeechProcessingViewController : SpeechControllerDismissDelegate {
 extension SpeechProcessingViewController : SocketManagerDelegate{
     func socket(isConnected: Bool) {
         //SocketManager.sharedInstance.connect()
+        if self.socketData.count > 0 && isConnected{
+            for data in self.socketData{
+                SocketManager.sharedInstance.sendVoiceData(data: data)
+            }
+            self.socketData.removeAll()
+        }
     }
 
     func getText(text: String) {
@@ -744,6 +770,13 @@ extension SpeechProcessingViewController: HomeVCDelegate{
     
     func stopRecord() {
         PrintUtility.printLog(tag: TAG, text: "Stop Recording")
+        self.socketData.removeAll()
+        if !service!.isRecordStop{
+            service?.isRecordStop = true
+        }else{
+            return
+        }
+
         if !self.isFinalProvided  && !isMinimumLimitExceed{
             ActivityIndicator.sharedInstance.show(hasBackground: false)
         }

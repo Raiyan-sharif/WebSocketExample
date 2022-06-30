@@ -2834,6 +2834,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3013,6 +3014,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -3040,6 +3042,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3179,6 +3182,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation.stg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3297,6 +3301,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3414,6 +3419,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3531,6 +3537,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3649,6 +3656,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pocketalk.ios.pt.translation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

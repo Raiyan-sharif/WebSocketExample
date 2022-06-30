@@ -23,6 +23,7 @@
 "TtsFromLanguage" = "Hello how are you?";
 "Language Settings" = "言語設定";
 "Speech Guideline" = "ボタンを押しながら、検索する言語名を話してください";
+"Country Language Settings" = "Country Settings";
 "history_add_fav" = "お気に入りに追加";
 "history_remove_fav" = "お気に入りから削除";
 "retranslation" = "他の言語に翻訳";
@@ -142,7 +143,7 @@
 "kTryAgain" = "もう一度やり直してください。";
 "kBestPrice" = "おすすめ";
 "kSaveAbout" = "週額よりも約";
-"kYen" = "円お得";
+"kYen" = " XX 円お得";
 
 "kYenPerWeek" = "円/週";
 "kYenPerMonth" = "円/月";
@@ -168,7 +169,7 @@
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "お気に入りの数が上限です";
 "kFreePlanText" = "All plans are free for the first";
-"kFreePlanDetailText" = "No chargees will be incurred if you cancle within the free period. Charges will continue to be charged from the day after the last day of the free period.";
+"kFreePlanDetailText" = "無料期間内の解約で料金は発生しません。無料期間最終日の翌日より料金が継続的に課金されます。";
 
 
 
