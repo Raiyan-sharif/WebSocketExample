@@ -154,6 +154,8 @@
 "kYenPerMonth" = "иен/месяц";
 "kYenPerYear" = "иен/год";
 "kStartPocketalkApp" = "Запустить POCKETALK";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 "kIAPFreeDaysDescription" = "Все тарифы бесплатны первые 3 дня";
 "kIAPFreePeriodCancellationDescription" = "При отмене подписки в течение пробного периода плата по тарифу не взимается. ";
@@ -187,3 +189,7 @@
 "kUnknownError" = "Server Error.\nTry again";
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

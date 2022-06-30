@@ -36,12 +36,25 @@ let languageMappingTotalRowCount = 1495
 let REVIEW_SUPPORT_URL = "https://rd.snxt.jp/PA010"
 
 let PRODUCTION_SUPPORT_URL = "https://rd.snxt.jp/PA002"
-let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+//let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
 let PRODUCTION_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
 let STAGING_SUPPORT_URL = "https://rd.snxt.jp/PA002"
-let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
+//let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
 let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
 
+let USER_MANUAL_URL_en = "https://rd.snxt.jp/PA014"
+let USER_MANUAL_URL_ja = "https://rd.snxt.jp/PA003"
+let USER_MANUAL_URL_zhHans = "https://rd.snxt.jp/PA015"
+let USER_MANUAL_URL_zhHant = "https://rd.snxt.jp/PA016"
+let USER_MANUAL_URL_es = "https://rd.snxt.jp/PA017"
+let USER_MANUAL_URL_ptPT = "https://rd.snxt.jp/PA018"
+let USER_MANUAL_URL_ru = "https://rd.snxt.jp/PA019"
+let USER_MANUAL_URL_fr = "https://rd.snxt.jp/PA020"
+let USER_MANUAL_URL_de = "https://rd.snxt.jp/PA021"
+let USER_MANUAL_URL_ko = "https://rd.snxt.jp/PA022"
+let USER_MANUAL_URL_it = "https://rd.snxt.jp/PA023"
+let USER_MANUAL_URL_th = "https://rd.snxt.jp/PA024"
+let USER_MANUAL_URL_ms = "https://rd.snxt.jp/PA025"
 
 
 
@@ -69,6 +82,8 @@ let kCouponCode = "kCouponCode"
 let kLicenseConfirmationCalledTime = "kLicenseConfirmationCalledTime"
 let kInitialFlowCompletedForCoupon = "kInitialFlowCompletedForCoupon"
 let kIsFromUniverslaLink = "kIsFromUniverslaLink"
+let kFreeTrialStatus = "kFreeTrialStatus"
+let kIsAllPermissionGranted = "kIsAllPermissionGranted"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -146,6 +161,7 @@ let DIFF_STRING_NOT_MATCHED = "Not Matched"
 let KAlertTableViewCell = "AlertTableViewCell"
 let KNoInternetAlertTableViewCell = "NoInternetAlertTableViewCell"
 let KPermissionTableViewCell = "PermissionTableViewCell"
+let kPlanTableViewThreeDaysTrialCell = "PlanTableViewThreeDaysTrialCell"
 let KPlanTableViewCell = "PlanTableViewCell"
 let KInfoLabelTableViewCell = "InfoLabelTableViewCell"
 let KSingleButtonTableViewCell = "SingleButtonTableViewCell"
@@ -331,6 +347,7 @@ let productionIAPSharedSecret = "44a85d85406d4980b33c4da329af53b3"
 let stagingIAPSharedSecret = "1421641f2e084686b6dca783fc2394c1"
 let IAP_ProductIDs = "IAP_ProductIDs"
 let productionIAPProduts = "Production_IAP_Products"
+let productionIAPProductsForNonJapaneseAppStoreRegion = "Production_IAP_Products_For_NonJapanese_AppStore_Region"
 let stagingIAPProduts = "Staging_IAP_Products"
 
 //IAP JSON Parsing
@@ -389,9 +406,14 @@ let kAppUdid = "udid"
 let kIosReceipt = "ios_receipt"
 let kOriginalTransactionID = "ios_original_transaction_id"
 let kImei = "imei"
+let kTrialKey = "trial_key"
+let kTrialType = "trial_type"
+let kIosTrialType = "app"
 let kTempo_param = "tempo"
 
 let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
+
+let kAlpha3CountryCodeJapan = "JPN"
 
 
 

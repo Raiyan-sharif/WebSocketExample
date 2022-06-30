@@ -8,6 +8,7 @@ import UIKit
 enum PurchasePlanTVCellInfo: Int {
     case selectPlan
     case freeUses
+    case threeDaysTrial
     case dailyPlan
     case weeklyPlan
     case monthlyPlan
@@ -17,7 +18,7 @@ enum PurchasePlanTVCellInfo: Int {
     var unitType: String {
         get {
             switch self {
-            case .selectPlan, .freeUses, .restorePurchase: return ""
+            case .selectPlan, .freeUses, .threeDaysTrial, .restorePurchase: return ""
             case .dailyPlan:
                 return PeriodUnitType.day.rawValue
             case .weeklyPlan:
@@ -33,7 +34,7 @@ enum PurchasePlanTVCellInfo: Int {
     var planTitleText: String{
         get {
             switch self {
-            case .selectPlan, .freeUses, .restorePurchase: return ""
+            case .selectPlan, .freeUses, .threeDaysTrial, .restorePurchase: return ""
             case .dailyPlan:
                 return "Daily Plan".localiz()
             case .weeklyPlan:
@@ -49,6 +50,7 @@ enum PurchasePlanTVCellInfo: Int {
     var title: String {
         get {
             switch self {
+            case .threeDaysTrial: return "kThreeDaysTrial".localiz()
             case .selectPlan: return "kPaidPlanVCRestorePurchaseButtonAlertTitle".localiz()
             case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan: return ""
             case .restorePurchase: return "kPaidPlanVCRestorePurchaseHistoryButton".localiz()
@@ -66,7 +68,7 @@ enum PurchasePlanTVCellInfo: Int {
                 return UITableView.automaticDimension
             case .monthlyPlan, .annualPlan:
                 return 120
-            case .dailyPlan, .weeklyPlan:
+            case .dailyPlan, .weeklyPlan, .threeDaysTrial:
                 return 110
             case .restorePurchase:
                 return 100

@@ -155,6 +155,8 @@
 "kYenPerMonth" = "เยน/เดือน";
 "kYenPerYear" = "เยน/ปี";
 "kStartPocketalkApp" = "เริ่มใช้งาน POCKETALK";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 "kIAPFreeDaysDescription" = "ทุกแพ็กเกจ ใช้ฟรี 3 วันแรก";
 "kIAPFreePeriodCancellationDescription" = "ไม่มีค่าธรรมเนียมหากคุณยกเลิกระหว่างช่วงทดลองใช้งานฟรี ";
@@ -187,3 +189,7 @@
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

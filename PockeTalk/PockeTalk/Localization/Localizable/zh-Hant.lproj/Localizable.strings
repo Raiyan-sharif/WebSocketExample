@@ -155,6 +155,8 @@
 "kYenPerMonth" = "日圓/月";
 "kYenPerYear" = "日圓/年";
 "kStartPocketalkApp" = "開始使用POCKETALK";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 "kIAPFreeDaysDescription" = "所有方案的首次利用均免費3天";
 "kIAPFreePeriodCancellationDescription" = "在免費期間內解約將不收取任何費用。 ";
@@ -188,3 +190,7 @@
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

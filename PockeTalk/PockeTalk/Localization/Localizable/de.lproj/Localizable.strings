@@ -158,6 +158,8 @@
 "kYenPerMonth" = "Yen/Monat";
 "kYenPerYear" = "Yen/Jahr";
 "kStartPocketalkApp" = "POCKETALK starten";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Anzahl der Favoriten hat ihre Grenzen erreicht";
@@ -188,3 +190,7 @@ da es sich um einen Abonnementvertrag handelt.";
 "kUnknownError" = "Server Error.\nTry again";
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

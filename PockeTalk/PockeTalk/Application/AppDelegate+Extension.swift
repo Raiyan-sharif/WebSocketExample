@@ -33,6 +33,10 @@ extension AppDelegate{
                     statusCheckVC.couponCode = couponCode
                     viewController = statusCheckVC
                 }
+            case .permission:
+                if let permisionVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
+                    viewController = permisionVC
+                }
             }
 
             let navigationController = UINavigationController.init(rootViewController: viewController)

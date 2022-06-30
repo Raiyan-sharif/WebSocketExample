@@ -22,6 +22,7 @@ enum ViewControllerType {
     case termAndCondition
     case purchasePlan
     case statusCheck
+    case permission
 }
 
 public enum IAPError: Error {
@@ -67,6 +68,27 @@ class IAPManager: NSObject {
         case productRequestFailed
     }
 
+    func iSAppStoreRegionJapan() -> Bool {
+        if #available(iOS 13.0, *) {
+            if let storefront = SKPaymentQueue.default().storefront {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region: \(storefront.countryCode)")
+                if storefront.countryCode == kAlpha3CountryCodeJapan {
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                // Fallback ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region nil so considering JPN")
+                return true
+            }
+        } else {
+            // Fallback on earlier versions. ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region iOS12 so considering JPN")
+            return true
+        }
+    }
+
     // get IAP products based on build varients
     func getProductsBasedOnBuildVarient() -> (product: String, iAPPassword: String) {
         switch (schemeName) {
@@ -80,11 +102,29 @@ class IAPManager: NSObject {
             return ("", "")
         }
     }
-    
+
+    func getProductsBasedOnBuildVarientForNonJapaneseAppStoreRegion() -> (product: String, iAPPassword: String) {
+        switch (schemeName) {
+        case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue,BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
+            return (productionIAPProductsForNonJapaneseAppStoreRegion, productionIAPSharedSecret)
+        case BuildVarientScheme.STAGING.rawValue:
+            return (stagingIAPProduts, stagingIAPSharedSecret)
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            return (productionIAPProductsForNonJapaneseAppStoreRegion, productionIAPSharedSecret)
+        default:
+            return ("", "")
+        }
+    }
+
     // MARK: - General Methods
     fileprivate func getProductIDs() -> [String]? {
         var resourceURL: String = ""
-        resourceURL = getProductsBasedOnBuildVarient().product
+        if iSAppStoreRegionJapan() == false {
+            resourceURL = getProductsBasedOnBuildVarientForNonJapaneseAppStoreRegion().product
+        } else {
+            resourceURL = getProductsBasedOnBuildVarient().product
+        }
+
         guard let url = Bundle.main.url(forResource: resourceURL, withExtension: "plist") else { return nil }
         do {
             let data = try Data(contentsOf: url)
@@ -508,7 +548,15 @@ extension IAPManager {
                             GlobalMethod.appdelegate().navigateToViewController(.home)
                         }
                     } else {
-                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                        var initialFlowCompleted = false
+                        if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
+                            initialFlowCompleted = flowCompleted
+                        }
+                        if(initialFlowCompleted){
+                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                        }else{
+                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                        }
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {

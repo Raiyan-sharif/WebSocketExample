@@ -23,6 +23,7 @@ protocol PurchasePlanViewModeling {
     func updateReceiptValidationAllow()
     func updateIsAPICallOngoing(_ status: Bool)
     func setProductFetchStatus(_ status: Bool)
+    func setFreeTrialStatus(_ status: Bool)
 }
 
 class PurchasePlanViewModel: PurchasePlanViewModeling {
@@ -35,6 +36,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _hasInAppPurchaseProduct = false
     private var _productFetchError: String?
     private var _isProductFetchOngoing: Bool = false
+    private var _isFreeTrialAvailable = false
 
     var numberOfRow: Int {
         return row.count
@@ -58,6 +60,10 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     var isProductFetchOngoing: Bool {
         return _isProductFetchOngoing
+    }
+    
+    var isFreeTrialAvailable: Bool{
+        return _isFreeTrialAvailable
     }
 
     //MARK: - API Calls
@@ -174,8 +180,14 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
             }
         }
 
-        if isFreeOfferAvailable {
+        if isFreeOfferAvailable && IAPManager.shared.iSAppStoreRegionJapan() == true {
             row.append(.freeUses)
+        }
+        
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "Free Trail availibility: \(_isFreeTrialAvailable) , Region Japan? : \(IAPManager.shared.iSAppStoreRegionJapan())")
+
+        if _isFreeTrialAvailable && IAPManager.shared.iSAppStoreRegionJapan() == false {
+            row.append(.threeDaysTrial)
         }
 
         for item in productDetails {
@@ -232,5 +244,9 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     func setProductFetchStatus(_ status: Bool) {
         self._isProductFetchOngoing = status
+    }
+    
+    func setFreeTrialStatus(_ status: Bool) {
+        self._isFreeTrialAvailable = status
     }
 }

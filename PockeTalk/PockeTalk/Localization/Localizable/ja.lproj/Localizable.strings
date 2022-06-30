@@ -149,6 +149,8 @@
 "kYenPerMonth" = "円/月";
 "kYenPerYear" = "円/年";
 "kStartPocketalkApp" = "ポケトークをはじめる";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 //IAP Alert
 "kIAPError" = "アプリ内購入エラー";
@@ -193,3 +195,7 @@
 
 // License token failure alert
 "kUnknownError" = "サーバエラー。\nもう一度やり直してください。";
+"kServerError" = "サーバエラー";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

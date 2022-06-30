@@ -253,6 +253,9 @@ struct NetworkManager:Network {
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
+                        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
+                            UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
+                        }
                         GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
 
                         PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")
@@ -342,6 +345,7 @@ struct NetworkManager:Network {
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
 
         let params = getLicenseTokenParam()
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "getLicenseToken => params => \(params)")
         provider.request(.liscense(params: params)){ result in
             self.requestCompletion(target: .liscense(params: params), result: result) { data in
                 completion(data)
@@ -359,7 +363,15 @@ struct NetworkManager:Network {
                 couponCodeParamName: couponCode
             ]
             return params
-        } else {
+        } else if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
+            params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                kTrialKey: getUUID() ?? "",
+                kTrialType: kIosTrialType
+            ]
+            return params
+        }else{
             let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
             let iosReceipt = UserDefaults.standard.string(forKey: kiOSReceipt)
             let iosOriginalTransactionID = UserDefaults.standard.string(forKey: kiOSOriginalTransactionID)
@@ -448,6 +460,42 @@ struct NetworkManager:Network {
         let params:[String:String]  = [
             "coupon_code": coupon
         ]
+        provider.request(.licenseConfirmation(params: params)){ result in
+            self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
+                completion(data)
+            }
+        }
+    }
+    
+    func callTokenIssuanceApiForFreeTrial(completion: @escaping (Data?) -> Void) {
+        let params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                kTrialKey: getUUID() ?? "",
+                kTrialType: kIosTrialType
+            ]
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"License Token API Params = \(params)")
+        provider.request(.liscense(params: params)){ result in
+            switch result {
+            case let .success(response):
+                do{
+                    let successResponse = try response.filterSuccessfulStatusCodes()
+                    completion(successResponse.data)
+                } catch _ {
+                    completion(nil)
+                }
+            case .failure(_):
+                completion(nil)
+            }
+        }
+    }
+    
+    func callLicenseConfirmationForFreeTrial(completion: @escaping (Data?) -> Void) {
+        let params:[String:String]  = [
+            kTrialKey: getUUID() ?? "",
+            kTrialType: kIosTrialType
+        ]
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"License Confirmation API Params = \(params)")
         provider.request(.licenseConfirmation(params: params)){ result in
             self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
                 completion(data)

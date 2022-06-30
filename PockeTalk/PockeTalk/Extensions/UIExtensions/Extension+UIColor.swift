@@ -183,4 +183,8 @@ extension UIColor {
     static var seperatorColor: UIColor {
         return UIColor(red: 198.0/255.0, green: 198.0/255.0, blue: 200.0/255.0, alpha: 1.0)
     }
+    
+    static var freeTrailColor: UIColor {
+        return UIColor.init(hex: "#F26E00")!
+    }
 }

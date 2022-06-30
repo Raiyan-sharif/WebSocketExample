@@ -30,13 +30,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> Coupon found: \(coupon)")
         }
         if savedCoupon.isEmpty {
-            IAPManager.shared.startObserving()
-            if UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value == nil {
-                UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value = true
-                KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
+            if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "========In Free Trial==========")
+                if UserDefaults.standard.bool(forKey: kIsAllPermissionGranted) == true {
+                    GlobalMethod.appdelegate().navigateToViewController(.home)
+                }else{
+                    GlobalMethod.appdelegate().navigateToViewController(.permission)
+                }
+            }else {
+                IAPManager.shared.startObserving()
+                if UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value == nil {
+                    UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value = true
+                    KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
+                }
+                KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+                IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
             }
-            KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-            IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
         }else{
             if shouldCallLicenseConfirmationApi() == true{
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
@@ -103,18 +112,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "applicationWillEnterForeground")
-
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
             PrintUtility.printLog(tag: "App Delegate", text: "applicationWillEnterForeground>> Coupon found: \(coupon)")
         }
         if savedCoupon.isEmpty {
-            PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
-            if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
-                ScreenTracker.sharedInstance.screenPurpose != .InitialFlow {
-                KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-                IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+            if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == false{
+                PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+                if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
+                    ScreenTracker.sharedInstance.screenPurpose != .InitialFlow {
+                    KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+                    IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
+                }
+            }else{
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "==== App in Free Trial ====")
             }
         }
     }
@@ -134,6 +146,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
     {
+        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "========In Free Trial==========")
+            showAlertFromAppDelegates(msg: "KFreeTrialErrorMessage".localiz())
+            return false
+        }
         // Get URL components from the incoming user activity.
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
               let incomingURL = userActivity.webpageURL,

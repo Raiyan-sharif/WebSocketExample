@@ -224,6 +224,9 @@
 		896C3D0927831BFA007C3560 /* InitialPermissionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C3D0827831BFA007C3560 /* InitialPermissionSettingsViewController.swift */; };
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
 		897C3E7D270EDD410093B548 /* LanguageEngineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */; };
+		8983D18C28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983D18A28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.swift */; };
+		8983D18D28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8983D18B28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.xib */; };
+		8983D18F28769E3A0095D9F4 /* Production_IAP_Products_For_NonJapanese_AppStore_Region.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8983D18E28769E3A0095D9F4 /* Production_IAP_Products_For_NonJapanese_AppStore_Region.plist */; };
 		89858F462727FD2000264686 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89858F452727FD2000264686 /* Connectivity.swift */; };
 		8988B7982721763000FBBA40 /* engine-tempo-value.json in Resources */ = {isa = PBXBuildFile; fileRef = 8988B7972721763000FBBA40 /* engine-tempo-value.json */; };
 		898E6AA727841ABE00138035 /* AppsPermissionCheckingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */; };
@@ -580,6 +583,9 @@
 		896C3D0827831BFA007C3560 /* InitialPermissionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialPermissionSettingsViewController.swift; sourceTree = "<group>"; };
 		8979064126FC876000A74C1B /* HistoryChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatItemModel.swift; sourceTree = "<group>"; };
 		897C3E7C270EDD410093B548 /* LanguageEngineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageEngineParser.swift; sourceTree = "<group>"; };
+		8983D18A28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewThreeDaysTrialCell.swift; sourceTree = "<group>"; };
+		8983D18B28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlanTableViewThreeDaysTrialCell.xib; sourceTree = "<group>"; };
+		8983D18E28769E3A0095D9F4 /* Production_IAP_Products_For_NonJapanese_AppStore_Region.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Production_IAP_Products_For_NonJapanese_AppStore_Region.plist; sourceTree = "<group>"; };
 		89858F452727FD2000264686 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		8988B7972721763000FBBA40 /* engine-tempo-value.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "engine-tempo-value.json"; sourceTree = "<group>"; };
 		898E6AA627841ABE00138035 /* AppsPermissionCheckingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsPermissionCheckingManager.swift; sourceTree = "<group>"; };
@@ -1697,6 +1703,8 @@
 				89B4D1F027BE59C700D1C7D2 /* PermissionTableViewCell.xib */,
 				89B4D1F327BE6C9A00D1C7D2 /* PlanTableViewCell.swift */,
 				89B4D1F427BE6C9A00D1C7D2 /* PlanTableViewCell.xib */,
+				8983D18A28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.swift */,
+				8983D18B28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.xib */,
 				89A4F02627C5FF5500A718FA /* InfoLabelTableViewCell.swift */,
 				89A4F02727C5FF5500A718FA /* InfoLabelTableViewCell.xib */,
 				8928E59427C7510900638F6E /* SingleButtonTableViewCell.swift */,
@@ -1956,6 +1964,7 @@
 			children = (
 				89BE587727AB91B8005B46A4 /* IAPManager.swift */,
 				891D450B27EAE5B200B4BD8B /* Production_IAP_Products.plist */,
+				8983D18E28769E3A0095D9F4 /* Production_IAP_Products_For_NonJapanese_AppStore_Region.plist */,
 				891D450D27EAE5CE00B4BD8B /* Staging_IAP_Products.plist */,
 			);
 			path = IAPManager;
@@ -2257,6 +2266,7 @@
 				69349AA926E5DBB6008D9AF4 /* tutorial.mp4 in Resources */,
 				89E6B2E4279E8DED00024A70 /* country_selection_list_th.json in Resources */,
 				898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */,
+				8983D18D28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.xib in Resources */,
 				692E8DEE26EB1B47003F7636 /* NoInternetAlert.xib in Resources */,
 				873F8C4A26F0760A00CD5F9B /* FontSelectionCell.xib in Resources */,
 				4A66138626DDCF5D004A925D /* LaunchScreen.storyboard in Resources */,
@@ -2284,6 +2294,7 @@
 				50193E1226E888870052F170 /* country_selection_list_ja.json in Resources */,
 				87B56E1626EB2FD800BF613B /* HistoryCell.xib in Resources */,
 				89E6B2EF279E8FD400024A70 /* conversation_languages_th.xml in Resources */,
+				8983D18F28769E3A0095D9F4 /* Production_IAP_Products_For_NonJapanese_AppStore_Region.plist in Resources */,
 				89E6B2E0279E8DDE00024A70 /* country_selection_list_it.json in Resources */,
 				8928E59D27C7B5D800638F6E /* InitialFlow.storyboard in Resources */,
 				891D450E27EAE5CE00B4BD8B /* Staging_IAP_Products.plist in Resources */,
@@ -2424,6 +2435,7 @@
 				89C0F7C726F1CDCB000CD5FC /* SocketManager.swift in Sources */,
 				89C0F7F526F3421A000CD5FC /* Extension+UIView.swift in Sources */,
 				87490D7F27D8899D009B272D /* WalkThroughViewController.swift in Sources */,
+				8983D18C28768C840095D9F4 /* PlanTableViewThreeDaysTrialCell.swift in Sources */,
 				89396B2B2704176200D77760 /* CustomVerticalTextView.swift in Sources */,
 				87C78F0B27212DA3004BC276 /* HomeViewController+Extension.swift in Sources */,
 				963D8EAA26F4A3E700E32162 /* FontUtility.swift in Sources */,

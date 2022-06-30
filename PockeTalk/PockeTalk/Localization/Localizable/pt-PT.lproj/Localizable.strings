@@ -156,6 +156,8 @@
 "kYenPerMonth" = "yens/mês";
 "kYenPerYear" = "yens/ano";
 "kStartPocketalkApp" = "Iniciar a aplicação POCKETALK";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 "kIAPFreeDaysDescription" = "Todos os planos são gratuitos durante os primeiros 3 dias";
 "kIAPFreePeriodCancellationDescription" = "Não será cobrada qualquer taxa se cancelar durante o período gratuito. ";
@@ -188,3 +190,7 @@ porque tem um contrato de subscrição.";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";

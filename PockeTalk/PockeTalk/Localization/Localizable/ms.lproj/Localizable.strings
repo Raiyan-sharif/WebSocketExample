@@ -155,6 +155,8 @@
 "kYenPerMonth" = "yen/bulan";
 "kYenPerYear" = "yen/tahun";
 "kStartPocketalkApp" = "Mulakan Aplikasi POCKETALK";
+"kThreeDaysTrial" = "無料でお試し";
+"kThreeDaysTrialDescription" = "無料期間3日";
 
 "kIAPFreeDaysDescription" = "Semua pelan adalah percuma untuk 3 hari pertama";
 "kIAPFreePeriodCancellationDescription" = "Bayaran tidak akan dikenakan jika anda membuat pembatalan semasa tempoh percuma. ";
@@ -187,3 +189,7 @@ kerana anda mempunyai perjanjian langganan.";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
