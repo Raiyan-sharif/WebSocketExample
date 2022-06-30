@@ -34,10 +34,10 @@
 "cancel" = "Cancel";
 "internet_connection_error" = "No Internet connection";
 "connect_via_wifi" = "Connect to Wi-Fi";
-"Playback Speed" = "Playback Speed";
+"Playback Speed" = "Playback speed";
 "Standard" = "Standard";
 "Slowly" = "Slowly";
-"Very Slowly" = "Very Slowly";
+"Very Slowly" = "Very slowly";
 "Reset" = "Reset";
 "Clear translation history" = "Clear translation history";
 "Delete the Camera translation history" = "Delete the Camera translation history";
