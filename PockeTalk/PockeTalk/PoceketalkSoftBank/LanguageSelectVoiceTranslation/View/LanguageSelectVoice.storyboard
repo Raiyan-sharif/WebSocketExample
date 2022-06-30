@@ -46,13 +46,17 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Shd-ip-8pf">
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Shd-ip-8pf">
                                         <rect key="frame" x="379" y="22.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Shd-ip-8pf" secondAttribute="height" multiplier="1:1" id="kn0-Pg-wSN"/>
                                             <constraint firstAttribute="height" constant="25" id="p1L-gr-1by"/>
                                         </constraints>
-                                        <state key="normal" image="btn_country"/>
+                                        <color key="tintColor" systemColor="systemTealColor"/>
+                                        <state key="normal" image="btn_country">
+                                            <color key="titleColor" systemColor="systemTealColor"/>
+                                            <color key="titleShadowColor" systemColor="systemTealColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="onCountryButtonTapped:" destination="QSE-q6-FMb" eventType="touchUpInside" id="kna-Yy-yOg"/>
                                         </connections>
@@ -119,6 +123,7 @@
                         <outlet property="btnBack" destination="2aN-TX-jdk" id="z0D-dd-cVW"/>
                         <outlet property="btnHistoryList" destination="j5a-GV-dFW" id="BQj-vG-LBw"/>
                         <outlet property="btnLangList" destination="pdz-fq-CgF" id="yz8-EU-nOo"/>
+                        <outlet property="flagButton" destination="Shd-ip-8pf" id="OHF-N9-A3n"/>
                         <outlet property="tabsView" destination="cHQ-jV-wOB" id="rcL-Td-2SP"/>
                         <outlet property="toolbarTitleLabel" destination="kr3-Oa-3tp" id="bhP-o6-0A0"/>
                     </connections>
@@ -528,7 +533,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
