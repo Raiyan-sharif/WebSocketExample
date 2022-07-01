@@ -144,10 +144,11 @@
 "kBestPrice" = "おすすめ";
 "kSaveAbout" = "週額よりも約";
 "kYen" = " XX 円お得";
+"upToOff" = "週額より約xxお得";
 
-"kYenPerWeek" = "円/週";
-"kYenPerMonth" = "円/月";
-"kYenPerYear" = "円/年";
+"kYenPerWeek" = " /週";
+"kYenPerMonth" = " /月";
+"kYenPerYear" = " /年";
 "kStartPocketalkApp" = "ポケトークをはじめる";
 
 //IAP Alert

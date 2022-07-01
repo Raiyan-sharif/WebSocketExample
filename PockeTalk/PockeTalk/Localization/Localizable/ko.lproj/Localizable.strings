@@ -155,10 +155,11 @@
 "kBestPrice" = "추천";
 "kSaveAbout" = "Save about";
 "kYen" = " XX 엔 절약";
+"upToOff" = "주간 요금제보다 약 xx 절약";
 
-"kYenPerWeek" = "엔/주";
-"kYenPerMonth" = "엔/월";
-"kYenPerYear" = "엔/연";
+"kYenPerWeek" = " /주";
+"kYenPerMonth" = " /월";
+"kYenPerYear" = " /연";
 "kStartPocketalkApp" = "포켓토크 시작하기";
 
 //Favorite Limit dailog

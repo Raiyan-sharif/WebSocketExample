@@ -139,19 +139,27 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
             if productDetails[item].periodUnitType == .month {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-                    productPrice: (productDetails[item].price).roundToDecimal(2),
+//                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    productPrice: productDetails[item].price,
                     numberOfWeek: 4)
 
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
+//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
+                //"Up to BDT xx off"
+                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
+                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
             }
 
             if productDetails[item].periodUnitType == .year {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-                    productPrice: (productDetails[item].price).roundToDecimal(2),
+//                    productPrice: (productDetails[item].price).roundToDecimal(2),
+                    productPrice: productDetails[item].price,
                     numberOfWeek: 52)
 
-                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
+//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
+                //"Up to BDT xx off"
+                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
+                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
             }
         }
     }

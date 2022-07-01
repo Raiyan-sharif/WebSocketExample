@@ -151,10 +151,11 @@
 "kBestPrice" = "推荐购买";
 "kSaveAbout" = "Save about";
 "kYen" = " XX 日元优惠";
+"upToOff" = "比周方案节省约xx";
 
-"kYenPerWeek" = "日元/周";
-"kYenPerMonth" = "日元/月";
-"kYenPerYear" = "日元/年";
+"kYenPerWeek" = " /周";
+"kYenPerMonth" = " /月";
+"kYenPerYear" = " /年";
 "kStartPocketalkApp" = "开始使用POCKETALK";
 
 "kIAPFreeDaysDescription" = "所有方案的首次利用均免费3天";

@@ -161,10 +161,11 @@
 "kBestPrice" = "Best Price";
 "kSaveAbout" = "Save about";
 "kYen" = " save XX yen";
+"upToOff" = "Up to xx off";
 
-"kYenPerWeek" = "yen/week";
-"kYenPerMonth" = "yen/month";
-"kYenPerYear" = "yen/year";
+"kYenPerWeek" = " /week";
+"kYenPerMonth" = " /month";
+"kYenPerYear" = " /year";
 "kStartPocketalkApp" = "Start POCKETALK App";
 
 //Favorite Limit dailog

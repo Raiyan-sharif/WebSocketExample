@@ -149,10 +149,11 @@
 "kBestPrice" = "Лучшая цена";
 "kSaveAbout" = "Save about";
 "kYen" = " скидка в XX иен";
+"upToOff" = "Лучше недельного тарифа примерно на xx";
 
-"kYenPerWeek" = "иен/неделя";
-"kYenPerMonth" = "иен/месяц";
-"kYenPerYear" = "иен/год";
+"kYenPerWeek" = " /неделя";
+"kYenPerMonth" = " /месяц";
+"kYenPerYear" = " /год";
 "kStartPocketalkApp" = "Запустить POCKETALK";
 
 "kIAPFreeDaysDescription" = "Все тарифы бесплатны первые 3 дня";

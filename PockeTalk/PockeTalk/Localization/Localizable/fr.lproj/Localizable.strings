@@ -149,10 +149,11 @@
 "kBestPrice" = "Bon prix";
 "kSaveAbout" = "Save about";
 "kYen" = " Économiez XX yen";
+"upToOff" = "Vous pouvez économiser environ xx par rapport au paiement hebdomadaire";
 
-"kYenPerWeek" = "yen/semaine";
-"kYenPerMonth" = "yen/mois";
-"kYenPerYear" = "yen/an";
+"kYenPerWeek" = " /semaine";
+"kYenPerMonth" = " /mois";
+"kYenPerYear" = " /an";
 "kStartPocketalkApp" = "Commencer à utiliser l'application de POCKETALK";
 
 "kIAPFreeDaysDescription" = "Tous les plans sont gratuits au début pour 3 jours";
