@@ -8,7 +8,7 @@ import SwiftRichString
 import StoreKit
 import SwiftKeychainWrapper
 
-class PurchasePlanViewController: UIViewController {
+class PurchasePlanViewController: BaseViewController {
     @IBOutlet weak private var purchasePlanTV: UITableView!
     private let TAG = "\(PurchasePlanViewController.self)"
     private var purchasePlanVM: PurchasePlanViewModeling!
@@ -91,7 +91,7 @@ class PurchasePlanViewController: UIViewController {
     private func restorePurchases() {
         ActivityIndicator.sharedInstance.show()
         if Reachability.isConnectedToNetwork() {
-            self.purchasePlanVM.updateReceiptValidationAllow()
+            self.purchasePlanVM.updateReceiptValidationAllow(iapReceiptValidationFrom: .restoreButton)
             purchasePlanVM.restorePurchase { [weak self] success, error in
                 if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)! == true {
                     guard let self = `self` else {return}
@@ -114,6 +114,7 @@ class PurchasePlanViewController: UIViewController {
             DispatchQueue.main.async {
                 ActivityIndicator.sharedInstance.hide()
                 InitialFlowHelper().showNoInternetAlert(on: self)
+                self.restorePurchaseLogEvent(planType: PurchasePlan.none.rawValue)
             }
         }
     }
@@ -124,7 +125,7 @@ class PurchasePlanViewController: UIViewController {
         } else {
             if Reachability.isConnectedToNetwork() {
                 ActivityIndicator.sharedInstance.show()
-                self.purchasePlanVM.updateReceiptValidationAllow()
+                self.purchasePlanVM.updateReceiptValidationAllow(iapReceiptValidationFrom: .purchaseButton)
                 self.purchasePlanVM.purchaseProduct(product: product){ [weak self] success, error in
 
                     if KeychainWrapper.standard.bool(forKey: receiptValidationAllowFromPurchase)! == true {
@@ -132,12 +133,20 @@ class PurchasePlanViewController: UIViewController {
 
                         if let productPurchaseError = error {
                             DispatchQueue.main.async {
+                                self.purchaseFailureLogEvent()
                                 self.showIAPRelatedError(productPurchaseError)
                                 ActivityIndicator.sharedInstance.hide()
                             }
                         } else {
                             DispatchQueue.main.async {
-                                success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
+                                if success {
+                                    self.goToPermissionVC()
+                                    self.purchaseSuccessfulLogEvent()
+                                } else {
+                                    self.purchaseFailureLogEvent()
+                                    PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product")
+                                }
+
                                 ActivityIndicator.sharedInstance.hide()
                                 KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                             }
@@ -173,11 +182,13 @@ class PurchasePlanViewController: UIViewController {
     private func unregisterNotification() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:.inAppPurchaseRestoreInfoNotification, object: nil)
     }
 
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restorePurchase(notification:)), name: .inAppPurchaseRestoreInfoNotification, object: nil)
     }
 
     @objc func applicationWillResignActive(notification: Notification) {
@@ -292,8 +303,57 @@ extension PurchasePlanViewController: UITableViewDelegate{
             case .selectPlan, .freeUses, .restorePurchase:
                 return
             case .dailyPlan, .weeklyPlan, .monthlyPlan, .annualPlan:
+                purchasePlanVM.setSelectedPlanType(planType: rowType)
                 getProductForPurchase(for: rowType)
+                choosePlanLogEvent(rowType)
             }
         }
+    }
+}
+
+//MARK: - Google analytics log events
+extension PurchasePlanViewController {
+    private func choosePlanLogEvent(_ rowType: PurchasePlanTVCellInfo) {
+        switch rowType{
+        case .selectPlan, .freeUses, .restorePurchase, .dailyPlan:
+            return
+        case .weeklyPlan:
+            analytics.buttonTap(screenName: analytics.firstPlanSelect,
+                                buttonName: analytics.buttonWeek)
+        case .monthlyPlan:
+            analytics.buttonTap(screenName: analytics.firstPlanSelect,
+                                buttonName: analytics.buttonMonth)
+        case .annualPlan:
+            analytics.buttonTap(screenName: analytics.firstPlanSelect,
+                                buttonName: analytics.buttonYear)
+        }
+    }
+
+    private func purchaseSuccessfulLogEvent() {
+        if let planTypeText = purchasePlanVM.getSelectedPlanType() {
+        analytics.purchasePlan(screenName: analytics.firstPurchaseComplete,
+                               buttonName: analytics.buttonOK,
+                               selectedPlan: planTypeText)
+        }
+    }
+
+    private func purchaseFailureLogEvent() {
+        if let planTypeText = purchasePlanVM.getSelectedPlanType() {
+        analytics.purchasePlan(screenName: analytics.firstPurchaseCancel,
+                               buttonName: analytics.buttonOK,
+                               selectedPlan: planTypeText)
+        }
+    }
+
+    @objc private func restorePurchase(notification: Notification) {
+        if let planType = notification.userInfo![planType] as? String {
+            restorePurchaseLogEvent(planType: planType)
+        }
+    }
+
+    private func restorePurchaseLogEvent(planType: String) {
+        analytics.purchasePlan(screenName: analytics.firstPlanSelect,
+                               buttonName: analytics.buttonRestore,
+                               selectedPlan: planType)
     }
 }

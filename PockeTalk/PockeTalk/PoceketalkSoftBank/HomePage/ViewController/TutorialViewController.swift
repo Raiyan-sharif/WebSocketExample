@@ -10,6 +10,7 @@ protocol SpeechControllerDismissDelegate : AnyObject {
     func dismiss()
 }
 
+//MARK: - DismissTutorialDelegate
 protocol DismissTutorialDelegate: AnyObject {
     func dismissTutorialWhileFirstTimeLoad()
 }
@@ -116,6 +117,8 @@ class TutorialViewController: BaseViewController {
 
     //MARK: - IBActions
     @IBAction private func crossActiion(_ sender: UIButton) {
+        cancelButtonLogEvent()
+
         UIView.animate(withDuration: animationDuration, delay: TimeInterval(animationDelay), options: .curveEaseOut, animations: {
             self.view.transform = CGAffineTransform(scaleX:self.animatedViewTransformation, y: self.animatedViewTransformation)
         }, completion: { [weak self] _ in
@@ -232,17 +235,25 @@ extension TutorialViewController: TTSResponsiveViewDelegate{
     func onVoiceEnd() {}
 }
 
-extension TutorialViewController :AudioPlayerDelegate{
-    func didStartAudioPlayer() {
-
-    }
-
-    func didStopAudioPlayer(flag: Bool) {
-
-    }
+//MARK: - AudioPlayerDelegate
+extension TutorialViewController: AudioPlayerDelegate{
+    func didStartAudioPlayer() {}
+    func didStopAudioPlayer(flag: Bool) {}
 }
-extension TutorialViewController : MultipartAudioPlayerProtocol{
+
+//MARK: - MultipartAudioPlayerProtocol
+extension TutorialViewController: MultipartAudioPlayerProtocol{
     func onSpeakStart() {}
     func onSpeakFinish() {}
     func onError() {}
 }
+
+//MARK: - Google analytics log events
+extension TutorialViewController {
+    private func cancelButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstHowToUse,
+                            buttonName: analytics.buttonCancel)
+    }
+}
+
+
