@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -274,16 +274,18 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DdB-cc-IKb">
-                                <rect key="frame" x="87" y="112" width="240" height="147.5"/>
+                                <rect key="frame" x="77" y="112" width="260" height="160.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rcc-rE-EqJ">
-                                        <rect key="frame" x="65" y="0.0" width="110" height="49"/>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="tailTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rcc-rE-EqJ">
+                                        <rect key="frame" x="70" y="0.0" width="120" height="53.5"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="110" id="nLk-oV-maY"/>
+                                            <constraint firstAttribute="height" constant="53.5" id="HX9-zh-xbM"/>
+                                            <constraint firstAttribute="width" constant="120" id="nLk-oV-maY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                        <state key="normal" title="Next" backgroundImage="Boarding_Next_Btn"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="NextCustomOnboardingButton" backgroundImage="Boarding_Next_Btn"/>
                                         <state key="selected" backgroundImage="Boarding_Next_Btn_Push"/>
                                         <state key="highlighted" backgroundImage="Boarding_Next_Btn_Push"/>
                                         <connections>
@@ -291,12 +293,13 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="FI0-We-Vtx">
-                                        <rect key="frame" x="0.0" y="49" width="240" height="49.5"/>
+                                        <rect key="frame" x="0.0" y="53.5" width="260" height="53.5"/>
                                         <subviews>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6BC-Ie-iC4">
-                                                <rect key="frame" x="0.0" y="0.0" width="110" height="49.5"/>
+                                            <button opaque="NO" tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6BC-Ie-iC4">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Back" backgroundImage="Boarding_Back_Btn"/>
                                                 <state key="selected" backgroundImage="Boarding_Back_Btn_Push"/>
                                                 <state key="highlighted" backgroundImage="Boarding_Back_Btn_Push"/>
@@ -304,11 +307,12 @@
                                                     <action selector="actionBackorNext:" destination="yJa-Nv-nVi" eventType="touchUpInside" id="ARS-C5-Xmz"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WH8-lJ-2L1">
-                                                <rect key="frame" x="130" y="0.0" width="110" height="49.5"/>
+                                            <button opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WH8-lJ-2L1">
+                                                <rect key="frame" x="140" y="0.0" width="120" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="Next" backgroundImage="Boarding_Next_Btn"/>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="NextCustomOnboardingButton" backgroundImage="Boarding_Next_Btn"/>
                                                 <state key="selected" backgroundImage="Boarding_Next_Btn_Push"/>
                                                 <state key="highlighted" backgroundImage="Boarding_Next_Btn_Push"/>
                                                 <connections>
@@ -318,12 +322,13 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dUr-GS-ygE">
-                                        <rect key="frame" x="0.0" y="98.5" width="240" height="49"/>
+                                        <rect key="frame" x="0.0" y="107" width="260" height="53.5"/>
                                         <subviews>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Z4-0b-dYU">
-                                                <rect key="frame" x="0.0" y="0.0" width="110" height="49"/>
+                                            <button opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Z4-0b-dYU">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Back" backgroundImage="Boarding_Back_Btn"/>
                                                 <state key="selected" backgroundImage="Boarding_Back_Btn_Push"/>
                                                 <state key="highlighted" backgroundImage="Boarding_Back_Btn_Push"/>
@@ -331,10 +336,11 @@
                                                     <action selector="actionBackorNext:" destination="yJa-Nv-nVi" eventType="touchUpInside" id="5r9-6K-N1O"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJk-0j-C9K">
-                                                <rect key="frame" x="130" y="0.0" width="110" height="49"/>
+                                            <button opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJk-0j-C9K">
+                                                <rect key="frame" x="140" y="0.0" width="120" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Close" backgroundImage="Boarding_Next_Btn"/>
                                                 <state key="selected" backgroundImage="Boarding_Next_Btn_Push"/>
                                                 <state key="highlighted" backgroundImage="Boarding_Next_Btn_Push"/>
@@ -449,7 +455,6 @@
                             <constraint firstItem="P8D-A0-FNk" firstAttribute="bottom" secondItem="KxD-xo-2VL" secondAttribute="bottom" id="rRK-ds-Gmc"/>
                             <constraint firstItem="lw7-m1-Tej" firstAttribute="bottom" secondItem="3yg-yI-oqt" secondAttribute="bottom" id="tg2-Yo-abb"/>
                             <constraint firstItem="DdB-cc-IKb" firstAttribute="centerX" secondItem="DyA-1h-ken" secondAttribute="centerX" id="vyM-7e-10O"/>
-                            <constraint firstItem="Rcc-rE-EqJ" firstAttribute="height" secondItem="DyA-1h-ken" secondAttribute="height" multiplier="0.055" id="xfe-wy-QYj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ar6-Mx-2KQ"/>
@@ -465,7 +470,7 @@
                         <outlet property="close" destination="HJk-0j-C9K" id="9Fb-K0-eyb"/>
                         <outlet property="directionButtonContainerView" destination="aOz-1x-Ow8" id="Uwz-tD-9ng"/>
                         <outlet property="firstBackBtn" destination="6BC-Ie-iC4" id="YSj-Iu-9dD"/>
-                        <outlet property="firstNextBtn" destination="Rcc-rE-EqJ" id="lBg-9Q-Z0W"/>
+                        <outlet property="firstNextBtn" destination="Rcc-rE-EqJ" id="Lr3-8k-ual"/>
                         <outlet property="lanNameLabel" destination="qTg-3O-deO" id="7Z6-A0-OKe"/>
                         <outlet property="languageChangedDirectionButton" destination="ZOs-yM-vhr" id="zKI-uX-JWx"/>
                         <outlet property="languageView" destination="P8D-A0-FNk" id="hdQ-0v-o7L"/>
@@ -482,7 +487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CA5-2t-8sW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2005.7971014492755" y="5.3571428571428568"/>
+            <point key="canvasLocation" x="1823" y="897"/>
         </scene>
     </scenes>
     <resources>

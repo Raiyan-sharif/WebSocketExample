@@ -67,20 +67,48 @@ class WalkThroughViewController: BaseViewController {
         initialCase()
         ScreenTracker.sharedInstance.screenPurpose = .WalkThroughViewController
     }
+    func addAttributeStringFromLocalize(quote:String)->NSAttributedString{
+        let font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 0.0
+        paragraphStyle.alignment = .center
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        paragraphStyle.minimumLineHeight = 0.0
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white,
+            .paragraphStyle: paragraphStyle
+        ]
+
+        let attributedQuote = NSAttributedString(string: quote, attributes: attributes)
+        return attributedQuote
+    }
 
     func initialCase(){
+        firstNextBtn.titleLabel?.numberOfLines = 2
+        firstBackBtn.titleLabel?.numberOfLines = 2
+        secondNextBtn.titleLabel?.numberOfLines = 2
+        secondBackBtn.titleLabel?.numberOfLines = 2
+        close.titleLabel?.numberOfLines = 2
 
-        firstNextBtn.setTitle("kNextButtonTitle".localiz(), for: .normal)
-        firstBackBtn.setTitle("Back".localiz(), for: .normal)
-        secondNextBtn.setTitle("kNextButtonTitle".localiz(), for: .normal)
-        secondBackBtn.setTitle("Back".localiz(), for: .normal)
-        close.setTitle("Close".localiz(), for: .normal)
 
-        firstNextBtn.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        firstBackBtn.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        secondNextBtn.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        secondBackBtn.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
-        close.titleLabel?.font = UIFont.systemFont(ofSize: FontUtility.getSmallFontSize())
+        firstNextBtn.setAttributedTitle(addAttributeStringFromLocalize(quote: "kNextButtonTitle".localiz()), for: .normal)
+        firstNextBtn.getPadding(left: 12, right: 20, bottom: 0, top: 0)
+
+        firstBackBtn.setAttributedTitle(addAttributeStringFromLocalize(quote: "Back".localiz()), for: .normal)
+        firstBackBtn.getPadding(left: 20, right: 12, bottom: 0, top: 0)
+
+        secondNextBtn.setAttributedTitle(addAttributeStringFromLocalize(quote: "kNextButtonTitle".localiz()), for: .normal)
+        secondNextBtn.getPadding(left: 12, right: 20, bottom: 0, top: 0)
+
+
+        secondBackBtn.setAttributedTitle(addAttributeStringFromLocalize(quote: "Back".localiz()), for: .normal)
+        secondBackBtn.getPadding(left: 20, right: 12, bottom: 0, top: 0)
+
+        close.setAttributedTitle(addAttributeStringFromLocalize(quote: "Close".localiz()), for: .normal)
+        close.getPadding(left: 12, right: 20, bottom: 0, top: 0)
+
 
         titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getBiggestFontSize())
         curPage = .firstPage
@@ -247,4 +275,3 @@ class WalkThroughViewController: BaseViewController {
     }
 
 }
-

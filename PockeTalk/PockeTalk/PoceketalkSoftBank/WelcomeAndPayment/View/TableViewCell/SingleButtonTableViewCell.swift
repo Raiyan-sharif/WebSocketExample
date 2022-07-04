@@ -6,7 +6,8 @@
 import UIKit
 
 class SingleButtonTableViewCell: UITableViewCell {
-    @IBOutlet weak private var singleBtn: UIButton!
+
+    @IBOutlet weak var singleBtn: UIButton!
     private var indexPath: IndexPath!
     private var callbackClosure: ((IndexPath) -> Void)?
 
@@ -22,8 +23,14 @@ class SingleButtonTableViewCell: UITableViewCell {
     //MARK: - Configure Cell
     func configure(indexPath: IndexPath, buttonTitle: String, callbackClosure: ((_ cellIndexPath: IndexPath) -> Void)?){
             self.callbackClosure = callbackClosure
-            self.singleBtn.setTitle(buttonTitle, for: .normal)
-            self.indexPath = indexPath
+
+        let myNormalAttributedTitle = NSAttributedString(string: buttonTitle,
+                                                         attributes: [NSAttributedString.Key.foregroundColor : UIColor._royalBlueColor()])
+        self.singleBtn.setAttributedTitle(myNormalAttributedTitle,for:.normal)
+        self.singleBtn.titleLabel?.baselineAdjustment = .alignBaselines
+        self.singleBtn.titleLabel?.textAlignment = .center
+
+        self.indexPath = indexPath
         }
 
     //MARK: - IBActions

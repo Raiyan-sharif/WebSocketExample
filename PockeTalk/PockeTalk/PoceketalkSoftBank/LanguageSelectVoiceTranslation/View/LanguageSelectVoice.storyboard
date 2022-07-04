@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QSE-q6-FMb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -270,8 +270,8 @@
                                             <action selector="onBackButtonPressed:" destination="lja-Kd-kPL" eventType="touchUpInside" id="j2B-uT-rJ2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy">
-                                        <rect key="frame" x="48" y="25" width="318" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-G5-3Iy" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                        <rect key="frame" x="58" y="25" width="298" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -293,13 +293,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="centerX" secondItem="PHR-7n-hpU" secondAttribute="centerX" id="0qh-Fm-kDR"/>
                                     <constraint firstItem="Adk-NL-W07" firstAttribute="centerY" secondItem="PHR-7n-hpU" secondAttribute="centerY" id="AhB-cs-3dj"/>
                                     <constraint firstItem="szt-G5-3Iy" firstAttribute="centerY" secondItem="PHR-7n-hpU" secondAttribute="centerY" id="Fsr-E7-lGg"/>
-                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="centerX" secondItem="PHR-7n-hpU" secondAttribute="centerX" id="IaA-fy-Rm5"/>
                                     <constraint firstAttribute="height" constant="70" id="PTF-Ak-ZF6"/>
                                     <constraint firstAttribute="trailing" secondItem="pWF-3E-L8I" secondAttribute="trailing" constant="10" id="XoW-RA-hjW"/>
-                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="leading" secondItem="Adk-NL-W07" secondAttribute="trailing" constant="5" id="iYY-t6-8BR"/>
-                                    <constraint firstItem="pWF-3E-L8I" firstAttribute="leading" relation="lessThanOrEqual" secondItem="szt-G5-3Iy" secondAttribute="trailing" constant="5" id="pt9-nk-dyD"/>
+                                    <constraint firstItem="szt-G5-3Iy" firstAttribute="leading" secondItem="Adk-NL-W07" secondAttribute="trailing" constant="15" id="iYY-t6-8BR"/>
+                                    <constraint firstItem="pWF-3E-L8I" firstAttribute="leading" secondItem="szt-G5-3Iy" secondAttribute="trailing" constant="8" id="pt9-nk-dyD"/>
                                     <constraint firstItem="Adk-NL-W07" firstAttribute="leading" secondItem="PHR-7n-hpU" secondAttribute="leading" constant="10" id="uIG-LE-Lgf"/>
                                     <constraint firstItem="pWF-3E-L8I" firstAttribute="centerY" secondItem="PHR-7n-hpU" secondAttribute="centerY" id="zTm-dd-2Ey"/>
                                 </constraints>
@@ -339,7 +339,7 @@
                     </view>
                     <connections>
                         <outlet property="buttonOk" destination="pWF-3E-L8I" id="CJc-3H-Dto"/>
-                        <outlet property="countryNameLabel" destination="szt-G5-3Iy" id="Xnr-dQ-Y5s"/>
+                        <outlet property="countryNameLabel" destination="szt-G5-3Iy" id="pLz-8L-8UO"/>
                         <outlet property="languageListCollectionView" destination="JcR-Sg-Jnm" id="EDX-K8-IVj"/>
                     </connections>
                 </viewController>
