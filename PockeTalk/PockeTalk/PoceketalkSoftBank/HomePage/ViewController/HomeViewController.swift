@@ -382,6 +382,7 @@ class HomeViewController: BaseViewController {
 
     //MARK: - IBActions
     @IBAction private func menuAction(_ sender: UIButton) {
+        menuButtonLogEvent()
         talkBtnImgView.isHidden = true
         let settingsStoryBoard = UIStoryboard(name: "Settings", bundle: nil)
         if let settinsViewController = settingsStoryBoard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
@@ -398,6 +399,7 @@ class HomeViewController: BaseViewController {
     }
 
     @IBAction private func switchLanguageDirectionAction(_ sender: UIButton) {
+        changeLanguageButtonLogEvent()
         if self.isTransitionComplete {
             self.isTransitionComplete = false
             PrintUtility.printLog(tag: TAG, text: "switchLanguageDirectionAction isArrowUp \(LanguageSelectionManager.shared.isArrowUp)")
@@ -425,33 +427,8 @@ class HomeViewController: BaseViewController {
         self.goToFavouriteScreen()
     }
 
-    //MARK: - View Transactions
-    private func dislayTutorialScreen(shwoingTutorialForTheFirstTime: Bool) {
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
-
-        controller.speechProDismissDelegateFromTutorial = self
-
-        controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
-        if shwoingTutorialForTheFirstTime {
-            controller.dismissTutorialDelegate = self
-        } else {
-            controller.dismissTutorialDelegate = nil
-        }
-
-        homeContainerView.isHidden = false
-        add(asChildViewController: controller, containerView:homeContainerView)
-    }
-
-    @objc func goToFavouriteScreen () {
-        let fv = FavouriteViewController()
-        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
-        self.enableORDisableMicrophoneButton(isEnable: true)
-        add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
-        hideSpeechView()
-        ScreenTracker.sharedInstance.screenPurpose = .FavouriteScreen
-    }
-
     @IBAction func didTapOnCameraButton(_ sender: UIButton) {
+        cameraButtonLogEvent()
         if HomeViewController.isCameraButtonClickable == true {
             let batteryPercentage = UIDevice.current.batteryLevel * batteryMaxPercent
             if batteryPercentage <= cameraDisableBatteryPercentage {
@@ -478,6 +455,32 @@ class HomeViewController: BaseViewController {
                 }
             }
         }
+    }
+
+    //MARK: - View Transactions
+    private func dislayTutorialScreen(shwoingTutorialForTheFirstTime: Bool) {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: KTutorialViewController)as! TutorialViewController
+
+        controller.speechProDismissDelegateFromTutorial = self
+
+        controller.isShwoingTutorialForTheFirstTime = shwoingTutorialForTheFirstTime
+        if shwoingTutorialForTheFirstTime {
+            controller.dismissTutorialDelegate = self
+        } else {
+            controller.dismissTutorialDelegate = nil
+        }
+
+        homeContainerView.isHidden = false
+        add(asChildViewController: controller, containerView:homeContainerView)
+    }
+
+    @objc func goToFavouriteScreen () {
+        let fv = FavouriteViewController()
+        let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
+        self.enableORDisableMicrophoneButton(isEnable: true)
+        add(asChildViewController: fv, containerView:homeContainerView, animation: transition)
+        hideSpeechView()
+        ScreenTracker.sharedInstance.screenPurpose = .FavouriteScreen
     }
 
     func showBatteryWarningAlert(){
@@ -621,6 +624,7 @@ extension HomeViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             if touch.view == self.topClickView {
+                LanguageSelectionManager.shared.isArrowUp == true ? destinationLanguageButtonLogEvent() : sourceLanguageButtonLogEvent()
                 topHighlightedView.isHidden = false
                 selectedTab = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -630,6 +634,7 @@ extension HomeViewController {
                 }
                 selectedTouchView = topHighlightedView
             } else if touch.view == self.bottomClickView {
+                LanguageSelectionManager.shared.isArrowUp == true ? sourceLanguageButtonLogEvent() : destinationLanguageButtonLogEvent()
                 bottomHighlightedView.isHidden = false
                 selectedTab = 1
                 selectedTouchView = bottomHighlightedView
@@ -647,7 +652,7 @@ extension HomeViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if selectedTouchView == nil { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            print(self!.selectedTab)
+            PrintUtility.printLog(tag: self!.TAG, text: "\(self!.selectedTab)")
             self?.topHighlightedView.isHidden = true
             self?.bottomHighlightedView.isHidden = true
             self?.selectedTouchView = nil

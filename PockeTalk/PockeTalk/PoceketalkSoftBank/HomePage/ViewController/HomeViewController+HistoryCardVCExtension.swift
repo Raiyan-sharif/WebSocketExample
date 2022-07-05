@@ -39,6 +39,7 @@ extension HomeViewController{
     ///HistoryImageView tap gesture functionality
     @objc private func handleTapForImageGesture(tapGestureRecognizer: UITapGestureRecognizer){
         PrintUtility.printLog(tag: historyCardTAG, text: "Tap on Hisotry ImageView,  Visibility: \(self.cardVisible) State:\(self.nextState)")
+        historyTrayTapLogEvent()
         animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: false)
         self.historyCardVC.updateData(shouldCVScrollToBottom: true)
         ScreenTracker.sharedInstance.screenPurpose = .HistoryScrren

@@ -863,15 +863,15 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
 
 }
 
+//MARK: - UIScrollViewDelegate
 extension CaptureImageProcessVC: UIScrollViewDelegate {
-
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return cameraImageView
     }
 }
 
+//MARK: - LoaderDelegate
 extension CaptureImageProcessVC: LoaderDelegate{
-
     func showLoader() {
         DispatchQueue.main.async { [self] in
             ActivityIndicator.sharedInstance.show()
@@ -891,7 +891,6 @@ extension CaptureImageProcessVC: LoaderDelegate{
 }
 
 //MARK: - CameraTTSDialogProtocol
-
 extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func removeDialogEvent() {
         self.stopTTS()
@@ -937,13 +936,20 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
 
         PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
         let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+
+        activityViewController.completionWithItemsHandler = { [weak self] (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            guard let `self` = self else {return}
+            if completed, let activityString = activityType?.rawValue{
+                self.cameraTranslateResultMenuShareLogEvent(activityString: activityString)
+            }
+        }
+
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
     }
 }
 
 //MARK: - CameraTTSContextMenuProtocol
-
 extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
     func cameraTTSContextMenuSendMail() {
         // Send an email implementaiton goes here
@@ -953,6 +959,7 @@ extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
     }
 }
 
+//MARK: -  UIImage Extension
 extension UIImage {
     enum JPEGQuality: CGFloat {
         case lowest  = 0
@@ -970,6 +977,7 @@ extension UIImage {
     }
 }
 
+//MARK: -  TTSResponsiveViewDelegate
 extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
     func onMultipartUrlReceived(url: String) {
         if(!url.isEmpty){
@@ -991,6 +999,7 @@ extension CaptureImageProcessVC : TTSResponsiveViewDelegate {
     func onReady() {}
 }
 
+//MARK: -  CXCallObserverDelegate
 extension CaptureImageProcessVC: CXCallObserverDelegate{
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         PrintUtility.printLog(tag: TAG, text: "callObserver")
@@ -1015,6 +1024,7 @@ extension CaptureImageProcessVC: CXCallObserverDelegate{
     }
 }
 
+//MARK: -  SocketManagerDelegate
 extension CaptureImageProcessVC : SocketManagerDelegate{
     func faildSocketConnection(value: String) {
         PrintUtility.printLog(tag: TAG, text: value)
@@ -1026,18 +1036,12 @@ extension CaptureImageProcessVC : SocketManagerDelegate{
     }
 
     func getData(data: Data) {}
-
 }
 
-//MARK: - AudioPlayerDelegate
+//MARK: -  AudioPlayerDelegate
 extension CaptureImageProcessVC :AudioPlayerDelegate{
-    func didStartAudioPlayer() {
-
-    }
-
-    func didStopAudioPlayer(flag: Bool) {
-
-    }
+    func didStartAudioPlayer() {}
+    func didStopAudioPlayer(flag: Bool) {}
 }
 
 extension CaptureImageProcessVC : MultipartAudioPlayerProtocol{
@@ -1051,5 +1055,14 @@ extension CaptureImageProcessVC : MultipartAudioPlayerProtocol{
 
     func onError() {
         self.isSpeaking = false
+    }
+}
+
+//MARK: - Google analytics log events
+extension CaptureImageProcessVC {
+    private func cameraTranslateResultMenuShareLogEvent(activityString: String) {
+        analytics.translateResultMenuShare(screenName: analytics.cameraTranslationResultDetailsMenuShare,
+                                           eventParamName: analytics.app,
+                                           sharedAppName: activityString)
     }
 }

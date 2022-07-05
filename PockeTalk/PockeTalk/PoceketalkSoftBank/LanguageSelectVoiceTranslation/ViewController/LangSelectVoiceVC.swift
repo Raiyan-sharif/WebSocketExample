@@ -53,6 +53,8 @@ class LangSelectVoiceVC: BaseViewController {
     var isFirstTimeLoad = true
     var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose = .HomeSpeechProcessing
     private var floatingMicrophoneButton: UIButton!
+    private var analyticsScreenName: String?
+    var isFromHistoryTTS = false
 
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -63,6 +65,7 @@ class LangSelectVoiceVC: BaseViewController {
         registerNotification()
         self.view.bottomImageView(usingState: .gradient)
         FloatingMikeButton.sharedInstance.delegate = self
+        setAnalyticsScreenName()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -182,6 +185,7 @@ class LangSelectVoiceVC: BaseViewController {
     }
 
     @IBAction func onCountryButtonTapped(_ sender: Any) {
+        countryButtonLogEvent()
         if FloatingMikeButton.sharedInstance.hiddenStatus() == false{
             navigateToCountryScene()
         }
@@ -196,6 +200,7 @@ class LangSelectVoiceVC: BaseViewController {
         } else {
             selectedLanguageCode = UserDefaultsProperty<String>(KSelectedLanguageVoice).value!
         }
+        okButtonLogEvent()
         UserDefaultsProperty<String>(KSelectedLanguageVoice).value = selectedLanguageCode
         PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) isnativeval \(isNative)")
         saveLangSelectionindex()
@@ -407,6 +412,24 @@ class LangSelectVoiceVC: BaseViewController {
             }
         }
     }
+
+    private func setAnalyticsScreenName() {
+        if fromScreenPurpose == .HomeSpeechProcessing {
+            if !fromRetranslation {
+                //Showing language scene from home scene
+                if isNative == LanguageName.bottomLang.rawValue {
+                    LanguageSelectionManager.shared.isArrowUp == true ? (analyticsScreenName = analytics.mainSourceLanguage) : (analyticsScreenName = analytics.mainDestinationLanguage)
+                } else {
+                    LanguageSelectionManager.shared.isArrowUp == false ? (analyticsScreenName = analytics.mainSourceLanguage) : (analyticsScreenName = analytics.mainDestinationLanguage)
+                }
+            } else {
+                //Shwoing language scene from Home -> TTS Alert scene
+                analyticsScreenName = analytics.mainResultMenuSelectDestinationLang
+            }
+        } else if fromScreenPurpose == .HistoryScrren {
+            analyticsScreenName = isFromHistoryTTS ? analytics.historyCardMenuSelectDstLang : analytics.historyLongTapMenuSelectDstLang
+        }
+    }
 }
 
 //MARK: - LanguageSettingsProtocol
@@ -478,9 +501,58 @@ extension LangSelectVoiceVC: FloatingMikeButtonDelegate{
         PrintUtility.printLog(tag: TAG, text: "Language select voice microphone Tap")
         if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionVoice ||
             ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionVoice {
+            voiceInputButtonLogEvent()
             microphoneIcon(isHidden: true)
+
             if FloatingMikeButton.sharedInstance.hiddenStatus() {
                 navigateToLanguageSettingsScene()
+            }
+        }
+    }
+}
+
+//MARK: - Google analytics log events
+extension LangSelectVoiceVC {
+    private func countryButtonLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonSelectRegion)
+        }
+    }
+
+    private func voiceInputButtonLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonVoiceInput)
+        }
+    }
+
+    private func okButtonLogEvent() {
+        if let screenName = analyticsScreenName {
+            //Need confirmation
+            if let selectedLanguageName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguageCode)?.name {
+
+                if screenName == analytics.mainSourceLanguage {
+                    analytics.updateSourceLanguage(screenName: screenName,
+                                                   buttonName: analytics.buttonOK,
+                                                   srcLanguageName: selectedLanguageName)
+                } else if screenName == analytics.mainDestinationLanguage {
+                    analytics.updateDestinationLanguage(screenName: screenName,
+                                                        buttonName: analytics.buttonOK,
+                                                        desLanguageName: selectedLanguageName)
+                } else if screenName == analytics.mainResultMenuSelectDestinationLang {
+                    analytics.updateDestinationLanguage(screenName: screenName,
+                                                        buttonName: analytics.buttonOK,
+                                                        desLanguageName: selectedLanguageName)
+                } else if screenName == analytics.historyLongTapMenuSelectDstLang {
+                    analytics.updateDestinationLanguage(screenName: screenName,
+                                                        buttonName: analytics.buttonOK,
+                                                        desLanguageName: selectedLanguageName)
+                } else if screenName == analytics.historyCardMenuSelectDstLang {
+                    analytics.updateDestinationLanguage(screenName: screenName,
+                                                        buttonName: analytics.buttonOK,
+                                                        desLanguageName: selectedLanguageName)
+                }
             }
         }
     }

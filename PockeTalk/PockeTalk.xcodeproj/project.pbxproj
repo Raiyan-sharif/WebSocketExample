@@ -231,6 +231,7 @@
 		898EC6EC26E0B16F00D8CAE5 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */; };
 		898EC6ED26E0B16F00D8CAE5 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */; };
 		89990F6F2783179600D39154 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89990F6E2783179600D39154 /* WelcomeViewController.swift */; };
+		899A06622876C5AA0005FEB2 /* GoogleAnalyticsUserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899A06612876C5AA0005FEB2 /* GoogleAnalyticsUserProperty.swift */; };
 		899E12DE27B2388600151533 /* MultipartAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */; };
 		899FB08227A2B12C00B83366 /* Date+Reuseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FB08127A2B12C00B83366 /* Date+Reuseable.swift */; };
 		89A4F01E27C5E56700A718FA /* AppFirstLaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A4F01D27C5E56700A718FA /* AppFirstLaunchViewController.swift */; };
@@ -286,6 +287,7 @@
 		89CE6AC826FDC2D9000ECF17 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC726FDC2D9000ECF17 /* Photo.swift */; };
 		89CE6ACA26FDC506000ECF17 /* CameraViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */; };
 		89CFFC6C2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFFC6B2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift */; };
+		89D266A6288112DF00236AD2 /* GoogleAnalyticsServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D266A5288112DF00236AD2 /* GoogleAnalyticsServiceInfo.swift */; };
 		89DEC185277AF7DC00A8FF34 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEC183277AF7DC00A8FF34 /* SingleLabelCell.swift */; };
 		89DEC186277AF7DC00A8FF34 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89DEC184277AF7DC00A8FF34 /* SingleLabelCell.xib */; };
 		89E0F2AE277AD5430031782D /* LangDetectionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */; };
@@ -589,6 +591,7 @@
 		898EC6EA26E0B16F00D8CAE5 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		898EC6EB26E0B16F00D8CAE5 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		89990F6E2783179600D39154 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		899A06612876C5AA0005FEB2 /* GoogleAnalyticsUserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsUserProperty.swift; sourceTree = "<group>"; };
 		899E12DD27B2388600151533 /* MultipartAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartAudioPlayer.swift; sourceTree = "<group>"; };
 		899FB08127A2B12C00B83366 /* Date+Reuseable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Reuseable.swift"; sourceTree = "<group>"; };
 		89A3127E279FBA08009A9931 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -666,6 +669,7 @@
 		89CE6AC726FDC2D9000ECF17 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		89CE6AC926FDC506000ECF17 /* CameraViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+CaptureSession.swift"; sourceTree = "<group>"; };
 		89CFFC6B2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+HistoryCardVCExtension.swift"; sourceTree = "<group>"; };
+		89D266A5288112DF00236AD2 /* GoogleAnalyticsServiceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsServiceInfo.swift; sourceTree = "<group>"; };
 		89DEC183277AF7DC00A8FF34 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		89DEC184277AF7DC00A8FF34 /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
 		89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetectionResponseModel.swift; sourceTree = "<group>"; };
@@ -1812,6 +1816,8 @@
 			isa = PBXGroup;
 			children = (
 				89887EBE286D6DFB00ADEC67 /* GoogleAnalytics.swift */,
+				899A06612876C5AA0005FEB2 /* GoogleAnalyticsUserProperty.swift */,
+				89D266A5288112DF00236AD2 /* GoogleAnalyticsServiceInfo.swift */,
 			);
 			path = GoogleAnalytics;
 			sourceTree = "<group>";
@@ -2518,6 +2524,7 @@
 				89A4F02527C5F83E00A718FA /* PermissionTVCellInfo.swift in Sources */,
 				89BE587827AB91B8005B46A4 /* IAPManager.swift in Sources */,
 				5028D55526E29EB1002A5250 /* LangSelectVoiceVC.swift in Sources */,
+				899A06622876C5AA0005FEB2 /* GoogleAnalyticsUserProperty.swift in Sources */,
 				89BC919E27D75E1900965D03 /* FileUtility.swift in Sources */,
 				8940A3B127ABC835005CB401 /* InformationSettingViewController.swift in Sources */,
 				4A63ADEB26FC51FF0062A85A /* CameraTTSContextMenu.swift in Sources */,
@@ -2716,6 +2723,7 @@
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
 				895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */,
 				8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */,
+				89D266A6288112DF00236AD2 /* GoogleAnalyticsServiceInfo.swift in Sources */,
 				87AE1C7926FB100B00C23798 /* SocketDataModel.swift in Sources */,
 				50675D5926EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift in Sources */,
 				5028D54E26E29D57002A5250 /* LangListCell.swift in Sources */,

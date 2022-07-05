@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // Start firebase
+        //Start firebase & Log info
         FirebaseApp.configure()
+        GoogleAnalytics().serviceInfo.logGoogleServiceInfo()
 
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
@@ -58,6 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
                 }
             }
+
+            //Update coupon already uses once status
+            KeychainWrapper.standard.set(true, forKey: kIsCouponAlreadyUsedOnce)
         }
         return true
     }

@@ -141,7 +141,7 @@ extension HomeViewController{
         isFromCameraPreview = false
         enableorDisableGesture(notification: nil)
     }
-    
+
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
         RuntimePermissionUtil().requestAuthorizationPermission(for: .audio) { (isGranted) in
             if isGranted {
@@ -158,6 +158,10 @@ extension HomeViewController{
                 if gesture.state == .began {
                     if Reachability.isConnectedToNetwork() {
                         HomeViewController.showOrHideTalkButtonImage(true)
+
+                        //Talk button log event functionalities
+                        self.talkButtonLogEventHelper()
+
                         if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren || ScreenTracker.sharedInstance.screenPurpose == .FavouriteScreen {
                             ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
                         }
@@ -240,6 +244,21 @@ extension HomeViewController{
             }
         }
     }
+
+    private func talkButtonLogEventHelper() {
+        //Update the speech processing fromScreenPurpose property
+        self.speechVC.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
+        let src = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.bottomLanguage : LanguageSelectionManager.shared.topLanguage
+        let dst = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+        //Trigger logEvent depending on the screen purpose
+        if !(UserDefaultsProperty<Bool>(kHistoryTTS).value ?? false) {
+            if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing {
+                self.homeTalkButtonLogEvent(sourceLanguage: src, destinationLanguage: dst)
+            } else if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren {
+                self.historyTalkButtonLogEvent(sourceLanguage: src, destinationLanguage: dst)
+            }
+        }
+    }
     
     func isFromPronuntiationPractice()-> Bool{
         return ScreenTracker.sharedInstance.screenPurpose == .PronunciationPractice ||
@@ -293,6 +312,56 @@ enum BottomImageViewState{
     case black
     case hidden
 }
+
+//MARK: - Google analytics log events
+extension HomeViewController {
+    func sourceLanguageButtonLogEvent(){
+        analytics.buttonTap(screenName: analytics.home,
+                            buttonName: analytics.buttonSourceLang)
+    }
+
+    func destinationLanguageButtonLogEvent(){
+        analytics.buttonTap(screenName: analytics.home,
+                            buttonName: analytics.buttonDestinationLang)
+    }
+
+    func historyTrayTapLogEvent(){
+        analytics.buttonTap(screenName: analytics.home,
+                            buttonName: analytics.buttonHistory)
+    }
+
+    func cameraButtonLogEvent(){
+        analytics.buttonTap(screenName: analytics.home,
+                            buttonName: analytics.buttonCamera)
+    }
+
+    func menuButtonLogEvent(){
+        analytics.buttonTap(screenName: analytics.home,
+                            buttonName: analytics.buttonSettings)
+    }
+
+    func changeLanguageButtonLogEvent(){
+        let sourceLanguage = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.bottomLanguage : LanguageSelectionManager.shared.topLanguage
+        let destinationLanguage = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+        analytics.changeLanguage(screenName: analytics.home,
+                                 buttonName: analytics.buttonExchangeLang,
+                                 srcLanguageName: sourceLanguage,
+                                 desLanguageName: destinationLanguage)
+    }
+
+    private func homeTalkButtonLogEvent(sourceLanguage: String, destinationLanguage: String) {
+        analytics.mainTalkButton(screenName: analytics.home,
+                                 srcLanguageName: sourceLanguage,
+                                 desLanguageName: destinationLanguage)
+    }
+
+    func historyTalkButtonLogEvent(sourceLanguage: String, destinationLanguage: String) {
+        analytics.historyTalkButton(screenName: analytics.history,
+                                 srcLanguageName: sourceLanguage,
+                                 desLanguageName: destinationLanguage)
+    }
+}
+
 
 
 

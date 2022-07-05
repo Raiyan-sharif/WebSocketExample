@@ -369,6 +369,7 @@ let kTTSAudioFileNameExtenstion = ".wav"
 
 let kInAppPurchaseStatus = "inAppPurchaseStatus"
 let KIsAppAlreadyLaunchedOnce = "isAppAlreadyLaunchedOnce"
+let kIsCouponAlreadyUsedOnce = "isCouponAlreadyUsedOnce"
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"
 //Language History List
@@ -398,5 +399,5 @@ let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
 
 //Google Analytics Variables
 var GASettingScreenName = ""
-
+let kHistoryTTS = "historyTTS"
 

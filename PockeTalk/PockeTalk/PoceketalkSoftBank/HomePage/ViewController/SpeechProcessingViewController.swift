@@ -15,6 +15,7 @@ protocol SpeechProcessingVCDelegates: AnyObject{
     func searchCountry(text: String)
 }
 
+//MARK: - SpeechProcessingDismissDelegate
 protocol SpeechProcessingDismissDelegate : AnyObject {
     func showTutorial()
 }
@@ -36,6 +37,7 @@ class SpeechProcessingViewController: BaseViewController{
     @IBOutlet weak private var pronunciationLable: UILabel!
     var talkButtonImageView = UIImageView()
     var isTapOnMenu = false
+    var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?
 
     private let TAG:String = "SpeechProcessingViewController"
     weak var speechProcessingDelegate: SpeechProcessingVCDelegates?
@@ -537,7 +539,7 @@ class SpeechProcessingViewController: BaseViewController{
                         break
                     case .HomeSpeechProcessing :
                         AppRater.shared.incrementTranslationCount()
-                        self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value)
+                        self.showTtsAlert(ttt: self.speechProcessingVM.getTTT_Text,stt: self.speechProcessingVM.getSST_Text.value, fromScreenPurpose: self.fromScreenPurpose)
                         break
                     case .PronunciationPractice,.HistroyPronunctiation:
                         self.homeVC?.hideSpeechView()
@@ -582,7 +584,7 @@ class SpeechProcessingViewController: BaseViewController{
         }
     }
     
-    private func showTtsAlert ( ttt: String, stt: String ) {
+    private func showTtsAlert ( ttt: String, stt: String, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?) {
         let languageManager = LanguageSelectionManager.shared
         let isArrowUp = languageManager.isArrowUp
         let isTop = isArrowUp ? IsTop.noTop.rawValue : IsTop.top.rawValue
@@ -610,7 +612,7 @@ class SpeechProcessingViewController: BaseViewController{
         
         let chatItem =  ChatEntity.init(id: nil, textNative: nativeText, textTranslated: targetText, textTranslatedLanguage: targetLangName, textNativeLanguage: nativeLangName, chatIsLiked: IsLiked.noLike.rawValue, chatIsTop: isTop, chatIsDelete: IsDeleted.noDelete.rawValue, chatIsFavorite: IsFavourite.noFavourite.rawValue)
         
-        self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: false, fromSpeech: true)
+        self.showTTSScreen(chatItemModel: HistoryChatItemModel(chatItem: chatItem, idxPath: nil), hideMenuButton: false, hideBottmSection: false, saveDataToDB: true, fromHistory: false, ttsAlertControllerDelegate: nil, isRecreation: false, fromSpeech: true, fromScreenPurpose: fromScreenPurpose)
     }
 
     @objc private func pronunciationTextUpdate(notification:NSNotification) {
@@ -743,6 +745,7 @@ extension SpeechProcessingViewController : SocketManagerDelegate{
 extension SpeechProcessingViewController: HomeVCDelegate{
     func startRecord() {
         PrintUtility.printLog(tag: TAG, text: "Start Recording")
+        UserDefaultsProperty<Bool>(kHistoryTTS).value = false
         self.timer?.invalidate()
         ActivityIndicator.sharedInstance.hide()
         isFinalProvided = false
@@ -831,7 +834,7 @@ extension SpeechProcessingViewController{
         self.talkButtonImageView.image = #imageLiteral(resourceName: "talk_button").withRenderingMode(.alwaysOriginal)
     }
     
-    func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false){
+    func showTTSScreen(chatItemModel: HistoryChatItemModel, hideMenuButton: Bool, hideBottmSection: Bool, saveDataToDB: Bool, fromHistory:Bool, ttsAlertControllerDelegate: TtsAlertControllerDelegate?, isRecreation: Bool, fromSpeech: Bool = false, fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?){
         let chatItem = chatItemModel.chatItem!
         if saveDataToDB == true{
             do {
@@ -849,6 +852,7 @@ extension SpeechProcessingViewController{
         ttsVC.isFromHistory = fromHistory
         ttsVC.isRecreation = isRecreation
         ttsVC.isFromSpeechProcessing = fromSpeech
+        ttsVC.fromScreenPurpose = fromScreenPurpose
 
         self.homeVC?.add(asChildViewController: ttsVC, containerView:homeVC!.homeContainerView, animation: nil)
         homeVC?.hideSpeechView()
