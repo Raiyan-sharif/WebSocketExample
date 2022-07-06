@@ -122,6 +122,8 @@ class CustomAlertDailogViewController: BaseViewController {
     }
 
     @IBAction func onCancel(_ sender: Any) {
+        analytics.buttonTap(screenName: GASettingScreenName,
+                                 buttonName: analytics.buttonCancel)
         dismiss(animated: true)
     }
 

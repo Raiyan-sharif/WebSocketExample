@@ -396,6 +396,7 @@ let kTempo_param = "tempo"
 
 let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
 
-
+//Google Analytics Variables
+var GASettingScreenName = ""
 
 

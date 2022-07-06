@@ -127,6 +127,10 @@ class SystemLanguageViewController: BaseViewController {
     
     //MARK: - IBActions
     @objc func backButtonTapped() {
+        analytics.settingSystemLanguage(screenName: analytics.settingSysLang,
+                                        button: analytics.buttonBack,
+                                        before: currentSelectedLanguage,
+                                        after: selectedLanguage!)
         self.navigationController?.popViewController(animated: true)
         if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
             let languageItem = languageList[mIndexPath.row]

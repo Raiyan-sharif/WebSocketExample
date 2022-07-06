@@ -79,6 +79,9 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selecteText = dataSource[indexPath.row]
+        analytics.settingTextSize(screenName: analytics.settingTextSize,
+                                  menu: analytics.buttonTextSize,
+                                  size: selecteText)
         FontUtility.setFontSize(selectedFont: selecteText)
         tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
