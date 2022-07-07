@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +28,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dg1-d7-fg6">
-                                <rect key="frame" x="10" y="100" width="241" height="74"/>
+                                <rect key="frame" x="20" y="100" width="221" height="74"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -37,10 +37,10 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="J2K-vB-8n7" firstAttribute="top" secondItem="Z3h-Md-QS9" secondAttribute="top" id="06m-JZ-uFx"/>
-                            <constraint firstAttribute="trailing" secondItem="dg1-d7-fg6" secondAttribute="trailing" constant="10" id="9bQ-dX-EuO"/>
+                            <constraint firstAttribute="trailing" secondItem="dg1-d7-fg6" secondAttribute="trailing" constant="20" id="9bQ-dX-EuO"/>
                             <constraint firstAttribute="bottom" secondItem="dg1-d7-fg6" secondAttribute="bottom" id="B75-tD-0JD"/>
                             <constraint firstAttribute="trailing" secondItem="J2K-vB-8n7" secondAttribute="trailing" constant="20" id="I3a-cw-KfB"/>
-                            <constraint firstItem="dg1-d7-fg6" firstAttribute="leading" secondItem="Z3h-Md-QS9" secondAttribute="leading" constant="10" id="Yvb-Oa-7SP"/>
+                            <constraint firstItem="dg1-d7-fg6" firstAttribute="leading" secondItem="Z3h-Md-QS9" secondAttribute="leading" constant="20" id="Yvb-Oa-7SP"/>
                             <constraint firstItem="J2K-vB-8n7" firstAttribute="leading" secondItem="Z3h-Md-QS9" secondAttribute="leading" constant="20" id="hnx-cb-Jxk"/>
                             <constraint firstItem="dg1-d7-fg6" firstAttribute="centerX" secondItem="Z3h-Md-QS9" secondAttribute="centerX" id="n5U-hk-FRl"/>
                             <constraint firstItem="dg1-d7-fg6" firstAttribute="top" secondItem="J2K-vB-8n7" secondAttribute="bottom" id="ruD-VD-puQ"/>
