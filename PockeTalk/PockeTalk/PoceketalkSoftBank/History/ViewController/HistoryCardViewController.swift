@@ -363,7 +363,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             let chatItem = self.historyViewModel.items.value[indexpath.item] as! ChatEntity
             self.historyViewModel.deleteHistory(indexpath.item)
             self.deletedCellHeight = cell.frame.height
-            self.historyCardDeleteSwipeLogEvent(src: chatItem.textNativeLanguage!, dst: chatItem.textTranslatedLanguage!)
+            self.historyCardDeleteSwipeLogEvent(src: chatItem.textNativeLanguage!, des: chatItem.textTranslatedLanguage!)
             
             self.collectionView.performBatchUpdates { [weak self]  in
                 guard let `self`  = self else {return}
@@ -392,7 +392,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
                 return
             }
             let chatItem = self.historyViewModel.items.value[collectionView.indexPathForItem(at: collectionView.convert(point, from:collectionView))!.item] as! ChatEntity
-            self.historyCardFavoriteSwipeLogEvent(src: chatItem.textNativeLanguage!, dst: chatItem.textTranslatedLanguage!)
+            self.historyCardFavoriteSwipeLogEvent(src: chatItem.textNativeLanguage!, des: chatItem.textTranslatedLanguage!)
             // Favorite limit check and dailog show
             if item.chatIsLiked == IsLiked.noLike.rawValue {
                 var favoriteItemCount: Int = 0
@@ -427,7 +427,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             let chatItem = self.historyViewModel.items.value[indexpath.item] as! ChatEntity
-            self.historyCardSelectLogEvent(src: chatItem.textNativeLanguage!, dst: chatItem.textTranslatedLanguage!)
+            self.historyCardSelectLogEvent(src: chatItem.textNativeLanguage!, des: chatItem.textTranslatedLanguage!)
             self.openTTTResult(indexpath)
         }
         
@@ -438,7 +438,7 @@ extension HistoryCardViewController: UICollectionViewDelegate, UICollectionViewD
             let cellPoint =  collectionView.convert(point, from:collectionView)
             let indexpath = collectionView.indexPathForItem(at: cellPoint)!
             let chatItem = self.historyViewModel.items.value[indexpath.item] as! ChatEntity
-            self.historyCardLongTapLogEvent(src: chatItem.textNativeLanguage!, dst: chatItem.textTranslatedLanguage!)
+            self.historyCardLongTapLogEvent(src: chatItem.textNativeLanguage!, des: chatItem.textTranslatedLanguage!)
             self.openTTTResultAlert(indexpath)
         }
         return cell
@@ -679,40 +679,40 @@ extension HistoryCardViewController : SocketManagerDelegate{
 
 //MARK: - Google analytics log events
 extension HistoryCardViewController {
-    func historyCardFavoriteSwipeLogEvent(src: String, dst: String) {
+    private func historyCardFavoriteSwipeLogEvent(src: String, des: String) {
         analytics.historyItemSelect(screenName: analytics.history,
-                                    buttonName: analytics.buttonFavo,
+                                    buttonName: analytics.buttonFav,
                                     srcLanguageName: src,
-                                    desLanguageName: dst,
+                                    desLanguageName: des,
                                     buttonParam: analytics.swipeMenu,
                                     event: .swipe)
     }
 
-    func historyCardDeleteSwipeLogEvent(src: String, dst: String) {
+    private func historyCardDeleteSwipeLogEvent(src: String, des: String) {
         analytics.historyItemSelect(screenName: analytics.history,
                                     buttonName: analytics.buttonDelete,
                                     srcLanguageName: src,
-                                    desLanguageName: dst,
+                                    desLanguageName: des,
                                     buttonParam: analytics.swipeMenu,
                                     event: .swipe)
     }
 
-    func historyCardSelectLogEvent(src: String, dst: String) {
+    private func historyCardSelectLogEvent(src: String, des: String) {
         analytics.historyItemSelect(screenName: analytics.history,
                                     buttonName: analytics.buttonCard,
                                     srcLanguageName: src,
-                                    desLanguageName: dst,
+                                    desLanguageName: des,
                                     buttonParam: analytics.selectMenu,
                                     event: .select)
     }
 
-    func historyCardLongTapLogEvent(src: String, dst: String) {
+    private func historyCardLongTapLogEvent(src: String, des: String) {
         analytics.historyItemSelect(screenName: analytics.history,
                                     buttonName: analytics.buttonLongTap,
                                     srcLanguageName: src,
-                                    desLanguageName: dst,
-                                    buttonParam: analytics.longtapMenu,
-                                    event: .longtap)
+                                    desLanguageName: des,
+                                    buttonParam: analytics.longTapMenu,
+                                    event: .longTap)
     }
 
 }

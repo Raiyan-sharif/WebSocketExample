@@ -126,6 +126,11 @@ class CameraLanguageSelectionViewModel:BaseModel{
         return detectedLanguageItemsCamera
     }
 
+    func getLocalizedAutomaticRecognitionString() -> String {
+        let currentLangCode = LanguageManager.shared.currentLanguage.rawValue
+        return autoRecognitionNames[currentLangCode] ?? "Automatic Recognition"
+    }
+
     func loadCameraLanguageList() -> [String]?{
         PrintUtility.printLog(tag: TAG,text: "loadCameraLanguageList called")
         //let sysLangCode = LanguageManager.shared.currentLanguage.rawValue

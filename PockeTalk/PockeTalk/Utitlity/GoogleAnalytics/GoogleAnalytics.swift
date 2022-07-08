@@ -10,9 +10,10 @@ enum GoogleAnalyticEvent: String {
     case pressButton = "press_btn"
     case swipe = "swipe"
     case select = "select"
-    case longtap = "longtap"
+    case longTap = "longtap"
     case voiceInput = "voice_input"
     case translate = "translate"
+    case takePicture = "take_pic"
 }
 
 struct GoogleAnalytics {
@@ -45,7 +46,7 @@ struct GoogleAnalytics {
     let settingResetHistory = "setting_reset_history"
     let settingResetCam = "setting_reset_cam"
 
-    let settingResetFavo = "setting_reset_favo"
+    let settingResetFav = "setting_reset_favo"
     let settingResetAll = "setting_reset_all"
     let home = "main"
     let mainSourceLanguage = "main_select_src_lang"
@@ -63,7 +64,7 @@ struct GoogleAnalytics {
     let mainResultMenuPractice = "main_result_menu_practice"
     let history = "history"
     let historyLongTapMenu = "history_longtap_menu"
-    let historyLongTapMenuSelectDstLang = "history_longtap_menu_select_dst_lang"
+    let historyLongTapMenuSelectDesLang = "history_longtap_menu_select_dst_lang"
 
     let historyLongTapMenuPractice = "history_longtap_menu_practice"
     let historyLongTapMenuPracticeCheck = "history_longtap_menu_practice_check"
@@ -73,13 +74,24 @@ struct GoogleAnalytics {
     let historyLongTapMenuPracticeWrongSpeed = "history_longtap_menu_practice_wrong_speed"
     let historyCard = "history_card"
     let historyCardMenu = "history_card_menu"
-    let historyCardMenuSelectDstLang = "history_card_menu_select_dst_lang"
+    let historyCardMenuSelectDesLang = "history_card_menu_select_dst_lang"
 
     let historyCardMenuPractice = "history_card_menu_practice"
     let historyCardMenuPracticeCheck = "history_card_menu_practice_check"
     let historyCardMenuPracticeCheckSpeed = "history_card_menu_practice_check_speed"
     let historyCardMenuPracticeWrong = "history_card_menu_practice_wrong"
 
+    let camTranslate = "cam_translate"
+    let camTranslateSelectSrcLang = "cam_translate_select_src_lang"
+    let camTranslateSelectDesLang = "cam_translate_select_dst_lang"
+    let camTranslateHistory = "cam_translate_history"
+
+    let camTranslateConfirm = "cam_translate_confirm"
+    let camTranslateResultDetail = "cam_translate_result_detail"
+    let camTranslateResult = "cam_translate_result"
+    let camTranslateResultDetailMenu = "cam_translate_result_detail_menu"
+
+    let camTranslateResultDetailMenuShare = "cam_translate_result_detail_menu_share"
     let historyCardMenuPracticeWrongSpeed = "history_card_menu_practice_wrong_speed"
     let historyCardMenuShare = "history_card_menu_share"
     let cameraTranslationResultDetailsMenuShare = "cam_translate_result_detail_menu_share"
@@ -100,8 +112,18 @@ struct GoogleAnalytics {
     private let voiceInputMenu = "voice_input_menu"
     private let count = "count"
 
+    private let takePic = "take_pic"
+    private let expansion = "expansion"
+    private let camSourceLangName = "cam_src_lang_name"
+    private let camDestinationLangName = "cam_dst_lang_name"
+
+    private let srcLangName = "src_lang_name"
+    private let desLangName = "dst_lang_name"
+    private let trimming = "trimming"
+    private let displayStatus = "display_status"
+
     let swipeMenu = "swipe_menu"
-    let longtapMenu = "longtap_menu"
+    let longTapMenu = "longtap_menu"
 
     //MARK: - Event parameter value properties
     let buttonAgree = "agree"
@@ -126,7 +148,7 @@ struct GoogleAnalytics {
 
     let buttonLicense = "license"
     let buttonCam = "cam"
-    let buttonFavo = "favo"
+    let buttonFav = "favo"
     let buttonAll = "all"
 
     let buttonDelete = "delete"
@@ -167,7 +189,12 @@ struct GoogleAnalytics {
     let app = "app"
     let buttonCard = "card"
     let buttonLongTap = "longtap"
-    let buttonHistryMenu = "histry_menu"
+    let buttonHistoryMenu = "histry_menu"
+
+    let buttonCameraSourceLang = "select_cam_src_lang"
+    let buttonCameraDestinationLang = "select_cam_dst_lang"
+    let buttonCamHistory = "cam_history"
+    let buttonDisplayHistory = "display_history"
 
     enum PronunciationPlayBackSpeed: String {
         case normal = "Normal"
@@ -186,7 +213,6 @@ struct GoogleAnalytics {
     private let userUniqueId = "udid"
     private let firebaseGeneratedUniqueId = "uuid"
     private let deviceUniqueId = "dvid"
-
     private let iOSOperatingSystemName = "ios"
 
     //MARK: - Set UserProperty
@@ -352,6 +378,38 @@ struct GoogleAnalytics {
                         sourceLanguageName: srcLanguageName,
                         destinationLanguageName: desLanguageName]
         logEvent(event: .translate, parameters: parameter)
+    }
+
+    //MARK: - Camera logEvent functions
+    func takePicture(screenName: String, zoom: String, source: String, destination: String) {
+        let parameter = [mainScreenName: screenName,
+                        expansion: "Zoom \(zoom)x when taking picture",
+                        camSourceLangName: source,
+                        camDestinationLangName: destination]
+        logEvent(event: .takePicture, parameters: parameter)
+    }
+
+    func cameraLanguageSelect(screenName: String, button: String, langName: String, fromSrc: Bool) {
+        let param = fromSrc ? srcLangName : desLangName
+        let parameter = [mainScreenName: screenName,
+                        buttonParamName: button,
+                        param: langName]
+        logEvent(event: .pressButton, parameters: parameter)
+    }
+
+    func cameraCrop(screenName: String, button: String, crop: Bool) {
+        let status = crop ? "ON" : "OFF"
+        let parameter = [mainScreenName: screenName,
+                        buttonParamName: button,
+                        trimming: status]
+        logEvent(event: .pressButton, parameters: parameter)
+    }
+
+    func cameraResult(screenName: String, button: String, mode: String) {
+        let parameter = [mainScreenName: screenName,
+                        buttonParamName: button,
+                        displayStatus: mode]
+        logEvent(event: .pressButton, parameters: parameter)
     }
 
     //MARK: - Common logEvent functions

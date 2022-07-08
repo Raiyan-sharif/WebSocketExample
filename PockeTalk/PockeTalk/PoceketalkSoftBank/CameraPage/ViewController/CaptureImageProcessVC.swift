@@ -744,6 +744,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
 
     @objc func modeSwitchButtonEventListener(_ button: UIButton) {
+        buttonModeSwitchLogEvent()
         UserDefaults.standard.set(true, forKey: "modeSwitchState")
         UserDefaults.standard.set(false, forKey: isTransLationSuccessful)
         socketManager.connect()
@@ -893,6 +894,7 @@ extension CaptureImageProcessVC: LoaderDelegate{
 //MARK: - CameraTTSDialogProtocol
 extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     func removeDialogEvent() {
+        buttonBackLogEvent()
         self.stopTTS()
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(backButton)
@@ -925,6 +927,7 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
     }
 
     func cameraTTSDialogShowContextMenu() {
+        buttonMenuLogEvent()
         stopTTS()
         self.view.addSubview(cameraTTSContextMenu)
     }
@@ -953,9 +956,14 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
 extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
     func cameraTTSContextMenuSendMail() {
         // Send an email implementaiton goes here
+        buttonShareLogEvent()
         PrintUtility.printLog(tag: "TAG", text: "Share in Camera")
         self.dismiss(animated: true, completion: nil)
         shareTranslation()
+    }
+
+    func cameraTTSContextMenuCancel() {
+        buttonCancelLogEvent()
     }
 }
 
@@ -1064,5 +1072,32 @@ extension CaptureImageProcessVC {
         analytics.translateResultMenuShare(screenName: analytics.cameraTranslationResultDetailsMenuShare,
                                            eventParamName: analytics.app,
                                            sharedAppName: activityString)
+    }
+
+    private func buttonModeSwitchLogEvent() {
+        let modeState = UserDefaults.standard.string(forKey: modeSwitchType) == "lineMode" ? "line_mode" : "not"
+        analytics.cameraResult(screenName: analytics.camTranslateResult,
+                               button: analytics.buttonDisplayHistory,
+                               mode: modeState)
+    }
+
+    private func buttonBackLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateResultDetail,
+                            buttonName: analytics.buttonBack)
+    }
+
+    private func buttonMenuLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateResultDetail,
+                            buttonName: analytics.buttonMenu)
+    }
+
+    private func buttonShareLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateResultDetailMenu,
+                            buttonName: analytics.buttonShare)
+    }
+
+    private func buttonCancelLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateResultDetailMenu,
+                            buttonName: analytics.buttonCancel)
     }
 }

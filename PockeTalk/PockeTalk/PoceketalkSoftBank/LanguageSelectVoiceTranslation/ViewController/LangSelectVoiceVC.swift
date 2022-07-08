@@ -427,7 +427,7 @@ class LangSelectVoiceVC: BaseViewController {
                 analyticsScreenName = analytics.mainResultMenuSelectDestinationLang
             }
         } else if fromScreenPurpose == .HistoryScrren {
-            analyticsScreenName = isFromHistoryTTS ? analytics.historyCardMenuSelectDstLang : analytics.historyLongTapMenuSelectDstLang
+            analyticsScreenName = isFromHistoryTTS ? analytics.historyCardMenuSelectDesLang : analytics.historyLongTapMenuSelectDesLang
         }
     }
 }
@@ -544,11 +544,11 @@ extension LangSelectVoiceVC {
                     analytics.updateDestinationLanguage(screenName: screenName,
                                                         buttonName: analytics.buttonOK,
                                                         desLanguageName: selectedLanguageName)
-                } else if screenName == analytics.historyLongTapMenuSelectDstLang {
+                } else if screenName == analytics.historyLongTapMenuSelectDesLang {
                     analytics.updateDestinationLanguage(screenName: screenName,
                                                         buttonName: analytics.buttonOK,
                                                         desLanguageName: selectedLanguageName)
-                } else if screenName == analytics.historyCardMenuSelectDstLang {
+                } else if screenName == analytics.historyCardMenuSelectDesLang {
                     analytics.updateDestinationLanguage(screenName: screenName,
                                                         buttonName: analytics.buttonOK,
                                                         desLanguageName: selectedLanguageName)

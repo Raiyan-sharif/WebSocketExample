@@ -912,7 +912,7 @@ extension TtsAlertController {
 
     private func tapMenuLogEvent() {
         if let screenName = self.analyticsScreenName {
-            let button = isFromHistory ? analytics.buttonHistryMenu : analytics.buttonMenu
+            let button = isFromHistory ? analytics.buttonHistoryMenu : analytics.buttonMenu
             analytics.buttonTap(screenName: screenName,
                                 buttonName: button)
         }

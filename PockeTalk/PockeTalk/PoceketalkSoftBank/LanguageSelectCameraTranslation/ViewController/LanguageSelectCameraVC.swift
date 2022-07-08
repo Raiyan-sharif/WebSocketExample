@@ -143,11 +143,13 @@ class LanguageSelectCameraVC: BaseViewController {
         PrintUtility.printLog(tag: TAG , text: " isnativeval \(String(describing: langSelectFor))")
         saveCameraLangSelectionindex()
         if langSelectFor! {
+            fromLanguageOkButtonLogEvent()
             if isLanguageSupportRecognition(code: selectedLanguageCode){
                 PrintUtility.printLog(tag: TAG, text: "code \(selectedLanguageCode) has recognition support")
                 CameraLanguageSelectionViewModel.shared.fromLanguage = selectedLanguageCode
             }
         }else{
+            targetLanguageOkButtonLogEvent()
             CameraLanguageSelectionViewModel.shared.targetLanguage = selectedLanguageCode
             UserDefaultsProperty<String>(KCameraTempTargetLanguage).value = selectedLanguageCode
         }
@@ -382,6 +384,12 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
 //MARK: - FloatingMikeButtonDelegate
 extension LanguageSelectCameraVC: FloatingMikeButtonDelegate{
     func didTapOnMicrophoneButton() {
+        let langSelectFor = UserDefaultsProperty<Bool>(KCameraLanguageFrom).value
+        if langSelectFor! {
+            fromLanguageVoiceButtonLogEvent()
+        }else{
+            targetLanguageVoiceButtonLogEvent()
+        }
         PrintUtility.printLog(tag: TAG, text: "Language select voice camera Tap")
         if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
             ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
@@ -390,5 +398,32 @@ extension LanguageSelectCameraVC: FloatingMikeButtonDelegate{
                 navigateToLanguageScene()
             }
         }
+    }
+}
+
+//MARK: - Google analytics log events
+extension LanguageSelectCameraVC {
+    private func fromLanguageOkButtonLogEvent() {
+        analytics.cameraLanguageSelect(screenName: analytics.camTranslateSelectSrcLang,
+                                       button: analytics.buttonOK,
+                                       langName: LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguageCode)?.name ?? CameraLanguageSelectionViewModel.shared.getLocalizedAutomaticRecognitionString(),
+                                       fromSrc: true)
+    }
+
+    private func fromLanguageVoiceButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateSelectSrcLang,
+                            buttonName: analytics.buttonVoiceInput)
+    }
+
+    private func targetLanguageOkButtonLogEvent() {
+        analytics.cameraLanguageSelect(screenName: analytics.camTranslateSelectDesLang,
+                                       button: analytics.buttonOK,
+                                       langName: LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguageCode)?.name ?? "",
+                                       fromSrc: false)
+    }
+
+    private func targetLanguageVoiceButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateSelectDesLang,
+                            buttonName: analytics.buttonVoiceInput)
     }
 }

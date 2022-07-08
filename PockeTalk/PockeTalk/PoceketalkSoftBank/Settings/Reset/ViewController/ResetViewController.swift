@@ -104,12 +104,12 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Camera History")
         case ResetItemType.clearFavourite.rawValue:
-            GASettingScreenName = analytics.settingResetFavo
+            GASettingScreenName = analytics.settingResetFav
             analytics.buttonTap(screenName: analytics.settingReset,
-                                buttonName: analytics.buttonFavo)
+                                buttonName: analytics.buttonFav)
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
-                self.analytics.buttonTap(screenName: self.analytics.settingResetFavo,
+                self.analytics.buttonTap(screenName: self.analytics.settingResetFav,
                                          buttonName: self.analytics.buttonDelete)
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 FileUtility.deleteAllFavoriteTTSAudioFiles()

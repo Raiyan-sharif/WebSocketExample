@@ -311,7 +311,7 @@ extension AlertReusableViewController {
     private func favoriteLogEvent(isLiked: Bool) {
         if let screenName = analyticsScreenName {
             analytics.addToFavorite(screenName: screenName,
-                                    buttonName: analytics.buttonFavo,
+                                    buttonName: analytics.buttonFav,
                                     isLiked: isLiked)
         }
     }
