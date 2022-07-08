@@ -79,9 +79,7 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selecteText = dataSource[indexPath.row]
-        analytics.settingTextSize(screenName: analytics.settingTextSize,
-                                  menu: analytics.buttonTextSize,
-                                  size: selecteText)
+        selectTextSizeLogEvent(selecteText: selecteText)
         FontUtility.setFontSize(selectedFont: selecteText)
         tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -129,4 +127,13 @@ extension TextSizeViewController : UITableViewDataSource, UITableViewDelegate{
         self.dismiss(animated: false, completion: nil)
     }
 
+}
+
+//MARK: - Google analytics log events
+extension TextSizeViewController {
+    private func selectTextSizeLogEvent(selecteText: String) {
+        analytics.settingTextSize(screenName: analytics.settingTextSize,
+                                  menu: analytics.buttonTextSize,
+                                  size: selecteText)
+    }
 }

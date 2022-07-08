@@ -53,8 +53,7 @@ class InformationSettingViewController: BaseViewController, UITableViewDelegate,
         switch infoType
         {
         case InformationSettingsItemType.appVersion.rawValue:
-            analytics.buttonTap(screenName: analytics.settingInfo,
-                                buttonName: analytics.buttonVersion)
+            menuVersionLogEvent()
             let appVersion = getAppVersion()
             PrintUtility.printLog(tag: TAG, text: "appVersion - \(appVersion)")
             let alertService = CustomAlertViewModel()
@@ -64,8 +63,7 @@ class InformationSettingViewController: BaseViewController, UITableViewDelegate,
             self.present(alert, animated: true, completion: nil)
 
         case InformationSettingsItemType.licenseInfo.rawValue:
-            analytics.buttonTap(screenName: analytics.settingInfo,
-                                buttonName: analytics.buttonLicense)
+            menuLicenseLogEvent()
             PrintUtility.printLog(tag: TAG, text: "Open LicenseInfo view")
             let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "LicenseInfoViewController") as! LicenseInfoViewController
@@ -91,5 +89,18 @@ class InformationSettingViewController: BaseViewController, UITableViewDelegate,
             return version as? String ?? ""
         }
         return ""
+    }
+}
+
+//MARK: - Google analytics log events
+extension InformationSettingViewController {
+    private func menuVersionLogEvent() {
+        analytics.buttonTap(screenName: analytics.settingInfo,
+                            buttonName: analytics.buttonVersion)
+    }
+
+    private func menuLicenseLogEvent() {
+        analytics.buttonTap(screenName: analytics.settingInfo,
+                            buttonName: analytics.buttonLicense)
     }
 }

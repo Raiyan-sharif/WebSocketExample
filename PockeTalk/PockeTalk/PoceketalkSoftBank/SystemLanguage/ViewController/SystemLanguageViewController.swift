@@ -127,10 +127,7 @@ class SystemLanguageViewController: BaseViewController {
     
     //MARK: - IBActions
     @objc func backButtonTapped() {
-        analytics.settingSystemLanguage(screenName: analytics.settingSysLang,
-                                        button: analytics.buttonBack,
-                                        before: currentSelectedLanguage,
-                                        after: selectedLanguage!)
+        buttonBackLogEvent(beforeSysLang: currentSelectedLanguage, afterSysLang: selectedLanguage!)
         self.navigationController?.popViewController(animated: true)
         if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
             let languageItem = languageList[mIndexPath.row]
@@ -208,3 +205,12 @@ extension SystemLanguageViewController: UITableViewDelegate{
     }
 }
 
+//MARK: - Google analytics log events
+extension SystemLanguageViewController {
+    private func buttonBackLogEvent(beforeSysLang: String, afterSysLang: String) {
+        analytics.settingSystemLanguage(screenName: analytics.settingSysLang,
+                                        button: analytics.buttonBack,
+                                        beforeSysLang: beforeSysLang,
+                                        afterSysLang: afterSysLang)
+    }
+}

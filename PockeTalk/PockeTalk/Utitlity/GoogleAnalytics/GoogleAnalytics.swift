@@ -104,8 +104,8 @@ struct GoogleAnalytics {
 
     let selectMenu = "select_menu"
     private let textSize = "text_size"
-    private let beforeSysLang = "before_sys_lang"
-    private let afterSysLang = "after_sys_lang"
+    private let beforeSysLanguage = "before_sys_lang"
+    private let afterSysLanguage = "after_sys_lang"
 
     private let favoriteStatus = "favo_status"
     private let speed = "speed"
@@ -296,11 +296,11 @@ struct GoogleAnalytics {
         logEvent(event: .pressButton, parameters: parameter)
     }
 
-    func settingSystemLanguage(screenName: String, button: String, before: String, after: String) {
+    func settingSystemLanguage(screenName: String, button: String, beforeSysLang: String, afterSysLang: String) {
         let parameter = [mainScreenName: screenName,
                         buttonParamName: button,
-                        beforeSysLang: before,
-                        afterSysLang: after]
+                        beforeSysLanguage: beforeSysLang,
+                        afterSysLanguage: afterSysLang]
         logEvent(event: .pressButton, parameters: parameter)
     }
 

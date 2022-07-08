@@ -20,8 +20,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
     let window = UIApplication.shared.keyWindow!
 
     @IBAction func actionBack(_ sender: UIButton) {
-        analytics.buttonTap(screenName: analytics.setting,
-                            buttonName: analytics.buttonBack)
+        buttonBackLogEvent()
         let transition = CATransition()
         transition.duration = kSettingsScreenTransitionDuration
         transition.type = CATransitionType.reveal
@@ -91,37 +90,31 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         switch settingsType
         {
         case SettingsItemType.textSize.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonTextSize)
+            menuTextSizeLogEvent()
             let textSizeVC = TextSizeViewController()
             textSizeVC.modalPresentationStyle = .overCurrentContext
             textSizeVC.delegate = self
             self.navigationController?.present(textSizeVC, animated: false, completion: nil)
         case SettingsItemType.languageChange.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonSysLang)
+            menuSystemLanguageLogEvent()
             PrintUtility.printLog(tag: "LanguageChange: ", text: "LanguageChange")
             self.navigationController?.pushViewController(SystemLanguageViewController(), animated: true)
         case SettingsItemType.support.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonSupport)
+            menuSupportLogEvent()
             PrintUtility.printLog(tag: "support: ", text: "support")
             GlobalMethod.openUrlInBrowser(url: GlobalMethod.getURLString().supportURL)
         case SettingsItemType.userManual.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonManual)
+            menuManualLogEvent()
             PrintUtility.printLog(tag: "userManual: ", text: "userManual")
             GlobalMethod.openUrlInBrowser(url: GlobalMethod.getURLString().userManuelURL)
         case SettingsItemType.information.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonInfo)
+            menuInformationLogEvent()
             PrintUtility.printLog(tag: "information: ", text: "Information 2nd depth")
             let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "InformationSettingViewController") as! InformationSettingViewController
             self.navigationController?.pushViewController(viewController, animated: true)
         case SettingsItemType.reset.rawValue:
-            analytics.buttonTap(screenName: analytics.setting,
-                                buttonName: analytics.buttonReset)
+            menuResetLogEvent()
             let storyboard = UIStoryboard.init(name: "Reset", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "ResetViewController") as! ResetViewController
             self.navigationController?.pushViewController(viewController, animated: true)
@@ -137,4 +130,42 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
 
 protocol fontSizeChanged : AnyObject {
     func fontSizeChanged(value: Bool)
+}
+
+//MARK: - Google analytics log events
+extension SettingsViewController {
+    private func buttonBackLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonBack)
+    }
+
+    private func menuTextSizeLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonTextSize)
+    }
+
+    private func menuSystemLanguageLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonSysLang)
+    }
+
+    private func menuSupportLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonSupport)
+    }
+
+    private func menuManualLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonManual)
+    }
+
+    private func menuInformationLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonInfo)
+    }
+
+    private func menuResetLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.buttonReset)
+    }
 }
