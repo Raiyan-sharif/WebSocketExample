@@ -12,6 +12,7 @@ enum SettingsItemType: String, CaseIterable {
     case information = "information"
     case support = "Support"
     case reset = "Reset"
+    case feedback = "Feedback"
     case response = "Network Response"
     //    case softBank = "SoftBank"
 

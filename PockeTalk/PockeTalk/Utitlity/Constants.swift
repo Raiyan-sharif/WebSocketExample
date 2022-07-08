@@ -42,7 +42,20 @@ let STAGING_SUPPORT_URL = "https://rd.snxt.jp/PA002"
 let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
 let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
 
-
+//MARK: - Feedback URL
+let FEEDBACK_JAPANESE_URL = "https://rd.snxt.jp/PA026"
+let FEEDBACK_ENGLISH_URL = "https://rd.snxt.jp/PA027"
+let FEEDBACK_CHINESE_SIMPLIFIED_URL = "https://rd.snxt.jp/PA028"
+let FEEDBACK_CHINESE_TRADITIONAL_URL = "https://rd.snxt.jp/PA029"
+let FEEDBACK_SPANISH_URL = "https://rd.snxt.jp/PA030"
+let FEEDBACK_PORTGUESE_URL = "https://rd.snxt.jp/PA031"
+let FEEDBACK_RUSSIAN_URL = "https://rd.snxt.jp/PA032"
+let FEEDBACK_FRENCH_URL = "https://rd.snxt.jp/PA033"
+let FEEDBACK_GERMAN_URL = "https://rd.snxt.jp/PA034"
+let FEEDBACK_KOREAN_URL = "https://rd.snxt.jp/PA035"
+let FEEDBACK_ITALIAN_URL = "https://rd.snxt.jp/PA036"
+let FEEDBACK_THAI_URL = "https://rd.snxt.jp/PA037"
+let FEEDBACK_MALAY_URL = "https://rd.snxt.jp/PA038"
 
 
 //MARK: - Notification Name

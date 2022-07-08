@@ -78,6 +78,41 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
         return 45
     }
 
+    func getFeedbackURL() -> String{
+        let currentSelection = LanguageManager.shared.currentLanguage
+
+        switch currentSelection{
+        case .en:
+            return FEEDBACK_ENGLISH_URL
+        case .ja:
+            return FEEDBACK_JAPANESE_URL
+        case .ko:
+            return FEEDBACK_KOREAN_URL
+        case .ru:
+            return FEEDBACK_RUSSIAN_URL
+        case .fr:
+            return FEEDBACK_FRENCH_URL
+        case .es:
+            return FEEDBACK_SPANISH_URL
+        case .it:
+            return FEEDBACK_ITALIAN_URL
+        case .de:
+            return FEEDBACK_GERMAN_URL
+        case .ms:
+            return FEEDBACK_MALAY_URL
+        case .th:
+            return FEEDBACK_THAI_URL
+        case .zhHans:
+            return FEEDBACK_CHINESE_SIMPLIFIED_URL
+        case .zhHant:
+            return FEEDBACK_CHINESE_TRADITIONAL_URL
+        case .ptPT:
+            return FEEDBACK_PORTGUESE_URL
+        default:
+            return FEEDBACK_ENGLISH_URL
+        }
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let settingsType =  SettingsItemType.settingsItems[indexPath.row]
         if let cell = tableView.cellForRow(at: indexPath) {
@@ -112,6 +147,9 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             let viewController = storyboard.instantiateViewController(withIdentifier: "ResetViewController") as! ResetViewController
             self.navigationController?.pushViewController(viewController, animated: true)
             PrintUtility.printLog(tag: "Reset: ", text: "Reset")
+        case SettingsItemType.feedback.rawValue:
+            PrintUtility.printLog(tag: "feedback: ", text: "feedback")
+            GlobalMethod.openUrlInBrowser(url: self.getFeedbackURL())
         case SettingsItemType.response.rawValue:
             self.navigationController?.pushViewController(NetworkLoggerViewController(), animated: true)
         default:
