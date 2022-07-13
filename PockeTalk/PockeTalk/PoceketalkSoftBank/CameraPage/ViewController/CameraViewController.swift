@@ -547,27 +547,28 @@ extension CameraViewController {
     }
     
     func pointInCamera(centerPoint:CGPoint, circleColor: UIColor){
-        ///Get the path based on the center point
-        let circlePath = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: startAngle, endAngle:endAngle, clockwise: true)
-        
-        ///Draw the layer
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = circlePath.cgPath
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = circleColor.cgColor
-        shapeLayer.lineWidth = lineWidth
-        
-        cameraPreviewView.layer.addSublayer(shapeLayer)
-        self.zoomLevel.isHidden = false
-        
-        ///Remove the circle
-        DispatchQueue.main.asyncAfter(deadline: .now() + removeTime) {
-            self.zoomLevel.isHidden = true
-            shapeLayer.removeFromSuperlayer()
+        let isInRegion = cameraPreviewView.frame.maxY > centerPoint.y + radius + radius
+        if(isInRegion){
+            ///Get the path based on the center point
+            let circlePath = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: startAngle, endAngle:endAngle, clockwise: true)
+            ///Draw the layer
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.clear.cgColor
+            shapeLayer.strokeColor = circleColor.cgColor
+            shapeLayer.lineWidth = lineWidth
+            cameraPreviewView.layer.addSublayer(shapeLayer)
+            self.zoomLevel.isHidden = false
+            ///Remove the circle
+            DispatchQueue.main.asyncAfter(deadline: .now() + removeTime) {
+                self.zoomLevel.isHidden = true
+                shapeLayer.removeFromSuperlayer()
+            }
+
         }
-        
+
     }
-    
+
     private func startConfirmController(uiImage: UIImage) {
         let vc = ImageCroppingViewController(image: uiImage, croppingParameters: croppingParameters)
         vc.onCompletion = { [weak self] image, asset in
