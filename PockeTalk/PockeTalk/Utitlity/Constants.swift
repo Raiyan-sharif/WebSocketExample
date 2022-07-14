@@ -414,6 +414,7 @@ let kTempo_param = "tempo"
 let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
 
 let kAlpha3CountryCodeJapan = "JPN"
+let kUserPassedTc = "kUserPassedTc"
 
 
 

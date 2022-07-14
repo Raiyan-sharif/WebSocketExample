@@ -146,11 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
     {
-        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "========In Free Trial==========")
-            showAlertFromAppDelegates(msg: "KFreeTrialErrorMessage".localiz())
-            return false
-        }
         // Get URL components from the incoming user activity.
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
               let incomingURL = userActivity.webpageURL,

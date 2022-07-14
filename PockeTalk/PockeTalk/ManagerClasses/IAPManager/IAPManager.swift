@@ -23,6 +23,7 @@ enum ViewControllerType {
     case purchasePlan
     case statusCheck
     case permission
+    case walkthrough
 }
 
 public enum IAPError: Error {

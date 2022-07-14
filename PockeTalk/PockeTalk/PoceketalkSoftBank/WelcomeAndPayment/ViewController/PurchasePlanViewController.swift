@@ -34,6 +34,7 @@ class PurchasePlanViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.hideNoInternetAlert()
                     if(self.shouldCallLicenseIssuanceApi){
+                        self.showLoader()
                         self.checkFreeTrialEligibility()
                     }else if(self.shouldCallLicenseConfirmationApi){
                         self.callLicenseConfirmationApi()
@@ -42,6 +43,7 @@ class PurchasePlanViewController: UIViewController {
                     }
                 }
             }else {
+                self.hideLoader()
                 self.showNoInternetAlert()
             }
         }
@@ -159,8 +161,8 @@ class PurchasePlanViewController: UIViewController {
 
                         if let productPurchaseError = error {
                             DispatchQueue.main.async {
+                                self.hideLoader()
                                 self.showIAPRelatedError(productPurchaseError)
-                                ActivityIndicator.sharedInstance.hide()
                             }
                         } else {
                             DispatchQueue.main.async {
@@ -183,7 +185,12 @@ class PurchasePlanViewController: UIViewController {
 
     //MARK: - IBActions
     private func tapOnCell(indexPath: IndexPath) {
-        Reachability.isConnectedToNetwork() ? (restorePurchases()) : (self.showNoInternetAlert())
+        if Reachability.isConnectedToNetwork() == true{
+            restorePurchases()
+        } else {
+            self.hideLoader()
+            self.showNoInternetAlert()
+        }
     }
 
     //MARK: - View Transactions
@@ -213,8 +220,11 @@ class PurchasePlanViewController: UIViewController {
 
     @objc func applicationDidBecomeActive(notification: Notification) {
         if Reachability.isConnectedToNetwork() {
-            purchasePlanVM.isAPICallOngoing ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
+            self.hideNoInternetAlert()
+            (purchasePlanVM.isAPICallOngoing || shouldShowLoader) ? (ActivityIndicator.sharedInstance.show()) : (ActivityIndicator.sharedInstance.hide())
         } else {
+            self.hideLoader()
+            self.showNoInternetAlert()
             purchasePlanVM.updateIsAPICallOngoing(false)
         }
     }
@@ -262,6 +272,7 @@ class PurchasePlanViewController: UIViewController {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         }
                     }
+                    self.alert = nil
                 }
             },{ cancel in
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "Tap on no internet cancle")
@@ -272,23 +283,25 @@ class PurchasePlanViewController: UIViewController {
     
     func popupNoIntenetAlert(title: String, message: String, actionTitles:[String], actionStyle: [UIAlertAction.Style], action:[((UIAlertAction) -> Void)]) {
         DispatchQueue.main.async {
-            self.alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            if let alert = self.alert{
-                alert.view.tintColor = UIColor.black
-                for (index, title) in actionTitles.enumerated() {
-                    let action = UIAlertAction(title: title, style: actionStyle[index], handler: action[index])
-                    alert.addAction(action)
+            if self.alert == nil{
+                self.alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                if let alert = self.alert{
+                    alert.view.tintColor = UIColor.black
+                    for (index, title) in actionTitles.enumerated() {
+                        let action = UIAlertAction(title: title, style: actionStyle[index], handler: action[index])
+                        alert.addAction(action)
+                    }
+                    self.present(alert, animated: true, completion: nil)
                 }
-                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
     func hideNoInternetAlert() {
         DispatchQueue.main.async {
-            self.hideLoader()
             if let alert = self.alert{
                 alert.dismiss(animated: false, completion: nil)
+                self.alert = nil
             }
         }
     }
@@ -297,7 +310,6 @@ class PurchasePlanViewController: UIViewController {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"checkFreeTrialEligibility =>")
         if Reachability.isConnectedToNetwork() == true{
             PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"checkFreeTrialEligibility => Has internet => Calling license token API")
-            self.showLoader()
             self.shouldCallLicenseIssuanceApi = false
             NetworkManager.shareInstance.callTokenIssuanceApiForFreeTrial{ [weak self]
                 data in
@@ -307,11 +319,11 @@ class PurchasePlanViewController: UIViewController {
                     return
                 }
                 do {
-                    self?.hideLoader()
                     let data = try JSONDecoder().decode(LiscenseTokenModel.self, from: data)
                     let alertService = CustomAlertViewModel()
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"checkFreeTrialEligibility => Data => result =>  \(data.result_code)")
                     if data.result_code == response_ok {
+                        self?.hideLoader()
                         UserDefaults.standard.set(true, forKey: kFreeTrialStatus)
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"====== Trial is Activated =====")
                         self?.goToPermissionVC()
@@ -322,6 +334,7 @@ class PurchasePlanViewController: UIViewController {
                             self?.freeTrialRetryCount += 1
                             self?.checkFreeTrialEligibility()
                         } else {
+                            self?.hideLoader()
                             self?.freeTrialRetryCount = 0
                             DispatchQueue.main.async {
                                 let alert = alertService.alertDialogFreeTrialError(message: "kServerError".localiz()) {
@@ -485,6 +498,7 @@ extension PurchasePlanViewController: UITableViewDelegate{
             case .threeDaysTrial:
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "Tap on no 3 days Trial")
                 self.shouldCallLicenseIssuanceApi = false
+                self.showLoader()
                 self.checkFreeTrialEligibility()
             }
         }

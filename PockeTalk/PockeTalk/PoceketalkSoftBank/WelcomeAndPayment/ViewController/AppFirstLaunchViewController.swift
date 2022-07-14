@@ -59,6 +59,7 @@ class AppFirstLaunchViewController: UIViewController {
 
     //MARK: - View Transactions
     private func goToWalkThroughScreen() {
+        UserDefaults.standard.set(true, forKey: kUserPassedTc)
         DispatchQueue.main.async {
             PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
             if let viewController = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{

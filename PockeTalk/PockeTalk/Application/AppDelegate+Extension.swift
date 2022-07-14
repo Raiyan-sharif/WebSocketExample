@@ -37,12 +37,34 @@ extension AppDelegate{
                 if let permisionVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
                     viewController = permisionVC
                 }
+            case .walkthrough:
+                if let walkthroughVc = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
+                    viewController = walkthroughVc
+                }
             }
 
             let navigationController = UINavigationController.init(rootViewController: viewController)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
             self.setActivityIndicatorWindow()
+        }
+    }
+    
+    func gotoNextVc(){
+        var savedCoupon = ""
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+            savedCoupon = coupon
+        }
+        if UserDefaultsUtility.getBoolValue(forKey: kIsAllPermissionGranted) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.home)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.permission)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && savedCoupon.isEmpty{
+            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
         }
     }
 

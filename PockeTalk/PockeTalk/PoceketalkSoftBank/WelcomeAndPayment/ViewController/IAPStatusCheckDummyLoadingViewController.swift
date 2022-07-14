@@ -100,7 +100,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 if success {
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
                     self.hideLoader()
-                    self.showAlertAndRedirectToHomeVC("KSubscriptionErrorMessage".localiz())
+                    self.showAlertAndRedirectToVC("KSubscriptionErrorMessage".localiz())
                 } else {
                     self.callLicenseConfirmationApi(coupon: couponCode)
                 }
@@ -148,7 +148,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                     if let result_code = result.result_code {
                         if result_code == response_ok {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"====== Trial is Active =====")
-                            self.showAlertAndRedirectToHomeVC("KFreeTrialErrorMessage".localiz())
+                            self.showAlertAndRedirectToVC("KFreeTrialErrorMessage".localiz())
                         }else {
                             if let couponCode = self.couponCode {
                                 self.checkInAppPurchaseStatus(coupon: couponCode)
@@ -367,18 +367,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         }
     }
 
-    private func showAlertAndRedirectToHomeVC(_ msg: String){
+    private func showAlertAndRedirectToVC(_ msg: String){
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "showAlertAndRedirectToHomeVC [+]")
         DispatchQueue.main.async {
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogSoftbank(message: msg) {
-                if UserDefaultsUtility.getBoolValue(forKey: kIsAllPermissionGranted) == true{
-                    GlobalMethod.appdelegate().navigateToViewController(.home)
-                }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true{
-                    GlobalMethod.appdelegate().navigateToViewController(.permission)
-                }else{
-                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                }
+                GlobalMethod.appdelegate().gotoNextVc()
             }
             self.present(alert, animated: true, completion: nil)
         }

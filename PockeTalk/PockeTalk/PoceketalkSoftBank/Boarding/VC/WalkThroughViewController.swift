@@ -61,6 +61,7 @@ class WalkThroughViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         PrintUtility.printLog(tag: self.TAG, text: "viewDidLoad[+]")
 
         updateLanguageNames()
