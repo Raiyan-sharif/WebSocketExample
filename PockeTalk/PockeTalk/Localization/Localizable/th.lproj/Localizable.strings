@@ -150,10 +150,11 @@
 "kBestPrice" = "รายการแนะนำ";
 "kSaveAbout" = "Save about";
 "kYen" = " ประหยัด XXเยน";
+"upToOff" = "ประหยัดกว่าประมาณ xx จากค่าธรรมเนียมรายสัปดาห์ปกติิ";
 
-"kYenPerWeek" = "เยน/สัปดาห์";
-"kYenPerMonth" = "เยน/เดือน";
-"kYenPerYear" = "เยน/ปี";
+"kYenPerWeek" = " /สัปดาห์";
+"kYenPerMonth" = " /เดือน";
+"kYenPerYear" = " /ปี";
 "kStartPocketalkApp" = "เริ่มใช้งาน POCKETALK";
 "kThreeDaysTrial" = "無料でお試し";
 "kThreeDaysTrialDescription" = "無料期間3日";

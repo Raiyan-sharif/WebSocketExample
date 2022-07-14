@@ -327,14 +327,15 @@ extension IAPManager {
         //Get the currency
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        numberFormatter.locale = Locale.current
-
+        numberFormatter.locale = product.priceLocale
         let priceString = numberFormatter.string(from: 0)
-        let currencyString = (priceString?.replacingOccurrences(of: "0", with: ""))?.replacingOccurrences(of: ".", with: "")
+//        let priceString = numberFormatter.string(from: product.price)
+        let currencyString = ((priceString?.replacingOccurrences(of: "0", with: ""))?.replacingOccurrences(of: ".", with: ""))?.replacingOccurrences(of: ",", with: "")
+        let trimmedCurrency = currencyString?.trimmingCharacters(in: .whitespacesAndNewlines)
 
         //Get the price
         let price = (product.price.doubleValue).roundToDecimal(2)
-        return (currency: currencyString ?? "", price: price)
+        return (currency: trimmedCurrency ?? "", price: price)
     }
 
     func getSubscriptionDurationPeriod(product: SKProduct) -> String {
@@ -427,6 +428,8 @@ extension IAPManager {
     func getProductDetails(from product: SKProduct) -> ProductDetails {
         let currency = getLocalCurrencyAndPrice(from: product).currency
         let price = getLocalCurrencyAndPrice(from: product).price
+        PrintUtility.printLog(tag: TAG, text: "iAP_C \(currency)")
+        PrintUtility.printLog(tag: TAG, text: "iAP_P \(price)")
         let unitType = getPeriodUnitType(product: product)
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
@@ -434,11 +437,11 @@ extension IAPManager {
         var planPerUnitText = ""
         switch unitType {
         case .week:
-            planPerUnitText = "\(Int(price)) \("kYenPerWeek".localiz())"
+            planPerUnitText = "\(currency) \(price)\("kYenPerWeek".localiz())"
         case .month:
-            planPerUnitText = "\(Int(price)) \("kYenPerMonth".localiz())"
+            planPerUnitText = "\(currency) \(price)\("kYenPerMonth".localiz())"
         case .year:
-            planPerUnitText = "\(Int(price)) \("kYenPerYear".localiz())"
+            planPerUnitText = "\(currency) \(price)\("kYenPerYear".localiz())"
         default:
             break
         }

@@ -150,10 +150,11 @@
 "kBestPrice" = "Harga Terbaik";
 "kSaveAbout" = "Save about";
 "kYen" = " jimat XX yen";
+"upToOff" = "Kira-kira xx lebih rendah berbanding bayaran mingguan yang biasa";
 
-"kYenPerWeek" = "yen/minggu";
-"kYenPerMonth" = "yen/bulan";
-"kYenPerYear" = "yen/tahun";
+"kYenPerWeek" = " /minggu";
+"kYenPerMonth" = " /bulan";
+"kYenPerYear" = " /tahun";
 "kStartPocketalkApp" = "Mulakan Aplikasi POCKETALK";
 "kThreeDaysTrial" = "無料でお試し";
 "kThreeDaysTrialDescription" = "無料期間3日";

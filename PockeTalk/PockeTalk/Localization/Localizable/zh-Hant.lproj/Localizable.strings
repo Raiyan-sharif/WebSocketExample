@@ -150,10 +150,11 @@
 "kBestPrice" = "推薦購買";
 "kSaveAbout" = "Save about";
 "kYen" = " XX 日圓優惠";
+"upToOff" = "比週方案節省約xx";
 
-"kYenPerWeek" = "日圓/週";
-"kYenPerMonth" = "日圓/月";
-"kYenPerYear" = "日圓/年";
+"kYenPerWeek" = " /週";
+"kYenPerMonth" = " /月";
+"kYenPerYear" = " /年";
 "kStartPocketalkApp" = "開始使用POCKETALK";
 "kThreeDaysTrial" = "無料でお試し";
 "kThreeDaysTrialDescription" = "無料期間3日";
