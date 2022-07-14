@@ -322,6 +322,7 @@ class PurchasePlanViewController: UIViewController {
                             self?.freeTrialRetryCount += 1
                             self?.checkFreeTrialEligibility()
                         } else {
+                            self?.freeTrialRetryCount = 0
                             DispatchQueue.main.async {
                                 let alert = alertService.alertDialogFreeTrialError(message: "kServerError".localiz()) {
                                 }
