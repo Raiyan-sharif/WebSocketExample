@@ -8,7 +8,8 @@ import Foundation
 struct GoogleAnalyticsServiceInfo {
     func logGoogleServiceInfo() {
         guard let googleServiceInfoPlistPath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") else {
-            fatalError("Couldn't locate GoogleService-Info.plist")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.googleAnalyticsTag, text: "Couldn't locate GoogleService-Info.plist")
+            return
         }
 
         do {
@@ -21,13 +22,14 @@ struct GoogleAnalyticsServiceInfo {
             let projectId = googleServiceInfo.projectId
 
             guard let appId = FirebaseAppId(rawValue: rawAppId) else {
-                fatalError("Invalid appId: \(rawAppId)")
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.googleAnalyticsTag, text: "Invalid appId: \(rawAppId)")
+                return
             }
 
             PrintUtility.printLog(tag: TagUtility.sharedInstance.googleAnalyticsTag, text: buildAppIdStatusText(from: appId))
             PrintUtility.printLog(tag: TagUtility.sharedInstance.googleAnalyticsTag, text: "Firebase ProjectId: \(projectId)")
         } catch {
-            fatalError("\(error)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.googleAnalyticsTag, text: "Error: \(error)")
         }
     }
 
@@ -39,6 +41,7 @@ struct GoogleAnalyticsServiceInfo {
 enum FirebaseAppId: String {
     case dev = "1:958429054171:ios:29d71a1365d6e8777cf8fe"
     case prod = "1:180111879719:ios:aeef784ae461a427e2a802"
+    case testDev = "1:257641794970:ios:f2e31363c7a5e386177e23"
 
     var environment: String {
         switch self {
@@ -46,6 +49,8 @@ enum FirebaseAppId: String {
             return "Dev"
         case .prod:
             return "Prod"
+        case .testDev:
+            return "Dev (Testing)"
         }
     }
 }
