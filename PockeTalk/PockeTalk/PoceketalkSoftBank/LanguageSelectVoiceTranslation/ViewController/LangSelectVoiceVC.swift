@@ -16,6 +16,7 @@ class LangSelectVoiceVC: BaseViewController {
     @IBOutlet weak private var btnLangList: UIButton!
     @IBOutlet weak private var btnBack: UIButton!
     @IBOutlet weak private var toolbarTitleLabel: UILabel!
+    @IBOutlet weak var flagButton: UIButton!
 
     let TAG = "\(LangSelectVoiceVC.self)"
     var languageHasUpdated:(()->())?
@@ -66,6 +67,7 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        flagButton.setImage(UIImage(named: "btn_country_push.png"), for: [.selected, .highlighted])
         self.updateHomeContainer?(true)
         DispatchQueue.main.asyncAfter(deadline: .now() + kScreenTransitionTime / 2) {
             if FloatingMikeButton.sharedInstance.hiddenStatus() == true{
