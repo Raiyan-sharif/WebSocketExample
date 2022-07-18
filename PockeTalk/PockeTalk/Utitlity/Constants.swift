@@ -83,7 +83,7 @@ let kLicenseConfirmationCalledTime = "kLicenseConfirmationCalledTime"
 let kInitialFlowCompletedForCoupon = "kInitialFlowCompletedForCoupon"
 let kIsFromUniverslaLink = "kIsFromUniverslaLink"
 let kFreeTrialStatus = "kFreeTrialStatus"
-let kIsAllPermissionGranted = "kIsAllPermissionGranted"
+let kPermissionCompleted = "kPermissionCompleted"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"

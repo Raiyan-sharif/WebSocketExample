@@ -224,28 +224,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
                                     DispatchQueue.main.async {
                                         let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {
-                                            var couponInitialFlowCompleted = false
-                                            if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                                couponInitialFlowCompleted = flowCompleted
-                                            }
-                                            if couponInitialFlowCompleted == true{
-                                                GlobalMethod.appdelegate().navigateToViewController(.home)
-                                            }else{
-                                                GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                            }
+                                            GlobalMethod.appdelegate().gotoNextVcForCoupon()
                                         }
                                         self.present(alert, animated: true, completion: nil)
                                     }
                                 }else{
-                                    var couponInitialFlowCompleted = false
-                                    if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                        couponInitialFlowCompleted = flowCompleted
-                                    }
-                                    if couponInitialFlowCompleted == true{
-                                        GlobalMethod.appdelegate().navigateToViewController(.home)
-                                    }else{
-                                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                    }
+                                    GlobalMethod.appdelegate().gotoNextVcForCoupon()
                                 }
                             
                         } else if result_code == INFO_EXPIRED_LICENSE{
@@ -256,21 +240,17 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 savedCoupon = coupon
                             }
                             if savedCoupon.isEmpty {
-                                DispatchQueue.main.async {
-                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                    }
-                                    self.present(alert, animated: true, completion: nil)
-                                }
+                                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon not found!")
                             } else {
                                 UserDefaults.standard.removeObject(forKey: kCouponCode)
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon removed: \(savedCoupon)")
-                                DispatchQueue.main.async {
-                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                    }
-                                    self.present(alert, animated: true, completion: nil)
+                            }
+                            
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
+                                    GlobalMethod.appdelegate().gotoNextVcForAuth()
                                 }
+                                self.present(alert, animated: true, completion: nil)
                             }
                         } else if result_code == INFO_INVALID_LICENSE {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "INFO_INVALID_LICENSE")
@@ -372,7 +352,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         DispatchQueue.main.async {
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogSoftbank(message: msg) {
-                GlobalMethod.appdelegate().gotoNextVc()
+                GlobalMethod.appdelegate().gotoNextVc(false)
             }
             self.present(alert, animated: true, completion: nil)
         }

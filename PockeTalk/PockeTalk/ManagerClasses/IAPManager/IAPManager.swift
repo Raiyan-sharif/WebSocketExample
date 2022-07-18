@@ -24,6 +24,7 @@ enum ViewControllerType {
     case statusCheck
     case permission
     case walkthrough
+    case welcome
 }
 
 public enum IAPError: Error {
@@ -546,21 +547,9 @@ extension IAPManager {
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
-                        if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
-                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                        } else {
-                            GlobalMethod.appdelegate().navigateToViewController(.home)
-                        }
+                        GlobalMethod.appdelegate().gotoNextVc(true)
                     } else {
-                        var initialFlowCompleted = false
-                        if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                            initialFlowCompleted = flowCompleted
-                        }
-                        if(initialFlowCompleted){
-                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                        }else{
-                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                        }
+                        GlobalMethod.appdelegate().gotoNextVcForAuth()
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {
@@ -850,9 +839,9 @@ extension IAPManager {
             let cancelAction = UIAlertAction(title: "Cancel".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
                 if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
-                        GlobalMethod.appdelegate().navigateToViewController(.home)
+                        GlobalMethod.appdelegate().gotoNextVc(true)
                     } else {
-                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                        GlobalMethod.appdelegate().gotoNextVcForAuth()
                     }
                 }
             }

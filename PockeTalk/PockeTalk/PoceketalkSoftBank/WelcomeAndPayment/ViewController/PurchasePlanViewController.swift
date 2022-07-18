@@ -92,9 +92,9 @@ class PurchasePlanViewController: UIViewController {
 
                 if self.purchasePlanVM.isProductFetchOngoing {
                     if let productFetchError = error {
+                        self.hideLoader()
                         DispatchQueue.main.async {
                             self.showProductFetchErrorAlert(message: productFetchError)
-                            ActivityIndicator.sharedInstance.hide()
                             return
                         }
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Product can't fetch, error: \(productFetchError)")
@@ -102,16 +102,14 @@ class PurchasePlanViewController: UIViewController {
 
                     DispatchQueue.main.async {
                         success ? (self.purchasePlanTV.reloadData()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Can't successfully fetch the product, status: \(success)"))
-                        ActivityIndicator.sharedInstance.hide()
+                        self.hideLoader()
                         self.purchasePlanVM.setProductFetchStatus(false)
                     }
                 }
             }
         } else {
-            DispatchQueue.main.async {
-                ActivityIndicator.sharedInstance.hide()
-                self.shouldRefreshProductList = true
-            }
+            self.hideLoader()
+            self.shouldRefreshProductList = true
             self.showNoInternetAlert()
         }
     }
@@ -126,22 +124,22 @@ class PurchasePlanViewController: UIViewController {
                     guard let self = `self` else {return}
 
                     if let error = error {
+                        self.hideLoader()
                         DispatchQueue.main.async {
                             self.showIAPRelatedError(error)
-                            ActivityIndicator.sharedInstance.hide()
                         }
                     } else {
                         DispatchQueue.main.async {
                             success ? (self.goToPermissionVC()) : (self.didFinishRestoringPurchasesWithZeroProducts())
-                            ActivityIndicator.sharedInstance.hide()
+                            self.hideLoader()
                             KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                         }
                     }
                 }
             }
         } else {
+            self.hideLoader()
             DispatchQueue.main.async {
-                ActivityIndicator.sharedInstance.hide()
                 self.showNoInternetAlert()
             }
         }
@@ -167,17 +165,15 @@ class PurchasePlanViewController: UIViewController {
                         } else {
                             DispatchQueue.main.async {
                                 success ? (self.goToPermissionVC()) : (PrintUtility.printLog(tag: TagUtility.sharedInstance.iapTag, text: "Din't successfully buy the product"))
-                                ActivityIndicator.sharedInstance.hide()
+                                self.hideLoader()
                                 KeychainWrapper.standard.set(false, forKey: receiptValidationAllowFromPurchase)
                             }
                         }
                     }
                 }
             } else {
-                DispatchQueue.main.async {
-                    ActivityIndicator.sharedInstance.hide()
-                    self.showNoInternetAlert()
-                }
+                self.hideLoader()
+                self.showNoInternetAlert()
             }
         }
         return true

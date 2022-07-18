@@ -41,6 +41,10 @@ extension AppDelegate{
                 if let walkthroughVc = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
                     viewController = walkthroughVc
                 }
+            case .welcome:
+                if let welcomeVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
+                    viewController = welcomeVC
+                }
             }
 
             let navigationController = UINavigationController.init(rootViewController: viewController)
@@ -50,16 +54,42 @@ extension AppDelegate{
         }
     }
     
-    func gotoNextVc(){
+    func gotoNextVc(_ purchaseStatus: Bool){
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
         }
-        if UserDefaultsUtility.getBoolValue(forKey: kIsAllPermissionGranted) == true{
+        if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
             GlobalMethod.appdelegate().navigateToViewController(.home)
+        }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
+            GlobalMethod.appdelegate().navigateToViewController(.welcome)
         }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
             GlobalMethod.appdelegate().navigateToViewController(.permission)
-        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && savedCoupon.isEmpty{
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && savedCoupon.isEmpty && purchaseStatus == false{
+            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+        }
+    }
+    
+    func gotoNextVcForCoupon(){
+        if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
+            GlobalMethod.appdelegate().navigateToViewController(.home)
+        }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
+            GlobalMethod.appdelegate().navigateToViewController(.welcome)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.permission)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+        }
+    }
+    
+    func gotoNextVcForAuth(){
+        if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true {
             GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
         }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
             GlobalMethod.appdelegate().navigateToViewController(.walkthrough)

@@ -32,11 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if savedCoupon.isEmpty {
             if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "========In Free Trial==========")
-                if UserDefaults.standard.bool(forKey: kIsAllPermissionGranted) == true {
-                    GlobalMethod.appdelegate().navigateToViewController(.home)
-                }else{
-                    GlobalMethod.appdelegate().navigateToViewController(.permission)
-                }
+                GlobalMethod.appdelegate().gotoNextVc(true)
             }else {
                 IAPManager.shared.startObserving()
                 if UserDefaultsProperty<Bool>(KIsAppAlreadyLaunchedOnce).value == nil {
@@ -52,15 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
                 GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon)
             }else{
-                var couponInitialFlowCompleted = false
-                if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                    couponInitialFlowCompleted = flowCompleted
-                }
-                if couponInitialFlowCompleted == true{
-                    GlobalMethod.appdelegate().navigateToViewController(.home)
-                }else{
-                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                }
+                GlobalMethod.appdelegate().gotoNextVcForCoupon()
             }
         }
         return true
@@ -121,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == false{
                 PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
                 if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
-                    ScreenTracker.sharedInstance.screenPurpose != .InitialFlow {
+                    ScreenTracker.sharedInstance.screenPurpose != .InitialFlow &&  ScreenTracker.sharedInstance.screenPurpose != .WalkThroughViewController{
                     KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
                     IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
                 }
