@@ -248,14 +248,20 @@ extension HomeViewController{
     private func talkButtonLogEventHelper() {
         //Update the speech processing fromScreenPurpose property
         self.speechVC.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
+
+        //Get the source and destination lang name
         let src = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.bottomLanguage : LanguageSelectionManager.shared.topLanguage
-        let dst = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+        let des = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+
+        let srcLangName =  LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: src)?.name ?? ""
+        let desLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: des)?.name ?? ""
+
         //Trigger logEvent depending on the screen purpose
         if !(UserDefaultsProperty<Bool>(kHistoryTTS).value ?? false) {
             if ScreenTracker.sharedInstance.screenPurpose == .HomeSpeechProcessing {
-                self.homeTalkButtonLogEvent(sourceLanguage: src, destinationLanguage: dst)
+                self.homeTalkButtonLogEvent(sourceLanguage: srcLangName, destinationLanguage: desLangName)
             } else if ScreenTracker.sharedInstance.screenPurpose == .HistoryScrren {
-                self.historyTalkButtonLogEvent(sourceLanguage: src, destinationLanguage: dst)
+                self.historyTalkButtonLogEvent(sourceLanguage: srcLangName, destinationLanguage: desLangName)
             }
         }
     }
