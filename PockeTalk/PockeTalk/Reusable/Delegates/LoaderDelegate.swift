@@ -5,7 +5,7 @@
 //
 
 import Foundation
-protocol LoaderDelegate {
+protocol LoaderDelegate: AnyObject {
     func showLoader()
     func hideLoader()
 }

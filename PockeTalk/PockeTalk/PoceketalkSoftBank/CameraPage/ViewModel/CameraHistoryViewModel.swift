@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 
 
-protocol CameraHistoryViewModelDelegates {
+protocol CameraHistoryViewModelDelegates: AnyObject {
     func updateViewWithImages()
 }
 
@@ -33,7 +33,7 @@ class CameraHistoryViewModel: BaseModel {
     
     
     
-    private(set) var delegate: CameraHistoryViewModelDelegates?
+    private(set) weak var delegate: CameraHistoryViewModelDelegates?
     
     func viewDidLoad<T>(_ vc: T) {
         self.delegate = vc.self as? CameraHistoryViewModelDelegates
