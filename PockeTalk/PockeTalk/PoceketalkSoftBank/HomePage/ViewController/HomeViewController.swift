@@ -399,7 +399,6 @@ class HomeViewController: BaseViewController {
     }
 
     @IBAction private func switchLanguageDirectionAction(_ sender: UIButton) {
-        changeLanguageButtonLogEvent()
         if self.isTransitionComplete {
             self.isTransitionComplete = false
             PrintUtility.printLog(tag: TAG, text: "switchLanguageDirectionAction isArrowUp \(LanguageSelectionManager.shared.isArrowUp)")
@@ -412,6 +411,15 @@ class HomeViewController: BaseViewController {
             }
             setLanguageDirection()
         }
+
+        //changeLanguageButtonLogEvent() Log event functionalities
+        let srcLangCode = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.bottomLanguage : LanguageSelectionManager.shared.topLanguage
+        let desLangCode = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+
+        let srcLangName =  LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: srcLangCode)?.name ?? ""
+        let desLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: desLangCode)?.name ?? ""
+
+        changeLanguageButtonLogEvent(sourceLanguage: srcLangName, destinationLanguage: desLangName)
     }
 
     @IBAction private func topLanguageBtnAction(_ sender: UIButton) {

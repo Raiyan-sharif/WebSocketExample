@@ -529,7 +529,6 @@ extension LangSelectVoiceVC {
 
     private func okButtonLogEvent() {
         if let screenName = analyticsScreenName {
-            //Need confirmation
             if let selectedLanguageName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLanguageCode)?.name {
 
                 if screenName == analytics.mainSourceLanguage {

@@ -446,6 +446,7 @@ extension ImageCroppingViewController {
 
     private func buttonCropLogEvent(trimmingState: Bool) {
         analytics.cameraCrop(screenName: analytics.camTranslateConfirm,
-                             button: analytics.buttonNext, crop: trimmingState)
+                             button: analytics.buttonNext,
+                             crop: trimmingState)
     }
 }

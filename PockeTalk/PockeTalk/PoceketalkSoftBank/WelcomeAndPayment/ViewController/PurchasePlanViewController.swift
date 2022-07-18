@@ -204,6 +204,12 @@ class PurchasePlanViewController: BaseViewController {
         }
     }
 
+    @objc private func restorePurchase(notification: Notification) {
+        if let planType = notification.userInfo![planType] as? String {
+            restorePurchaseLogEvent(planType: planType)
+        }
+    }
+
     private func getProductForPurchase(for type: PurchasePlanTVCellInfo){
         if let productDetails = purchasePlanVM.getProductDetailsData(using: type){
             if !self.requestForPurchaseProduct(product: productDetails.product){
@@ -342,12 +348,6 @@ extension PurchasePlanViewController {
         analytics.purchasePlan(screenName: analytics.firstPurchaseCancel,
                                buttonName: analytics.buttonOK,
                                selectedPlan: planTypeText)
-        }
-    }
-
-    @objc private func restorePurchase(notification: Notification) {
-        if let planType = notification.userInfo![planType] as? String {
-            restorePurchaseLogEvent(planType: planType)
         }
     }
 

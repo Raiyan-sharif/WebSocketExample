@@ -362,19 +362,16 @@ extension PronunciationPracticeResultViewController {
 
     private func normalPlayBackLogEvent() {
         analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
-                                        eventParamName: analytics.selectMenu,
                                         playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.normal)
     }
 
     private func slowPlayBackLogEvent() {
         analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
-                                        eventParamName: analytics.selectMenu,
                                         playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.slow)
     }
 
     private func verySlowPlayBackLogEvent() {
         analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
-                                        eventParamName: analytics.selectMenu,
                                         playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.verySlow)
     }
 }

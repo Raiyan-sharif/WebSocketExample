@@ -15,7 +15,12 @@ struct GoogleAnalyticsUserProperty {
     }
 
     func getSystemLanguageName() -> String {
-        return LanguageManager.shared.currentLanguage.rawValue
+        let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
+        let alternativeSystemLangCode = GlobalMethod.getSystemLanguageCodeForAnalytics(sysLangCode: sysLangCode)
+
+        let sysLangName = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: alternativeSystemLangCode)?.name ?? ""
+        return sysLangName
+
     }
 
     /*

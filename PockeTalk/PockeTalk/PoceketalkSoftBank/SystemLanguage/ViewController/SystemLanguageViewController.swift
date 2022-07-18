@@ -81,6 +81,16 @@ class SystemLanguageViewController: BaseViewController {
         return 0
     }
 
+    private func systemLanguageChangeLogEvent() {
+        let currentSelectedLangCode = GlobalMethod.getSystemLanguageCodeForAnalytics(sysLangCode: currentSelectedLanguage)
+        let currentSelectedLang = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: currentSelectedLangCode)?.name ?? ""
+
+        let selectedLangCode = GlobalMethod.getSystemLanguageCodeForAnalytics(sysLangCode: selectedLanguage ?? "")
+        let selectedLang = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLangCode)?.name ?? ""
+
+        buttonBackLogEvent(beforeSysLang: currentSelectedLang, afterSysLang: selectedLang)
+    }
+
     //MARK: - Initial setup
     private func setUpUI() {
         tableView = UITableView(frame: .zero, style: .plain)
@@ -94,27 +104,26 @@ class SystemLanguageViewController: BaseViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.black
-        
         tableView.register(cellType: SystemLanguageCell.self)
         tableView.tableFooterView = UIView()
-        
+
         if let isSelected = UserDefaultsProperty<Bool>(KFirstInitialized).value, isSelected{
             self.title = "Language".localiz()
         }else{
             self.title = "Language"
         }
-        
+
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         tableView.addGestureRecognizer(longPress)
     }
-    
+
     //MARK: - Load data
     private func getData(){
         if let path = Bundle.main.path(forResource: "system_languages", ofType: "xml") {
             do {
                 let contents = try String(contentsOfFile: path)
                 let xml =  try XML.parse(contents)
-                
+
                 for item in xml["language","child", "item"] {
                     let attributes = item.attributes
                     languageList.append(SystemLanguages(langName: attributes["name"]!, lanType: attributes["code"]!) )
@@ -124,25 +133,25 @@ class SystemLanguageViewController: BaseViewController {
             }
         }
     }
-    
+
     //MARK: - IBActions
     @objc func backButtonTapped() {
-        buttonBackLogEvent(beforeSysLang: currentSelectedLanguage, afterSysLang: selectedLanguage!)
         self.navigationController?.popViewController(animated: true)
         if selectedLanguage != nil && currentSelectedLanguage != selectedLanguage{
             let languageItem = languageList[mIndexPath.row]
             let langCode = Languages(rawValue: languageItem.lanType) ?? .en
             LanguageManager.shared.setLanguage(language: langCode)
-            
+
             UserDefaultsProperty<Bool>(KFirstInitialized).value = true
             UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
             LanguageSelectionManager.shared.loadLanguageListData()
             //LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
             let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
             NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
+            systemLanguageChangeLogEvent()
         }
     }
-    
+
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         let touchPoint = sender.location(in: tableView)
         if let indexPath = tableView.indexPathForRow(at: touchPoint) {
@@ -151,7 +160,6 @@ class SystemLanguageViewController: BaseViewController {
             case .began:
                 cell?.contentView.backgroundColor = UIColor(hex: "#59BFFF")
             case .ended:
-                
                 let languageItem = languageList[indexPath.row]
                 if let language = selectedLanguage, language == languageItem.lanType{
                     cell?.contentView.backgroundColor = UIColor(hex: "#008FE8")

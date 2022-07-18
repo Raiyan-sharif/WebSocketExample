@@ -23,10 +23,10 @@ struct GoogleAnalytics {
     //MARK: - Screen parameter key-value properties
     private let mainScreenName = "mainScreenName"
     let firstAgreement = "first_agreement"
-    let firstTutorialOne = "first_turorial_1"
-    let firstTutorialTwo = "first_turorial_2"
+    let firstTutorialOne = "first_tutorial_1"
+    let firstTutorialTwo = "first_tutorial_2"
 
-    let firstTutorialThree = "first_turorial_3"
+    let firstTutorialThree = "first_tutorial_3"
     let firstPlanSelect = "first_plan_select"
     let firstStart = "first_start"
     let firstHowToUse = "first_howtouse"
@@ -189,12 +189,13 @@ struct GoogleAnalytics {
     let app = "app"
     let buttonCard = "card"
     let buttonLongTap = "longtap"
-    let buttonHistoryMenu = "histry_menu"
+    let buttonHistoryMenu = "menu"
 
     let buttonCameraSourceLang = "select_cam_src_lang"
     let buttonCameraDestinationLang = "select_cam_dst_lang"
     let buttonCamHistory = "cam_history"
     let buttonDisplayHistory = "display_history"
+    let translate = "translate"
 
     enum PronunciationPlayBackSpeed: String {
         case normal = "Normal"
@@ -308,6 +309,7 @@ struct GoogleAnalytics {
     func mainTalkButton(screenName: String, srcLanguageName: String, desLanguageName: String){
         let parameter = [mainScreenName: screenName,
                         userID: getUUID() ?? "",
+                        voiceInputMenu: translate,
                         sourceLanguageName: srcLanguageName,
                         destinationLanguageName: desLanguageName]
         logEvent(event: .translate, parameters: parameter)
@@ -343,9 +345,9 @@ struct GoogleAnalytics {
         logEvent(event: .pressButton, parameters: parameter)
     }
 
-    func pronunciationPlayBack(screenName: String, eventParamName: String, playBackType: PronunciationPlayBackSpeed) {
+    func pronunciationPlayBack(screenName: String, playBackType: PronunciationPlayBackSpeed) {
         let parameter = [mainScreenName: screenName,
-                        selectMenu: eventParamName,
+                        selectMenu: speed,
                         speed: playBackType.rawValue]
         logEvent(event: .select, parameters: parameter)
     }
@@ -375,9 +377,18 @@ struct GoogleAnalytics {
 
     func historyTalkButton(screenName: String, srcLanguageName: String, desLanguageName: String) {
         let parameter = [mainScreenName: screenName,
+                        voiceInputMenu: translate,
                         sourceLanguageName: srcLanguageName,
                         destinationLanguageName: desLanguageName]
         logEvent(event: .translate, parameters: parameter)
+    }
+
+    func historyCardMenuDelete(screenName: String, srcLanguageName: String, desLanguageName: String) {
+        let parameter = [mainScreenName: screenName,
+                        buttonParamName: buttonDelete,
+                        sourceLanguageName: srcLanguageName,
+                        destinationLanguageName: desLanguageName]
+        logEvent(event: .pressButton, parameters: parameter)
     }
 
     //MARK: - Camera logEvent functions

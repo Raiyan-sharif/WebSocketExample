@@ -63,9 +63,13 @@ class PermissionViewController: BaseViewController {
         let dispatchQueue = DispatchQueue.global(qos: .background)
 
         dispatchQueue.async {
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { isPermissionOn in
-                self.permissionLogEvent(permissionType: .microphone,
-                                        permissionStatus: isPermissionOn)
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { (isPermissionOn, permissionGiven) in
+
+                //Log permission status depending on previous alert shown status
+                if !permissionGiven {
+                    self.permissionLogEvent(permissionType: .microphone,
+                                            permissionStatus: isPermissionOn)
+                }
 
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .microphonePermission, status: isPermissionOn)
@@ -74,9 +78,13 @@ class PermissionViewController: BaseViewController {
             }
             semaphore.wait()
 
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { isPermissionOn in
-                self.permissionLogEvent(permissionType: .camera,
-                                        permissionStatus: isPermissionOn)
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { (isPermissionOn, permissionGiven) in
+
+                //Log permission status depending on previous alert shown status
+                if !permissionGiven {
+                    self.permissionLogEvent(permissionType: .camera,
+                                            permissionStatus: isPermissionOn)
+                }
 
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .cameraPermission, status: isPermissionOn)

@@ -346,9 +346,7 @@ extension HomeViewController {
                             buttonName: analytics.buttonSettings)
     }
 
-    func changeLanguageButtonLogEvent(){
-        let sourceLanguage = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.bottomLanguage : LanguageSelectionManager.shared.topLanguage
-        let destinationLanguage = LanguageSelectionManager.shared.isArrowUp == true ? LanguageSelectionManager.shared.topLanguage : LanguageSelectionManager.shared.bottomLanguage
+    func changeLanguageButtonLogEvent(sourceLanguage: String, destinationLanguage: String){
         analytics.changeLanguage(screenName: analytics.home,
                                  buttonName: analytics.buttonExchangeLang,
                                  srcLanguageName: sourceLanguage,

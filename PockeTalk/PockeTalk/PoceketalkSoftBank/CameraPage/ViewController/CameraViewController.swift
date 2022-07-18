@@ -650,12 +650,12 @@ extension CameraViewController {
 
     private func buttonFromLanguageLogEvent() {
         analytics.buttonTap(screenName: analytics.camTranslate,
-                            buttonName: analytics.buttonSourceLang)
+                            buttonName: analytics.buttonCameraSourceLang)
     }
 
     private func buttonTargetLanguageLogEvent() {
         analytics.buttonTap(screenName: analytics.camTranslate,
-                            buttonName: analytics.buttonDestinationLang)
+                            buttonName: analytics.buttonCameraDestinationLang)
     }
 
     private func buttonHistoryLogEvent() {

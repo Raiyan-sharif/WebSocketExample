@@ -319,7 +319,7 @@ extension AlertReusableViewController {
     private func retranslateLogEvent() {
         if let screenName = analyticsScreenName {
             analytics.buttonTap(screenName: screenName,
-                                buttonName: analytics.buttonSourceLang)
+                                buttonName: analytics.buttonDestinationLang)
         }
     }
 
@@ -330,7 +330,6 @@ extension AlertReusableViewController {
         }
     }
 
-    //Need confirmation
     private func practicePronunciationLogEvent() {
         if let screenName = analyticsScreenName {
             let desLanguageName = self.chatItemModel?.chatItem?.textTranslatedLanguage ?? ""
@@ -356,8 +355,17 @@ extension AlertReusableViewController {
 
     private func deleteLogEvent() {
         if let screenName = analyticsScreenName {
-            analytics.buttonTap(screenName: screenName,
-                                buttonName: analytics.buttonDelete)
+            if screenName == analytics.historyCardMenu {
+                let srcLangName = self.chatItemModel?.chatItem?.textNativeLanguage ?? ""
+                let desLangName = self.chatItemModel?.chatItem?.textTranslatedLanguage ?? ""
+
+                analytics.historyCardMenuDelete(screenName: screenName,
+                                                srcLanguageName: srcLangName,
+                                                desLanguageName: desLangName)
+            } else {
+                analytics.buttonTap(screenName: screenName,
+                                    buttonName: analytics.buttonDelete)
+            }
         }
     }
 }

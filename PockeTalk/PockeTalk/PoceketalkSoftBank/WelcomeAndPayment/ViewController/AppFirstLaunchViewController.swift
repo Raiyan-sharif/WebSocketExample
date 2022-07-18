@@ -82,7 +82,7 @@ class AppFirstLaunchViewController: BaseViewController {
 
     //MARK: - IBActions
     @IBAction private func termAndConditionButtonTap(_ sender: UIButton) {
-        termAndConditionButtonLogEvent()
+        acceptAndStartButtonLogEvent()
         if Reachability.isConnectedToNetwork(){
             goToWalkThroughScreen()
         } else {
@@ -91,7 +91,7 @@ class AppFirstLaunchViewController: BaseViewController {
     }
 
     @IBAction private func acceptAndStartButtonTap(_ sender: UIButton) {
-        acceptAndStartButtonLogEvent()
+        termAndConditionButtonLogEvent()
         if Reachability.isConnectedToNetwork() {
             let settingsUrl = NSURL(string: GlobalMethod.getURLString().termsAndConditionsURL)! as URL
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)

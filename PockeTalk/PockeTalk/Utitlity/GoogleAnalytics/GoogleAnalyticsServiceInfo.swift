@@ -41,7 +41,6 @@ struct GoogleAnalyticsServiceInfo {
 enum FirebaseAppId: String {
     case dev = "1:958429054171:ios:29d71a1365d6e8777cf8fe"
     case prod = "1:180111879719:ios:aeef784ae461a427e2a802"
-    case testDev = "1:257641794970:ios:f2e31363c7a5e386177e23"
 
     var environment: String {
         switch self {
@@ -49,8 +48,6 @@ enum FirebaseAppId: String {
             return "Dev"
         case .prod:
             return "Prod"
-        case .testDev:
-            return "Dev (Testing)"
         }
     }
 }
