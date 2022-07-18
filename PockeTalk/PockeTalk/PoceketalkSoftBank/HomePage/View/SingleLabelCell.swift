@@ -24,6 +24,9 @@ class SingleLabelCell: UITableViewCell {
         infoLabel.text = ttsText
         if indexPath.row == 2 {
             infoLabel.textColor = .gray
+            let toFont = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
+            var leftRightPadding: CGFloat = 150
+            infoLabel.font = infoLabel.font.withSize(FontUtility.getFontSize())
             if let nativeLanguage = chatItem?.textNativeLanguage,
                let nativeLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: nativeLanguage) {
 
@@ -36,6 +39,7 @@ class SingleLabelCell: UITableViewCell {
             }
         } else {
             infoLabel.textColor = .black
+            infoLabel.font = infoLabel.font.withSize(FontUtility.getToFontSize())
             if let translatedLanguage = chatItem?.textTranslatedLanguage,
                let translatedLanguageCode = LanguageSelectionManager.shared.getLanguageCodeByName(langName: translatedLanguage) {
 
