@@ -170,10 +170,10 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 
          }
         setUPViews()
-        previewLayer.videoGravity = .resize
+        previewLayer.videoGravity = .resizeAspectFill
         previewView = cameraPreviewView
         previewView.frame = cameraPreviewView.frame
-        cropImageRect = cameraPreviewView.frame
+        cropImageRect = previewView.frame
         previewView.layer.addSublayer(previewLayer)
         talkButtonImageView = window.viewWithTag(109) as! UIImageView
         view.insertSubview(previewView, at: 0)
@@ -472,10 +472,11 @@ extension CameraViewController {
                 
                 let image = photo.image()
                 let originalSize: CGSize
-                let visibleLayerFrame = cropImageRect
-                
+                let width = previewView.frame.size.width
+                let height = previewView.frame.size.height
+                let visibleLayerFrame = CGRect(x: 0, y: 0, width: width, height: height)
                 let metaRect = (previewLayer.metadataOutputRectConverted(fromLayerRect: visibleLayerFrame ))
-                
+
                 if (image!.imageOrientation == UIImage.Orientation.left || image!.imageOrientation == UIImage.Orientation.right) {
                     originalSize = CGSize(width: (image?.size.height)!, height: image!.size.width)
                 } else {
@@ -485,11 +486,9 @@ extension CameraViewController {
                 
                 if let finalCgImage = image!.cgImage?.cropping(to: cropRect) {
                     let image = UIImage(cgImage: finalCgImage, scale: 1.0, orientation: image!.imageOrientation)
-                    
                     self.capturedImage = image
+                    layoutCameraResult(uiImage: image)
                 }
-                //            let image11 = cropToBounds(image: image!, width: Double(cropImageRect.width), height: Double(cropImageRect.height))
-                layoutCameraResult(uiImage: image!)
             }
         }
     }
