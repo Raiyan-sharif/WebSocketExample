@@ -195,3 +195,7 @@
 
 // License token failure alert
 "kUnknownError" = "サーバエラー。\nもう一度やり直してください。";
+
+// Push NotificationContent
+"kSevenDayBeforeExpiration" = "無料期間の有効期限はあと1週間です";
+"kCouponAfterExpiration" =  "アプリ無料期間の有効期限が切れました。継続して利用できるようにしましょう";

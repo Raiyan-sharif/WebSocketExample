@@ -155,7 +155,6 @@
 "kYenPerMonth" = " /mes";
 "kYenPerYear" = " /año";
 "kStartPocketalkApp" = "Inicie la aplicación POCKETALK";
-
 "kIAPFreeDaysDescription" = "Todos los planes son gratuitos durante los primeros 3 días";
 "kIAPFreePeriodCancellationDescription" = "No se aplicará ningún coste si cancela durante el periodo gratuito. ";
 "kIAPFreePeriodSubscriptionDescription" = "La tarifa se cobrará de forma continua desde el día siguiente al último día del periodo gratuito.";
@@ -186,5 +185,10 @@
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+
+// Push NotificationContent
+"kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
+"kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+

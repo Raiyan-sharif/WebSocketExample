@@ -159,6 +159,7 @@
 "kYenPerWeek" = " /Woche";
 "kYenPerMonth" = " /Monat";
 "kYenPerYear" = " /Jahr";
+
 "kStartPocketalkApp" = "POCKETALK starten";
 
 //Favorite Limit dailog
@@ -188,5 +189,10 @@ da es sich um einen Abonnementvertrag handelt.";
 
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
+
+// Push NotificationContent
+"kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
+"kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+

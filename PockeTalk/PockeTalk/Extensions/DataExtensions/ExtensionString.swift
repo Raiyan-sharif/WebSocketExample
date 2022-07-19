@@ -68,6 +68,30 @@ extension String {
         return data.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     }
 
+    func getISO_8601FormattedDateString(from string: String) -> String? {
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: kDateFormatterLocale)
+        let date = dateFormatter.date(from: string)
+
+        if let date = date {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let resultDate = dateFormatter.string(from: date)
+            return resultDate
+        } else {
+            return nil
+        }
+    }
+
+    func getISO_8601FormattedDate(from string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: kDateFormatterLocale)
+        let date = dateFormatter.date(from: string) ?? Date()
+        return date
+    }
+
     // Convert string to date
     func getFormattedDate(formatter: String) -> Date? {
         let dateFormatterGet = DateFormatter()
