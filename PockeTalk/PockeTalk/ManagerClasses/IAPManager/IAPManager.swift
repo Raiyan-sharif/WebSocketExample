@@ -427,6 +427,23 @@ extension IAPManager {
         return (isFreeTrialAvailable, freeTrialDuration, freeTrialStringType)
     }
 
+    private func getPlanPerUnitText(unitType: PeriodUnitType, currency: String, price: Double) -> String {
+        var planText = ""
+
+        switch unitType {
+        case .week:
+            planText = "kYenPerWeek".localiz()
+        case .month:
+            planText = "kYenPerMonth".localiz()
+        case .year:
+            planText = "kYenPerYear".localiz()
+        default:
+            break
+        }
+
+        return iSAppStoreRegionJapan() ? ("\(currency) \(Int(price))\(planText)") : ("\(currency) \(price)\(planText)")
+    }
+
     func getProductDetails(from product: SKProduct) -> ProductDetails {
         let currency = getLocalCurrencyAndPrice(from: product).currency
         let price = getLocalCurrencyAndPrice(from: product).price
@@ -436,17 +453,10 @@ extension IAPManager {
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
         /// set planPerUnit text
-        var planPerUnitText = ""
-        switch unitType {
-        case .week:
-            planPerUnitText = "\(currency) \(price)\("kYenPerWeek".localiz())"
-        case .month:
-            planPerUnitText = "\(currency) \(price)\("kYenPerMonth".localiz())"
-        case .year:
-            planPerUnitText = "\(currency) \(price)\("kYenPerYear".localiz())"
-        default:
-            break
-        }
+        let planPerUnitText = getPlanPerUnitText(
+                unitType: unitType,
+                currency: currency,
+                price: price)
 
         /// set free uses details text
         var freeUsesDetailsText: String?
@@ -465,7 +475,8 @@ extension IAPManager {
                 periodUnitType: unitType,
                 planPerUnitText: planPerUnitText,
                 freeUsesDetailsText: freeUsesDetailsText,
-                suggestionText: nil
+                suggestionText: nil,
+                isAppStoreJapan: iSAppStoreRegionJapan()
             )
         )
     }

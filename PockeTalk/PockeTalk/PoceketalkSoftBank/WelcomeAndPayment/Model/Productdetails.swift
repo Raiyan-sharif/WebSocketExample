@@ -1,5 +1,5 @@
 //
-//  Productdetails.swift
+//  ProductDetails.swift
 //  PockeTalk
 //
 
@@ -14,6 +14,7 @@ struct ProductDetails{
     let planPerUnitText: String
     let freeUsesDetailsText: String?
     var suggestionText: String?
+    let isAppStoreJapan: Bool
 }
 
 enum PeriodUnitType: String{

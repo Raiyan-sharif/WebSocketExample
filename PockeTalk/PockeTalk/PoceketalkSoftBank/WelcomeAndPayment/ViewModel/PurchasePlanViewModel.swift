@@ -145,37 +145,47 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
             if productDetails[item].periodUnitType == .month {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-//                    productPrice: (productDetails[item].price).roundToDecimal(2),
                     productPrice: productDetails[item].price,
                     numberOfWeek: 4)
 
-//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
-                //"Up to BDT xx off"
-                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
-                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+                productDetails[item].suggestionText = getProductDetailSuggestionText(
+                    isAppStoreJapan: productDetails[item].isAppStoreJapan,
+                    currency: productDetails[item].currency,
+                    savingPrice: savingPrice)
             }
 
             if productDetails[item].periodUnitType == .year {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-//                    productPrice: (productDetails[item].price).roundToDecimal(2),
                     productPrice: productDetails[item].price,
                     numberOfWeek: 52)
 
-//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
-                //"Up to BDT xx off"
-                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
-                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+                productDetails[item].suggestionText = getProductDetailSuggestionText(
+                    isAppStoreJapan: productDetails[item].isAppStoreJapan,
+                    currency: productDetails[item].currency,
+                    savingPrice: savingPrice)
             }
         }
     }
 
-    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Int {
+    private func getProductDetailSuggestionText(isAppStoreJapan: Bool, currency: String, savingPrice: Double) -> String {
+        let savingPriceWithCurrency = isAppStoreJapan ? ("\(currency) \(Int(savingPrice))") : ("\(currency) \(savingPrice)")
+
+        return "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+    }
+
+    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Double {
+        let doubleSavingPrice = ((weeklyPrice * Double(numberOfWeek)) - productPrice).roundToDecimal(2)
         let savingPrice = Int((weeklyPrice * Double(numberOfWeek)) - productPrice)
         let digitCount = String(savingPrice).count
         let mod = digitCount > 3 ? 100 : 10
         let nearestFloorSavingPrice = savingPrice - (savingPrice % mod)
-        return nearestFloorSavingPrice
+
+        if !IAPManager.shared.iSAppStoreRegionJapan() {
+            return doubleSavingPrice
+        } else {
+            return Double(nearestFloorSavingPrice)
+        }
     }
 
     private func setupTVRowData() {
