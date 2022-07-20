@@ -79,7 +79,7 @@ class LanguageEngineDownloader: NSObject {
     }
 
     private func getLanguageEngineURL() -> String {
-       #if PRODUCTION_WITH_LIVE_URL || PRODUCTION_WITH_STAGE_URL || PRODUCTION_WITH_PRODUCTION_URL
+        #if PRODUCTION_WITH_LIVE_URL || PRODUCTION_WITH_PRODUCTION_URL
             return LanguageEngineUrlForProductionBuild
         #else
             return LanguageEngineUrlForStageBuild
