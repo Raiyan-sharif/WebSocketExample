@@ -302,7 +302,6 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             deleteItemPressed()
             break
         }
-     
     }
 }
 
@@ -312,7 +311,7 @@ extension AlertReusableViewController {
         if let screenName = analyticsScreenName {
             analytics.addToFavorite(screenName: screenName,
                                     buttonName: analytics.buttonFav,
-                                    isLiked: isLiked)
+                                    isLiked: !isLiked)
         }
     }
 

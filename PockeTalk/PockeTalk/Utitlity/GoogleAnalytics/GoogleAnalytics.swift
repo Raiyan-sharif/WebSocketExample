@@ -362,7 +362,7 @@ struct GoogleAnalytics {
     func pronunciationPractice(screenName: String, eventParamName: String, practiceCount: Int) {
         let parameter = [mainScreenName: screenName,
                         voiceInputMenu: eventParamName,
-                        count: "\(practiceCount) of tries performed against current practice"]
+                        count: "\(practiceCount)"]
         logEvent(event: .voiceInput, parameters: parameter)
     }
 
@@ -394,7 +394,7 @@ struct GoogleAnalytics {
     //MARK: - Camera logEvent functions
     func takePicture(screenName: String, zoom: String, source: String, destination: String) {
         let parameter = [mainScreenName: screenName,
-                        expansion: "Zoom \(zoom)x when taking picture",
+                        expansion: "\(zoom)",
                         camSourceLangName: source,
                         camDestinationLangName: destination]
         logEvent(event: .takePicture, parameters: parameter)
