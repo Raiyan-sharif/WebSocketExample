@@ -83,11 +83,13 @@ class PermissionViewController: UIViewController {
 
     //MARK: - Utils
     func initialCallCall() {
-        NetworkManager.shareInstance.handleLicenseToken { result in
-            if result {
-                AppDelegate.generateAccessKey{ result in
-                    if result == true {
-                       // SocketManager.sharedInstance.connect()
+        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == false {
+            NetworkManager.shareInstance.handleLicenseToken { result in
+                if result {
+                    AppDelegate.generateAccessKey{ result in
+                        if result == true {
+                           // SocketManager.sharedInstance.connect()
+                        }
                     }
                 }
             }

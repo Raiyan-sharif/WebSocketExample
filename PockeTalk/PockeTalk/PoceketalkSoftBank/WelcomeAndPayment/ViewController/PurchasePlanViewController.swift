@@ -322,7 +322,17 @@ class PurchasePlanViewController: UIViewController {
                         self?.hideLoader()
                         UserDefaults.standard.set(true, forKey: kFreeTrialStatus)
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"====== Trial is Activated =====")
-                        self?.goToPermissionVC()
+                        if let liscense_token = data.token {
+                            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "\(liscense_token)")
+                            UserDefaults.standard.set(liscense_token, forKey: licenseTokenUserDefaultKey)
+
+                            let tokenCreationTimeInMiliSecond = Date().millisecondsSince1970
+                            UserDefaults.standard.set(tokenCreationTimeInMiliSecond, forKey: tokenCreationTime)
+                            AppDelegate.generateAccessKey{ result in}
+                            self?.goToPermissionVC()
+                        }else{
+                            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "Response ok but no token provided!")
+                        }
                     } else {
                         UserDefaults.standard.set(false, forKey: kFreeTrialStatus)
                         if self?.freeTrialRetryCount ?? 0 < 3 {
