@@ -189,7 +189,7 @@ struct GoogleAnalytics {
     let app = "app"
     let buttonCard = "card"
     let buttonLongTap = "longtap"
-    let buttonHistoryMenu = "menu"
+    let buttonHistoryMenu = "history_menu"
 
     let buttonCameraSourceLang = "select_cam_src_lang"
     let buttonCameraDestinationLang = "select_cam_dst_lang"
