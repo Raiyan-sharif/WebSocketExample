@@ -6,7 +6,7 @@
 import Foundation
 import Moya
 import Kronos
-
+import SwiftKeychainWrapper
 
 protocol Network {
     var provider: MoyaProvider<NetworkServiceAPI> { get }
@@ -246,11 +246,13 @@ struct NetworkManager:Network {
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
                 PrintUtility.printLog(tag: "RTC", text: "requestCompletion >> result code: \(result.resultCode)")
+
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
                         PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
+                        KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
