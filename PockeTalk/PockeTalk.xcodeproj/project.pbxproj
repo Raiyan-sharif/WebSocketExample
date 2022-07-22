@@ -289,6 +289,7 @@
 		89CFFC6C2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFFC6B2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift */; };
 		89DEC185277AF7DC00A8FF34 /* SingleLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEC183277AF7DC00A8FF34 /* SingleLabelCell.swift */; };
 		89DEC186277AF7DC00A8FF34 /* SingleLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89DEC184277AF7DC00A8FF34 /* SingleLabelCell.xib */; };
+		89DF693C288A694F00A6C64A /* TokenApiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF693B288A694F00A6C64A /* TokenApiState.swift */; };
 		89E0F2AE277AD5430031782D /* LangDetectionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */; };
 		89E0F2AF277AD5430031782D /* LangDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0F2AD277AD5430031782D /* LangDetection.swift */; };
 		89E3736527E0B59E0092F786 /* BuildVariantScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E3736427E0B59E0092F786 /* BuildVariantScheme.swift */; };
@@ -670,6 +671,7 @@
 		89CFFC6B2791D766004D3951 /* HomeViewController+HistoryCardVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+HistoryCardVCExtension.swift"; sourceTree = "<group>"; };
 		89DEC183277AF7DC00A8FF34 /* SingleLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelCell.swift; sourceTree = "<group>"; };
 		89DEC184277AF7DC00A8FF34 /* SingleLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLabelCell.xib; sourceTree = "<group>"; };
+		89DF693B288A694F00A6C64A /* TokenApiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenApiState.swift; sourceTree = "<group>"; };
 		89E0F2AC277AD5430031782D /* LangDetectionResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetectionResponseModel.swift; sourceTree = "<group>"; };
 		89E0F2AD277AD5430031782D /* LangDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangDetection.swift; sourceTree = "<group>"; };
 		89E3736427E0B59E0092F786 /* BuildVariantScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildVariantScheme.swift; sourceTree = "<group>"; };
@@ -911,6 +913,7 @@
 				89E3736427E0B59E0092F786 /* BuildVariantScheme.swift */,
 				89100D5D27BCE96E00E3895B /* TagUtility.swift */,
 				890F3ECA284DD633001C984A /* PanGestureDetection.swift */,
+				89DF693B288A694F00A6C64A /* TokenApiState.swift */,
 			);
 			path = Utitlity;
 			sourceTree = "<group>";
@@ -2651,6 +2654,7 @@
 				89B1593B2784133A00636574 /* TermsAndConditionsViewController.swift in Sources */,
 				4AE97AD826E8E1E7007344FC /* ChatDBModel.swift in Sources */,
 				895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */,
+				89DF693C288A694F00A6C64A /* TokenApiState.swift in Sources */,
 				8705289126F0ACF100555AF6 /* TextSizeViewController.swift in Sources */,
 				87AE1C7926FB100B00C23798 /* SocketDataModel.swift in Sources */,
 				50675D5926EB1BDD00A775E5 /* CameraLanguageSelectionViewModel.swift in Sources */,

@@ -245,6 +245,7 @@ struct NetworkManager:Network {
                 //IAPManager.shared.setScheduleExecution = 0
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
+                PrintUtility.printLog(tag: "RTC", text: "requestCompletion >> result code: \(result.resultCode)")
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
                         PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
@@ -257,19 +258,23 @@ struct NetworkManager:Network {
                             UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
                         }
                         GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")
                         completion(nil)
                     } else if result_code == WARN_INPUT_PARAM {
                         PrintUtility.printLog(tag: "License Token API", text: "Input parameter error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else if result_code == ERR_CREATE_FAILED {
                         PrintUtility.printLog(tag: "License Token API", text: "License token issuance error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else if result_code == ERR_UNKNOWN {
                         PrintUtility.printLog(tag: "License Token API", text: "Unknown error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else {
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "License info over")
                             let alertVC = UIAlertController(title: "" , message: "kUnknownError".localiz(), preferredStyle: UIAlertController.Style.alert)
                             alertVC.view.tintColor = UIColor.black
@@ -301,10 +306,12 @@ struct NetworkManager:Network {
                 }
 
             } catch let err {
+                TokenApiStateObserver.shared.updateState(state: .failed)
                 //IAPManager.shared.setScheduleExecution = 0
                 completion(nil)
             }
         case let .failure(error):
+            TokenApiStateObserver.shared.updateState(state: .failed)
             //IAPManager.shared.setScheduleExecution = 0
             completion(nil)
         }
@@ -343,7 +350,7 @@ struct NetworkManager:Network {
     }
 
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
-
+        TokenApiStateObserver.shared.updateState(state: .running)
         let params = getLicenseTokenParam()
         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "getLicenseToken => params => \(params)")
         provider.request(.liscense(params: params)){ result in
@@ -445,6 +452,7 @@ struct NetworkManager:Network {
     }
 
     func startTokenRefreshProcedure() {
+        PrintUtility.printLog(tag: "RTC", text: "startTokenRefreshProcedure >> call token api")
         handleLicenseToken { result in
             if result {
                 AppDelegate.generateAccessKey { result in
