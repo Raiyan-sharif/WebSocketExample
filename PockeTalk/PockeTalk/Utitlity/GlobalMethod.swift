@@ -508,6 +508,11 @@ class GlobalMethod {
                 talkButton.isHidden = !isEnable
                 HomeViewController.dummyTalkBtnImgView.isHidden = isEnable
             }
+            if isEnable{
+                FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
+            }else {
+                FloatingMikeButton.sharedInstance.isHidden(true)
+            }
         }
     }
 }

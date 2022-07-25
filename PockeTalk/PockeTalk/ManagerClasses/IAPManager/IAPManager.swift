@@ -61,6 +61,7 @@ class IAPManager: NSObject {
     var IAPTimeoutInterval: Double = kIAPTimeoutInterval
     var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
+    var appStoreRegionRetryCount = 0
 
     // MARK: - Custom Types
     enum IAPManagerError: Error {
@@ -73,18 +74,24 @@ class IAPManager: NSObject {
     func iSAppStoreRegionJapan() -> Bool {
         if #available(iOS 13.0, *) {
             if let storefront = SKPaymentQueue.default().storefront {
+                IAPManager.shared.appStoreRegionRetryCount = 0
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region: \(storefront.countryCode)")
                 if storefront.countryCode == kAlpha3CountryCodeJapan {
                     return true
                 }else{
                     return false
                 }
-            }else{
-                // Fallback ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
-                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region nil so considering JPN")
-                return true
+            }else {
+                if IAPManager.shared.appStoreRegionRetryCount < 5 {
+                    IAPManager.shared.appStoreRegionRetryCount += 1
+                    return iSAppStoreRegionJapan()
+                } else{
+                    IAPManager.shared.appStoreRegionRetryCount = 0
+                    return true
+                }
             }
         } else {
+            IAPManager.shared.appStoreRegionRetryCount = 0
             // Fallback on earlier versions. ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
             PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region iOS12 so considering JPN")
             return true
