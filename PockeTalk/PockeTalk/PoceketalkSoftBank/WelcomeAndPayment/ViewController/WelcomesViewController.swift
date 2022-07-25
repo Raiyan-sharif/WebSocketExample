@@ -35,6 +35,10 @@ class WelcomesViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
-        GlobalMethod.appdelegate().navigateToViewController(.home)
+        if let viewController = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.setViewControllers([viewController], animated: false)
+        }
     }
 }
