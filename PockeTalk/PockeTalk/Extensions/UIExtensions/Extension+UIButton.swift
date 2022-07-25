@@ -26,4 +26,11 @@ extension UIButton {
         self.setTitle(title ?? "", for: .normal)
         self.backgroundColor = backgroundColor ?? UIColor()
     }
+
+    func getPadding(left: CGFloat, right: CGFloat, bottom: CGFloat, top: CGFloat) {
+
+        self.titleLabel?.lineBreakMode = .byTruncatingTail
+        self.contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+
+    }
 }

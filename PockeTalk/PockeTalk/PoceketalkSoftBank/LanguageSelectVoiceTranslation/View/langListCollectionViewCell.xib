@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,10 +46,21 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="moS-Ek-JKX">
+                                <rect key="frame" x="0.0" y="49.5" width="395" height="0.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="dMF-Cl-GiB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="moS-Ek-JKX" secondAttribute="trailing" id="5C2-Ri-ili"/>
+                            <constraint firstAttribute="bottom" secondItem="moS-Ek-JKX" secondAttribute="bottom" id="5QK-8D-VR7"/>
                             <constraint firstItem="5sR-Fq-eui" firstAttribute="top" secondItem="VX8-MK-bTO" secondAttribute="top" id="8Ry-9r-XAs"/>
+                            <constraint firstItem="moS-Ek-JKX" firstAttribute="leading" secondItem="VX8-MK-bTO" secondAttribute="leading" id="90p-Zq-Jbc"/>
                             <constraint firstItem="4d0-Q4-f2h" firstAttribute="centerY" secondItem="VX8-MK-bTO" secondAttribute="centerY" id="Aeq-rK-lwh"/>
                             <constraint firstAttribute="trailing" secondItem="tAm-i0-PI5" secondAttribute="trailing" constant="50" id="CvR-4V-JnI"/>
                             <constraint firstAttribute="bottom" secondItem="5sR-Fq-eui" secondAttribute="bottom" id="H81-4b-Aaw"/>
@@ -86,6 +97,11 @@
             <point key="canvasLocation" x="-99.275362318840592" y="-250.44642857142856"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="tAm-i0-PI5">
+            <size key="intrinsicContentSize" width="41.5" height="20.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="ic_check_circle_white_selected" width="24" height="24"/>
         <image name="icon_novoice" width="25" height="25"/>

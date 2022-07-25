@@ -17,7 +17,7 @@
 "application_version" = "Application Version";
 "Pocketalk Promotion" = "Pocketalk Promotion";
 "Camera" = "Camera";
-"Favorite" = "Favorite";
+"Favorite" = "Favorites";
 "PronunciationGuideline" = "Press the button and pronounce it";
 "Region" = "Region";
 "TtsToLanguage" = "Hola como estas";
@@ -35,14 +35,14 @@
 "cancel" = "Cancel";
 "internet_connection_error" = "No Internet connection";
 "connect_via_wifi" = "Connect to Wi-Fi";
-"Playback Speed" = "Playback Speed";
+"Playback Speed" = "Playback speed";
 "Standard" = "Standard";
 "Slowly" = "Slowly";
-"Very Slowly" = "Very Slowly";
+"Very Slowly" = "Very slowly";
 "Reset" = "Reset";
 "Clear translation history" = "Clear translation history";
 "Delete the Camera translation history" = "Delete the Camera translation history";
-"Clear all Favorite" = "Clear all Favorite";
+"Clear all Favorite" = "Clear all Favorites";
 "Delete all the data" = "Delete all the data";
 "font_size" = "Text Size";
 "Smallest" = "Smallest";

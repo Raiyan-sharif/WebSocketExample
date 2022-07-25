@@ -80,7 +80,7 @@ class TutorialViewController: BaseViewController {
 
         self.titleLabel.text = tutorialLanguage?.lineOne
         self.titleLabel.textAlignment = .center
-        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getTutorialFontSize(), weight: .semibold)
+        self.titleLabel.font = UIFont.systemFont(ofSize: FontUtility.getTutorialFontSize(), weight: .regular)
         self.titleLabel.textColor = UIColor._blackColor()
 
         self.infoLabel.text = tutorialLanguage?.lineTwo

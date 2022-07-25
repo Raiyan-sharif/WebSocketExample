@@ -39,6 +39,7 @@ class InformationSettingViewController: BaseViewController, UITableViewDelegate,
 
         cell.labelTitle.text = InformationSettingsItemType.settingItems[indexPath.row].localiz()
         cell.selectionStyle = .none
+        cell.labelTitle.textAlignment = .center
         return cell
     }
 

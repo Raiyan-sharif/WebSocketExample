@@ -4,12 +4,13 @@
 //
 
 import UIKit
+import MarqueeLabel
 
 class CountryWiseLanguageListViewController: BaseViewController {
     @IBOutlet weak private var languageListCollectionView: UICollectionView!
     @IBOutlet weak private var buttonOk: UIButton!
-    @IBOutlet weak private var countryNameLabel: UILabel!
-    
+    @IBOutlet weak private var countryNameLabel: MarqueeLabel!
+    //
     let TAG = "\(CountryWiseLanguageListViewController.self)"
     var selectedLanguageCode = ""
     var dataShowingLanguageCode = ""
@@ -53,6 +54,10 @@ class CountryWiseLanguageListViewController: BaseViewController {
         buttonOk.layer.cornerRadius = 15
         let countryCode = GlobalMethod.getCountryCodeFrom(countryListItem, and: dataShowingLanguageCode)
         countryNameLabel.text = countryCode
+        countryNameLabel.type = .continuous
+        countryNameLabel.trailingBuffer = kMarqueeLabelTrailingBufferForLanguageScreen
+        countryNameLabel.speed = .rate(kMarqueeLabelScrollingSpeenForLanguageScreen)
+
     }
     
     private func configureCollectionView() {

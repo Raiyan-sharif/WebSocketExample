@@ -28,6 +28,10 @@ class FontUtility {
         return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex() + 1]
     }
 
+    static func getToFontSize () -> CGFloat {
+        return DEFAULT_FONTSIZE * FONTSIZE[getFontSizeIndex() + 1] * 1.1
+    }
+    
     static func getBiggestFontSize () -> CGFloat {
         return getBiggerFontSize() + DEFAULT_FONTSIZE * DEFAULT_FONT_MULTIPLYER * 2
     }

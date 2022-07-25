@@ -124,6 +124,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         let fromLang = CameraLanguageSelectionViewModel.shared.getLanguageInfoByCode(langCode: fromLangCode, languageList: CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList())
         let targetLang = languageManager.getLanguageInfoByCode(langCode: targetLangCode)
 
+        fromLangLabel.textAlignment = .center
+        toLangLabel.textAlignment = .center
+
         if(fromLang?.code == CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()[0].code){
             fromLangLabel.text = "\(fromLang?.sysLangName ?? "")"
         }else{
