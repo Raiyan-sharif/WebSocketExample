@@ -345,34 +345,42 @@ class GlobalMethod {
         
         return transition
     }
-    
+
     static func addMoveOutTransitionAnimatation(duration: Double, animationStyle: CATransitionSubtype)-> CATransition{
         let transition = CATransition()
         transition.duration = duration
         transition.type = CATransitionType.reveal
         transition.subtype = animationStyle
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        
+
         return transition
     }
-    
+
     static func removePunctuation(of text: String) -> String{
-        let punctuationList = [".", "。", "·", "։", "჻", "।", "‧", ",", "，", "、", "،", "\"", "!", "！", "¡", "՜", ";", "՝", "_", "〜", "~", "～", "|", "॥", "՚", "’", "-", "֊", "?", "？", ":", "：", "․", "׃", "՞", "¿", "」", "「", "'", "『", "』", "〝", "〟", "«", "»", "׀", "؟", "‘", "־", "״", "׳", "။"]
-        var textWithoutPronounciations = text
-        for pronounciationItem in punctuationList{
-            textWithoutPronounciations = textWithoutPronounciations.replacingOccurrences(
-                of: pronounciationItem,
-                with: "",
-                options: NSString.CompareOptions.literal,
-                range: nil
-            )
-        }
-        return textWithoutPronounciations
+        return text.replacingOccurrences(
+            of: "([:punct:])",
+            with: "",
+            options: .regularExpression,
+            range: nil
+        )
     }
-    
+
+    /// Remove all whitespace characters, including line breaks in between and around text.
+    /// [POSIX Bracket Expression Reference](https://www.regular-expressions.info/posixbrackets.html)
+    /// - Parameter text: input text
+    /// - Returns: whitespace removed output text
+    static func removeAllWhitespace(of text: String) -> String{
+        return text.replacingOccurrences(
+            of: "([:space:])",
+            with: "",
+            options: .regularExpression,
+            range: nil
+        )
+    }
+
     static func getAlternativeSystemLanguageCode(of sysLangCode: String) -> String{
         var convertedLangCode = sysLangCode
-        
+
         if sysLangCode == SystemLanguageCode.zhHans.rawValue {
             convertedLangCode = AlternativeSystemLanguageCode.zh.rawValue
         } else if sysLangCode == SystemLanguageCode.zhHant.rawValue {
@@ -380,7 +388,7 @@ class GlobalMethod {
         } else if sysLangCode == SystemLanguageCode.ptPT.rawValue {
             convertedLangCode = AlternativeSystemLanguageCode.pt.rawValue
         }
-        
+
         return convertedLangCode
     }
     

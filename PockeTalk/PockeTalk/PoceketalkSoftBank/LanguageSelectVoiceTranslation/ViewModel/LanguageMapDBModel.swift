@@ -124,13 +124,21 @@ class LanguageMapDBModel: BaseDBModel {
 
     }
 
-     func findAllEntities() throws -> [BaseEntity]? {
-        var retArray = [BaseEntity]()
-        let items = try findAll()
+    /// Get all language names that match the provided language code
+    /// - Parameter languageCode: language code
+    /// - Returns: array of LanguageMapEntity
+    func findAllEntities(languageCode: String = "") throws -> [BaseEntity]? {
+        var retArray = [LanguageMapEntity]()
+        var items: AnySequence<Row>
+        if languageCode.isEmpty {
+            items = try findAll()
+        } else {
+            let filterQuery = table.filter(languageCode == textCode)
+            items = try find(filter: filterQuery)
+        }
         for item in items {
             retArray.append(LanguageMapEntity.init(id: item[id], textCode: item[textCode], textCodeTr: item[textCodeTr], textValueOne: item[textValueOne], textValueTwo: item[textValueTwo], textValueThree: item[textValueThree], textValueFour: item[textValueFour], textValueFive: item[textValueFive], textValueSix: item[textValueSix], textValueSeven: item[textValueSeven]))
         }
-
         return retArray
     }
 }
