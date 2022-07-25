@@ -78,7 +78,7 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="ml" stt_engine="" tts_engine="google"/>
     <item code="mr" stt_engine=""/>
     <item code="ne" stt_engine="" tts_engine="" tts_value="Nepali"/>
-    <item code="fa" stt_engine="" tts_engine=""/>
+    <item code="fa" stt_engine=""/>
     <item code="si" stt_engine="" tts_engine="" tts_value="Sinhala"/>
     <item code="sl" stt_engine=""/>
     <item code="su" stt_engine="" tts_engine=""/>
