@@ -5,11 +5,12 @@
 
 import UIKit
 
-public class CustomLocalNotification: NSObject {
+open class CustomLocalNotification: NSObject {
+    public static let sharedInstance = CustomLocalNotification()
     private var customLocalNotificationView: CustomLocalNotificationView!
-    private let window = UIApplication.shared.keyWindow ?? UIWindow()
+    var window = UIApplication.shared.keyWindow ?? UIWindow()
 
-    override init() {
+    private override init() {
         super.init()
         customLocalNotificationView = CustomLocalNotificationView()
         customLocalNotificationView.notificationDelegate = self

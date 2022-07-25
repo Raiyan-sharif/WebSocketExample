@@ -8,16 +8,12 @@ import Kronos
 import SwiftKeychainWrapper
 
 extension AppDelegate{
-    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "", initAppWindow: Bool = false) {
+    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "", showNotification: Bool = false) {
         var viewController = UIViewController()
 
         DispatchQueue.main.async {
             self.window?.rootViewController = nil
-
-            ///Set app window when app launch only
-            if initAppWindow {
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-            }
+            self.window = UIWindow(frame: UIScreen.main.bounds)
 
             switch type {
             case .home:
@@ -55,7 +51,11 @@ extension AppDelegate{
             let navigationController = UINavigationController.init(rootViewController: viewController)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
-            //self.setActivityIndicatorWindow()
+            self.setWindow()
+
+            if showNotification {
+                CustomLocalNotification.sharedInstance.addView()
+            }
         }
     }
     
@@ -79,17 +79,17 @@ extension AppDelegate{
         }
     }
     
-    func gotoNextVcForCoupon(_ initAppWindow: Bool = false){
+    func gotoNextVcForCoupon(){
         if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
-            GlobalMethod.appdelegate().navigateToViewController(.home, initAppWindow: initAppWindow)
+            GlobalMethod.appdelegate().navigateToViewController(.home)
         }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
-            GlobalMethod.appdelegate().navigateToViewController(.welcome, initAppWindow: initAppWindow)
+            GlobalMethod.appdelegate().navigateToViewController(.welcome)
         }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true{
-            GlobalMethod.appdelegate().navigateToViewController(.permission, initAppWindow: initAppWindow)
+            GlobalMethod.appdelegate().navigateToViewController(.permission)
         }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
-            GlobalMethod.appdelegate().navigateToViewController(.walkthrough,initAppWindow: initAppWindow)
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
         }else{
-            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition, initAppWindow: initAppWindow)
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
         }
     }
     
@@ -103,8 +103,9 @@ extension AppDelegate{
         }
     }
 
-    private func setActivityIndicatorWindow() {
+    private func setWindow() {
         ActivityIndicator.sharedInstance.window = self.window ?? UIWindow()
+        CustomLocalNotification.sharedInstance.window = self.window ?? UIWindow()
     }
 
     //MARK: -  Set device language as default language
@@ -257,20 +258,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UserDefaults.standard.set("\(id)", forKey: "NotificationID")
         }
 
-        //Remove local notification view if exist
-        CustomLocalNotification().removeView()
-
+        CustomLocalNotification.sharedInstance.removeView()
         DispatchQueue.main.async {
             guard let _ = UserDefaults.standard.string(forKey: kNotificationURL) else{
                 return
             }
             if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
-                GlobalMethod.appdelegate().navigateToViewController(.home)
-                CustomLocalNotification().addView()
+                GlobalMethod.appdelegate().navigateToViewController(.home, showNotification: true)
+
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon Exist. Navigating to HomeVC & adding local notification view")
 
             } else {
-                CustomLocalNotification().addView()
+                CustomLocalNotification.sharedInstance.addView()
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon didn't Exist. Showing local notification view on top of the existing view")
             }
         }
