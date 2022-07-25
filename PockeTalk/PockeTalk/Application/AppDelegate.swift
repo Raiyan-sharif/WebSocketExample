@@ -47,9 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if shouldCallLicenseConfirmationApi() == true{
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
                 UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
-                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon, initAppWindow: true)
+                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon)
             }else{
-                GlobalMethod.appdelegate().gotoNextVcForCoupon(true)
+                GlobalMethod.appdelegate().gotoNextVcForCoupon()
             }
         }
         return true

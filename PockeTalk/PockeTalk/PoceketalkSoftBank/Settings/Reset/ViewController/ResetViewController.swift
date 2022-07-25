@@ -124,7 +124,8 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
                 }
                 LocalNotificationManager.sharedInstance.removeScheduledNotification()
-                CustomLocalNotification().removeView()
+                CustomLocalNotification.sharedInstance.removeView()
+
                 
                 ///Delete all TTS audio files
                 FileUtility.deleteTTSAudioDirectory()
@@ -142,7 +143,10 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
                 ///Remove local notification manager schedule & view from window if exist
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification when delete all data")
-                
+
+                LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                CustomLocalNotification.sharedInstance.removeView()
+
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
 //                self.navigationController?.popToRootViewController(animated: false)
