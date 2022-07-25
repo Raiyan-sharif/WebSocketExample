@@ -14,7 +14,7 @@ class SystemLanguageViewController: BaseViewController {
     var mIndexPath = IndexPath()
     private let TAG = "\(SystemLanguageViewController.self)"
     private var selectedLanguage:String?
-    
+
     private var leftBtn:UIButton!{
         let okBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         okBtn.changeFontSize()
@@ -55,13 +55,14 @@ class SystemLanguageViewController: BaseViewController {
         setUpUI()
         currentSelectedLanguage = LanguageManager.shared.currentLanguage.rawValue
         selectedLanguage = currentSelectedLanguage
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.title = "Language".localiz()
+//        self.title = "Language".localiz()
+
         self.navigationController?.navigationBar.isHidden = false
 
         DispatchQueue.main.async {
@@ -82,14 +83,46 @@ class SystemLanguageViewController: BaseViewController {
     }
 
     //MARK: - Initial setup
+    private func setUpNavBarBackButton(navViewHeight: Int) -> UIButton {
+        let okButton = UIButton(frame: CGRect(x: backButtonOffsetX, y: ((navViewHeight - backButtonHeight/2) - 2), width: backButtonWidth, height: backButtonHeight))
+        okButton.changeFontSize()
+        okButton.contentHorizontalAlignment = .left
+        okButton.setTitle("OK", for: .normal)
+        okButton.setImage(UIImage(named: "icon_arrow_left.9"), for: .normal)
+        okButton.titleLabel?.textColor = .white
+        okButton.clipsToBounds = true
+        okButton.backgroundColor = .clear
+        okButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return okButton
+    }
+
+    private func setUpNavBarTitle(navView: UIView) -> UILabel {
+        let navTitle = UILabel(frame: CGRect(x: 0, y: (Int(navView.frame.size.height)/2 - navTitleHeight/2), width: navTitleWidth, height: navTitleHeight))
+        navTitle.textAlignment = .center
+        navTitle.changeFontSize()
+        navTitle.backgroundColor = .clear
+        navTitle.center.x = navView.center.x
+        navTitle.text = "Language".localiz()
+        navTitle.textColor = .white
+        return navTitle
+    }
+
     private func setUpUI() {
+        let window = UIApplication.shared.keyWindow
+        let safeAreaHeight = window?.safeAreaInsets.top ?? 20
+        let navView = UIView(frame: CGRect(x: navigationBarOffsetX, y: safeAreaHeight, width: UIScreen.main.bounds.size.width, height: Double(navigationBarHeight)))
+        navView.addSubview(setUpNavBarBackButton(navViewHeight: Int(navView.frame.size.height)/2))
+        navView.addSubview(setUpNavBarTitle(navView: navView))
+        navView.backgroundColor = UIColor(red: 18.0/255.0, green: 18.0/255.0, blue: 18.0/255.0, alpha: 1.0)
+        view.addSubview(navView)
+
         tableView = UITableView(frame: .zero, style: .plain)
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             .isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: navView.bottomAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.dataSource = self
         tableView.delegate = self
@@ -97,12 +130,6 @@ class SystemLanguageViewController: BaseViewController {
         
         tableView.register(cellType: SystemLanguageCell.self)
         tableView.tableFooterView = UIView()
-        
-        if let isSelected = UserDefaultsProperty<Bool>(KFirstInitialized).value, isSelected{
-            self.title = "Language".localiz()
-        }else{
-            self.title = "Language"
-        }
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         tableView.addGestureRecognizer(longPress)
@@ -132,8 +159,6 @@ class SystemLanguageViewController: BaseViewController {
             let languageItem = languageList[mIndexPath.row]
             let langCode = Languages(rawValue: languageItem.lanType) ?? .en
             LanguageManager.shared.setLanguage(language: langCode)
-            
-            UserDefaultsProperty<Bool>(KFirstInitialized).value = true
             UserDefaultsProperty<String>(KSelectedLanguage).value = languageItem.lanType
             LanguageSelectionManager.shared.loadLanguageListData()
             //LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()

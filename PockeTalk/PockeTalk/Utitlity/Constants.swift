@@ -53,7 +53,6 @@ let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
 
 let kUserDefaultAccessToken = "kUserDefaultAccessToken"
 let KSelectedLanguage = "KSelectedLanguage"
-let KFirstInitialized = "KFirstInitialized"
 let kUserDefaultIsMenuFavorite = "kUserDefaultIsMenuFavorite"
 let kUserDefaultIsTutorialDisplayed = "kUserDefaultIsTutorialDisplayed"
 let kIsShownLanguageSettings = "kIsShownLanguageSettings"
@@ -393,6 +392,13 @@ let kTempo_param = "tempo"
 
 let KCameraTempTargetLanguage = "KCameraTempTargetLanguage"
 
-
-
+//Constant of SystemLanguageViewController
+let navigationBarHeight = 70
+let navigationBarOffsetX = 0.0
+let navigationBarOffsetY = 0.0
+let backButtonOffsetX = 5
+let backButtonWidth = 60
+let backButtonHeight = 30
+let navTitleWidth = 200
+let navTitleHeight = 30
 
