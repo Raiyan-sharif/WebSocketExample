@@ -352,7 +352,11 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         DispatchQueue.main.async {
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogSoftbank(message: msg) {
-                GlobalMethod.appdelegate().gotoNextVc(false)
+                if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true || KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true{
+                    GlobalMethod.appdelegate().gotoNextVc(false)
+                } else {
+                    GlobalMethod.appdelegate().gotoNextVcForAuth()
+                }
             }
             self.present(alert, animated: true, completion: nil)
         }

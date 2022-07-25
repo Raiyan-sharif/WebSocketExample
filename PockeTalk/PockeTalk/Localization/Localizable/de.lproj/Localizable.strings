@@ -194,4 +194,5 @@ da es sich um einen Abonnementvertrag handelt.";
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "Gutscheincode-Authentifizierung fehlgeschlagen";
+"kFreeTrialExpireMessage" = "Die kostenlose Testphase ist beendet.\nUm die App weiter zu verwenden, wählen Sie bitte einen der folgenden Pläne.";

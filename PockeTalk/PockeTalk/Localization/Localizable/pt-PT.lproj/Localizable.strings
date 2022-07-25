@@ -194,4 +194,5 @@ porque tem um contrato de subscrição.";
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "Erro de autenticação no código do cupão";
+"kFreeTrialExpireMessage" = "O seu período de avaliação gratuita terminou.\nPara continuar a utilizar a aplicação, escolha um dos seguintes planos de subscrição.";

@@ -481,6 +481,35 @@ class GlobalMethod {
             return USER_MANUAL_URL_en
         }
     }
+    
+    // Common alert
+    static func showCommonAlert(in viewController: UIViewController? = nil, msg: String, completion: @escaping() -> Void){
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let vc = CustomAlertViewModel().alertDialogFreeTrialError(message: msg){
+                completion()
+            }
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            if viewController != nil {
+                viewController?.present(vc, animated: true, completion: nil)
+            } else if let _visibleViewController = self.getVisibleViewController(nil) {
+                _visibleViewController.present(vc, animated: true, completion: nil)
+            } else {
+                if let _window = appDelegate.window, let _rootViewController = _window.rootViewController {
+                    _rootViewController.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    static func updateTalkButtonEnableStatus(_ isEnable: Bool){
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            if let talkButton = appDelegate.window?.viewWithTag(109) as? UIImageView {
+                talkButton.isHidden = !isEnable
+                HomeViewController.dummyTalkBtnImgView.isHidden = isEnable
+            }
+        }
+    }
 }
 
 class GlobalAlternative{

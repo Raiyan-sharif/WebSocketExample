@@ -194,4 +194,5 @@
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "쿠폰 코드 인증 오류";
+"kFreeTrialExpireMessage" = "무료 체험 기간이 종료되었습니다.\n계속 이용하시려면 요금제를 선택해 주세요.";

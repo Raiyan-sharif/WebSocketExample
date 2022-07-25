@@ -193,4 +193,5 @@ kerana anda mempunyai perjanjian langganan.";
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "Ralat pengesahan kod kupon";
+"kFreeTrialExpireMessage" = "Tempoh percubaan percuma anda sudah tamat.\nUntuk terus menggunakan aplikasi, pilih salah satu daripada pelan langganan berikut.";

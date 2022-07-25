@@ -193,4 +193,5 @@
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "ข้อผิดพลาดในการตรวจสอบรหัสคูปอง";
+"kFreeTrialExpireMessage" = "ช่วงทดลองใช้งานฟรีของคุณสิ้นสุดแล้ว\nหากต้องการใช้แอปพลิเคชันต่อไป โปรดเลือกแพ็กเกจเพื่อใช้งานต่อ";

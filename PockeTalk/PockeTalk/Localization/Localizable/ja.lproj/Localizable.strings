@@ -199,4 +199,5 @@
 "kServerError" = "サーバエラー";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "クーポンコード認証エラー";
+"kFreeTrialExpireMessage" = "無料体験期間は終了しました。\n続けるにはプランを選択してください。";

@@ -252,14 +252,21 @@ struct NetworkManager:Network {
                         PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
+                        RunAsyncFunc.shared.cancelRunningAsyncTask()
                         KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
                         if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
                             UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
+                            GlobalMethod.updateTalkButtonEnableStatus(false)
+                            GlobalMethod.showCommonAlert(in: nil, msg: "kFreeTrialExpireMessage".localiz()){
+                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                GlobalMethod.updateTalkButtonEnableStatus(true)
+                            }
+                        }else{
+                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                         }
-                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                         TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")
                         completion(nil)

@@ -194,4 +194,5 @@ perché hai già sottoscritto un abbonamento.";
 "kServerError" = "Server Error";
 
 //Free trial
-"KFreeTrialErrorMessage" = "Under free trial\nCoupon code was not activated";
+"KFreeTrialErrorMessage" = "Errore di autenticazione del codice coupon";
+"kFreeTrialExpireMessage" = "Il periodo di prova è scaduto.\nPer continuare a utilizzare l'app, scegliere uno dei seguenti piani di abbonamento.";
