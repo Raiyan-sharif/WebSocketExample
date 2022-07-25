@@ -155,8 +155,8 @@
 "kYenPerMonth" = " /месяц";
 "kYenPerYear" = " /год";
 "kStartPocketalkApp" = "Запустить POCKETALK";
-"kThreeDaysTrial" = "無料でお試し";
-"kThreeDaysTrialDescription" = "無料期間3日";
+"kThreeDaysTrial" = "Пробный период";
+"kThreeDaysTrialDescription" = "Бесплатных дней: 3";
 
 "kIAPFreeDaysDescription" = "Все тарифы бесплатны первые 3 дня";
 "kIAPFreePeriodCancellationDescription" = "При отмене подписки в течение пробного периода плата по тарифу не взимается. ";

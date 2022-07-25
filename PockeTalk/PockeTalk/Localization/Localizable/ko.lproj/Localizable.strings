@@ -161,8 +161,8 @@
 "kYenPerMonth" = " /월";
 "kYenPerYear" = " /연";
 "kStartPocketalkApp" = "포켓토크 시작하기";
-"kThreeDaysTrial" = "無料でお試し";
-"kThreeDaysTrialDescription" = "無料期間3日";
+"kThreeDaysTrial" = "무료 체험하기";
+"kThreeDaysTrialDescription" = "무료 체험 기간 3일";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "즐겨찾기 수가 한계에 도달하였습니다";

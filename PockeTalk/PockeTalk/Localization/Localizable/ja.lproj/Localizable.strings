@@ -151,7 +151,7 @@
 "kYenPerYear" = " /年";
 "kStartPocketalkApp" = "ポケトークをはじめる";
 "kThreeDaysTrial" = "無料でお試し";
-"kThreeDaysTrialDescription" = "無料期間3日";
+"kThreeDaysTrialDescription" = "無料期間3日間";
 
 //IAP Alert
 "kIAPError" = "アプリ内購入エラー";

@@ -159,8 +159,8 @@
 "kYenPerMonth" = " /Monat";
 "kYenPerYear" = " /Jahr";
 "kStartPocketalkApp" = "POCKETALK starten";
-"kThreeDaysTrial" = "無料でお試し";
-"kThreeDaysTrialDescription" = "無料期間3日";
+"kThreeDaysTrial" = "Kostenlos testen";
+"kThreeDaysTrialDescription" = "3 Tage lang kostenlos";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "Anzahl der Favoriten hat ihre Grenzen erreicht";

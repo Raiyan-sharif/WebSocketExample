@@ -156,8 +156,8 @@
 "kYenPerMonth" = " /月";
 "kYenPerYear" = " /年";
 "kStartPocketalkApp" = "開始使用POCKETALK";
-"kThreeDaysTrial" = "無料でお試し";
-"kThreeDaysTrialDescription" = "無料期間3日";
+"kThreeDaysTrial" = "免費試用";
+"kThreeDaysTrialDescription" = "免費期3天";
 
 "kIAPFreeDaysDescription" = "所有方案的首次利用均免費3天";
 "kIAPFreePeriodCancellationDescription" = "在免費期間內解約將不收取任何費用。 ";
