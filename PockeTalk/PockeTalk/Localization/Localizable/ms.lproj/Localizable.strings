@@ -157,6 +157,8 @@
 "kYenPerMonth" = " /bulan";
 "kYenPerYear" = " /tahun";
 "kStartPocketalkApp" = "Mulakan Aplikasi POCKETALK";
+"kThreeDaysTrial" = "Percubaan percuma";
+"kThreeDaysTrialDescription" = "Percuma selama 3 hari";
 
 "kIAPFreeDaysDescription" = "Semua pelan adalah percuma untuk 3 hari pertama";
 "kIAPFreePeriodCancellationDescription" = "Bayaran tidak akan dikenakan jika anda membuat pembatalan semasa tempoh percuma. ";
@@ -190,6 +192,14 @@ kerana anda mempunyai perjanjian langganan.";
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
 
+
 // Push NotificationContent
 "kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
 "kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
+
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Ralat pengesahan kod kupon";
+"kFreeTrialExpireMessage" = "Tempoh percubaan percuma anda sudah tamat.\nUntuk terus menggunakan aplikasi, pilih salah satu daripada pelan langganan berikut.";
+

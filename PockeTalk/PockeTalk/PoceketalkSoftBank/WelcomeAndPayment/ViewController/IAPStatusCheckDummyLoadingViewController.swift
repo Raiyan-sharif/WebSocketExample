@@ -18,7 +18,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     private var shouldShowLoader = false
     private var statusCodeText = ""
     let TAG: String = "SB_AUTH"
-
+    private var shouldCheckFreeTrialStatus = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
@@ -43,6 +43,8 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                             }
                         }
                         
+                    }else if(self.shouldCheckFreeTrialStatus){
+                        self.checkFreeTrialStatus()
                     }
                 }
             }
@@ -100,7 +102,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                 if success {
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
                     self.hideLoader()
-                    self.showAlertAndRedirectToHomeVC()
+                    self.showAlertAndRedirectToVC("KSubscriptionErrorMessage".localiz())
                 } else {
                     self.callLicenseConfirmationApi(coupon: couponCode)
                 }
@@ -113,7 +115,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkCouponStatus [+], CouponCode: \(couponCode)")
             if let isFromUniversalLink = UserDefaults.standard.bool(forKey: kIsFromUniverslaLink) as? Bool {
                 if isFromUniversalLink == true {
-                    checkInAppPurchaseStatus(coupon: couponCode)
+                    checkFreeTrialStatus()
                 } else {
                     self.callLicenseConfirmationApi(coupon: couponCode)
                 }
@@ -130,6 +132,52 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
 //            self.present(alert, animated: true, completion: nil)
 //        }
 //    }
+    
+    private func checkFreeTrialStatus(){
+        if Reachability.isConnectedToNetwork() == true{
+            self.shouldCheckFreeTrialStatus = false
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => Has internet => Calling license conformation API")
+            NetworkManager.shareInstance.callLicenseConfirmationForFreeTrial { [weak self] data  in
+                guard let data = data, let self = self else {
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => Data => nill => API FAILED")
+                    self?.hideLoader()
+                    return
+                }
+                do {
+                    let result = try JSONDecoder().decode(LicenseConfirmationModel.self, from: data)
+                    self.hideLoader()
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => result_code => \(result.result_code)")
+                    if let result_code = result.result_code {
+                        if result_code == response_ok {
+                            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"====== Trial is Active =====")
+                            self.showAlertAndRedirectToVC("KFreeTrialErrorMessage".localiz())
+                        }else {
+                            if let couponCode = self.couponCode {
+                                self.checkInAppPurchaseStatus(coupon: couponCode)
+                            }
+                        }
+                    }else{
+                        UserDefaults.standard.set(false, forKey: kFreeTrialStatus)
+                        if let couponCode = self.couponCode {
+                            self.checkInAppPurchaseStatus(coupon: couponCode)
+                        }
+                    }
+                } catch let err {
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => Error => \(err.localizedDescription)")
+                    self.hideLoader()
+                    UserDefaults.standard.set(false, forKey: kFreeTrialStatus)
+                    if let couponCode = self.couponCode {
+                        self.checkInAppPurchaseStatus(coupon: couponCode)
+                    }
+                }
+            }
+        }else{
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => No internet ")
+            self.hideLoader()
+            self.showNoInternetAlert()
+            self.shouldCheckFreeTrialStatus = true
+        }
+    }
 
     private func checkInAppPurchaseStatus(coupon: String) {
         if Reachability.isConnectedToNetwork() == true{
@@ -138,20 +186,6 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
             shouldCallApi = false
             shouldCallIapApi = false
             IAPManager.shared.receiptValidationForCouponCode()
-//            IAPManager.shared.receiptValidation(iapReceiptValidationFrom: .none) { isPurchaseSchemeActive, error in
-////                if let err = error {
-////                    self.hideLoader()
-////                    self.iAPStatusCheckAlert(message: err.localizedDescription, coupon: coupon)
-////                } else {
-//                    if isPurchaseSchemeActive == true {
-//                        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "checkInAppPurchaseStatus [+]")
-//                        self.hideLoader()
-//                        self.showAlertAndRedirectToHomeVC()
-//                    } else {
-//                        self.callLicenseConfirmationApi(coupon: coupon)
-//                    }
-////                }
-//            }
         }else{
             self.hideLoader()
             shouldCallApi = true
@@ -204,28 +238,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
                                 DispatchQueue.main.async {
                                     let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {
-                                        var couponInitialFlowCompleted = false
-                                        if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                            couponInitialFlowCompleted = flowCompleted
-                                        }
-                                        if couponInitialFlowCompleted == true{
-                                            GlobalMethod.appdelegate().navigateToViewController(.home)
-                                        }else{
-                                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                        }
+                                        GlobalMethod.appdelegate().gotoNextVcForCoupon()
                                     }
                                     self.present(alert, animated: true, completion: nil)
                                 }
                             }else{
-                                var couponInitialFlowCompleted = false
-                                if let flowCompleted =  UserDefaults.standard.bool(forKey: kInitialFlowCompletedForCoupon) as? Bool {
-                                    couponInitialFlowCompleted = flowCompleted
-                                }
-                                if couponInitialFlowCompleted == true{
-                                    GlobalMethod.appdelegate().navigateToViewController(.home)
-                                }else{
-                                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                }
+                                GlobalMethod.appdelegate().gotoNextVcForCoupon()
                             }
                             
                         } else if result_code == INFO_EXPIRED_LICENSE{
@@ -236,21 +254,17 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 savedCoupon = coupon
                             }
                             if savedCoupon.isEmpty {
-                                DispatchQueue.main.async {
-                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                                    }
-                                    self.present(alert, animated: true, completion: nil)
-                                }
+                                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon not found!")
                             } else {
                                 UserDefaults.standard.removeObject(forKey: kCouponCode)
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon removed: \(savedCoupon)")
-                                DispatchQueue.main.async {
-                                    let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
-                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                    }
-                                    self.present(alert, animated: true, completion: nil)
+                            }
+                            
+                            DispatchQueue.main.async {
+                                let alert = alertService.alertDialogSoftbank(message: "KInfoExpiredLiscnseErrorMessage".localiz()) {
+                                    GlobalMethod.appdelegate().gotoNextVcForAuth()
                                 }
+                                self.present(alert, animated: true, completion: nil)
                             }
                         } else if result_code == INFO_INVALID_LICENSE {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "INFO_INVALID_LICENSE")
@@ -347,15 +361,15 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
         }
     }
 
-    private func showAlertAndRedirectToHomeVC(){
+    private func showAlertAndRedirectToVC(_ msg: String){
         PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "showAlertAndRedirectToHomeVC [+]")
         DispatchQueue.main.async {
             let alertService = CustomAlertViewModel()
-            let alert = alertService.alertDialogSoftbank(message: "KSubscriptionErrorMessage".localiz()) {
-                if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
-                    GlobalMethod.appdelegate().navigateToViewController(.home)
+            let alert = alertService.alertDialogSoftbank(message: msg) {
+                if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true || KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true{
+                    GlobalMethod.appdelegate().gotoNextVc(false)
                 } else {
-                    GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                    GlobalMethod.appdelegate().gotoNextVcForAuth()
                 }
             }
             self.present(alert, animated: true, completion: nil)

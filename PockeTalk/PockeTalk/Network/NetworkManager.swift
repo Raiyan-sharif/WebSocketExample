@@ -6,7 +6,7 @@
 import Foundation
 import Moya
 import Kronos
-
+import SwiftKeychainWrapper
 
 protocol Network {
     var provider: MoyaProvider<NetworkServiceAPI> { get }
@@ -245,28 +245,45 @@ struct NetworkManager:Network {
                 //IAPManager.shared.setScheduleExecution = 0
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
+                PrintUtility.printLog(tag: "RTC", text: "requestCompletion >> result code: \(result.resultCode)")
+
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
                         PrintUtility.printLog(tag: "License Token API", text: "License Token api calling successfully")
                         completion(successResponse.data)
                     } else if result_code == WARN_INVALID_AUTH {
+                        RunAsyncFunc.shared.cancelRunningAsyncTask()
+                        KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
                         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
                         }
-                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-
+                        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
+                            UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
+                            GlobalMethod.updateTalkButtonEnableStatus(false)
+                            GlobalMethod.showCommonAlert(in: nil, msg: "kFreeTrialExpireMessage".localiz()){
+                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                GlobalMethod.updateTalkButtonEnableStatus(true)
+                            }
+                        }else{
+                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                        }
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")
                         completion(nil)
                     } else if result_code == WARN_INPUT_PARAM {
                         PrintUtility.printLog(tag: "License Token API", text: "Input parameter error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else if result_code == ERR_CREATE_FAILED {
                         PrintUtility.printLog(tag: "License Token API", text: "License token issuance error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else if result_code == ERR_UNKNOWN {
                         PrintUtility.printLog(tag: "License Token API", text: "Unknown error")
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         completion(nil)
                     } else {
+                        TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "License info over")
                             let alertVC = UIAlertController(title: "" , message: "kUnknownError".localiz(), preferredStyle: UIAlertController.Style.alert)
                             alertVC.view.tintColor = UIColor.black
@@ -298,10 +315,12 @@ struct NetworkManager:Network {
                 }
 
             } catch let err {
+                TokenApiStateObserver.shared.updateState(state: .failed)
                 //IAPManager.shared.setScheduleExecution = 0
                 completion(nil)
             }
         case let .failure(error):
+            TokenApiStateObserver.shared.updateState(state: .failed)
             //IAPManager.shared.setScheduleExecution = 0
             completion(nil)
         }
@@ -340,8 +359,9 @@ struct NetworkManager:Network {
     }
 
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
-
+        TokenApiStateObserver.shared.updateState(state: .running)
         let params = getLicenseTokenParam()
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "getLicenseToken => params => \(params)")
         provider.request(.liscense(params: params)){ result in
             self.requestCompletion(target: .liscense(params: params), result: result) { data in
                 completion(data)
@@ -359,7 +379,15 @@ struct NetworkManager:Network {
                 couponCodeParamName: couponCode
             ]
             return params
-        } else {
+        } else if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
+            params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                kTrialKey: getUUID() ?? "",
+                kTrialType: kIosTrialType
+            ]
+            return params
+        }else{
             let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
             let iosReceipt = UserDefaults.standard.string(forKey: kiOSReceipt)
             let iosOriginalTransactionID = UserDefaults.standard.string(forKey: kiOSOriginalTransactionID)
@@ -433,6 +461,7 @@ struct NetworkManager:Network {
     }
 
     func startTokenRefreshProcedure() {
+        PrintUtility.printLog(tag: "RTC", text: "startTokenRefreshProcedure >> call token api")
         handleLicenseToken { result in
             if result {
                 AppDelegate.generateAccessKey { result in
@@ -448,6 +477,42 @@ struct NetworkManager:Network {
         let params:[String:String]  = [
             "coupon_code": coupon
         ]
+        provider.request(.licenseConfirmation(params: params)){ result in
+            self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
+                completion(data)
+            }
+        }
+    }
+    
+    func callTokenIssuanceApiForFreeTrial(completion: @escaping (Data?) -> Void) {
+        let params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                kTrialKey: getUUID() ?? "",
+                kTrialType: kIosTrialType
+            ]
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"License Token API Params = \(params)")
+        provider.request(.liscense(params: params)){ result in
+            switch result {
+            case let .success(response):
+                do{
+                    let successResponse = try response.filterSuccessfulStatusCodes()
+                    completion(successResponse.data)
+                } catch _ {
+                    completion(nil)
+                }
+            case .failure(_):
+                completion(nil)
+            }
+        }
+    }
+    
+    func callLicenseConfirmationForFreeTrial(completion: @escaping (Data?) -> Void) {
+        let params:[String:String]  = [
+            kTrialKey: getUUID() ?? "",
+            kTrialType: kIosTrialType
+        ]
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"License Confirmation API Params = \(params)")
         provider.request(.licenseConfirmation(params: params)){ result in
             self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
                 completion(data)

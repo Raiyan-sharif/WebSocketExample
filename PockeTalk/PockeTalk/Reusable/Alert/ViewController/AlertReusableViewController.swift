@@ -35,14 +35,14 @@ class AlertReusableViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
-         connectivity.startMonitoring { connection, reachable in
-             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
-             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
-                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
-             }
-
-         }
+//        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+//         connectivity.startMonitoring { connection, reachable in
+//             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+//             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+//                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+//             }
+//
+//         }
         // Do any additional setup after loading the view.
         alertViewModel = AlertReusableViewModel()
         self.setUpUI()
@@ -184,8 +184,8 @@ class AlertReusableViewController: BaseViewController {
 
     @objc private func appWillEnterForeground() {
         PrintUtility.printLog(tag: "AlertReusableViewController", text: "Will Enter foreground")
-        AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
-        }
+//        AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
+//        }
     }
 
 }

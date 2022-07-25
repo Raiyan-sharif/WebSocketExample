@@ -109,12 +109,15 @@ class SpeechProcessingViewController: BaseViewController{
         bindData()
         setupAudio()
         //showLoaderDependentOnApiCall()
-       // AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+        PrintUtility.printLog(tag: "RTC", text: "Speech >> viewDidLoad")
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
         LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
         connectivity.startMonitoring { connection, reachable in
             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
                 LanguageEngineDownloader.shared.checkTimeAndDownloadLanguageEngineFile()
+                PrintUtility.printLog(tag: "RTC", text: "Speech >> viewDidLoad>> network")
+                AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
             }
         }
 //        connectivity.startMonitoring { connection, reachable in
@@ -658,7 +661,8 @@ class SpeechProcessingViewController: BaseViewController{
 
     @objc private func appWillEnterForeground() {
         PrintUtility.printLog(tag: TAG, text: "Will Enter foreground")
-        if ScreenTracker.sharedInstance.screenPurpose == .CameraScreen{
+        PrintUtility.printLog(tag: "RTC", text: "Speech >> appWillEnterForeground")
+        if TokenApiStateObserver.shared.apiState != .running{
             AppDelegate.executeLicenseTokenRefreshFunctionality() { _ in
             }
         }

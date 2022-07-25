@@ -423,13 +423,96 @@ class GlobalMethod {
         let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
         switch (schemeName) {
         case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
-            return (PRODUCTION_SUPPORT_URL, PRODUCTION_USER_MANUEL_URL, PRODUCTION_TERMS_AND_CONDITIONS_URL)
+            return (PRODUCTION_SUPPORT_URL, getUserManualUrl(), PRODUCTION_TERMS_AND_CONDITIONS_URL)
         case BuildVarientScheme.STAGING.rawValue:
-            return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
+            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
         case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
-            return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
+            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
         default:
-            return (STAGING_SUPPORT_URL, STAGING_USER_MANUEL_URL, STAGING_TERMS_AND_CONDITIONS_URL)
+            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
+        }
+    }
+    
+    static func getUserManualUrl() -> String{
+        let appLang = LanguageManager.shared.currentLanguage
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App Language => \(appLang)")
+        switch appLang {
+        case .ja:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ja)")
+            return USER_MANUAL_URL_ja
+        case .en:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_en)")
+            return USER_MANUAL_URL_en
+        case .zhHans:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_zhHans)")
+            return USER_MANUAL_URL_zhHans
+        case .zhHant:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_zhHant)")
+            return USER_MANUAL_URL_zhHant
+        case .es:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_es)")
+            return USER_MANUAL_URL_es
+        case .ptPT:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ptPT)")
+            return USER_MANUAL_URL_ptPT
+        case .ru:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ru)")
+            return USER_MANUAL_URL_ru
+        case .fr:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_fr)")
+            return USER_MANUAL_URL_fr
+        case .de:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_de)")
+            return USER_MANUAL_URL_de
+        case .ko:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ko)")
+            return USER_MANUAL_URL_ko
+        case .it:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_it)")
+            return USER_MANUAL_URL_it
+        case .th:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_th)")
+            return USER_MANUAL_URL_th
+        case .ms:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ms)")
+            return USER_MANUAL_URL_ms
+        default:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_en)")
+            return USER_MANUAL_URL_en
+        }
+    }
+    
+    // Common alert
+    static func showCommonAlert(in viewController: UIViewController? = nil, msg: String, completion: @escaping() -> Void){
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let vc = CustomAlertViewModel().alertDialogFreeTrialError(message: msg){
+                completion()
+            }
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            if viewController != nil {
+                viewController?.present(vc, animated: true, completion: nil)
+            } else if let _visibleViewController = self.getVisibleViewController(nil) {
+                _visibleViewController.present(vc, animated: true, completion: nil)
+            } else {
+                if let _window = appDelegate.window, let _rootViewController = _window.rootViewController {
+                    _rootViewController.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    static func updateTalkButtonEnableStatus(_ isEnable: Bool){
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            if let talkButton = appDelegate.window?.viewWithTag(109) as? UIImageView {
+                talkButton.isHidden = !isEnable
+                HomeViewController.dummyTalkBtnImgView.isHidden = isEnable
+            }
+            if isEnable{
+                FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
+            }else {
+                FloatingMikeButton.sharedInstance.isHidden(true)
+            }
         }
     }
 }

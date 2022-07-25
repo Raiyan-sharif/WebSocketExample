@@ -23,6 +23,7 @@ protocol PurchasePlanViewModeling {
     func updateReceiptValidationAllow()
     func updateIsAPICallOngoing(_ status: Bool)
     func setProductFetchStatus(_ status: Bool)
+    func setFreeTrialStatus(_ status: Bool)
 }
 
 class PurchasePlanViewModel: PurchasePlanViewModeling {
@@ -35,6 +36,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _hasInAppPurchaseProduct = false
     private var _productFetchError: String?
     private var _isProductFetchOngoing: Bool = false
+    private var _isFreeTrialAvailable = false
 
     var numberOfRow: Int {
         return row.count
@@ -58,6 +60,10 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     var isProductFetchOngoing: Bool {
         return _isProductFetchOngoing
+    }
+    
+    var isFreeTrialAvailable: Bool{
+        return _isFreeTrialAvailable
     }
 
     //MARK: - API Calls
@@ -139,37 +145,47 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
             if productDetails[item].periodUnitType == .month {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-//                    productPrice: (productDetails[item].price).roundToDecimal(2),
                     productPrice: productDetails[item].price,
                     numberOfWeek: 4)
 
-//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
-                //"Up to BDT xx off"
-                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
-                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+                productDetails[item].suggestionText = getProductDetailSuggestionText(
+                    isAppStoreJapan: productDetails[item].isAppStoreJapan,
+                    currency: productDetails[item].currency,
+                    savingPrice: savingPrice)
             }
 
             if productDetails[item].periodUnitType == .year {
                 let savingPrice = calculateSavings(
                     weeklyPrice: weeklyPrice,
-//                    productPrice: (productDetails[item].price).roundToDecimal(2),
                     productPrice: productDetails[item].price,
                     numberOfWeek: 52)
 
-//                productDetails[item].suggestionText = "kSaveAbout".localiz() + "kYen".localiz().replacingOccurrences(of: "XX", with: "\(savingPrice)")
-                //"Up to BDT xx off"
-                let savingPriceWithCurrency = "\(productDetails[item].currency) \(savingPrice)"
-                productDetails[item].suggestionText = "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+                productDetails[item].suggestionText = getProductDetailSuggestionText(
+                    isAppStoreJapan: productDetails[item].isAppStoreJapan,
+                    currency: productDetails[item].currency,
+                    savingPrice: savingPrice)
             }
         }
     }
 
-    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Int {
+    private func getProductDetailSuggestionText(isAppStoreJapan: Bool, currency: String, savingPrice: Double) -> String {
+        let savingPriceWithCurrency = isAppStoreJapan ? ("\(currency) \(Int(savingPrice))") : ("\(currency) \(savingPrice)")
+
+        return "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
+    }
+
+    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Double {
+        let doubleSavingPrice = ((weeklyPrice * Double(numberOfWeek)) - productPrice).roundToDecimal(2)
         let savingPrice = Int((weeklyPrice * Double(numberOfWeek)) - productPrice)
         let digitCount = String(savingPrice).count
         let mod = digitCount > 3 ? 100 : 10
         let nearestFloorSavingPrice = savingPrice - (savingPrice % mod)
-        return nearestFloorSavingPrice
+
+        if !IAPManager.shared.iSAppStoreRegionJapan() {
+            return doubleSavingPrice
+        } else {
+            return Double(nearestFloorSavingPrice)
+        }
     }
 
     private func setupTVRowData() {
@@ -182,8 +198,14 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
             }
         }
 
-        if isFreeOfferAvailable {
+        if isFreeOfferAvailable && IAPManager.shared.iSAppStoreRegionJapan() == true {
             row.append(.freeUses)
+        }
+        
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "Free Trail availibility: \(_isFreeTrialAvailable) , Region Japan? : \(IAPManager.shared.iSAppStoreRegionJapan())")
+
+        if _isFreeTrialAvailable && IAPManager.shared.iSAppStoreRegionJapan() == false {
+            row.append(.threeDaysTrial)
         }
 
         for item in productDetails {
@@ -240,5 +262,9 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
 
     func setProductFetchStatus(_ status: Bool) {
         self._isProductFetchOngoing = status
+    }
+    
+    func setFreeTrialStatus(_ status: Bool) {
+        self._isFreeTrialAvailable = status
     }
 }

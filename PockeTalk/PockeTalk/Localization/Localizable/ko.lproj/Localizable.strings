@@ -161,6 +161,8 @@
 "kYenPerMonth" = " /월";
 "kYenPerYear" = " /연";
 "kStartPocketalkApp" = "포켓토크 시작하기";
+"kThreeDaysTrial" = "무료 체험하기";
+"kThreeDaysTrialDescription" = "무료 체험 기간 3일";
 
 //Favorite Limit dailog
 "msg_liked_item_limit_exits" = "즐겨찾기 수가 한계에 도달하였습니다";
@@ -190,6 +192,14 @@
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
 
+
 // Push NotificationContent
 "kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
 "kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
+
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "쿠폰 코드 인증 오류";
+"kFreeTrialExpireMessage" = "무료 체험 기간이 종료되었습니다.\n계속 이용하시려면 요금제를 선택해 주세요.";
+

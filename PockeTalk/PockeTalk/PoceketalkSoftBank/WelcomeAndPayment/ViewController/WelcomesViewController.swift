@@ -18,6 +18,7 @@ class WelcomesViewController: UIViewController {
     private func setupUI() {
         setupView()
         setupButtonProperty()
+        UserDefaultsProperty<Bool>(kPermissionCompleted).value = true
     }
 
     private func setupView() {

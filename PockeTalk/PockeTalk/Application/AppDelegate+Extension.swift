@@ -38,12 +38,68 @@ extension AppDelegate{
                     statusCheckVC.couponCode = couponCode
                     viewController = statusCheckVC
                 }
+            case .permission:
+                if let permisionVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
+                    viewController = permisionVC
+                }
+            case .walkthrough:
+                if let walkthroughVc = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
+                    viewController = walkthroughVc
+                }
+            case .welcome:
+                if let welcomeVC = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
+                    viewController = welcomeVC
+                }
             }
 
             let navigationController = UINavigationController.init(rootViewController: viewController)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
             //self.setActivityIndicatorWindow()
+        }
+    }
+    
+    func gotoNextVc(_ purchaseStatus: Bool){
+        var savedCoupon = ""
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+            savedCoupon = coupon
+        }
+        if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
+            GlobalMethod.appdelegate().navigateToViewController(.home)
+        }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
+            GlobalMethod.appdelegate().navigateToViewController(.welcome)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.permission)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && savedCoupon.isEmpty && purchaseStatus == false{
+            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+        }
+    }
+    
+    func gotoNextVcForCoupon(_ initAppWindow: Bool = false){
+        if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
+            GlobalMethod.appdelegate().navigateToViewController(.home, initAppWindow: initAppWindow)
+        }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
+            GlobalMethod.appdelegate().navigateToViewController(.welcome, initAppWindow: initAppWindow)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.permission, initAppWindow: initAppWindow)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough,initAppWindow: initAppWindow)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition, initAppWindow: initAppWindow)
+        }
+    }
+    
+    func gotoNextVcForAuth(){
+        if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true {
+            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+        }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
+            GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
+        }else{
+            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
         }
     }
 
@@ -81,21 +137,30 @@ extension AppDelegate{
             do {
                 let result = try JSONDecoder().decode(ResultModel.self, from: data)
                 if result.resultCode == response_ok{
+                    TokenApiStateObserver.shared.updateState(state: .success)
                     UserDefaultsProperty<String>(authentication_key).value = result.access_key
                     SocketManager.sharedInstance.updateRequestKey()
 
                     UserDefaultsProperty<Bool>(isNetworkAvailable).value = nil
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "AppDelegate >> generateAccessKey")
                     AppDelegate.executeLicenseTokenRefreshFunctionality(){_ in}
                     completion(true)
                 }
+                else {
+                    PrintUtility.printLog(tag: "AppDelegate", text: "generate access key failed")
+                    TokenApiStateObserver.shared.updateState(state: .failed)
+                }
             }catch{
                 PrintUtility.printLog(tag: "AppDelegate", text: "Didn't get auth key")
+                TokenApiStateObserver.shared.updateState(state: .failed)
                 completion(false)
             }
         }
     }
 
     class func executeLicenseTokenRefreshFunctionality(completion : @escaping (Bool)->Void) {
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "executeLicenseTokenRefreshFunctionality")
+
         let tokenCreationTime: Int64? = UserDefaults.standard.value(forKey: tokenCreationTime) as? Int64
 
         if tokenCreationTime != nil {
@@ -104,17 +169,22 @@ extension AppDelegate{
             let scheduleRefreshTime = (tokenExpiryTime - currentTime)/1000
             PrintUtility.printLog(tag: "REFRESH TOKEN", text: "REFRESH TOKEN EXECUTED AFTER \(scheduleRefreshTime) SEC")
             if tokenExpiryTime > currentTime {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "executeLicenseTokenRefreshFunctionality>> tokenExpiryTime > currentTime")
                 PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED CALLED AFTER \(scheduleRefreshTime) SEC")
-
-                if RunAsyncFunc.shared.isAlreadyScheduled == false {
-                    RunAsyncFunc.shared.executeScheduleCall(scheduleTime: TimeInterval(scheduleRefreshTime))
-                }
+                
+                RunAsyncFunc.shared.cancelRunningAsyncTask()
+                //if RunAsyncFunc.shared.isAlreadyScheduled == false {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "executeLicenseTokenRefreshFunctionality>> tokenExpiryTime > currentTime >> false")
+                RunAsyncFunc.shared.executeScheduleCall(scheduleTime: TimeInterval(scheduleRefreshTime))
+                //}
                 completion(true)
 
             } else if (currentTime > tokenExpiryTime) {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "executeLicenseTokenRefreshFunctionality>> else if")
                 //expired
                 PrintUtility.printLog(tag: "REFRESH TOKEN", text: "TOKEN REFRESHED RIGHT NOW")
                 //RunAsyncFunc.shared.addAsyncTask()
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "e >> call token api")
                 NetworkManager.shareInstance.handleLicenseToken { result in
                     if result {
                         AppDelegate.generateAccessKey{ result in
@@ -128,6 +198,8 @@ extension AppDelegate{
                     }
                 }
             } else {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "executeLicenseTokenRefreshFunctionality>> else")
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "e >> call token api")
                 NetworkManager.shareInstance.handleLicenseToken { result in
                     if result {
                         AppDelegate.generateAccessKey{ result in
@@ -222,7 +294,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 class RunAsyncFunc {
 
     static let shared = RunAsyncFunc()
-    var isAlreadyScheduled = false
+    //var isAlreadyScheduled = false
 
     var queues = DispatchQueue(label: "com.dispatch.workItem")
     //  Create a work item
@@ -230,6 +302,7 @@ class RunAsyncFunc {
     func executeScheduleCall(scheduleTime: TimeInterval) {
         //isAlreadyScheduled = true
         workItems = DispatchWorkItem() {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "RunAsyncFunc >> call token api")
             NetworkManager.shareInstance.handleLicenseToken { result in
                 if result {
                     AppDelegate.generateAccessKey{ result in
@@ -246,7 +319,7 @@ class RunAsyncFunc {
     }
 
     func cancelRunningAsyncTask() {
-        isAlreadyScheduled = false
+        //isAlreadyScheduled = false
         workItems.cancel()
     }
 

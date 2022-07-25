@@ -180,26 +180,12 @@ extension HomeViewController{
                             SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
                             self.speechVC.updateLanguageType()
 
-                            AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in
-                                if result {
-                                    if self.speechVC.languageHasUpdated{
-                                        self.speechVC.updateLanguageInRemote(completion: { isOk in
-                                            if isOk{
-                                                SocketManager.sharedInstance.connect()
-                                            } else {
-                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
-                                                    gesture.state = .ended
-                                                }
-                                            }
-                                        })
-                                    }else{
-                                        SocketManager.sharedInstance.connect()
-                                    }
-                                } else {
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
-                                        gesture.state = .ended
-                                    }
-                                }
+                            if TokenApiStateObserver.shared.apiState != .running {
+                                self.isWaitingForTokenApi = false
+                                self.callLicenseTokenApi(gesture: gesture)
+                            }else{
+                                self.gesture = gesture
+                                self.isWaitingForTokenApi = true
                             }
                             
                             self.speechVC.hideOrOpenExampleText(isHidden: true)
@@ -237,6 +223,31 @@ extension HomeViewController{
                 }
             } else {
                 GlobalMethod.showPermissionAlert(viewController: self, title : kMicrophoneUsageTitle, message : kMicrophoneUsageMessage)
+            }
+        }
+    }
+
+    func callLicenseTokenApi(gesture: UILongPressGestureRecognizer) {
+        AppDelegate.executeLicenseTokenRefreshFunctionality(){ [weak self] result in
+            guard let `self` = self else {return}
+            if result { 
+                if self.speechVC.languageHasUpdated{
+                    self.speechVC.updateLanguageInRemote(completion: { isOk in
+                        if isOk{
+                            SocketManager.sharedInstance.connect()
+                        } else {
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
+                                gesture.state = .ended
+                            }
+                        }
+                    })
+                }else{
+                    SocketManager.sharedInstance.connect()
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
+                    gesture.state = .ended
+                }
             }
         }
     }

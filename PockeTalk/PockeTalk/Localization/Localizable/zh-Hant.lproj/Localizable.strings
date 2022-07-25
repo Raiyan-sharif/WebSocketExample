@@ -157,6 +157,8 @@
 "kYenPerMonth" = " /月";
 "kYenPerYear" = " /年";
 "kStartPocketalkApp" = "開始使用POCKETALK";
+"kThreeDaysTrial" = "免費試用";
+"kThreeDaysTrialDescription" = "免費期3天";
 
 "kIAPFreeDaysDescription" = "所有方案的首次利用均免費3天";
 "kIAPFreePeriodCancellationDescription" = "在免費期間內解約將不收取任何費用。 ";
@@ -191,6 +193,14 @@
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
 
+
 // Push NotificationContent
 "kSevenDayBeforeExpiration" = "Free trial period will end in 1 week";
 "kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
+
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "優惠券代碼驗證錯誤";
+"kFreeTrialExpireMessage" = "免費試用期已過。\n請選擇一個方案以便繼續利用。 ";
+

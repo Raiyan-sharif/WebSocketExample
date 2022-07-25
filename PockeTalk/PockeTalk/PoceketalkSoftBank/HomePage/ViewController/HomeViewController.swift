@@ -80,6 +80,7 @@ class HomeViewController: BaseViewController {
     var cardHeight:CGFloat = 0
     var cardVisible = false
     let historyCardAnimationDuration = 0.5
+    var ob : NSKeyValueObservation?
 
     var nextState:CardState {
         return cardVisible ? .collapsed : .expanded
@@ -126,6 +127,9 @@ class HomeViewController: BaseViewController {
         ScreenTracker.sharedInstance.screenPurpose == .HistroyPronunctiation
     }
 
+    var isWaitingForTokenApi = false
+    var gesture: UILongPressGestureRecognizer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ScreenTracker.sharedInstance.screenPurpose = .HomeSpeechProcessing
@@ -147,7 +151,25 @@ class HomeViewController: BaseViewController {
         bottomView.layer.zPosition = 103
         AppRater.shared.saveAppLaunchTimeOnce()
         self.speechVC.languageHasUpdated = true
+
         setupCustomLocalNotification()
+        ob = TokenApiStateObserver.shared.observe(\.apiState, options: .new) { [weak self] observer, change in
+            guard let `self` = self else {return}
+            switch observer.apiState {
+            case .success, .failed, .notStarted:
+                PrintUtility.printLog(tag:TagUtility.sharedInstance.trialTag, text: "API State: not running")
+                if(self.isWaitingForTokenApi){
+                    PrintUtility.printLog(tag:TagUtility.sharedInstance.trialTag, text: "long press rest task")
+                    self.isWaitingForTokenApi = false
+                    if let ges = self.gesture{
+                        self.callLicenseTokenApi(gesture: ges)
+                    }
+                }
+                break
+            case .running:
+                PrintUtility.printLog(tag:TagUtility.sharedInstance.trialTag, text: "API State: running")
+            }
+        }
     }
 
     override func loadView() {
@@ -545,6 +567,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: .languageChangeFromSettingsNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .sttInputError, object: nil)
         NotificationCenter.default.removeObserver(self, name: .onGetCouponExpireyNotification, object: nil)
+        ob?.invalidate()
     }
 
     private func openLanguageSelectionScreen(isNative: Int){

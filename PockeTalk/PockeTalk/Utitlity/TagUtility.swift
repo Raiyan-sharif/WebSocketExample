@@ -16,4 +16,5 @@ public class TagUtility: NSObject{
     let sbAuthTag = "sbAuthTag"
     let iapTag = "IAPTAG"
     let localNotificationTag = "localNotificationTag"
+    let trialTag = "free_trial"
 }

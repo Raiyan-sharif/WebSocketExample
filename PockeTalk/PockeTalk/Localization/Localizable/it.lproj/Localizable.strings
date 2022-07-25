@@ -155,6 +155,8 @@
 "kYenPerMonth" = " al mese";
 "kYenPerYear" = " all'anno";
 "kStartPocketalkApp" = "Inizia l'App POCKETALK";
+"kThreeDaysTrial" = "Prova gratuita";
+"kThreeDaysTrialDescription" = "Gratis per 3 giorni";
 
 "kIAPFreeDaysDescription" = "Tutti i piani sono gratuiti per i primi 3 giorni";
 "kIAPFreePeriodCancellationDescription" = "Nessun addebito se cancelli durante il periodo di prova gratuita. ";
@@ -194,3 +196,8 @@ perché hai già sottoscritto un abbonamento.";
 "kCouponAfterExpiration" =  "Free trial has ended. Please purchase paid license to continue using Pocketalk app.";
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Errore di autenticazione del codice coupon";
+"kFreeTrialExpireMessage" = "Il periodo di prova è scaduto.\nPer continuare a utilizzare l'app, scegliere uno dei seguenti piani di abbonamento.";

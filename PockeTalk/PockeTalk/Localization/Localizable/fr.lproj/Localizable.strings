@@ -156,6 +156,11 @@
 "kYenPerMonth" = " /mois";
 "kYenPerYear" = " /an";
 "kStartPocketalkApp" = "Commencer à utiliser l'application de POCKETALK";
+
+"kThreeDaysTrial" = "Essayer gratuitement";
+"kThreeDaysTrialDescription" = "Gratuité pour 3 jours";
+
+
 "kIAPFreeDaysDescription" = "Tous les plans sont gratuits au début pour 3 jours";
 "kIAPFreePeriodCancellationDescription" = "Le frais n'arrive pas lorsqu vous résiliez en cours de la période gratuite. ";
 "kIAPFreePeriodSubscriptionDescription" = "Le frais sera demandé régulièrement à partir du lendeman de la dernier jour de la période gratuite.";
@@ -194,4 +199,10 @@
 
 "TtsFromLanguage" = "Hello how are you?";
 "TtsToLanguage" = "Hola como estas";
+
+"kServerError" = "Server Error";
+
+//Free trial
+"KFreeTrialErrorMessage" = "Erreur d'authentification pour le code de coupon";
+"kFreeTrialExpireMessage" = "La période d'essai gratuit est terminée.\nPour continuer à utiliser l'application, choisissez un des plans d'abonnement suivants.";
 

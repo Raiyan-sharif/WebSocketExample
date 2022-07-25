@@ -164,14 +164,14 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
-         connectivity.startMonitoring { connection, reachable in
-             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
-             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
-                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
-             }
-
-         }
+//        AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+//         connectivity.startMonitoring { connection, reachable in
+//             PrintUtility.printLog(tag:"Current Connection :", text:" \(connection) Is reachable: \(reachable)")
+//             if  UserDefaultsProperty<Bool>(isNetworkAvailable).value == nil && reachable == .yes{
+//                 AppDelegate.executeLicenseTokenRefreshFunctionality(){ result in }
+//             }
+//
+//         }
         setUPViews()
         previewLayer.videoGravity = .resizeAspectFill
         previewView = cameraPreviewView

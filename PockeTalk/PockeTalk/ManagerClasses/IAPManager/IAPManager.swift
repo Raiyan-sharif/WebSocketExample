@@ -22,6 +22,9 @@ enum ViewControllerType {
     case termAndCondition
     case purchasePlan
     case statusCheck
+    case permission
+    case walkthrough
+    case welcome
 }
 
 public enum IAPError: Error {
@@ -58,6 +61,7 @@ class IAPManager: NSObject {
     var IAPTimeoutInterval: Double = kIAPTimeoutInterval
     var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
+    var appStoreRegionRetryCount = 0
 
     // MARK: - Custom Types
     enum IAPManagerError: Error {
@@ -65,6 +69,33 @@ class IAPManager: NSObject {
         case noProductsFound
         case paymentWasCancelled
         case productRequestFailed
+    }
+
+    func iSAppStoreRegionJapan() -> Bool {
+        if #available(iOS 13.0, *) {
+            if let storefront = SKPaymentQueue.default().storefront {
+                IAPManager.shared.appStoreRegionRetryCount = 0
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region: \(storefront.countryCode)")
+                if storefront.countryCode == kAlpha3CountryCodeJapan {
+                    return true
+                }else{
+                    return false
+                }
+            }else {
+                if IAPManager.shared.appStoreRegionRetryCount < 5 {
+                    IAPManager.shared.appStoreRegionRetryCount += 1
+                    return iSAppStoreRegionJapan()
+                } else{
+                    IAPManager.shared.appStoreRegionRetryCount = 0
+                    return true
+                }
+            }
+        } else {
+            IAPManager.shared.appStoreRegionRetryCount = 0
+            // Fallback on earlier versions. ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region iOS12 so considering JPN")
+            return true
+        }
     }
 
     // get IAP products based on build varients
@@ -80,11 +111,29 @@ class IAPManager: NSObject {
             return ("", "")
         }
     }
-    
+
+    func getProductsBasedOnBuildVarientForNonJapaneseAppStoreRegion() -> (product: String, iAPPassword: String) {
+        switch (schemeName) {
+        case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue,BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
+            return (productionIAPProductsForNonJapaneseAppStoreRegion, productionIAPSharedSecret)
+        case BuildVarientScheme.STAGING.rawValue:
+            return (stagingIAPProduts, stagingIAPSharedSecret)
+        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
+            return (productionIAPProductsForNonJapaneseAppStoreRegion, productionIAPSharedSecret)
+        default:
+            return ("", "")
+        }
+    }
+
     // MARK: - General Methods
     fileprivate func getProductIDs() -> [String]? {
         var resourceURL: String = ""
-        resourceURL = getProductsBasedOnBuildVarient().product
+        if iSAppStoreRegionJapan() == false {
+            resourceURL = getProductsBasedOnBuildVarientForNonJapaneseAppStoreRegion().product
+        } else {
+            resourceURL = getProductsBasedOnBuildVarient().product
+        }
+
         guard let url = Bundle.main.url(forResource: resourceURL, withExtension: "plist") else { return nil }
         do {
             let data = try Data(contentsOf: url)
@@ -385,6 +434,23 @@ extension IAPManager {
         return (isFreeTrialAvailable, freeTrialDuration, freeTrialStringType)
     }
 
+    private func getPlanPerUnitText(unitType: PeriodUnitType, currency: String, price: Double) -> String {
+        var planText = ""
+
+        switch unitType {
+        case .week:
+            planText = "kYenPerWeek".localiz()
+        case .month:
+            planText = "kYenPerMonth".localiz()
+        case .year:
+            planText = "kYenPerYear".localiz()
+        default:
+            break
+        }
+
+        return iSAppStoreRegionJapan() ? ("\(currency) \(Int(price))\(planText)") : ("\(currency) \(price)\(planText)")
+    }
+
     func getProductDetails(from product: SKProduct) -> ProductDetails {
         let currency = getLocalCurrencyAndPrice(from: product).currency
         let price = getLocalCurrencyAndPrice(from: product).price
@@ -394,17 +460,10 @@ extension IAPManager {
         let freeUsesInfo = getFreeUsesInfo(product: product)
 
         /// set planPerUnit text
-        var planPerUnitText = ""
-        switch unitType {
-        case .week:
-            planPerUnitText = "\(currency) \(price)\("kYenPerWeek".localiz())"
-        case .month:
-            planPerUnitText = "\(currency) \(price)\("kYenPerMonth".localiz())"
-        case .year:
-            planPerUnitText = "\(currency) \(price)\("kYenPerYear".localiz())"
-        default:
-            break
-        }
+        let planPerUnitText = getPlanPerUnitText(
+                unitType: unitType,
+                currency: currency,
+                price: price)
 
         /// set free uses details text
         var freeUsesDetailsText: String?
@@ -423,7 +482,8 @@ extension IAPManager {
                 periodUnitType: unitType,
                 planPerUnitText: planPerUnitText,
                 freeUsesDetailsText: freeUsesDetailsText,
-                suggestionText: nil
+                suggestionText: nil,
+                isAppStoreJapan: iSAppStoreRegionJapan()
             )
         )
     }
@@ -507,13 +567,9 @@ extension IAPManager {
                 }
             } else if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
-                        if UserDefaultsUtility.getBoolValue(forKey: kIsClearedDataAll) == true {
-                            GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
-                        } else {
-                            GlobalMethod.appdelegate().navigateToViewController(.home)
-                        }
+                        GlobalMethod.appdelegate().gotoNextVc(true)
                     } else {
-                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                        GlobalMethod.appdelegate().gotoNextVcForAuth()
                     }
                     KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
             }  else if iapReceiptValidationFrom == .applicationWillEnterForeground {
@@ -803,9 +859,9 @@ extension IAPManager {
             let cancelAction = UIAlertAction(title: "Cancel".localiz(), style: UIAlertAction.Style.cancel) { (alert) in
                 if iapReceiptValidationFrom == .didFinishLaunchingWithOptions {
                     if KeychainWrapper.standard.bool(forKey: kInAppPurchaseStatus) == true {
-                        GlobalMethod.appdelegate().navigateToViewController(.home)
+                        GlobalMethod.appdelegate().gotoNextVc(true)
                     } else {
-                        GlobalMethod.appdelegate().navigateToViewController(.termAndCondition)
+                        GlobalMethod.appdelegate().gotoNextVcForAuth()
                     }
                 }
             }
