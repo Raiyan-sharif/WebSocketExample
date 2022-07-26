@@ -168,23 +168,23 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         }
     }
 
-    private func getProductDetailSuggestionText(isAppStoreJapan: Bool, currency: String, savingPrice: Double) -> String {
+    private func getProductDetailSuggestionText(isAppStoreJapan: Bool, currency: String, savingPrice: Int) -> String {
         let savingPriceWithCurrency = isAppStoreJapan ? ("\(currency) \(Int(savingPrice))") : ("\(currency) \(savingPrice)")
 
         return "upToOff".localiz().replacingOccurrences(of: "xx", with: "\(savingPriceWithCurrency)")
     }
 
-    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Double {
-        let doubleSavingPrice = ((weeklyPrice * Double(numberOfWeek)) - productPrice).roundToDecimal(2)
+    private func calculateSavings(weeklyPrice: Double, productPrice: Double, numberOfWeek: Int) -> Int {
+        //let doubleSavingPrice = ((weeklyPrice * Double(numberOfWeek)) - productPrice).roundToDecimal(2)
         let savingPrice = Int((weeklyPrice * Double(numberOfWeek)) - productPrice)
         let digitCount = String(savingPrice).count
         let mod = digitCount > 3 ? 100 : 10
         let nearestFloorSavingPrice = savingPrice - (savingPrice % mod)
 
         if !IAPManager.shared.iSAppStoreRegionJapan() {
-            return doubleSavingPrice
+            return savingPrice
         } else {
-            return Double(nearestFloorSavingPrice)
+            return nearestFloorSavingPrice
         }
     }
 
