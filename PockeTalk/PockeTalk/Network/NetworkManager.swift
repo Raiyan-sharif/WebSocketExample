@@ -260,12 +260,16 @@ struct NetworkManager:Network {
                         if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
                             UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
                             GlobalMethod.updateTalkButtonEnableStatus(false)
+                            GlobalMethod.isLicenseOverDialogShowing = true
                             GlobalMethod.showCommonAlert(in: nil, msg: "kFreeTrialExpireMessage".localiz()){
                                 GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
                                 GlobalMethod.updateTalkButtonEnableStatus(true)
+                                GlobalMethod.isLicenseOverDialogShowing = false
                             }
                         }else{
-                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                            if GlobalMethod.isLicenseOverDialogShowing == false{
+                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                            }
                         }
                         TokenApiStateObserver.shared.updateState(state: .failed)
                         PrintUtility.printLog(tag: "License Token API", text: "There is no license information.")

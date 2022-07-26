@@ -26,6 +26,8 @@ class PurchasePlanViewController: UIViewController {
         purchasePlanVM = PurchasePlanViewModel()
         setupUI()
         registerNotification()
+        //Update licenseOver dialog showing status
+        GlobalMethod.isLicenseOverDialogShowing = false
         ScreenTracker.sharedInstance.screenPurpose = .PurchasePlanScreen
         self.connectivity.startMonitoring { [weak self] connection, reachable in
             guard let self = self else { return }
