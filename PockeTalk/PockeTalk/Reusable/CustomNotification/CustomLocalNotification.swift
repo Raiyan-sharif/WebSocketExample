@@ -33,7 +33,7 @@ open class CustomLocalNotification: NSObject {
     }
 
     func addView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: { [weak self] in
             guard let `self` = self else {return}
             self.addLocalNotificationViewOnWindow()
             self.loadWebView()
