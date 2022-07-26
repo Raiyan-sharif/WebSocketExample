@@ -588,7 +588,9 @@ extension IAPManager {
                                 }
                                 if savedCoupon.isEmpty {
                                     if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
-                                        GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                        if GlobalMethod.isLicenseOverDialogShowing == false{
+                                            GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                        }
                                     }
                                 }
                             }

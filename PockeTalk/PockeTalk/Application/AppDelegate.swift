@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ///Enable exclusive touch for all the buttons across the app
         UIButton.appearance().isExclusiveTouch = true
+        
+        //Update licenseOver dialog showing status
+        GlobalMethod.isLicenseOverDialogShowing = false
 
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
