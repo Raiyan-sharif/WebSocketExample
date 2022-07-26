@@ -135,12 +135,14 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
     
     private func checkFreeTrialStatus(){
         if Reachability.isConnectedToNetwork() == true{
+            self.showLoader()
             self.shouldCheckFreeTrialStatus = false
             PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => Has internet => Calling license conformation API")
             NetworkManager.shareInstance.callLicenseConfirmationForFreeTrial { [weak self] data  in
                 guard let data = data, let self = self else {
                     PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text:"callLicenseConfirmationApi => Data => nill => API FAILED")
                     self?.hideLoader()
+                    self?.showUnknownErrorDialog()
                     return
                 }
                 do {
