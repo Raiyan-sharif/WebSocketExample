@@ -129,6 +129,9 @@ public class LanguageMapViewModel{
         var item : LanguageMapEntity?
         if srcLanguageCode == SystemLanguageCode.ru.rawValue
             || srcLanguageCode == SystemLanguageCode.ko.rawValue
+            || srcLanguageCode == SystemLanguageCode.es.rawValue
+            || srcLanguageCode == SystemLanguageCode.fr.rawValue
+            || srcLanguageCode == SystemLanguageCode.it.rawValue
             || srcLanguageCode == AlternativeSystemLanguageCode.pt.rawValue {
             let langaugeMapArray = try? LanguageMapDBModel().findAllEntities(languageCode: srcLanguageCode)
             for langaugeMapRow in langaugeMapArray ?? [] {
