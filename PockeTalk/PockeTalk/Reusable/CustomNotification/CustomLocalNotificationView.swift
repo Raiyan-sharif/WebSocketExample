@@ -42,7 +42,10 @@ class CustomLocalNotificationView: UIView, WKUIDelegate, WKNavigationDelegate {
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         noInternetTitleLabel.text = "No Internet"
+        //noInternetTitleLabel.text = "internet_connection_error".localiz()
+        //cancelButton.setTitle("cancel".localiz(), for: .normal)
         webkitView.navigationDelegate = self
+        webkitView.backgroundColor = .clear
     }
 
     func viewWebContainer(isHidden: Bool) {
