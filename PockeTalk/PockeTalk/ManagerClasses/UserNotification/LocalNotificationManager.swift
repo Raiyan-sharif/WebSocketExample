@@ -97,13 +97,18 @@ class LocalNotificationManager: NSObject {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
     }
 
-    private func hasScheduledLocalNotification() -> Bool{
+    private func hasScheduledLocalNotification(completion: @escaping(_ scheduleExist: Bool)-> Void){
         var pendingNotificationCount = 0
         notificationCenter.getPendingNotificationRequests(completionHandler: { requests in
             pendingNotificationCount = requests.count
+
+            if pendingNotificationCount > 0 {
+                completion(true)
+            } else {
+                completion(false)
+            }
         })
 
-        return pendingNotificationCount > 0 ? (true) : (false)
     }
 
     private func checkAuthorizationAndScheduleLocalNotification() {
@@ -116,23 +121,26 @@ class LocalNotificationManager: NSObject {
     }
 
     func setUpLocalNotification() {
-        if hasScheduledLocalNotification(){
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Already have scheduled notifications")
-        } else {
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Didn't have any scheduled notification. New notification scheduling.")
-            checkAuthorizationAndScheduleLocalNotification()
-        }
+        hasScheduledLocalNotification(completion: { scheduleExist in
+            if scheduleExist == true {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Already have scheduled notifications")
+            } else {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Didn't have any scheduled notification. New notification scheduling.")
+                self.checkAuthorizationAndScheduleLocalNotification()
+            }
+        })
     }
 
     func removeScheduledNotification() {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "removeScheduledNotification()[+]")
-
-        notificationCenter.removeAllPendingNotificationRequests()
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "All pending notification requests removed")
-
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "removeScheduledNotification()[-]")
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
+        hasScheduledLocalNotification(completion: { scheduleExist in
+            if scheduleExist == true {
+                self.notificationCenter.removeAllPendingNotificationRequests()
+            } else {
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "There is No Scheduled Notifications()[+]")
+            }
+        })
     }
 
     private func getNotificationDate(using day: Int) -> Date? {
