@@ -640,9 +640,26 @@ class HomeViewController: BaseViewController {
         if let languageInfo = notification?.userInfo as? [String: Bool] {
             if (languageInfo["isLanguageChanged"] ?? false) == true {
                 speechVC.languageHasUpdated = true
+                updateScheduledNotification()
             }
         }
     }
+
+    func updateScheduledNotification() {
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode), !coupon.isEmpty {
+            UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
+                let pendingNotificationCount = requests.count
+                if pendingNotificationCount > 0 {
+                    LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                    LocalNotificationManager.sharedInstance.updateLocalNotifications()
+                }
+            })
+
+        } else {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Didn't have notification to update")
+        }
+    }
+
     @objc private func onSttError(notification: Notification) {
         DispatchQueue.main.async {
             guard let url = Bundle.main.url(forResource: "record_failed", withExtension: "wav") else { return }
