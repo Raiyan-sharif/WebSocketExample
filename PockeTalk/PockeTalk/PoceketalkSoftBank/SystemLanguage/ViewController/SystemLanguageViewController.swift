@@ -92,6 +92,14 @@ class SystemLanguageViewController: BaseViewController {
         okButton.titleLabel?.textColor = .white
         okButton.clipsToBounds = true
         okButton.backgroundColor = .clear
+        let highlightedButtonColor = UIColor(red: 90.0/255.0, green: 200.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        okButton.setTitleColor(highlightedButtonColor, for: .highlighted)
+
+        let origImage = UIImage(named: "icon_arrow_left.9")
+        let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
+        okButton.setImage(tintedImage, for: .highlighted)
+        okButton.tintColor = highlightedButtonColor
+
         okButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return okButton
     }
