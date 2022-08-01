@@ -13,7 +13,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var btnBack: UIButton!
     private let TAG:String = "ResetViewController"
-    
+
     @IBAction func actionBack(_ sender: Any) {
         if self.navigationController != nil{
             navigationController?.popToViewController(ofClass: SettingsViewController.self)
@@ -109,6 +109,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Favourite Data")
         case ResetItemType.deleteAllData.rawValue:
+
+            if let coupon =  UserDefaults.standard.string(forKey: kCouponCode), !coupon.isEmpty {
+                LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                CustomLocalNotification.sharedInstance.removeView()
+            }
             ResponseLogger.shareInstance.clean()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_all_data_reset".localiz(), buttonTitle: "delete_all_data".localiz()) {
@@ -123,10 +128,6 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 } catch _ {
 
                 }
-                LocalNotificationManager.sharedInstance.removeScheduledNotification()
-                CustomLocalNotification.sharedInstance.removeView()
-
-                
                 ///Delete all TTS audio files
                 FileUtility.deleteTTSAudioDirectory()
                 
@@ -143,10 +144,6 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
                 ///Remove local notification manager schedule & view from window if exist
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification when delete all data")
-
-                LocalNotificationManager.sharedInstance.removeScheduledNotification()
-                CustomLocalNotification.sharedInstance.removeView()
-
                 /// Relaunch Application
                 GlobalMethod.appdelegate().relaunchApplication()
 //                self.navigationController?.popToRootViewController(animated: false)
