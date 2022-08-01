@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Update licenseOver dialog showing status
         GlobalMethod.isLicenseOverDialogShowing = false
 
+        //Detect app store region
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "didFinishLaunchingWithOptions")
+        IAPManager.shared.iSAppStoreRegionJapan()
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
@@ -88,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Relaunch Application upon deleting all data
     func relaunchApplication() {
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "relaunchApplication")
+        IAPManager.shared.iSAppStoreRegionJapan()
         //isAppRelaunch = true
         IAPManager.shared.startObserving()
         UserDefaultsUtility.setBoolValue(true, forKey: KIsAppAlreadyLaunchedOnce)
@@ -103,7 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "applicationWillEnterForeground")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "applicationWillEnterForeground")
+        IAPManager.shared.iSAppStoreRegionJapan()
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
