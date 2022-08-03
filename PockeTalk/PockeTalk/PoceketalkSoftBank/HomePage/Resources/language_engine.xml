@@ -38,9 +38,10 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="es-US" stt_engine="" tts_engine="" tts_value="Spanish Female"/>
     <item code="es-AR" stt_engine="" tts_engine="" tts_value="Spanish Latin American Female"/>
     <item code="es-CO" stt_engine="" tts_engine="" tts_value="Spanish Latin American Female"/>
+    <item code="es-MX" stt_engine="" tts_engine=""/>
     <item code="sv" stt_engine="" tts_engine="" tts_value="Swedish Female"/>
     <item code="tr" stt_engine="" tts_engine="" tts_value="Turkish Female"/>
-    <item code="hy" stt_engine="" tts_engine="" tts_value="Armenian Male_0.2"/>
+    <item code="hy" stt_engine=""/>
     <item code="ja" stt_engine="" tts_engine=""/>
     <item code="ko" stt_engine="" tts_engine="" tts_value="Korean Female"/>
     <item code="hr" stt_engine="" tts_engine=""/>
@@ -52,10 +53,9 @@ TAG tts_value define that this language will be played through responsive engine
     <item code="af" stt_engine="" tts_engine=""/>
     <item code="sq" stt_engine="" tts_engine="" tts_value="Albanian Male_0.2"/>
     <item code="bs" stt_engine="" tts_engine="" tts_value="Bosnian Male_0.2"/>
-    <item code="eo" tts_engine="" tts_value="Esperanto Male_0.2"/>
     <item code="la" tts_engine="" tts_value="Latin Female"/>
-    <item code="mk" stt_engine="" tts_engine="" tts_value="Macedonian Male_0.2"/>
-    <item code="cy" tts_engine="" tts_value="Welsh Male_0.2"/>
+    <item code="mk" stt_engine="" tts_engine=""/>
+    <item code="cy" tts_engine=""/>
     <item code="lv" stt_engine="" tts_engine="" tts_value="Latvian Male_1.0"/>
     <item code="th" stt_engine="" tts_engine=""/>
     <item code="vi" stt_engine="" tts_engine="" tts_value="Vietnamese Male"/>

@@ -16,5 +16,5 @@ enum DataAccessError: Error {
 
 struct DataBaseConstant {
     static let DATABASE_NAME = "pocketalksoftbank.db";
-    static let DATABASE_VERSION = 2
+    static let DATABASE_VERSION = NEW_DB_VERSION
 }

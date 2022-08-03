@@ -97,6 +97,7 @@
     <item code="ja" code_tr="es" val1="スペイン" val2="スペイン語" />
     <item code="ja" code_tr="es-US" val1="スパングリッシュ" />
     <item code="ja" code_tr="es-CO" val1="コロンビア" val2="コロンビア語" />
+    <item code="ja" code_tr="es-MX" val1="メキシコ" />
     <item code="ja" code_tr="es-AR" val1="アルゼンチン" val2="アルゼンチン語" />
     <item code="ja" code_tr="su" val1="スンダ" val2="スンダ語" />
     <item code="ja" code_tr="sw" val1="スワヒリ" val2="スワヒリ語" />
@@ -212,6 +213,7 @@
     <item code="en" code_tr="es" val1="Spain" val2="Spanish" />
     <item code="en" code_tr="es-US" val1="Span grill" />
     <item code="en" code_tr="es-CO" val1="Colombia" val2="Colombian" />
+    <item code="en" code_tr="es-MX" val1="Mexico" />
     <item code="en" code_tr="es-AR" val1="Argentina" val2="Argentine" />
     <item code="en" code_tr="su" val1="Sunda" />
     <item code="en" code_tr="sw" val1="Swahili" />
@@ -327,6 +329,7 @@
     <item code="ko" code_tr="es" val1="스페인" val2="스페인어" />
     <item code="ko" code_tr="es-US" val1="스팽글 리시" />
     <item code="ko" code_tr="es-CO" val1="콜롬비아" val2="콜롬비아 어" />
+    <item code="ko" code_tr="es-MX" val1="멕시코" />
     <item code="ko" code_tr="es-AR" val1="아르헨티나" val2="아르헨티나 어" />
     <item code="ko" code_tr="su" val1="순다" val2="순 다어" />
     <item code="ko" code_tr="sw" val1="스와힐리어" />
@@ -442,6 +445,7 @@
     <item code="zh" code_tr="es" val1="西班牙" val2="西班牙语" />
     <item code="zh" code_tr="es-US" val1="美国西班牙语" />
     <item code="zh" code_tr="es-CO" val1="哥伦比亚" val2="哥伦比亚西班牙语" />
+    <item code="zh" code_tr="es-MX" val1="墨西哥" />
     <item code="zh" code_tr="es-AR" val1="阿根廷" val2="阿根廷语言" />
     <item code="zh" code_tr="su" val1="巽" val2="巽他语" />
     <item code="zh" code_tr="sw" val1="斯瓦希里" />
@@ -557,6 +561,7 @@
     <item code="es" code_tr="es" val1="España" val2="Español" />
     <item code="es" code_tr="es-US" val1="Parrilla" />
     <item code="es" code_tr="es-CO" val1="Colombia" val2="Colombiano" />
+    <item code="es" code_tr="es-MX" val1="México"/>
     <item code="es" code_tr="es-AR" val1="Argentina" val2="Argentino" />
     <item code="es" code_tr="su" val1="Sunda" val2="Sundanese" />
     <item code="es" code_tr="sw" val1="Swahili" />
@@ -672,6 +677,7 @@
     <item code="fr" code_tr="es" val1="Espagne" val2="Espagnol" />
     <item code="fr" code_tr="es-US" val1="Grille d'envergure" />
     <item code="fr" code_tr="es-CO" val1="Colombie" val2="Colombien" />
+    <item code="fr" code_tr="es-MX" val1="mexicain" />
     <item code="fr" code_tr="es-AR" val1="Argentine" />
     <item code="fr" code_tr="su" val1="Sunda" val2="Sundanais" />
     <item code="fr" code_tr="sw" val1="Swahili" />
@@ -787,6 +793,7 @@
     <item code="de" code_tr="es" val1="Spanien" val2="Spanisch" />
     <item code="de" code_tr="es-US" val1="Spanisch in den Vereinigten Staaten" />
     <item code="de" code_tr="es-CO" val1="Kolumbien" val2="kolumbianisch" />
+    <item code="de" code_tr="es-MX" val1="Mexiko" />
     <item code="de" code_tr="es-AR" val1="Argentinien" val2="argentinisch" />
     <item code="de" code_tr="su" val1="Sundanesisch" />
     <item code="de" code_tr="sw" val1="Suaheli" val2="Kisuaheli" />
@@ -902,6 +909,7 @@
     <item code="it" code_tr="es" val1="Spagnolo" val2="Castigliano" />
     <item code="it" code_tr="es-US" val1="Spagnolo negli Stati Uniti" />
     <item code="it" code_tr="es-CO" val1="Colombia" val2="Colombiano" />
+    <item code="it" code_tr="es-MX" val1="Messico"/>
     <item code="it" code_tr="es-AR" val1="Argentina" val2="Argentino" />
     <item code="it" code_tr="su" val1="Sundanese" val2="Sondanese" />
     <item code="it" code_tr="sw" val1="Swahili" val2="Kiswahili" />
@@ -1017,6 +1025,7 @@
     <item code="ms" code_tr="es" val1="Sepanyol" />
     <item code="ms" code_tr="es-US" val1="Sepanyol" val2="Amerika" />
     <item code="ms" code_tr="es-CO" val1="Sepanyol" val2="Colombia" />
+    <item code="ms" code_tr="es-MX" val1="Mexico" />
     <item code="ms" code_tr="es-AR" val1="Sepanyol" val2="Argentina" />
     <item code="ms" code_tr="su" val1="Sunda" />
     <item code="ms" code_tr="sw" val1="Swahili" />
@@ -1132,6 +1141,7 @@
     <item code="ru" code_tr="es" val1="Испанский" />
     <item code="ru" code_tr="es-US" val1="Испанский" />
     <item code="ru" code_tr="es-CO" val1="Испанский" />
+    <item code="ru" code_tr="es-MX" val1="Мексика" />
     <item code="ru" code_tr="es-AR" val1="Испанский" />
     <item code="ru" code_tr="su" val1="Сунданский" />
     <item code="ru" code_tr="sw" val1="Свахили" />
@@ -1247,6 +1257,7 @@
     <item code="th" code_tr="es" val1="ภาษาสเปน" val2="สเปน" val3="ภาษากัสติยา" val4="สแปนิช" />
     <item code="th" code_tr="es-US" val1="ภาษาสเปนแบบอเมริกัน" val2="สเปนแบบอเมริกัน" val3="ภาษาสเปนสำเนียงอเมริกัน" val4="สเปนสำเนียงอเมริกัน" val5="อเมริกันสแปนิช" />
     <item code="th" code_tr="es-CO" val1="ภาษาสเปนแบบโคลอมเบียน" val2="สเปนแบบโคลอมเบียน" val3="ภาษาสเปนสำเนียงโคลอมเบียน" val4="สเปนสำเนียงโคลอมเบียน" val5="ภาษาสเปนแบบโคลอมเบีย" val6="สเปนแบบโคลอมเบีย" val7="ภาษาสเปนสำเนียงโคลอมเบีย" val8="สเปนสำเนียงโคลอมเบีย" val9="โคลอมเบียนสแปนิช" />
+    <item code="th" code_tr="es-MX" val1="เม็กซิโก" />
     <item code="th" code_tr="es-AR" val1="ภาษาสเปนแบบอาร์เจนติเนียน" val2="สเปนแบบอาร์เจนติเนียน" val3="ภาษาสเปนสำเนียงอาร์เจนติเนียน" val4="สเปนสำเนียงอาร์เจนติเนียน" val5="ภาษาสเปนแบบอาร์เจนตินา" val6="สเปนแบบอาร์เจนตินา" val7="ภาษาสเปนสำเนียงอาร์เจนตินา" val8="สเปนสำเนียงอาร์เจนตินา" val9="อาร์เจนติเนียนสแปนิช" />
     <item code="th" code_tr="su" val1="ภาษาซุนดา" val2="ซุนดา" val3="ซุนดานีส" />
     <item code="th" code_tr="sw" val1="ภาษาสวาฮีลี" val2="สวาฮีลี" />
@@ -1362,6 +1373,7 @@
     <item code="pt" code_tr="es" val1="Espanhol" />
     <item code="pt" code_tr="es-US" val1="Espanhol" />
     <item code="pt" code_tr="es-CO" val1="Espanhol" />
+    <item code="pt" code_tr="es-MX" val1="México" />
     <item code="pt" code_tr="es-AR" val1="Espanhol" />
     <item code="pt" code_tr="su" val1="Sundanês" val2="Sundanesiano" />
     <item code="pt" code_tr="sw" val1="Suaíli" val2="Kiswahili" />
@@ -1477,6 +1489,7 @@
     <item code="zh-TW" code_tr="es" val1="西" />
     <item code="zh-TW" code_tr="es-US" val1="美國西班牙文" />
     <item code="zh-TW" code_tr="es-CO" val1="哥倫比亞西班牙文" />
+    <item code="zh-TW" code_tr="es-MX" val1="墨西哥" />
     <item code="zh-TW" code_tr="es-AR" val1="阿根廷西班牙文" />
     <item code="zh-TW" code_tr="su" val1="巽他" />
     <item code="zh-TW" code_tr="sw" val1="斯瓦" />

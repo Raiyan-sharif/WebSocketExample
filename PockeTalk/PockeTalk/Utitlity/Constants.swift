@@ -29,7 +29,6 @@ let kScreenTransitionTime: Double = 0.5
 let kFadeAnimationTransitionTime: TimeInterval = 0.35
 let viewsAlphaValue: CGFloat = 0.0
 let speechViewTransitionTime = 0.15
-let languageMappingTotalRowCount = 1495
 
 
 //MARK: - Link
@@ -239,6 +238,7 @@ let LABEL_LINE_HEIGHT_FOR_OTHERS_LANGUAGE : CGFloat = 1.0
 //MARK: - Database Constants
 let rowFetchPerScroll = 500
 let MAX_HISTORY_ROW = 10000
+let NEW_DB_VERSION = 3
 
 // Selection of font
 let KFontSelection = "KFontSelection"

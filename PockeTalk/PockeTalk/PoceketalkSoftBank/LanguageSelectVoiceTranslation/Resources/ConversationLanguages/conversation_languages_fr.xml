@@ -34,6 +34,7 @@
     <item name="Gàidhlig na h-Alba" code="gd" en="Scots Gaelic" es="Escocés gaélico" fr="Écossais gaélique" ja="スコットランド・ゲール語" ko="스코틀랜드 게일어" zh="苏格兰盖尔语" it="Gaelico scozzese" de="Schottisch-Gälisch" />
     <item name="Español (Argentina)" code="es-AR" en="Spanish(Argentina)" es="Español (argentina)" fr="Espagnol (Argentine)" ja="スペイン語(アルゼンチン)" ko="스페인어(아르헨티나)" zh="西班牙语(阿根廷)" it="Spagnolo (Argentina)" de="Spanisch (Argentinien)" />
     <item name="Español(Colombia)" code="es-CO" en="Spanish(Colombia)" es="Español (colombia)" fr="Espagnol (Colombie)" ja="スペイン語(コロンビア)" ko="스페인어(콜롬비아)" zh="西班牙语(哥伦比亚)" it="Spagnolo (Colombia)" de="Spanisch (Kolumbien)" />
+    <item name="Español (México)" code="es-MX" en="Spanish(Mexico)" es="Español (México)" fr="Espagnol (mexicain)" ja="スペイン語(メキシコ)" ko="스페인어(멕시코)" zh="西班牙语（墨西哥）" it="Spagnolo (Messico)" de="Spanisch (Mexiko)" ru="Испанский (Мексика)" zh-TW="西班牙語（墨西哥）" ms="Sepanyol (Mexico)" th="ภาษาสเปน (เม็กซิโก)" pt="Espanhol (México)"/>
     <item name="Español" code="es" en="Spanish(Spain)" es="Español" fr="Espagnol (Espagne)" ja="スペイン語(スペイン)" ko="스페인어(스페인)" zh="西班牙语(西班牙)" it="Spagnolo" de="Spanisch" />
     <item name="Español(América)" code="es-US" en="Spanish(US)" es="Español (EE. UU.)" fr="Espagnol (États-Unis)" ja="スペイン語(米国)" ko="스페인어(미국)" zh="西班牙语(美国)" it="Spagnola (Stati Uniti d'America)" de="Spanisch (Amerika)" />
     <item name="Esperanto" code="eo" en="Esperanto" es="Esperanto" fr="Espéranto" ja="エスペラント語" ko="에스페란토" zh="世界语" it="Esperanto" de="Esperanto" />

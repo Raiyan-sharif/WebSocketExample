@@ -19,7 +19,7 @@ class ConfiguraitonFactory {
         } else if oldVersion == newVersion {
             return nil
         } else {
-            if newVersion == 2 {
+            if newVersion == NEW_DB_VERSION {
                 UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value = newVersion
                 LanguageMapViewModel().parseXmlAndStoreNewlyAddedLanguageMappingToDb()
             }

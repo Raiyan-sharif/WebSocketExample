@@ -98,6 +98,7 @@
     <item name="Español(América)" code="es-US" en="Spanish(US)" es="Español (EE. UU.)" fr="Espagnol (États-Unis)" ja="スペイン語(米国)" ko="스페인어(미국)" zh="西班牙语(美国)" it="Spagnola (Stati Uniti d'America)" de="Spanisch (Amerika)" />
     <item name="Español (Argentina)" code="es-AR" en="Spanish(Argentina)" es="Español (argentina)" fr="Espagnol (Argentine)" ja="スペイン語(アルゼンチン)" ko="스페인어(아르헨티나)" zh="西班牙语(阿根廷)" it="Spagnolo (Argentina)" de="Spanisch (Argentinien)" />
     <item name="Español(Colombia)" code="es-CO" en="Spanish(Colombia)" es="Español (colombia)" fr="Espagnol (Colombie)" ja="スペイン語(コロンビア)" ko="스페인어(콜롬비아)" zh="西班牙语(哥伦比亚)" it="Spagnolo (Colombia)" de="Spanisch (Kolumbien)" />
+    <item name="Español (México)" code="es-MX" en="Spanish(Mexico)" es="Español (México)" fr="Espagnol (mexicain)" ja="スペイン語(メキシコ)" ko="스페인어(멕시코)" zh="西班牙语（墨西哥）" it="Spagnolo (Messico)" de="Spanisch (Mexiko)" ru="Испанский (Мексика)" zh-TW="西班牙語（墨西哥）" ms="Sepanyol (Mexico)" th="ภาษาสเปน (เม็กซิโก)" pt="Espanhol (México)"/>
     <item name="Basa Sunda" code="su" en="Sundanese" es="Sundanese" fr="Sundanais" ja="スンダ語" ko="순다어" zh="巽他语" it="Sundanese" de="Sundanesisch" />
     <item name="Kiswahili" code="sw" en="Swahili" es="Swahili" fr="Swahili" ja="スワヒリ語" ko="스와힐리어" zh="斯瓦希裡语" it="Swahili" de="Swahili" />
     <item name="тоҷикӣ" code="tg" en="Tajik" es="Tayiko" fr="Tadjik" ja="タジク語" ko="타지크어" zh="塔吉克" it="Tagico" de="Tadschikisch" />
