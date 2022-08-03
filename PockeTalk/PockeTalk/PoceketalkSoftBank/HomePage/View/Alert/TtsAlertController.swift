@@ -97,7 +97,11 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     
     private var isTextFittedInCell = true
     private var sttText = [String](repeating: "", count: 3)
-    private var leftRightPadding: CGFloat = 150
+    private var singleCellLeadingAndTrailingPadding: CGFloat = 32
+    private var ttsResultTVPlaceholderViewLeadingAndTrailingPadding: CGFloat = 20
+    private var containerViewLeadingAndTrailingPadding: CGFloat = 40
+    private var singleCellTopPadding: CGFloat = 10
+    private var singleCellBottomPadding: CGFloat = 32
     var multipartAudioPlayer: MultipartAudioPlayer?
     var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?
     var analyticsScreenName: String?
@@ -122,7 +126,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        defaultTextLabelCellHeight = ((placeholderContainerView.frame.size.height * 45) / 100)
+        defaultTextLabelCellHeight = ((ttsResultTV.frame.size.height * 45) / 100)
         setupTTSTableViewProperty()
         setupTTSTableView()
         setAnalyticsScreenName()
@@ -145,18 +149,25 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private func setupTTSTableViewProperty(){
         sttText[0] = chatItemModel?.chatItem?.textTranslated ?? ""
         sttText[2] = chatItemModel?.chatItem?.textNative ?? ""
-        let font = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
-        
+
+        PrintUtility.printLog(tag: "TtsAlertController", text: "sttText0 \(sttText[0])")
+        PrintUtility.printLog(tag: "TtsAlertController", text: "sttText2 \(sttText[2])")
+
+        let fontSizeForZero = UIFont.systemFont(ofSize: FontUtility.getToFontSize(), weight: .regular)
+        let fontSizeForTwo = UIFont.systemFont(ofSize: FontUtility.getFontSize(), weight: .regular)
+
+        let textLabelWidth = singleCellLeadingAndTrailingPadding + ttsResultTVPlaceholderViewLeadingAndTrailingPadding + containerViewLeadingAndTrailingPadding
+
         toTextLabelCellHeight = sttText[0].heightWithConstrainedWidth(
-            width: UIScreen.main.bounds.width - leftRightPadding,
-            font: font)
-        
+            width: UIScreen.main.bounds.width - textLabelWidth,
+            font: fontSizeForZero) + singleCellTopPadding + singleCellBottomPadding
+
         fromTextLabelCellHeight = sttText[2].heightWithConstrainedWidth(
-            width: UIScreen.main.bounds.width - leftRightPadding,
-            font: font)
-        
+            width: UIScreen.main.bounds.width - textLabelWidth,
+            font: fontSizeForTwo) + singleCellTopPadding + singleCellBottomPadding
+
         PrintUtility.printLog(tag: TAG, text: "PCH \(placeholderContainerView.frame.size.height), TVH \(ttsResultTV.bounds.height), DTLH \(defaultTextLabelCellHeight), TTLH \(toTextLabelCellHeight), FTLH \(fromTextLabelCellHeight) TTxt: \(sttText[0]), FTxt: \(sttText[2])")
-        
+
         if toTextLabelCellHeight < defaultTextLabelCellHeight && fromTextLabelCellHeight < defaultTextLabelCellHeight {
             isTextFittedInCell = true
             ttsResultTV.isScrollEnabled = false
@@ -876,7 +887,7 @@ extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
         if indexPath.row == 1 {
             return isTextFittedInCell ? (0) : (20)
         }
-        
+
         if isTextFittedInCell{
             return defaultTextLabelCellHeight
         } else {
