@@ -276,18 +276,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
     }
-
-    func checkAndResetLocalNotification() {
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> checkAndResetLocalNotification()[+]")
-
-        if let _ = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
-            LocalNotificationManager.sharedInstance.setUpLocalNotification()
-        }
-
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> checkAndResetLocalNotification()[-]")
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
-    }
 }
 
 class RunAsyncFunc {

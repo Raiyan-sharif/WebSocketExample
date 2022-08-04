@@ -99,6 +99,11 @@ let kInitialFlowCompletedForCoupon = "kInitialFlowCompletedForCoupon"
 let kIsFromUniverslaLink = "kIsFromUniverslaLink"
 let kFreeTrialStatus = "kFreeTrialStatus"
 let kPermissionCompleted = "kPermissionCompleted"
+let KLocalNotificationURLDownloadTime = "KLocalNotificationURLDownloadTime"
+let KSevenDaysBeforeURL = "KSevenDaysBeforeURL"
+let KOneDayAfterURL = "KOneDayAfterURL"
+let KSevenDaysAfterURL = "KSevenDaysAfterURL"
+let KThirdLocalNotificationDate = "KThirdLocalNotificationDate"
 
 //MARK: - Toast Message Title
 let kMenuActionToastMessage = "Navigate to menu screen"
@@ -247,6 +252,7 @@ let license_token = "license_token"
 let language_token = "token"
 let response_ok = "OK"
 let base_url = infoForKey("BaseUrl")
+let notification_base_url = notificationURLInfoForKey("NotificationBaseUrl")
 let stream_auth_key_url = "/handsfree/api/pub/create"
 let language_channge_url = "/handsfree/api/pub/lang"
 let tts_url = "/handsfree/api/pub/tts"
@@ -254,12 +260,8 @@ let liscense_token_url = "/handsfree/api/pub/token"
 let license_confirmation_url = "/handsfree/api/pub/license"
 let image_annotate_url = "/handsfree/api/pub/images_annotate"
 let detect_lang_url = "/handsfree/api/pub/detect_lang"
-
-// Notification URL
-
-let kNotificationURL1 = "https://rd.snxt.jp/PA011"
-let kNotificationURL2 = "https://rd.snxt.jp/PA012"
-let kNotificationURL3 = "https://rd.snxt.jp/PA013"
+let local_notification_stage_url = "/pocketalkios-test/url.json"
+let local_notification_production_url = "/pocketalkios/url.json"
 let kCouponExpiryDate = "kCouponExpiryDate"
 let kNotificationURL = "NotificationURL"
 
@@ -327,6 +329,11 @@ let loaderLineWidth: CGFloat = 10.0
 func infoForKey(_ key: String) -> String {
     return (Bundle.main.infoDictionary?[key] as? String)?
         .replacingOccurrences(of: "\\", with: "") ?? "https://test.pt-v.com"
+}
+
+func notificationURLInfoForKey(_ key: String) -> String {
+    return (Bundle.main.infoDictionary?[key] as? String)?
+        .replacingOccurrences(of: "\\", with: "") ?? "https://www.sourcenext.com/produce/app"
 }
 
 ///Set IMEI number based on different build configuration

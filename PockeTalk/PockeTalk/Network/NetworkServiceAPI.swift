@@ -12,12 +12,19 @@ enum NetworkServiceAPI {
     case tts(params:[String:Any])
     case liscense(params:[String:Any])
     case licenseConfirmation(params:[String:Any])
+    case localNotificationURL
 }
-extension NetworkServiceAPI:TargetType{
+
+extension NetworkServiceAPI: TargetType{
     var baseURL: URL {
-        return URL(string:base_url)!
+        switch self {
+        case .authkey, .changeLanguage, .tts, .liscense, .licenseConfirmation:
+            return URL(string:base_url)!
+        case .localNotificationURL:
+            return URL(string: notification_base_url)!
+        }
     }
-    
+
     var path: String {
         switch self {
         case .authkey:
@@ -30,18 +37,22 @@ extension NetworkServiceAPI:TargetType{
             return liscense_token_url
         case .licenseConfirmation:
             return license_confirmation_url
+        case .localNotificationURL:
+            return LocalNotificationManager.sharedInstance.getLocalNotificationUrlPath()
         }
-        
     }
+
     var method: Moya.Method {
         switch self {
         case .authkey, .changeLanguage, .tts, .liscense, .licenseConfirmation:
             return .post
+        case .localNotificationURL:
+            return .get
         }
     }
+
     var task: Task {
         switch self {
-            
         case let .authkey(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .changeLanguage(params) :
@@ -52,9 +63,11 @@ extension NetworkServiceAPI:TargetType{
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .licenseConfirmation(params) :
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        case .localNotificationURL:
+            return .requestPlain
         }
     }
-    
+
     var sampleData: Data {
         switch self {
         case let .authkey(config) :
@@ -67,8 +80,11 @@ extension NetworkServiceAPI:TargetType{
             return "{\"description is \": \"\(value)\"}".utf8Encoded
         case let .licenseConfirmation(value):
             return "{\"description is \": \"\(value)\"}".utf8Encoded
+        case .localNotificationURL:
+            return "{\"Called local notification URL \"}".utf8Encoded
         }
     }
+
     var headers: [String: String]? {
         switch self {
         case .authkey, .tts:

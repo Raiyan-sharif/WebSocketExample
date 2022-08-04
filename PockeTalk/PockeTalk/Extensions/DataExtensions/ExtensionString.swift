@@ -84,6 +84,14 @@ extension String {
         }
     }
 
+    func getISO_8601FormattedNotificationDate(from string: String) -> Date{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: kDateFormatterLocale)
+        let date = dateFormatter.date(from: string)
+        return date ?? Date()
+    }
+
     func getISO_8601FormattedDate(from string: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

@@ -120,7 +120,7 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             PrintUtility.printLog(tag: TAG, text: "Favourite Data")
         case ResetItemType.deleteAllData.rawValue:
             if let coupon =  UserDefaults.standard.string(forKey: kCouponCode), !coupon.isEmpty {
-                LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
                 CustomLocalNotification.sharedInstance.removeView()
             }
             GASettingScreenName = analytics.settingResetAll

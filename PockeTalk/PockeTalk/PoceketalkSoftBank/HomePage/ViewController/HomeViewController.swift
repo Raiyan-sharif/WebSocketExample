@@ -343,9 +343,6 @@ class HomeViewController: BaseViewController {
         } else {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> Existing User")
         }
-
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "HomeVC -> setupCustomLocalNotification()[-]")
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
     }
 
     ///setup mike button for the first time
@@ -417,7 +414,7 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableorDisableGesture(notification:)), name: .bottmViewGestureNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.languageChangedFromSettings(notification:)), name: .languageChangeFromSettingsNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSttError(notification:)), name: .sttInputError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedCouponExipreDate(notification:)), name: .onGetCouponExpireyNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.onReceivedCouponExipreDate(notification:)), name: .onGetCouponExpireyNotification, object: nil)
     }
 
     //MARK: - IBActions
@@ -632,10 +629,6 @@ class HomeViewController: BaseViewController {
         setHistoryAndFavouriteView()
     }
 
-    @objc private func onReceivedCouponExipreDate(notification: Notification) {
-        LocalNotificationManager.sharedInstance.setUpLocalNotification()
-    }
-
     @objc func enableorDisableGesture(notification: Notification?) {
         if(isEnableGessture){
             self.bottomView.backgroundColor = UIColor.black
@@ -661,7 +654,7 @@ class HomeViewController: BaseViewController {
             UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
                 let pendingNotificationCount = requests.count
                 if pendingNotificationCount > 0 {
-                    LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                    LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
                     LocalNotificationManager.sharedInstance.updateLocalNotifications()
                 }
             })

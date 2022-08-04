@@ -225,8 +225,8 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 if let date = date {
                                     UserDefaults.standard.set(date, forKey: kCouponExpiryDate)
                                     PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification from callLicenseConfirmationApi()")
-                                    LocalNotificationManager.sharedInstance.removeScheduledNotification()
-                                    NotificationCenter.default.post(name: .onGetCouponExpireyNotification, object: nil)
+                                    LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
+                                    LocalNotificationManager.sharedInstance.getLocalNotificationURLData { _ in }
                                 }
                             }
                             

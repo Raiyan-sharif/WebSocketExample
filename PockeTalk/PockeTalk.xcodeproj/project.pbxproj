@@ -220,6 +220,7 @@
 		89513CCC27ABDB2F008C6F99 /* responsivevoice_1.8.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 89513CCB27ABDB2F008C6F99 /* responsivevoice_1.8.1.js */; };
 		89519669271EC6F900151DC8 /* TempoEngineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89519668271EC6F900151DC8 /* TempoEngineModel.swift */; };
 		8951966B271ECCAE00151DC8 /* TempoEngineValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */; };
+		89589161289A354D00F0062F /* NetworkServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89589160289A354D00F0062F /* NetworkServiceModel.swift */; };
 		895B2946272A86F60032C40C /* TutorialContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B2945272A86F60032C40C /* TutorialContainerViewController.swift */; };
 		896C3D0927831BFA007C3560 /* InitialPermissionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C3D0827831BFA007C3560 /* InitialPermissionSettingsViewController.swift */; };
 		8979064226FC876000A74C1B /* HistoryChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8979064126FC876000A74C1B /* HistoryChatItemModel.swift */; };
@@ -586,6 +587,7 @@
 		89513CCB27ABDB2F008C6F99 /* responsivevoice_1.8.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = responsivevoice_1.8.1.js; sourceTree = "<group>"; };
 		89519668271EC6F900151DC8 /* TempoEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineModel.swift; sourceTree = "<group>"; };
 		8951966A271ECCAE00151DC8 /* TempoEngineValueParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoEngineValueParser.swift; sourceTree = "<group>"; };
+		89589160289A354D00F0062F /* NetworkServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceModel.swift; sourceTree = "<group>"; };
 		895B2945272A86F60032C40C /* TutorialContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialContainerViewController.swift; sourceTree = "<group>"; };
 		896537F127F4D668006B3C19 /* PockeTalkProductionWithStageURL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkProductionWithStageURL.entitlements; sourceTree = "<group>"; };
 		896C2B8827F5EC9C00D7DE60 /* PockeTalkLoadEngineFromAsset.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PockeTalkLoadEngineFromAsset.entitlements; sourceTree = "<group>"; };
@@ -1455,6 +1457,7 @@
 			children = (
 				8732CAD626FC282200843BFE /* NetworkServiceAPI.swift */,
 				8732CADC26FC285400843BFE /* NetworkManager.swift */,
+				89589160289A354D00F0062F /* NetworkServiceModel.swift */,
 				89C0F7C626F1CDCB000CD5FC /* SocketManager.swift */,
 				89858F452727FD2000264686 /* Connectivity.swift */,
 			);
@@ -2682,6 +2685,7 @@
 				4AB51D16270AF56B007D254A /* RuntimePermissionUtil.swift in Sources */,
 				967B746426FAE796001B1985 /* CustomAlertViewModel.swift in Sources */,
 				8782DF1A26E0AFA6003A1681 /* NavigationViewController.swift in Sources */,
+				89589161289A354D00F0062F /* NetworkServiceModel.swift in Sources */,
 				89E6B2F5279EB9F800024A70 /* SystemlanguageCodes.swift in Sources */,
 				502939A22717F2B8004EB8C0 /* ResetListTableViewCell.swift in Sources */,
 				87B56E0B26EB2F9A00BF613B /* HistoryViewModel.swift in Sources */,
