@@ -301,7 +301,8 @@ class ITTServerViewModel: BaseModel {
             })
         } else {
             mLineData = BlockData(translatedText: lineTranslatedText, languageCodeTo: targetLan!)
-            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: { textView in
+            self.getTextViewWithCoordinator(detectedBlockOrLineList: lineListFromJson, arrTranslatedText: self.lineTranslatedText, completion: {[weak self] textView in
+                guard let `self` = self else { return }
                 self.lineModetTextViewList = textView
                 self.loaderdelegate?.hideLoader()
             })
@@ -337,13 +338,14 @@ class ITTServerViewModel: BaseModel {
     func getTextViewWithCoordinator(detectedBlockOrLineList: [BlockDetection],  arrTranslatedText: [String], completion: @escaping(_ textView: [TextViewWithCoordinator])-> Void) {
         
         DispatchQueue.main.async {
-            self.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { (listTextView) in
-                
-                self.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { [self] (listTV) in
+            self.parseTextDetection.getListVerticalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { [weak self](listTextView) in
+                guard let `self` = self else { return }
+                self.parseTextDetection.getListHorizontalTextViewFromBlockList(detectedBlockList: detectedBlockOrLineList, arrTranslatedText: arrTranslatedText, completion: { [weak self] listTV in
+                    guard let `self` = self else { return }
                     let textViewList = listTextView + listTV
-                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Total textView: \(textViewList.count)")
-                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Vertical TextView: \(listTextView.count)")
-                    PrintUtility.printLog(tag: TAG, text: "getTextViewWithCoordinator()>> Horizontal TextView: \(listTV.count)")
+                    PrintUtility.printLog(tag: self.TAG, text: "getTextViewWithCoordinator()>> Total textView: \(textViewList.count)")
+                    PrintUtility.printLog(tag: self.TAG, text: "getTextViewWithCoordinator()>> Vertical TextView: \(listTextView.count)")
+                    PrintUtility.printLog(tag: self.TAG, text: "getTextViewWithCoordinator()>> Horizontal TextView: \(listTV.count)")
                     completion(textViewList)
                 })
             })

@@ -117,12 +117,10 @@ class CaptureImageProcessVC: BaseViewController {
         self.view.addSubview(ttsResponsiveView)
         ttsResponsiveView.isHidden = true
 
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIScene.willEnterForegroundNotification, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive),
-                                               name: UIApplication.didBecomeActiveNotification,            object: nil)
         multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
     }
 
@@ -173,10 +171,10 @@ class CaptureImageProcessVC: BaseViewController {
         }
     }
 
-    @objc func willResignActive(_ notification: Notification) {
-        self.stopTTS()
-        AudioPlayer.sharedInstance.stop()
-    }
+//    @objc func willResignActive(_ notification: Notification) {
+//        self.stopTTS()
+//        AudioPlayer.sharedInstance.stop()
+//    }
 
     func setUpViewForCapturedImage() {
 
@@ -253,16 +251,16 @@ class CaptureImageProcessVC: BaseViewController {
         setUpImageViewConstraint()
 
         self.iTTServerViewModel.getITTData(from: image1) { [weak self] (data, error) in
-
+            guard let `self` = self else { return }
             if error != nil {
                 if error?.localizedDescription == "error_no_text_detected"{
-                    PrintUtility.printLog(tag: self!.TAG, text: "Error message: \(error!.localizedDescription)")
-                    self!.showErrorAlert(message: "error_no_text_detected".localiz())
+                    PrintUtility.printLog(tag: self.TAG, text: "Error message: \(error!.localizedDescription)")
+                    self.showErrorAlert(message: "error_no_text_detected".localiz())
                 }
 
                 if error?.localizedDescription == "error_network"{
-                    PrintUtility.printLog(tag: self!.TAG, text: "Error message: \(error!.localizedDescription)")
-                    self!.showErrorAlert(message: "error_network".localiz())
+                    PrintUtility.printLog(tag: self.TAG, text: "Error message: \(error!.localizedDescription)")
+                    self.showErrorAlert(message: "error_network".localiz())
                 }
 
                 PrintUtility.printLog(tag: "ERROR :", text: "\(String(describing: error))")
@@ -273,7 +271,7 @@ class CaptureImageProcessVC: BaseViewController {
                         if(modeSwitchTypes == nil) {
                             UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
                         }
-                        self?.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self!.fromHistoryVC)
+                        self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: modeSwitchTypes ?? blockMode, isFromHistoryVC: self.fromHistoryVC)
                     } else {
                         GlobalMethod.showNoInternetAlert()
                     }
@@ -295,6 +293,9 @@ class CaptureImageProcessVC: BaseViewController {
         showHistoryData(historyID: historyID)
     }
     deinit{
+        self.stopTTS()
+        AudioPlayer.sharedInstance.stop()
+        NotificationCenter.default.removeObserver(self, name: UIScene.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         ttsResponsiveView.removeObserver()
     }
@@ -510,13 +511,14 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
 
     func updateView() {
-        DispatchQueue.main.async {[self] in
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
             UserDefaults.standard.set(true, forKey: isTransLationSuccessful)
             let blockModeTextViews = self.iTTServerViewModel.blockModeTextViewList
             let lineModeTextViews = self.iTTServerViewModel.lineModetTextViewList
             PrintUtility.printLog(tag: "blockModeTextViews & lineModeTextViews", text: "\(self.iTTServerViewModel.blockModeTextViewList.count), \(self.iTTServerViewModel.lineModetTextViewList.count)")
             //if (blockModeTextViews.count != 0 || lineModeTextViews.count != 0) {
-            hideLoader()
+            self.hideLoader()
 
             if let modeSwitchType = UserDefaults.standard.string(forKey: modeSwitchType) {
                 PrintUtility.printLog(tag: "modeSwitchType for update Views", text: "\(modeSwitchType)")
@@ -524,17 +526,17 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     for each in lineModeTextViews {
                         each.view.removeFromSuperview()
                     }
-                    plotLineOrBlock(using: blockModeTextViews)
+                    self.plotLineOrBlock(using: blockModeTextViews)
 
                 } else {
                     for each in blockModeTextViews {
                         each.view.removeFromSuperview()
                     }
-                    plotLineOrBlock(using: lineModeTextViews)
+                    self.plotLineOrBlock(using: lineModeTextViews)
                 }
             } else {
                 UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
-                plotLineOrBlock(using: blockModeTextViews)
+                self.plotLineOrBlock(using: blockModeTextViews)
             }
             // }
         }
@@ -572,10 +574,13 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
             }
         }
 
-        if let view = UIApplication.shared.keyWindow {
-            view.addSubview(modeSwitchButton)
-            setupModeSwitchButton()
+        defer {
+            if let view = UIApplication.shared.keyWindow {
+                view.addSubview(modeSwitchButton)
+                setupModeSwitchButton()
+            }
         }
+
 
         //backButton.isUserInteractionEnabled = true
     }
@@ -721,9 +726,9 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         super.viewWillDisappear(animated)
         callObserver.setDelegate(self, queue: nil)
         removeFloatingButton()
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIApplication.didBecomeActiveNotification,
-                                                  object: nil)
+//        NotificationCenter.default.removeObserver(self,
+//                                                  name: UIApplication.didBecomeActiveNotification,
+//                                                  object: nil)
         AudioPlayer.sharedInstance.stop()
         stopTTS()
     }
@@ -772,10 +777,11 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                     updateView()
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        showLoader()
+//                        showLoader()
                         PrintUtility.printLog(tag: "Mode switch button action", text: "1111")
                         showLoader()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                            guard let `self` = self else { return }
                             if let detectedData = self.iTTServerViewModel.detectedJSON {
                                 self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: lineMode, isFromHistoryVC: self.fromHistoryVC)
                                 UserDefaults.standard.set(lineMode, forKey: modeSwitchType)
@@ -799,7 +805,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 } else {
                     if Reachability.isConnectedToNetwork() {
                         showLoader()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                            guard let `self` = self else { return }
                             if let detectedData = self.iTTServerViewModel.detectedJSON {
                                 self.iTTServerViewModel.getblockAndLineModeData(detectedData, _for: blockMode, isFromHistoryVC: self.fromHistoryVC)
                                 UserDefaults.standard.set(blockMode, forKey: modeSwitchType)
@@ -825,7 +832,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
                 for viewController in viewControllers {
                     if viewController is HomeViewController {
                         let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-                        self.view.window!.layer.add(transition, forKey: kCATransition)
+                        self.view.window?.layer.add(transition, forKey: kCATransition)
                         self.navigationController?.popToViewController(viewController, animated: false)
                     }
                 }
@@ -834,6 +841,7 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
     }
 
     func setupModeSwitchButton() {
+        guard let _ = view else { return }
         NSLayoutConstraint.activate([
             modeSwitchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             modeSwitchButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:0),
@@ -875,11 +883,12 @@ extension CaptureImageProcessVC: UIScrollViewDelegate {
 //MARK: - LoaderDelegate
 extension CaptureImageProcessVC: LoaderDelegate{
     func showLoader() {
-        DispatchQueue.main.async { [self] in
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
             ActivityIndicator.sharedInstance.show()
-            isClickable = false
-            isLoading = true
-            backButton.isUserInteractionEnabled = false
+            self.isClickable = false
+            self.isLoading = true
+            self.backButton.isUserInteractionEnabled = false
         }
     }
 
