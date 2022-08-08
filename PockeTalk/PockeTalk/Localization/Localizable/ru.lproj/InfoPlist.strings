@@ -3,8 +3,8 @@
   PockeTalk
 */
 
-"NSCameraUsageDescription" = "This app requires the access to camera to get the text from image for translation";
-"NSMicrophoneUsageDescription" = "This app requires the access to Microphone to convert speech to text for translation";
+"NSCameraUsageDescription" = "Приложению требуется доступ к камере для распознавания переводимого текста на изображении";
+"NSMicrophoneUsageDescription" = "Приложению требуется доступ к микрофону для преобразования речи в переводимый текст";
 "NSPhotoLibraryUsageDescription" = "Add photo to image";
 
 "CFBundleDisplayName" = "Pocketalk";
