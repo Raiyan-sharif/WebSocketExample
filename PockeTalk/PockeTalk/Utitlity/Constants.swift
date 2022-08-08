@@ -35,14 +35,6 @@ let languageMappingTotalRowCount = 1495
 //MARK: - Link
 let REVIEW_SUPPORT_URL = "https://rd.snxt.jp/PA010"
 
-let PRODUCTION_SUPPORT_URL = "https://rd.snxt.jp/PA002"
-//let PRODUCTION_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
-let PRODUCTION_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
-let STAGING_SUPPORT_URL = "https://rd.snxt.jp/PA002"
-//let STAGING_USER_MANUEL_URL = "https://rd.snxt.jp/PA003"
-let STAGING_TERMS_AND_CONDITIONS_URL = "https://rd.snxt.jp/PA001"
-
-
 //MARK: - Feedback URL
 let FEEDBACK_JAPANESE_URL = "https://rd.snxt.jp/PA026"
 let FEEDBACK_ENGLISH_URL = "https://rd.snxt.jp/PA027"
@@ -72,6 +64,33 @@ let USER_MANUAL_URL_it = "https://rd.snxt.jp/PA023"
 let USER_MANUAL_URL_th = "https://rd.snxt.jp/PA024"
 let USER_MANUAL_URL_ms = "https://rd.snxt.jp/PA025"
 
+let SUPPORT_URL_en = "https://rd.snxt.jp/PA039"
+let SUPPORT_URL_ja = "https://rd.snxt.jp/PA002"
+let SUPPORT_URL_zhHans = "https://rd.snxt.jp/PA040"
+let SUPPORT_URL_zhHant = "https://rd.snxt.jp/PA041"
+let SUPPORT_URL_es = "https://rd.snxt.jp/PA042"
+let SUPPORT_URL_ptPT = "https://rd.snxt.jp/PA043"
+let SUPPORT_URL_ru = "https://rd.snxt.jp/PA044"
+let SUPPORT_URL_fr = "https://rd.snxt.jp/PA045"
+let SUPPORT_URL_de = "https://rd.snxt.jp/PA046"
+let SUPPORT_URL_ko = "https://rd.snxt.jp/PA047"
+let SUPPORT_URL_it = "https://rd.snxt.jp/PA048"
+let SUPPORT_URL_th = "https://rd.snxt.jp/PA049"
+let SUPPORT_URL_ms = "https://rd.snxt.jp/PA050"
+
+let TERMS_CONDITIONS_URL_en = "https://rd.snxt.jp/PA051"
+let TERMS_CONDITIONS_URL_ja = "https://rd.snxt.jp/PA001"
+let TERMS_CONDITIONS_URL_zhHans = "https://rd.snxt.jp/PA052"
+let TERMS_CONDITIONS_URL_zhHant = "https://rd.snxt.jp/PA053"
+let TERMS_CONDITIONS_URL_es = "https://rd.snxt.jp/PA054"
+let TERMS_CONDITIONS_URL_ptPT = "https://rd.snxt.jp/PA055"
+let TERMS_CONDITIONS_URL_ru = "https://rd.snxt.jp/PA056"
+let TERMS_CONDITIONS_URL_fr = "https://rd.snxt.jp/PA057"
+let TERMS_CONDITIONS_URL_de = "https://rd.snxt.jp/PA058"
+let TERMS_CONDITIONS_URL_ko = "https://rd.snxt.jp/PA059"
+let TERMS_CONDITIONS_URL_it = "https://rd.snxt.jp/PA060"
+let TERMS_CONDITIONS_URL_th = "https://rd.snxt.jp/PA061"
+let TERMS_CONDITIONS_URL_ms = "https://rd.snxt.jp/PA062"
 
 
 //MARK: - Notification Name

@@ -429,67 +429,156 @@ class GlobalMethod {
     }
 
     static func getURLString() -> (supportURL: String, userManuelURL: String, termsAndConditionsURL: String) {
-        let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
-        switch (schemeName) {
-        case BuildVarientScheme.PRODUCTION_WITH_PRODUCTION_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_STAGE_URL.rawValue, BuildVarientScheme.PRODUCTION_WITH_LIVE_URL.rawValue:
-            return (PRODUCTION_SUPPORT_URL, getUserManualUrl(), PRODUCTION_TERMS_AND_CONDITIONS_URL)
-        case BuildVarientScheme.STAGING.rawValue:
-            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
-        case BuildVarientScheme.LOAD_ENGINE_FROM_ASSET.rawValue, BuildVarientScheme.SERVER_API_LOG.rawValue:
-            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
-        default:
-            return (STAGING_SUPPORT_URL, getUserManualUrl(), STAGING_TERMS_AND_CONDITIONS_URL)
-        }
+        return (getSupportUrl(), getUserManualUrl(), getTermsConditionsUrl())
     }
-    
-    static func getUserManualUrl() -> String{
+
+    static func getTermsConditionsUrl() -> String{
         let appLang = LanguageManager.shared.currentLanguage
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App Language => \(appLang)")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "App Language => \(appLang)")
         switch appLang {
         case .ja:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ja)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_ja)")
+            return TERMS_CONDITIONS_URL_ja
+        case .en:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_en)")
+            return TERMS_CONDITIONS_URL_en
+        case .zhHans:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_zhHans)")
+            return TERMS_CONDITIONS_URL_zhHans
+        case .zhHant:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_zhHant)")
+            return TERMS_CONDITIONS_URL_zhHant
+        case .es:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_es)")
+            return TERMS_CONDITIONS_URL_es
+        case .ptPT:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_ptPT)")
+            return TERMS_CONDITIONS_URL_ptPT
+        case .ru:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_ru)")
+            return TERMS_CONDITIONS_URL_ru
+        case .fr:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_fr)")
+            return TERMS_CONDITIONS_URL_fr
+        case .de:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_de)")
+            return TERMS_CONDITIONS_URL_de
+        case .ko:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_ko)")
+            return TERMS_CONDITIONS_URL_ko
+        case .it:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_it)")
+            return TERMS_CONDITIONS_URL_it
+        case .th:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_th)")
+            return TERMS_CONDITIONS_URL_th
+        case .ms:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_ms)")
+            return TERMS_CONDITIONS_URL_ms
+        default:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Terms Conditions url => \(TERMS_CONDITIONS_URL_en)")
+            return TERMS_CONDITIONS_URL_en
+        }
+    }
+
+    static func getSupportUrl() -> String{
+        let appLang = LanguageManager.shared.currentLanguage
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "App Language => \(appLang)")
+        switch appLang {
+        case .ja:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_ja)")
+            return SUPPORT_URL_ja
+        case .en:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_en)")
+            return SUPPORT_URL_en
+        case .zhHans:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_zhHans)")
+            return SUPPORT_URL_zhHans
+        case .zhHant:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_zhHant)")
+            return SUPPORT_URL_zhHant
+        case .es:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_es)")
+            return SUPPORT_URL_es
+        case .ptPT:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_ptPT)")
+            return SUPPORT_URL_ptPT
+        case .ru:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_ru)")
+            return SUPPORT_URL_ru
+        case .fr:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_fr)")
+            return SUPPORT_URL_fr
+        case .de:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_de)")
+            return SUPPORT_URL_de
+        case .ko:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_ko)")
+            return SUPPORT_URL_ko
+        case .it:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_it)")
+            return SUPPORT_URL_it
+        case .th:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_th)")
+            return SUPPORT_URL_th
+        case .ms:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_ms)")
+            return SUPPORT_URL_ms
+        default:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "Support url => \(SUPPORT_URL_en)")
+            return SUPPORT_URL_en
+        }
+    }
+
+    static func getUserManualUrl() -> String{
+        let appLang = LanguageManager.shared.currentLanguage
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "App Language => \(appLang)")
+        switch appLang {
+        case .ja:
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_ja)")
             return USER_MANUAL_URL_ja
         case .en:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_en)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_en)")
             return USER_MANUAL_URL_en
         case .zhHans:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_zhHans)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_zhHans)")
             return USER_MANUAL_URL_zhHans
         case .zhHant:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_zhHant)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_zhHant)")
             return USER_MANUAL_URL_zhHant
         case .es:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_es)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_es)")
             return USER_MANUAL_URL_es
         case .ptPT:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ptPT)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_ptPT)")
             return USER_MANUAL_URL_ptPT
         case .ru:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ru)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_ru)")
             return USER_MANUAL_URL_ru
         case .fr:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_fr)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_fr)")
             return USER_MANUAL_URL_fr
         case .de:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_de)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_de)")
             return USER_MANUAL_URL_de
         case .ko:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ko)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_ko)")
             return USER_MANUAL_URL_ko
         case .it:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_it)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_it)")
             return USER_MANUAL_URL_it
         case .th:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_th)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_th)")
             return USER_MANUAL_URL_th
         case .ms:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_ms)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_ms)")
             return USER_MANUAL_URL_ms
         default:
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "User manual url => \(USER_MANUAL_URL_en)")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.urlTag, text: "User manual url => \(USER_MANUAL_URL_en)")
             return USER_MANUAL_URL_en
         }
     }
+
     
     // Common alert
     static func showCommonAlert(in viewController: UIViewController? = nil, msg: String, completion: @escaping() -> Void){
