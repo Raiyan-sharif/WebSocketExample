@@ -72,7 +72,8 @@ class CameraLanguageSelectionViewModel:BaseModel{
                 return item
             }
         }
-        return nil
+        PrintUtility.printLog(tag: TAG,text: "langcode \(langCode) doesn't exit in language list.")
+        return LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
     }
 
 //    public var isArrowUp: Bool? {
