@@ -62,6 +62,9 @@ class IAPManager: NSObject {
     var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     let schemeName = Bundle.main.infoDictionary![currentSelectedSceme] as! String
     var appStoreRegionRetryCount = 0
+    private var productID = [String: Any]()
+    var iapReceiptValidationForm: IAPReceiptValidationFrom = .none
+
 
     // MARK: - Custom Types
     enum IAPManagerError: Error {
@@ -298,7 +301,7 @@ extension IAPManager: SKPaymentTransactionObserver {
                     }
                 }
             } else {
-                self.IAPResponseCheck(iapReceiptValidationFrom: .purchaseAndRestoreButton)
+                self.IAPResponseCheck(iapReceiptValidationFrom: iapReceiptValidationForm)
                 KeychainWrapper.standard.set(false, forKey: receiptValidationAllow)
             }
         }
@@ -516,7 +519,7 @@ extension IAPManager {
                     if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
                         let statusCode = self?.getIAPJsonResponseStatusCode(jsonResponse: jsonResponse)
 
-                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
+                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse, iapReceiptValidationFrom: .none) {
                             let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: Date(), latestReceiptInfoArray: latestInfoReceiptObjects)
 
                             if let updatedPurchaseStatus = purchaseStatus {
@@ -555,7 +558,7 @@ extension IAPManager {
         PrintUtility.printLog(tag: TAG, text: "iapReceiptValidationFrom \(iapReceiptValidationFrom)")
         PrintUtility.printLog(tag: TAG, text: "receiptValidationAllow \(String(describing: KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!))")
         if KeychainWrapper.standard.bool(forKey: receiptValidationAllow)!  == true {
-            if iapReceiptValidationFrom == .purchaseAndRestoreButton {
+            if iapReceiptValidationFrom == .purchaseButton ||  iapReceiptValidationFrom == .restoreButton {
                 receiptValidation(iapReceiptValidationFrom: iapReceiptValidationFrom) { isPurchaseSchemeActive, error in
                     if let err = error {
                         self.onBuyProductHandler?(.failure(err))
@@ -624,7 +627,7 @@ extension IAPManager {
             let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
                 do {
                     if let data = data, let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse) {
+                        if let latestInfoReceiptObjects = self?.getLatestInfoReceiptObjects(jsonResponse: jsonResponse, iapReceiptValidationFrom: iapReceiptValidationFrom) {
                             //Clock.sync(completion:  { date, offset in
                                // if let getResDate = date {
                                     let purchaseStatus = self?.isPurchaseActive(currentDateFromServer: Date(), latestReceiptInfoArray: latestInfoReceiptObjects)
@@ -652,9 +655,31 @@ extension IAPManager {
         }
     }
 
-    func getLatestInfoReceiptObjects(jsonResponse: NSDictionary) -> [LatestReceiptInfo]? {
+    func getLatestInfoReceiptObjects(jsonResponse: NSDictionary, iapReceiptValidationFrom: IAPReceiptValidationFrom) -> [LatestReceiptInfo]? {
         if let ios_receipt = jsonResponse[latest_receipt] as? String {
             UserDefaults.standard.set(ios_receipt, forKey: kiOSReceipt)
+        }
+
+        if iapReceiptValidationFrom == .restoreButton {
+            if let renewalInfo: NSArray = jsonResponse[pending_renewal_info] as? NSArray {
+                let productList = getProductData()
+
+                for renewalInfo in renewalInfo {
+                    let renewInfo = renewalInfo as! NSDictionary
+                    var productID: String?
+
+                    if let product_id = renewInfo[auto_renew_product_id] as? String {
+                        productID = product_id
+                    } else {
+                        productID = nil
+                    }
+
+                    let productType = getProductType(productId: productID, productList: productList)
+                    NotificationCenter.default.post(name: .inAppPurchaseRestoreInfoNotification, object: nil, userInfo: [planType: productType])
+                }
+            } else {
+                PrintUtility.printLog(tag: TAG, text: "Pending renewal info didn't exist")
+            }
         }
 
         if let receiptInfo: NSArray = jsonResponse[latest_receipt_info] as? NSArray {
@@ -778,6 +803,33 @@ extension IAPManager {
             }
         }
         return isSubsActive
+    }
+
+    private func getProductData() -> [String] {
+        var productionIAPProductArray: [String] = []
+        if let URL = Bundle.main.url(forResource: "Production_IAP_Products", withExtension: "plist") {
+            if let productsFromPlist = NSArray(contentsOf: URL) as? [String] {
+                productionIAPProductArray = productsFromPlist
+            }
+        }
+        return productionIAPProductArray
+    }
+
+    private func getProductType(productId: String?, productList: [String]) -> String {
+        if let prodId = productId {
+            for item in 0..<productList.count {
+                if productList[item] == prodId {
+                    if item == 0 {
+                        return PurchasePlan.week.rawValue
+                    } else if item == 1 {
+                        return PurchasePlan.month.rawValue
+                    } else if item == 2 {
+                        return PurchasePlan.year.rawValue
+                    }
+                }
+            }
+        }
+        return PurchasePlan.none.rawValue
     }
 }
 

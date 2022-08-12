@@ -87,6 +87,7 @@ class CameraHistoryViewController: BaseViewController {
     }
     
     @objc func backButtonEventListener(_ button: UIButton) {
+        buttonBackLogEvent()
         let transition = GlobalMethod.addMoveOutTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.navigationController?.popViewController(animated: false)
@@ -219,4 +220,12 @@ extension CameraHistoryViewController: CameraHistoryPopUPDelegates {
     }
     
 
+}
+
+//MARK: - Google analytics log events
+extension CameraHistoryViewController {
+    private func buttonBackLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateHistory,
+                            buttonName: analytics.buttonBack)
+    }
 }

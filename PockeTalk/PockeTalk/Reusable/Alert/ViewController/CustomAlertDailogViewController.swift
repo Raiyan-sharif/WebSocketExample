@@ -122,6 +122,7 @@ class CustomAlertDailogViewController: BaseViewController {
     }
 
     @IBAction func onCancel(_ sender: Any) {
+        buttonCancleLogEvent()
         dismiss(animated: true)
     }
 
@@ -153,5 +154,13 @@ class CustomSizeButton: UIButton {
         let desiredButtonSize = CGSize(width: labelSize.width + titleEdgeInsets.left + titleEdgeInsets.right, height: labelSize.height + titleEdgeInsets.top + titleEdgeInsets.bottom)
 
         return desiredButtonSize
+    }
+}
+
+//MARK: - Google analytics log events
+extension CustomAlertDailogViewController {
+    func buttonCancleLogEvent() {
+        analytics.buttonTap(screenName: GASettingScreenName,
+                            buttonName: analytics.buttonCancel)
     }
 }

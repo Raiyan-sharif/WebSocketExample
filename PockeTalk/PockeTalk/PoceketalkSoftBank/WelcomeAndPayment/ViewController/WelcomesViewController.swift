@@ -5,7 +5,7 @@
 
 import UIKit
 
-class WelcomesViewController: UIViewController {
+class WelcomesViewController: BaseViewController {
     @IBOutlet weak private var nextBtn: UIButton!
 
     //MARK: - Lifecycle methods
@@ -35,10 +35,24 @@ class WelcomesViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
+        nextButtonLogEvent()
+        goToHomeVC()
+    }
+
+    //MARK: - View Transactions
+    private func goToHomeVC() {
         if let viewController = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
             let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
             self.navigationController?.view.layer.add(transition, forKey: nil)
             self.navigationController?.setViewControllers([viewController], animated: false)
         }
+    }
+}
+
+//MARK: - Google analytics log events
+extension WelcomesViewController {
+    private func nextButtonLogEvent() {
+        analytics.buttonTap(screenName: analytics.firstStart,
+                            buttonName: analytics.buttonStart)
     }
 }

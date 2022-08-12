@@ -68,8 +68,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         let resetDataType =  ResetItemType.resetItems[indexPath.row]
         switch resetDataType {
         case ResetItemType.clearTranslationHistory.rawValue:
+            GASettingScreenName = analytics.settingResetHistory
+            clearTranslationLogEvent()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
+                self.clearTranslationConfirmLogEvent()
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 FileUtility.deleteAllHistoryTTSAudioFiles()
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeHistory)
@@ -82,8 +85,11 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Translation History")
         case ResetItemType.deleteCameraHistory.rawValue:
+            GASettingScreenName = analytics.settingResetCam
+            clearCameraLogEvent()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_camera_history_del_dialog".localiz(), buttonTitle: "clear".localiz()) {
+                self.clearCameraConfirmLogEvent()
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 _ = try? CameraHistoryDBModel().deleteAll()
                 self.showSuccessAlert(title: "camera_history_cleared".localiz())
@@ -94,8 +100,12 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Camera History")
         case ResetItemType.clearFavourite.rawValue:
+            GASettingScreenName = analytics.settingResetFav
+            clearFavoriteLogEvent()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_history_del_dialog_favorite".localiz(), buttonTitle: "clear".localiz()) {
+                self.clearFavoriteConfirmLogEvent()
+
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 FileUtility.deleteAllFavoriteTTSAudioFiles()
                 _ = ChatDBModel().deleteAllChatHistory(removeStatus: .removeFavorite)
@@ -104,19 +114,21 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 self.showSuccessAlert(title: "favorite_history_cleared".localiz())
             }
             present(alert, animated: true, completion: nil)
-//            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
-//            self.present(alert, animated: true, completion: nil)
+            //            let alert = AlertDialogUtility.showFavouriteHistoryDialog()
+            //            self.present(alert, animated: true, completion: nil)
             deSelectTableCell()
             PrintUtility.printLog(tag: TAG, text: "Favourite Data")
         case ResetItemType.deleteAllData.rawValue:
-
             if let coupon =  UserDefaults.standard.string(forKey: kCouponCode), !coupon.isEmpty {
                 LocalNotificationManager.sharedInstance.removeScheduledNotification()
                 CustomLocalNotification.sharedInstance.removeView()
             }
+            GASettingScreenName = analytics.settingResetAll
+            clearAllDataLogEvent()
             ResponseLogger.shareInstance.clean()
             let alertService = CustomAlertViewModel()
             let alert = alertService.alertDialogWithoutTitleWithActionButton(message: "msg_all_data_reset".localiz(), buttonTitle: "delete_all_data".localiz()) {
+                self.clearAllDataConfirmLogEvent()
                 PrintUtility.printLog(tag: self.TAG, text: "Handle Ok logic here")
                 
                 do {
@@ -171,4 +183,47 @@ class ResetViewController: BaseViewController, UITableViewDelegate, UITableViewD
         self.present(dialog, animated: true, completion: nil)
     }
 
+}
+
+//MARK: - Google analytics log events
+extension ResetViewController {
+    private func clearTranslationLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingReset,
+                            buttonName: analytics.buttonHistory)
+    }
+
+    private func clearTranslationConfirmLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingResetHistory,
+                            buttonName: analytics.buttonDelete)
+    }
+
+    private func clearFavoriteLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingReset,
+                            buttonName: analytics.buttonFav)
+    }
+
+    private func clearFavoriteConfirmLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingResetFav,
+                            buttonName: analytics.buttonDelete)
+    }
+
+    private func clearCameraLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingReset,
+                            buttonName: analytics.buttonCam)
+    }
+
+    private func clearCameraConfirmLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingResetCam,
+                            buttonName: analytics.buttonDelete)
+    }
+
+    private func clearAllDataLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingReset,
+                            buttonName: analytics.buttonAll)
+    }
+
+    private func clearAllDataConfirmLogEvent(){
+        analytics.buttonTap(screenName: analytics.settingResetAll,
+                            buttonName: analytics.buttonDelete)
+    }
 }

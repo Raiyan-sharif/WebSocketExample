@@ -300,6 +300,7 @@ class ImageCroppingViewController: BaseViewController {
     }
 
     @IBAction func cancelButtonEventListener(_ sender: Any) {
+        buttonCancelLogEvent()
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         for viewController in viewControllers {
             if viewController is HomeViewController {
@@ -328,6 +329,12 @@ class ImageCroppingViewController: BaseViewController {
 
             imageFrameHeight = imageView.frame.size.height*cropRect.height
             imageFrameWidth = imageView.frame.size.height*cropRect.width
+
+            let roundedImageFrameHeight = Double(imageFrameHeight).roundToDecimal(2)
+            let roundedImageFrameWidth = Double(imageView.frame.size.width*cropRect.width).roundToDecimal(2)
+
+            let trimmingState = (roundedImageFrameHeight == Double(imageView.frame.size.height).roundToDecimal(2) && roundedImageFrameWidth == Double(imageView.frame.size.width).roundToDecimal(2)) ? false : true
+            buttonCropLogEvent(trimmingState: trimmingState)
         }
 
         if Reachability.isConnectedToNetwork() {
@@ -427,5 +434,19 @@ extension ImageCroppingViewController: UIScrollViewDelegate, CropOverlappingView
 
     public func scrollViewDidZoom(_ scrollView: UIScrollView) {
         centerScrollViewContent()
+    }
+}
+
+//MARK: - Google analytics log events
+extension ImageCroppingViewController {
+    private func buttonCancelLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateConfirm,
+                            buttonName: analytics.buttonCancel)
+    }
+
+    private func buttonCropLogEvent(trimmingState: Bool) {
+        analytics.cameraCrop(screenName: analytics.camTranslateConfirm,
+                             button: analytics.buttonNext,
+                             crop: trimmingState)
     }
 }

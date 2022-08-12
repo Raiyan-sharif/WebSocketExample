@@ -33,8 +33,12 @@ class PronunciationPracticeResultViewController: BaseViewController {
     var tempo:String = "normal"
     var multipartAudioPlayer: MultipartAudioPlayer?
     var urlStrings:[String] = []
+
+    var mainResultMenuPracticeCheckStr: String!
+    var mainResultMenuPracticeCheckSpeedStr: String!
     
     @IBAction func actionBack(_ sender: Any) {
+        backButtonTapLogEvent()
         stopTTS()
         LanguageSelectionManager.shared.tempSourceLanguage = nil
         NotificationCenter.default.post(name: .pronumTiationTextUpdate, object: nil, userInfo: ["pronuntiationText":"pronuntiationText"])
@@ -71,6 +75,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
 
     //TODO: need to replace with valid action
     @IBAction func actionReplay(_ sender: Any) {
+        replayButtonTapLogEvent()
         stopTTS()
         let vc = TempoControlSelectionAlertController.init()
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -95,6 +100,7 @@ class PronunciationPracticeResultViewController: BaseViewController {
         }
         bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
         multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
+        setAnalyticsScreenName()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -151,6 +157,39 @@ class PronunciationPracticeResultViewController: BaseViewController {
         let item = LanguageEngineParser.shared.getTtsValue(langCode: languageCode)
         self.voice = item.voice
         self.rate = item.rate
+    }
+
+    private func setAnalyticsScreenName() {
+        if isFromHistoryTTS {
+            //Show self scene from history card scene
+            if viewSuccessContainer.isHidden {
+                mainResultMenuPracticeCheckStr = analytics.historyCardMenuPracticeWrong
+                mainResultMenuPracticeCheckSpeedStr = analytics.historyCardMenuPracticeWrongSpeed
+            } else {
+                mainResultMenuPracticeCheckStr = analytics.historyCardMenuPracticeCheck
+                mainResultMenuPracticeCheckSpeedStr = analytics.historyCardMenuPracticeCheckSpeed
+            }
+        } else {
+            if isFromHistory {
+                //Show self scene from history scene
+                if viewSuccessContainer.isHidden {
+                    mainResultMenuPracticeCheckStr = analytics.historyLongTapMenuPracticeWrong
+                    mainResultMenuPracticeCheckSpeedStr = analytics.historyLongTapMenuPracticeWrongSpeed
+                } else {
+                    mainResultMenuPracticeCheckStr = analytics.historyLongTapMenuPracticeCheck
+                    mainResultMenuPracticeCheckSpeedStr = analytics.historyLongTapMenuPracticeCheckSpeed
+                }
+            } else {
+                //Show self scene from home scene
+                if viewSuccessContainer.isHidden {
+                    mainResultMenuPracticeCheckStr = analytics.mainResultMenuPracticeWrong
+                    mainResultMenuPracticeCheckSpeedStr = analytics.mainResultMenuPracticeWrongSpeed
+                } else {
+                    mainResultMenuPracticeCheckStr = analytics.mainResultMenuPracticeCheck
+                    mainResultMenuPracticeCheckSpeedStr = analytics.mainResultMenuPracticeCheckSpeed
+                }
+            }
+        }
     }
     
     // TODO microphone tap event
@@ -245,7 +284,9 @@ class PronunciationPracticeResultViewController: BaseViewController {
         AudioPlayer.sharedInstance.stop()
     }
 }
-extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate {
+
+//MARK: - TTSResponsiveViewDelegate
+extension PronunciationPracticeResultViewController: TTSResponsiveViewDelegate {
     func onMultipartUrlReceived(url: String) {
         if(!url.isEmpty){
             urlStrings.append(url)
@@ -261,39 +302,41 @@ extension PronunciationPracticeResultViewController : TTSResponsiveViewDelegate 
     }
     
     func onVoiceEnd() { }
-    
     func onReady() {}
 }
+
+//MARK: - TempoControlSelectionDelegate
 extension PronunciationPracticeResultViewController: TempoControlSelectionDelegate{
     func onStandardSelection() {
+        normalPlayBackLogEvent()
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .standard)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
         tempo = "normal"
     }
     
     func onSlowSelection() {
+        slowPlayBackLogEvent()
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .slow)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
         tempo = "slow"
     }
     
     func onVerySlowSelection() {
+        verySlowPlayBackLogEvent()
         rate = TempoEngineValueParser.shared.getEngineTempoValue(engineName: ttsResponsiveView.engineName, type: .verySlow)
         PrintUtility.printLog(tag: TAG, text: "rate: \(rate)")
         tempo = "veryslow"
     }
 }
 
-extension PronunciationPracticeResultViewController :AudioPlayerDelegate{
-    func didStartAudioPlayer() {
-
-    }
-
-    func didStopAudioPlayer(flag: Bool) {
-
-    }
+//MARK: - AudioPlayerDelegate
+extension PronunciationPracticeResultViewController: AudioPlayerDelegate{
+    func didStartAudioPlayer() {}
+    func didStopAudioPlayer(flag: Bool) {}
 }
-extension PronunciationPracticeResultViewController : MultipartAudioPlayerProtocol{
+
+//MARK: - MultipartAudioPlayerProtocol
+extension PronunciationPracticeResultViewController: MultipartAudioPlayerProtocol{
     func onSpeakStart() {
         self.isSpeaking = true
     }
@@ -302,6 +345,34 @@ extension PronunciationPracticeResultViewController : MultipartAudioPlayerProtoc
     }
     func onError() {
         self.isSpeaking = false
+    }
+}
+
+//MARK: - Google analytics log events
+extension PronunciationPracticeResultViewController {
+    private func backButtonTapLogEvent() {
+        analytics.buttonTap(screenName: mainResultMenuPracticeCheckStr,
+                            buttonName: analytics.buttonBack)
+    }
+
+    private func replayButtonTapLogEvent() {
+        analytics.buttonTap(screenName: mainResultMenuPracticeCheckStr,
+                            buttonName: analytics.buttonSpeed)
+    }
+
+    private func normalPlayBackLogEvent() {
+        analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
+                                        playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.normal)
+    }
+
+    private func slowPlayBackLogEvent() {
+        analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
+                                        playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.slow)
+    }
+
+    private func verySlowPlayBackLogEvent() {
+        analytics.pronunciationPlayBack(screenName: mainResultMenuPracticeCheckSpeedStr,
+                                        playBackType: GoogleAnalytics.PronunciationPlayBackSpeed.verySlow)
     }
 }
 

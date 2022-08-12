@@ -43,6 +43,8 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     let window :UIWindow = UIApplication.shared.keyWindow!
     var urlStrings:[String] = []
     var multipartAudioPlayer: MultipartAudioPlayer?
+    var analyticsScreenNameStr: String!
+    private var numberOfTimePronunciationTries: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +61,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         }
         bottomViewBottomLayoutConstrain.constant = HomeViewController.homeVCBottomViewHeight
         multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
+        setAnalyticsScreenName()
     }
 
     func registerNotification(){
@@ -83,13 +86,15 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     @objc func gotoPronuntiationPacticeVC(notification: Notification) {
 
         if let value = notification.userInfo!["value"] as? PronuntiationValue{
-
+            numberOfTimePronunciationTries += 1
+            pronunciationPracticeTriesLogEvent()
             let storyboard = UIStoryboard(name: "PronunciationPractice", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: "PronunciationPracticeResultViewController")as! PronunciationPracticeResultViewController
             controller.orginalText = value.orginalText
             controller.practiceText = value.practiceText
             controller.languageCode = value.languageCcode
             controller.isFromHistoryTTS = isFromHistoryTTS
+            controller.isFromHistory = isFromHistory
             add(asChildViewController: controller, containerView: view, animation: nil)
         }
     }
@@ -157,6 +162,14 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
         self.rate = item.rate
     }
 
+    private func setAnalyticsScreenName() {
+        if !isFromHistory {
+            analyticsScreenNameStr = analytics.mainResultMenuPractice
+        } else {
+            isFromHistoryTTS ? (analyticsScreenNameStr = analytics.historyCardMenuPractice) : (analyticsScreenNameStr = analytics.historyLongTapMenuPractice)
+        }
+    }
+
     // TODO microphone tap event
     @objc func microphoneTapAction (sender:UIButton) {
         self.stopTTS()
@@ -199,6 +212,7 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
 
     @IBAction func actionBack(_ sender: Any) {
+        backButtonTapLogEvent()
         stopTTS()
         AudioPlayer.sharedInstance.stop()
         LanguageSelectionManager.shared.tempSourceLanguage = nil
@@ -241,7 +255,8 @@ class PronunciationPracticeViewController: BaseViewController, DismissPronunciat
     }
 }
 
-extension PronunciationPracticeViewController : TTSResponsiveViewDelegate {
+//MARK: - TTSResponsiveViewDelegate
+extension PronunciationPracticeViewController: TTSResponsiveViewDelegate {
     func onMultipartUrlReceived(url: String) {
         if(!url.isEmpty){
             urlStrings.append(url)
@@ -267,16 +282,14 @@ struct PronuntiationValue {
     let languageCcode:String
 }
 
-extension PronunciationPracticeViewController :AudioPlayerDelegate{
-    func didStartAudioPlayer() {
-
-    }
-
-    func didStopAudioPlayer(flag: Bool) {
-
-    }
+//MARK: - AudioPlayerDelegate
+extension PronunciationPracticeViewController: AudioPlayerDelegate{
+    func didStartAudioPlayer() {}
+    func didStopAudioPlayer(flag: Bool) {}
 }
-extension PronunciationPracticeViewController : MultipartAudioPlayerProtocol{
+
+//MARK: - MultipartAudioPlayerProtocol
+extension PronunciationPracticeViewController: MultipartAudioPlayerProtocol{
     func onSpeakStart() {
         self.isSpeaking = true
     }
@@ -285,6 +298,20 @@ extension PronunciationPracticeViewController : MultipartAudioPlayerProtocol{
     }
     func onError() {
         self.isSpeaking = false
+    }
+}
+
+//MARK: - Google analytics log events
+extension PronunciationPracticeViewController{
+    private func backButtonTapLogEvent() {
+        analytics.buttonTap(screenName: analyticsScreenNameStr,
+                            buttonName: analytics.buttonBack)
+    }
+
+    private func pronunciationPracticeTriesLogEvent() {
+        analytics.pronunciationPractice(screenName: analyticsScreenNameStr,
+                                        eventParamName: analytics.buttonPractice,
+                                        practiceCount: numberOfTimePronunciationTries)
     }
 }
 

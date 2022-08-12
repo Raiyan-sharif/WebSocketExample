@@ -30,6 +30,10 @@ target 'PockeTalk' do
 
   pod 'SwiftKeychainWrapper'
 
+  pod 'FirebaseAnalytics'
+
+  pod 'FirebaseCrashlytics'
+
   # Pods for PockeTalk
 
   target 'PockeTalkTests' do

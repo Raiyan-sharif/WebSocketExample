@@ -237,6 +237,7 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                             if isFromUniversalLink == true {
                                 UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
                                 UserDefaults.standard.set(coupon, forKey: kCouponCode)
+                                KeychainWrapper.standard.set(true, forKey: kIsCouponAlreadyUsedOnce)
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon saved: \(coupon)")
                                 DispatchQueue.main.async {
                                     let alert = alertService.alertDialogSoftbankWithError(message: "kCouponActivatedMesage".localiz(), errorMessage: self.statusCodeText) {

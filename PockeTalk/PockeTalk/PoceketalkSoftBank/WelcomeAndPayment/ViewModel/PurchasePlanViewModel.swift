@@ -20,10 +20,19 @@ protocol PurchasePlanViewModeling {
     func purchaseProduct(product: SKProduct, onCompletion: @escaping CompletionCallBack)
     func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails?
     func getFreeDaysUsesInfo() -> String?
-    func updateReceiptValidationAllow()
+    func updateReceiptValidationAllow(iapReceiptValidationFrom: IAPReceiptValidationFrom)
     func updateIsAPICallOngoing(_ status: Bool)
     func setProductFetchStatus(_ status: Bool)
     func setFreeTrialStatus(_ status: Bool)
+    func getSelectedPlanType() -> String?
+    func setSelectedPlanType(planType: PurchasePlanTVCellInfo)
+}
+
+enum PurchasePlan: String {
+    case week = "week"
+    case month = "month"
+    case year = "year"
+    case none = "none"
 }
 
 class PurchasePlanViewModel: PurchasePlanViewModeling {
@@ -37,6 +46,7 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
     private var _productFetchError: String?
     private var _isProductFetchOngoing: Bool = false
     private var _isFreeTrialAvailable = false
+    private var selectedPlanType: PurchasePlanTVCellInfo?
 
     var numberOfRow: Int {
         return row.count
@@ -223,6 +233,10 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         row.append(.restorePurchase)
     }
 
+    func setSelectedPlanType(planType: PurchasePlanTVCellInfo) {
+        selectedPlanType = planType
+    }
+
     //MARK: - Getable methods
     func getProductDetailsData(using cellType: PurchasePlanTVCellInfo) -> ProductDetails? {
         for product in self.productDetails{
@@ -244,6 +258,21 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         return nil
     }
 
+    func getSelectedPlanType() -> String? {
+        var planTypeText: String?
+
+        if let planType = self.selectedPlanType {
+            if planType == .weeklyPlan {
+                planTypeText = PurchasePlan.week.rawValue
+            } else if planType == .monthlyPlan {
+                planTypeText = PurchasePlan.month.rawValue
+            } else if planType == .annualPlan {
+                planTypeText = PurchasePlan.year.rawValue
+            }
+        }
+        return planTypeText
+    }
+
     //MARK: - Utils
     private func resetData() {
         row.removeAll()
@@ -251,9 +280,10 @@ class PurchasePlanViewModel: PurchasePlanViewModeling {
         productDetails.removeAll()
     }
 
-    func updateReceiptValidationAllow() {
+    func updateReceiptValidationAllow(iapReceiptValidationFrom: IAPReceiptValidationFrom) {
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
         KeychainWrapper.standard.set(true, forKey: receiptValidationAllowFromPurchase)
+        IAPManager.shared.iapReceiptValidationForm = iapReceiptValidationFrom
     }
 
     func updateIsAPICallOngoing(_ status: Bool) {

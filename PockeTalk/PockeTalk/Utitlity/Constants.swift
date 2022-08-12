@@ -380,6 +380,9 @@ let IAPPassword = "password"
 let expires_date = "expires_date"
 let latest_receipt_info = "latest_receipt_info"
 let latest_receipt = "latest_receipt"
+let pending_renewal_info = "pending_renewal_info"
+let auto_renew_product_id = "auto_renew_product_id"
+let planType = "planType"
 let cancellation_date = "cancellation_date"
 let product_id = "product_id"
 let is_in_intro_offer_period = "is_in_intro_offer_period"
@@ -407,6 +410,7 @@ let kTTSAudioFileNameExtenstion = ".wav"
 
 let kInAppPurchaseStatus = "inAppPurchaseStatus"
 let KIsAppAlreadyLaunchedOnce = "isAppAlreadyLaunchedOnce"
+let kIsCouponAlreadyUsedOnce = "isCouponAlreadyUsedOnce"
 // SCHEME
 let currentSelectedSceme = "CURRENT_SCHEME_NAME"
 //Language History List
@@ -452,4 +456,7 @@ let backButtonHeight = 30
 let navTitleWidth = 200
 let navTitleHeight = 30
 
+//Google Analytics Variables
+var GASettingScreenName = ""
+let kHistoryTTS = "historyTTS"
 

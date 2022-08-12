@@ -62,6 +62,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     let removeTime : Double = 0.3
     let zoomLabelBorderWidth : CGFloat = 2.0
     var circleColor: UIColor = .white
+    var zoomLevelGoogleAnalytic : Float = 1.0
     
     /// Camera History
     private let cameraHistoryViewModel = CameraHistoryViewModel()
@@ -70,6 +71,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     private var connectivity = Connectivity()
     
     @IBAction func onFromLangBtnPressed(_ sender: Any) {
+        buttonFromLanguageLogEvent()
         self.updateHomeContainer?(false)
         HomeViewController.cameraTapFlag = 1
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = true
@@ -79,6 +81,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func onTargetLangBtnPressed(_ sender: Any) {
+        buttonTargetLanguageLogEvent()
         self.updateHomeContainer?(false)
         HomeViewController.cameraTapFlag = 2
         UserDefaultsProperty<Bool>(KCameraLanguageFrom).value = false
@@ -270,6 +273,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     
     
     @objc func imageHistoryEvent (sender: UITapGestureRecognizer) {
+        buttonHistoryLogEvent()
         isViewInteractionEnable(false)
         let cameraStoryBoard = UIStoryboard(name: "Camera", bundle: nil)
         if let vc = cameraStoryBoard.instantiateViewController(withIdentifier: String(describing: CameraHistoryViewController.self)) as? CameraHistoryViewController {
@@ -319,6 +323,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
         }
         registerNotification()
         updateLanguageNames()
+        zoomLevelGoogleAnalytic = 1.0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -418,6 +423,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
             
             configCamera(device) { device in
                 device.videoZoomFactor = resolvedScale
+                self.zoomLevelGoogleAnalytic = Float(resolvedScale)
                 DispatchQueue.main.async {
                     self.zoomLevel.isHidden = false
                     self.zoomLevel.text = String(format:"%.01f", resolvedScale) + "x"
@@ -455,6 +461,7 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
 extension CameraViewController {
     
     @IBAction func backButtonEventListener(_ sender: Any) {
+        buttonBackLogEvent()
         isViewInteractionEnable(false)
         self.updateHomeContainer?(false)
         HomeViewController.isCameraButtonClickable = true
@@ -467,7 +474,7 @@ extension CameraViewController {
     }
     
     @IBAction func captureButtonEventListener(_ sender: Any) {
-        
+        buttonCaptureLogEvent()
         if isCaptureButtonClickable == true {
             isViewInteractionEnable(false)
             isCaptureButtonClickable = false
@@ -634,4 +641,34 @@ extension CameraViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+}
+
+//MARK: - Google analytics log events
+extension CameraViewController {
+    private func buttonBackLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslate,
+                            buttonName: analytics.buttonBack)
+    }
+
+    private func buttonFromLanguageLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslate,
+                            buttonName: analytics.buttonCameraSourceLang)
+    }
+
+    private func buttonTargetLanguageLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslate,
+                            buttonName: analytics.buttonCameraDestinationLang)
+    }
+
+    private func buttonHistoryLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslate,
+                            buttonName: analytics.buttonCamHistory)
+    }
+
+    private func buttonCaptureLogEvent() {
+        analytics.takePicture(screenName: analytics.camTranslate,
+                              zoom: String(format:"%.01f", zoomLevelGoogleAnalytic),
+                              source: LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.fromLanguage)?.name ?? CameraLanguageSelectionViewModel.shared.getLocalizedAutomaticRecognitionString(),
+                              destination: LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.targetLanguage)?.name ?? "")
+    }
 }

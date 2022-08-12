@@ -5,6 +5,8 @@
 
 import UIKit
 import SwiftKeychainWrapper
+import FirebaseCore
+import FirebaseAnalytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         UNUserNotificationCenter.current().delegate = self
+        //Start firebase & Log info
+        FirebaseApp.configure()
+        GoogleAnalytics().serviceInfo.logGoogleServiceInfo()
+
         //Database create tables
         _ = try?  ConfiguraitonFactory().getConfiguraitonFactory(oldVersion: UserDefaultsProperty<Int>(kUserDefaultDatabaseOldVersion).value, newVersion: DataBaseConstant.DATABASE_VERSION)?.execute()
         //Initial UI setup
@@ -57,6 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }else{
                 GlobalMethod.appdelegate().gotoNextVcForCoupon()
             }
+
+            //Update coupon already uses once status
+            KeychainWrapper.standard.set(true, forKey: kIsCouponAlreadyUsedOnce)
         }
         return true
     }

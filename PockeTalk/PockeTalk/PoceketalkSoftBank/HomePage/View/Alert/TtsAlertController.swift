@@ -99,7 +99,8 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     private var sttText = [String](repeating: "", count: 3)
     private var leftRightPadding: CGFloat = 150
     var multipartAudioPlayer: MultipartAudioPlayer?
-    
+    var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?
+    var analyticsScreenName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,12 +118,14 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         registerNotification()
         multipartAudioPlayer = MultipartAudioPlayer(controller: self, delegate: self)
         checkTTSValueAndPlay()
+        UserDefaultsProperty<Bool>(kHistoryTTS).value = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         defaultTextLabelCellHeight = ((placeholderContainerView.frame.size.height * 45) / 100)
         setupTTSTableViewProperty()
         setupTTSTableView()
+        setAnalyticsScreenName()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -286,6 +289,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func handleSingleTap(recognizer:UITapGestureRecognizer) {
+        tapCardLogEvent()
         //Capture tap gesture
         if let tap = recognizer.view as? UILabel {
             if tap == self.toTranslateLabel {
@@ -376,6 +380,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func menuTapAction(_ sender: UIButton) {
+        tapMenuLogEvent()
         self.stopTTS()
         self.stopAnimation()
         self.openContextMenu()
@@ -395,6 +400,9 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         vc.items = self.itemsToShowOnContextMenu
         vc.delegate = self
         vc.chatItemModel = self.chatItemModel
+        vc.fromScreenPurpose = self.fromScreenPurpose
+        vc.isFromHistoryTTS = isFromHistory
+
         let navController = UINavigationController.init(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         navController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -513,12 +521,26 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
         stopTTS()
         unregisterNotification()
         ttsResponsiveView.removeObserver()
+        UserDefaultsProperty<Bool>(kHistoryTTS).value = false
     }
     
     func stopTTS(){
         ttsResponsiveView.stopTTS()
         multipartAudioPlayer?.stop()
         stopAnimation()
+    }
+
+    private func setAnalyticsScreenName() {
+        if let fromScreen = fromScreenPurpose {
+            switch fromScreen {
+            case .HomeSpeechProcessing:
+                analyticsScreenName = analytics.mainResult
+            case .HistoryScrren:
+                analyticsScreenName = analytics.historyCard
+            default:
+                break
+            }
+        }
     }
     
     func shareData(chatItemModel: HistoryChatItemModel?){
@@ -536,6 +558,14 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
             let dataToSend = [sharedData]
             PrintUtility.printLog(tag: TAG, text: "sharedData \(sharedData)")
             let activityViewController = UIActivityViewController(activityItems: dataToSend, applicationActivities: nil)
+
+            activityViewController.completionWithItemsHandler = { [weak self] (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+                guard let `self` = self else {return}
+                if completed, let activityString = activityType?.rawValue{
+                    self.historyTranslateResultMenuShareLogEvent(activityString: activityString)
+                }
+            }
+
             activityViewController.popoverPresentationController?.sourceView = self.view
             self.present(activityViewController, animated: true, completion: nil)
         } else {
@@ -690,6 +720,7 @@ extension TtsAlertController : AlertReusableDelegate {
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose
+        controller.isFromHistoryTTS = true
         
         let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
         add(asChildViewController: controller, containerView: view, animation: transition)
@@ -828,7 +859,7 @@ extension TtsAlertController :AudioPlayerDelegate{
     }
 }
 
-//MARK: - UITableViewDe legate, UITableViewDataSource
+//MARK: - UITableViewDelegate, UITableViewDataSource
 extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -854,6 +885,7 @@ extension TtsAlertController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
+//MARK: - MultipartAudioPlayerProtocol Delegate
 extension TtsAlertController : MultipartAudioPlayerProtocol{
     func onSpeakStart() {
         self.isSpeaking = true
@@ -866,6 +898,32 @@ extension TtsAlertController : MultipartAudioPlayerProtocol{
     func onError() {
         self.isSpeaking = false
         self.stopAnimation()
+    }
+}
+
+//MARK: - Google analytics log events
+extension TtsAlertController {
+    private func tapCardLogEvent() {
+        if let screenName = self.analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonTapCard)
+        }
+    }
+
+    private func tapMenuLogEvent() {
+        if let screenName = self.analyticsScreenName {
+            let button = isFromHistory ? analytics.buttonHistoryMenu : analytics.buttonMenu
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: button)
+        }
+    }
+
+    private func historyTranslateResultMenuShareLogEvent(activityString: String) {
+        if let screenName = self.analyticsScreenName, screenName == analytics.historyCard {
+            analytics.translateResultMenuShare(screenName: analytics.historyCardMenuShare,
+                                               eventParamName: analytics.app,
+                                               sharedAppName: activityString)
+        }
     }
 }
 

@@ -38,4 +38,5 @@ extension Notification.Name {
     static let countryListBackNotification = Notification.Name("countryListBackNotification")
     static let sttInputError = Notification.Name("sttInputErrorNotification")
     static let onGetCouponExpireyNotification = Notification.Name("onGetCouponExpireyNotification")
+    static let inAppPurchaseRestoreInfoNotification = Notification.Name("inAppPurchaseRestoreInfoNotification")
 }

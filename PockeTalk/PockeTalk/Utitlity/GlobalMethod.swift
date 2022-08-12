@@ -389,14 +389,26 @@ class GlobalMethod {
         } else if sysLangCode == SystemLanguageCode.ptPT.rawValue {
             convertedLangCode = AlternativeSystemLanguageCode.pt.rawValue
         }
-
         return convertedLangCode
     }
-    
+
+    static func getSystemLanguageCodeForAnalytics(sysLangCode: String) -> String {
+        var convertedLangCode = sysLangCode
+
+        if sysLangCode == SystemLanguageCode.zhHans.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.zhCN.rawValue
+        } else if sysLangCode == SystemLanguageCode.zhHant.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.zhTW.rawValue
+        } else if sysLangCode == SystemLanguageCode.ptPT.rawValue {
+            convertedLangCode = AlternativeSystemLanguageCode.pt.rawValue
+        }
+        return convertedLangCode
+    }
+
     static func getCountryCodeFrom(_ countryListItem: CountryListItemElement?, and langCode: String) -> String{
         var countryCode = String()
         let countryEnName = countryListItem?.countryName.en ?? "en"
-        
+
         if langCode == SystemLanguageCode.ja.rawValue {
             countryCode = countryListItem?.countryName.ja ?? countryEnName
         } else if langCode == SystemLanguageCode.es.rawValue {

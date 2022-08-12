@@ -17,13 +17,13 @@ class InitialPermissionSettingsViewController: UIViewController {
     @IBOutlet weak var cameraIconImageView: UIImageView!
     @IBOutlet weak var notificationIconImageView: UIImageView!
     @IBOutlet weak var nextButton: UIButton!
-    
+
     func nextButtonUI() {
         nextButton.layer.cornerRadius = 10
         nextButton.layer.borderColor = UIColor.black.cgColor
         nextButton.layer.borderWidth = 1.0
     }
-    
+
     func initialUISetUp() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         nextButtonUI()
@@ -33,13 +33,13 @@ class InitialPermissionSettingsViewController: UIViewController {
         notificationLabel.text = "kInitialPermissionSettingsVCNotificationLabel".localiz()
         nextButton.setTitle("kNextButtonTitle".localiz(), for: .normal)
     }
-    
+
     func checkPermissions() {
         let semaphore = DispatchSemaphore(value: 0)
         let dispatchQueue = DispatchQueue.global(qos: .background)
-        
+
         dispatchQueue.async {
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { isPermissionOn in
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { (isPermissionOn, _) in
                 DispatchQueue.main.async {
                     if isPermissionOn == true {
                         self.micIconImageView.image = UIImage(named: "check-markIcon")
@@ -50,8 +50,8 @@ class InitialPermissionSettingsViewController: UIViewController {
                 semaphore.signal()
             }
             semaphore.wait()
-            
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { isPermissionOn in
+
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { (isPermissionOn, _) in
                 DispatchQueue.main.async {
                     if isPermissionOn == true {
                         self.cameraIconImageView.image = UIImage(named: "check-markIcon")
@@ -62,8 +62,8 @@ class InitialPermissionSettingsViewController: UIViewController {
                 semaphore.signal()
             }
             semaphore.wait()
-            
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { isPermissionOn in
+
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { (isPermissionOn, _) in
                 DispatchQueue.main.async {
                     if isPermissionOn == true {
                         self.notificationIconImageView.image = UIImage(named: "check-markIcon")

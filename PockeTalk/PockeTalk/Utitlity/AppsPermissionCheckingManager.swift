@@ -19,55 +19,54 @@ enum PermissionTypes {
 class AppsPermissionCheckingManager {
     static let shared = AppsPermissionCheckingManager()
     private init() { }
-        
-    func checkPermissionFor(permissionTypes: PermissionTypes, completion: @escaping (_ isPermissionOn: Bool) -> ()) {
+
+    func checkPermissionFor(permissionTypes: PermissionTypes, completion: @escaping (_ status: Bool, _ permissionGiven: Bool) -> ()) {
         if permissionTypes == .microphone {
             switch AVAudioSession.sharedInstance().recordPermission {
             case .granted:
                 //If user allow the permission
-                completion(true)
+                completion(true, true)
                 break
             case .denied:
                 //If user denied the permission
-                completion(false)
+                completion(false, true)
                 break
             case .undetermined:
                 //First time
                 AVAudioSession.sharedInstance().requestRecordPermission({ success in
                     if success {
-                        completion(true)
+                        completion(true, false)
                     } else {
-                        completion(false)
+                        completion(false, false)
                     }
                 })
                 break
             @unknown default:
                 fatalError()
             }
-            
         } else if permissionTypes == .camera {
             switch AVCaptureDevice.authorizationStatus(for: .video) {
             case .notDetermined:
                 //First time
                 AVCaptureDevice.requestAccess(for: .video) { success in
                     if success {
-                        completion(true)
+                        completion(true, false)
                     } else {
-                        completion(false)
+                        completion(false, false)
                     }
                 }
                 break
             case .restricted:
                 //If user turns it off from app settings
-                completion(false)
+                completion(false, true)
                 break
             case .denied:
                 //If user denied the permission
-                completion(false)
+                completion(false, true)
                 break
             case .authorized:
                 //If user allow the permission
-                completion(true)
+                completion(true, true)
                 break
             @unknown default:
                 fatalError()
@@ -78,27 +77,27 @@ class AppsPermissionCheckingManager {
                 switch permission.authorizationStatus  {
                 case .authorized:
                     //If user allow the permission
-                    completion(true)
+                    completion(true, true)
                 case .denied:
                     //If user denied the permission
-                    completion(false)
+                    completion(false, true)
                 case .notDetermined:
                     //First time
                     current.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
                         if granted {
-                            completion(true)
+                            completion(true, false)
                         } else {
-                            completion(false)
+                            completion(false, false)
                         }
                     }
                 case .provisional:
                     // @available(iOS 12.0, *)
                     // The application is authorized to post non-interruptive user notifications.
-                    completion(true)
+                    completion(true, true)
                 case .ephemeral:
                     // @available(iOS 14.0, *)
                     // The application is temporarily authorized to post notifications. Only available to app clips.
-                    completion(true)
+                    completion(true, true)
                 @unknown default:
                     PrintUtility.printLog(tag: "unknowDefault", text: "Unknow Status")
                 }

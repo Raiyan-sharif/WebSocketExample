@@ -82,6 +82,16 @@ class SystemLanguageViewController: BaseViewController {
         return 0
     }
 
+    private func systemLanguageChangeLogEvent() {
+        let currentSelectedLangCode = GlobalMethod.getSystemLanguageCodeForAnalytics(sysLangCode: currentSelectedLanguage)
+        let currentSelectedLang = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: currentSelectedLangCode)?.name ?? ""
+
+        let selectedLangCode = GlobalMethod.getSystemLanguageCodeForAnalytics(sysLangCode: selectedLanguage ?? "")
+        let selectedLang = LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: selectedLangCode)?.name ?? ""
+
+        buttonBackLogEvent(beforeSysLang: currentSelectedLang, afterSysLang: selectedLang)
+    }
+
     //MARK: - Initial setup
     private func setUpNavBarBackButton(navViewHeight: Int) -> UIButton {
         let okButton = UIButton(frame: CGRect(x: backButtonOffsetX, y: ((navViewHeight - backButtonHeight/2) - 2), width: backButtonWidth, height: backButtonHeight))
@@ -172,6 +182,7 @@ class SystemLanguageViewController: BaseViewController {
             //LanguageSelectionManager.shared.setLanguageAccordingToSystemLanguage()
             let isLanguageChanged:[String: Bool] = ["isLanguageChanged": true]
             NotificationCenter.default.post(name: .languageChangeFromSettingsNotification, object: nil, userInfo: isLanguageChanged)
+            systemLanguageChangeLogEvent()
         }
     }
     
@@ -237,3 +248,12 @@ extension SystemLanguageViewController: UITableViewDelegate{
     }
 }
 
+//MARK: - Google analytics log events
+extension SystemLanguageViewController {
+    private func buttonBackLogEvent(beforeSysLang: String, afterSysLang: String) {
+        analytics.settingSystemLanguage(screenName: analytics.settingSysLang,
+                                        button: analytics.buttonBack,
+                                        beforeSysLang: beforeSysLang,
+                                        afterSysLang: afterSysLang)
+    }
+}

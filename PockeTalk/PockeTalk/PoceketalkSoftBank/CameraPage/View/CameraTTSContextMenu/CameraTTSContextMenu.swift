@@ -8,6 +8,7 @@ import UIKit
 
 protocol CameraTTSContextMenuProtocol: AnyObject {
     func cameraTTSContextMenuSendMail()
+    func cameraTTSContextMenuCancel()
 }
 
 class CameraTTSContextMenu: UIView {
@@ -91,6 +92,7 @@ class CameraTTSContextMenu: UIView {
     }
 
     @IBAction func didTapOnCancelButton(_ sender: UIButton) {
+        self.delegate?.cameraTTSContextMenuCancel()
         dismissContextMenu()
     }
 

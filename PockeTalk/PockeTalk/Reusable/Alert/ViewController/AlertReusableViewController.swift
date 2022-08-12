@@ -32,6 +32,9 @@ class AlertReusableViewController: BaseViewController {
     weak var delegate : AlertReusableDelegate?
     let toastDisplayTime : Double = 2.0
     private var connectivity = Connectivity()
+    var fromScreenPurpose: SpeechProcessingScreenOpeningPurpose?
+    var analyticsScreenName: String?
+    var isFromHistoryTTS = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +50,7 @@ class AlertReusableViewController: BaseViewController {
         alertViewModel = AlertReusableViewModel()
         self.setUpUI()
         self.registerForNotification()
+        setAnalyticsScreenName()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,11 +95,13 @@ class AlertReusableViewController: BaseViewController {
         if(chatItemModel?.chatItem != nil){
             if chatItemModel!.chatItem?.chatIsLiked == IsLiked.like.rawValue{
                 // Favorite limit flag update
+                favoriteLogEvent(isLiked: true)
                 UserDefaultsProperty<Bool>("FAVORITE_LIMIT_FLAG_KEY").value = false
                 alertViewModel.swapLikeValue(chatItemModel!.chatItem!)
                 cell.imgView.image = UIImage(named:"icon_favorite_popup.png")
                 chatItemModel!.chatItem?.chatIsLiked = IsLiked.noLike.rawValue
             }else{
+                favoriteLogEvent(isLiked: false)
                 // Favorite limit check
                 var favoriteItemCount:Int = 0
                 do{
@@ -161,6 +167,23 @@ class AlertReusableViewController: BaseViewController {
             }
             // Edit heightOfTableViewConstraint's constant to update height of table view
             self.tableViewHeightConstraint.constant = heightOfTableView
+        }
+    }
+
+    private func setAnalyticsScreenName() {
+        if let fromScreen = fromScreenPurpose {
+            switch fromScreen {
+            case .HomeSpeechProcessing:
+                analyticsScreenName = analytics.mainResultMenu
+            case .HistoryScrren:
+                if isFromHistoryTTS {
+                    analyticsScreenName = analytics.historyCardMenu
+                } else {
+                    analyticsScreenName = analytics.historyLongTapMenu
+                }
+            default:
+                break
+            }
         }
     }
 
@@ -248,31 +271,100 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
         case .retranslation :
             //self.showToast(message: kTranslateIntoOtherLanguageUnderDevelopment, seconds: toastDisplayTime)
             /// ToDo in next version
+            retranslateLogEvent()
             self.dismiss(animated: true, completion: nil)
             self.retranslation()
             break
         case .reverse:
             //self.showToast(message: kReverseTranslationUnderDevelopment, seconds: toastDisplayTime)
             /// ToDo in next version
+            reverseTranslateLogEvent()
              self.dismiss(animated: false, completion: nil)
             self.reverseTranslation()
             break
         case .practice :
+            practicePronunciationLogEvent()
             self.dismiss(animated: true, completion: nil)
             showPracticeView()
             break
         case .sendMail :
+            shareLogEvent()
             PrintUtility.printLog(tag: "TAG", text: "shareJson sendmail button pressed")
             self.dismiss(animated: true, completion: nil)
             shareTranslation()
             break
         case .cancel :
+            cancelLogEvent()
             self.dismiss(animated: true, completion: nil)
         case .delete :
+            deleteLogEvent()
             self.dismiss(animated: true, completion: nil)
             deleteItemPressed()
             break
         }
-     
+    }
+}
+
+//MARK: - Google analytics log events
+extension AlertReusableViewController {
+    private func favoriteLogEvent(isLiked: Bool) {
+        if let screenName = analyticsScreenName {
+            analytics.addToFavorite(screenName: screenName,
+                                    buttonName: analytics.buttonFav,
+                                    isLiked: !isLiked)
+        }
+    }
+
+    private func retranslateLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonDestinationLang)
+        }
+    }
+
+    private func reverseTranslateLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonReverseTranslate)
+        }
+    }
+
+    private func practicePronunciationLogEvent() {
+        if let screenName = analyticsScreenName {
+            let desLanguageName = self.chatItemModel?.chatItem?.textTranslatedLanguage ?? ""
+            analytics.updateDestinationLanguage(screenName: screenName,
+                                                buttonName: analytics.buttonPractice,
+                                                desLanguageName: desLanguageName)
+        }
+    }
+
+    private func shareLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonShare)
+        }
+    }
+
+    private func cancelLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonCancel)
+        }
+    }
+
+    private func deleteLogEvent() {
+        if let screenName = analyticsScreenName {
+            if screenName == analytics.historyCardMenu {
+                let srcLangName = self.chatItemModel?.chatItem?.textNativeLanguage ?? ""
+                let desLangName = self.chatItemModel?.chatItem?.textTranslatedLanguage ?? ""
+
+                analytics.historyCardMenuDelete(screenName: screenName,
+                                                srcLanguageName: srcLangName,
+                                                desLanguageName: desLangName)
+            } else {
+                analytics.buttonTap(screenName: screenName,
+                                    buttonName: analytics.buttonDelete)
+            }
+        }
     }
 }

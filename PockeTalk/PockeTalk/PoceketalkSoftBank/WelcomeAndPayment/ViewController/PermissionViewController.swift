@@ -5,7 +5,7 @@
 
 import UIKit
 
-class PermissionViewController: UIViewController {
+class PermissionViewController: BaseViewController {
     @IBOutlet weak private var permissionTV: UITableView!
     @IBOutlet weak private var nextBtn: UIButton!
     private var row = [PermissionTVCellInfo]()
@@ -64,7 +64,14 @@ class PermissionViewController: UIViewController {
         let dispatchQueue = DispatchQueue.global(qos: .background)
 
         dispatchQueue.async {
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { isPermissionOn in
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .microphone) { (isPermissionOn, permissionGiven) in
+
+                //Log permission status depending on previous alert shown status
+                if !permissionGiven {
+                    self.permissionLogEvent(permissionType: .microphone,
+                                            permissionStatus: isPermissionOn)
+                }
+
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .microphonePermission, status: isPermissionOn)
                 }
@@ -72,7 +79,14 @@ class PermissionViewController: UIViewController {
             }
             semaphore.wait()
 
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { isPermissionOn in
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .camera) { (isPermissionOn, permissionGiven) in
+
+                //Log permission status depending on previous alert shown status
+                if !permissionGiven {
+                    self.permissionLogEvent(permissionType: .camera,
+                                            permissionStatus: isPermissionOn)
+                }
+
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .cameraPermission, status: isPermissionOn)
                 }
@@ -80,7 +94,13 @@ class PermissionViewController: UIViewController {
             }
             semaphore.wait()
 
-            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { isPermissionOn in
+            AppsPermissionCheckingManager.shared.checkPermissionFor(permissionTypes: .notification) { (isPermissionOn, permissionGiven) in
+                //Todo have to cinfirm notification permission
+                if !permissionGiven {
+//                    self.permissionLogEvent(permissionType: .notification,
+//                                            permissionStatus: isPermissionOn)
+                }
+
                 DispatchQueue.main.async {
                     self.setGrantPermissionStatusAndReloadTV(for: .notificationPermission, status: isPermissionOn)
                 }
@@ -137,11 +157,17 @@ class PermissionViewController: UIViewController {
     //MARK: - IBActions
     @IBAction private func nextButtonTap(_ sender: UIButton) {
         if isAllPermissionShown {
-            if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
-                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
-                self.navigationController?.view.layer.add(transition, forKey: nil)
-                self.navigationController?.pushViewController(viewController, animated: false)
-            }
+            nextButtonLogEvent()
+            goToWelcomeVC()
+        }
+    }
+
+    //MARK: - View Transactions
+    private func goToWelcomeVC() {
+        if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.pushViewController(viewController, animated: false)
         }
     }
 }
@@ -179,5 +205,28 @@ extension PermissionViewController: UITableViewDelegate {
         case .allowAccess, .microphonePermission, .cameraPermission, .notificationPermission:
             return rowType.height
         }
+    }
+}
+
+//MARK: - Google analytics log events
+extension PermissionViewController {
+    private func permissionLogEvent(permissionType: PermissionTypes, permissionStatus: Bool) {
+        switch permissionType {
+        case .microphone:
+            analytics.permission(screenName: self.analytics.firstMicPermission,
+                                 permissionStatus: permissionStatus)
+        case .camera:
+            analytics.permission(screenName: self.analytics.firstCamPermission,
+                                 permissionStatus: permissionStatus)
+        case .notification:
+            return
+        }
+    }
+
+    private func nextButtonLogEvent() {
+        analytics.permissionConfirm(screenName: analytics.firstPermissionConfirm,
+                                    buttonName: analytics.buttonNext,
+                                    micPermissionStatus: row[1].isPermissionGranted,
+                                    camPermissionStatus: row[2].isPermissionGranted)
     }
 }
