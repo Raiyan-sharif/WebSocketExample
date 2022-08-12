@@ -203,3 +203,5 @@ kerana anda mempunyai perjanjian langganan.";
 "KFreeTrialErrorMessage" = "Ralat pengesahan kod kupon";
 "kFreeTrialExpireMessage" = "Tempoh percubaan percuma anda sudah tamat.\nUntuk terus menggunakan aplikasi, pilih salah satu daripada pelan langganan berikut.";
 
+//Custom Alert
+"copy" = "Salin";

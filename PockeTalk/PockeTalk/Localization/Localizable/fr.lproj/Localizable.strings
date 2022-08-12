@@ -206,3 +206,5 @@
 "KFreeTrialErrorMessage" = "Erreur d'authentification pour le code de coupon";
 "kFreeTrialExpireMessage" = "La période d'essai gratuit est terminée.\nPour continuer à utiliser l'application, choisissez un des plans d'abonnement suivants.";
 
+//Custom Alert
+"copy" = "Copie";

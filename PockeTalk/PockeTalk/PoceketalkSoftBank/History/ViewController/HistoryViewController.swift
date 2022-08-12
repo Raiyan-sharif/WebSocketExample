@@ -599,6 +599,14 @@ extension HistoryViewController : AlertReusableDelegate {
 
     }
 
+    func onCopyPressed(chatItemModel: HistoryChatItemModel?) {
+        guard let chatItem = chatItemModel else {
+            return
+        }
+        UIPasteboard.general.string = ""
+        UIPasteboard.general.string = GlobalMethod.getClipBoardTextOfVoiceTranslation(chatItemModel: chatItem)
+    }
+
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
         self.collectionView.performBatchUpdates{

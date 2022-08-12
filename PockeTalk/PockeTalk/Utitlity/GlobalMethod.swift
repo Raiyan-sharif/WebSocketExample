@@ -640,6 +640,44 @@ class GlobalMethod {
             }
         }
     }
+
+
+    /// Copy to clipboard method for copying formatted voice translation to clipboard
+    /// The newline between the chatitems have been intentianally left out
+    /// Please DO NOT REMOVE THE NEW LINE from the return string.
+    /// Using # (hashtag) enables us to escape special characters in the string. This prevents from text breaking up in some langauges. i.e. Russian
+    /// [Reference on how to escape special character in strings](https://www.hackingwithswift.com/articles/162/how-to-use-raw-strings-in-swift)
+    /// - Parameter chatItemModel: contains native (text from voice input) and translated text
+    /// - Returns: formatted string ready to be copied to clipboard
+    static func getClipBoardTextOfVoiceTranslation(chatItemModel: HistoryChatItemModel?) -> String{
+        return #"""
+        \#(chatItemModel?.chatItem?.textTranslated?.replaceAllNewLineAndTabsWithSpace().trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+
+        \#(chatItemModel?.chatItem?.textNative?.replaceAllNewLineAndTabsWithSpace().trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+        """#
+    }
+
+
+    /// Copy to clipboard method for copying formatted camera translation result to clipboard
+    /// The newline between the targetLangItem and nativeText have been intentianally left out
+    /// Please DO NOT REMOVE THE NEW LINE from the return string.
+    /// Using # (hashtag) enables us to escape special characters in the string. This prevents from text breaking up in some langauges. i.e. Russian
+    /// [Reference on how to escape special character in strings](https://www.hackingwithswift.com/articles/162/how-to-use-raw-strings-in-swift)
+    /// - Parameters:
+    ///   - targetText: translated text
+    ///   - targetLangItem: target langauge object for translation (to langauge)
+    ///   - nativeText: scanned text from image
+    ///   - nativeLangItem: detected language object from provided image (from language)
+    /// - Returns: formatted string ready to be copied to clipboard
+    static func getClipBoardTextOfCameraTranslation(_ targetText: String,_ targetLanguageItem: LanguageItem?,_ nativeText: String, _ nativeLanguageItem: LanguageItem?) -> String{
+        return #"""
+        \#(targetText.replaceAllNewLineAndTabsWithSpace().trimmingCharacters(in: .whitespacesAndNewlines))
+        \#(targetLanguageItem?.sysLangName ?? "")(\#(targetLanguageItem?.name ?? ""))
+
+        \#(nativeText.replaceAllNewLineAndTabsWithSpace().trimmingCharacters(in: .whitespacesAndNewlines))
+        \#(nativeLanguageItem?.sysLangName ?? "")(\#(nativeLanguageItem?.name ?? ""))
+        """#
+    }
 }
 
 class GlobalAlternative{
@@ -682,4 +720,20 @@ class GlobalAlternative{
            viewController?.present(controller, animated: true, completion: nil)
        }
    }
+}
+
+extension String {
+
+    /// Replace all tabs and line breaks in between and around text with space
+    /// [POSIX Bracket Expression Reference](https://www.regular-expressions.info/posixbrackets.html)
+    /// - Parameter text: input text
+    /// - Returns: tabs and line break removed output text
+    func replaceAllNewLineAndTabsWithSpace() -> String {
+        return self.replacingOccurrences(
+            of: "[\t\r\n]",
+            with: " ",
+            options: .regularExpression,
+            range: nil
+        )
+    }
 }

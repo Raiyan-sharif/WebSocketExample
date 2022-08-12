@@ -202,3 +202,5 @@ porque tiene un acuerdo de suscripción.";
 "KFreeTrialErrorMessage" = "Error de autenticación del código de cupón";
 "kFreeTrialExpireMessage" = "La duración de su prueba gratuita ha finalizado.\nPara continuar utilizando la app, elija uno de los siguientes planes de suscripción.";
 
+//Custom Alert
+"copy" = "Copiar";

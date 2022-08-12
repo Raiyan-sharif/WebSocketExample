@@ -8,7 +8,10 @@ import UIKit
 
 protocol CameraTTSContextMenuProtocol: AnyObject {
     func cameraTTSContextMenuSendMail()
+
     func cameraTTSContextMenuCancel()
+
+    func cameraTTSContextMenuCopyText()
 }
 
 class CameraTTSContextMenu: UIView {
@@ -18,6 +21,7 @@ class CameraTTSContextMenu: UIView {
     @IBOutlet weak var placeHolderView: UIView!
 
     @IBOutlet weak var sendEmailButton: UIButton!
+    @IBOutlet weak var copyButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
 
     @IBOutlet weak var separatorLabel: UILabel!
@@ -60,6 +64,7 @@ class CameraTTSContextMenu: UIView {
         self.placeHolderView.backgroundColor = .white
         self.sendEmailButton.backgroundColor = .white
         self.cancelButton.backgroundColor = .white
+        self.copyButton.backgroundColor = .white
         if #available(iOS 13.0, *) {
             self.separatorLabel.backgroundColor = .separator
         } else {
@@ -74,11 +79,13 @@ class CameraTTSContextMenu: UIView {
     //Set UI font and Update if needed
     func setUpFontAttribute() {
         self.sendEmailButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        self.copyButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
     }
 
     func setUpDataInput() {
         self.sendEmailButton.setTitle("share".localiz(), for: .normal)
+        self.copyButton.setTitle("copy".localiz(), for: .normal)
         self.cancelButton.setTitle("cancel".localiz(), for: .normal)
     }
 
@@ -88,6 +95,12 @@ class CameraTTSContextMenu: UIView {
 
     @IBAction func didTapOnSendMailButton(_ sender: UIButton) {
         self.delegate?.cameraTTSContextMenuSendMail()
+        dismissContextMenu()
+    }
+
+    @IBAction func copyButtonAction(_ sender: UIButton) {
+        PrintUtility.printLog(tag: "CameraTTSContextMenu", text: "copyButtonAction() copy button is pressed")
+        self.delegate?.cameraTTSContextMenuCopyText()
         dismissContextMenu()
     }
 

@@ -208,3 +208,5 @@
 "KFreeTrialErrorMessage" = "Coupon authentication error";
 "kFreeTrialExpireMessage" = "Your free trial period is over.\nTo continue using the app, choose one of the following subscription plans.";
 
+//Custom Alert
+"copy" = "Copy";

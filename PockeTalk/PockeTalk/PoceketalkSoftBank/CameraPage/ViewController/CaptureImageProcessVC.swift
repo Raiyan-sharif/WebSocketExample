@@ -41,6 +41,8 @@ class CaptureImageProcessVC: BaseViewController {
     var targetLang : String = ""
     var nativeText: String = ""
     var targetText: String = ""
+    var nativeLanguageItem:LanguageItem?
+    var targetLanguageItem:LanguageItem?
     var playNative = true
     var isClickable = true
     var isLoading = Bool()
@@ -634,6 +636,8 @@ extension CaptureImageProcessVC: ITTServerViewModelDelegates {
         self.nativeLang = nativeLanguage
         self.targetText = translateText
         self.targetLang = translateLanguage
+        self.nativeLanguageItem = nativeLangItem
+        self.targetLanguageItem = targetLangItem
         /// Just showing the TTS dialog for testing.
         let tapForNativeTTS = UITapGestureRecognizer(target: self, action: #selector(self.actionTappedOnNativeTTSText(sender:)))
         cameraTTSDiaolog.fromLanguageLabel.isUserInteractionEnabled = true
@@ -931,6 +935,7 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
         stopTTS()
         self.view.addSubview(cameraTTSContextMenu)
     }
+
     func shareTranslation(){
         let sharedData = "Translated language: \(gNativeLanguage)\n" + "\(toLanguage) \n\n" +
         "Original language: \(fromLanguage)\n" + "\(gTranslateLanguage)"
@@ -950,6 +955,14 @@ extension CaptureImageProcessVC: CameraTTSDialogProtocol {
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
     }
+
+    func copyTextToClipBoard() {
+        guard let target = targetLanguageItem, let native = nativeLanguageItem else {
+            return
+        }
+        UIPasteboard.general.string = ""
+        UIPasteboard.general.string = GlobalMethod.getClipBoardTextOfCameraTranslation(targetText, target, nativeText, native)
+    }
 }
 
 //MARK: - CameraTTSContextMenuProtocol
@@ -962,8 +975,14 @@ extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
         shareTranslation()
     }
 
+
     func cameraTTSContextMenuCancel() {
         buttonCancelLogEvent()
+    }
+
+    func cameraTTSContextMenuCopyText() {
+        PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "Copy text to clipboard")
+        copyTextToClipBoard()
     }
 }
 

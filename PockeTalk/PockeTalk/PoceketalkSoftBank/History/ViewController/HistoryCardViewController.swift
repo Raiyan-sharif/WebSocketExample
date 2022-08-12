@@ -252,6 +252,7 @@ class HistoryCardViewController: BaseViewController {
         if withPronounciation{
             self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
         }
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "copy".localiz(), imageName: "", menuType: .copy))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
@@ -499,6 +500,14 @@ extension HistoryCardViewController : RetranslationDelegate{
 //MARK:- AlertReusableDelegate
 extension HistoryCardViewController : AlertReusableDelegate{
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {}
+
+    func onCopyPressed(chatItemModel: HistoryChatItemModel?) {
+        guard let chatItem = chatItemModel else {
+            return
+        }
+        UIPasteboard.general.string = ""
+        UIPasteboard.general.string = GlobalMethod.getClipBoardTextOfVoiceTranslation(chatItemModel: chatItem)
+    }
     
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
         self.historyViewModel.deleteHistory(chatItemModel!.idxPath!.item)
