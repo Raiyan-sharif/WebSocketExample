@@ -203,7 +203,7 @@ class PurchasePlanViewController: BaseViewController {
     private func goToPermissionVC() {
         UserDefaults.standard.set(true, forKey: kUserPassedSubscription)
         if let viewController = UIStoryboard.init(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: PermissionViewController.self)) as? PermissionViewController {
-            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.navigationController?.view.layer.add(transition, forKey: nil)
             self.navigationController?.pushViewController(viewController, animated: false)
         }

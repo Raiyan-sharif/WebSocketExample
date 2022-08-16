@@ -164,10 +164,12 @@ class PermissionViewController: BaseViewController {
 
     //MARK: - View Transactions
     private func goToWelcomeVC() {
+
         if let viewController = UIStoryboard(name: KStoryboardInitialFlow, bundle: nil).instantiateViewController(withIdentifier: String(describing: WelcomesViewController.self)) as? WelcomesViewController {
-            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.navigationController?.view.layer.add(transition, forKey: nil)
             self.navigationController?.pushViewController(viewController, animated: false)
+
         }
     }
 }

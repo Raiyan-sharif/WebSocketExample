@@ -42,7 +42,7 @@ class WelcomesViewController: BaseViewController {
     //MARK: - View Transactions
     private func goToHomeVC() {
         if let viewController = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: HomeViewController.self)) as? HomeViewController {
-            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+            let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
             self.navigationController?.view.layer.add(transition, forKey: nil)
             self.navigationController?.setViewControllers([viewController], animated: false)
         }

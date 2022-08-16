@@ -64,7 +64,7 @@ class AppFirstLaunchViewController: BaseViewController {
         DispatchQueue.main.async {
             PrintUtility.printLog(tag: "initalFlow", text: "Tap on accept and start Btn")
             if let viewController = UIStoryboard(name: KBoarding, bundle: nil).instantiateViewController(withIdentifier: String(describing: WalkThroughViewController.self)) as? WalkThroughViewController{
-                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromRight)
+                let transition = GlobalMethod.addMoveInTransitionAnimatation(duration: kScreenTransitionTime, animationStyle: CATransitionSubtype.fromLeft)
                 //viewController.purchasePlanVM = self.purchasePlanVM
                 self.navigationController?.view.layer.add(transition, forKey: nil)
                 self.navigationController?.pushViewController(viewController, animated: false)
