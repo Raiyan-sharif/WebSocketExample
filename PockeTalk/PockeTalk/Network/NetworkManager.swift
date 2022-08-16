@@ -523,6 +523,23 @@ struct NetworkManager:Network {
             }
         }
     }
+
+    func getLocalNotificationURL(completion: @escaping (LocalNotificationURLModel?, Error?) -> Void) {
+        provider.request(.localNotificationURL) { result in
+            switch result  {
+            case let .success(response):
+                do {
+                    let successResponse = try response.filterSuccessfulStatusCodes()
+                    let result = try JSONDecoder().decode(LocalNotificationURLModel.self, from: successResponse.data)
+                    completion(result, nil)
+                } catch let err {
+                    completion(nil, err)
+                }
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
 }
 
 struct ResultModel : Codable {
@@ -546,7 +563,6 @@ struct ResultModel : Codable {
 }
 
 struct TTSModel : Codable {
-
     let tts : String?
     let codec : String?
     let tempo : String?

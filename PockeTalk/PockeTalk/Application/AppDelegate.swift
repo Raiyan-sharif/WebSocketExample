@@ -132,13 +132,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
                     IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
                 }
-            }else{
+            } else {
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "==== App in Free Trial ====")
             }
         }
-
-        //Set local notification when user have coupon & didn't set any local notification yet
-        checkAndResetLocalNotification()
+        LocalNotificationManager.sharedInstance.callNotificationFetchUrl()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -172,8 +170,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
                   return false
               }
-
-
 
         if let couponCode = params.first(where: { $0.name == couponCodeParamName } )?.value {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon Code = \(couponCode)")

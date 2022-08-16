@@ -564,7 +564,7 @@ extension IAPManager {
                         self.onBuyProductHandler?(.failure(err))
                     } else {
                         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification when purchase or restore")
-                        LocalNotificationManager.sharedInstance.removeScheduledNotification()
+                        LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
                         self.onBuyProductHandler?(.success(isPurchaseSchemeActive))
                     }
                 }

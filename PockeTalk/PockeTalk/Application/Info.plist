@@ -6,6 +6,8 @@
 	<string>$(AUDIO_STREAM_BASE_URL)</string>
 	<key>BaseUrl</key>
 	<string>$(BASE_URL)</string>
+	<key>NotificationBaseUrl</key>
+	<string>$(NOTIFICATION_BASE_URL)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_US</string>
 	<key>CFBundleDisplayName</key>
