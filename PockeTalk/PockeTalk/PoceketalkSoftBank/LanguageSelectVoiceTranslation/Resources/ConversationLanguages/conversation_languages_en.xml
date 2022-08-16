@@ -7,7 +7,7 @@
 <item name="اللغة العربية" code="ar" en="Arabic" es="Arábica" fr="Arabe" ja="アラビア語" ko="아랍어" zh="阿拉伯语" it="Arabo" de="Arabisch" />
 <item name="Հայերեն" code="hy" en="Armenian" es="Armenio" fr="Arménien" ja="アルメニア語" ko="아르메니아어" zh="亚美尼亚语" it="Armeno" de="Armenisch" />
 <item name="Azərbaycanca" code="az" en="Azeerbaijani" es="Azerbaiyano" fr="Azerbaïdjanais" ja="アゼルバイジャン語" ko="아제르바이잔어" zh="阿塞拜疆语" it="Azero" de="Aserbaidschanisch" />
-<item name="Euskara" code="eu" en="Basque" es="Vasco" fr="Bbasque" ja="バスク語" ko="바스크어" zh="巴斯克语" it="Basco" de="Baskisch" />
+<item name="Euskara" code="eu" en="Basque" es="Vasco" fr="Basque" ja="バスク語" ko="바스크어" zh="巴斯克语" it="Basco" de="Baskisch" />
 <item name="Беларуская мова" code="be" en="Belarusian" es="Bielorruso" fr="Biélorusse" ja="ベラルーシ語" ko="벨라루스어" zh="白俄罗斯语" it="Bielorusso" de="Weißrussisch" />
 <item name="বাংলা" code="bn" en="Bengali" es="Bengalí" fr="Bengali" ja="ベンガル語" ko="벵골어" zh="孟加拉语" it="Bengali" de="Bengalisch" />
 <item name="Bosanski" code="bs" en="Bosnian" es="Bosnio" fr="Bosniaque" ja="ボスニア語" ko="보스니아어" zh="波斯尼亚语" it="Bosniaco" de="Bosnisch" />
