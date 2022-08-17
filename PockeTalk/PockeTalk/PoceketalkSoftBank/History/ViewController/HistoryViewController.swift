@@ -242,11 +242,8 @@ class HistoryViewController: BaseViewController {
         guard let window = UIApplication.shared.keyWindow else {return nil}
         PrintUtility.printLog(tag: "SafeArea", text: " \(window.frame.width)")
         let cameraButton = UIButton(frame: CGRect(x: window.frame.width - 40, y: window.safeAreaInsets.top + 5, width: 30, height: 30))
-        if #available(iOS 13.0, *) {
-            cameraButton.setImage(UIImage(systemName: "camera.fill"), for: UIControl.State.normal)
-        } else {
-            // Fallback on earlier versions
-        }
+        cameraButton.setImage(UIImage(systemName: "camera.fill"), for: UIControl.State.normal)
+        
         cameraButton.addTarget(self, action: #selector(actionCamera), for: .touchUpInside)
         return cameraButton
     }
