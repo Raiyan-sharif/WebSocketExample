@@ -712,6 +712,7 @@
                             <constraint firstItem="s4c-gQ-DAh" firstAttribute="leading" secondItem="8IZ-xB-7Vz" secondAttribute="leading" constant="20" id="acB-dU-LTk"/>
                             <constraint firstItem="8IZ-xB-7Vz" firstAttribute="trailing" secondItem="s4c-gQ-DAh" secondAttribute="trailing" constant="20" id="cGe-4U-bbY"/>
                             <constraint firstItem="8IZ-xB-7Vz" firstAttribute="bottom" secondItem="mlc-TZ-GgA" secondAttribute="bottom" id="fX4-87-D52"/>
+                            <constraint firstItem="8IZ-xB-7Vz" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="s4c-gQ-DAh" secondAttribute="bottom" constant="30" id="qTP-ly-JXg"/>
                             <constraint firstItem="Q1b-U2-IaS" firstAttribute="leading" secondItem="8IZ-xB-7Vz" secondAttribute="leading" constant="10" id="tJ4-hm-fdf"/>
                             <constraint firstItem="s4c-gQ-DAh" firstAttribute="top" secondItem="GBr-oO-X6J" secondAttribute="bottom" constant="-25" id="xjN-p7-Kty"/>
                         </constraints>
@@ -723,6 +724,7 @@
                         <outlet property="bottomViewBottomLayoutConstrain" destination="fX4-87-D52" id="NFG-YG-vyV"/>
                         <outlet property="changeTranslationButton" destination="its-cr-Uvr" id="Zx5-PE-cxb"/>
                         <outlet property="containerView" destination="s4c-gQ-DAh" id="6eZ-96-1SS"/>
+                        <outlet property="containerViewBottomConstraint" destination="qTP-ly-JXg" id="kZP-w4-hFj"/>
                         <outlet property="containerViewLeadingConstraint" destination="9gP-eW-qAU" id="gQv-qP-hya"/>
                         <outlet property="containerViewTopConstraint" destination="6fE-dE-4fM" id="XSu-A5-UVf"/>
                         <outlet property="containerViewtrailingConstraint" destination="cGe-4U-bbY" id="Rib-bo-ESN"/>
@@ -1400,6 +1402,11 @@
             <point key="canvasLocation" x="-3233.3333333333335" y="20.380434782608699"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="azA-jg-J50">
+            <size key="intrinsicContentSize" width="29" height="29"/>
+        </designable>
+    </designables>
     <resources>
         <image name="LaunchScreen" width="1284" height="2778"/>
         <image name="TopHistoryBtn" width="264" height="30"/>
