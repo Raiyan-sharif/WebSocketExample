@@ -33,4 +33,9 @@ extension UIButton {
         self.contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
 
     }
+
+    func setPaddingByWordWrappingButtons(left: CGFloat, right: CGFloat, bottom: CGFloat, top: CGFloat) {
+        self.titleLabel?.lineBreakMode = .byWordWrapping
+        self.contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    }
 }

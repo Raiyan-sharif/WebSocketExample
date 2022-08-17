@@ -120,13 +120,14 @@ extension AppDelegate{
         
         if let langCode = Languages(rawValue: (SystemLanguageCode(rawValue: deviceLanguageCodeWithoutPunctuations) ?? .en) .rawValue) {
             var languageCode = langCode
-
-            // If device system language is japanese then first launch and reset both shows japanese otherwise english
-            if deviceLanguageCode.contains(SystemLanguageCode.ja.rawValue) {
-                languageCode = Languages.ja
-            } else {
-                languageCode = Languages.en
+            if deviceLanguageCode.contains(SystemLanguageCode.zhHans.rawValue) {
+                languageCode = Languages.zhHans
+            } else if deviceLanguageCode.contains(SystemLanguageCode.zhHant.rawValue) {
+                languageCode = Languages.zhHant
+            } else if deviceLanguageCode == SystemLanguageCode.ptPT.rawValue {
+                languageCode = Languages.ptPT
             }
+
             LanguageManager.shared.setLanguage(language: languageCode)
         }
     }
