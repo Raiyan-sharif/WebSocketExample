@@ -17,3 +17,8 @@ struct LocalNotificationURLModel: Codable {
     }
 }
 
+enum NotificationStatus: String {
+    case Sevendaysbefore = "7 days before coupon expires"
+    case Onedaybefore = "1 day after coupon expires"
+    case Sevendaysafter = "7 days after coupon expires"
+}

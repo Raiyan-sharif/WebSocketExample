@@ -15,7 +15,6 @@ class LocalNotificationManager: NSObject {
 
     var contentStrings = ["kSevenDayBeforeExpiration".localiz(), "kCouponAfterExpiration".localiz(), "kCouponAfterExpiration".localiz()]
     private var appName = "kPockeTalk".localiz()
-    private let url = "URL"
     private let numberOfNotification = 3
     private let couponScheduleDay = [-7, 1, 7]
 
@@ -62,18 +61,18 @@ class LocalNotificationManager: NSObject {
                     if i == 0 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[0]) {
                             date = notificationDate
-                            content.userInfo = [self.url: UserDefaults.standard.string(forKey: KSevenDaysBeforeURL) ?? ""]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysBeforeURL) ?? "",Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Sevendaysbefore.rawValue]
                         }
                     } else if i == 1 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[1]) {
                             date = notificationDate
-                            content.userInfo = [self.url: UserDefaults.standard.string(forKey: KOneDayAfterURL) ?? ""]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KOneDayAfterURL) ?? "", Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Onedaybefore.rawValue]
                         }
                     }else if i == 2 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[2]) {
                             UserDefaults.standard.set("\(notificationDate)", forKey: KThirdLocalNotificationDate)
                             date = notificationDate
-                            content.userInfo = [self.url: UserDefaults.standard.string(forKey: KSevenDaysAfterURL) ?? ""]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysAfterURL) ?? "", Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Sevendaysafter.rawValue]
                         }
                     }
 

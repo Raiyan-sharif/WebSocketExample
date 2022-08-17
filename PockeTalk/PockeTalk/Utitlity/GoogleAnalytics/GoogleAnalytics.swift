@@ -14,6 +14,7 @@ enum GoogleAnalyticEvent: String {
     case voiceInput = "voice_input"
     case translate = "translate"
     case takePicture = "take_pic"
+    case notification = "notification"
 }
 
 struct GoogleAnalytics {
@@ -199,6 +200,9 @@ struct GoogleAnalytics {
     let translate = "translate"
     let buttonCopy = "copy"
     let feedback = "feedback"
+
+    private let notification_name = "notification_name"
+    private let notificationStatus = "status"
 
     enum PronunciationPlayBackSpeed: String {
         case normal = "Normal"
@@ -432,5 +436,13 @@ struct GoogleAnalytics {
                         selectMenu: eventParamName,
                         sharedApp: sharedAppName]
         logEvent(event: .select, parameters: parameter)
+    }
+
+    //MARK: - Notification Result logEvent functions
+    func notificationResult(screenName: String = "", notificationName: String, status: String) {
+        let parameter = [mainScreenName: screenName,
+                        notification_name: notificationName,
+                        notificationStatus: status]
+        logEvent(event: .notification, parameters: parameter)
     }
 }

@@ -29,7 +29,7 @@ enum SpeechProcessingScreenOpeningPurpose{
 }
 
 class BaseViewController: UIViewController {
-    let analytics = GoogleAnalytics()
+    let analytics = GlobalMethod.appdelegate().analytics
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.changeFontSize()

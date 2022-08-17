@@ -257,14 +257,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> didReceive()[+]")
-
-        if let urlString = response.notification.request.content.userInfo["URL"] {
+        let userInfo = response.notification.request.content.userInfo
+        if let urlString = userInfo[Knotification_Url] {
             if let expiryDate = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
                 UserDefaults.standard.set("\(urlString)/?coupon_timelimit=\(expiryDate)", forKey: kNotificationURL)
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "kNotificationURL key saved. URL: \(urlString)/?coupon_timelimit=\(expiryDate)")
             }
             let id = response.notification.request.identifier
             UserDefaults.standard.set("\(id)", forKey: "NotificationID")
+        }
+        //  Notification data send to Google analytics
+        if let notificationStatus = userInfo[Knotification_Status] as? String, let notificationName = userInfo[Knotification_Name] as? String{
+            analytics.notificationResult(notificationName: notificationName, status: notificationStatus)
         }
 
         CustomLocalNotification.sharedInstance.removeView()

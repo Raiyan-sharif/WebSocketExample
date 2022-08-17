@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let TAG = "\(AppDelegate.self)"
     var window: UIWindow?
     private var connectivity = Connectivity()
+    var analytics = GoogleAnalytics()
     //var isAppRelaunch = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
