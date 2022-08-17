@@ -27,6 +27,8 @@ class WelcomesViewController: BaseViewController {
     }
 
     private func setupButtonProperty() {
+        nextBtn.titleLabel?.textAlignment = .center
+        nextBtn.setPaddingByWordWrappingButtons(left: 10, right: 10, bottom: 0, top: 0)
         nextBtn.setButtonAttributes(
             cornerRadius: InitialFlowHelper().nextButtonCornerRadius,
             title: "kStartPocketalkApp".localiz(),

@@ -34,7 +34,7 @@ class AppFirstLaunchViewController: BaseViewController {
         termAndConditionButton.backgroundColor = UIColor._royalBlueColor()
         termAndConditionButton.layer.cornerRadius = InitialFlowHelper().nextButtonCornerRadius
         termAndConditionButton.titleLabel?.textAlignment = .center
-        termAndConditionButton.getPadding(left: 10, right: 10, bottom: 0, top: 0)
+        termAndConditionButton.setPaddingByWordWrappingButtons(left: 10, right: 10, bottom: 0, top: 0)
 
         acceptAndStartButton.setAttributedTitle(InitialFlowHelper().getAcceptAndStartBtnAttributedString(), for: .normal)
         acceptAndStartButton.titleLabel?.textAlignment = .center

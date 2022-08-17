@@ -72,7 +72,8 @@ class CameraLanguageSelectionViewModel:BaseModel{
                 return item
             }
         }
-        return nil
+        PrintUtility.printLog(tag: TAG,text: "langcode \(langCode) doesn't exit in language list.")
+        return LanguageSelectionManager.shared.getLanguageInfoByCode(langCode: langCode)
     }
 
 //    public var isArrowUp: Bool? {
@@ -183,7 +184,7 @@ class CameraLanguageSelectionViewModel:BaseModel{
     func setDefaultLanguage(){
         let langList = getFromLanguageLanguageList()
         CameraLanguageSelectionViewModel.shared.fromLanguage = langList[0].code
-        CameraLanguageSelectionViewModel.shared.targetLanguage =  "en"
+        CameraLanguageSelectionViewModel.shared.targetLanguage =  getTargetLanguageCode()
         let fromLangItem = getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.fromLanguage, languageList: langList)
         let targetLangItem = getLanguageInfoByCode(langCode: CameraLanguageSelectionViewModel.shared.targetLanguage, languageList: langList)
 
@@ -191,6 +192,11 @@ class CameraLanguageSelectionViewModel:BaseModel{
         insertIntoDb(entity: LanguageSelectionEntity(id: 0, textLanguageCode: targetLangItem?.code, cameraOrVoice: LanguageType.camera.rawValue))
     }
 
+    private func getTargetLanguageCode() -> String{
+        let sysLangCode = LanguageManager.shared.currentLanguage.rawValue
+        let convertedSystemLangCode = GlobalMethod.getAlternativeSystemLanguageCodeForCamera(of: sysLangCode)
+        return convertedSystemLangCode
+    }
 
     func findLanugageCodeAndSelect(_ text: String, screen: SpeechProcessingScreenOpeningPurpose) {
         PrintUtility.printLog(tag: TAG, text: "delegate SpeechProcessingVCDelegates called text = \(text)")
