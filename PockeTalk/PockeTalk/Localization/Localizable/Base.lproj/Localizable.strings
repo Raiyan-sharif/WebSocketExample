@@ -194,3 +194,5 @@
 // License token failure alert
 "kUnknownError" = "Server Error.\nTry again";
 
+//Custom Alert
+"copy" = "Copy";

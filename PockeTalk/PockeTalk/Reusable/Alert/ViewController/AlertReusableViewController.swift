@@ -11,6 +11,10 @@ protocol AlertReusableDelegate: AnyObject {
     func pronunciationPracticeTap (chatItemModel: HistoryChatItemModel?)
     func onDeleteItem(chatItemModel: HistoryChatItemModel?)
     func onSharePressed(chatItemModel: HistoryChatItemModel?)
+
+    /// Copies text to clipboard
+    /// - Parameter chatItemModel: contains native and translated text
+    func onCopyPressed(chatItemModel: HistoryChatItemModel?)
 }
 
 class AlertReusableViewController: BaseViewController {
@@ -145,6 +149,11 @@ class AlertReusableViewController: BaseViewController {
     func shareTranslation () {
         PrintUtility.printLog(tag: "TAG", text: "shareJson shareTranslation delegate calling")
         self.delegate?.onSharePressed(chatItemModel: self.chatItemModel)
+    }
+
+    func copyButtonAction() {
+        PrintUtility.printLog(tag: "AlertReusableDelegate", text: "copyButtonAction() copy button is pressed")
+        self.delegate?.onCopyPressed(chatItemModel: self.chatItemModel)
     }
 
     func reverseTranslation () {
@@ -292,6 +301,10 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             PrintUtility.printLog(tag: "TAG", text: "shareJson sendmail button pressed")
             self.dismiss(animated: true, completion: nil)
             shareTranslation()
+            break
+        case .copy:
+            copyButtonAction()
+            self.dismiss(animated: true, completion: nil)
             break
         case .cancel :
             cancelLogEvent()

@@ -209,3 +209,5 @@
 "KFreeTrialErrorMessage" = "クーポンコード認証エラー";
 "kFreeTrialExpireMessage" = "無料体験期間は終了しました。\n続けるにはプランを選択してください。";
 
+//Custom Alert
+"copy" = "コピー";

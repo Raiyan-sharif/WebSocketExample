@@ -75,6 +75,7 @@ class FavouriteViewController: BaseViewController {
         self.itemsToShowOnContextMenu.append(AlertItems(title: "retranslation".localiz(), imageName: "", menuType: .retranslation))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "reverse".localiz(), imageName: "", menuType: .reverse))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "delete_from_fv".localiz(), imageName: "Delete_icon.png", menuType: .delete))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "copy".localiz(), imageName: "", menuType: .copy))
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
     
@@ -371,6 +372,14 @@ extension FavouriteViewController : RetranslationDelegate{
 extension FavouriteViewController : AlertReusableDelegate {
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {
 
+    }
+
+    func onCopyPressed(chatItemModel: HistoryChatItemModel?) {
+        guard let chatItem = chatItemModel else {
+            return
+        }
+        UIPasteboard.general.string = ""
+        UIPasteboard.general.string = GlobalMethod.getClipBoardTextOfVoiceTranslation(chatItemModel: chatItem)
     }
 
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {

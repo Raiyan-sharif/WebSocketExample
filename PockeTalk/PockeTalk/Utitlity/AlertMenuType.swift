@@ -11,6 +11,7 @@ enum AlertFeatureType: String  {
     case reverse = "reverse"
     case practice = "practice"
     case sendMail = "sendMail"
+    case copy = "copy"
     case cancel = "cancel"
     case delete = "delete"
 }

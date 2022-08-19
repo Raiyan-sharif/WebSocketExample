@@ -204,3 +204,5 @@
 "KFreeTrialErrorMessage" = "優惠券代碼驗證錯誤";
 "kFreeTrialExpireMessage" = "免費試用期已過。\n請選擇一個方案以便繼續利用。 ";
 
+//Custom Alert
+"copy" = "複製";

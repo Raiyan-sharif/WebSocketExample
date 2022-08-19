@@ -438,6 +438,7 @@ class TtsAlertController: BaseViewController, UIGestureRecognizerDelegate {
             self.itemsToShowOnContextMenu.append(AlertItems(title: "pronunciation_practice".localiz(), imageName: "", menuType: .practice))
         }
         self.itemsToShowOnContextMenu.append(AlertItems(title: "share".localiz(), imageName: "", menuType: .sendMail))
+        self.itemsToShowOnContextMenu.append(AlertItems(title: "copy".localiz(), imageName: "", menuType: .copy) )
         self.itemsToShowOnContextMenu.append(AlertItems(title: "cancel".localiz(), imageName: "", menuType: .cancel) )
     }
 
@@ -689,6 +690,14 @@ extension TtsAlertController : AlertReusableDelegate {
     func onSharePressed(chatItemModel: HistoryChatItemModel?) {
         PrintUtility.printLog(tag: TAG, text: "TtsAlertController shareJson called")
         self.shareData(chatItemModel: chatItemModel)
+    }
+
+    func onCopyPressed(chatItemModel: HistoryChatItemModel?) {
+        guard let chatItem = chatItemModel else {
+            return
+        }
+        UIPasteboard.general.string = ""
+        UIPasteboard.general.string = GlobalMethod.getClipBoardTextOfVoiceTranslation(chatItemModel: chatItem)
     }
     
     func onDeleteItem(chatItemModel: HistoryChatItemModel?) {
