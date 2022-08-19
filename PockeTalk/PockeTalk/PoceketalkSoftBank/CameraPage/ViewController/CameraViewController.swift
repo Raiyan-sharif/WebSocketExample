@@ -313,13 +313,16 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
                         DispatchQueue.main.async {
                             self.turnOnCameraFlash()
                         }
-                        
                     }
                 }else {
                     UserDefaults.standard.set(false, forKey: isCameraFlashOn)
                 }
                 
             }
+        }
+        let zoomScale: CGFloat = activeCamera?.minAvailableVideoZoomFactor ?? 1.0
+        DispatchQueue.main.async {
+            self.zoomLevel.text = String(format:"%.01f", zoomScale) + "x"
         }
         registerNotification()
         updateLanguageNames()
@@ -409,10 +412,10 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
     @objc
     private func handlePinch(_ pinch: UIPinchGestureRecognizer) {
         guard sessionSetupSucceeds,  let device = activeCamera else { return }
-        self.zoomLevel.isHidden = true
         switch pinch.state {
         case .began:
             initialScale = device.videoZoomFactor
+            self.zoomLevel.isHidden = false
         case .changed:
             let minAvailableZoomScale = device.minAvailableVideoZoomFactor
             let maxAvailableZoomScale = device.maxAvailableVideoZoomFactor
@@ -430,6 +433,9 @@ class CameraViewController: BaseViewController, AVCapturePhotoCaptureDelegate {
                 }
             }
         default:
+            DispatchQueue.main.asyncAfter(deadline: .now() + self.removeTime) {
+                self.zoomLevel.isHidden = true
+            }
             return
         }
     }
