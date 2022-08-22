@@ -204,3 +204,9 @@ perché hai già sottoscritto un abbonamento.";
 
 //Custom Alert
 "copy" = "Copia";
+
+//Serial
+"kSerialParseError" = "Errore di autenticazione seriale. Per favore riprova.";
+"kSerialActivationErrorMessageExceptSubscription" = "Errore di autenticazione seriale.";
+"kSerialActivationErrorMessageForSubscription" = "In abbonamento. Seriale non è stato attivato.";
+"kSerialActivationSuccessMessage" = "Seriale attivato.";

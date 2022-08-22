@@ -206,3 +206,9 @@ porque tem um contrato de subscrição.";
 
 //Custom Alert
 "copy" = "Copiar";
+
+//Serial
+"kSerialParseError" = "Erro de autenticação serial. Por favor, tente novamente.";
+"kSerialActivationErrorMessageExceptSubscription" = "Erro de autenticação serial.";
+"kSerialActivationErrorMessageForSubscription" = "Sob assinatura. Serial não foi ativado.";
+"kSerialActivationSuccessMessage" = "Serial ativado.";

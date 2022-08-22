@@ -208,3 +208,9 @@
 
 //Custom Alert
 "copy" = "Copie";
+
+//Serial
+"kSerialParseError" = "Erreur d'authentification série. Veuillez réessayer.";
+"kSerialActivationErrorMessageExceptSubscription" = "Erreur d'authentification série.";
+"kSerialActivationErrorMessageForSubscription" = "Sous abonnement. La série n'a pas été activée.";
+"kSerialActivationSuccessMessage" = "Série activé.";

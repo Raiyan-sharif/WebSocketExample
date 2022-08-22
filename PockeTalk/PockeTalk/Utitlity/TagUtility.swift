@@ -19,4 +19,5 @@ public class TagUtility: NSObject{
     let trialTag = "free_trial"
     let googleAnalyticsTag = "googleAnalyticsTag"
     let urlTag = "app_urls"
+    let serialTag = "serial"
 }

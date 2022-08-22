@@ -205,3 +205,9 @@
 
 //Custom Alert
 "copy" = "복사";
+
+//Serial
+"kSerialParseError" = "직렬 인증 오류입니다. 다시 시도해 주세요.";
+"kSerialActivationErrorMessageExceptSubscription" = "직렬 인증 오류입니다.";
+"kSerialActivationErrorMessageForSubscription" = "구독 중입니다. 시리얼이 활성화되지 않았습니다.";
+"kSerialActivationSuccessMessage" = "직렬이 활성화되었습니다.";

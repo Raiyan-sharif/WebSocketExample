@@ -211,3 +211,9 @@
 
 //Custom Alert
 "copy" = "コピー";
+
+//Serial
+"kSerialParseError" = "シリアル認証エラー。再度お試しください。";
+"kSerialActivationErrorMessageExceptSubscription" = "シリアル認証エラー。";
+"kSerialActivationErrorMessageForSubscription" = "サブスクリプション契約中。シリアルがアクティベートされませんでした。";
+"kSerialActivationSuccessMessage" = "シリアルがアクティベートされました。";

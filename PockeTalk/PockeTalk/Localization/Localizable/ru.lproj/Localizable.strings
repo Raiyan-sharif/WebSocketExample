@@ -204,3 +204,9 @@
 
 //Custom Alert
 "copy" = "Копировать";
+
+//Serial
+"kSerialParseError" = "Ошибка последовательной аутентификации. Пожалуйста, попробуйте еще раз.";
+"kSerialActivationErrorMessageExceptSubscription" = "Ошибка последовательной аутентификации.";
+"kSerialActivationErrorMessageForSubscription" = "По подписке. Серийник не активировался.";
+"kSerialActivationSuccessMessage" = "Серийник активирован.";

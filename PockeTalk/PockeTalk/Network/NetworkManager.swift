@@ -245,7 +245,7 @@ struct NetworkManager:Network {
                 //IAPManager.shared.setScheduleExecution = 0
                 let successResponse = try response.filterSuccessfulStatusCodes()
                 let result = try JSONDecoder().decode(ResultModel.self, from: successResponse.data)
-                PrintUtility.printLog(tag: "RTC", text: "requestCompletion >> result code: \(result.resultCode)")
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.serialTag, text: "requestCompletion >> result code: \(result.resultCode)")
 
                 if let result_code = result.resultCode {
                     if result_code == response_ok {
@@ -254,21 +254,20 @@ struct NetworkManager:Network {
                     } else if result_code == WARN_INVALID_AUTH {
                         RunAsyncFunc.shared.cancelRunningAsyncTask()
                         KeychainWrapper.standard.set(false, forKey: kInAppPurchaseStatus)
-                        if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
+                        if let _ = UserDefaults.standard.string(forKey: kSerialCodeKey){
+                            UserDefaults.standard.removeObject(forKey: kSerialCodeKey)
+                            showErrorMessageAndNavigateToPurchase(msg: "KInfoExpiredLiscnseErrorMessage".localiz())
+                        }else if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
                             UserDefaults.standard.removeObject(forKey: kCouponCode)
-                        }
-                        if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
+                            showErrorMessageAndNavigateToPurchase(msg: "KInfoExpiredLiscnseErrorMessage".localiz())
+                        } else if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true {
                             UserDefaults.standard.removeObject(forKey: kFreeTrialStatus)
-                            GlobalMethod.updateTalkButtonEnableStatus(false)
-                            GlobalMethod.isLicenseOverDialogShowing = true
-                            GlobalMethod.showCommonAlert(in: nil, msg: "kFreeTrialExpireMessage".localiz()){
-                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
-                                GlobalMethod.updateTalkButtonEnableStatus(true)
-                                GlobalMethod.isLicenseOverDialogShowing = false
-                            }
-                        }else{
+                            showErrorMessageAndNavigateToPurchase(msg: "kFreeTrialExpireMessage".localiz())
+                        }else {
                             if GlobalMethod.isLicenseOverDialogShowing == false{
-                                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                DispatchQueue.main.async {
+                                    GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                                }
                             }
                         }
                         TokenApiStateObserver.shared.updateState(state: .failed)
@@ -330,6 +329,18 @@ struct NetworkManager:Network {
         }
     }
 
+    func showErrorMessageAndNavigateToPurchase(msg: String){
+        DispatchQueue.main.async {
+            GlobalMethod.updateTalkButtonEnableStatus(false)
+            GlobalMethod.isLicenseOverDialogShowing = true
+            GlobalMethod.showCommonAlert(in: nil, msg: msg){
+                GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
+                GlobalMethod.updateTalkButtonEnableStatus(true)
+                GlobalMethod.isLicenseOverDialogShowing = false
+            }
+        }
+    }
+
     func requestLicenseConfirmationCompletion(target:NetworkServiceAPI,result:Result<Moya.Response, MoyaError>,completion:@escaping (Data?)->Void){
         switch result {
         case let .success(response):
@@ -365,7 +376,7 @@ struct NetworkManager:Network {
     func getLicenseToken(completion: @escaping (Data?) -> Void) {
         TokenApiStateObserver.shared.updateState(state: .running)
         let params = getLicenseTokenParam()
-        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "getLicenseToken => params => \(params)")
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag + " " + TagUtility.sharedInstance.serialTag, text: "getLicenseToken => params => \(params)")
         provider.request(.liscense(params: params)){ result in
             self.requestCompletion(target: .liscense(params: params), result: result) { data in
                 completion(data)
@@ -376,14 +387,22 @@ struct NetworkManager:Network {
     func getLicenseTokenParam() -> [String: String]{
         var params = [String: String]()
         let defaultParam = [kImei: imeiNumber, kClientInfo: kClientInfo, kAppUdid: udid ?? ""]
-        if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
+
+        if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey), !serial.isEmpty {
+            params = [
+                kAppUdid: getUUID() ?? "",
+                kClientInfo: kPocketalk_app_ios,
+                kSerialParamName: serial
+            ]
+            return params
+        }else if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
             params = [
                 kAppUdid: getUUID() ?? "",
                 kClientInfo: kPocketalk_app_ios,
                 couponCodeParamName: couponCode
             ]
             return params
-        } else if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
+        }else if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
             params = [
                 kAppUdid: getUUID() ?? "",
                 kClientInfo: kPocketalk_app_ios,
@@ -477,10 +496,20 @@ struct NetworkManager:Network {
         }
     }
 
-    func getLicenseConfirmation(coupon: String, completion: @escaping (Data?) -> Void) {
-        let params:[String:String]  = [
-            "coupon_code": coupon
+    func getLicenseConfirmation(coupon: String?, serial: String?, completion: @escaping (Data?) -> Void) {
+        var params:[String:String]  = [
+            couponCodeParamName: ""
         ]
+        if let couponCode = coupon, !couponCode.isEmpty{
+            params = [
+                couponCodeParamName: couponCode
+            ]
+        }else if let serialCode = serial, !serialCode.isEmpty{
+            params = [
+                kSerialParamName: serialCode
+            ]
+        }
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.serialTag, text: "getLicenseConfirmation >>> Params: \(params)")
         provider.request(.licenseConfirmation(params: params)){ result in
             self.requestLicenseConfirmationCompletion(target: .licenseConfirmation(params: params), result: result) { data in
                 completion(data)

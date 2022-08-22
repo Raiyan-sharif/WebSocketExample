@@ -8,7 +8,7 @@ import Kronos
 import SwiftKeychainWrapper
 
 extension AppDelegate{
-    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "", showNotification: Bool = false) {
+    func navigateToViewController(_ type: ViewControllerType, couponCode: String = "", serial: String = "", showNotification: Bool = false) {
         var viewController = UIViewController()
 
         DispatchQueue.main.async {
@@ -31,7 +31,11 @@ extension AppDelegate{
                 }
             case .statusCheck:
                 if let statusCheckVC = UIStoryboard(name: KStoryboardMain, bundle: nil).instantiateViewController(withIdentifier: String(describing: IAPStatusCheckDummyLoadingViewController.self)) as? IAPStatusCheckDummyLoadingViewController {
-                    statusCheckVC.couponCode = couponCode
+                    if(!couponCode.isEmpty){
+                        statusCheckVC.couponCode = couponCode
+                    }else if(!serial.isEmpty){
+                        statusCheckVC.serial = serial
+                    }
                     viewController = statusCheckVC
                 }
             case .permission:
@@ -64,13 +68,17 @@ extension AppDelegate{
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
         }
+        var serialCode = ""
+        if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+            serialCode = serial
+        }
         if let _ = UserDefaultsProperty<Bool>(kUserDefaultIsTutorialDisplayed).value{
             GlobalMethod.appdelegate().navigateToViewController(.home)
         }else if let _ = UserDefaultsProperty<Bool>(kPermissionCompleted).value{
             GlobalMethod.appdelegate().navigateToViewController(.welcome)
         }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedSubscription) == true{
             GlobalMethod.appdelegate().navigateToViewController(.permission)
-        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && savedCoupon.isEmpty && purchaseStatus == false{
+        }else if UserDefaultsUtility.getBoolValue(forKey: kInitialFlowCompletedForCoupon) == true && serialCode.isEmpty && savedCoupon.isEmpty && purchaseStatus == false{
             GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)
         }else if UserDefaultsUtility.getBoolValue(forKey: kUserPassedTc) == true{
             GlobalMethod.appdelegate().navigateToViewController(.walkthrough)
@@ -264,17 +272,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             guard let _ = UserDefaults.standard.string(forKey: kNotificationURL) else{
                 return
             }
-            if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
+            var savedCoupon = ""
+            if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                savedCoupon = coupon
+            }
+            var serialCode = ""
+            if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+                serialCode = serial
+            }
+            if !savedCoupon.isEmpty || !serialCode.isEmpty {
                 GlobalMethod.appdelegate().navigateToViewController(.home, showNotification: true)
-
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon Exist. Navigating to HomeVC & adding local notification view")
-
             } else {
                 CustomLocalNotification.sharedInstance.addView()
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon didn't Exist. Showing local notification view on top of the existing view")
             }
         }
-
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
     }
 }

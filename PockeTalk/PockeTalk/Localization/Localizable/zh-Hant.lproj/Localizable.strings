@@ -206,3 +206,9 @@
 
 //Custom Alert
 "copy" = "複製";
+
+//Serial
+"kSerialParseError" = "串行驗證錯誤。 請再試一次。";
+"kSerialActivationErrorMessageExceptSubscription" = "串行验证错误。";
+"kSerialActivationErrorMessageForSubscription" = "訂閱中。 串行未激活。";
+"kSerialActivationSuccessMessage" = "串行激活。";

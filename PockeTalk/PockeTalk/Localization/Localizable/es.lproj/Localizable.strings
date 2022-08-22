@@ -204,3 +204,9 @@ porque tiene un acuerdo de suscripción.";
 
 //Custom Alert
 "copy" = "Copiar";
+
+//Serial
+"kSerialParseError" = "Error de autenticación en serie. Inténtalo de nuevo.";
+"kSerialActivationErrorMessageExceptSubscription" = "Error de autenticación en serie.";
+"kSerialActivationErrorMessageForSubscription" = "Bajo suscripción. La serie no estaba activada.";
+"kSerialActivationSuccessMessage" = "Serie activada.";

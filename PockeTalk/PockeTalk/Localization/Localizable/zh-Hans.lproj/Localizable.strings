@@ -207,3 +207,9 @@
 
 //Custom Alert
 "copy" = "复制";
+
+//Serial
+"kSerialParseError" = "串行验证错误。 请再试一次。";
+"kSerialActivationErrorMessageExceptSubscription" = "직렬 인증 오류입니다.";
+"kSerialActivationErrorMessageForSubscription" = "구독 중입니다. 시리얼이 활성화되지 않았습니다.";
+"kSerialActivationSuccessMessage" = "串行激活。";

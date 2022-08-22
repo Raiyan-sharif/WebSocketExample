@@ -205,3 +205,9 @@ da es sich um einen Abonnementvertrag handelt.";
 
 //Custom Alert
 "copy" = "Kopieren";
+
+//Serial
+"kSerialParseError" = "Serieller Authentifizierungsfehler. Bitte versuche es erneut.";
+"kSerialActivationErrorMessageExceptSubscription" = "Serieller Authentifizierungsfehler.";
+"kSerialActivationErrorMessageForSubscription" = "Im Abonnement. Seriell wurde nicht aktiviert.";
+"kSerialActivationSuccessMessage" = "Seriell aktiviert.";

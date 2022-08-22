@@ -204,3 +204,9 @@
 
 //Custom Alert
 "copy" = "สำเนา";
+
+//Serial
+"kSerialParseError" = "ข้อผิดพลาดในการตรวจสอบสิทธิ์แบบอนุกรม กรุณาลองอีกครั้ง.";
+"kSerialActivationErrorMessageExceptSubscription" = "ข้อผิดพลาดในการตรวจสอบสิทธิ์แบบอนุกรม";
+"kSerialActivationErrorMessageForSubscription" = "ภายใต้การสมัครสมาชิก ไม่ได้เปิดใช้งานซีเรียล";
+"kSerialActivationSuccessMessage" = "เปิดใช้งานซีเรียลแล้ว";

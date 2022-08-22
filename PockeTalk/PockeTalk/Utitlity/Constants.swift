@@ -486,3 +486,7 @@ let navTitleHeight = 30
 var GASettingScreenName = ""
 let kHistoryTTS = "historyTTS"
 
+//Serial Auth
+let kSerialParamName = "serial"
+let kSerialParamKey = "serial"
+let kSerialCodeKey = "kSerialCodeKey"

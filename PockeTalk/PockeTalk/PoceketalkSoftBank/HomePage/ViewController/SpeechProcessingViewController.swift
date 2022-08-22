@@ -238,7 +238,15 @@ class SpeechProcessingViewController: BaseViewController{
     func showLoaderDependentOnApiCall() {
         ActivityIndicator.sharedInstance.show()
 
-        if let couponCode = UserDefaults.standard.string(forKey: kCouponCode), couponCode != "" {
+        var savedCoupon = ""
+        if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+            savedCoupon = coupon
+        }
+        var serialCode = ""
+        if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+            serialCode = serial
+        }
+        if !serialCode.isEmpty || !savedCoupon.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                 ActivityIndicator.sharedInstance.hide()
             }

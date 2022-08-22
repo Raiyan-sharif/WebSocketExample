@@ -37,12 +37,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Detect app store region
         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "didFinishLaunchingWithOptions")
         IAPManager.shared.iSAppStoreRegionJapan()
+
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> Coupon found: \(coupon)")
         }
-        if savedCoupon.isEmpty {
+        var serialCode = ""
+        if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+            serialCode = serial
+        }
+        if !serialCode.isEmpty || !savedCoupon.isEmpty{
+            if shouldCallLicenseConfirmationApi() == true{
+                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
+                UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
+                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon, serial: serialCode)
+            }else{
+                GlobalMethod.appdelegate().gotoNextVcForCoupon()
+            }
+            
+            //Update coupon already uses once status
+            KeychainWrapper.standard.set(true, forKey: kIsCouponAlreadyUsedOnce)
+        }else{
             if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == true{
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "========In Free Trial==========")
                 GlobalMethod.appdelegate().gotoNextVc(true)
@@ -55,17 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
                 IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .didFinishLaunchingWithOptions)
             }
-        }else{
-            if shouldCallLicenseConfirmationApi() == true{
-                PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "application>> shouldCallLicenseConfirmationApi")
-                UserDefaults.standard.set(false, forKey: kIsFromUniverslaLink)
-                GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: savedCoupon)
-            }else{
-                GlobalMethod.appdelegate().gotoNextVcForCoupon()
-            }
-
-            //Update coupon already uses once status
-            KeychainWrapper.standard.set(true, forKey: kIsCouponAlreadyUsedOnce)
         }
         return true
     }
@@ -122,18 +126,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var savedCoupon = ""
         if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
             savedCoupon = coupon
-            PrintUtility.printLog(tag: "App Delegate", text: "applicationWillEnterForeground>> Coupon found: \(coupon)")
         }
-        if savedCoupon.isEmpty {
-            if UserDefaults.standard.bool(forKey: kFreeTrialStatus) == false{
-                PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
-                if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
-                    ScreenTracker.sharedInstance.screenPurpose != .InitialFlow &&  ScreenTracker.sharedInstance.screenPurpose != .WalkThroughViewController{
-                    KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
-                    IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
-                }
-            } else {
-                PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "==== App in Free Trial ====")
+        var serialCode = ""
+        if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+            serialCode = serial
+        }
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + " " + TagUtility.sharedInstance.serialTag, text: "applicationWillEnterForeground")
+        if serialCode.isEmpty && savedCoupon.isEmpty && UserDefaults.standard.bool(forKey: kFreeTrialStatus) == false{
+            PrintUtility.printLog(tag: "IAPTAG: APP FG from: ", text: "\(ScreenTracker.sharedInstance.screenPurpose)")
+            if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen &&
+                ScreenTracker.sharedInstance.screenPurpose != .InitialFlow &&  ScreenTracker.sharedInstance.screenPurpose != .WalkThroughViewController{
+                KeychainWrapper.standard.set(true, forKey: receiptValidationAllow)
+                IAPManager.shared.IAPResponseCheck(iapReceiptValidationFrom: .applicationWillEnterForeground)
             }
         }
         LocalNotificationManager.sharedInstance.callNotificationFetchUrl()
@@ -159,14 +163,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
               let incomingURL = userActivity.webpageURL,
               let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
-                  PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Wrong URL/component received")
+                  PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "AppDelegate.application >>> Wrong URL/component received: \(userActivity.webpageURL)")
                   showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
                   return false
               }
 
         // Check for specific URL components that you need.
         guard let params = components.queryItems else {
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "No params received")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + TagUtility.sharedInstance.serialTag, text: "AppDelegate.application >>> No params received")
             showAlertFromAppDelegates(msg: "kCouponCodeParseError".localiz())
                   return false
               }
@@ -180,10 +184,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "calling api")
             UserDefaults.standard.set(true, forKey: kIsFromUniverslaLink)
             IAPManager.shared.shouldBypassPurchasePlan = true
-            GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: couponCode)
+            GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: couponCode, serial: "")
+            return true
+        }else if let serial = params.first(where: { $0.name == kSerialParamKey } )?.value {
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.serialTag, text: "AppDelegate.application >>> serial = \(serial)")
+            if serial.isEmpty{
+                showAlertFromAppDelegates(msg: "kSerialParseError".localiz())
+                return false
+            }
+            UserDefaults.standard.set(true, forKey: kIsFromUniverslaLink)
+            IAPManager.shared.shouldBypassPurchasePlan = true
+            GlobalMethod.appdelegate().navigateToViewController(.statusCheck, couponCode: "", serial: serial)
             return true
         } else {
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag, text: "Coupon code missing missing")
+            PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + TagUtility.sharedInstance.serialTag, text: "AppDelegate.application >>> serial and coupon is both missing in uri!")
+            showAlertFromAppDelegates(msg: "KErrorMessage".localiz())
             return false
         }
     }

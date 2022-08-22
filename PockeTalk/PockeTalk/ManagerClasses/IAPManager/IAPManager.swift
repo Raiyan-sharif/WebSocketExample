@@ -589,7 +589,11 @@ extension IAPManager {
                                 if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
                                     savedCoupon = coupon
                                 }
-                                if savedCoupon.isEmpty {
+                                var serialCode = ""
+                                if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+                                    serialCode = serial
+                                }
+                                if savedCoupon.isEmpty && serialCode.isEmpty {
                                     if ScreenTracker.sharedInstance.screenPurpose != .PurchasePlanScreen {
                                         if GlobalMethod.isLicenseOverDialogShowing == false{
                                             GlobalMethod.appdelegate().navigateToViewController(.purchasePlan)

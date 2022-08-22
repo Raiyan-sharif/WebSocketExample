@@ -210,3 +210,9 @@
 
 //Custom Alert
 "copy" = "Copy";
+
+//Serial
+"kSerialParseError" = "Serial authentication error. Please try again.";
+"kSerialActivationErrorMessageExceptSubscription" = "Serial authentication error.";
+"kSerialActivationErrorMessageForSubscription" = "Under subscription. Serial was not activated.";
+"kSerialActivationSuccessMessage" = "Serial activated.";

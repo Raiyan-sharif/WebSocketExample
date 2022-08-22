@@ -200,18 +200,21 @@ class WalkThroughViewController: BaseViewController {
         case ButtonTag.thirdPageClose.rawValue:
             thirdTutorialCloseButtonLogEvent()
             UserDefaults.standard.set(true, forKey: kInitialFlowCompletedForCoupon)
-            var savedCoupon = ""
-            if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
-                savedCoupon = coupon
-                PrintUtility.printLog(tag: self.TAG, text: "Coupon found: \(coupon)")
-            }
             if Reachability.isConnectedToNetwork() {
-                if savedCoupon.isEmpty {
-                    PrintUtility.printLog(tag: self.TAG, text: "No coupon found, go to purchase plan view")
-                    goToPurchasePlan()
-                }else{
-                    PrintUtility.printLog(tag: self.TAG, text: "Coupon found, go to permission view")
+                var savedCoupon = ""
+                if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
+                    savedCoupon = coupon
+                }
+                var serialCode = ""
+                if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
+                    serialCode = serial
+                }
+                if !savedCoupon.isEmpty || !serialCode.isEmpty{
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + " " + TagUtility.sharedInstance.serialTag, text: "WalkThroughViewController >>> Coupon or serial found >>> Goto permission")
                     goToPermissionVC()
+                }else{
+                    PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + " " + TagUtility.sharedInstance.serialTag, text: "WalkThroughViewController >>> No coupon or serial found")
+                    goToPurchasePlan()
                 }
             }else{
                 DispatchQueue.main.async {
