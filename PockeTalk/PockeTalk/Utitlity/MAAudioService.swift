@@ -93,6 +93,7 @@ class MAAudioService {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .duckOthers, .interruptSpokenAudioAndMixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
+            try AVAudioSession.sharedInstance().setAllowHapticsAndSystemSoundsDuringRecording(true)
         } catch {
             PrintUtility.printLog(tag: "AUDIO_ERROR", text: error.localizedDescription)
         }

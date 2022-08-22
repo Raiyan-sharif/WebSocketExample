@@ -179,6 +179,7 @@ extension HomeViewController{
                             DispatchQueue.main.async {
                                 guard let url = Bundle.main.url(forResource: "start_record", withExtension: "wav") else { return }
                                 AudioPlayer.sharedInstance.playSTTSound(url: url)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             }
 //                            SocketManager.sharedInstance.connect()
                             SocketManager.sharedInstance.socketManagerDelegate = self.speechVC
