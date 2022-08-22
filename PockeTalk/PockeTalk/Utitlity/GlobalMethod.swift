@@ -29,22 +29,22 @@ class GlobalMethod {
     // Get top padding
     static func getTopPadding() -> CGFloat {
         var topPadding: CGFloat = 20.0
-        if #available(iOS 11.0, *) {
-            if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
-                topPadding = max(appDelegate.window?.safeAreaInsets.top ?? 0.0, 20.0)
-            }
+
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            topPadding = max(appDelegate.window?.safeAreaInsets.top ?? 0.0, 20.0)
         }
+
         return topPadding
     }
 
     // Get bottom padding
     static func getBottomPadding() -> CGFloat {
         var bottomPadding: CGFloat = 0.0
-        if #available(iOS 11.0, *) {
-            if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
-                bottomPadding = max(appDelegate.window?.safeAreaInsets.bottom ?? 0.0, 0.0)
-            }
+
+        if let appDelegate: AppDelegate = UIApplication.shared.delegate as? AppDelegate {
+            bottomPadding = max(appDelegate.window?.safeAreaInsets.bottom ?? 0.0, 0.0)
         }
+
         return bottomPadding
     }
 
