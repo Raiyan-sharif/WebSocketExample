@@ -5,11 +5,13 @@
 
 import UIKit
 import AVKit
+import AVFoundation
 
 class TutorialContainerViewController: BaseViewController{
     var playVideoCallback: (()-> Void)?
     var player: AVPlayer?
-    
+    var playerLayer: CALayer?
+
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,21 +20,31 @@ class TutorialContainerViewController: BaseViewController{
         setupVideoPlayer()
         player?.play()
     }
-    
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        playerLayer?.frame = self.view.bounds
+    }
+
     //MARK: - Initial Setup
     private func setupVideoPlayer() {
+        self.view.backgroundColor = .clear
         ///get the video path and set on player
         guard let path = Bundle.main.path(forResource: "tutorial", ofType: "mp4") else { return }
         let videoURL = NSURL(fileURLWithPath: path)
         player = AVPlayer(url: videoURL as URL)
-        
-        ///create and embade AVPlayerViewController
-        let avPlayerVC = AVPlayerViewController()
-        avPlayerVC.player = player
-        avPlayerVC.showsPlaybackControls = false
+
+        //create and embade AVPlayerViewController
+        let avPlayerVC = UIViewController()
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.shouldRasterize = true
+        playerLayer?.rasterizationScale = UIScreen.main.scale
+        playerLayer?.frame = self.view.bounds
+        if let playerLyr = playerLayer {
+            avPlayerVC.view.layer.addSublayer(playerLyr)
+        }
         avPlayerVC.view.backgroundColor = UIColor.clear
         embed(avPlayerVC, inView: self.view)
-        
         ///register tap gesture
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
