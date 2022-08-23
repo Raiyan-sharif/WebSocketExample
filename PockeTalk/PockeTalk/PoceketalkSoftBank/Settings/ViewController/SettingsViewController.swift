@@ -155,6 +155,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate, UITableVi
             self.navigationController?.pushViewController(viewController, animated: true)
             PrintUtility.printLog(tag: "Reset: ", text: "Reset")
         case SettingsItemType.feedback.rawValue:
+            feedbackLogEvent()
             PrintUtility.printLog(tag: "feedback: ", text: "feedback")
             GlobalMethod.openUrlInBrowser(url: self.getFeedbackURL())
         case SettingsItemType.response.rawValue:
@@ -205,5 +206,10 @@ extension SettingsViewController {
     private func menuResetLogEvent() {
         analytics.buttonTap(screenName: analytics.setting,
                             buttonName: analytics.buttonReset)
+    }
+
+    private func feedbackLogEvent() {
+        analytics.buttonTap(screenName: analytics.setting,
+                            buttonName: analytics.feedback)
     }
 }

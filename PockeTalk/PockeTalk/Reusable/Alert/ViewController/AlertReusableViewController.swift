@@ -292,6 +292,7 @@ extension AlertReusableViewController: UITableViewDelegate, UITableViewDataSourc
             shareTranslation()
             break
         case .copy:
+            copyLogEvent()
             copyButtonAction()
             self.dismiss(animated: true, completion: nil)
             break
@@ -337,6 +338,13 @@ extension AlertReusableViewController {
             analytics.updateDestinationLanguage(screenName: screenName,
                                                 buttonName: analytics.buttonPractice,
                                                 desLanguageName: desLanguageName)
+        }
+    }
+
+    private func copyLogEvent() {
+        if let screenName = analyticsScreenName {
+            analytics.buttonTap(screenName: screenName,
+                                buttonName: analytics.buttonCopy)
         }
     }
 

@@ -195,7 +195,10 @@ struct GoogleAnalytics {
     let buttonCameraDestinationLang = "select_cam_dst_lang"
     let buttonCamHistory = "cam_history"
     let buttonDisplayHistory = "display_history"
+
     let translate = "translate"
+    let buttonCopy = "copy"
+    let feedback = "feedback"
 
     enum PronunciationPlayBackSpeed: String {
         case normal = "Normal"

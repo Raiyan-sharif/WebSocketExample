@@ -11,6 +11,7 @@ struct GoogleAnalyticsUserProperty {
     enum UserSubscriptionType: String {
         case iAP = "subsc"
         case coupon = "sb"
+        case serial = "serial"
         case none = "none"
     }
 
@@ -26,6 +27,7 @@ struct GoogleAnalyticsUserProperty {
     /*
     subsc：User is using under paid subscription
     sb：User is using under SB coupon
+    serial：User is using under serial
     none：None of subsc or sb
     */
 
@@ -33,6 +35,11 @@ struct GoogleAnalyticsUserProperty {
         //Check for coupon
         if let _ =  UserDefaults.standard.string(forKey: kCouponCode) {
             return UserSubscriptionType.coupon.rawValue
+        }
+
+        //Check for serial auth
+        if let _ = UserDefaults.standard.string(forKey: kSerialCodeKey) {
+            return UserSubscriptionType.serial.rawValue
         }
 
         //Check for IAP

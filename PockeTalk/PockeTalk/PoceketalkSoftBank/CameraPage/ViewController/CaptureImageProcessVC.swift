@@ -978,6 +978,7 @@ extension CaptureImageProcessVC: CameraTTSContextMenuProtocol {
     }
 
     func cameraTTSContextMenuCopyText() {
+        copyLogEvent()
         PrintUtility.printLog(tag: "CaptureImageProcessVC", text: "Copy text to clipboard")
         copyTextToClipBoard()
     }
@@ -1110,6 +1111,11 @@ extension CaptureImageProcessVC {
     private func buttonShareLogEvent() {
         analytics.buttonTap(screenName: analytics.camTranslateResultDetailMenu,
                             buttonName: analytics.buttonShare)
+    }
+
+    private func copyLogEvent() {
+        analytics.buttonTap(screenName: analytics.camTranslateResultDetailMenu,
+                            buttonName: analytics.buttonCopy)
     }
 
     private func buttonCancelLogEvent() {
