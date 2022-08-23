@@ -145,13 +145,9 @@ public class LanguageManager {
     if let windows = windows {
       windowsToChange = windows
     } else {
-      if #available(iOS 13.0, *) {
         windowsToChange = UIApplication.shared.connectedScenes
           .compactMap({$0 as? UIWindowScene})
           .map({ ($0.windows.first, $0.title) })
-      } else {
-        windowsToChange = [(UIApplication.shared.keyWindow, nil)]
-      }
     }
 
     return windowsToChange

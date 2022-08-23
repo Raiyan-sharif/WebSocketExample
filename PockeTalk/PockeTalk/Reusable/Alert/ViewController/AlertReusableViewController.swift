@@ -72,14 +72,10 @@ class AlertReusableViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if #available(iOS 13.0, *) {
             if(!flagTalkButton){
                 talkButtonImageView.isHidden = false
                 HomeViewController.dummyTalkBtnImgView.isHidden = true
             }
-        } else {
-            PrintUtility.printLog(tag: "AlertReusableViewController", text: "Fall into previous version than iOS 13")
-        }
         FloatingMikeButton.sharedInstance.hideFloatingMicrophoneBtnInCustomViews()
     }
 
@@ -197,21 +193,14 @@ class AlertReusableViewController: BaseViewController {
     }
 
     private func registerForNotification() {
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
 
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        }
     }
 
     deinit {
         connectivity.cancel()
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.removeObserver(self, name: UIScene.willEnterForegroundNotification, object: nil)
-        } else {
-            NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-        }
+        NotificationCenter.default.removeObserver(self, name: UIScene.willEnterForegroundNotification, object: nil)
+       
     }
 
     @objc private func appWillEnterForeground() {

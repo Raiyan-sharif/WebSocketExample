@@ -65,12 +65,7 @@ class CameraTTSContextMenu: UIView {
         self.sendEmailButton.backgroundColor = .white
         self.cancelButton.backgroundColor = .white
         self.copyButton.backgroundColor = .white
-        if #available(iOS 13.0, *) {
-            self.separatorLabel.backgroundColor = .separator
-        } else {
-            // Fallback on earlier versions
-            self.separatorLabel.backgroundColor = .seperatorColor
-        }
+        self.separatorLabel.backgroundColor = .separator
         //set Corner Radius
         self.placeHolderView.layer.cornerRadius = DIALOG_CORNER_RADIUS
         self.placeHolderView.layer.masksToBounds = true

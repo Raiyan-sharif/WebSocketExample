@@ -96,11 +96,11 @@ class LangSelectVoiceVC: BaseViewController {
     }
     
     private func setButtonTopCornerRadius(_ button: UIButton){
-        if #available(iOS 11.0, *) {
-            button.layer.cornerRadius = 8
-            button.layer.masksToBounds = true
-            button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
+
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+
     }
     
     private func setupPageViewController() {

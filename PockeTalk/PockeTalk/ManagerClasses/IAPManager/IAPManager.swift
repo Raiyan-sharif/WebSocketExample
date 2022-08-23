@@ -75,7 +75,6 @@ class IAPManager: NSObject {
     }
 
     func iSAppStoreRegionJapan() -> Bool {
-        if #available(iOS 13.0, *) {
             if let storefront = SKPaymentQueue.default().storefront {
                 IAPManager.shared.appStoreRegionRetryCount = 0
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region: \(storefront.countryCode)")
@@ -93,12 +92,6 @@ class IAPManager: NSObject {
                     return true
                 }
             }
-        } else {
-            IAPManager.shared.appStoreRegionRetryCount = 0
-            // Fallback on earlier versions. ref: https://sourcenext.backlog.com/view/PT_SK-10063#comment-169844513
-            PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "App region iOS12 so considering JPN")
-            return true
-        }
     }
 
     // get IAP products based on build varients
