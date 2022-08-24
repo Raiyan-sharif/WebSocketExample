@@ -195,9 +195,9 @@ extension HomeViewController{
 //MARK: - HistoryCardViewControllerDelegate
 extension HomeViewController: HistoryCardViewControllerDelegate {
     func dissmissHistory(shouldUpdateViewAlpha: Bool, isFromHistoryScene: Bool) {
+        self.historyDissmissed()
         if isFromHistoryScene{
             animateTransitionIfNeeded(state: nextState, shouldUpdateCardViewAlpha: shouldUpdateViewAlpha)
-            self.historyDissmissed()
             PrintUtility.printLog(tag: historyCardTAG, text: "Dismiss history from history,  Visibility: \(self.cardVisible) State:\(self.nextState)")
         } else {
             PrintUtility.printLog(tag: historyCardTAG, text: "Dismiss history from home,  Visibility: \(self.cardVisible) State:\(self.nextState)")
