@@ -243,9 +243,11 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                                 PrintUtility.printLog(tag: self.TAG, text: "Date coupon: \(date)")
                                 if let date = date {
                                     UserDefaults.standard.set(date, forKey: kCouponExpiryDate)
-                                    PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification from callLicenseConfirmationApi()")
-                                    LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
-                                    LocalNotificationManager.sharedInstance.getLocalNotificationURLData { _ in }
+                                    if let coupon = self.couponCode, !coupon.isEmpty {
+                                        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removing scheduled Notification from callLicenseConfirmationApi()")
+                                        LocalNotificationManager.sharedInstance.removeScheduledNotification { _ in }
+                                        LocalNotificationManager.sharedInstance.getLocalNotificationURLData { _ in }
+                                    }
                                 }
                             }
                             if UserDefaults.standard.bool(forKey: kIsFromUniverslaLink) {
