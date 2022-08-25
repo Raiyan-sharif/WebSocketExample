@@ -25,6 +25,18 @@ struct GoogleAnalyticsUserProperty {
     }
 
     /*
+     on：User hasn't signed up for subscription but is under free trial period
+     off：State other than on
+     */
+
+    func getFreeTrialInfo() -> String {
+        if let _ = UserDefaults.standard.string(forKey: kFreeTrialStatus) {
+            return "on"
+        }
+        return "off"
+    }
+
+    /*
     subsc：User is using under paid subscription
     sb：User is using under SB coupon
     serial：User is using under serial

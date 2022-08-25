@@ -227,10 +227,11 @@ struct GoogleAnalytics {
     private func setDefaultUserProperty() {
         Analytics.setUserProperty(iOSOperatingSystemName, forName: operatingSystem)
         Analytics.setUserProperty(userProperty.getSystemLanguageName(), forName: systemLanguage)
-
         Analytics.setUserProperty(userProperty.getSubscriptionPlanInfo(), forName: subscriptionPlanInfo)
-        //Analytics.setUserProperty(userProperty.getSubscriptionPlanInfo(), forName: threeDaysTrialInfo)
+
+        Analytics.setUserProperty(userProperty.getFreeTrialInfo(), forName: threeDaysTrialInfo)
         Analytics.setUserProperty(userProperty.getSBCouponUsesInfo(), forName: sbCouponUsesInfo)
+
         Analytics.setUserProperty(userProperty.getUDID(), forName: userUniqueId)
         Analytics.setUserProperty(userProperty.getFirebaseUserPseudoID(), forName: firebaseGeneratedUniqueId)
         Analytics.setUserProperty(userProperty.getUDID(), forName: deviceUniqueId)
@@ -241,6 +242,7 @@ struct GoogleAnalytics {
             operatingSystem: iOSOperatingSystemName,
             systemLanguage: userProperty.getSystemLanguageName(),
             subscriptionPlanInfo: userProperty.getSubscriptionPlanInfo(),
+            threeDaysTrialInfo: userProperty.getFreeTrialInfo(),
             sbCouponUsesInfo: userProperty.getSBCouponUsesInfo(),
             userUniqueId: userProperty.getUDID(),
             firebaseGeneratedUniqueId: userProperty.getFirebaseUserPseudoID(),
