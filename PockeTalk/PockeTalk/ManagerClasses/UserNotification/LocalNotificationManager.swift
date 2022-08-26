@@ -283,15 +283,7 @@ class LocalNotificationManager: NSObject {
                         }
                     }
                 }
-                if let thirdNotificationDate = UserDefaults.standard.string(forKey: KThirdLocalNotificationDate) {
-                    let thirdNotificationShowDate = thirdNotificationDate.getISO_8601FormattedNotificationDate(from: thirdNotificationDate)
-                    if thirdNotificationShowDate < Date() {
-                        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Removed  all saved notification data\n")
-                        removeLocalNotificationSavedData()
-                    }
-                }
             }
-
         }
     }
 
@@ -334,7 +326,7 @@ class LocalNotificationManager: NSObject {
         UserDefaults.standard.set(Date(), forKey: KLocalNotificationURLDownloadTime)
     }
 
-    private func removeLocalNotificationSavedData() {
+    func removeLocalNotificationSavedData() {
         UserDefaults.standard.removeObject(forKey: kCouponExpiryDate)
         UserDefaults.standard.removeObject(forKey: KThirdLocalNotificationDate)
         UserDefaults.standard.removeObject(forKey: KLocalNotificationURLDownloadTime)

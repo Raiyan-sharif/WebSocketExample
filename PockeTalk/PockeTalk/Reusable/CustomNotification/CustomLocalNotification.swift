@@ -30,6 +30,10 @@ open class CustomLocalNotification: NSObject {
         if window.subviews.contains(customLocalNotificationViewTagView) {
             window.viewWithTag(customNotificationViewTag)?.removeFromSuperview()
         }
+
+        if let notificationID = UserDefaults.standard.string(forKey: "NotificationID"), notificationID == NotificationStatus.scheduleNotification2.rawValue {
+            LocalNotificationManager.sharedInstance.removeLocalNotificationSavedData()
+        }
     }
 
     func addView() {
