@@ -315,7 +315,12 @@ class IAPStatusCheckDummyLoadingViewController: UIViewController {
                             }else if let serialToCheck = self.serial, !serialToCheck.isEmpty{
                                 UserDefaults.standard.removeObject(forKey: kSerialCodeKey)
                                 PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + " " + TagUtility.sharedInstance.serialTag, text: "Serial removed: \(serialToCheck)")
-                                GlobalMethod.appdelegate().gotoNextVcForAuth()
+                                DispatchQueue.main.async {
+                                    let alert = alertService.alertDialogSoftbank(message: "kSerialActivationErrorMessageExceptSubscription".localiz()) {
+                                        GlobalMethod.appdelegate().gotoNextVcForAuth()
+                                    }
+                                    self.present(alert, animated: true, completion: nil)
+                                }
                             }
                         } else if result_code == WARN_INPUT_PARAM {
                             PrintUtility.printLog(tag: TagUtility.sharedInstance.sbAuthTag + " " + TagUtility.sharedInstance.serialTag, text: "WARN_INPUT_PARAM")
