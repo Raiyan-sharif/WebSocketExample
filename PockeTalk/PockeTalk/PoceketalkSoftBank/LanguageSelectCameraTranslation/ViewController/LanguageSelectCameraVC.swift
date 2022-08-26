@@ -228,35 +228,52 @@ class LanguageSelectCameraVC: BaseViewController {
         add(asChildViewController: controller, containerView: self.view, animation: transition)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSettingsSelectionCamera
     }
-    
+
     //MARK: - Utils
     @objc func showMicrophoneButton(notification: Notification) {
         microphoneIcon(isHidden: false)
     }
-    
+
     private func microphoneIcon(isHidden: Bool){
         FloatingMikeButton.sharedInstance.isHidden(isHidden)
     }
-    
-    private func updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: Bool = false){
+
+    private func updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: Bool){
         self.isFirstTimeLoad = false
-        let index = cameraLangSelectindex
+        var index = 0
+
+        /// When coming by STT from the Language Settings scene, redirect to the language list by setting index as 0
+        /// When back button press from the Language Settings scene, redirect to the selected language scene by setting index as cameraLangSelectindex
+
+        isProvideSTTFromLanguageSettingCameraTutorialUI ? (index = 0) : (index = cameraLangSelectindex)
+
         updateButton(index: index)
         tabsViewDidSelectItemAt(position: index, isProvideSTTFromLanguageSettingCameraTutorialUI: isProvideSTTFromLanguageSettingCameraTutorialUI)
+
         index == 1 ? (ScreenTracker.sharedInstance.screenPurpose = .LanguageHistorySelectionCamera) : (ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera)
     }
-    
+
     private func unregisterNotification(){
         NotificationCenter.default.removeObserver(self, name: .cameraHistorySelectionLanguage, object: nil)
     }
-    
+
     @objc func updateCameralanguageSelection (notification:Notification) {
         self.isFirstTimeLoad = false
         updateButton(index: 0)
         tabsViewDidSelectItemAt(position: 0, isProvideSTTFromLanguageSettingCameraTutorialUI: false)
         ScreenTracker.sharedInstance.screenPurpose = .LanguageSelectionCamera
     }
-    
+
+    private func updateCameraSelectionIndex() {
+        if UserDefaultsProperty<Bool>(KCameraLanguageFrom).value == true {
+            UserDefaultsProperty<Int>(kCameraFromLanguageSelectionIndex).value = 0
+        } else{
+            UserDefaultsProperty<Int>(kCameraToLanguageSelectionIndex).value = 0
+        }
+
+        self.cameraLangSelectindex = getCameraLangSelectionindex()
+    }
+
     private func updateButton(index:Int){
         PrintUtility.printLog(tag: TAG , text: "Index position \(index)")
         if index == 0{
@@ -271,14 +288,14 @@ class LanguageSelectCameraVC: BaseViewController {
             btnHistoryList.setImage(UIImage(named: iconHistorySelect), for: UIControl.State.normal)
         }
     }
-    
+
     private func tabsViewDidSelectItemAt(position: Int, isProvideSTTFromLanguageSettingCameraTutorialUI: Bool) {
         if position != currentIndex {
             if position > currentIndex {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .forward, animated: true, completion: nil)
             } else {
                 self.pageController.setViewControllers([showViewController(position)!], direction: .reverse, animated: true, completion: nil)
-            } 
+            }
         } else {
             /// Handle case when tapping on mike button inside language list UI and provide successful STT. In this case both index are equal.
             if isProvideSTTFromLanguageSettingCameraTutorialUI{
@@ -286,7 +303,7 @@ class LanguageSelectCameraVC: BaseViewController {
             }
         }
     }
-    
+
     private func showViewController(_ index: Int) -> UIViewController? {
         currentIndex = index
         if index == 0 {
@@ -305,7 +322,7 @@ class LanguageSelectCameraVC: BaseViewController {
             return contentVC
         }
     }
-    
+
     private func isLanguageSupportRecognition(code: String?) -> Bool{
         let recogLangList = CameraLanguageSelectionViewModel.shared.getFromLanguageLanguageList()
         for item in recogLangList{
@@ -319,9 +336,15 @@ class LanguageSelectCameraVC: BaseViewController {
 
 //MARK: - LanguageSelectCameraVC
 extension LanguageSelectCameraVC: LnaguageSettingsTutorialCameraProtocol{
-    func updateLanguageByVoice() {
+    func updateLanguageByVoice(isFromSTT: Bool) {
         microphoneIcon(isHidden: false)
-        updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: true)
+
+        ///Update camera selection index when STT success from Language Settings scene
+        if isFromSTT {
+            updateCameraSelectionIndex()
+        }
+
+        updateUI(isProvideSTTFromLanguageSettingCameraTutorialUI: isFromSTT)
     }
 }
 
@@ -339,13 +362,12 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
             return self.showViewController(index)
         }
     }
-    
-  
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let vc = pageViewController.viewControllers?.first
         var index: Int
         index = getVCPageIndex(vc)
-        
+
         if index == 0 {
             return nil
         } else {
@@ -353,19 +375,19 @@ extension LanguageSelectCameraVC: UIPageViewControllerDataSource, UIPageViewCont
             return self.showViewController(index)
         }
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if finished {
             if completed {
                 guard let vc = pageViewController.viewControllers?.first else { return }
                 let index: Int
-                
+
                 index = getVCPageIndex(vc)
                 updateButton(index: index)
             }
         }
     }
-    
+
     func getVCPageIndex(_ viewController: UIViewController?) -> Int {
         switch viewController {
         case is LanguageListCameraVC:
@@ -390,6 +412,7 @@ extension LanguageSelectCameraVC: FloatingMikeButtonDelegate{
         }else{
             targetLanguageVoiceButtonLogEvent()
         }
+
         PrintUtility.printLog(tag: TAG, text: "Language select voice camera Tap")
         if ScreenTracker.sharedInstance.screenPurpose == .LanguageSelectionCamera ||
             ScreenTracker.sharedInstance.screenPurpose == .LanguageHistorySelectionCamera {
