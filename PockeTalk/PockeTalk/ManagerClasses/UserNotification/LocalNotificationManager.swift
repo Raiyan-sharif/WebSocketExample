@@ -61,18 +61,18 @@ class LocalNotificationManager: NSObject {
                     if i == 0 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[0]) {
                             date = notificationDate
-                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysBeforeURL) ?? "",Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Sevendaysbefore.rawValue]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysBeforeURL) ?? ""]
                         }
                     } else if i == 1 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[1]) {
                             date = notificationDate
-                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KOneDayAfterURL) ?? "", Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Onedaybefore.rawValue]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KOneDayAfterURL) ?? ""]
                         }
                     }else if i == 2 {
                         if let notificationDate = self.getNotificationDate(using: self.couponScheduleDay[2]) {
                             UserDefaults.standard.set("\(notificationDate)", forKey: KThirdLocalNotificationDate)
                             date = notificationDate
-                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysAfterURL) ?? "", Knotification_Name:KNotification_Value, Knotification_Status:NotificationStatus.Sevendaysafter.rawValue]
+                            content.userInfo = [Knotification_Url: UserDefaults.standard.string(forKey: KSevenDaysAfterURL) ?? ""]
                         }
                     }
 
@@ -353,8 +353,9 @@ class LocalNotificationManager: NSObject {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Local notification urls: \(urlData)")
     }
 
-    private func checkNotificationURLDataExistence() -> Bool {
+    func checkNotificationURLDataExistence() -> Bool {
 
+        PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\(UserDefaults.standard.string(forKey: KSevenDaysBeforeURL))")
         if let _ = UserDefaults.standard.string(forKey: KSevenDaysBeforeURL), let _ = UserDefaults.standard.string(forKey: KOneDayAfterURL), let _ = UserDefaults.standard.string(forKey: KSevenDaysAfterURL) {
             PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "URL data exists")
             return true

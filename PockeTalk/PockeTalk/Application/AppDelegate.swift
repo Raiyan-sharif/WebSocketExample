@@ -35,6 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Update licenseOver dialog showing status
         GlobalMethod.isLicenseOverDialogShowing = false
 
+        var couponExpiryDate = UserDefaults.standard.string(forKey: kCouponExpiryDate)
+
+        if (couponExpiryDate != nil)  && (LocalNotificationManager.sharedInstance.checkNotificationURLDataExistence() == false) {
+            LocalNotificationManager.sharedInstance.scheduleNotificationAfterUrlUpdate()
+        }
+
         //Detect app store region
         PrintUtility.printLog(tag: TagUtility.sharedInstance.trialTag, text: "didFinishLaunchingWithOptions")
         IAPManager.shared.iSAppStoreRegionJapan()

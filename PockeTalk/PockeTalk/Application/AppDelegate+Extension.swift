@@ -257,8 +257,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "\n")
         PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "AppDelegate -> didReceive()[+]")
-        let userInfo = response.notification.request.content.userInfo
-        if let urlString = userInfo[Knotification_Url] {
+
+        if let urlString = response.notification.request.content.userInfo[Knotification_Url] {
             if let expiryDate = UserDefaults.standard.string(forKey: kCouponExpiryDate) {
                 UserDefaults.standard.set("\(urlString)/?coupon_timelimit=\(expiryDate)", forKey: kNotificationURL)
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "kNotificationURL key saved. URL: \(urlString)/?coupon_timelimit=\(expiryDate)")
@@ -266,11 +266,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let id = response.notification.request.identifier
             UserDefaults.standard.set("\(id)", forKey: "NotificationID")
         }
-        //  Notification data send to Google analytics
-        if let notificationStatus = userInfo[Knotification_Status] as? String, let notificationName = userInfo[Knotification_Name] as? String{
-            analytics.notificationResult(notificationName: notificationName, status: notificationStatus)
-        }
 
+        let notificaStatus = NotificationStatus(type: response.notification.request.identifier).getValue
+        analytics.notificationResult(notificationName: KNotification_Value, status: notificaStatus )
+        
         CustomLocalNotification.sharedInstance.removeView()
         DispatchQueue.main.async {
             guard let _ = UserDefaults.standard.string(forKey: kNotificationURL) else{
@@ -280,11 +279,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if let coupon =  UserDefaults.standard.string(forKey: kCouponCode) {
                 savedCoupon = coupon
             }
-            var serialCode = ""
-            if let serial = UserDefaults.standard.string(forKey: kSerialCodeKey){
-                serialCode = serial
-            }
-            if !savedCoupon.isEmpty || !serialCode.isEmpty {
+            
+            if !savedCoupon.isEmpty {
                 GlobalMethod.appdelegate().navigateToViewController(.home, showNotification: true)
                 PrintUtility.printLog(tag: TagUtility.sharedInstance.localNotificationTag, text: "Coupon Exist. Navigating to HomeVC & adding local notification view")
             } else {

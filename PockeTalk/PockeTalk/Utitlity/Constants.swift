@@ -492,7 +492,5 @@ let kSerialParamKey = "serial"
 let kSerialCodeKey = "kSerialCodeKey"
 
 //MARK: - LocalNotification  Constant Value
-let Knotification_Url = "notificationUrl"
-let Knotification_Status = "notificationStstus"
-let Knotification_Name = "notificationName"
+let Knotification_Url = "URL"
 let KNotification_Value = "sbcp_finish"
