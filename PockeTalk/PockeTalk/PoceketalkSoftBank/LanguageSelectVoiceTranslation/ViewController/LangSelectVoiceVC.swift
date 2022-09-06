@@ -312,6 +312,7 @@ class LangSelectVoiceVC: BaseViewController {
             contentVC.pageIndex = index
             contentVC.tabsHeight = tabsView.bounds.height
             contentVC.isFirstTimeLoad = self.isFirstTimeLoad
+            contentVC.fromRetranslation = fromRetranslation
             langugeListVC = contentVC
             return contentVC
         } else if index == 1 {
@@ -324,6 +325,7 @@ class LangSelectVoiceVC: BaseViewController {
             contentVC.tabsHeight = tabsView.bounds.height
             contentVC.pageIndex = index
             contentVC.isFirstTimeLoad = self.isFirstTimeLoad
+            contentVC.fromRetranslation = fromRetranslation
             langugeListVC = contentVC
             return contentVC
         }

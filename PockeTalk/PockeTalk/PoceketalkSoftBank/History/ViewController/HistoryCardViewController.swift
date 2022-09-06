@@ -546,7 +546,7 @@ extension HistoryCardViewController : AlertReusableDelegate{
     
     func transitionFromRetranslation(chatItemModel: HistoryChatItemModel?){
         selectedChatItemModel = chatItemModel
-        
+        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.getLanguageCodeByName(langName: (chatItemModel?.chatItem?.textTranslatedLanguage ?? systemLanguageCodeEN))?.code
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0

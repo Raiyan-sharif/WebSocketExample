@@ -736,7 +736,7 @@ extension TtsAlertController : AlertReusableDelegate {
         let storyboard = UIStoryboard(name: "LanguageSelectVoice", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kLanguageSelectVoice)as! LangSelectVoiceVC
         controller.isNative = chatItemModel?.chatItem?.chatIsTop ?? 0 == IsTop.noTop.rawValue ? 1 : 0
-        
+        UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.getLanguageCodeByName(langName: (chatItemModel?.chatItem?.textTranslatedLanguage ?? systemLanguageCodeEN))?.code
         controller.retranslationDelegate = self
         controller.fromRetranslation = true
         controller.fromScreenPurpose = ScreenTracker.sharedInstance.screenPurpose

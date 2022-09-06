@@ -17,6 +17,7 @@ class LanguageListVC: BaseViewController {
     var selectedIndexPath: IndexPath?
     var isNative: Int = 0
     var isFirstTimeLoad: Bool!
+    var fromRetranslation: Bool = false
     private let languageManager = LanguageSelectionManager.shared
     var tabsHeight:CGFloat = 0
     //MARK: - Lifecycle methods
@@ -27,7 +28,10 @@ class LanguageListVC: BaseViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setupLanguageProperty()
+        if(!fromRetranslation){
+            setupLanguageProperty()
+        }
+        languageItems = LanguageSelectionManager.shared.languageItems
         UserDefaultsProperty<String>(kTempSelectedLanguageVoice).value = UserDefaultsProperty<String>(KSelectedLanguageVoice).value
         updateTableView(false)
     }
@@ -46,8 +50,6 @@ class LanguageListVC: BaseViewController {
                 UserDefaultsProperty<String>(KSelectedLanguageVoice).value = LanguageSelectionManager.shared.topLanguage
             }
         }
-        
-        languageItems = LanguageSelectionManager.shared.languageItems
     }
     
     private func setupTableView(){
